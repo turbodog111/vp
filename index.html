@@ -61,10 +61,12 @@
       gap: 8px;
       padding: 8px 12px;
       background: #222;
+      flex-wrap: wrap;
     }
 
-    input {
+    input[type="url"] {
       flex: 1;
+      min-width: 0;
       background: #111;
       border: 1px solid #333;
       border-radius: 5px;
@@ -72,11 +74,22 @@
       padding: 7px 10px;
       font-size: 13px;
       outline: none;
-      min-width: 0;
     }
 
-    input::placeholder { color: #555; }
-    input:focus { border-color: #555; }
+    input[type="url"]::placeholder { color: #555; }
+    input[type="url"]:focus { border-color: #555; }
+
+    select {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 5px;
+      color: #aaa;
+      padding: 7px 8px;
+      font-size: 12px;
+      outline: none;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
 
     button {
       background: #2d2d2d;
@@ -102,7 +115,7 @@
 </head>
 <body>
 
-  <!-- Panel 1 -->
+  <!-- Panel 1: Kick -->
   <div class="card">
     <div class="card-bar">♞</div>
     <div class="ratio">
@@ -110,7 +123,7 @@
     </div>
   </div>
 
-  <!-- Panel 2 -->
+  <!-- Panel 2: video via Piped -->
   <div class="card">
     <div class="input-bar">
       <input
@@ -122,6 +135,12 @@
         autocapitalize="off"
         spellcheck="false"
       />
+      <select id="inst" title="mirror">
+        <option value="piped.video">①</option>
+        <option value="piped.privacydev.net">②</option>
+        <option value="piped.adminforge.de">③</option>
+        <option value="piped.smnz.de">④</option>
+      </select>
       <button id="go">▶</button>
     </div>
     <div id="p2">
@@ -130,26 +149,25 @@
   </div>
 
   <script>
-    // Domain parts are never written as complete strings — assembled at runtime only
-    const h  = 'https://';
-    const k  = ['player.', 'ki', 'ck', '.com/'].join('') + 'gmhikaru';
-    const yt = ['www.', 'you', 'tube-no', 'cookie', '.com/', 'embed/'].join('');
+    const h = 'https://';
+    const k = ['player.', 'ki', 'ck', '.com/'].join('') + 'gmhikaru';
 
     setTimeout(() => { document.getElementById('p1').src = h + k; }, 150);
 
     function extractId(raw) {
       const s = raw.trim();
       const m =
-        s.match(/[?&]v=([A-Za-z0-9_-]{11})/)     ||
-        s.match(/\.be\/([A-Za-z0-9_-]{11})/)      ||
-        s.match(/\/live\/([A-Za-z0-9_-]{11})/)    ||
-        s.match(/\/embed\/([A-Za-z0-9_-]{11})/)   ||
+        s.match(/[?&]v=([A-Za-z0-9_-]{11})/)   ||
+        s.match(/\.be\/([A-Za-z0-9_-]{11})/)    ||
+        s.match(/\/live\/([A-Za-z0-9_-]{11})/)  ||
+        s.match(/\/embed\/([A-Za-z0-9_-]{11})/) ||
         s.match(/\/shorts\/([A-Za-z0-9_-]{11})/);
       return m ? m[1] : null;
     }
 
     function load() {
       const raw  = document.getElementById('url').value;
+      const inst = document.getElementById('inst').value;
       const area = document.getElementById('p2');
       const id   = extractId(raw);
 
@@ -171,7 +189,8 @@
       area.innerHTML = '';
       area.appendChild(w);
 
-      setTimeout(() => { f.src = h + yt + id + '?autoplay=1&rel=0'; }, 150);
+      // Piped embed — proxies all video traffic through the selected instance
+      setTimeout(() => { f.src = h + inst + '/embed/' + id + '?autoplay=1'; }, 150);
     }
 
     document.getElementById('go').addEventListener('click', load);
