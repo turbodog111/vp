@@ -11,191 +11,400 @@
       background: #111;
       color: #ccc;
       font-family: system-ui, -apple-system, sans-serif;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      padding: 10px;
       min-height: 100vh;
     }
 
-    .card {
+    #hdr {
+      text-align: center;
+      font-size: 11px;
+      color: #444;
+      padding: 2px 0 10px;
+      letter-spacing: 0.07em;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .panel {
       background: #1a1a1a;
-      border-radius: 8px;
+      border-radius: 7px;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
-    .card-bar {
-      padding: 8px 12px;
-      font-size: 20px;
+    .pbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 9px;
       background: #222;
-      user-select: none;
+      gap: 8px;
+      min-height: 30px;
     }
 
-    .ratio {
+    .pbar.on-move {
+      background: #2c2c2c;
+    }
+
+    .pname {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ddd;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pclk {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #555;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+    }
+
+    .pclk.live { color: #eee; }
+    .pclk.low  { color: #e44 !important; }
+
+    /* Board */
+    .board-wrap {
       position: relative;
       width: 100%;
-      padding-top: 56.25%;
+      padding-top: 100%;
       background: #000;
     }
 
-    .ratio iframe {
+    .board {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
     }
 
-    .ghost {
-      position: absolute;
-      inset: 0;
+    .sq {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #2a2a2a;
-      font-size: 48px;
+      font-size: clamp(13px, 3vw, 28px);
+      user-select: none;
     }
 
-    .input-bar {
-      display: flex;
-      gap: 8px;
-      padding: 8px 12px;
-      background: #222;
-      flex-wrap: wrap;
+    .sq.ls { background: #f0d9b5; }
+    .sq.ds { background: #b58863; }
+    .sq.hl { filter: brightness(1.25); }
+
+    .wp {
+      color: #fff;
+      -webkit-text-stroke: 0.4px #444;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9);
     }
 
-    input[type="url"] {
-      flex: 1;
-      min-width: 0;
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 5px;
-      color: #eee;
-      padding: 7px 10px;
-      font-size: 13px;
-      outline: none;
+    .bp {
+      color: #111;
+      -webkit-text-stroke: 0.3px rgba(255,255,255,0.5);
+      text-shadow: 0 1px 2px rgba(255,255,255,0.3);
     }
 
-    input[type="url"]::placeholder { color: #555; }
-    input[type="url"]:focus { border-color: #555; }
-
-    select {
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 5px;
-      color: #aaa;
-      padding: 7px 8px;
-      font-size: 12px;
-      outline: none;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    button {
-      background: #2d2d2d;
-      border: 1px solid #444;
-      border-radius: 5px;
-      color: #eee;
-      padding: 7px 16px;
-      cursor: pointer;
-      font-size: 15px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    button:hover { background: #3a3a3a; }
-
-    .err {
+    /* Move list */
+    .moves {
+      padding: 5px 9px 7px;
       font-size: 11px;
-      color: #e55;
-      padding: 5px 12px 7px;
-      background: #1a1a1a;
+      line-height: 1.75;
+      max-height: 60px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-top: 1px solid #222;
+      color: #666;
+      flex-shrink: 0;
+    }
+
+    .mn { color: #444; margin-right: 1px; }
+    .mv { color: #bbb; margin-right: 4px; }
+
+    .result {
+      display: inline-block;
+      background: #2a2a2a;
+      color: #777;
+      font-size: 10px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      margin-left: 3px;
+    }
+
+    #sbar {
+      text-align: center;
+      font-size: 10px;
+      color: #2e2e2e;
+      padding: 8px 0 2px;
+      letter-spacing: 0.05em;
     }
   </style>
 </head>
 <body>
 
-  <!-- Panel 1: Kick -->
-  <div class="card">
-    <div class="card-bar">♞</div>
-    <div class="ratio">
-      <iframe id="p1" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" allowfullscreen></iframe>
-    </div>
-  </div>
+  <div id="hdr">♟ &nbsp;·&nbsp; R10 &nbsp;·&nbsp; 9 Apr &nbsp;·&nbsp; 14:45 CEST &nbsp;<span id="cd"></span></div>
+  <div class="grid" id="grid"></div>
+  <div id="sbar">—</div>
 
-  <!-- Panel 2: video via Piped -->
-  <div class="card">
-    <div class="input-bar">
-      <input
-        id="url"
-        type="url"
-        placeholder="paste link"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-        spellcheck="false"
-      />
-      <select id="inst" title="mirror">
-        <option value="piped.video">①</option>
-        <option value="piped.privacydev.net">②</option>
-        <option value="piped.adminforge.de">③</option>
-        <option value="piped.smnz.de">④</option>
-      </select>
-      <button id="go">▶</button>
-    </div>
-    <div id="p2">
-      <div class="ratio"><div class="ghost">▷</div></div>
-    </div>
-  </div>
+  <script type="module">
 
-  <script>
-    const h = 'https://';
-    const k = ['player.', 'ki', 'ck', '.com/'].join('') + 'gmhikaru';
-
-    setTimeout(() => { document.getElementById('p1').src = h + k; }, 150);
-
-    function extractId(raw) {
-      const s = raw.trim();
-      const m =
-        s.match(/[?&]v=([A-Za-z0-9_-]{11})/)   ||
-        s.match(/\.be\/([A-Za-z0-9_-]{11})/)    ||
-        s.match(/\/live\/([A-Za-z0-9_-]{11})/)  ||
-        s.match(/\/embed\/([A-Za-z0-9_-]{11})/) ||
-        s.match(/\/shorts\/([A-Za-z0-9_-]{11})/);
-      return m ? m[1] : null;
+    let Chess = null;
+    try {
+      const mod = await import('https://cdn.jsdelivr.net/npm/chess.js@1.4.0/dist/esm/chess.js');
+      Chess = mod.Chess;
+    } catch(e) {
+      document.getElementById('sbar').textContent = '⚠ engine unavailable — boards show starting position only';
     }
 
-    function load() {
-      const raw  = document.getElementById('url').value;
-      const inst = document.getElementById('inst').value;
-      const area = document.getElementById('p2');
-      const id   = extractId(raw);
+    // ── Constants ────────────────────────────────────────────────────────────
 
-      if (!id) {
-        area.innerHTML =
-          '<div class="err">⚠ unrecognized link — paste the full address</div>' +
-          '<div class="ratio"><div class="ghost">▷</div></div>';
-        return;
+    const GAMES = [
+      { id: 'UO81qK9U', white: 'Esipenko',  black: 'Bluebaum' },
+      { id: 'RN9BrHlK', white: 'Sindarov',  black: 'Pragg'    },
+      { id: 'rnuH0n1M', white: 'Wei Yi',    black: 'Caruana'  },
+      { id: 'Uav0LRGT', white: 'Giri',      black: 'Nakamura' },
+    ];
+
+    const PGN_URL = [
+      'https://lichess.org/broadcast/',
+      'fide-candidates-2026-open/round-10/G3oSxPgs.pgn'
+    ].join('');
+
+    // April 9 14:45 CEST = 12:45 UTC
+    const ROUND_START = new Date('2026-04-09T12:45:00Z');
+
+    const INIT_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+
+    const SYM = {
+      K:'♔', Q:'♕', R:'♖', B:'♗', N:'♘', P:'♙',
+      k:'♚', q:'♛', r:'♜', b:'♝', n:'♞', p:'♟'
+    };
+
+    // ── Build initial DOM ────────────────────────────────────────────────────
+
+    const grid = document.getElementById('grid');
+    for (const g of GAMES) {
+      const panel = document.createElement('div');
+      panel.className = 'panel';
+      panel.innerHTML = `
+        <div class="pbar" id="bb-${g.id}">
+          <span class="pname">${g.black}</span>
+          <span class="pclk" id="bc-${g.id}">—</span>
+        </div>
+        <div class="board-wrap">
+          <div class="board" id="bd-${g.id}"></div>
+        </div>
+        <div class="pbar" id="wb-${g.id}">
+          <span class="pname">${g.white}</span>
+          <span class="pclk" id="wc-${g.id}">—</span>
+        </div>
+        <div class="moves" id="mv-${g.id}">—</div>
+      `;
+      grid.appendChild(panel);
+      drawBoard(g.id, INIT_FEN, null, null);
+    }
+
+    // ── Board rendering ──────────────────────────────────────────────────────
+
+    function sqIdx(sq) {
+      // sq like 'e4' → flat index 0..63 in FEN row-major order (rank 8 = row 0)
+      const col = sq.charCodeAt(0) - 97;         // a=0 … h=7
+      const row = 8 - parseInt(sq[1]);            // rank 8→0, rank 1→7
+      return row * 8 + col;
+    }
+
+    function drawBoard(id, fen, fromSq, toSq) {
+      const el = document.getElementById('bd-' + id);
+      if (!el) return;
+      const hlFrom = fromSq != null ? sqIdx(fromSq) : -1;
+      const hlTo   = toSq   != null ? sqIdx(toSq)   : -1;
+
+      const rows = fen.split(' ')[0].split('/');
+      let html = '';
+      let idx = 0;
+      for (let r = 0; r < 8; r++) {
+        let file = 0;
+        for (const ch of rows[r]) {
+          if (/\d/.test(ch)) {
+            const n = +ch;
+            for (let i = 0; i < n; i++) {
+              const hl = (idx === hlFrom || idx === hlTo) ? ' hl' : '';
+              html += `<div class="sq ${(r+file)%2===0 ? 'ls':'ds'}${hl}"></div>`;
+              file++; idx++;
+            }
+          } else {
+            const isW = ch === ch.toUpperCase();
+            const hl = (idx === hlFrom || idx === hlTo) ? ' hl' : '';
+            html += `<div class="sq ${(r+file)%2===0 ? 'ls':'ds'}${hl}">` +
+                    `<span class="${isW ? 'wp':'bp'}">${SYM[ch]||''}</span></div>`;
+            file++; idx++;
+          }
+        }
+      }
+      el.innerHTML = html;
+    }
+
+    // ── Clock helpers ─────────────────────────────────────────────────────────
+
+    function fmtClk(t) {
+      if (!t) return '—';
+      const [h, m, s] = t.split(':').map(Number);
+      if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      return `${m}:${String(s).padStart(2,'0')}`;
+    }
+
+    function isLow(t) {
+      if (!t) return false;
+      const [h, m] = t.split(':').map(Number);
+      return h === 0 && m < 1;
+    }
+
+    // ── PGN parsing ──────────────────────────────────────────────────────────
+
+    function parseAll(text) {
+      const chunks = text.split(/(?=\[Event )/).filter(c => c.trim().length > 10);
+      const out = {};
+
+      for (const chunk of chunks) {
+        // Parse headers
+        const hdrs = {};
+        for (const m of chunk.matchAll(/\[(\w+) "([^"]*)"\]/g)) hdrs[m[1]] = m[2];
+
+        // Match game by game ID embedded in Site URL
+        const site = hdrs.Site || '';
+        const game = GAMES.find(g => site.includes(g.id));
+        if (!game) continue;
+
+        // Extract clock times — white moves at even indices (0,2,4…), black at odd
+        const allClks = [...chunk.matchAll(/\[%clk (\d+:\d+:\d+)\]/g)].map(m => m[1]);
+        const wClk = allClks.filter((_, i) => i % 2 === 0).at(-1) ?? null;
+        const bClk = allClks.filter((_, i) => i % 2 !== 0).at(-1) ?? null;
+
+        // Strip PGN comments so chess.js can parse cleanly
+        const clean = chunk
+          .replace(/\{[^}]*\}/g, '')
+          .replace(/;[^\n]*/g, '')
+          .trim();
+
+        let fen   = INIT_FEN;
+        let hist  = [];
+        let turn  = 'w';
+        let fromSq = null, toSq = null;
+
+        if (Chess) {
+          try {
+            const ch = new Chess();
+            ch.loadPgn(clean);
+            fen  = ch.fen();
+            turn = ch.turn();
+            const verbose = ch.history({ verbose: true });
+            hist = verbose.map(m => m.san);
+            if (verbose.length > 0) {
+              const last = verbose.at(-1);
+              fromSq = last.from;
+              toSq   = last.to;
+            }
+          } catch(_) {}
+        }
+
+        out[game.id] = {
+          wClk, bClk, fen, hist, turn,
+          fromSq, toSq,
+          res: hdrs.Result || '*'
+        };
       }
 
-      const f = document.createElement('iframe');
-      f.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
-      f.allowFullscreen = true;
-      f.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
-
-      const w = document.createElement('div');
-      w.className = 'ratio';
-      w.appendChild(f);
-      area.innerHTML = '';
-      area.appendChild(w);
-
-      // Piped embed — proxies all video traffic through the selected instance
-      setTimeout(() => { f.src = h + inst + '/embed/' + id + '?autoplay=1'; }, 150);
+      return out;
     }
 
-    document.getElementById('go').addEventListener('click', load);
-    document.getElementById('url').addEventListener('keydown', e => e.key === 'Enter' && load());
-  </script>
+    // ── Panel update ─────────────────────────────────────────────────────────
 
+    function updatePanel(id, d) {
+      const { wClk, bClk, fen, hist, turn, fromSq, toSq, res } = d;
+      const started = hist.length > 0 || res !== '*';
+
+      drawBoard(id, fen, fromSq, toSq);
+
+      // Clock elements
+      const wcEl = document.getElementById('wc-' + id);
+      const bcEl = document.getElementById('bc-' + id);
+      const wBar = document.getElementById('wb-' + id);
+      const bBar = document.getElementById('bb-' + id);
+
+      // Side to move has the running clock (only after game starts)
+      const wLive = started && res === '*' && turn === 'w';
+      const bLive = started && res === '*' && turn === 'b';
+
+      wcEl.textContent = fmtClk(wClk);
+      bcEl.textContent = fmtClk(bClk);
+      wcEl.className = 'pclk' + (wLive ? ' live' : '') + (isLow(wClk) ? ' low' : '');
+      bcEl.className = 'pclk' + (bLive ? ' live' : '') + (isLow(bClk) ? ' low' : '');
+      wBar.className = 'pbar' + (wLive ? ' on-move' : '');
+      bBar.className = 'pbar' + (bLive ? ' on-move' : '');
+
+      // Move list
+      const mvEl = document.getElementById('mv-' + id);
+      if (hist.length === 0) {
+        mvEl.innerHTML = res !== '*'
+          ? `<span class="result">${res}</span>`
+          : '—';
+      } else {
+        let html = '';
+        for (let i = 0; i < hist.length; i++) {
+          if (i % 2 === 0) html += `<span class="mn">${Math.floor(i/2)+1}.</span>`;
+          html += `<span class="mv">${hist[i]}</span>`;
+        }
+        if (res !== '*') html += `<span class="result">${res}</span>`;
+        mvEl.innerHTML = html;
+        mvEl.scrollTop = mvEl.scrollHeight;
+      }
+    }
+
+    // ── Countdown ────────────────────────────────────────────────────────────
+
+    function updateCountdown() {
+      const diff = ROUND_START - Date.now();
+      const cdEl = document.getElementById('cd');
+      if (diff <= 0) { cdEl.textContent = ''; return; }
+      const h = Math.floor(diff / 3_600_000);
+      const m = Math.floor((diff % 3_600_000) / 60_000);
+      cdEl.textContent = `· ${h}h ${m}m`;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 30_000);
+
+    // ── Poll ─────────────────────────────────────────────────────────────────
+
+    async function poll() {
+      try {
+        const res = await fetch(PGN_URL, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+        const games = parseAll(text);
+        for (const [id, data] of Object.entries(games)) updatePanel(id, data);
+        const now = new Date();
+        document.getElementById('sbar').textContent =
+          `↻ ${String(now.getHours()).padStart(2,'0')}:` +
+          `${String(now.getMinutes()).padStart(2,'0')}:` +
+          `${String(now.getSeconds()).padStart(2,'0')}`;
+      } catch(e) {
+        document.getElementById('sbar').textContent = '⚠ ' + e.message;
+      }
+    }
+
+    poll();
+    setInterval(poll, 4_000);
+
+  </script>
 </body>
 </html>
