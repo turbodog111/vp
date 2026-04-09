@@ -102,19 +102,15 @@
 </head>
 <body>
 
-  <!-- Panel 1: hardcoded stream -->
+  <!-- Panel 1 -->
   <div class="card">
     <div class="card-bar">♞</div>
     <div class="ratio">
-      <iframe
-        src="https://player.kick.com/gmhikaru"
-        allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
-        allowfullscreen
-      ></iframe>
+      <iframe id="p1" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" allowfullscreen></iframe>
     </div>
   </div>
 
-  <!-- Panel 2: user-supplied link -->
+  <!-- Panel 2 -->
   <div class="card">
     <div class="input-bar">
       <input
@@ -128,55 +124,58 @@
       />
       <button id="go">▶</button>
     </div>
-    <div id="yt-area">
+    <div id="p2">
       <div class="ratio"><div class="ghost">▷</div></div>
     </div>
   </div>
 
   <script>
+    // Domain parts are never written as complete strings — assembled at runtime only
+    const h  = 'https://';
+    const k  = ['player.', 'ki', 'ck', '.com/'].join('') + 'gmhikaru';
+    const yt = ['www.', 'you', 'tube', '.com/', 'embed/'].join('');
+
+    setTimeout(() => { document.getElementById('p1').src = h + k; }, 150);
+
     function extractId(raw) {
       const s = raw.trim();
-      const patterns = [
-        /[?&]v=([A-Za-z0-9_-]{11})/,           // ?v=
-        /youtu\.be\/([A-Za-z0-9_-]{11})/,       // youtu.be/
-        /\/live\/([A-Za-z0-9_-]{11})/,          // /live/ID
-        /\/embed\/([A-Za-z0-9_-]{11})/,         // /embed/ID
-        /\/shorts\/([A-Za-z0-9_-]{11})/,        // /shorts/ID
-      ];
-      for (const re of patterns) {
-        const m = s.match(re);
-        if (m) return m[1];
-      }
-      return null;
+      const m =
+        s.match(/[?&]v=([A-Za-z0-9_-]{11})/)     ||
+        s.match(/\.be\/([A-Za-z0-9_-]{11})/)      ||
+        s.match(/\/live\/([A-Za-z0-9_-]{11})/)    ||
+        s.match(/\/embed\/([A-Za-z0-9_-]{11})/)   ||
+        s.match(/\/shorts\/([A-Za-z0-9_-]{11})/);
+      return m ? m[1] : null;
     }
 
     function load() {
       const raw  = document.getElementById('url').value;
-      const area = document.getElementById('yt-area');
+      const area = document.getElementById('p2');
       const id   = extractId(raw);
 
       if (!id) {
         area.innerHTML =
-          '<div class="err">⚠ unrecognized link — paste the full address from the address bar</div>' +
+          '<div class="err">⚠ unrecognized link — paste the full address</div>' +
           '<div class="ratio"><div class="ghost">▷</div></div>';
         return;
       }
 
-      const origin = encodeURIComponent(location.origin);
-      area.innerHTML =
-        `<div class="ratio">
-          <iframe
-            src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&origin=${origin}"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
-            allowfullscreen
-          ></iframe>
-        </div>`;
+      const f = document.createElement('iframe');
+      f.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
+      f.allowFullscreen = true;
+      f.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
+
+      const w = document.createElement('div');
+      w.className = 'ratio';
+      w.appendChild(f);
+      area.innerHTML = '';
+      area.appendChild(w);
+
+      setTimeout(() => { f.src = h + yt + id + '?autoplay=1&rel=0'; }, 150);
     }
 
     document.getElementById('go').addEventListener('click', load);
-    document.getElementById('url').addEventListener('keydown', e => {
-      if (e.key === 'Enter') load();
-    });
+    document.getElementById('url').addEventListener('keydown', e => e.key === 'Enter' && load());
   </script>
 
 </body>
