@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>♟</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #111;
+      color: #ccc;
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .card-bar {
+      padding: 8px 12px;
+      font-size: 20px;
+      background: #222;
+      user-select: none;
+    }
+
+    .ratio {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background: #000;
+    }
+
+    .ratio iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .ghost {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2a2a2a;
+      font-size: 48px;
+    }
+
+    .input-bar {
+      display: flex;
+      gap: 8px;
+      padding: 8px 12px;
+      background: #222;
+    }
+
+    input {
+      flex: 1;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 5px;
+      color: #eee;
+      padding: 7px 10px;
+      font-size: 13px;
+      outline: none;
+      min-width: 0;
+    }
+
+    input::placeholder { color: #555; }
+    input:focus { border-color: #555; }
+
+    button {
+      background: #2d2d2d;
+      border: 1px solid #444;
+      border-radius: 5px;
+      color: #eee;
+      padding: 7px 16px;
+      cursor: pointer;
+      font-size: 15px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    button:hover { background: #3a3a3a; }
+
+    .err {
+      font-size: 11px;
+      color: #e55;
+      padding: 5px 12px 7px;
+      background: #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Panel 1: hardcoded stream -->
+  <div class="card">
+    <div class="card-bar">♞</div>
+    <div class="ratio">
+      <iframe
+        src="https://player.kick.com/gmhikaru"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+
+  <!-- Panel 2: user-supplied link -->
+  <div class="card">
+    <div class="input-bar">
+      <input
+        id="url"
+        type="url"
+        placeholder="paste link"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
+      <button id="go">▶</button>
+    </div>
+    <div id="yt-area">
+      <div class="ratio"><div class="ghost">▷</div></div>
+    </div>
+  </div>
+
+  <script>
+    function extractId(raw) {
+      const s = raw.trim();
+      const patterns = [
+        /[?&]v=([A-Za-z0-9_-]{11})/,           // ?v=
+        /youtu\.be\/([A-Za-z0-9_-]{11})/,       // youtu.be/
+        /\/live\/([A-Za-z0-9_-]{11})/,          // /live/ID
+        /\/embed\/([A-Za-z0-9_-]{11})/,         // /embed/ID
+        /\/shorts\/([A-Za-z0-9_-]{11})/,        // /shorts/ID
+      ];
+      for (const re of patterns) {
+        const m = s.match(re);
+        if (m) return m[1];
+      }
+      return null;
+    }
+
+    function load() {
+      const raw  = document.getElementById('url').value;
+      const area = document.getElementById('yt-area');
+      const id   = extractId(raw);
+
+      if (!id) {
+        area.innerHTML =
+          '<div class="err">⚠ unrecognized link — paste the full address from the address bar</div>' +
+          '<div class="ratio"><div class="ghost">▷</div></div>';
+        return;
+      }
+
+      const origin = encodeURIComponent(location.origin);
+      area.innerHTML =
+        `<div class="ratio">
+          <iframe
+            src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&origin=${origin}"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+            allowfullscreen
+          ></iframe>
+        </div>`;
+    }
+
+    document.getElementById('go').addEventListener('click', load);
+    document.getElementById('url').addEventListener('keydown', e => {
+      if (e.key === 'Enter') load();
+    });
+  </script>
+
+</body>
+</html>
