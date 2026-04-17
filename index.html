@@ -4,10 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>vp</title>
-  <script
-    src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-    defer
-  ></script>
+  <link rel="icon" href="data:,">
   <style>
     :root {
       color-scheme: dark;
@@ -126,20 +123,6 @@
       margin-top: 18px;
     }
 
-    .challenge-wrap {
-      display: none;
-      justify-content: center;
-      margin-top: 18px;
-    }
-
-    .challenge-wrap.is-visible {
-      display: flex;
-    }
-
-    #challenge {
-      min-height: 65px;
-    }
-
     .download[hidden] {
       display: none;
     }
@@ -177,26 +160,17 @@
       <div class="actions">
         <a id="download" class="download" href="#" hidden>download mp4</a>
       </div>
-      <div id="challengeWrap" class="challenge-wrap">
-        <div id="challenge"></div>
-      </div>
     </form>
   </main>
 
   <script>
-    const API_BASE = "https://cobalt-api.meowing.de";
+    const COBALT_BASE = "https://cobalt.tools/";
 
     const form = document.getElementById("form");
     const urlInput = document.getElementById("url");
     const submitButton = document.getElementById("submit");
     const meta = document.getElementById("meta");
     const download = document.getElementById("download");
-    const challengeWrap = document.getElementById("challengeWrap");
-
-    let instanceInfo = null;
-    let widgetId = null;
-    let turnstileToken = "";
-    let sessionToken = "";
 
     function setMeta(text, isError = false) {
       meta.textContent = text;
@@ -209,193 +183,48 @@
       download.removeAttribute("download");
     }
 
-    function showChallenge() {
-      challengeWrap.classList.add("is-visible");
+    function cobaltUrl(value) {
+      return `${COBALT_BASE}?u=${encodeURIComponent(value)}`;
     }
 
-    function hideChallenge() {
-      challengeWrap.classList.remove("is-visible");
-    }
+    function syncDownload() {
+      const value = urlInput.value.trim();
+      const valid = value && /^https?:\/\//i.test(value);
 
-    function shortError(code) {
-      const mapped = {
-        "error.api.auth.jwt.missing": "verify",
-        "error.api.auth.jwt.invalid": "verify again",
-        "error.api.auth.jwt.expired": "verify again",
-        "error.api.turnstile.failed": "verify again",
-        "error.api.fetch.empty": "not found"
-      };
-
-      return mapped[code] || "couldn't render";
-    }
-
-    function renderChallenge() {
-      if (!window.turnstile || widgetId !== null || !instanceInfo?.turnstileSitekey) {
+      if (!valid) {
+        resetDownload();
         return;
       }
 
-      widgetId = window.turnstile.render("#challenge", {
-        sitekey: instanceInfo.turnstileSitekey,
-        theme: "dark",
-        size: "flexible",
-        appearance: "interaction-only",
-        callback(token) {
-          turnstileToken = token;
-          setMeta("");
-        },
-        "expired-callback"() {
-          turnstileToken = "";
-          sessionToken = "";
-        },
-        "error-callback"() {
-          turnstileToken = "";
-          sessionToken = "";
-          setMeta("verify again", true);
-          showChallenge();
-        }
-      });
-    }
-
-    async function loadInstance() {
-      const response = await fetch(API_BASE, {
-        headers: {
-          Accept: "application/json"
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error("offline");
-      }
-
-      const payload = await response.json();
-      instanceInfo = payload.cobalt || {};
-      renderChallenge();
-    }
-
-    async function ensureSession() {
-      if (!instanceInfo?.turnstileSitekey) {
-        return;
-      }
-
-      if (sessionToken) {
-        return;
-      }
-
-      if (!turnstileToken) {
-        showChallenge();
-        throw new Error("verify");
-      }
-
-      const response = await fetch(`${API_BASE}/session`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "cf-turnstile-response": turnstileToken
-        }
-      });
-
-      const payload = await response.json().catch(() => ({}));
-
-      if (!response.ok || !payload.token) {
-        sessionToken = "";
-        turnstileToken = "";
-
-        if (widgetId !== null && window.turnstile) {
-          window.turnstile.reset(widgetId);
-        }
-
-        showChallenge();
-        throw new Error(shortError(payload.error?.code));
-      }
-
-      sessionToken = payload.token;
-      hideChallenge();
-    }
-
-    async function renderDownload(url) {
-      await ensureSession();
-
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      };
-
-      if (sessionToken) {
-        headers.Authorization = `Bearer ${sessionToken}`;
-      }
-
-      const response = await fetch(API_BASE, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          url,
-          downloadMode: "auto",
-          youtubeVideoContainer: "mp4",
-          youtubeVideoCodec: "h264",
-          videoQuality: "720"
-        })
-      });
-
-      const payload = await response.json().catch(() => ({}));
-
-      if (!response.ok || payload.status === "error") {
-        if (payload.error?.code?.includes("jwt")) {
-          sessionToken = "";
-          turnstileToken = "";
-          showChallenge();
-
-          if (widgetId !== null && window.turnstile) {
-            window.turnstile.reset(widgetId);
-          }
-        }
-
-        throw new Error(shortError(payload.error?.code));
-      }
-
-      if (payload.status === "redirect" || payload.status === "tunnel") {
-        return {
-          href: payload.url,
-          fileName: payload.filename || "video.mp4"
-        };
-      }
-
-      if (payload.status === "picker" && Array.isArray(payload.picker) && payload.picker.length) {
-        const item = payload.picker.find((entry) => entry.type === "video") || payload.picker[0];
-        return {
-          href: item.url,
-          fileName: payload.audioFilename || "video.mp4"
-        };
-      }
-
-      throw new Error("couldn't render");
+      download.href = cobaltUrl(value);
+      download.target = "_blank";
+      download.rel = "noopener";
+      download.hidden = false;
     }
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      resetDownload();
-      submitButton.disabled = true;
-      setMeta("rendering");
+      const value = urlInput.value.trim();
 
       try {
-        const rendered = await renderDownload(urlInput.value.trim());
-        download.href = rendered.href;
-        download.target = "_blank";
-        download.rel = "noopener";
-        download.download = rendered.fileName;
-        download.hidden = false;
-        setMeta("ready");
+        const next = new URL(value);
+        if (!/^https?:$/i.test(next.protocol)) {
+          throw new Error();
+        }
+
+        setMeta("");
+        window.location.href = cobaltUrl(value);
       } catch (error) {
-        setMeta(error.message || "couldn't render", true);
-      } finally {
-        submitButton.disabled = false;
+        setMeta("invalid link", true);
       }
     });
 
-    loadInstance().catch(() => {
-      setMeta("offline", true);
+    urlInput.addEventListener("input", () => {
+      setMeta("");
+      syncDownload();
     });
 
-    window.addEventListener("load", renderChallenge);
+    syncDownload();
   </script>
 </body>
 </html>
