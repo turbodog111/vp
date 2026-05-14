@@ -222,6 +222,43 @@ input[type="range"]:focus { outline: none; }
   padding: 8px 12px; color: var(--fg-dim); font-size: 12px;
 }
 
+#toast {
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  transform: translate(-50%, -10px);
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 1000;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+  white-space: nowrap;
+  max-width: calc(100vw - 32px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.toast-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+.toast-text {
+  color: var(--fg);
+}
+
 @media (max-width: 760px) {
   .topbar { padding: 12px 16px; }
   .main { padding: 12px 16px; }

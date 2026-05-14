@@ -13,6 +13,24 @@ let unshuffledQueue = null;
 let playlists = loadPlaylists();
 let currentPlaylist = null;
 
+let toastTimeout = null;
+function showToast(icon, text) {
+  let toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.innerHTML = '<span class="toast-icon"></span><span class="toast-text"></span>';
+    document.body.appendChild(toast);
+  }
+  toast.querySelector('.toast-icon').textContent = icon;
+  toast.querySelector('.toast-text').textContent = text;
+  toast.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 1400);
+}
+
 function loadPlaylists() {
   try { return JSON.parse(localStorage.getItem('vp_playlists') || '{}'); }
   catch { return {}; }
@@ -165,10 +183,18 @@ function togglePlay() {
     queueIndex = 0;
     currentPlaylist = null;
     playCurrent();
+    const song = library[queue[queueIndex]];
+    showToast('▶', song?.title || song?.displayName || 'Playing');
     return;
   }
-  if (audio.paused) audio.play();
-  else audio.pause();
+  if (audio.paused) {
+    audio.play();
+    const song = library[queue[queueIndex]];
+    showToast('▶', song?.title || song?.displayName || 'Playing');
+  } else {
+    audio.pause();
+    showToast('⏸', 'Paused');
+  }
 }
 
 function playNext(auto = false) {
@@ -181,9 +207,17 @@ function playNext(auto = false) {
   if (queueIndex + 1 < queue.length) {
     queueIndex++;
     playCurrent();
+    if (!auto) {
+      const song = library[queue[queueIndex]];
+      showToast('⏭', song?.title || song?.displayName || 'Next');
+    }
   } else if (loopMode === 'all') {
     queueIndex = 0;
     playCurrent();
+    if (!auto) {
+      const song = library[queue[queueIndex]];
+      showToast('⏭', song?.title || song?.displayName || 'Next');
+    }
   } else {
     audio.pause();
     audio.currentTime = 0;
@@ -194,6 +228,7 @@ function playPrev() {
   if (queue.length === 0) return;
   if (audio.currentTime > 3) {
     audio.currentTime = 0;
+    showToast('⏮', 'Restart');
     return;
   }
   if (queueIndex > 0) {
@@ -202,14 +237,18 @@ function playPrev() {
     queueIndex = queue.length - 1;
   } else {
     audio.currentTime = 0;
+    showToast('⏮', 'Restart');
     return;
   }
   playCurrent();
+  const song = library[queue[queueIndex]];
+  showToast('⏮', song?.title || song?.displayName || 'Previous');
 }
 
 function toggleShuffle() {
   shuffled = !shuffled;
   $('shuffle').classList.toggle('on', shuffled);
+  showToast('🔀', shuffled ? 'Shuffle on' : 'Shuffle off');
   if (queue.length === 0) return;
   if (shuffled) {
     unshuffledQueue = queue.slice();
@@ -235,6 +274,9 @@ function cycleLoop() {
   btn.dataset.mode = loopMode;
   btn.textContent = loopMode === 'one' ? '🔂' : '🔁';
   btn.title = `Loop: ${loopMode}`;
+  const labels = { off: 'Loop off', all: 'Loop all', one: 'Loop one' };
+  const icon = loopMode === 'one' ? '🔂' : '🔁';
+  showToast(icon, labels[loopMode]);
 }
 
 function fmtTime(sec) {
@@ -275,6 +317,9 @@ $('seek').addEventListener('input', (e) => {
 $('volume').addEventListener('input', (e) => {
   audio.volume = parseFloat(e.target.value);
   localStorage.setItem('vp_volume', e.target.value);
+  const pct = Math.round(audio.volume * 100);
+  const icon = pct === 0 ? '🔇' : pct < 50 ? '🔉' : '🔊';
+  showToast(icon, `Volume ${pct}%`);
 });
 
 const savedVolume = localStorage.getItem('vp_volume');
