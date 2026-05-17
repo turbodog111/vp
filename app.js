@@ -1,5 +1,10 @@
 const REPO_OWNER = 'turbodog111';
 const REPO_NAME = 'vp';
+const COLLECTIONS = [
+  { id: 'secular', label: 'Secular', folder: 'songs' },
+  { id: 'christian', label: 'Christian', folder: 'songs/christian' }
+];
+const COLLECTION_ORDER = new Map(COLLECTIONS.map((collection, index) => [collection.id, index]));
 
 const $ = (id) => document.getElementById(id);
 const audio = $('audio');
@@ -12,6 +17,7 @@ let shuffled = false;
 let unshuffledQueue = null;
 let playlists = loadPlaylists();
 let currentPlaylist = null;
+let activeCollection = localStorage.getItem('vp_collection') || 'all';
 
 let toastTimeout = null;
 function showToast(icon, text) {
@@ -50,58 +56,148 @@ function prettyName(filename) {
   return { artist: '', title: base, display: base };
 }
 
+function encodePath(path) {
+  return path.split('/').map(encodeURIComponent).join('/');
+}
+
+function collectionLabel(collectionId) {
+  return COLLECTIONS.find(collection => collection.id === collectionId)?.label || collectionId;
+}
+
+function songRef(song) {
+  return song?.id || song?.name;
+}
+
+function refMatchesSong(ref, song) {
+  return ref === song.id || ref === song.name;
+}
+
+function findSongIndex(ref) {
+  let idx = library.findIndex(song => song.id === ref);
+  if (idx < 0) idx = library.findIndex(song => song.name === ref);
+  return idx;
+}
+
+function filteredLibraryEntries(filter = '') {
+  const q = filter.toLowerCase().trim();
+  return library
+    .map((song, idx) => ({ song, idx }))
+    .filter(({ song }) => activeCollection === 'all' || song.collection === activeCollection)
+    .filter(({ song }) => !q || song.displayName.toLowerCase().includes(q));
+}
+
+async function fetchCollection(collection) {
+  const apiPath = encodePath(collection.folder);
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${apiPath}?ref=main`;
+  const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
+  if (!res.ok) {
+    const error = new Error(`HTTP ${res.status}`);
+    error.status = res.status;
+    throw error;
+  }
+  const items = await res.json();
+  return items
+    .filter(i => i.type === 'file' && /\.mp3$/i.test(i.name))
+    .map(i => {
+      const path = `${collection.folder}/${i.name}`;
+      const p = prettyName(i.name);
+      return {
+        id: path,
+        name: i.name,
+        path,
+        url: `./${encodePath(path)}`,
+        collection: collection.id,
+        collectionLabel: collection.label,
+        displayName: p.display,
+        artist: p.artist,
+        title: p.title,
+        size: i.size
+      };
+    });
+}
+
 async function loadLibrary() {
   const errBox = $('library-error');
   errBox.classList.add('hidden');
-  try {
-    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/songs?ref=main`;
-    const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
-    if (res.ok) {
-      const items = await res.json();
-      library = items
-        .filter(i => i.type === 'file' && /\.mp3$/i.test(i.name))
-        .map(i => {
-          const p = prettyName(i.name);
-          return {
-            name: i.name,
-            url: `./songs/${encodeURIComponent(i.name)}`,
-            displayName: p.display,
-            artist: p.artist,
-            title: p.title,
-            size: i.size
-          };
-        })
-        .sort((a, b) => a.displayName.localeCompare(b.displayName));
-    } else if (res.status === 403) {
-      errBox.textContent = 'GitHub API rate limit hit. Try again in a few minutes.';
-      errBox.classList.remove('hidden');
-    } else if (res.status === 404) {
-      // songs folder doesn't exist yet — show empty state
-      library = [];
-    } else {
-      errBox.textContent = `Could not load library (HTTP ${res.status}).`;
-      errBox.classList.remove('hidden');
+  const loaded = [];
+  const errors = [];
+  for (const collection of COLLECTIONS) {
+    try {
+      loaded.push(...await fetchCollection(collection));
+    } catch (error) {
+      if (error.status !== 404 || collection.id === 'secular') {
+        errors.push({ collection, error });
+      }
     }
-  } catch (e) {
-    errBox.textContent = 'Could not load library. Check your connection.';
+  }
+  library = loaded.sort((a, b) => {
+    const collectionSort = COLLECTION_ORDER.get(a.collection) - COLLECTION_ORDER.get(b.collection);
+    return collectionSort || a.displayName.localeCompare(b.displayName);
+  });
+  if (errors.length > 0) {
+    if (errors.some(({ error }) => error.status === 403)) {
+      errBox.textContent = 'GitHub API rate limit hit. Try again in a few minutes.';
+    } else {
+      const failed = errors
+        .map(({ collection, error }) => collection ? `${collection.label} (${error.message})` : error.message)
+        .join(', ');
+      errBox.textContent = `Could not load part of the library: ${failed}.`;
+    }
     errBox.classList.remove('hidden');
   }
+  if (activeCollection !== 'all' && !COLLECTIONS.some(collection => collection.id === activeCollection)) {
+    activeCollection = 'all';
+  }
+  renderCollectionFilters();
   renderLibrary($('search').value);
+}
+
+function renderCollectionFilters() {
+  const filter = $('collection-filter');
+  if (!filter) return;
+  const counts = Object.fromEntries(COLLECTIONS.map(collection => [collection.id, 0]));
+  library.forEach(song => {
+    if (counts[song.collection] !== undefined) counts[song.collection]++;
+  });
+  filter.querySelectorAll('.collection-tab').forEach(button => {
+    const collection = button.dataset.collection;
+    button.classList.toggle('active', collection === activeCollection);
+    const count = collection === 'all' ? library.length : counts[collection] || 0;
+    button.querySelector('.collection-count').textContent = count;
+  });
+}
+
+function setActiveCollection(collection) {
+  activeCollection = collection;
+  localStorage.setItem('vp_collection', activeCollection);
+  renderCollectionFilters();
+  renderLibrary($('search').value);
+}
+
+function emptyLibraryText(filter) {
+  if (library.length === 0) {
+    return 'No songs found. Drop .mp3 files into songs/ or songs/christian/, commit, and push.';
+  }
+  if (filter.trim()) {
+    return `No ${activeCollection === 'all' ? '' : `${collectionLabel(activeCollection).toLowerCase()} `}songs match that search.`;
+  }
+  if (activeCollection !== 'all') {
+    return `No ${collectionLabel(activeCollection).toLowerCase()} songs found.`;
+  }
+  return 'No songs found.';
 }
 
 function renderLibrary(filter = '') {
   const list = $('library-list');
   const empty = $('library-empty');
-  const q = filter.toLowerCase().trim();
+  const filtered = filteredLibraryEntries(filter);
   list.innerHTML = '';
-  if (library.length === 0) {
+  if (filtered.length === 0) {
+    empty.textContent = emptyLibraryText(filter);
     empty.classList.remove('hidden');
     return;
   }
   empty.classList.add('hidden');
-  const filtered = library
-    .map((s, i) => ({ song: s, idx: i }))
-    .filter(({ song }) => !q || song.displayName.toLowerCase().includes(q));
   filtered.forEach(({ song, idx }, displayIdx) => {
     const li = document.createElement('li');
     li.className = 'song-row';
@@ -109,16 +205,22 @@ function renderLibrary(filter = '') {
     if (queue[queueIndex] === idx) li.classList.add('playing');
     li.innerHTML = `
       <span class="col-num"></span>
-      <span class="col-title"></span>
+      <span class="col-title song-title-wrap">
+        <span class="song-title-text"></span>
+        <span class="song-badge"></span>
+      </span>
       <span class="col-actions">
         <button class="icon-btn add-to" title="Add to playlist">+</button>
       </span>
     `;
     li.querySelector('.col-num').textContent = displayIdx + 1;
-    li.querySelector('.col-title').textContent = song.displayName;
+    li.querySelector('.song-title-text').textContent = song.displayName;
+    const badge = li.querySelector('.song-badge');
+    badge.textContent = song.collectionLabel;
+    badge.classList.add(song.collection);
     li.addEventListener('click', (e) => {
       if (e.target.closest('.col-actions')) return;
-      queue = library.map((_, i) => i);
+      queue = filtered.map(entry => entry.idx);
       shuffled = false;
       $('shuffle').classList.remove('on');
       queueIndex = queue.indexOf(idx);
@@ -155,6 +257,7 @@ function playCurrent() {
   $('np-title').textContent = song.title || song.displayName;
   const parts = [];
   if (song.artist) parts.push(song.artist);
+  if (song.collectionLabel) parts.push(song.collectionLabel);
   if (currentPlaylist) parts.push(`Playlist: ${currentPlaylist}`);
   $('np-sub').textContent = parts.join(' · ');
   $('play').textContent = '⏸';
@@ -178,8 +281,9 @@ function updateMediaSession(song) {
 
 function togglePlay() {
   if (!audio.src) {
-    if (library.length === 0) return;
-    queue = library.map((_, i) => i);
+    const visible = filteredLibraryEntries($('search').value);
+    if (visible.length === 0) return;
+    queue = visible.map(entry => entry.idx);
     queueIndex = 0;
     currentPlaylist = null;
     playCurrent();
@@ -330,6 +434,10 @@ if (savedVolume !== null) {
 
 $('search').addEventListener('input', (e) => renderLibrary(e.target.value));
 
+document.querySelectorAll('.collection-tab').forEach(button => {
+  button.addEventListener('click', () => setActiveCollection(button.dataset.collection));
+});
+
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -395,13 +503,14 @@ function renderPlaylists() {
       li.textContent = 'Empty. Add songs from the Library tab using the + button.';
       ul.appendChild(li);
     } else {
-      songs.forEach((songName, i) => {
-        const libIdx = library.findIndex(s => s.name === songName);
+      songs.forEach((songId, i) => {
+        const libIdx = findSongIndex(songId);
         const li = document.createElement('li');
         li.className = 'playlist-song';
         li.dataset.playlist = name;
         li.dataset.libIdx = libIdx;
-        const label = libIdx >= 0 ? library[libIdx].displayName : `${songName} (missing)`;
+        const missingName = String(songId).split('/').pop();
+        const label = libIdx >= 0 ? library[libIdx].displayName : `${missingName} (missing)`;
         li.innerHTML = `
           <span class="col-num">${i + 1}</span>
           <span class="title"></span>
@@ -427,18 +536,19 @@ function renderPlaylists() {
 }
 
 function playPlaylist(name, startIdx = 0, shuffle = false) {
-  const songNames = playlists[name];
-  if (!songNames || songNames.length === 0) return;
-  const indices = songNames
-    .map(n => library.findIndex(s => s.name === n))
-    .filter(i => i >= 0);
-  if (indices.length === 0) {
-    alert('No playable songs in this playlist. The files may not be in songs/ yet.');
+  const songIds = playlists[name];
+  if (!songIds || songIds.length === 0) return;
+  const playable = songIds
+    .map((id, playlistIdx) => ({ libIdx: findSongIndex(id), playlistIdx }))
+    .filter(entry => entry.libIdx >= 0);
+  if (playable.length === 0) {
+    alert('No playable songs in this playlist. The files may not be in the library folders yet.');
     return;
   }
-  queue = indices;
+  queue = playable.map(entry => entry.libIdx);
   currentPlaylist = name;
   if (shuffle) {
+    const orderedQueue = queue.slice();
     for (let i = queue.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [queue[i], queue[j]] = [queue[j], queue[i]];
@@ -446,9 +556,10 @@ function playPlaylist(name, startIdx = 0, shuffle = false) {
     queueIndex = 0;
     shuffled = true;
     $('shuffle').classList.add('on');
-    unshuffledQueue = indices;
+    unshuffledQueue = orderedQueue;
   } else {
-    queueIndex = Math.min(Math.max(0, startIdx), queue.length - 1);
+    const targetQueueIndex = playable.findIndex(entry => entry.playlistIdx === startIdx);
+    queueIndex = targetQueueIndex >= 0 ? targetQueueIndex : 0;
     shuffled = false;
     $('shuffle').classList.remove('on');
     unshuffledQueue = null;
@@ -470,15 +581,15 @@ function showAddToMenu(libIdx, anchor) {
   }
   names.forEach(name => {
     const b = document.createElement('button');
-    const already = playlists[name].includes(library[libIdx].name);
+    const song = library[libIdx];
+    const already = playlists[name].some(id => refMatchesSong(id, song));
     b.textContent = already ? `✓ ${name}` : name;
     b.addEventListener('click', (e) => {
       e.stopPropagation();
-      const song = library[libIdx];
       if (already) {
-        playlists[name] = playlists[name].filter(n => n !== song.name);
+        playlists[name] = playlists[name].filter(id => !refMatchesSong(id, song));
       } else {
-        playlists[name].push(song.name);
+        playlists[name].push(songRef(song));
       }
       savePlaylists();
       closeMenu();
@@ -500,7 +611,7 @@ function showAddToMenu(libIdx, anchor) {
     if (!name) return;
     if (!playlists[name]) playlists[name] = [];
     const song = library[libIdx];
-    if (!playlists[name].includes(song.name)) playlists[name].push(song.name);
+    if (!playlists[name].some(id => refMatchesSong(id, song))) playlists[name].push(songRef(song));
     savePlaylists();
   });
   menu.appendChild(create);

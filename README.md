@@ -1,12 +1,12 @@
 # vp
 
-Personal music player. Static site, no backend. Songs live in `songs/`, playlists live in your browser.
+Personal music player. Static site, no backend. Secular songs live in `songs/`, Christian songs live in `songs/christian/`, and playlists live in your browser.
 
 Live at: https://turbodog111.github.io/vp/
 
 ## Adding songs
 
-1. Drop `.mp3` files into the `songs/` folder.
+1. Drop secular `.mp3` files into `songs/` and Christian `.mp3` files into `songs/christian/`.
 2. For nicer display, name them `Artist - Title.mp3` (the dash is parsed for the now-playing label).
 3. Commit and push:
    ```
@@ -18,7 +18,8 @@ Live at: https://turbodog111.github.io/vp/
 
 ## Features
 
-- Auto-discovers every `.mp3` in `songs/` via the GitHub contents API
+- Auto-discovers every `.mp3` in `songs/` and `songs/christian/` via the GitHub contents API
+- Filter the library by All / Secular / Christian
 - Create / delete playlists (stored in `localStorage`)
 - Add/remove songs to playlists from the library
 - Play a playlist in order or shuffle it
