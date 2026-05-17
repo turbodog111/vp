@@ -18,6 +18,12 @@ let unshuffledQueue = null;
 let playlists = loadPlaylists();
 let currentPlaylist = null;
 let activeCollection = localStorage.getItem('vp_collection') || 'all';
+let audioCtx = null;
+let audioSource = null;
+let analyser = null;
+let waveData = null;
+let waveRaf = null;
+let smoothedLevel = 0;
 
 let toastTimeout = null;
 function showToast(icon, text) {
@@ -76,6 +82,17 @@ function findSongIndex(ref) {
   let idx = library.findIndex(song => song.id === ref);
   if (idx < 0) idx = library.findIndex(song => song.name === ref);
   return idx;
+}
+
+function currentSong() {
+  return library[queue[queueIndex]] || null;
+}
+
+function switchView(view) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === view));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === `view-${view}`));
+  if (view === 'playlists') renderPlaylists();
+  if (view === 'now') resizeWaveform();
 }
 
 function filteredLibraryEntries(filter = '') {
@@ -252,6 +269,7 @@ function playCurrent() {
   const libIdx = queue[queueIndex];
   const song = library[libIdx];
   if (!song) return;
+  ensureAudioGraph();
   audio.src = song.url;
   audio.play().catch(err => console.warn('Play failed:', err));
   $('np-title').textContent = song.title || song.displayName;
@@ -262,8 +280,39 @@ function playCurrent() {
   $('np-sub').textContent = parts.join(' · ');
   $('play').textContent = '⏸';
   highlightCurrent();
+  updateNowPlaying(song);
+  switchView('now');
   updateMediaSession(song);
   document.title = `${song.title || song.displayName} — vp`;
+}
+
+function updateNowPlaying(song = currentSong()) {
+  const title = song ? (song.title || song.displayName) : 'Nothing playing';
+  const parts = [];
+  if (song?.artist) parts.push(song.artist);
+  if (song?.collectionLabel) parts.push(song.collectionLabel);
+  if (currentPlaylist) parts.push(`Playlist: ${currentPlaylist}`);
+
+  $('now-title').textContent = title;
+  $('now-subtitle').textContent = song ? parts.join(' · ') : 'Pick a song from the library.';
+  $('now-kicker').textContent = currentPlaylist || song?.collectionLabel || 'vp';
+  updateUpNext();
+  updatePlaybackVisuals();
+}
+
+function updateUpNext() {
+  const nextIdx = queueIndex + 1 < queue.length ? queue[queueIndex + 1] : (loopMode === 'all' && queue.length ? queue[0] : -1);
+  const next = library[nextIdx];
+  $('queue-next').textContent = next ? next.displayName : 'End of queue';
+}
+
+function updatePlaybackVisuals() {
+  const pct = audio.duration ? Math.min(1, Math.max(0, audio.currentTime / audio.duration)) : 0;
+  const deg = `${pct * 360}deg`;
+  $('play').style.setProperty('--progress', deg);
+  $('hero-play').style.setProperty('--progress', deg);
+  $('hero-time-current').textContent = fmtTime(audio.currentTime);
+  $('hero-time-total').textContent = fmtTime(audio.duration);
 }
 
 function updateMediaSession(song) {
@@ -292,9 +341,11 @@ function togglePlay() {
     return;
   }
   if (audio.paused) {
+    ensureAudioGraph();
     audio.play();
     const song = library[queue[queueIndex]];
     showToast('▶', song?.title || song?.displayName || 'Playing');
+    switchView('now');
   } else {
     audio.pause();
     showToast('⏸', 'Paused');
@@ -390,18 +441,126 @@ function fmtTime(sec) {
   return `${m}:${s}`;
 }
 
+function ensureAudioGraph() {
+  if (analyser) {
+    if (audioCtx?.state === 'suspended') audioCtx.resume().catch(() => {});
+    return;
+  }
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return;
+  audioCtx = new AudioContextClass();
+  audioSource = audioCtx.createMediaElementSource(audio);
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  analyser.smoothingTimeConstant = 0.76;
+  waveData = new Uint8Array(analyser.frequencyBinCount);
+  audioSource.connect(analyser);
+  analyser.connect(audioCtx.destination);
+  startWaveform();
+}
+
+function resizeWaveform() {
+  const canvas = $('waveform');
+  if (!canvas) return;
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  const rect = canvas.getBoundingClientRect();
+  const w = Math.max(320, Math.floor(rect.width * dpr));
+  const h = Math.max(120, Math.floor(rect.height * dpr));
+  if (canvas.width !== w || canvas.height !== h) {
+    canvas.width = w;
+    canvas.height = h;
+  }
+}
+
+function startWaveform() {
+  if (waveRaf) return;
+  const draw = () => {
+    waveRaf = requestAnimationFrame(draw);
+    drawWaveform();
+  };
+  draw();
+}
+
+function drawWaveform() {
+  const canvas = $('waveform');
+  if (!canvas) return;
+  resizeWaveform();
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width;
+  const h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  const gradient = ctx.createLinearGradient(0, 0, w, 0);
+  gradient.addColorStop(0, 'rgba(94, 234, 212, 0.25)');
+  gradient.addColorStop(0.48, 'rgba(94, 234, 212, 0.95)');
+  gradient.addColorStop(1, 'rgba(253, 230, 138, 0.62)');
+
+  const bins = analyser && waveData ? waveData.length : 96;
+  if (analyser && waveData && !audio.paused) {
+    analyser.getByteTimeDomainData(waveData);
+  }
+
+  const mid = h * 0.54;
+  const barGap = Math.max(2, Math.round(w / 260));
+  const barW = Math.max(3, Math.floor(w / bins) - barGap);
+  let levelSum = 0;
+
+  for (let i = 0; i < bins; i++) {
+    const idle = 0.12 + 0.06 * Math.sin(Date.now() / 650 + i * 0.34);
+    const sample = analyser && waveData
+      ? Math.abs((waveData[i] - 128) / 128)
+      : idle;
+    const amp = audio.paused ? idle * 0.55 : Math.max(sample, idle * 0.45);
+    levelSum += amp;
+    const x = i * (w / bins);
+    const barH = Math.max(8, amp * h * 0.86);
+    const radius = Math.min(8, barW / 2);
+    ctx.fillStyle = gradient;
+    roundedBar(ctx, x, mid - barH / 2, barW, barH, radius);
+  }
+
+  const level = Math.min(1, levelSum / bins * 2.8);
+  smoothedLevel = smoothedLevel * 0.82 + level * 0.18;
+  $('hero-play').style.setProperty('--level', smoothedLevel.toFixed(3));
+}
+
+function roundedBar(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.fill();
+}
+
 audio.addEventListener('timeupdate', () => {
   $('time-current').textContent = fmtTime(audio.currentTime);
   if (audio.duration) {
     $('seek').value = (audio.currentTime / audio.duration) * 100;
   }
+  updatePlaybackVisuals();
 });
 audio.addEventListener('loadedmetadata', () => {
   $('time-total').textContent = fmtTime(audio.duration);
+  updatePlaybackVisuals();
 });
 audio.addEventListener('ended', () => playNext(true));
-audio.addEventListener('play', () => { $('play').textContent = '⏸'; });
-audio.addEventListener('pause', () => { $('play').textContent = '▶'; });
+audio.addEventListener('play', () => {
+  $('play').textContent = '⏸';
+  $('hero-play').classList.add('playing');
+  $('hero-play').querySelector('.hero-icon').textContent = '⏸';
+  document.body.classList.add('is-playing');
+  startWaveform();
+  updatePlaybackVisuals();
+});
+audio.addEventListener('pause', () => {
+  $('play').textContent = '▶';
+  $('hero-play').classList.remove('playing');
+  $('hero-play').querySelector('.hero-icon').textContent = '▶';
+  document.body.classList.remove('is-playing');
+  updatePlaybackVisuals();
+});
 audio.addEventListener('error', () => {
   console.warn('Audio error for', audio.src);
   // Try next song if this one fails
@@ -409,6 +568,7 @@ audio.addEventListener('error', () => {
 });
 
 $('play').addEventListener('click', togglePlay);
+$('hero-play').addEventListener('click', togglePlay);
 $('next').addEventListener('click', () => playNext(false));
 $('prev').addEventListener('click', playPrev);
 $('shuffle').addEventListener('click', toggleShuffle);
@@ -440,11 +600,7 @@ document.querySelectorAll('.collection-tab').forEach(button => {
 
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    tab.classList.add('active');
-    $(`view-${tab.dataset.view}`).classList.add('active');
-    if (tab.dataset.view === 'playlists') renderPlaylists();
+    switchView(tab.dataset.view);
   });
 });
 
@@ -646,4 +802,7 @@ document.addEventListener('keydown', (e) => {
   else if (e.code === 'KeyS' && !e.metaKey && !e.ctrlKey) { e.preventDefault(); toggleShuffle(); }
 });
 
+window.addEventListener('resize', resizeWaveform);
+resizeWaveform();
+drawWaveform();
 loadLibrary();

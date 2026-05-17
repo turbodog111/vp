@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>vp</title>
-<link rel="stylesheet" href="styles.css?v=2026-05-17-christian-collection">
+<link rel="stylesheet" href="styles.css?v=2026-05-17-now-playing">
 </head>
 <body>
 <div class="app">
@@ -17,6 +17,7 @@
   <nav class="tabs">
     <button class="tab active" data-view="library">Library</button>
     <button class="tab" data-view="playlists">Playlists</button>
+    <button class="tab" data-view="now">Now Playing</button>
   </nav>
 
   <main class="main">
@@ -43,6 +44,36 @@
         <button id="new-playlist">+ New playlist</button>
       </div>
       <div id="playlists-container"></div>
+    </section>
+
+    <section id="view-now" class="view now-view">
+      <div class="now-stage">
+        <div class="now-meta">
+          <div class="now-kicker" id="now-kicker">vp</div>
+          <h1 id="now-title">Nothing playing</h1>
+          <div id="now-subtitle" class="now-subtitle">Pick a song from the library.</div>
+        </div>
+
+        <div class="hero-control">
+          <button id="hero-play" class="hero-play" title="Play/Pause (Space)">
+            <span class="hero-ring"></span>
+            <span class="hero-icon">▶</span>
+          </button>
+          <div class="hero-time">
+            <span id="hero-time-current">0:00</span>
+            <span id="hero-time-total">0:00</span>
+          </div>
+        </div>
+
+        <div class="now-queue">
+          <div class="queue-label">Up next</div>
+          <div id="queue-next">No queue yet</div>
+        </div>
+      </div>
+
+      <div class="wave-panel">
+        <canvas id="waveform" width="1200" height="220" aria-label="Audio waveform"></canvas>
+      </div>
     </section>
   </main>
 
@@ -71,6 +102,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=2026-05-17-christian-collection"></script>
+<script src="app.js?v=2026-05-17-now-playing"></script>
 </body>
 </html>
