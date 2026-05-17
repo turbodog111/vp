@@ -26,9 +26,11 @@ let waveTimeData = null;
 let waveRaf = null;
 let waveBars = [];
 let smoothedLevel = 0;
+let waveLevelWindow = [];
 const WAVE_BAR_COUNT = 84;
-const WAVE_GAIN = 1.22;
-const WAVE_SOFT_LIMIT = 0.96;
+const WAVE_GAIN = 1.34;
+const WAVE_SOFT_LIMIT = 0.94;
+const WAVE_LEVEL_WINDOW = 180;
 const WAVE_MIN_FREQ = 55;
 const WAVE_MAX_FREQ = 14000;
 
@@ -277,6 +279,7 @@ function playCurrent() {
   const song = library[libIdx];
   if (!song) return;
   ensureAudioGraph();
+  resetWaveEnvelope();
   audio.src = song.url;
   audio.play().catch(err => console.warn('Play failed:', err));
   $('np-title').textContent = song.title || song.displayName;
@@ -503,6 +506,38 @@ function easeOutCubic(value) {
   return 1 - Math.pow(1 - clamp(0, 1, value), 3);
 }
 
+function easeInOut(value) {
+  const t = clamp(0, 1, value);
+  return t * t * (3 - 2 * t);
+}
+
+function smoothStep(edge0, edge1, value) {
+  if (edge0 === edge1) return value >= edge1 ? 1 : 0;
+  return easeInOut((value - edge0) / (edge1 - edge0));
+}
+
+function percentile(sortedValues, percent) {
+  if (!sortedValues.length) return 0;
+  const index = Math.floor((sortedValues.length - 1) * percent);
+  return sortedValues[index];
+}
+
+function normalizedWaveLevel(rms, peak) {
+  const blendedEnergy = Math.max(0.00002, rms * 0.72 + peak * 0.28);
+  const db = 20 * Math.log10(blendedEnergy);
+  waveLevelWindow.push(db);
+  if (waveLevelWindow.length > WAVE_LEVEL_WINDOW) waveLevelWindow.shift();
+
+  const sorted = [...waveLevelWindow].sort((a, b) => a - b);
+  const floorDb = percentile(sorted, 0.18);
+  const peakDb = percentile(sorted, 0.92);
+  const dynamicSpan = Math.max(2.8, peakDb - floorDb);
+  const relativeLevel = clamp(0, 1, (db - floorDb) / dynamicSpan);
+  const absoluteLevel = smoothStep(-44, -14, db);
+  const gatedRelative = smoothStep(0.12, 0.92, relativeLevel);
+  return clamp(0, 1, Math.max(gatedRelative, absoluteLevel * 0.18));
+}
+
 function waveBaseShape(i, total) {
   const x = total <= 1 ? 0.5 : i / (total - 1);
   const edgeTaper = Math.sin(Math.PI * x);
@@ -534,7 +569,13 @@ function waveBandEnergy(index, total) {
 
 function ensureWaveBars(count) {
   if (waveBars.length === count) return;
-  waveBars = Array.from({length: count}, (_, i) => waveBaseShape(i, count) * 0.12);
+  waveBars = Array.from({length: count}, (_, i) => waveBaseShape(i, count) * 0.018);
+}
+
+function resetWaveEnvelope() {
+  smoothedLevel = 0;
+  waveLevelWindow = [];
+  waveBars = waveBars.map((_, i) => waveBaseShape(i, waveBars.length) * 0.01);
 }
 
 function drawWaveform() {
@@ -563,21 +604,24 @@ function drawWaveform() {
   const barGap = Math.max(2, Math.round(w / 260));
   const barW = Math.max(3, Math.floor(w / bins) - barGap);
   let rmsEnergy = 0;
+  let peakEnergy = 0;
   const bandTargets = new Array(bins).fill(0);
   if (isAudible) {
     for (let i = 0; i < waveTimeData.length; i++) {
       const centered = (waveTimeData[i] - 128) / 128;
+      peakEnergy = Math.max(peakEnergy, Math.abs(centered));
       rmsEnergy += centered * centered;
     }
     rmsEnergy = Math.sqrt(rmsEnergy / Math.max(1, waveTimeData.length));
     for (let i = 0; i < bins; i++) {
       bandTargets[i] = waveBandEnergy(i, bins);
     }
-    const targetLevel = clamp(0.04, 1, rmsEnergy * 7.4);
-    const attack = targetLevel > smoothedLevel ? 0.58 : 0.18;
+    const targetLevel = normalizedWaveLevel(rmsEnergy, peakEnergy);
+    const attack = targetLevel > smoothedLevel ? 0.7 : 0.34;
     smoothedLevel = smoothedLevel * (1 - attack) + targetLevel * attack;
   } else if (!audio.src) {
     smoothedLevel = smoothedLevel * 0.98 + 0.08 * 0.02;
+    waveLevelWindow = [];
   }
 
   for (let i = 0; i < bins; i++) {
@@ -589,15 +633,16 @@ function drawWaveform() {
       const bandEnergy = left * 0.16 + center * 0.68 + right * 0.16;
       const staticTexture = 0.02 * Math.sin(i * 0.73);
       const bandContrast = Math.pow(bandEnergy, 1.45);
-      const target = shape * (0.045 + smoothedLevel * 0.38 + bandContrast * 1.15 + staticTexture);
-      const rate = target > waveBars[i] ? 0.62 : 0.2;
+      const breathing = Math.pow(smoothedLevel, 1.12);
+      const target = 0.004 + shape * breathing * (0.2 + bandContrast * 1.6 + staticTexture);
+      const rate = target > waveBars[i] ? 0.72 : 0.4;
       waveBars[i] = waveBars[i] * (1 - rate) + target * rate;
     } else if (!audio.src) {
       waveBars[i] = waveBars[i] * 0.99 + waveBaseShape(i, bins) * 0.08 * 0.01;
     }
-    const amp = Math.max(0.026, softLimit(Math.max(0, waveBars[i] * WAVE_GAIN), WAVE_SOFT_LIMIT));
+    const amp = Math.max(0.005, softLimit(Math.max(0, waveBars[i] * WAVE_GAIN), WAVE_SOFT_LIMIT));
     const x = i * (w / bins);
-    const barH = Math.max(5, amp * h * 0.68);
+    const barH = Math.max(2, amp * h * 0.74);
     const radius = Math.min(8, barW / 2);
     ctx.fillStyle = gradient;
     roundedBar(ctx, x, mid - barH / 2, barW, barH, radius);
