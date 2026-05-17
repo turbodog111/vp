@@ -27,8 +27,8 @@ let waveRaf = null;
 let waveBars = [];
 let smoothedLevel = 0;
 const WAVE_BAR_COUNT = 84;
-const WAVE_GAIN = 1.05;
-const WAVE_SOFT_LIMIT = 0.86;
+const WAVE_GAIN = 1.22;
+const WAVE_SOFT_LIMIT = 0.96;
 const WAVE_MIN_FREQ = 55;
 const WAVE_MAX_FREQ = 14000;
 
@@ -573,8 +573,8 @@ function drawWaveform() {
     for (let i = 0; i < bins; i++) {
       bandTargets[i] = waveBandEnergy(i, bins);
     }
-    const targetLevel = clamp(0.06, 0.95, rmsEnergy * 5.6);
-    const attack = targetLevel > smoothedLevel ? 0.42 : 0.16;
+    const targetLevel = clamp(0.04, 1, rmsEnergy * 7.4);
+    const attack = targetLevel > smoothedLevel ? 0.58 : 0.18;
     smoothedLevel = smoothedLevel * (1 - attack) + targetLevel * attack;
   } else if (!audio.src) {
     smoothedLevel = smoothedLevel * 0.98 + 0.08 * 0.02;
@@ -586,17 +586,18 @@ function drawWaveform() {
       const left = bandTargets[Math.max(0, i - 1)];
       const center = bandTargets[i];
       const right = bandTargets[Math.min(bins - 1, i + 1)];
-      const bandEnergy = left * 0.22 + center * 0.56 + right * 0.22;
+      const bandEnergy = left * 0.16 + center * 0.68 + right * 0.16;
       const staticTexture = 0.02 * Math.sin(i * 0.73);
-      const target = shape * (0.08 + smoothedLevel * 0.48 + bandEnergy * 0.72 + staticTexture);
-      const rate = target > waveBars[i] ? 0.44 : 0.18;
+      const bandContrast = Math.pow(bandEnergy, 1.45);
+      const target = shape * (0.045 + smoothedLevel * 0.38 + bandContrast * 1.15 + staticTexture);
+      const rate = target > waveBars[i] ? 0.62 : 0.2;
       waveBars[i] = waveBars[i] * (1 - rate) + target * rate;
     } else if (!audio.src) {
       waveBars[i] = waveBars[i] * 0.99 + waveBaseShape(i, bins) * 0.08 * 0.01;
     }
     const amp = Math.max(0.026, softLimit(Math.max(0, waveBars[i] * WAVE_GAIN), WAVE_SOFT_LIMIT));
     const x = i * (w / bins);
-    const barH = Math.max(6, amp * h * 0.64);
+    const barH = Math.max(5, amp * h * 0.68);
     const radius = Math.min(8, barW / 2);
     ctx.fillStyle = gradient;
     roundedBar(ctx, x, mid - barH / 2, barW, barH, radius);
