@@ -23,7 +23,9 @@ let audioSource = null;
 let analyser = null;
 let waveData = null;
 let waveRaf = null;
+let waveBars = [];
 let smoothedLevel = 0;
+const WAVE_BAR_COUNT = 84;
 
 let toastTimeout = null;
 function showToast(icon, text) {
@@ -452,7 +454,7 @@ function ensureAudioGraph() {
   audioSource = audioCtx.createMediaElementSource(audio);
   analyser = audioCtx.createAnalyser();
   analyser.fftSize = 256;
-  analyser.smoothingTimeConstant = 0.76;
+  analyser.smoothingTimeConstant = 0.9;
   waveData = new Uint8Array(analyser.frequencyBinCount);
   audioSource.connect(analyser);
   analyser.connect(audioCtx.destination);
@@ -481,6 +483,23 @@ function startWaveform() {
   draw();
 }
 
+function clamp(min, max, value) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function waveBaseShape(i, total) {
+  const x = total <= 1 ? 0.5 : i / (total - 1);
+  const edgeTaper = Math.sin(Math.PI * x);
+  const centerLift = 1 - Math.abs(x - 0.5) * 0.42;
+  const slowLobes = 0.76 + 0.14 * Math.sin(x * Math.PI * 5.2) + 0.1 * Math.sin(x * Math.PI * 9.6 + 0.8);
+  return clamp(0.16, 1, (0.22 + edgeTaper * 0.78) * centerLift * slowLobes);
+}
+
+function ensureWaveBars(count) {
+  if (waveBars.length === count) return;
+  waveBars = Array.from({length: count}, (_, i) => waveBaseShape(i, count) * 0.12);
+}
+
 function drawWaveform() {
   const canvas = $('waveform');
   if (!canvas) return;
@@ -495,23 +514,38 @@ function drawWaveform() {
   gradient.addColorStop(0.48, 'rgba(94, 234, 212, 0.95)');
   gradient.addColorStop(1, 'rgba(253, 230, 138, 0.62)');
 
-  const bins = analyser && waveData ? waveData.length : 96;
+  const bins = WAVE_BAR_COUNT;
+  ensureWaveBars(bins);
   if (analyser && waveData && !audio.paused) {
-    analyser.getByteTimeDomainData(waveData);
+    analyser.getByteFrequencyData(waveData);
   }
 
   const mid = h * 0.54;
   const barGap = Math.max(2, Math.round(w / 260));
   const barW = Math.max(3, Math.floor(w / bins) - barGap);
-  let levelSum = 0;
+  let audioEnergy = 0;
+  if (analyser && waveData && !audio.paused) {
+    const usefulBins = Math.min(waveData.length, 92);
+    for (let i = 2; i < usefulBins; i++) {
+      audioEnergy += waveData[i] / 255;
+    }
+    audioEnergy = audioEnergy / Math.max(1, usefulBins - 2);
+  }
+  const idlePulse = audio.paused ? 0.04 * Math.sin(Date.now() / 1200) : 0;
+  const targetLevel = audio.paused ? 0.12 + idlePulse : clamp(0.08, 1, audioEnergy * 2.2);
+  smoothedLevel = smoothedLevel * 0.92 + targetLevel * 0.08;
 
   for (let i = 0; i < bins; i++) {
-    const idle = 0.12 + 0.06 * Math.sin(Date.now() / 650 + i * 0.34);
-    const sample = analyser && waveData
-      ? Math.abs((waveData[i] - 128) / 128)
-      : idle;
-    const amp = audio.paused ? idle * 0.55 : Math.max(sample, idle * 0.45);
-    levelSum += amp;
+    const shape = waveBaseShape(i, bins);
+    const bandIdx = analyser && waveData
+      ? Math.min(waveData.length - 1, Math.floor((i / bins) * 70) + 4)
+      : 0;
+    const bandEnergy = analyser && waveData && !audio.paused ? waveData[bandIdx] / 255 : 0;
+    const slowShimmer = 0.035 * Math.sin(Date.now() / 1500 + i * 0.22);
+    const target = shape * (0.16 + smoothedLevel * 0.95 + bandEnergy * 0.16 + slowShimmer);
+    const smoothing = audio.paused ? 0.965 : 0.89;
+    waveBars[i] = waveBars[i] * smoothing + target * (1 - smoothing);
+    const amp = clamp(0.035, 0.92, waveBars[i]);
     const x = i * (w / bins);
     const barH = Math.max(8, amp * h * 0.86);
     const radius = Math.min(8, barW / 2);
@@ -519,8 +553,6 @@ function drawWaveform() {
     roundedBar(ctx, x, mid - barH / 2, barW, barH, radius);
   }
 
-  const level = Math.min(1, levelSum / bins * 2.8);
-  smoothedLevel = smoothedLevel * 0.82 + level * 0.18;
   $('hero-play').style.setProperty('--level', smoothedLevel.toFixed(3));
 }
 
