@@ -26,6 +26,8 @@ let waveRaf = null;
 let waveBars = [];
 let smoothedLevel = 0;
 const WAVE_BAR_COUNT = 84;
+const WAVE_GAIN = 0.62;
+const WAVE_MAX_AMP = 0.58;
 
 let toastTimeout = null;
 function showToast(icon, text) {
@@ -516,7 +518,8 @@ function drawWaveform() {
 
   const bins = WAVE_BAR_COUNT;
   ensureWaveBars(bins);
-  if (analyser && waveData && !audio.paused) {
+  const isAudible = !!(analyser && waveData && !audio.paused);
+  if (isAudible) {
     analyser.getByteFrequencyData(waveData);
   }
 
@@ -524,30 +527,32 @@ function drawWaveform() {
   const barGap = Math.max(2, Math.round(w / 260));
   const barW = Math.max(3, Math.floor(w / bins) - barGap);
   let audioEnergy = 0;
-  if (analyser && waveData && !audio.paused) {
+  if (isAudible) {
     const usefulBins = Math.min(waveData.length, 92);
     for (let i = 2; i < usefulBins; i++) {
       audioEnergy += waveData[i] / 255;
     }
     audioEnergy = audioEnergy / Math.max(1, usefulBins - 2);
+    const targetLevel = clamp(0.05, 0.72, audioEnergy * 1.55);
+    smoothedLevel = smoothedLevel * 0.94 + targetLevel * 0.06;
+  } else if (!audio.src) {
+    smoothedLevel = smoothedLevel * 0.98 + 0.08 * 0.02;
   }
-  const idlePulse = audio.paused ? 0.04 * Math.sin(Date.now() / 1200) : 0;
-  const targetLevel = audio.paused ? 0.12 + idlePulse : clamp(0.08, 1, audioEnergy * 2.2);
-  smoothedLevel = smoothedLevel * 0.92 + targetLevel * 0.08;
 
   for (let i = 0; i < bins; i++) {
-    const shape = waveBaseShape(i, bins);
-    const bandIdx = analyser && waveData
-      ? Math.min(waveData.length - 1, Math.floor((i / bins) * 70) + 4)
-      : 0;
-    const bandEnergy = analyser && waveData && !audio.paused ? waveData[bandIdx] / 255 : 0;
-    const slowShimmer = 0.035 * Math.sin(Date.now() / 1500 + i * 0.22);
-    const target = shape * (0.16 + smoothedLevel * 0.95 + bandEnergy * 0.16 + slowShimmer);
-    const smoothing = audio.paused ? 0.965 : 0.89;
-    waveBars[i] = waveBars[i] * smoothing + target * (1 - smoothing);
-    const amp = clamp(0.035, 0.92, waveBars[i]);
+    if (isAudible) {
+      const shape = waveBaseShape(i, bins);
+      const bandIdx = Math.min(waveData.length - 1, Math.floor((i / bins) * 70) + 4);
+      const bandEnergy = waveData[bandIdx] / 255;
+      const staticTexture = 0.018 * Math.sin(i * 0.73);
+      const target = shape * (0.1 + smoothedLevel * 0.58 + bandEnergy * 0.08 + staticTexture);
+      waveBars[i] = waveBars[i] * 0.92 + target * 0.08;
+    } else if (!audio.src) {
+      waveBars[i] = waveBars[i] * 0.99 + waveBaseShape(i, bins) * 0.08 * 0.01;
+    }
+    const amp = clamp(0.026, WAVE_MAX_AMP, waveBars[i] * WAVE_GAIN);
     const x = i * (w / bins);
-    const barH = Math.max(8, amp * h * 0.86);
+    const barH = Math.max(6, amp * h * 0.72);
     const radius = Math.min(8, barW / 2);
     ctx.fillStyle = gradient;
     roundedBar(ctx, x, mid - barH / 2, barW, barH, radius);
