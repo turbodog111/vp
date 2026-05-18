@@ -40,6 +40,7 @@ let calibratedClockSongId = null;
 let calibratedBaseTime = 0;
 let calibratedBasePerf = 0;
 let calibratedClockRunning = false;
+let pendingClockSeekTime = null;
 const WAVE_BAR_COUNT = 84;
 const WAVE_GAIN = 1.34;
 const WAVE_SOFT_LIMIT = 0.94;
@@ -221,8 +222,35 @@ function currentCalibratedTime(song = currentSong()) {
   return clamp(0, profileDuration, calibratedBaseTime + elapsed);
 }
 
-function syncCalibratedClockToNative(song = currentSong()) {
-  resetCalibratedClock(calibratedFromNativeTime(audio.currentTime || 0, song), song);
+function setNativeTimeFromCalibratedClock(time, song = currentSong(), options = {}) {
+  const profileDuration = effectProfileForSong(song)?.duration;
+  if (!Number.isFinite(profileDuration) || profileDuration <= 0) return false;
+  const duration = effectiveDuration(song);
+  const targetTime = duration ? clamp(0, duration, time) : Math.max(0, time);
+  const nativeTarget = nativeFromCalibratedTime(targetTime, song);
+  if (!Number.isFinite(nativeTarget)) return false;
+  const tolerance = Number.isFinite(options.tolerance) ? options.tolerance : 0.012;
+  if (options.force || Math.abs((audio.currentTime || 0) - nativeTarget) > tolerance) {
+    pendingClockSeekTime = targetTime;
+    audio.currentTime = nativeTarget;
+  }
+  return true;
+}
+
+function syncCalibratedClockToNative(song = currentSong(), options = {}) {
+  const wasRunning = calibratedClockRunning;
+  let nextTime;
+  if (pendingClockSeekTime !== null) {
+    nextTime = pendingClockSeekTime;
+    if (options.consumePending) pendingClockSeekTime = null;
+  } else {
+    nextTime = calibratedFromNativeTime(audio.currentTime || 0, song);
+    if (options.allowBackward === false && calibratedClockSongId === songClockId(song)) {
+      nextTime = Math.max(currentCalibratedTime(song), nextTime);
+    }
+  }
+  resetCalibratedClock(nextTime, song);
+  if (wasRunning && !audio.paused && options.keepRunning !== false) startCalibratedClock(song);
 }
 
 function startCalibratedClock(song = currentSong()) {
@@ -237,6 +265,19 @@ function pauseCalibratedClock(song = currentSong()) {
   calibratedBaseTime = currentCalibratedTime(song);
   calibratedBasePerf = performance.now() / 1000;
   calibratedClockRunning = false;
+}
+
+function lockNativeAudioToPausedClock(song = currentSong()) {
+  setNativeTimeFromCalibratedClock(calibratedBaseTime, song, {force: true});
+}
+
+function resumeAudioFromCalibratedClock(song = currentSong()) {
+  ensureAudioGraph();
+  ensureCalibratedClock(song);
+  if (!calibratedClockRunning) {
+    setNativeTimeFromCalibratedClock(calibratedBaseTime, song, {force: true});
+  }
+  return audio.play();
 }
 
 function effectSectionAt(profile, time) {
@@ -520,12 +561,13 @@ function playCurrent() {
   audio.webkitPreservesPitch = true;
   if (!sameSource) {
     resetWaveEnvelope();
+    pendingClockSeekTime = null;
     audio.pause();
     audio.src = song.url;
     audio.load();
     resetCalibratedClock(0, song);
   }
-  audio.play().catch(err => console.warn('Play failed:', err));
+  resumeAudioFromCalibratedClock(song).catch(err => console.warn('Play failed:', err));
   $('np-title').textContent = song.title || song.displayName;
   const parts = [];
   if (song.artist) parts.push(song.artist);
@@ -582,7 +624,7 @@ function updateMediaSession(song) {
     artist: song.artist || 'Unknown',
     album: currentPlaylist || 'vp'
   });
-  navigator.mediaSession.setActionHandler('play', () => audio.play());
+  navigator.mediaSession.setActionHandler('play', () => resumeAudioFromCalibratedClock());
   navigator.mediaSession.setActionHandler('pause', () => audio.pause());
   navigator.mediaSession.setActionHandler('previoustrack', playPrev);
   navigator.mediaSession.setActionHandler('nexttrack', () => playNext(false));
@@ -601,8 +643,7 @@ function togglePlay() {
     return;
   }
   if (audio.paused) {
-    ensureAudioGraph();
-    audio.play();
+    resumeAudioFromCalibratedClock();
     const song = library[queue[queueIndex]];
     showToast('▶', song?.title || song?.displayName || 'Playing');
     switchView('now');
@@ -617,7 +658,7 @@ function playNext(auto = false) {
   if (loopMode === 'one' && auto) {
     audio.currentTime = 0;
     resetCalibratedClock(0);
-    audio.play();
+    resumeAudioFromCalibratedClock();
     return;
   }
   if (queueIndex + 1 < queue.length) {
@@ -1167,11 +1208,11 @@ audio.addEventListener('loadedmetadata', () => {
   updatePlaybackVisuals();
 });
 audio.addEventListener('seeking', () => {
-  syncCalibratedClockToNative();
+  syncCalibratedClockToNative(currentSong(), {allowBackward: false});
   updatePlaybackVisuals();
 });
 audio.addEventListener('seeked', () => {
-  syncCalibratedClockToNative();
+  syncCalibratedClockToNative(currentSong(), {allowBackward: false, consumePending: true});
   if (!audio.paused) startCalibratedClock();
   updatePlaybackVisuals();
 });
@@ -1197,6 +1238,7 @@ audio.addEventListener('play', () => {
 });
 audio.addEventListener('pause', () => {
   pauseCalibratedClock();
+  lockNativeAudioToPausedClock();
   $('play').textContent = '▶';
   $('hero-play').classList.remove('playing');
   $('hero-play').querySelector('.hero-icon').textContent = '▶';
@@ -1223,8 +1265,10 @@ $('seek').addEventListener('input', (e) => {
   const duration = effectiveDuration();
   if (!duration) return;
   const targetTime = (parseFloat(e.target.value) / 100) * duration;
-  audio.currentTime = nativeFromCalibratedTime(targetTime);
   resetCalibratedClock(targetTime);
+  if (!setNativeTimeFromCalibratedClock(targetTime, currentSong(), {force: true})) {
+    audio.currentTime = nativeFromCalibratedTime(targetTime);
+  }
   if (!audio.paused) startCalibratedClock();
   updatePlaybackVisuals();
 });
