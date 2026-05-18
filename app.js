@@ -42,13 +42,6 @@ let calibratedBasePerf = 0;
 let calibratedClockRunning = false;
 let pendingClockSeekTime = null;
 let pendingClockSeekStartedAt = 0;
-let chorusTriggerState = {
-  key: null,
-  baseline: 0,
-  triggered: false,
-  gate: 0,
-  armedAt: 0,
-};
 const WAVE_BAR_COUNT = 84;
 const WAVE_GAIN = 1.34;
 const WAVE_SOFT_LIMIT = 0.94;
@@ -60,7 +53,6 @@ const SONG_EFFECT_PROFILES = {
     bpm: 123,
     key: 'F# major',
     beatOffset: 0,
-    duration: 217.835102,
     sections: [
       {name: 'Intro', start: 0, end: 51, intensity: 0.24, chorus: false},
       {name: 'First chorus', start: 52.27, end: 84.01, intensity: 1, chorus: true, fade: 0.5},
@@ -181,28 +173,16 @@ function nativeAudioDuration() {
 }
 
 function effectiveDuration(song = currentSong()) {
-  const profile = effectProfileForSong(song);
-  if (Number.isFinite(profile?.duration) && profile.duration > 0) return profile.duration;
   return nativeAudioDuration();
 }
 
 function calibratedFromNativeTime(nativeTime, song = currentSong()) {
-  const profileDuration = effectProfileForSong(song)?.duration;
-  const nativeDuration = nativeAudioDuration();
   const time = Number.isFinite(nativeTime) ? nativeTime : 0;
-  if (Number.isFinite(profileDuration) && profileDuration > 0 && nativeDuration > 0) {
-    return clamp(0, profileDuration, time * profileDuration / nativeDuration);
-  }
   return Math.max(0, time);
 }
 
 function nativeFromCalibratedTime(time, song = currentSong()) {
-  const profileDuration = effectProfileForSong(song)?.duration;
-  const nativeDuration = nativeAudioDuration();
   const calibratedTime = Number.isFinite(time) ? time : 0;
-  if (Number.isFinite(profileDuration) && profileDuration > 0 && nativeDuration > 0) {
-    return clamp(0, nativeDuration, calibratedTime * nativeDuration / profileDuration);
-  }
   return Math.max(0, calibratedTime);
 }
 
@@ -221,10 +201,6 @@ function ensureCalibratedClock(song = currentSong()) {
 }
 
 function currentCalibratedTime(song = currentSong()) {
-  const profileDuration = effectProfileForSong(song)?.duration;
-  if (!Number.isFinite(profileDuration) || profileDuration <= 0) {
-    return Math.max(0, audio.currentTime || 0);
-  }
   ensureCalibratedClock(song);
   if (pendingClockSeekTime !== null) {
     if (calibratedClockRunning && !audio.seeking && performance.now() - pendingClockSeekStartedAt > 180) {
@@ -237,12 +213,11 @@ function currentCalibratedTime(song = currentSong()) {
     calibratedBaseTime = calibratedFromNativeTime(audio.currentTime || 0, song);
     calibratedBasePerf = performance.now() / 1000;
   }
-  return clamp(0, profileDuration, calibratedBaseTime);
+  const duration = effectiveDuration(song);
+  return duration ? clamp(0, duration, calibratedBaseTime) : Math.max(0, calibratedBaseTime);
 }
 
 function setNativeTimeFromCalibratedClock(time, song = currentSong(), options = {}) {
-  const profileDuration = effectProfileForSong(song)?.duration;
-  if (!Number.isFinite(profileDuration) || profileDuration <= 0) return false;
   const duration = effectiveDuration(song);
   const targetTime = duration ? clamp(0, duration, time) : Math.max(0, time);
   const nativeTarget = nativeFromCalibratedTime(targetTime, song);
@@ -323,57 +298,6 @@ function beatPulseForProfile(profile, time) {
   const beats = Math.max(0, (time - (profile.beatOffset || 0)) * profile.bpm / 60);
   const phase = beats - Math.floor(beats);
   return Math.pow(1 - phase, 4.2);
-}
-
-function resetChorusTrigger() {
-  chorusTriggerState = {
-    key: null,
-    baseline: 0,
-    triggered: false,
-    gate: 0,
-    armedAt: 0,
-  };
-}
-
-function chorusTriggerKey(section) {
-  if (!section) return null;
-  return `${section.name}:${section.start}:${section.end}`;
-}
-
-function resolveChorusGate(section, time, level) {
-  if (!section?.chorus || !Number.isFinite(time)) {
-    if (chorusTriggerState.key !== null) resetChorusTrigger();
-    return 0;
-  }
-
-  const key = chorusTriggerKey(section);
-  if (chorusTriggerState.key !== key) {
-    chorusTriggerState = {
-      key,
-      baseline: clamp(0, 1, level),
-      triggered: false,
-      gate: 0,
-      armedAt: performance.now(),
-    };
-  }
-
-  const elapsed = Math.max(0, time - section.start);
-  const audible = !!(analyser && waveData && waveTimeData && !audio.paused && !audio.seeking && audio.readyState >= 2);
-  const rise = clamp(0, 1, tetoRiseEnergy);
-  const lift = Math.max(0, level - chorusTriggerState.baseline);
-  const riseOnset = smoothStep(0.065, 0.2, rise);
-  const levelOnset = smoothStep(0.08, 0.24, lift) * smoothStep(0.18, 0.62, level);
-  const sustainedLoudness = smoothStep(0.55, 0.78, level) * smoothStep(0.45, 1.25, elapsed);
-  const noAnalyserFallback = !audible && elapsed > 0.35;
-
-  if (!chorusTriggerState.triggered && (riseOnset > 0.2 || levelOnset > 0.22 || sustainedLoudness > 0.45 || noAnalyserFallback)) {
-    chorusTriggerState.triggered = true;
-  }
-
-  const target = chorusTriggerState.triggered ? 1 : 0;
-  const rate = target > chorusTriggerState.gate ? 0.24 : 0.08;
-  chorusTriggerState.gate = chorusTriggerState.gate * (1 - rate) + target * rate;
-  return clamp(0, 1, chorusTriggerState.gate);
 }
 
 function isTetoFxActive(song = currentSong()) {
@@ -977,7 +901,6 @@ function resetWaveEnvelope() {
   lastTetoAmplitude = 0;
   waveLevelWindow = [];
   waveBars = waveBars.map((_, i) => waveBaseShape(i, waveBars.length) * 0.01);
-  resetChorusTrigger();
   updateFxState();
 }
 
@@ -1042,10 +965,8 @@ function drawTetoFx(level) {
   const profile = effectProfileForSong();
   const fxTime = currentCalibratedTime();
   const section = effectSectionAt(profile, fxTime);
-  const timedSectionPower = profile ? ((section?.intensity || 0.28) * (section?.fadeLevel ?? 1)) : 1;
-  const chorusGate = resolveChorusGate(section, fxTime, level);
-  const sectionPower = section?.chorus ? (0.28 + (timedSectionPower - 0.28) * chorusGate) : timedSectionPower;
-  const chorusPower = section?.chorus ? timedSectionPower * chorusGate : 0;
+  const sectionPower = profile ? ((section?.intensity || 0.28) * (section?.fadeLevel ?? 1)) : 1;
+  const chorusPower = section?.chorus ? sectionPower : 0;
   const beatPulse = beatPulseForProfile(profile, fxTime);
   const protectedRects = ['.now-meta', '.now-queue'].map(selector => {
     const el = document.querySelector(selector);
@@ -1345,7 +1266,6 @@ $('seek').addEventListener('input', (e) => {
   if (!duration) return;
   const targetTime = (parseFloat(e.target.value) / 100) * duration;
   resetCalibratedClock(targetTime);
-  resetChorusTrigger();
   if (!setNativeTimeFromCalibratedClock(targetTime, currentSong(), {force: true})) {
     audio.currentTime = nativeFromCalibratedTime(targetTime);
   }
