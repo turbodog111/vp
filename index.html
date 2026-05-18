@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>vp</title>
-<link rel="stylesheet" href="styles.css?v=2026-05-17-overlay-responsive">
+<link rel="stylesheet" href="styles.css?v=2026-05-18-teto-fx-playlist-fix">
 </head>
 <body>
 <div class="app">
@@ -12,6 +12,13 @@
     <div class="brand">vp</div>
     <input id="search" type="search" placeholder="Search songs...">
     <button id="refresh" class="icon-btn" title="Refresh library">↻</button>
+    <button id="settings-toggle" class="icon-btn" title="Settings">⚙</button>
+    <div id="settings-menu" class="settings-menu hidden">
+      <label class="setting-row">
+        <input id="teto-fx-enabled" type="checkbox">
+        <span>Teto FX for secular songs</span>
+      </label>
+    </div>
   </header>
 
   <nav class="tabs">
@@ -47,6 +54,7 @@
     </section>
 
     <section id="view-now" class="view now-view">
+      <canvas id="teto-fx" class="teto-fx-canvas" aria-hidden="true"></canvas>
       <div class="now-stage">
         <div class="now-meta">
           <div class="now-kicker" id="now-kicker">vp</div>
@@ -102,6 +110,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=2026-05-17-quiet-floor-waveform"></script>
+<script src="app.js?v=2026-05-18-teto-fx-playlist-fix"></script>
 </body>
 </html>

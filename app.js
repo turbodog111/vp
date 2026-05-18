@@ -18,6 +18,7 @@ let unshuffledQueue = null;
 let playlists = loadPlaylists();
 let currentPlaylist = null;
 let activeCollection = localStorage.getItem('vp_collection') || 'all';
+let tetoFxEnabled = localStorage.getItem('vp_teto_fx_enabled') !== 'false';
 let audioCtx = null;
 let audioSource = null;
 let analyser = null;
@@ -33,6 +34,21 @@ const WAVE_SOFT_LIMIT = 0.94;
 const WAVE_LEVEL_WINDOW = 180;
 const WAVE_MIN_FREQ = 55;
 const WAVE_MAX_FREQ = 14000;
+const TETO_FX_OBJECTS = Array.from({ length: 34 }, (_, i) => {
+  const seed = Math.sin((i + 1) * 45.233) * 10000;
+  const frac = seed - Math.floor(seed);
+  const side = i % 4;
+  const x = side === 0 ? 0.08 + frac * 0.22 : side === 1 ? 0.7 + frac * 0.22 : 0.18 + frac * 0.64;
+  const y = side === 2 ? 0.12 + frac * 0.18 : side === 3 ? 0.62 + frac * 0.24 : 0.18 + frac * 0.58;
+  return {
+    x,
+    y,
+    phase: frac * Math.PI * 2,
+    size: 7 + (i % 7) * 2.3,
+    kind: i % 3,
+    threshold: 0.12 + (i % 5) * 0.1,
+  };
+});
 
 let toastTimeout = null;
 function showToast(icon, text) {
@@ -97,11 +113,33 @@ function currentSong() {
   return library[queue[queueIndex]] || null;
 }
 
+function isTetoFxActive(song = currentSong()) {
+  return !!(tetoFxEnabled && song && song.collection === 'secular');
+}
+
+function setTetoFxEnabled(enabled) {
+  tetoFxEnabled = !!enabled;
+  localStorage.setItem('vp_teto_fx_enabled', tetoFxEnabled ? 'true' : 'false');
+  const checkbox = $('teto-fx-enabled');
+  if (checkbox) checkbox.checked = tetoFxEnabled;
+  updateFxState();
+}
+
+function updateFxState() {
+  const active = isTetoFxActive();
+  const level = active && !audio.paused ? smoothedLevel : 0;
+  document.body.classList.toggle('teto-fx-active', active);
+  document.body.style.setProperty('--teto-level', level.toFixed(3));
+}
+
 function switchView(view) {
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === view));
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === `view-${view}`));
   if (view === 'playlists') renderPlaylists();
-  if (view === 'now') resizeWaveform();
+  if (view === 'now') {
+    resizeWaveform();
+    resizeFxCanvas();
+  }
 }
 
 function filteredLibraryEntries(filter = '') {
@@ -246,6 +284,10 @@ function renderLibrary(filter = '') {
     badge.classList.add(song.collection);
     li.addEventListener('click', (e) => {
       if (e.target.closest('.col-actions')) return;
+      if (queue[queueIndex] === idx && audio.src) {
+        switchView('now');
+        return;
+      }
       queue = filtered.map(entry => entry.idx);
       shuffled = false;
       $('shuffle').classList.remove('on');
@@ -253,7 +295,13 @@ function renderLibrary(filter = '') {
       currentPlaylist = null;
       playCurrent();
     });
-    li.querySelector('.add-to').addEventListener('click', (e) => {
+    const addButton = li.querySelector('.add-to');
+    addButton.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+    addButton.addEventListener('click', (e) => {
+      e.preventDefault();
       e.stopPropagation();
       showAddToMenu(idx, e.currentTarget);
     });
@@ -279,8 +327,17 @@ function playCurrent() {
   const song = library[libIdx];
   if (!song) return;
   ensureAudioGraph();
-  resetWaveEnvelope();
-  audio.src = song.url;
+  const targetSrc = new URL(song.url, window.location.href).href;
+  const sameSource = audio.currentSrc === targetSrc || audio.src === targetSrc;
+  audio.playbackRate = 1;
+  audio.preservesPitch = true;
+  audio.webkitPreservesPitch = true;
+  if (!sameSource) {
+    resetWaveEnvelope();
+    audio.pause();
+    audio.src = song.url;
+    audio.load();
+  }
   audio.play().catch(err => console.warn('Play failed:', err));
   $('np-title').textContent = song.title || song.displayName;
   const parts = [];
@@ -308,6 +365,7 @@ function updateNowPlaying(song = currentSong()) {
   $('now-kicker').textContent = currentPlaylist || song?.collectionLabel || 'vp';
   updateUpNext();
   updatePlaybackVisuals();
+  updateFxState();
 }
 
 function updateUpNext() {
@@ -485,6 +543,21 @@ function resizeWaveform() {
   }
 }
 
+function resizeFxCanvas() {
+  const canvas = $('teto-fx');
+  const view = $('view-now');
+  if (!canvas || !view) return;
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  const rect = view.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) return;
+  const w = Math.max(320, Math.floor(rect.width * dpr));
+  const h = Math.max(320, Math.floor(rect.height * dpr));
+  if (canvas.width !== w || canvas.height !== h) {
+    canvas.width = w;
+    canvas.height = h;
+  }
+}
+
 function startWaveform() {
   if (waveRaf) return;
   const draw = () => {
@@ -576,6 +649,143 @@ function resetWaveEnvelope() {
   smoothedLevel = 0;
   waveLevelWindow = [];
   waveBars = waveBars.map((_, i) => waveBaseShape(i, waveBars.length) * 0.01);
+  updateFxState();
+}
+
+function drawDiamond(ctx, x, y, size, angle, fillStyle, alpha) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.globalAlpha *= alpha;
+  ctx.fillStyle = fillStyle;
+  ctx.beginPath();
+  ctx.moveTo(0, -size);
+  ctx.lineTo(size * 0.56, 0);
+  ctx.lineTo(0, size);
+  ctx.lineTo(-size * 0.56, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawTetoFx(level) {
+  const canvas = $('teto-fx');
+  const view = $('view-now');
+  if (!canvas || !view) return;
+  resizeFxCanvas();
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width;
+  const h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+  updateFxState();
+  if (!isTetoFxActive()) return;
+
+  const audible = !!(audio.src && !audio.paused);
+  const quietGate = audible ? smoothStep(0.1, 0.42, level) : 0;
+  const party = audible ? smoothStep(0.2, 0.82, level) : 0;
+  if (quietGate <= 0.01) return;
+
+  const fxRect = canvas.getBoundingClientRect();
+  const heroRect = $('hero-play').getBoundingClientRect();
+  const sx = fxRect.width ? canvas.width / fxRect.width : 1;
+  const sy = fxRect.height ? canvas.height / fxRect.height : 1;
+  const cx = (heroRect.left - fxRect.left + heroRect.width / 2) * sx;
+  const cy = (heroRect.top - fxRect.top + heroRect.height / 2) * sy;
+  const radius = Math.min(w, h) * (0.16 + party * 0.035);
+  const t = performance.now() / 1000;
+  const protectedRects = ['.now-meta', '.now-queue'].map(selector => {
+    const el = document.querySelector(selector);
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    const pad = 18;
+    return {
+      x: (r.left - fxRect.left) * sx - pad * sx,
+      y: (r.top - fxRect.top) * sy - pad * sy,
+      w: (r.width + pad * 2) * sx,
+      h: (r.height + pad * 2) * sy,
+    };
+  }).filter(Boolean);
+  const protectedPoint = (x, y) => protectedRects.some(r =>
+    x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h
+  );
+
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
+
+  const glow = ctx.createRadialGradient(cx, cy, radius * 0.2, cx, cy, radius * (2.1 + party * 0.5));
+  glow.addColorStop(0, `rgba(255, 113, 49, ${0.06 + party * 0.18})`);
+  glow.addColorStop(0.5, `rgba(210, 54, 37, ${0.025 + party * 0.12})`);
+  glow.addColorStop(1, 'rgba(91, 28, 17, 0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, w, h);
+
+  for (let j = 0; j < 4; j++) {
+    const dir = j % 2 === 0 ? 1 : -1;
+    const hue = j % 2 === 0 ? '255, 106, 61' : '255, 173, 67';
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(dir * (t * (0.16 + party * 0.22) + j * 0.82));
+    ctx.beginPath();
+    const sweep = Math.PI * (1.05 + party * 0.42);
+    for (let a = 0; a <= sweep; a += 0.055) {
+      const wobble = Math.sin(a * 4.2 + t * 2.4 + j) * radius * 0.045 * party;
+      const r = radius * (0.88 + j * 0.12) + a * radius * 0.12 + wobble;
+      const x = Math.cos(a * dir + j * Math.PI * 0.5) * r;
+      const y = Math.sin(a * dir + j * Math.PI * 0.5) * r * 0.72;
+      if (a === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = `rgba(${hue}, ${0.12 + quietGate * 0.22 + party * 0.4})`;
+    ctx.lineWidth = Math.max(1, (2.2 + party * 5.6) * sx);
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  const palettes = [
+    'rgba(255, 96, 62, 0.95)',
+    'rgba(255, 153, 54, 0.86)',
+    'rgba(181, 55, 31, 0.74)',
+    'rgba(255, 210, 105, 0.72)',
+  ];
+  TETO_FX_OBJECTS.forEach((obj, i) => {
+    const appear = smoothStep(obj.threshold, Math.min(1, obj.threshold + 0.36), party);
+    if (appear <= 0.01) return;
+    const pulse = 0.65 + Math.sin(t * (1.8 + (i % 5) * 0.35) + obj.phase) * 0.35;
+    const beat = appear * (0.72 + pulse * 0.28);
+    const drift = (6 + party * 20) * sx;
+    const x = obj.x * w + Math.sin(t * 0.9 + obj.phase) * drift;
+    const y = obj.y * h + Math.cos(t * 1.15 + obj.phase * 0.7) * drift * 0.72;
+    if (protectedPoint(x, y)) return;
+    const size = obj.size * sx * (0.48 + beat * 1.1);
+    const color = palettes[i % palettes.length];
+    if (obj.kind === 0) {
+      drawDiamond(ctx, x, y, size, t * 0.9 + obj.phase, color, beat * 0.82);
+    } else if (obj.kind === 1) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(Math.sin(t * 0.75 + obj.phase) * 0.34);
+      ctx.globalAlpha *= beat * 0.82;
+      ctx.fillStyle = color;
+      const barH = size * (1.25 + party * 1.65);
+      roundedBar(ctx, -size * 0.26, -barH / 2, size * 0.52, barH, size * 0.24);
+      ctx.restore();
+    } else {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(t * 0.55 + obj.phase);
+      ctx.globalAlpha *= beat * 0.78;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = Math.max(1, size * 0.16);
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.arc(0, 0, size, -Math.PI * 0.15, Math.PI * (0.75 + party * 0.5));
+      ctx.stroke();
+      ctx.restore();
+    }
+  });
+
+  ctx.restore();
 }
 
 function drawWaveform() {
@@ -588,9 +798,16 @@ function drawWaveform() {
   ctx.clearRect(0, 0, w, h);
 
   const gradient = ctx.createLinearGradient(0, 0, w, 0);
-  gradient.addColorStop(0, 'rgba(94, 234, 212, 0.25)');
-  gradient.addColorStop(0.48, 'rgba(94, 234, 212, 0.95)');
-  gradient.addColorStop(1, 'rgba(253, 230, 138, 0.62)');
+  if (isTetoFxActive()) {
+    gradient.addColorStop(0, 'rgba(132, 42, 28, 0.32)');
+    gradient.addColorStop(0.32, 'rgba(255, 93, 55, 0.88)');
+    gradient.addColorStop(0.58, 'rgba(255, 150, 45, 0.98)');
+    gradient.addColorStop(1, 'rgba(172, 111, 48, 0.72)');
+  } else {
+    gradient.addColorStop(0, 'rgba(94, 234, 212, 0.25)');
+    gradient.addColorStop(0.48, 'rgba(94, 234, 212, 0.95)');
+    gradient.addColorStop(1, 'rgba(253, 230, 138, 0.62)');
+  }
 
   const bins = WAVE_BAR_COUNT;
   ensureWaveBars(bins);
@@ -649,6 +866,7 @@ function drawWaveform() {
   }
 
   $('hero-play').style.setProperty('--level', smoothedLevel.toFixed(3));
+  drawTetoFx(smoothedLevel);
 }
 
 function roundedBar(ctx, x, y, w, h, r) {
@@ -680,6 +898,7 @@ audio.addEventListener('play', () => {
   document.body.classList.add('is-playing');
   startWaveform();
   updatePlaybackVisuals();
+  updateFxState();
 });
 audio.addEventListener('pause', () => {
   $('play').textContent = '▶';
@@ -687,6 +906,7 @@ audio.addEventListener('pause', () => {
   $('hero-play').querySelector('.hero-icon').textContent = '▶';
   document.body.classList.remove('is-playing');
   updatePlaybackVisuals();
+  updateFxState();
 });
 audio.addEventListener('error', () => {
   console.warn('Audio error for', audio.src);
@@ -717,6 +937,28 @@ const savedVolume = localStorage.getItem('vp_volume');
 if (savedVolume !== null) {
   audio.volume = parseFloat(savedVolume);
   $('volume').value = savedVolume;
+}
+
+const settingsToggle = $('settings-toggle');
+const settingsMenu = $('settings-menu');
+const tetoFxCheckbox = $('teto-fx-enabled');
+if (tetoFxCheckbox) tetoFxCheckbox.checked = tetoFxEnabled;
+if (settingsToggle && settingsMenu) {
+  settingsToggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    settingsMenu.classList.toggle('hidden');
+  });
+  settingsMenu.addEventListener('pointerdown', (e) => e.stopPropagation());
+  settingsMenu.addEventListener('click', (e) => e.stopPropagation());
+  document.addEventListener('click', (e) => {
+    if (!settingsMenu.classList.contains('hidden') && !settingsMenu.contains(e.target) && e.target !== settingsToggle) {
+      settingsMenu.classList.add('hidden');
+    }
+  });
+}
+if (tetoFxCheckbox) {
+  tetoFxCheckbox.addEventListener('change', () => setTetoFxEnabled(tetoFxCheckbox.checked));
 }
 
 $('search').addEventListener('input', (e) => renderLibrary(e.target.value));
@@ -768,9 +1010,28 @@ function renderPlaylists() {
     card.querySelector('.playlist-name').textContent = name;
     card.querySelector('.playlist-count').textContent =
       `${songs.length} song${songs.length === 1 ? '' : 's'}`;
-    card.querySelector('.playlist-play').addEventListener('click', () => playPlaylist(name, 0, false));
-    card.querySelector('.playlist-shuffle').addEventListener('click', () => playPlaylist(name, 0, true));
-    card.querySelector('.playlist-delete').addEventListener('click', () => {
+    const playButton = card.querySelector('.playlist-play');
+    const shuffleButton = card.querySelector('.playlist-shuffle');
+    const deleteButton = card.querySelector('.playlist-delete');
+    [playButton, shuffleButton, deleteButton].forEach(button => {
+      button.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    });
+    playButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      playPlaylist(name, 0, false);
+    });
+    shuffleButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      playPlaylist(name, 0, true);
+    });
+    deleteButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       if (confirm(`Delete playlist "${name}"?`)) {
         delete playlists[name];
         savePlaylists();
@@ -805,7 +1066,13 @@ function renderPlaylists() {
           if (e.target.closest('.remove')) return;
           if (libIdx >= 0) playPlaylist(name, i, false);
         });
-        li.querySelector('.remove').addEventListener('click', (e) => {
+        const removeButton = li.querySelector('.remove');
+        removeButton.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        });
+        removeButton.addEventListener('click', (e) => {
+          e.preventDefault();
           e.stopPropagation();
           songs.splice(i, 1);
           savePlaylists();
@@ -855,6 +1122,7 @@ function showAddToMenu(libIdx, anchor) {
   closeMenu();
   const menu = document.createElement('div');
   menu.className = 'menu';
+  menu.addEventListener('pointerdown', (e) => e.stopPropagation());
   const names = Object.keys(playlists).sort();
   if (names.length === 0) {
     const note = document.createElement('div');
@@ -867,7 +1135,12 @@ function showAddToMenu(libIdx, anchor) {
     const song = library[libIdx];
     const already = playlists[name].some(id => refMatchesSong(id, song));
     b.textContent = already ? `✓ ${name}` : name;
+    b.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
     b.addEventListener('click', (e) => {
+      e.preventDefault();
       e.stopPropagation();
       if (already) {
         playlists[name] = playlists[name].filter(id => !refMatchesSong(id, song));
@@ -887,7 +1160,12 @@ function showAddToMenu(libIdx, anchor) {
   const create = document.createElement('button');
   create.className = 'menu-create';
   create.textContent = '+ New playlist...';
+  create.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
   create.addEventListener('click', (e) => {
+    e.preventDefault();
     e.stopPropagation();
     closeMenu();
     const name = (prompt('Playlist name:') || '').trim();
@@ -929,7 +1207,12 @@ document.addEventListener('keydown', (e) => {
   else if (e.code === 'KeyS' && !e.metaKey && !e.ctrlKey) { e.preventDefault(); toggleShuffle(); }
 });
 
-window.addEventListener('resize', resizeWaveform);
+window.addEventListener('resize', () => {
+  resizeWaveform();
+  resizeFxCanvas();
+});
 resizeWaveform();
+resizeFxCanvas();
+updateFxState();
 drawWaveform();
 loadLibrary();
