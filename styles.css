@@ -29,6 +29,7 @@ button { font: inherit; }
 
 .topbar {
   display: flex; align-items: center; gap: 12px;
+  flex-wrap: wrap;
   padding: 14px 24px; border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
@@ -38,7 +39,7 @@ button { font: inherit; }
   margin-right: 8px;
 }
 #search {
-  flex: 1; max-width: 380px; margin-left: auto;
+  flex: 1 1 180px; min-width: 0; max-width: 380px; margin-left: auto;
   padding: 8px 12px; background: var(--panel); color: var(--fg);
   border: 1px solid var(--border); border-radius: 6px;
   font: inherit;
@@ -49,6 +50,7 @@ button { font: inherit; }
   display: flex; padding: 0 24px;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
+  overflow-x: auto;
 }
 .tab {
   padding: 10px 16px; background: transparent; color: var(--fg-dim);
@@ -490,4 +492,64 @@ input[type="range"]:focus { outline: none; }
   }
   .volume { display: none; }
   .controls { justify-content: center; }
+}
+
+@media (max-width: 440px) {
+  .topbar {
+    gap: 8px;
+  }
+  .brand {
+    margin-right: 0;
+  }
+  #search {
+    flex-basis: 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+  .tabs {
+    padding: 0 10px;
+  }
+  .tab {
+    padding: 9px 12px;
+    white-space: nowrap;
+  }
+  .main {
+    padding: 10px 12px;
+  }
+  .now-view.active {
+    grid-template-rows: minmax(330px, 1fr) 126px;
+    gap: 12px;
+  }
+  .now-stage {
+    min-height: 330px;
+  }
+  .now-meta h1 {
+    font-size: clamp(30px, 12vw, 46px);
+  }
+  .hero-play {
+    width: 128px;
+    height: 128px;
+  }
+  .hero-icon {
+    font-size: 36px;
+  }
+  #waveform {
+    height: 118px;
+  }
+  .player {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+  .controls {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .controls button {
+    width: 32px;
+    height: 32px;
+  }
+  .progress {
+    gap: 8px;
+  }
 }
