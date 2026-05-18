@@ -96,8 +96,10 @@ body.teto-fx-active {
 }
 body.teto-fx-active .now-view.active {
   background:
-    radial-gradient(circle at 69% 42%, rgba(255, 106, 61, calc(0.06 + var(--teto-level, 0) * 0.18)), transparent 32%),
-    radial-gradient(circle at 16% 25%, rgba(139, 35, 24, calc(0.04 + var(--teto-level, 0) * 0.11)), transparent 30%);
+    radial-gradient(circle at 68% 42%, rgba(255, 106, 61, calc(0.08 + var(--teto-level, 0) * 0.24)) 0%, rgba(192, 45, 30, calc(0.025 + var(--teto-level, 0) * 0.16)) 34%, transparent 68%),
+    radial-gradient(circle at 13% 82%, rgba(255, 74, 52, calc(0.025 + var(--teto-level, 0) * 0.14)) 0%, transparent 58%),
+    linear-gradient(135deg, rgba(83, 25, 18, calc(var(--teto-level, 0) * 0.22)), transparent 48%, rgba(115, 49, 20, calc(var(--teto-level, 0) * 0.16)));
+  background-blend-mode: screen, screen, normal;
 }
 
 .now-stage {
@@ -174,6 +176,8 @@ body.teto-fx-active .hero-play {
   inset: -12px;
   border-radius: inherit;
   background: conic-gradient(var(--accent) var(--progress), rgba(94, 234, 212, 0.12) 0deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 15px), #000 calc(100% - 14px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 15px), #000 calc(100% - 14px));
   opacity: 0.95;
   z-index: -2;
 }

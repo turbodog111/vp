@@ -27,6 +27,8 @@ let waveTimeData = null;
 let waveRaf = null;
 let waveBars = [];
 let smoothedLevel = 0;
+let tetoFxLevel = 0;
+let tetoGlowLevel = 0;
 let waveLevelWindow = [];
 const WAVE_BAR_COUNT = 84;
 const WAVE_GAIN = 1.34;
@@ -34,19 +36,32 @@ const WAVE_SOFT_LIMIT = 0.94;
 const WAVE_LEVEL_WINDOW = 180;
 const WAVE_MIN_FREQ = 55;
 const WAVE_MAX_FREQ = 14000;
-const TETO_FX_OBJECTS = Array.from({ length: 34 }, (_, i) => {
-  const seed = Math.sin((i + 1) * 45.233) * 10000;
-  const frac = seed - Math.floor(seed);
-  const side = i % 4;
-  const x = side === 0 ? 0.08 + frac * 0.22 : side === 1 ? 0.7 + frac * 0.22 : 0.18 + frac * 0.64;
-  const y = side === 2 ? 0.12 + frac * 0.18 : side === 3 ? 0.62 + frac * 0.24 : 0.18 + frac * 0.58;
+const seededUnit = (seed) => {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+};
+const TETO_FX_OBJECTS = Array.from({ length: 40 }, (_, i) => {
+  const a = seededUnit((i + 1) * 24.271);
+  const b = seededUnit((i + 1) * 61.733);
+  const lane = i % 8;
+  const homes = [
+    {x: 0.04 + a * 0.2, y: 0.08 + b * 0.28},
+    {x: 0.74 + a * 0.22, y: 0.08 + b * 0.28},
+    {x: 0.04 + a * 0.24, y: 0.62 + b * 0.3},
+    {x: 0.72 + a * 0.24, y: 0.6 + b * 0.32},
+    {x: 0.34 + a * 0.32, y: 0.05 + b * 0.18},
+    {x: 0.3 + a * 0.4, y: 0.74 + b * 0.2},
+    {x: 0.84 + a * 0.13, y: 0.33 + b * 0.3},
+    {x: 0.03 + a * 0.16, y: 0.36 + b * 0.32},
+  ];
+  const home = homes[lane];
   return {
-    x,
-    y,
-    phase: frac * Math.PI * 2,
-    size: 7 + (i % 7) * 2.3,
+    x: home.x,
+    y: home.y,
+    phase: a * Math.PI * 2,
+    size: 6 + (i % 7) * 1.9,
     kind: i % 3,
-    threshold: 0.12 + (i % 5) * 0.1,
+    threshold: 0.08 + ((i * 7) % 10) * 0.052,
   };
 });
 
@@ -125,9 +140,9 @@ function setTetoFxEnabled(enabled) {
   updateFxState();
 }
 
-function updateFxState() {
+function updateFxState(levelOverride = tetoGlowLevel) {
   const active = isTetoFxActive();
-  const level = active && !audio.paused ? smoothedLevel : 0;
+  const level = active && !audio.paused ? levelOverride : 0;
   document.body.classList.toggle('teto-fx-active', active);
   document.body.style.setProperty('--teto-level', level.toFixed(3));
 }
@@ -647,9 +662,28 @@ function ensureWaveBars(count) {
 
 function resetWaveEnvelope() {
   smoothedLevel = 0;
+  tetoFxLevel = 0;
+  tetoGlowLevel = 0;
   waveLevelWindow = [];
   waveBars = waveBars.map((_, i) => waveBaseShape(i, waveBars.length) * 0.01);
   updateFxState();
+}
+
+function smoothTetoFxLevels(level) {
+  const audible = !!(isTetoFxActive() && audio.src && !audio.paused);
+  if (!audible) {
+    tetoFxLevel = 0;
+    tetoGlowLevel = 0;
+    return {motion: 0, glow: 0};
+  }
+  const target = clamp(0, 1, level);
+  const motionTarget = smoothStep(0.06, 0.92, target);
+  const glowTarget = Math.pow(target, 0.72);
+  const motionRate = motionTarget > tetoFxLevel ? 0.065 : 0.022;
+  const glowRate = glowTarget > tetoGlowLevel ? 0.055 : 0.018;
+  tetoFxLevel = tetoFxLevel * (1 - motionRate) + motionTarget * motionRate;
+  tetoGlowLevel = tetoGlowLevel * (1 - glowRate) + glowTarget * glowRate;
+  return {motion: tetoFxLevel, glow: tetoGlowLevel};
 }
 
 function drawDiamond(ctx, x, y, size, angle, fillStyle, alpha) {
@@ -677,13 +711,13 @@ function drawTetoFx(level) {
   const w = canvas.width;
   const h = canvas.height;
   ctx.clearRect(0, 0, w, h);
-  updateFxState();
+  const levels = smoothTetoFxLevels(level);
+  updateFxState(levels.glow);
   if (!isTetoFxActive()) return;
 
-  const audible = !!(audio.src && !audio.paused);
-  const quietGate = audible ? smoothStep(0.1, 0.42, level) : 0;
-  const party = audible ? smoothStep(0.2, 0.82, level) : 0;
-  if (quietGate <= 0.01) return;
+  const quietGate = smoothStep(0.12, 0.42, levels.motion);
+  const party = smoothStep(0.22, 0.78, levels.motion);
+  if (quietGate <= 0.01 && levels.glow <= 0.02) return;
 
   const fxRect = canvas.getBoundingClientRect();
   const heroRect = $('hero-play').getBoundingClientRect();
@@ -712,11 +746,19 @@ function drawTetoFx(level) {
   ctx.save();
   ctx.globalCompositeOperation = 'lighter';
 
-  const glow = ctx.createRadialGradient(cx, cy, radius * 0.2, cx, cy, radius * (2.1 + party * 0.5));
-  glow.addColorStop(0, `rgba(255, 113, 49, ${0.06 + party * 0.18})`);
-  glow.addColorStop(0.5, `rgba(210, 54, 37, ${0.025 + party * 0.12})`);
+  const glowRadius = Math.max(w, h) * (0.34 + levels.glow * 0.3);
+  const glow = ctx.createRadialGradient(cx, cy, radius * 0.18, cx, cy, glowRadius);
+  glow.addColorStop(0, `rgba(255, 122, 45, ${0.08 + levels.glow * 0.22})`);
+  glow.addColorStop(0.46, `rgba(210, 54, 37, ${0.04 + levels.glow * 0.17})`);
+  glow.addColorStop(0.78, `rgba(120, 34, 22, ${0.015 + levels.glow * 0.09})`);
   glow.addColorStop(1, 'rgba(91, 28, 17, 0)');
   ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, w, h);
+
+  const cornerGlow = ctx.createRadialGradient(w * 0.08, h * 0.88, 0, w * 0.08, h * 0.88, Math.max(w, h) * 0.5);
+  cornerGlow.addColorStop(0, `rgba(255, 83, 48, ${levels.glow * 0.08})`);
+  cornerGlow.addColorStop(1, 'rgba(255, 83, 48, 0)');
+  ctx.fillStyle = cornerGlow;
   ctx.fillRect(0, 0, w, h);
 
   for (let j = 0; j < 4; j++) {
@@ -724,19 +766,19 @@ function drawTetoFx(level) {
     const hue = j % 2 === 0 ? '255, 106, 61' : '255, 173, 67';
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.rotate(dir * (t * (0.16 + party * 0.22) + j * 0.82));
+    ctx.rotate(dir * (t * (0.055 + party * 0.095) + j * 0.82));
     ctx.beginPath();
     const sweep = Math.PI * (1.05 + party * 0.42);
     for (let a = 0; a <= sweep; a += 0.055) {
-      const wobble = Math.sin(a * 4.2 + t * 2.4 + j) * radius * 0.045 * party;
+      const wobble = Math.sin(a * 3.2 + t * 1.15 + j) * radius * 0.035 * party;
       const r = radius * (0.88 + j * 0.12) + a * radius * 0.12 + wobble;
       const x = Math.cos(a * dir + j * Math.PI * 0.5) * r;
       const y = Math.sin(a * dir + j * Math.PI * 0.5) * r * 0.72;
       if (a === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
-    ctx.strokeStyle = `rgba(${hue}, ${0.12 + quietGate * 0.22 + party * 0.4})`;
-    ctx.lineWidth = Math.max(1, (2.2 + party * 5.6) * sx);
+    ctx.strokeStyle = `rgba(${hue}, ${0.1 + quietGate * 0.12 + party * 0.24})`;
+    ctx.lineWidth = Math.max(1, (1.5 + party * 3.4) * sx);
     ctx.lineCap = 'round';
     ctx.stroke();
     ctx.restore();
@@ -749,23 +791,23 @@ function drawTetoFx(level) {
     'rgba(255, 210, 105, 0.72)',
   ];
   TETO_FX_OBJECTS.forEach((obj, i) => {
-    const appear = smoothStep(obj.threshold, Math.min(1, obj.threshold + 0.36), party);
+    const appear = smoothStep(obj.threshold, Math.min(1, obj.threshold + 0.48), party);
     if (appear <= 0.01) return;
-    const pulse = 0.65 + Math.sin(t * (1.8 + (i % 5) * 0.35) + obj.phase) * 0.35;
+    const pulse = 0.72 + Math.sin(t * (0.72 + (i % 5) * 0.12) + obj.phase) * 0.28;
     const beat = appear * (0.72 + pulse * 0.28);
-    const drift = (6 + party * 20) * sx;
-    const x = obj.x * w + Math.sin(t * 0.9 + obj.phase) * drift;
-    const y = obj.y * h + Math.cos(t * 1.15 + obj.phase * 0.7) * drift * 0.72;
+    const drift = (12 + levels.motion * 30) * sx;
+    const x = obj.x * w + Math.sin(t * 0.22 + obj.phase) * drift;
+    const y = obj.y * h + Math.cos(t * 0.28 + obj.phase * 0.7) * drift * 0.72;
     if (protectedPoint(x, y)) return;
-    const size = obj.size * sx * (0.48 + beat * 1.1);
+    const size = obj.size * sx * (0.52 + beat * 1.02);
     const color = palettes[i % palettes.length];
     if (obj.kind === 0) {
-      drawDiamond(ctx, x, y, size, t * 0.9 + obj.phase, color, beat * 0.82);
+      drawDiamond(ctx, x, y, size, t * 0.42 + obj.phase, color, beat * 0.62);
     } else if (obj.kind === 1) {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(Math.sin(t * 0.75 + obj.phase) * 0.34);
-      ctx.globalAlpha *= beat * 0.82;
+      ctx.globalAlpha *= beat * 0.62;
       ctx.fillStyle = color;
       const barH = size * (1.25 + party * 1.65);
       roundedBar(ctx, -size * 0.26, -barH / 2, size * 0.52, barH, size * 0.24);
@@ -773,8 +815,8 @@ function drawTetoFx(level) {
     } else {
       ctx.save();
       ctx.translate(x, y);
-      ctx.rotate(t * 0.55 + obj.phase);
-      ctx.globalAlpha *= beat * 0.78;
+      ctx.rotate(t * 0.28 + obj.phase);
+      ctx.globalAlpha *= beat * 0.58;
       ctx.strokeStyle = color;
       ctx.lineWidth = Math.max(1, size * 0.16);
       ctx.lineCap = 'round';
