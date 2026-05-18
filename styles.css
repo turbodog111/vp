@@ -475,9 +475,9 @@ input[type="range"]:focus { outline: none; }
 #volume { width: 80px; }
 
 .menu {
-  position: absolute; background: var(--panel-2); border: 1px solid var(--border);
+  position: fixed; background: var(--panel-2); border: 1px solid var(--border);
   border-radius: 6px; padding: 4px; min-width: 200px; max-height: 280px;
-  overflow-y: auto; z-index: 100;
+  overflow-y: auto; z-index: 5000;
   box-shadow: 0 8px 24px rgba(0,0,0,0.5);
 }
 .menu button {

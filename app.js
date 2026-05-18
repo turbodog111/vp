@@ -32,6 +32,8 @@ let waveBars = [];
 let smoothedLevel = 0;
 let tetoFxLevel = 0;
 let tetoGlowLevel = 0;
+let tetoRiseEnergy = 0;
+let lastTetoAmplitude = 0;
 let waveLevelWindow = [];
 let playerVolume = parseVolume(localStorage.getItem('vp_volume'), 1);
 const WAVE_BAR_COUNT = 84;
@@ -282,10 +284,26 @@ function stopInteractiveEvent(e) {
   if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
 }
 
+function eventClientX(e) {
+  if (Number.isFinite(e.clientX)) return e.clientX;
+  const touch = e.touches?.[0] || e.changedTouches?.[0];
+  return Number.isFinite(touch?.clientX) ? touch.clientX : null;
+}
+
+function eventHitsRowActionZone(e, row) {
+  if (!row) return false;
+  const x = eventClientX(e);
+  if (x === null) return false;
+  const rect = row.getBoundingClientRect();
+  const actionZone = Math.max(58, Math.min(110, rect.width * 0.22));
+  return x >= rect.right - actionZone && x <= rect.right + 8;
+}
+
 function openAddToMenuFromEvent(e) {
   const target = e.target.closest?.('.add-to, .col-actions');
-  if (!target) return false;
-  const row = target.closest('.song-row');
+  const row = target?.closest('.song-row') || e.target.closest?.('.song-row');
+  const hitAction = !!target || eventHitsRowActionZone(e, row);
+  if (!hitAction) return false;
   const libIdx = parseInt(row?.dataset.libIdx, 10);
   if (!Number.isFinite(libIdx)) return false;
   stopInteractiveEvent(e);
@@ -337,6 +355,7 @@ function renderLibrary(filter = '') {
     badge.textContent = song.collectionLabel;
     badge.classList.add(song.collection);
     li.addEventListener('click', (e) => {
+      if (e.defaultPrevented || openAddToMenuFromEvent(e)) return;
       if (e.target.closest('.col-actions')) return;
       if (queue[queueIndex] === idx && audio.src) {
         switchView('now');
@@ -350,14 +369,12 @@ function renderLibrary(filter = '') {
       playCurrent();
     });
     const addButton = li.querySelector('.add-to');
+    addButton.type = 'button';
     addButton.addEventListener('pointerdown', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+      openAddToMenuFromEvent(e);
     });
     addButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      showAddToMenu(idx, e.currentTarget);
+      openAddToMenuFromEvent(e);
     });
     list.appendChild(li);
   });
@@ -707,6 +724,8 @@ function resetWaveEnvelope() {
   smoothedLevel = 0;
   tetoFxLevel = 0;
   tetoGlowLevel = 0;
+  tetoRiseEnergy = 0;
+  lastTetoAmplitude = 0;
   waveLevelWindow = [];
   waveBars = waveBars.map((_, i) => waveBaseShape(i, waveBars.length) * 0.01);
   updateFxState();
@@ -719,9 +738,9 @@ function smoothTetoFxLevels(level) {
     tetoGlowLevel = 0;
     return {motion: 0, glow: 0};
   }
-  const target = clamp(0, 1, level);
-  const motionTarget = smoothStep(0.06, 0.92, target);
-  const glowTarget = Math.pow(target, 0.72);
+  const rise = clamp(0, 1, tetoRiseEnergy);
+  const motionTarget = smoothStep(0.04, 0.88, rise);
+  const glowTarget = Math.pow(rise, 0.62);
   const motionRate = motionTarget > tetoFxLevel ? 0.065 : 0.022;
   const glowRate = glowTarget > tetoGlowLevel ? 0.055 : 0.018;
   tetoFxLevel = tetoFxLevel * (1 - motionRate) + motionTarget * motionRate;
@@ -917,11 +936,20 @@ function drawWaveform() {
       bandTargets[i] = waveBandEnergy(i, bins);
     }
     const targetLevel = normalizedWaveLevel(rmsEnergy, peakEnergy);
+    const upwardChange = Math.max(0, targetLevel - lastTetoAmplitude);
+    const riseImpulse = smoothStep(0.018, 0.24, upwardChange) * smoothStep(0.1, 0.9, targetLevel);
+    tetoRiseEnergy = Math.max(tetoRiseEnergy * 0.9, riseImpulse);
+    lastTetoAmplitude = targetLevel;
     const attack = targetLevel > smoothedLevel ? 0.7 : 0.34;
     smoothedLevel = smoothedLevel * (1 - attack) + targetLevel * attack;
   } else if (!audio.src) {
     smoothedLevel = smoothedLevel * 0.98 + 0.08 * 0.02;
+    tetoRiseEnergy *= 0.86;
+    lastTetoAmplitude = 0;
     waveLevelWindow = [];
+  } else {
+    tetoRiseEnergy *= 0.86;
+    lastTetoAmplitude = 0;
   }
 
   for (let i = 0; i < bins; i++) {
