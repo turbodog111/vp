@@ -42,6 +42,13 @@ let calibratedBasePerf = 0;
 let calibratedClockRunning = false;
 let pendingClockSeekTime = null;
 let pendingClockSeekStartedAt = 0;
+let chorusTriggerState = {
+  key: null,
+  baseline: 0,
+  triggered: false,
+  gate: 0,
+  armedAt: 0,
+};
 const WAVE_BAR_COUNT = 84;
 const WAVE_GAIN = 1.34;
 const WAVE_SOFT_LIMIT = 0.94;
@@ -316,6 +323,57 @@ function beatPulseForProfile(profile, time) {
   const beats = Math.max(0, (time - (profile.beatOffset || 0)) * profile.bpm / 60);
   const phase = beats - Math.floor(beats);
   return Math.pow(1 - phase, 4.2);
+}
+
+function resetChorusTrigger() {
+  chorusTriggerState = {
+    key: null,
+    baseline: 0,
+    triggered: false,
+    gate: 0,
+    armedAt: 0,
+  };
+}
+
+function chorusTriggerKey(section) {
+  if (!section) return null;
+  return `${section.name}:${section.start}:${section.end}`;
+}
+
+function resolveChorusGate(section, time, level) {
+  if (!section?.chorus || !Number.isFinite(time)) {
+    if (chorusTriggerState.key !== null) resetChorusTrigger();
+    return 0;
+  }
+
+  const key = chorusTriggerKey(section);
+  if (chorusTriggerState.key !== key) {
+    chorusTriggerState = {
+      key,
+      baseline: clamp(0, 1, level),
+      triggered: false,
+      gate: 0,
+      armedAt: performance.now(),
+    };
+  }
+
+  const elapsed = Math.max(0, time - section.start);
+  const audible = !!(analyser && waveData && waveTimeData && !audio.paused && !audio.seeking && audio.readyState >= 2);
+  const rise = clamp(0, 1, tetoRiseEnergy);
+  const lift = Math.max(0, level - chorusTriggerState.baseline);
+  const riseOnset = smoothStep(0.065, 0.2, rise);
+  const levelOnset = smoothStep(0.08, 0.24, lift) * smoothStep(0.18, 0.62, level);
+  const sustainedLoudness = smoothStep(0.55, 0.78, level) * smoothStep(0.45, 1.25, elapsed);
+  const noAnalyserFallback = !audible && elapsed > 0.35;
+
+  if (!chorusTriggerState.triggered && (riseOnset > 0.2 || levelOnset > 0.22 || sustainedLoudness > 0.45 || noAnalyserFallback)) {
+    chorusTriggerState.triggered = true;
+  }
+
+  const target = chorusTriggerState.triggered ? 1 : 0;
+  const rate = target > chorusTriggerState.gate ? 0.24 : 0.08;
+  chorusTriggerState.gate = chorusTriggerState.gate * (1 - rate) + target * rate;
+  return clamp(0, 1, chorusTriggerState.gate);
 }
 
 function isTetoFxActive(song = currentSong()) {
@@ -919,6 +977,7 @@ function resetWaveEnvelope() {
   lastTetoAmplitude = 0;
   waveLevelWindow = [];
   waveBars = waveBars.map((_, i) => waveBaseShape(i, waveBars.length) * 0.01);
+  resetChorusTrigger();
   updateFxState();
 }
 
@@ -983,8 +1042,10 @@ function drawTetoFx(level) {
   const profile = effectProfileForSong();
   const fxTime = currentCalibratedTime();
   const section = effectSectionAt(profile, fxTime);
-  const sectionPower = profile ? ((section?.intensity || 0.28) * (section?.fadeLevel ?? 1)) : 1;
-  const chorusPower = section?.chorus ? sectionPower : 0;
+  const timedSectionPower = profile ? ((section?.intensity || 0.28) * (section?.fadeLevel ?? 1)) : 1;
+  const chorusGate = resolveChorusGate(section, fxTime, level);
+  const sectionPower = section?.chorus ? (0.28 + (timedSectionPower - 0.28) * chorusGate) : timedSectionPower;
+  const chorusPower = section?.chorus ? timedSectionPower * chorusGate : 0;
   const beatPulse = beatPulseForProfile(profile, fxTime);
   const protectedRects = ['.now-meta', '.now-queue'].map(selector => {
     const el = document.querySelector(selector);
@@ -1284,6 +1345,7 @@ $('seek').addEventListener('input', (e) => {
   if (!duration) return;
   const targetTime = (parseFloat(e.target.value) / 100) * duration;
   resetCalibratedClock(targetTime);
+  resetChorusTrigger();
   if (!setNativeTimeFromCalibratedClock(targetTime, currentSong(), {force: true})) {
     audio.currentTime = nativeFromCalibratedTime(targetTime);
   }
