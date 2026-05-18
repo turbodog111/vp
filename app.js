@@ -19,9 +19,12 @@ let playlists = loadPlaylists();
 let currentPlaylist = null;
 let activeCollection = localStorage.getItem('vp_collection') || 'all';
 let tetoFxEnabled = localStorage.getItem('vp_teto_fx_enabled') !== 'false';
+let addToMenuOpenedAt = 0;
+let suppressMenuCloseUntil = 0;
 let audioCtx = null;
 let audioSource = null;
 let analyser = null;
+let outputGain = null;
 let waveData = null;
 let waveTimeData = null;
 let waveRaf = null;
@@ -30,6 +33,7 @@ let smoothedLevel = 0;
 let tetoFxLevel = 0;
 let tetoGlowLevel = 0;
 let waveLevelWindow = [];
+let playerVolume = parseVolume(localStorage.getItem('vp_volume'), 1);
 const WAVE_BAR_COUNT = 84;
 const WAVE_GAIN = 1.34;
 const WAVE_SOFT_LIMIT = 0.94;
@@ -40,7 +44,7 @@ const seededUnit = (seed) => {
   const x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
 };
-const TETO_FX_OBJECTS = Array.from({ length: 40 }, (_, i) => {
+const TETO_FX_OBJECTS = Array.from({ length: 24 }, (_, i) => {
   const a = seededUnit((i + 1) * 24.271);
   const b = seededUnit((i + 1) * 61.733);
   const lane = i % 8;
@@ -59,8 +63,8 @@ const TETO_FX_OBJECTS = Array.from({ length: 40 }, (_, i) => {
     x: home.x,
     y: home.y,
     phase: a * Math.PI * 2,
-    size: 6 + (i % 7) * 1.9,
-    kind: i % 3,
+    size: 5.8 + (i % 6) * 1.55,
+    kind: i % 2,
     threshold: 0.08 + ((i * 7) % 10) * 0.052,
   };
 });
@@ -89,6 +93,12 @@ function loadPlaylists() {
 }
 function savePlaylists() {
   localStorage.setItem('vp_playlists', JSON.stringify(playlists));
+}
+
+function parseVolume(value, fallback = 1) {
+  const parsed = parseFloat(value);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.min(1, Math.max(0, parsed));
 }
 
 function prettyName(filename) {
@@ -264,6 +274,35 @@ function emptyLibraryText(filter) {
     return `No ${collectionLabel(activeCollection).toLowerCase()} songs found.`;
   }
   return 'No songs found.';
+}
+
+function stopInteractiveEvent(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+}
+
+function openAddToMenuFromEvent(e) {
+  const target = e.target.closest?.('.add-to, .col-actions');
+  if (!target) return false;
+  const row = target.closest('.song-row');
+  const libIdx = parseInt(row?.dataset.libIdx, 10);
+  if (!Number.isFinite(libIdx)) return false;
+  stopInteractiveEvent(e);
+  const now = performance.now();
+  const anchor = row.querySelector('.add-to') || target;
+  if (e.type === 'click' && now - addToMenuOpenedAt < 350) return true;
+  addToMenuOpenedAt = now;
+  suppressMenuCloseUntil = now + 450;
+  showAddToMenu(libIdx, anchor);
+  return true;
+}
+
+function bindLibraryActionGuards() {
+  const list = $('library-list');
+  ['pointerdown', 'mousedown', 'touchstart', 'click'].forEach(type => {
+    list.addEventListener(type, openAddToMenuFromEvent, {capture: true});
+  });
 }
 
 function renderLibrary(filter = '') {
@@ -538,10 +577,14 @@ function ensureAudioGraph() {
   analyser.minDecibels = -92;
   analyser.maxDecibels = -18;
   analyser.smoothingTimeConstant = 0.36;
+  outputGain = audioCtx.createGain();
+  outputGain.gain.value = playerVolume;
   waveData = new Float32Array(analyser.frequencyBinCount);
   waveTimeData = new Uint8Array(analyser.fftSize);
+  audio.volume = 1;
   audioSource.connect(analyser);
-  analyser.connect(audioCtx.destination);
+  analyser.connect(outputGain);
+  outputGain.connect(audioCtx.destination);
   startWaveform();
 }
 
@@ -761,37 +804,35 @@ function drawTetoFx(level) {
   ctx.fillStyle = cornerGlow;
   ctx.fillRect(0, 0, w, h);
 
-  for (let j = 0; j < 4; j++) {
-    const dir = j % 2 === 0 ? 1 : -1;
-    const hue = j % 2 === 0 ? '255, 106, 61' : '255, 173, 67';
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(dir * (t * (0.055 + party * 0.095) + j * 0.82));
+  const pulseLevel = clamp(0, 1, levels.glow * 0.72 + party * 0.28);
+  const wash = ctx.createLinearGradient(0, 0, w, h);
+  wash.addColorStop(0, `rgba(255, 69, 45, ${pulseLevel * 0.09})`);
+  wash.addColorStop(0.48, `rgba(255, 134, 42, ${pulseLevel * 0.08})`);
+  wash.addColorStop(1, `rgba(136, 34, 24, ${pulseLevel * 0.1})`);
+  ctx.fillStyle = wash;
+  ctx.fillRect(0, 0, w, h);
+
+  const ringSpeed = 0.12 + party * 0.16;
+  const ringCount = 5;
+  for (let j = 0; j < ringCount; j++) {
+    const phase = (t * ringSpeed + j / ringCount) % 1;
+    const fade = Math.pow(1 - phase, 1.55);
+    const ringRadius = radius * (0.95 + phase * (2.4 + pulseLevel * 1.35));
     ctx.beginPath();
-    const sweep = Math.PI * (1.05 + party * 0.42);
-    for (let a = 0; a <= sweep; a += 0.055) {
-      const wobble = Math.sin(a * 3.2 + t * 1.15 + j) * radius * 0.035 * party;
-      const r = radius * (0.88 + j * 0.12) + a * radius * 0.12 + wobble;
-      const x = Math.cos(a * dir + j * Math.PI * 0.5) * r;
-      const y = Math.sin(a * dir + j * Math.PI * 0.5) * r * 0.72;
-      if (a === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.strokeStyle = `rgba(${hue}, ${0.1 + quietGate * 0.12 + party * 0.24})`;
-    ctx.lineWidth = Math.max(1, (1.5 + party * 3.4) * sx);
-    ctx.lineCap = 'round';
+    ctx.arc(cx, cy, ringRadius, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(255, ${112 + j * 16}, 48, ${fade * (0.04 + pulseLevel * 0.22)})`;
+    ctx.lineWidth = Math.max(1, (1.2 + pulseLevel * 3.4) * (1 - phase * 0.34) * sx);
     ctx.stroke();
-    ctx.restore();
   }
 
   const palettes = [
-    'rgba(255, 96, 62, 0.95)',
-    'rgba(255, 153, 54, 0.86)',
-    'rgba(181, 55, 31, 0.74)',
-    'rgba(255, 210, 105, 0.72)',
+    'rgba(255, 96, 62, 0.6)',
+    'rgba(255, 153, 54, 0.52)',
+    'rgba(181, 55, 31, 0.44)',
+    'rgba(255, 210, 105, 0.4)',
   ];
   TETO_FX_OBJECTS.forEach((obj, i) => {
-    const appear = smoothStep(obj.threshold, Math.min(1, obj.threshold + 0.48), party);
+    const appear = smoothStep(obj.threshold + 0.12, Math.min(1, obj.threshold + 0.58), party);
     if (appear <= 0.01) return;
     const pulse = 0.72 + Math.sin(t * (0.72 + (i % 5) * 0.12) + obj.phase) * 0.28;
     const beat = appear * (0.72 + pulse * 0.28);
@@ -802,12 +843,12 @@ function drawTetoFx(level) {
     const size = obj.size * sx * (0.52 + beat * 1.02);
     const color = palettes[i % palettes.length];
     if (obj.kind === 0) {
-      drawDiamond(ctx, x, y, size, t * 0.42 + obj.phase, color, beat * 0.62);
+      drawDiamond(ctx, x, y, size, t * 0.28 + obj.phase, color, beat * 0.38);
     } else if (obj.kind === 1) {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(Math.sin(t * 0.75 + obj.phase) * 0.34);
-      ctx.globalAlpha *= beat * 0.62;
+      ctx.globalAlpha *= beat * 0.36;
       ctx.fillStyle = color;
       const barH = size * (1.25 + party * 1.65);
       roundedBar(ctx, -size * 0.26, -barH / 2, size * 0.52, barH, size * 0.24);
@@ -963,23 +1004,47 @@ $('prev').addEventListener('click', playPrev);
 $('shuffle').addEventListener('click', toggleShuffle);
 $('loop').addEventListener('click', cycleLoop);
 $('refresh').addEventListener('click', loadLibrary);
+bindLibraryActionGuards();
 
 $('seek').addEventListener('input', (e) => {
   if (audio.duration) audio.currentTime = (e.target.value / 100) * audio.duration;
 });
-$('volume').addEventListener('input', (e) => {
-  audio.volume = parseFloat(e.target.value);
-  localStorage.setItem('vp_volume', e.target.value);
-  const pct = Math.round(audio.volume * 100);
-  const icon = pct === 0 ? '🔇' : pct < 50 ? '🔉' : '🔊';
-  showToast(icon, `Volume ${pct}%`);
-});
 
-const savedVolume = localStorage.getItem('vp_volume');
-if (savedVolume !== null) {
-  audio.volume = parseFloat(savedVolume);
-  $('volume').value = savedVolume;
+function updateVolumeIcon(volume = playerVolume) {
+  const iconEl = document.querySelector('.volume span');
+  if (!iconEl) return;
+  const pct = Math.round(volume * 100);
+  iconEl.textContent = pct === 0 ? '🔇' : pct < 50 ? '🔉' : '🔊';
 }
+
+function setPlayerVolume(value, notify = false) {
+  playerVolume = parseVolume(value, playerVolume);
+  localStorage.setItem('vp_volume', playerVolume.toString());
+  const volumeEl = $('volume');
+  if (volumeEl) volumeEl.value = playerVolume.toString();
+  if (outputGain && audioCtx) {
+    outputGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    outputGain.gain.setTargetAtTime(playerVolume, audioCtx.currentTime, 0.015);
+    audio.volume = 1;
+  } else {
+    audio.volume = playerVolume;
+  }
+  updateVolumeIcon(playerVolume);
+  if (notify) {
+    const pct = Math.round(playerVolume * 100);
+    const icon = pct === 0 ? '🔇' : pct < 50 ? '🔉' : '🔊';
+    showToast(icon, `Volume ${pct}%`);
+  }
+}
+
+const volumeEl = $('volume');
+volumeEl.value = playerVolume.toString();
+setPlayerVolume(playerVolume, false);
+volumeEl.addEventListener('input', (e) => setPlayerVolume(e.target.value, true));
+volumeEl.addEventListener('change', (e) => setPlayerVolume(e.target.value, true));
+['pointerdown', 'mousedown', 'touchstart', 'click'].forEach(type => {
+  volumeEl.addEventListener(type, (e) => e.stopPropagation(), {capture: true});
+});
 
 const settingsToggle = $('settings-toggle');
 const settingsMenu = $('settings-menu');
@@ -1162,6 +1227,7 @@ function playPlaylist(name, startIdx = 0, shuffle = false) {
 let activeMenu = null;
 function showAddToMenu(libIdx, anchor) {
   closeMenu();
+  suppressMenuCloseUntil = performance.now() + 450;
   const menu = document.createElement('div');
   menu.className = 'menu';
   menu.addEventListener('pointerdown', (e) => e.stopPropagation());
@@ -1230,6 +1296,7 @@ function showAddToMenu(libIdx, anchor) {
   }, 0);
 }
 function onDocClickClose(e) {
+  if (performance.now() < suppressMenuCloseUntil) return;
   if (activeMenu && !activeMenu.contains(e.target)) closeMenu();
 }
 function closeMenu() {
@@ -1241,7 +1308,7 @@ function closeMenu() {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (['INPUT', 'TEXTAREA', 'BUTTON', 'SELECT'].includes(e.target.tagName)) return;
   if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
   else if (e.code === 'ArrowRight' && e.shiftKey) { e.preventDefault(); playNext(false); }
   else if (e.code === 'ArrowLeft' && e.shiftKey) { e.preventDefault(); playPrev(); }

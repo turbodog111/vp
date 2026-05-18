@@ -96,9 +96,9 @@ body.teto-fx-active {
 }
 body.teto-fx-active .now-view.active {
   background:
-    radial-gradient(circle at 68% 42%, rgba(255, 106, 61, calc(0.08 + var(--teto-level, 0) * 0.24)) 0%, rgba(192, 45, 30, calc(0.025 + var(--teto-level, 0) * 0.16)) 34%, transparent 68%),
-    radial-gradient(circle at 13% 82%, rgba(255, 74, 52, calc(0.025 + var(--teto-level, 0) * 0.14)) 0%, transparent 58%),
-    linear-gradient(135deg, rgba(83, 25, 18, calc(var(--teto-level, 0) * 0.22)), transparent 48%, rgba(115, 49, 20, calc(var(--teto-level, 0) * 0.16)));
+    radial-gradient(circle at 68% 42%, rgba(255, 106, 61, calc(0.1 + var(--teto-level, 0) * 0.34)) 0%, rgba(192, 45, 30, calc(0.04 + var(--teto-level, 0) * 0.22)) 38%, transparent 72%),
+    radial-gradient(circle at 13% 82%, rgba(255, 74, 52, calc(0.035 + var(--teto-level, 0) * 0.18)) 0%, transparent 60%),
+    linear-gradient(135deg, rgba(83, 25, 18, calc(var(--teto-level, 0) * 0.28)), transparent 46%, rgba(115, 49, 20, calc(var(--teto-level, 0) * 0.22)));
   background-blend-mode: screen, screen, normal;
 }
 
