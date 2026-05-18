@@ -36,6 +36,10 @@ let tetoRiseEnergy = 0;
 let lastTetoAmplitude = 0;
 let waveLevelWindow = [];
 let playerVolume = parseVolume(localStorage.getItem('vp_volume'), 1);
+let calibratedClockSongId = null;
+let calibratedBaseTime = 0;
+let calibratedBasePerf = 0;
+let calibratedClockRunning = false;
 const WAVE_BAR_COUNT = 84;
 const WAVE_GAIN = 1.34;
 const WAVE_SOFT_LIMIT = 0.94;
@@ -47,6 +51,7 @@ const SONG_EFFECT_PROFILES = {
     bpm: 128,
     key: 'F# major',
     beatOffset: 0,
+    duration: 217.835102,
     sections: [
       {name: 'Intro', start: 0, end: 51, intensity: 0.24, chorus: false},
       {name: 'First chorus', start: 52.27, end: 84.01, intensity: 1, chorus: true, fade: 0.5},
@@ -156,6 +161,82 @@ function currentSong() {
 function effectProfileForSong(song = currentSong()) {
   if (!song) return null;
   return SONG_EFFECT_PROFILES[song.path] || SONG_EFFECT_PROFILES[song.id] || SONG_EFFECT_PROFILES[song.name] || null;
+}
+
+function songClockId(song = currentSong()) {
+  return song ? (song.id || song.path || song.url || song.name) : null;
+}
+
+function nativeAudioDuration() {
+  return Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;
+}
+
+function effectiveDuration(song = currentSong()) {
+  const profile = effectProfileForSong(song);
+  if (Number.isFinite(profile?.duration) && profile.duration > 0) return profile.duration;
+  return nativeAudioDuration();
+}
+
+function calibratedFromNativeTime(nativeTime, song = currentSong()) {
+  const profileDuration = effectProfileForSong(song)?.duration;
+  const nativeDuration = nativeAudioDuration();
+  const time = Number.isFinite(nativeTime) ? nativeTime : 0;
+  if (Number.isFinite(profileDuration) && profileDuration > 0 && nativeDuration > 0) {
+    return clamp(0, profileDuration, time * profileDuration / nativeDuration);
+  }
+  return Math.max(0, time);
+}
+
+function nativeFromCalibratedTime(time, song = currentSong()) {
+  const profileDuration = effectProfileForSong(song)?.duration;
+  const nativeDuration = nativeAudioDuration();
+  const calibratedTime = Number.isFinite(time) ? time : 0;
+  if (Number.isFinite(profileDuration) && profileDuration > 0 && nativeDuration > 0) {
+    return clamp(0, nativeDuration, calibratedTime * nativeDuration / profileDuration);
+  }
+  return Math.max(0, calibratedTime);
+}
+
+function resetCalibratedClock(time = 0, song = currentSong()) {
+  const duration = effectiveDuration(song);
+  calibratedClockSongId = songClockId(song);
+  calibratedBaseTime = duration ? clamp(0, duration, time) : Math.max(0, time);
+  calibratedBasePerf = performance.now() / 1000;
+  calibratedClockRunning = false;
+}
+
+function ensureCalibratedClock(song = currentSong()) {
+  if (calibratedClockSongId !== songClockId(song)) {
+    resetCalibratedClock(calibratedFromNativeTime(audio.currentTime || 0, song), song);
+  }
+}
+
+function currentCalibratedTime(song = currentSong()) {
+  const profileDuration = effectProfileForSong(song)?.duration;
+  if (!Number.isFinite(profileDuration) || profileDuration <= 0) {
+    return Math.max(0, audio.currentTime || 0);
+  }
+  ensureCalibratedClock(song);
+  const elapsed = calibratedClockRunning ? (performance.now() / 1000 - calibratedBasePerf) * (audio.playbackRate || 1) : 0;
+  return clamp(0, profileDuration, calibratedBaseTime + elapsed);
+}
+
+function syncCalibratedClockToNative(song = currentSong()) {
+  resetCalibratedClock(calibratedFromNativeTime(audio.currentTime || 0, song), song);
+}
+
+function startCalibratedClock(song = currentSong()) {
+  ensureCalibratedClock(song);
+  calibratedBaseTime = currentCalibratedTime(song);
+  calibratedBasePerf = performance.now() / 1000;
+  calibratedClockRunning = true;
+}
+
+function pauseCalibratedClock(song = currentSong()) {
+  ensureCalibratedClock(song);
+  calibratedBaseTime = currentCalibratedTime(song);
+  calibratedBasePerf = performance.now() / 1000;
+  calibratedClockRunning = false;
 }
 
 function effectSectionAt(profile, time) {
@@ -442,6 +523,7 @@ function playCurrent() {
     audio.pause();
     audio.src = song.url;
     audio.load();
+    resetCalibratedClock(0, song);
   }
   audio.play().catch(err => console.warn('Play failed:', err));
   $('np-title').textContent = song.title || song.displayName;
@@ -480,12 +562,17 @@ function updateUpNext() {
 }
 
 function updatePlaybackVisuals() {
-  const pct = audio.duration ? Math.min(1, Math.max(0, audio.currentTime / audio.duration)) : 0;
+  const current = currentCalibratedTime();
+  const duration = effectiveDuration();
+  const pct = duration ? clamp(0, 1, current / duration) : 0;
   const deg = `${pct * 360}deg`;
   $('play').style.setProperty('--progress', deg);
   $('hero-play').style.setProperty('--progress', deg);
-  $('hero-time-current').textContent = fmtTime(audio.currentTime);
-  $('hero-time-total').textContent = fmtTime(audio.duration);
+  $('time-current').textContent = fmtTime(current);
+  $('time-total').textContent = fmtTime(duration);
+  $('seek').value = pct * 100;
+  $('hero-time-current').textContent = fmtTime(current);
+  $('hero-time-total').textContent = fmtTime(duration);
 }
 
 function updateMediaSession(song) {
@@ -529,6 +616,7 @@ function playNext(auto = false) {
   if (queue.length === 0) return;
   if (loopMode === 'one' && auto) {
     audio.currentTime = 0;
+    resetCalibratedClock(0);
     audio.play();
     return;
   }
@@ -549,13 +637,18 @@ function playNext(auto = false) {
   } else {
     audio.pause();
     audio.currentTime = 0;
+    resetCalibratedClock(0);
+    updatePlaybackVisuals();
   }
 }
 
 function playPrev() {
   if (queue.length === 0) return;
-  if (audio.currentTime > 3) {
+  if (currentCalibratedTime() > 3) {
     audio.currentTime = 0;
+    resetCalibratedClock(0);
+    if (!audio.paused) startCalibratedClock();
+    updatePlaybackVisuals();
     showToast('⏮', 'Restart');
     return;
   }
@@ -565,6 +658,9 @@ function playPrev() {
     queueIndex = queue.length - 1;
   } else {
     audio.currentTime = 0;
+    resetCalibratedClock(0);
+    if (!audio.paused) startCalibratedClock();
+    updatePlaybackVisuals();
     showToast('⏮', 'Restart');
     return;
   }
@@ -824,10 +920,11 @@ function drawTetoFx(level) {
   const radius = Math.min(w, h) * (0.16 + party * 0.035);
   const t = performance.now() / 1000;
   const profile = effectProfileForSong();
-  const section = effectSectionAt(profile, audio.currentTime || 0);
+  const fxTime = currentCalibratedTime();
+  const section = effectSectionAt(profile, fxTime);
   const sectionPower = profile ? ((section?.intensity || 0.28) * (section?.fadeLevel ?? 1)) : 1;
   const chorusPower = section?.chorus ? sectionPower : 0;
-  const beatPulse = beatPulseForProfile(profile, audio.currentTime || 0);
+  const beatPulse = beatPulseForProfile(profile, fxTime);
   const protectedRects = ['.now-meta', '.now-queue'].map(selector => {
     const el = document.querySelector(selector);
     if (!el) return null;
@@ -1048,6 +1145,7 @@ function drawWaveform() {
   }
 
   $('hero-play').style.setProperty('--level', smoothedLevel.toFixed(3));
+  if (audio.src) updatePlaybackVisuals();
   drawTetoFx(smoothedLevel);
 }
 
@@ -1062,18 +1160,33 @@ function roundedBar(ctx, x, y, w, h, r) {
 }
 
 audio.addEventListener('timeupdate', () => {
-  $('time-current').textContent = fmtTime(audio.currentTime);
-  if (audio.duration) {
-    $('seek').value = (audio.currentTime / audio.duration) * 100;
-  }
   updatePlaybackVisuals();
 });
 audio.addEventListener('loadedmetadata', () => {
-  $('time-total').textContent = fmtTime(audio.duration);
+  syncCalibratedClockToNative();
   updatePlaybackVisuals();
 });
-audio.addEventListener('ended', () => playNext(true));
+audio.addEventListener('seeking', () => {
+  syncCalibratedClockToNative();
+  updatePlaybackVisuals();
+});
+audio.addEventListener('seeked', () => {
+  syncCalibratedClockToNative();
+  if (!audio.paused) startCalibratedClock();
+  updatePlaybackVisuals();
+});
+audio.addEventListener('ratechange', () => {
+  pauseCalibratedClock();
+  if (!audio.paused) startCalibratedClock();
+});
+audio.addEventListener('waiting', () => pauseCalibratedClock());
+audio.addEventListener('playing', () => startCalibratedClock());
+audio.addEventListener('ended', () => {
+  pauseCalibratedClock();
+  playNext(true);
+});
 audio.addEventListener('play', () => {
+  startCalibratedClock();
   $('play').textContent = '⏸';
   $('hero-play').classList.add('playing');
   $('hero-play').querySelector('.hero-icon').textContent = '⏸';
@@ -1083,6 +1196,7 @@ audio.addEventListener('play', () => {
   updateFxState();
 });
 audio.addEventListener('pause', () => {
+  pauseCalibratedClock();
   $('play').textContent = '▶';
   $('hero-play').classList.remove('playing');
   $('hero-play').querySelector('.hero-icon').textContent = '▶';
@@ -1106,7 +1220,13 @@ $('refresh').addEventListener('click', loadLibrary);
 bindLibraryActionGuards();
 
 $('seek').addEventListener('input', (e) => {
-  if (audio.duration) audio.currentTime = (e.target.value / 100) * audio.duration;
+  const duration = effectiveDuration();
+  if (!duration) return;
+  const targetTime = (parseFloat(e.target.value) / 100) * duration;
+  audio.currentTime = nativeFromCalibratedTime(targetTime);
+  resetCalibratedClock(targetTime);
+  if (!audio.paused) startCalibratedClock();
+  updatePlaybackVisuals();
 });
 
 function updateVolumeIcon(volume = playerVolume) {
