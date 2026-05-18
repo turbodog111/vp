@@ -50,7 +50,7 @@ const WAVE_MIN_FREQ = 55;
 const WAVE_MAX_FREQ = 14000;
 const SONG_EFFECT_PROFILES = {
   'songs/Penthouse - One, Two, Three (一二三).mp3': {
-    bpm: 128,
+    bpm: 123,
     key: 'F# major',
     beatOffset: 0,
     duration: 217.835102,
