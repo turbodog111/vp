@@ -19,8 +19,8 @@ let playlists = loadPlaylists();
 let currentPlaylist = null;
 let activeCollection = localStorage.getItem('vp_collection') || 'all';
 let tetoFxEnabled = localStorage.getItem('vp_teto_fx_enabled') !== 'false';
-let addToMenuOpenedAt = 0;
-let suppressMenuCloseUntil = 0;
+let addToActionOpenedAt = 0;
+let pendingPlaylistSongIdx = null;
 let audioCtx = null;
 let audioSource = null;
 let analyser = null;
@@ -42,6 +42,19 @@ const WAVE_SOFT_LIMIT = 0.94;
 const WAVE_LEVEL_WINDOW = 180;
 const WAVE_MIN_FREQ = 55;
 const WAVE_MAX_FREQ = 14000;
+const SONG_EFFECT_PROFILES = {
+  'songs/Penthouse - One, Two, Three (一二三).mp3': {
+    bpm: 128,
+    key: 'F# major',
+    beatOffset: 0,
+    sections: [
+      {name: 'Intro', start: 0, end: 51, intensity: 0.24, chorus: false},
+      {name: 'First chorus', start: 52, end: 83, intensity: 1, chorus: true},
+      {name: 'Altered second chorus', start: 131, end: 160, intensity: 0.92, chorus: true},
+      {name: 'Last chorus', start: 182, end: 213, intensity: 1.08, chorus: true},
+    ],
+  },
+};
 const seededUnit = (seed) => {
   const x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
@@ -138,6 +151,23 @@ function findSongIndex(ref) {
 
 function currentSong() {
   return library[queue[queueIndex]] || null;
+}
+
+function effectProfileForSong(song = currentSong()) {
+  if (!song) return null;
+  return SONG_EFFECT_PROFILES[song.path] || SONG_EFFECT_PROFILES[song.id] || SONG_EFFECT_PROFILES[song.name] || null;
+}
+
+function effectSectionAt(profile, time) {
+  if (!profile || !Number.isFinite(time)) return null;
+  return profile.sections.find(section => time >= section.start && time <= section.end) || null;
+}
+
+function beatPulseForProfile(profile, time) {
+  if (!profile?.bpm || !Number.isFinite(time)) return 0;
+  const beats = Math.max(0, (time - (profile.beatOffset || 0)) * profile.bpm / 60);
+  const phase = beats - Math.floor(beats);
+  return Math.pow(1 - phase, 4.2);
 }
 
 function isTetoFxActive(song = currentSong()) {
@@ -308,11 +338,9 @@ function openAddToMenuFromEvent(e) {
   if (!Number.isFinite(libIdx)) return false;
   stopInteractiveEvent(e);
   const now = performance.now();
-  const anchor = row.querySelector('.add-to') || target;
-  if (e.type === 'click' && now - addToMenuOpenedAt < 350) return true;
-  addToMenuOpenedAt = now;
-  suppressMenuCloseUntil = now + 450;
-  showAddToMenu(libIdx, anchor);
+  if (now - addToActionOpenedAt < 350) return true;
+  addToActionOpenedAt = now;
+  startAddToPlaylistFlow(libIdx);
   return true;
 }
 
@@ -789,6 +817,11 @@ function drawTetoFx(level) {
   const cy = (heroRect.top - fxRect.top + heroRect.height / 2) * sy;
   const radius = Math.min(w, h) * (0.16 + party * 0.035);
   const t = performance.now() / 1000;
+  const profile = effectProfileForSong();
+  const section = effectSectionAt(profile, audio.currentTime || 0);
+  const sectionPower = profile ? (section?.intensity || 0.28) : 1;
+  const chorusPower = section?.chorus ? sectionPower : 0;
+  const beatPulse = beatPulseForProfile(profile, audio.currentTime || 0);
   const protectedRects = ['.now-meta', '.now-queue'].map(selector => {
     const el = document.querySelector(selector);
     if (!el) return null;
@@ -808,30 +841,62 @@ function drawTetoFx(level) {
   ctx.save();
   ctx.globalCompositeOperation = 'lighter';
 
-  const glowRadius = Math.max(w, h) * (0.34 + levels.glow * 0.3);
+  const glowRadius = Math.max(w, h) * (0.34 + levels.glow * 0.3 + chorusPower * beatPulse * 0.16);
   const glow = ctx.createRadialGradient(cx, cy, radius * 0.18, cx, cy, glowRadius);
-  glow.addColorStop(0, `rgba(255, 122, 45, ${0.08 + levels.glow * 0.22})`);
-  glow.addColorStop(0.46, `rgba(210, 54, 37, ${0.04 + levels.glow * 0.17})`);
-  glow.addColorStop(0.78, `rgba(120, 34, 22, ${0.015 + levels.glow * 0.09})`);
+  glow.addColorStop(0, `rgba(255, 122, 45, ${0.06 + levels.glow * 0.18 + chorusPower * beatPulse * 0.16})`);
+  glow.addColorStop(0.46, `rgba(210, 54, 37, ${0.03 + levels.glow * 0.13 + chorusPower * beatPulse * 0.12})`);
+  glow.addColorStop(0.78, `rgba(120, 34, 22, ${0.01 + levels.glow * 0.08 + chorusPower * beatPulse * 0.05})`);
   glow.addColorStop(1, 'rgba(91, 28, 17, 0)');
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, w, h);
 
   const cornerGlow = ctx.createRadialGradient(w * 0.08, h * 0.88, 0, w * 0.08, h * 0.88, Math.max(w, h) * 0.5);
-  cornerGlow.addColorStop(0, `rgba(255, 83, 48, ${levels.glow * 0.08})`);
+  cornerGlow.addColorStop(0, `rgba(255, 83, 48, ${levels.glow * 0.05 + chorusPower * beatPulse * 0.08})`);
   cornerGlow.addColorStop(1, 'rgba(255, 83, 48, 0)');
   ctx.fillStyle = cornerGlow;
   ctx.fillRect(0, 0, w, h);
 
-  const pulseLevel = clamp(0, 1, levels.glow * 0.72 + party * 0.28);
+  const bpmPulse = profile ? beatPulse * (0.3 + sectionPower * 0.7) : 0;
+  const pulseLevel = clamp(0, 1, (levels.glow * 0.54 + party * 0.2) * sectionPower + bpmPulse * (0.22 + chorusPower * 0.72));
   const wash = ctx.createLinearGradient(0, 0, w, h);
-  wash.addColorStop(0, `rgba(255, 69, 45, ${pulseLevel * 0.09})`);
-  wash.addColorStop(0.48, `rgba(255, 134, 42, ${pulseLevel * 0.08})`);
-  wash.addColorStop(1, `rgba(136, 34, 24, ${pulseLevel * 0.1})`);
+  wash.addColorStop(0, `rgba(255, 69, 45, ${pulseLevel * (0.06 + chorusPower * 0.07)})`);
+  wash.addColorStop(0.48, `rgba(255, 134, 42, ${pulseLevel * (0.06 + chorusPower * 0.06)})`);
+  wash.addColorStop(1, `rgba(136, 34, 24, ${pulseLevel * (0.07 + chorusPower * 0.08)})`);
   ctx.fillStyle = wash;
   ctx.fillRect(0, 0, w, h);
 
-  const ringSpeed = 0.12 + party * 0.16;
+  if (chorusPower > 0) {
+    const colors = [
+      [255, 98, 55],
+      [255, 173, 67],
+      [111, 211, 255],
+      [255, 92, 143],
+    ];
+    const beamCount = 7;
+    for (let j = 0; j < beamCount; j++) {
+      const color = colors[j % colors.length];
+      const angle = t * (0.16 + chorusPower * 0.05) + j * (Math.PI * 2 / beamCount) + beatPulse * 0.2;
+      const width = (0.14 + beatPulse * 0.05) * Math.PI;
+      const length = Math.max(w, h) * (0.82 + chorusPower * 0.46);
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(angle);
+      const beam = ctx.createLinearGradient(0, 0, length, 0);
+      beam.addColorStop(0, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${0.05 + chorusPower * 0.1 + beatPulse * 0.12})`);
+      beam.addColorStop(0.42, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${0.025 + chorusPower * 0.07 + beatPulse * 0.08})`);
+      beam.addColorStop(1, `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`);
+      ctx.fillStyle = beam;
+      ctx.beginPath();
+      ctx.moveTo(radius * 0.4, 0);
+      ctx.lineTo(length, Math.sin(width) * length * 0.28);
+      ctx.lineTo(length, -Math.sin(width) * length * 0.28);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  const ringSpeed = profile?.bpm ? profile.bpm / 60 : 0.12 + party * 0.16;
   const ringCount = 5;
   for (let j = 0; j < ringCount; j++) {
     const phase = (t * ringSpeed + j / ringCount) % 1;
@@ -839,7 +904,7 @@ function drawTetoFx(level) {
     const ringRadius = radius * (0.95 + phase * (2.4 + pulseLevel * 1.35));
     ctx.beginPath();
     ctx.arc(cx, cy, ringRadius, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(255, ${112 + j * 16}, 48, ${fade * (0.04 + pulseLevel * 0.22)})`;
+    ctx.strokeStyle = `rgba(255, ${112 + j * 16}, 48, ${fade * (0.025 + pulseLevel * 0.2 + chorusPower * beatPulse * 0.12)})`;
     ctx.lineWidth = Math.max(1, (1.2 + pulseLevel * 3.4) * (1 - phase * 0.34) * sx);
     ctx.stroke();
   }
@@ -851,7 +916,7 @@ function drawTetoFx(level) {
     'rgba(255, 210, 105, 0.4)',
   ];
   TETO_FX_OBJECTS.forEach((obj, i) => {
-    const appear = smoothStep(obj.threshold + 0.12, Math.min(1, obj.threshold + 0.58), party);
+    const appear = smoothStep(obj.threshold + 0.12, Math.min(1, obj.threshold + 0.58), party * sectionPower + beatPulse * 0.14);
     if (appear <= 0.01) return;
     const pulse = 0.72 + Math.sin(t * (0.72 + (i % 5) * 0.12) + obj.phase) * 0.28;
     const beat = appear * (0.72 + pulse * 0.28);
@@ -1108,16 +1173,91 @@ document.querySelectorAll('.tab').forEach(tab => {
   });
 });
 
-$('new-playlist').addEventListener('click', () => {
-  const name = (prompt('Playlist name:') || '').trim();
-  if (!name) return;
-  if (playlists[name]) { alert('A playlist with that name already exists.'); return; }
-  playlists[name] = [];
+$('new-playlist').addEventListener('click', () => createPlaylistFromInput($('new-playlist-name')));
+$('new-playlist-name').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') createPlaylistFromInput(e.currentTarget);
+});
+
+function createPlaylistFromInput(input, songToAdd = null) {
+  const name = (input?.value || '').trim();
+  if (!name) return null;
+  if (!playlists[name]) playlists[name] = [];
+  if (songToAdd && !playlists[name].some(id => refMatchesSong(id, songToAdd))) {
+    playlists[name].push(songRef(songToAdd));
+  }
   savePlaylists();
+  if (input) input.value = '';
   renderPlaylists();
+  renderPlaylistActionPanel();
+  return name;
+}
+
+function startAddToPlaylistFlow(libIdx) {
+  pendingPlaylistSongIdx = libIdx;
+  switchView('playlists');
+  renderPlaylistActionPanel();
+  setTimeout(() => $('playlist-action-panel')?.scrollIntoView({block: 'nearest'}), 0);
+}
+
+function renderPlaylistActionPanel() {
+  const panel = $('playlist-action-panel');
+  if (!panel) return;
+  const song = library[pendingPlaylistSongIdx];
+  if (!song) {
+    panel.classList.add('hidden');
+    return;
+  }
+  panel.classList.remove('hidden');
+  $('playlist-action-title').textContent = song.displayName;
+  const options = $('playlist-action-options');
+  options.innerHTML = '';
+  const names = Object.keys(playlists).sort((a, b) => a.localeCompare(b));
+  if (names.length === 0) {
+    const note = document.createElement('div');
+    note.className = 'empty';
+    note.style.padding = '6px 0';
+    note.style.textAlign = 'left';
+    note.textContent = 'No playlists yet. Create one below and this song will be added.';
+    options.appendChild(note);
+  } else {
+    names.forEach(name => {
+      const button = document.createElement('button');
+      const already = playlists[name].some(id => refMatchesSong(id, song));
+      button.type = 'button';
+      button.classList.toggle('on', already);
+      button.textContent = already ? `✓ ${name}` : `+ ${name}`;
+      button.addEventListener('click', () => {
+        if (already) {
+          playlists[name] = playlists[name].filter(id => !refMatchesSong(id, song));
+        } else {
+          playlists[name].push(songRef(song));
+        }
+        savePlaylists();
+        renderPlaylists();
+        renderPlaylistActionPanel();
+      });
+      options.appendChild(button);
+    });
+  }
+}
+
+$('playlist-action-create').addEventListener('click', () => {
+  const song = library[pendingPlaylistSongIdx];
+  createPlaylistFromInput($('playlist-action-name'), song);
+});
+$('playlist-action-name').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const song = library[pendingPlaylistSongIdx];
+    createPlaylistFromInput(e.currentTarget, song);
+  }
+});
+$('playlist-action-cancel').addEventListener('click', () => {
+  pendingPlaylistSongIdx = null;
+  renderPlaylistActionPanel();
 });
 
 function renderPlaylists() {
+  renderPlaylistActionPanel();
   const container = $('playlists-container');
   container.innerHTML = '';
   const names = Object.keys(playlists).sort((a, b) => a.localeCompare(b));
@@ -1167,11 +1307,11 @@ function renderPlaylists() {
     deleteButton.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (confirm(`Delete playlist "${name}"?`)) {
-        delete playlists[name];
-        savePlaylists();
-        renderPlaylists();
-      }
+      delete playlists[name];
+      savePlaylists();
+      renderPlaylists();
+      renderPlaylistActionPanel();
+      showToast('×', `Deleted ${name}`);
     });
     const ul = card.querySelector('.playlist-songs');
     if (songs.length === 0) {
@@ -1227,7 +1367,7 @@ function playPlaylist(name, startIdx = 0, shuffle = false) {
     .map((id, playlistIdx) => ({ libIdx: findSongIndex(id), playlistIdx }))
     .filter(entry => entry.libIdx >= 0);
   if (playable.length === 0) {
-    alert('No playable songs in this playlist. The files may not be in the library folders yet.');
+    showToast('!', 'No playable songs in this playlist.');
     return;
   }
   queue = playable.map(entry => entry.libIdx);
@@ -1250,89 +1390,6 @@ function playPlaylist(name, startIdx = 0, shuffle = false) {
     unshuffledQueue = null;
   }
   playCurrent();
-}
-
-let activeMenu = null;
-function showAddToMenu(libIdx, anchor) {
-  closeMenu();
-  suppressMenuCloseUntil = performance.now() + 450;
-  const menu = document.createElement('div');
-  menu.className = 'menu';
-  menu.addEventListener('pointerdown', (e) => e.stopPropagation());
-  const names = Object.keys(playlists).sort();
-  if (names.length === 0) {
-    const note = document.createElement('div');
-    note.className = 'menu-note';
-    note.textContent = 'No playlists yet';
-    menu.appendChild(note);
-  }
-  names.forEach(name => {
-    const b = document.createElement('button');
-    const song = library[libIdx];
-    const already = playlists[name].some(id => refMatchesSong(id, song));
-    b.textContent = already ? `✓ ${name}` : name;
-    b.addEventListener('pointerdown', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    });
-    b.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (already) {
-        playlists[name] = playlists[name].filter(id => !refMatchesSong(id, song));
-      } else {
-        playlists[name].push(songRef(song));
-      }
-      savePlaylists();
-      closeMenu();
-    });
-    menu.appendChild(b);
-  });
-  if (names.length > 0) {
-    const div = document.createElement('div');
-    div.className = 'menu-divider';
-    menu.appendChild(div);
-  }
-  const create = document.createElement('button');
-  create.className = 'menu-create';
-  create.textContent = '+ New playlist...';
-  create.addEventListener('pointerdown', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  });
-  create.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    closeMenu();
-    const name = (prompt('Playlist name:') || '').trim();
-    if (!name) return;
-    if (!playlists[name]) playlists[name] = [];
-    const song = library[libIdx];
-    if (!playlists[name].some(id => refMatchesSong(id, song))) playlists[name].push(songRef(song));
-    savePlaylists();
-  });
-  menu.appendChild(create);
-
-  document.body.appendChild(menu);
-  const rect = anchor.getBoundingClientRect();
-  const menuWidth = 200;
-  menu.style.top = `${rect.bottom + 4}px`;
-  menu.style.left = `${Math.max(8, Math.min(window.innerWidth - menuWidth - 8, rect.right - menuWidth))}px`;
-  activeMenu = menu;
-  setTimeout(() => {
-    document.addEventListener('click', onDocClickClose);
-  }, 0);
-}
-function onDocClickClose(e) {
-  if (performance.now() < suppressMenuCloseUntil) return;
-  if (activeMenu && !activeMenu.contains(e.target)) closeMenu();
-}
-function closeMenu() {
-  if (activeMenu) {
-    activeMenu.remove();
-    activeMenu = null;
-    document.removeEventListener('click', onDocClickClose);
-  }
 }
 
 document.addEventListener('keydown', (e) => {

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>vp</title>
-<link rel="stylesheet" href="styles.css?v=2026-05-18-wk-playlist-rise-fx">
+<link rel="stylesheet" href="styles.css?v=2026-05-18-inline-playlists-penthouse">
 </head>
 <body>
 <div class="app">
@@ -48,7 +48,20 @@
 
     <section id="view-playlists" class="view">
       <div class="playlist-toolbar">
+        <input id="new-playlist-name" type="text" placeholder="New playlist name">
         <button id="new-playlist">+ New playlist</button>
+      </div>
+      <div id="playlist-action-panel" class="playlist-action hidden">
+        <div class="playlist-action-copy">
+          <div class="playlist-action-kicker">Add to playlist</div>
+          <div id="playlist-action-title" class="playlist-action-title">Select a song</div>
+        </div>
+        <div id="playlist-action-options" class="playlist-action-options"></div>
+        <div class="playlist-action-create">
+          <input id="playlist-action-name" type="text" placeholder="Create playlist">
+          <button id="playlist-action-create">Create and add</button>
+          <button id="playlist-action-cancel" class="ghost">Cancel</button>
+        </div>
       </div>
       <div id="playlists-container"></div>
     </section>
@@ -110,6 +123,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=2026-05-18-wk-playlist-rise-fx"></script>
+<script src="app.js?v=2026-05-18-inline-playlists-penthouse"></script>
 </body>
 </html>
