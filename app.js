@@ -49,9 +49,9 @@ const SONG_EFFECT_PROFILES = {
     beatOffset: 0,
     sections: [
       {name: 'Intro', start: 0, end: 51, intensity: 0.24, chorus: false},
-      {name: 'First chorus', start: 52, end: 83, intensity: 1, chorus: true},
-      {name: 'Altered second chorus', start: 131, end: 160, intensity: 0.92, chorus: true},
-      {name: 'Last chorus', start: 182, end: 213, intensity: 1.08, chorus: true},
+      {name: 'First chorus', start: 52.27, end: 84.01, intensity: 1, chorus: true, fade: 0.5},
+      {name: 'Altered second chorus', start: 128.89, end: 148.37, intensity: 0.92, chorus: true, fade: 0.5},
+      {name: 'Last chorus', start: 179.5, end: 211.38, intensity: 1.08, chorus: true, fade: 0.5},
     ],
   },
 };
@@ -160,7 +160,13 @@ function effectProfileForSong(song = currentSong()) {
 
 function effectSectionAt(profile, time) {
   if (!profile || !Number.isFinite(time)) return null;
-  return profile.sections.find(section => time >= section.start && time <= section.end) || null;
+  const section = profile.sections.find(item => time >= item.start && time <= item.end);
+  if (!section) return null;
+  const fade = section.fade || 0;
+  if (!fade) return {...section, fadeLevel: 1};
+  const fadeIn = clamp(0, 1, (time - section.start) / fade);
+  const fadeOut = clamp(0, 1, (section.end - time) / fade);
+  return {...section, fadeLevel: Math.min(fadeIn, fadeOut)};
 }
 
 function beatPulseForProfile(profile, time) {
@@ -819,7 +825,7 @@ function drawTetoFx(level) {
   const t = performance.now() / 1000;
   const profile = effectProfileForSong();
   const section = effectSectionAt(profile, audio.currentTime || 0);
-  const sectionPower = profile ? (section?.intensity || 0.28) : 1;
+  const sectionPower = profile ? ((section?.intensity || 0.28) * (section?.fadeLevel ?? 1)) : 1;
   const chorusPower = section?.chorus ? sectionPower : 0;
   const beatPulse = beatPulseForProfile(profile, audio.currentTime || 0);
   const protectedRects = ['.now-meta', '.now-queue'].map(selector => {
