@@ -41,6 +41,7 @@ let calibratedBaseTime = 0;
 let calibratedBasePerf = 0;
 let calibratedClockRunning = false;
 let pendingClockSeekTime = null;
+let pendingClockSeekStartedAt = 0;
 const WAVE_BAR_COUNT = 84;
 const WAVE_GAIN = 1.34;
 const WAVE_SOFT_LIMIT = 0.94;
@@ -218,8 +219,18 @@ function currentCalibratedTime(song = currentSong()) {
     return Math.max(0, audio.currentTime || 0);
   }
   ensureCalibratedClock(song);
-  const elapsed = calibratedClockRunning ? (performance.now() / 1000 - calibratedBasePerf) * (audio.playbackRate || 1) : 0;
-  return clamp(0, profileDuration, calibratedBaseTime + elapsed);
+  if (pendingClockSeekTime !== null) {
+    if (calibratedClockRunning && !audio.seeking && performance.now() - pendingClockSeekStartedAt > 180) {
+      pendingClockSeekTime = null;
+    } else {
+      return clamp(0, profileDuration, pendingClockSeekTime);
+    }
+  }
+  if (calibratedClockRunning && !audio.seeking) {
+    calibratedBaseTime = calibratedFromNativeTime(audio.currentTime || 0, song);
+    calibratedBasePerf = performance.now() / 1000;
+  }
+  return clamp(0, profileDuration, calibratedBaseTime);
 }
 
 function setNativeTimeFromCalibratedClock(time, song = currentSong(), options = {}) {
@@ -230,9 +241,14 @@ function setNativeTimeFromCalibratedClock(time, song = currentSong(), options = 
   const nativeTarget = nativeFromCalibratedTime(targetTime, song);
   if (!Number.isFinite(nativeTarget)) return false;
   const tolerance = Number.isFinite(options.tolerance) ? options.tolerance : 0.012;
-  if (options.force || Math.abs((audio.currentTime || 0) - nativeTarget) > tolerance) {
+  const diff = Math.abs((audio.currentTime || 0) - nativeTarget);
+  const shouldSeek = options.force ? diff > 0.001 : diff > tolerance;
+  if (shouldSeek) {
     pendingClockSeekTime = targetTime;
+    pendingClockSeekStartedAt = performance.now();
     audio.currentTime = nativeTarget;
+  } else if (options.force) {
+    pendingClockSeekTime = null;
   }
   return true;
 }
@@ -255,7 +271,11 @@ function syncCalibratedClockToNative(song = currentSong(), options = {}) {
 
 function startCalibratedClock(song = currentSong()) {
   ensureCalibratedClock(song);
-  calibratedBaseTime = currentCalibratedTime(song);
+  if (pendingClockSeekTime !== null) {
+    calibratedBaseTime = pendingClockSeekTime;
+  } else {
+    calibratedBaseTime = calibratedFromNativeTime(audio.currentTime || 0, song);
+  }
   calibratedBasePerf = performance.now() / 1000;
   calibratedClockRunning = true;
 }
@@ -1213,12 +1233,11 @@ audio.addEventListener('seeking', () => {
 });
 audio.addEventListener('seeked', () => {
   syncCalibratedClockToNative(currentSong(), {allowBackward: false, consumePending: true});
-  if (!audio.paused) startCalibratedClock();
   updatePlaybackVisuals();
 });
 audio.addEventListener('ratechange', () => {
   pauseCalibratedClock();
-  if (!audio.paused) startCalibratedClock();
+  if (!audio.paused && !audio.seeking && audio.readyState >= 3) startCalibratedClock();
 });
 audio.addEventListener('waiting', () => pauseCalibratedClock());
 audio.addEventListener('playing', () => startCalibratedClock());
@@ -1227,7 +1246,6 @@ audio.addEventListener('ended', () => {
   playNext(true);
 });
 audio.addEventListener('play', () => {
-  startCalibratedClock();
   $('play').textContent = '⏸';
   $('hero-play').classList.add('playing');
   $('hero-play').querySelector('.hero-icon').textContent = '⏸';
