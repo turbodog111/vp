@@ -19,7 +19,7 @@ let playlists = loadPlaylists();
 let currentPlaylist = null;
 let activeCollection = localStorage.getItem('vp_collection') || 'all';
 let tetoFxEnabled = localStorage.getItem('vp_teto_fx_enabled') !== 'false';
-let fxTheme = ['teto', 'disco'].includes(localStorage.getItem('vp_fx_theme')) ? localStorage.getItem('vp_fx_theme') : 'teto';
+let fxTheme = ['teto', 'disco', 'teto11'].includes(localStorage.getItem('vp_fx_theme')) ? localStorage.getItem('vp_fx_theme') : 'teto11';
 let timingDebugEnabled = localStorage.getItem('vp_timing_debug_enabled') === 'true';
 let addToActionOpenedAt = 0;
 let pendingPlaylistSongIdx = null;
@@ -117,6 +117,51 @@ const DISCO_SPARKLES = Array.from({ length: 72 }, (_, i) => ({
   size: 1.6 + seededUnit((i + 1) * 5.73) * 4.8,
   threshold: 0.08 + seededUnit((i + 1) * 19.43) * 0.5,
 }));
+const TETO11_SPARKS = Array.from({ length: 104 }, (_, i) => ({
+  x: 0.035 + seededUnit((i + 1) * 17.217) * 0.93,
+  y: 0.05 + seededUnit((i + 1) * 29.913) * 0.86,
+  phase: seededUnit((i + 1) * 83.11) * Math.PI * 2,
+  size: 1.2 + seededUnit((i + 1) * 7.37) * 3.8,
+  warm: seededUnit((i + 1) * 43.91),
+  threshold: 0.04 + seededUnit((i + 1) * 31.13) * 0.44,
+}));
+const TETO11_HEARTS = Array.from({ length: 18 }, (_, i) => {
+  const a = seededUnit((i + 1) * 37.31);
+  const b = seededUnit((i + 1) * 53.17);
+  const zones = [
+    {x: 0.08 + a * 0.18, y: 0.12 + b * 0.22},
+    {x: 0.68 + a * 0.22, y: 0.13 + b * 0.2},
+    {x: 0.06 + a * 0.2, y: 0.58 + b * 0.28},
+    {x: 0.72 + a * 0.2, y: 0.56 + b * 0.28},
+    {x: 0.34 + a * 0.28, y: 0.72 + b * 0.13},
+    {x: 0.3 + a * 0.36, y: 0.07 + b * 0.12},
+  ];
+  return {
+    ...zones[i % zones.length],
+    phase: a * Math.PI * 2,
+    size: 4.4 + (i % 5) * 0.85 + b * 1.1,
+    threshold: 0.12 + (i % 6) * 0.075,
+  };
+});
+const TETO11_CIRCUITS = Array.from({ length: 14 }, (_, i) => ({
+  side: i % 4,
+  anchor: 0.08 + seededUnit((i + 1) * 67.7) * 0.84,
+  lane: 0.06 + seededUnit((i + 1) * 11.41) * 0.16,
+  length: 0.13 + seededUnit((i + 1) * 5.91) * 0.22,
+  phase: seededUnit((i + 1) * 97.13) * Math.PI * 2,
+  nodes: 2 + (i % 3),
+}));
+const TETO11_BEAMS = Array.from({ length: 6 }, (_, i) => ({
+  phase: seededUnit((i + 1) * 21.49) * Math.PI * 2,
+  speed: 0.08 + seededUnit((i + 1) * 36.7) * 0.08,
+  width: 0.045 + seededUnit((i + 1) * 18.23) * 0.045,
+  side: i % 4,
+}));
+const TETO11_ROBOTS = [
+  {x: 0.8, y: 0.22, size: 46, phase: 0.2},
+  {x: 0.24, y: 0.72, size: 38, phase: 1.8},
+  {x: 0.9, y: 0.56, size: 34, phase: 3.1},
+];
 
 let toastTimeout = null;
 function showToast(icon, text) {
@@ -479,7 +524,7 @@ function beatPulseForProfile(profile, time) {
 
 function activeFxTheme(song = currentSong()) {
   if (!tetoFxEnabled || !song || song.collection !== 'secular') return 'off';
-  return fxTheme === 'disco' ? 'disco' : 'teto';
+  return ['teto', 'disco', 'teto11'].includes(fxTheme) ? fxTheme : 'teto11';
 }
 
 function isAnyFxActive(song = currentSong()) {
@@ -494,6 +539,10 @@ function isDiscoFxActive(song = currentSong()) {
   return activeFxTheme(song) === 'disco';
 }
 
+function isTeto11FxActive(song = currentSong()) {
+  return activeFxTheme(song) === 'teto11';
+}
+
 function setTetoFxEnabled(enabled) {
   tetoFxEnabled = !!enabled;
   localStorage.setItem('vp_teto_fx_enabled', tetoFxEnabled ? 'true' : 'false');
@@ -503,7 +552,7 @@ function setTetoFxEnabled(enabled) {
 }
 
 function setFxTheme(theme) {
-  fxTheme = theme === 'disco' ? 'disco' : 'teto';
+  fxTheme = ['teto', 'disco', 'teto11'].includes(theme) ? theme : 'teto11';
   localStorage.setItem('vp_fx_theme', fxTheme);
   const select = $('fx-theme');
   if (select) select.value = fxTheme;
@@ -517,9 +566,11 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.classList.toggle('fx-active', active);
   document.body.classList.toggle('disco-fx-active', theme === 'disco');
   document.body.classList.toggle('teto-fx-active', theme === 'teto');
+  document.body.classList.toggle('teto11-fx-active', theme === 'teto11');
   document.body.style.setProperty('--fx-level', level.toFixed(3));
   document.body.style.setProperty('--teto-level', level.toFixed(3));
   document.body.style.setProperty('--disco-level', level.toFixed(3));
+  document.body.style.setProperty('--teto11-level', level.toFixed(3));
 }
 
 function switchView(view) {
@@ -1140,6 +1191,142 @@ function drawDiamond(ctx, x, y, size, angle, fillStyle, alpha) {
   ctx.restore();
 }
 
+function rgbaColor(color, alpha) {
+  return `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
+}
+
+function roundedRectPath(ctx, x, y, w, h, r) {
+  const radius = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + w, y, x + w, y + h, radius);
+  ctx.arcTo(x + w, y + h, x, y + h, radius);
+  ctx.arcTo(x, y + h, x, y, radius);
+  ctx.arcTo(x, y, x + w, y, radius);
+  ctx.closePath();
+}
+
+function drawPixelHeart(ctx, x, y, size, color, alpha, angle = 0) {
+  if (alpha <= 0) return;
+  const rows = ['0110110', '1111111', '1111111', '0111110', '0011100', '0001000'];
+  const block = size / 7;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.globalAlpha *= alpha;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = block * 1.8;
+  ctx.fillStyle = color;
+  const left = -size / 2;
+  const top = -rows.length * block / 2;
+  rows.forEach((row, rowIndex) => {
+    [...row].forEach((cell, colIndex) => {
+      if (cell !== '1') return;
+      const bx = left + colIndex * block;
+      const by = top + rowIndex * block;
+      ctx.fillRect(bx, by, block * 0.82, block * 0.82);
+    });
+  });
+  ctx.restore();
+}
+
+function drawLedSpark(ctx, x, y, size, color, alpha, twinkle = 1) {
+  if (alpha <= 0) return;
+  ctx.save();
+  ctx.globalAlpha *= alpha;
+  ctx.strokeStyle = color;
+  ctx.fillStyle = 'rgba(255, 248, 230, 0.82)';
+  ctx.shadowColor = color;
+  ctx.shadowBlur = size * 1.25;
+  ctx.lineWidth = Math.max(1, size * 0.18);
+  ctx.lineCap = 'round';
+  const arm = size * (0.62 + twinkle * 0.28);
+  ctx.beginPath();
+  ctx.moveTo(x - arm, y);
+  ctx.lineTo(x + arm, y);
+  ctx.moveTo(x, y - arm);
+  ctx.lineTo(x, y + arm);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(x, y, Math.max(1, size * 0.14), 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawCircuitTrace(ctx, w, h, trace, scale, alpha, color, pulse) {
+  if (alpha <= 0) return;
+  const edgePad = 3 * scale;
+  const inset = Math.min(w, h) * (trace.length + 0.08);
+  const jog = Math.min(w, h) * trace.lane * (trace.anchor > 0.5 ? -1 : 1);
+  let points;
+  if (trace.side === 0) {
+    const x = trace.anchor * w;
+    points = [[x, edgePad], [x, inset * 0.45], [x + jog, inset * 0.45], [x + jog, inset]];
+  } else if (trace.side === 1) {
+    const y = trace.anchor * h;
+    points = [[w - edgePad, y], [w - inset * 0.45, y], [w - inset * 0.45, y + jog], [w - inset, y + jog]];
+  } else if (trace.side === 2) {
+    const x = trace.anchor * w;
+    points = [[x, h - edgePad], [x, h - inset * 0.45], [x - jog, h - inset * 0.45], [x - jog, h - inset]];
+  } else {
+    const y = trace.anchor * h;
+    points = [[edgePad, y], [inset * 0.45, y], [inset * 0.45, y - jog], [inset, y - jog]];
+  }
+  ctx.save();
+  ctx.globalAlpha *= alpha;
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 8 * scale * (0.4 + pulse);
+  ctx.lineWidth = Math.max(1, 1.2 * scale);
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  points.forEach((point, index) => {
+    if (index === 0) ctx.moveTo(point[0], point[1]);
+    else ctx.lineTo(point[0], point[1]);
+  });
+  ctx.stroke();
+  points.slice(1).forEach((point, index) => {
+    if (index >= trace.nodes) return;
+    ctx.beginPath();
+    ctx.arc(point[0], point[1], (2.1 + pulse * 2.4) * scale, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  ctx.restore();
+}
+
+function drawRobotHeartGlyph(ctx, x, y, size, alpha, color, pulse) {
+  if (alpha <= 0) return;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.globalAlpha *= alpha;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = size * (0.12 + pulse * 0.16);
+  ctx.lineWidth = Math.max(1, size * 0.045);
+  roundedRectPath(ctx, -size * 0.48, -size * 0.36, size * 0.96, size * 0.72, size * 0.13);
+  ctx.fillStyle = 'rgba(34, 18, 20, 0.32)';
+  ctx.strokeStyle = color;
+  ctx.fill();
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(255, 237, 222, 0.58)';
+  ctx.beginPath();
+  ctx.moveTo(0, -size * 0.36);
+  ctx.lineTo(0, -size * 0.54);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, -size * 0.59, size * 0.055, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255, 242, 232, 0.86)';
+  roundedRectPath(ctx, -size * 0.27, -size * 0.11, size * 0.17, size * 0.1, size * 0.05);
+  ctx.fill();
+  roundedRectPath(ctx, size * 0.1, -size * 0.11, size * 0.17, size * 0.1, size * 0.05);
+  ctx.fill();
+  drawPixelHeart(ctx, 0, size * 0.18, size * (0.2 + pulse * 0.06), color, 0.72);
+  ctx.restore();
+}
+
 function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse) {
   const quietGate = smoothStep(0.08, 0.34, levels.motion);
   const party = smoothStep(0.16, 0.72, levels.motion);
@@ -1291,6 +1478,173 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
   ctx.restore();
 }
 
+function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, protectedPoint = () => false) {
+  const quietGate = smoothStep(0.08, 0.34, levels.motion);
+  const party = smoothStep(0.16, 0.72, levels.motion);
+  if (quietGate <= 0.01 && levels.glow <= 0.02) return;
+
+  const t = performance.now() / 1000;
+  const scale = Math.max(1, Math.min(w, h) / 760);
+  const chorusLift = section?.chorus ? sectionPower * 0.74 : 0;
+  const chorusBoost = clamp(0, 1, chorusLift / 0.74);
+  const bpmPulse = profile ? beatPulse * (0.3 + sectionPower * 0.7) : 0;
+  const alive = clamp(0, 1, levels.glow * 0.52 + party * 0.26 + bpmPulse * (0.28 + chorusLift * 0.72));
+  const palette = [
+    [255, 102, 72],
+    [255, 152, 82],
+    [255, 213, 130],
+    [255, 130, 176],
+    [236, 242, 255],
+  ];
+  const red = palette[0];
+  const orange = palette[1];
+  const rose = palette[3];
+  const chrome = palette[4];
+
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
+
+  const washDim = 0.66 + chorusBoost * 0.34;
+  const stageWash = ctx.createLinearGradient(0, 0, w, h);
+  stageWash.addColorStop(0, `rgba(255, 65, 64, ${(0.016 + alive * 0.1 + chorusLift * 0.05) * washDim})`);
+  stageWash.addColorStop(0.34, `rgba(255, 146, 74, ${(0.014 + alive * 0.08 + chorusLift * 0.045) * washDim})`);
+  stageWash.addColorStop(0.72, `rgba(255, 121, 180, ${(0.008 + alive * 0.052 + chorusLift * 0.035) * washDim})`);
+  stageWash.addColorStop(1, `rgba(80, 18, 24, ${(0.02 + alive * 0.09 + chorusLift * 0.045) * washDim})`);
+  ctx.fillStyle = stageWash;
+  ctx.fillRect(0, 0, w, h);
+
+  const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * (0.34 + alive * 0.22));
+  coreGlow.addColorStop(0, `rgba(255, 221, 188, ${0.035 + alive * 0.12 + chorusLift * 0.08})`);
+  coreGlow.addColorStop(0.3, `rgba(255, 103, 68, ${0.026 + alive * 0.1 + chorusLift * 0.07})`);
+  coreGlow.addColorStop(0.68, `rgba(255, 104, 164, ${0.01 + alive * 0.05 + chorusLift * 0.035})`);
+  coreGlow.addColorStop(1, 'rgba(255, 104, 164, 0)');
+  ctx.fillStyle = coreGlow;
+  ctx.fillRect(0, 0, w, h);
+
+  const beamDensity = 0.18 + chorusBoost * 0.38;
+  TETO11_BEAMS.forEach((beam, i) => {
+    if (seededUnit((i + 1) * 77.03) > beamDensity) return;
+    const color = palette[i % 4];
+    const origins = [
+      {x: w * (0.18 + seededUnit(i * 7.1) * 0.62), y: -h * 0.07, base: Math.PI * 0.5},
+      {x: w * 1.08, y: h * (0.18 + seededUnit(i * 5.4) * 0.62), base: Math.PI},
+      {x: w * (0.18 + seededUnit(i * 3.9) * 0.62), y: h * 1.08, base: -Math.PI * 0.5},
+      {x: -w * 0.08, y: h * (0.18 + seededUnit(i * 9.2) * 0.62), base: 0},
+    ];
+    const origin = origins[beam.side];
+    const sweep = Math.sin(t * beam.speed + beam.phase) * (0.24 + chorusBoost * 0.16);
+    const angle = origin.base + sweep + beatPulse * 0.035;
+    const length = Math.max(w, h) * (0.96 + chorusBoost * 0.24);
+    const halfWidth = length * (beam.width + beatPulse * 0.008);
+    const alpha = quietGate * (0.018 + party * 0.018 + chorusLift * 0.065) * (0.6 + beatPulse * 0.45);
+    ctx.save();
+    ctx.translate(origin.x, origin.y);
+    ctx.rotate(angle);
+    const beamGrad = ctx.createLinearGradient(0, 0, length, 0);
+    beamGrad.addColorStop(0, rgbaColor(color, alpha * 1.5));
+    beamGrad.addColorStop(0.48, rgbaColor(color, alpha));
+    beamGrad.addColorStop(1, rgbaColor(color, 0));
+    ctx.fillStyle = beamGrad;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(length, halfWidth);
+    ctx.lineTo(length, -halfWidth);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  });
+
+  TETO11_CIRCUITS.forEach((trace, i) => {
+    const twinkle = 0.5 + Math.sin(t * (0.55 + (i % 4) * 0.08) + trace.phase) * 0.5;
+    const alpha = quietGate * (0.018 + party * 0.02 + chorusBoost * 0.052 + bpmPulse * 0.03) * (0.55 + twinkle * 0.45);
+    drawCircuitTrace(ctx, w, h, trace, scale, alpha, rgbaColor(i % 3 === 0 ? rose : orange, 0.92), beatPulse);
+  });
+
+  const ringCount = Math.round(3 + chorusBoost * 2);
+  const ringSpeed = profile?.bpm ? profile.bpm / 60 : 1.35;
+  for (let i = 0; i < ringCount; i++) {
+    const phase = (t * ringSpeed + i / ringCount) % 1;
+    const fade = Math.pow(1 - phase, 1.45);
+    const radius = Math.min(w, h) * (0.13 + phase * (0.36 + alive * 0.12));
+    const color = i % 2 ? orange : red;
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = rgbaColor(color, fade * quietGate * (0.026 + alive * 0.12 + chorusLift * 0.11));
+    ctx.lineWidth = (1.2 + alive * 3.4) * scale;
+    ctx.stroke();
+  }
+
+  const heartAlpha = quietGate * (0.035 + alive * 0.09 + chorusLift * 0.16);
+  if (heartAlpha > 0.02) {
+    const heartWidth = Math.min(w, h) * (0.22 + alive * 0.08);
+    const startX = cx - heartWidth * 0.5;
+    const startY = cy + Math.min(h * 0.18, 140 * scale);
+    const points = [
+      [0, 0], [0.1, 0], [0.16, -0.1], [0.22, 0.12], [0.34, -0.02],
+      [0.45, -0.02], [0.53, 0.12], [0.62, -0.08], [0.7, 0], [1, 0],
+    ];
+    ctx.save();
+    ctx.translate(startX, startY);
+    ctx.strokeStyle = rgbaColor(rose, heartAlpha * (0.7 + beatPulse * 0.6));
+    ctx.lineWidth = Math.max(1, 1.4 * scale);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.shadowColor = rgbaColor(rose, 0.75);
+    ctx.shadowBlur = 8 * scale * (0.45 + alive);
+    ctx.beginPath();
+    points.forEach((point, index) => {
+      const px = point[0] * heartWidth;
+      const py = point[1] * heartWidth * 0.42;
+      if (index === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    });
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  const sparkleDensity = 0.42 + chorusBoost * 0.5;
+  TETO11_SPARKS.forEach((dot, i) => {
+    if (seededUnit((i + 1) * 61.41) > sparkleDensity) return;
+    const color = palette[i % palette.length];
+    const twinkle = 0.5 + Math.sin(t * (0.9 + (i % 8) * 0.12) + dot.phase) * 0.5;
+    const appear = smoothStep(dot.threshold, Math.min(1, dot.threshold + 0.42), party * 0.72 + chorusLift * 0.62 + beatPulse * 0.12);
+    const alpha = appear * quietGate * (0.038 + twinkle * 0.17 + beatPulse * (0.045 + chorusBoost * 0.1));
+    if (alpha <= 0.01) return;
+    const drift = (4 + party * 10 + chorusBoost * 4) * scale;
+    const x = dot.x * w + Math.sin(t * 0.16 + dot.phase) * drift;
+    const y = dot.y * h + Math.cos(t * 0.13 + dot.phase) * drift;
+    if (protectedPoint(x, y)) return;
+    drawLedSpark(ctx, x, y, dot.size * scale * (0.9 + twinkle * 0.55 + beatPulse * 0.55), rgbaColor(color, 0.92), alpha, twinkle);
+  });
+
+  const heartDensity = 0.22 + chorusBoost * 0.58;
+  TETO11_HEARTS.forEach((heart, i) => {
+    if (seededUnit((i + 1) * 19.73) > heartDensity) return;
+    const appear = smoothStep(heart.threshold, Math.min(1, heart.threshold + 0.45), party * 0.58 + chorusLift * 0.7 + beatPulse * 0.12);
+    if (appear <= 0.01) return;
+    const drift = (5 + party * 12 + chorusBoost * 5) * scale;
+    const x = heart.x * w + Math.sin(t * 0.13 + heart.phase) * drift;
+    const y = heart.y * h + Math.cos(t * 0.16 + heart.phase * 0.8) * drift;
+    if (protectedPoint(x, y)) return;
+    const color = i % 3 === 0 ? '#ff82b0' : (i % 3 === 1 ? '#ff9d54' : '#ffd582');
+    const alpha = appear * quietGate * (0.055 + chorusBoost * 0.22 + beatPulse * (0.035 + chorusBoost * 0.08));
+    const size = heart.size * scale * (2.1 + chorusBoost * 0.58 + beatPulse * 0.35);
+    drawPixelHeart(ctx, x, y, size, color, alpha, Math.sin(t * 0.22 + heart.phase) * 0.08);
+  });
+
+  const robotAppear = smoothStep(0.2, 0.88, party * 0.75 + chorusLift * 0.66 + beatPulse * 0.12);
+  TETO11_ROBOTS.forEach((bot, i) => {
+    const x = bot.x * w + Math.sin(t * 0.08 + bot.phase) * 8 * scale;
+    const y = bot.y * h + Math.cos(t * 0.11 + bot.phase) * 8 * scale;
+    if (protectedPoint(x, y)) return;
+    const color = rgbaColor(i % 2 ? chrome : rose, 0.95);
+    const alpha = robotAppear * quietGate * (0.035 + chorusBoost * 0.1 + beatPulse * 0.04);
+    drawRobotHeartGlyph(ctx, x, y, bot.size * scale * (0.78 + chorusBoost * 0.14), alpha, color, beatPulse);
+  });
+
+  ctx.restore();
+}
+
 function drawTetoFx(level) {
   const canvas = $('teto-fx');
   const view = $('view-now');
@@ -1324,11 +1678,6 @@ function drawTetoFx(level) {
   const chorusPower = section?.chorus ? sectionPower : 0;
   const beatPulse = beatPulseForProfile(profile, fxTime);
 
-  if (theme === 'disco') {
-    drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse);
-    return;
-  }
-
   const protectedRects = ['.now-meta', '.now-queue'].map(selector => {
     const el = document.querySelector(selector);
     if (!el) return null;
@@ -1344,6 +1693,15 @@ function drawTetoFx(level) {
   const protectedPoint = (x, y) => protectedRects.some(r =>
     x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h
   );
+
+  if (theme === 'disco') {
+    drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse);
+    return;
+  }
+  if (theme === 'teto11') {
+    drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, protectedPoint);
+    return;
+  }
 
   ctx.save();
   ctx.globalCompositeOperation = 'lighter';
@@ -1479,6 +1837,12 @@ function drawWaveform() {
     gradient.addColorStop(0.62, 'rgba(129, 92, 255, 0.94)');
     gradient.addColorStop(0.82, 'rgba(78, 255, 167, 0.88)');
     gradient.addColorStop(1, 'rgba(246, 78, 255, 0.58)');
+  } else if (isTeto11FxActive()) {
+    gradient.addColorStop(0, 'rgba(126, 34, 40, 0.34)');
+    gradient.addColorStop(0.28, 'rgba(255, 92, 76, 0.82)');
+    gradient.addColorStop(0.5, 'rgba(255, 151, 82, 0.98)');
+    gradient.addColorStop(0.72, 'rgba(255, 132, 178, 0.88)');
+    gradient.addColorStop(1, 'rgba(236, 242, 255, 0.58)');
   } else if (isTetoFxActive()) {
     gradient.addColorStop(0, 'rgba(132, 42, 28, 0.32)');
     gradient.addColorStop(0.32, 'rgba(255, 93, 55, 0.88)');

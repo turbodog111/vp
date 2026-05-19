@@ -114,6 +114,19 @@ body.disco-fx-active .now-view.active {
     linear-gradient(135deg, rgba(129, 92, 255, calc(var(--disco-level, 0) * 0.18)), transparent 45%, rgba(78, 255, 167, calc(var(--disco-level, 0) * 0.12)));
   background-blend-mode: screen, screen, screen, normal;
 }
+body.teto11-fx-active {
+  --accent: #ff795c;
+  --accent-2: #ff9abf;
+  --accent-fg: #19090a;
+}
+body.teto11-fx-active .now-view.active {
+  background:
+    radial-gradient(circle at 68% 40%, rgba(255, 125, 90, calc(0.065 + var(--teto11-level, 0) * 0.25)) 0%, rgba(125, 38, 30, calc(0.03 + var(--teto11-level, 0) * 0.16)) 38%, transparent 74%),
+    radial-gradient(circle at 18% 82%, rgba(255, 129, 180, calc(0.028 + var(--teto11-level, 0) * 0.15)) 0%, transparent 58%),
+    radial-gradient(circle at 82% 16%, rgba(255, 207, 122, calc(0.025 + var(--teto11-level, 0) * 0.13)) 0%, transparent 48%),
+    linear-gradient(135deg, rgba(94, 20, 29, calc(0.08 + var(--teto11-level, 0) * 0.2)), transparent 48%, rgba(118, 42, 26, calc(0.06 + var(--teto11-level, 0) * 0.16)));
+  background-blend-mode: screen, screen, screen, normal;
+}
 
 .now-stage {
   position: relative;
@@ -191,6 +204,14 @@ body.disco-fx-active .hero-play {
     radial-gradient(circle at 72% 72%, rgba(70, 218, 255, calc(0.06 + var(--disco-level, 0) * 0.2)), transparent 48%),
     #11111c;
 }
+body.teto11-fx-active .hero-play {
+  border-color: rgba(255, 121, 92, 0.42);
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255, 241, 222, 0.18), transparent 55%),
+    radial-gradient(circle at 32% 24%, rgba(255, 126, 90, calc(0.08 + var(--teto11-level, 0) * 0.22)), transparent 44%),
+    radial-gradient(circle at 72% 72%, rgba(255, 135, 183, calc(0.045 + var(--teto11-level, 0) * 0.16)), transparent 48%),
+    #1a1113;
+}
 .hero-play::before {
   content: "";
   position: absolute;
@@ -209,6 +230,11 @@ body.disco-fx-active .hero-play::before {
   background:
     conic-gradient(#ffe85b var(--progress), rgba(70, 218, 255, 0.18) 0deg),
     conic-gradient(from 90deg, rgba(255, 55, 155, 0.85), rgba(70, 218, 255, 0.8), rgba(78, 255, 167, 0.72), rgba(255, 232, 91, 0.85), rgba(255, 55, 155, 0.85));
+}
+body.teto11-fx-active .hero-play::before {
+  background:
+    conic-gradient(#ff795c var(--progress), rgba(255, 154, 191, 0.18) 0deg),
+    conic-gradient(from 120deg, rgba(255, 97, 82, 0.75), rgba(255, 174, 95, 0.72), rgba(255, 135, 183, 0.62), rgba(236, 242, 255, 0.48), rgba(255, 97, 82, 0.75));
 }
 .hero-play::after {
   content: "";
@@ -232,6 +258,13 @@ body.disco-fx-active .hero-play::after {
     0 0 calc(20px + var(--level) * 40px) rgba(255, 55, 155, calc(0.08 + var(--level) * 0.26)),
     0 0 calc(42px + var(--level) * 72px) rgba(70, 218, 255, calc(0.06 + var(--level) * 0.22)),
     0 0 calc(70px + var(--level) * 90px) rgba(255, 232, 91, calc(0.04 + var(--level) * 0.18));
+}
+body.teto11-fx-active .hero-play::after {
+  border-color: rgba(255, 121, 92, calc(0.2 + var(--level) * 0.48));
+  box-shadow:
+    0 0 calc(20px + var(--level) * 38px) rgba(255, 95, 74, calc(0.08 + var(--level) * 0.24)),
+    0 0 calc(44px + var(--level) * 70px) rgba(255, 139, 184, calc(0.04 + var(--level) * 0.18)),
+    0 0 calc(72px + var(--level) * 84px) rgba(255, 173, 91, calc(0.035 + var(--level) * 0.14));
 }
 .hero-play:hover { border-color: rgba(94, 234, 212, 0.55); }
 .hero-ring {
