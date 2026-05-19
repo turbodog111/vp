@@ -1149,8 +1149,15 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
   const scale = Math.max(1, Math.min(w, h) / 760);
   const bpmPulse = profile ? beatPulse * (0.28 + sectionPower * 0.72) : 0;
   const chorusLift = section?.chorus ? sectionPower * 0.72 : 0;
+  const chorusBoost = clamp(0, 1, chorusLift / 0.72);
+  const washDim = 0.46 + chorusBoost * 0.54;
+  const glowDim = 0.44 + chorusBoost * 0.56;
+  const beamDensity = 0.34 + chorusBoost * 0.66;
+  const beamDim = 0.42 + chorusBoost * 0.58;
+  const sparkleDensity = 0.26 + chorusBoost * 0.74;
+  const sparkleDim = 0.38 + chorusBoost * 0.62;
   const pulseLevel = clamp(0, 1, levels.glow * 0.48 + party * 0.34 + bpmPulse * (0.32 + chorusLift));
-  const beamPower = quietGate * (0.2 + party * 0.5 + chorusLift * 0.78) * (0.76 + beatPulse * 0.46);
+  const beamPower = quietGate * (0.1 + party * 0.32 + chorusLift * 0.96) * (0.62 + beatPulse * 0.56) * beamDim;
   const palette = [
     [255, 55, 155],
     [70, 218, 255],
@@ -1165,22 +1172,23 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
   ctx.globalCompositeOperation = 'lighter';
 
   const stageWash = ctx.createLinearGradient(0, 0, w, h);
-  stageWash.addColorStop(0, `rgba(255, 55, 155, ${0.025 + pulseLevel * 0.16})`);
-  stageWash.addColorStop(0.28, `rgba(79, 216, 255, ${0.02 + pulseLevel * 0.14})`);
-  stageWash.addColorStop(0.62, `rgba(255, 232, 91, ${0.012 + pulseLevel * 0.1})`);
-  stageWash.addColorStop(1, `rgba(124, 92, 255, ${0.03 + pulseLevel * 0.16})`);
+  stageWash.addColorStop(0, `rgba(255, 55, 155, ${(0.012 + pulseLevel * 0.14) * washDim})`);
+  stageWash.addColorStop(0.28, `rgba(79, 216, 255, ${(0.01 + pulseLevel * 0.12) * washDim})`);
+  stageWash.addColorStop(0.62, `rgba(255, 232, 91, ${(0.006 + pulseLevel * 0.09) * washDim})`);
+  stageWash.addColorStop(1, `rgba(124, 92, 255, ${(0.014 + pulseLevel * 0.14) * washDim})`);
   ctx.fillStyle = stageWash;
   ctx.fillRect(0, 0, w, h);
 
   const centerGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * (0.35 + pulseLevel * 0.22));
-  centerGlow.addColorStop(0, `rgba(255, 255, 228, ${0.05 + pulseLevel * 0.13})`);
-  centerGlow.addColorStop(0.34, `rgba(70, 218, 255, ${0.03 + pulseLevel * 0.12})`);
-  centerGlow.addColorStop(0.68, `rgba(255, 55, 155, ${0.012 + pulseLevel * 0.08})`);
+  centerGlow.addColorStop(0, `rgba(255, 255, 228, ${(0.024 + pulseLevel * 0.11) * glowDim})`);
+  centerGlow.addColorStop(0.34, `rgba(70, 218, 255, ${(0.014 + pulseLevel * 0.1) * glowDim})`);
+  centerGlow.addColorStop(0.68, `rgba(255, 55, 155, ${(0.006 + pulseLevel * 0.07) * glowDim})`);
   centerGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
   ctx.fillStyle = centerGlow;
   ctx.fillRect(0, 0, w, h);
 
   DISCO_BEAMS.forEach((beam, i) => {
+    if (seededUnit((i + 1) * 31.77) > beamDensity) return;
     const color = palette[beam.colorIndex];
     const originPhase = (beam.origin + Math.floor(t * 0.18)) % 4;
     const origins = [
@@ -1194,7 +1202,7 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
     const angle = origin.base + sweep + beatPulse * 0.06;
     const length = Math.max(w, h) * (1.08 + chorusLift * 0.42);
     const halfWidth = length * (beam.width + beatPulse * 0.018);
-    const alpha = beamPower * (0.06 + (i % 3) * 0.014 + chorusLift * 0.045);
+    const alpha = beamPower * (0.034 + (i % 3) * 0.01 + chorusLift * 0.08);
     ctx.save();
     ctx.translate(origin.x, origin.y);
     ctx.rotate(angle);
@@ -1212,7 +1220,7 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
     ctx.restore();
   });
 
-  const ringCount = 7;
+  const ringCount = Math.round(4 + chorusBoost * 3);
   for (let i = 0; i < ringCount; i++) {
     const phase = (t * (profile?.bpm ? profile.bpm / 72 : 1.4) + i / ringCount) % 1;
     const fade = Math.pow(1 - phase, 1.2);
@@ -1220,7 +1228,7 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
     const radius = Math.min(w, h) * (0.12 + phase * (0.34 + pulseLevel * 0.18));
     ctx.beginPath();
     ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${fade * (0.04 + pulseLevel * 0.2 + chorusLift * 0.14)})`;
+    ctx.strokeStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${fade * (0.022 + pulseLevel * 0.13 + chorusLift * 0.2)})`;
     ctx.lineWidth = (1.2 + pulseLevel * 3.6) * scale;
     ctx.stroke();
   }
@@ -1232,8 +1240,8 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
   ctx.translate(ballX, ballY);
   ctx.rotate(t * 0.24);
   const ballGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, ballRadius * 2.8);
-  ballGlow.addColorStop(0, `rgba(255, 255, 232, ${0.12 + pulseLevel * 0.18})`);
-  ballGlow.addColorStop(0.42, `rgba(70, 218, 255, ${0.06 + pulseLevel * 0.14})`);
+  ballGlow.addColorStop(0, `rgba(255, 255, 232, ${(0.07 + pulseLevel * 0.15) * glowDim})`);
+  ballGlow.addColorStop(0.42, `rgba(70, 218, 255, ${(0.034 + pulseLevel * 0.12) * glowDim})`);
   ballGlow.addColorStop(1, 'rgba(70, 218, 255, 0)');
   ctx.fillStyle = ballGlow;
   ctx.beginPath();
@@ -1248,7 +1256,7 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
       const d = Math.hypot(x, y) / ballRadius;
       if (d > 1) continue;
       const color = palette[(Math.floor((x + ballRadius) / tile) + Math.floor((y + ballRadius) / tile)) % palette.length];
-      const shine = (1 - d) * (0.28 + pulseLevel * 0.44) + seededUnit(x * 3.7 + y * 9.1) * 0.12;
+      const shine = ((1 - d) * (0.22 + pulseLevel * 0.42) + seededUnit(x * 3.7 + y * 9.1) * 0.09) * (0.56 + chorusBoost * 0.44);
       ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${shine})`;
       ctx.fillRect(x, y, tile * 0.82, tile * 0.82);
     }
@@ -1256,10 +1264,11 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
   ctx.restore();
 
   DISCO_SPARKLES.forEach((dot, i) => {
+    if (seededUnit((i + 1) * 47.19) > sparkleDensity) return;
     const color = palette[i % palette.length];
     const twinkle = 0.5 + Math.sin(t * (1.2 + (i % 7) * 0.24) + dot.phase) * 0.5;
     const appear = smoothStep(dot.threshold, Math.min(1, dot.threshold + 0.5), party + chorusLift * 0.65 + beatPulse * 0.18);
-    const alpha = appear * quietGate * (0.08 + twinkle * 0.34 + beatPulse * 0.14);
+    const alpha = appear * quietGate * sparkleDim * (0.045 + twinkle * 0.24 + beatPulse * (0.08 + chorusBoost * 0.12));
     if (alpha <= 0.01) return;
     const drift = (8 + party * 22) * scale;
     const x = dot.x * w + Math.sin(t * 0.24 + dot.phase) * drift;
