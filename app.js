@@ -103,21 +103,21 @@ const TETO_FX_OBJECTS = Array.from({ length: 24 }, (_, i) => {
     threshold: 0.08 + ((i * 7) % 10) * 0.052,
   };
 });
-const DISCO_BEAMS = Array.from({ length: 14 }, (_, i) => ({
+const DISCO_BEAMS = Array.from({ length: 8 }, (_, i) => ({
   phase: seededUnit((i + 1) * 9.81) * Math.PI * 2,
   speed: 0.13 + seededUnit((i + 1) * 16.37) * 0.16,
   width: 0.09 + seededUnit((i + 1) * 23.13) * 0.08,
   colorIndex: i % 7,
   origin: i % 4,
 }));
-const DISCO_SPARKLES = Array.from({ length: 72 }, (_, i) => ({
+const DISCO_SPARKLES = Array.from({ length: 32 }, (_, i) => ({
   x: 0.04 + seededUnit((i + 1) * 13.117) * 0.92,
   y: 0.05 + seededUnit((i + 1) * 41.91) * 0.86,
   phase: seededUnit((i + 1) * 71.37) * Math.PI * 2,
   size: 1.6 + seededUnit((i + 1) * 5.73) * 4.8,
   threshold: 0.08 + seededUnit((i + 1) * 19.43) * 0.5,
 }));
-const TETO11_SPARKS = Array.from({ length: 104 }, (_, i) => ({
+const TETO11_SPARKS = Array.from({ length: 44 }, (_, i) => ({
   x: 0.035 + seededUnit((i + 1) * 17.217) * 0.93,
   y: 0.05 + seededUnit((i + 1) * 29.913) * 0.86,
   phase: seededUnit((i + 1) * 83.11) * Math.PI * 2,
@@ -125,7 +125,7 @@ const TETO11_SPARKS = Array.from({ length: 104 }, (_, i) => ({
   warm: seededUnit((i + 1) * 43.91),
   threshold: 0.04 + seededUnit((i + 1) * 31.13) * 0.44,
 }));
-const TETO11_HEARTS = Array.from({ length: 18 }, (_, i) => {
+const TETO11_HEARTS = Array.from({ length: 8 }, (_, i) => {
   const a = seededUnit((i + 1) * 37.31);
   const b = seededUnit((i + 1) * 53.17);
   const zones = [
@@ -143,15 +143,7 @@ const TETO11_HEARTS = Array.from({ length: 18 }, (_, i) => {
     threshold: 0.12 + (i % 6) * 0.075,
   };
 });
-const TETO11_CIRCUITS = Array.from({ length: 14 }, (_, i) => ({
-  side: i % 4,
-  anchor: 0.08 + seededUnit((i + 1) * 67.7) * 0.84,
-  lane: 0.06 + seededUnit((i + 1) * 11.41) * 0.16,
-  length: 0.13 + seededUnit((i + 1) * 5.91) * 0.22,
-  phase: seededUnit((i + 1) * 97.13) * Math.PI * 2,
-  nodes: 2 + (i % 3),
-}));
-const TETO11_BEAMS = Array.from({ length: 6 }, (_, i) => ({
+const TETO11_BEAMS = Array.from({ length: 3 }, (_, i) => ({
   phase: seededUnit((i + 1) * 21.49) * Math.PI * 2,
   speed: 0.08 + seededUnit((i + 1) * 36.7) * 0.08,
   width: 0.045 + seededUnit((i + 1) * 18.23) * 0.045,
@@ -159,8 +151,6 @@ const TETO11_BEAMS = Array.from({ length: 6 }, (_, i) => ({
 }));
 const TETO11_ROBOTS = [
   {x: 0.8, y: 0.22, size: 46, phase: 0.2},
-  {x: 0.24, y: 0.72, size: 38, phase: 1.8},
-  {x: 0.9, y: 0.56, size: 34, phase: 3.1},
 ];
 let fxRingPulses = [];
 let lastFxRingBeatKey = '';
@@ -1256,49 +1246,6 @@ function drawLedSpark(ctx, x, y, size, color, alpha, twinkle = 1) {
   ctx.restore();
 }
 
-function drawCircuitTrace(ctx, w, h, trace, scale, alpha, color, pulse) {
-  if (alpha <= 0) return;
-  const edgePad = 3 * scale;
-  const inset = Math.min(w, h) * (trace.length + 0.08);
-  const jog = Math.min(w, h) * trace.lane * (trace.anchor > 0.5 ? -1 : 1);
-  let points;
-  if (trace.side === 0) {
-    const x = trace.anchor * w;
-    points = [[x, edgePad], [x, inset * 0.45], [x + jog, inset * 0.45], [x + jog, inset]];
-  } else if (trace.side === 1) {
-    const y = trace.anchor * h;
-    points = [[w - edgePad, y], [w - inset * 0.45, y], [w - inset * 0.45, y + jog], [w - inset, y + jog]];
-  } else if (trace.side === 2) {
-    const x = trace.anchor * w;
-    points = [[x, h - edgePad], [x, h - inset * 0.45], [x - jog, h - inset * 0.45], [x - jog, h - inset]];
-  } else {
-    const y = trace.anchor * h;
-    points = [[edgePad, y], [inset * 0.45, y], [inset * 0.45, y - jog], [inset, y - jog]];
-  }
-  ctx.save();
-  ctx.globalAlpha *= alpha;
-  ctx.strokeStyle = color;
-  ctx.fillStyle = color;
-  ctx.shadowColor = color;
-  ctx.shadowBlur = 8 * scale * (0.4 + pulse);
-  ctx.lineWidth = Math.max(1, 1.2 * scale);
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  ctx.beginPath();
-  points.forEach((point, index) => {
-    if (index === 0) ctx.moveTo(point[0], point[1]);
-    else ctx.lineTo(point[0], point[1]);
-  });
-  ctx.stroke();
-  points.slice(1).forEach((point, index) => {
-    if (index >= trace.nodes) return;
-    ctx.beginPath();
-    ctx.arc(point[0], point[1], (2.1 + pulse * 2.4) * scale, 0, Math.PI * 2);
-    ctx.fill();
-  });
-  ctx.restore();
-}
-
 function drawRobotHeartGlyph(ctx, x, y, size, alpha, color, pulse) {
   if (alpha <= 0) return;
   ctx.save();
@@ -1344,7 +1291,7 @@ function emitOutboundRingPulse(theme, now, cx, cy, baseRadius, travelRadius, pal
     lineWidth,
     life,
   });
-  if (fxRingPulses.length > 36) fxRingPulses.splice(0, fxRingPulses.length - 36);
+  if (fxRingPulses.length > 18) fxRingPulses.splice(0, fxRingPulses.length - 18);
 }
 
 function drawOutboundPulseRings(ctx, options) {
@@ -1418,14 +1365,6 @@ function drawOutboundPulseRings(ctx, options) {
     ctx.strokeStyle = rgbaColor(color, alpha);
     ctx.lineWidth = Math.max(1, pulse.lineWidth * (0.88 + fade * 0.22));
     ctx.stroke();
-
-    const glowRadius = Math.max(w, h) * 0.01;
-    const glow = ctx.createRadialGradient(pulse.cx, pulse.cy, Math.max(1, radius - glowRadius), pulse.cx, pulse.cy, radius + glowRadius * 2.5);
-    glow.addColorStop(0, rgbaColor(color, 0));
-    glow.addColorStop(0.5, rgbaColor(color, alpha * 0.42));
-    glow.addColorStop(1, rgbaColor(color, 0));
-    ctx.fillStyle = glow;
-    ctx.fillRect(0, 0, w, h);
   });
 }
 
@@ -1441,10 +1380,10 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
   const chorusBoost = clamp(0, 1, chorusLift / 0.72);
   const washDim = 0.46 + chorusBoost * 0.54;
   const glowDim = 0.44 + chorusBoost * 0.56;
-  const beamDensity = 0.34 + chorusBoost * 0.66;
-  const beamDim = 0.42 + chorusBoost * 0.58;
-  const sparkleDensity = 0.26 + chorusBoost * 0.74;
-  const sparkleDim = 0.38 + chorusBoost * 0.62;
+  const beamDensity = 0.18 + chorusBoost * 0.42;
+  const beamDim = 0.32 + chorusBoost * 0.42;
+  const sparkleDensity = 0.18 + chorusBoost * 0.46;
+  const sparkleDim = 0.3 + chorusBoost * 0.46;
   const pulseLevel = clamp(0, 1, levels.glow * 0.48 + party * 0.34 + bpmPulse * (0.32 + chorusLift));
   const beamPower = quietGate * (0.1 + party * 0.32 + chorusLift * 0.96) * (0.62 + beatPulse * 0.56) * beamDim;
   const palette = [
@@ -1489,9 +1428,9 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
     const origin = origins[originPhase];
     const sweep = Math.sin(t * beam.speed + beam.phase) * (0.42 + chorusLift * 0.22);
     const angle = origin.base + sweep + beatPulse * 0.06;
-    const length = Math.max(w, h) * (1.08 + chorusLift * 0.42);
+    const length = Math.max(w, h) * (0.94 + chorusLift * 0.28);
     const halfWidth = length * (beam.width + beatPulse * 0.018);
-    const alpha = beamPower * (0.034 + (i % 3) * 0.01 + chorusLift * 0.08);
+    const alpha = beamPower * (0.024 + (i % 3) * 0.006 + chorusLift * 0.052);
     ctx.save();
     ctx.translate(origin.x, origin.y);
     ctx.rotate(angle);
@@ -1524,9 +1463,9 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
     palette,
     baseRadius: Math.min(w, h) * (0.11 + pulseLevel * 0.015),
     travelRadius: Math.min(w, h) * (0.3 + pulseLevel * 0.12 + chorusBoost * 0.12),
-    alphaBase: 0.28 + chorusBoost * 0.14,
-    lineWidth: (1.2 + pulseLevel * 3.4) * scale,
-    life: 0.72,
+    alphaBase: 0.18 + chorusBoost * 0.09,
+    lineWidth: (1.05 + pulseLevel * 2.4) * scale,
+    life: 0.62,
   });
 
   const ballRadius = Math.min(w, h) * (0.045 + pulseLevel * 0.018);
@@ -1535,28 +1474,25 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
   ctx.save();
   ctx.translate(ballX, ballY);
   ctx.rotate(t * 0.24);
-  const ballGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, ballRadius * 2.8);
-  ballGlow.addColorStop(0, `rgba(255, 255, 232, ${(0.07 + pulseLevel * 0.15) * glowDim})`);
-  ballGlow.addColorStop(0.42, `rgba(70, 218, 255, ${(0.034 + pulseLevel * 0.12) * glowDim})`);
+  const ballGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, ballRadius * 1.9);
+  ballGlow.addColorStop(0, `rgba(255, 255, 232, ${(0.05 + pulseLevel * 0.09) * glowDim})`);
+  ballGlow.addColorStop(0.58, `rgba(70, 218, 255, ${(0.022 + pulseLevel * 0.06) * glowDim})`);
   ballGlow.addColorStop(1, 'rgba(70, 218, 255, 0)');
   ctx.fillStyle = ballGlow;
   ctx.beginPath();
-  ctx.arc(0, 0, ballRadius * 2.8, 0, Math.PI * 2);
+  ctx.arc(0, 0, ballRadius * 1.9, 0, Math.PI * 2);
   ctx.fill();
+  ctx.strokeStyle = `rgba(255, 255, 232, ${0.08 + pulseLevel * 0.16})`;
+  ctx.lineWidth = Math.max(1, 1.2 * scale);
   ctx.beginPath();
-  ctx.arc(0, 0, ballRadius, 0, Math.PI * 2);
-  ctx.clip();
-  const tile = Math.max(3, ballRadius * 0.24);
-  for (let y = -ballRadius; y < ballRadius; y += tile) {
-    for (let x = -ballRadius; x < ballRadius; x += tile) {
-      const d = Math.hypot(x, y) / ballRadius;
-      if (d > 1) continue;
-      const color = palette[(Math.floor((x + ballRadius) / tile) + Math.floor((y + ballRadius) / tile)) % palette.length];
-      const shine = ((1 - d) * (0.22 + pulseLevel * 0.42) + seededUnit(x * 3.7 + y * 9.1) * 0.09) * (0.56 + chorusBoost * 0.44);
-      ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${shine})`;
-      ctx.fillRect(x, y, tile * 0.82, tile * 0.82);
-    }
-  }
+  ctx.arc(0, 0, ballRadius * 0.92, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(-ballRadius * 0.6, 0);
+  ctx.lineTo(ballRadius * 0.6, 0);
+  ctx.moveTo(0, -ballRadius * 0.6);
+  ctx.lineTo(0, ballRadius * 0.6);
+  ctx.stroke();
   ctx.restore();
 
   DISCO_SPARKLES.forEach((dot, i) => {
@@ -1564,12 +1500,12 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
     const color = palette[i % palette.length];
     const twinkle = 0.5 + Math.sin(t * (1.2 + (i % 7) * 0.24) + dot.phase) * 0.5;
     const appear = smoothStep(dot.threshold, Math.min(1, dot.threshold + 0.5), party + chorusLift * 0.65 + beatPulse * 0.18);
-    const alpha = appear * quietGate * sparkleDim * (0.045 + twinkle * 0.24 + beatPulse * (0.08 + chorusBoost * 0.12));
+    const alpha = appear * quietGate * sparkleDim * (0.026 + twinkle * 0.14 + beatPulse * (0.04 + chorusBoost * 0.07));
     if (alpha <= 0.01) return;
     const drift = (8 + party * 22) * scale;
     const x = dot.x * w + Math.sin(t * 0.24 + dot.phase) * drift;
     const y = dot.y * h + Math.cos(t * 0.18 + dot.phase) * drift;
-    const size = dot.size * scale * (0.8 + beatPulse * 1.1 + twinkle * 0.5);
+    const size = dot.size * scale * (0.72 + beatPulse * 0.65 + twinkle * 0.34);
     ctx.strokeStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
     ctx.lineWidth = Math.max(1, scale * 1.1);
     ctx.beginPath();
@@ -1613,7 +1549,7 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
   ctx.save();
   ctx.globalCompositeOperation = 'lighter';
 
-  const washDim = 0.66 + chorusBoost * 0.34;
+  const washDim = 0.5 + chorusBoost * 0.24;
   const stageWash = ctx.createLinearGradient(0, 0, w, h);
   stageWash.addColorStop(0, `rgba(255, 65, 64, ${(0.016 + alive * 0.1 + chorusLift * 0.05) * washDim})`);
   stageWash.addColorStop(0.34, `rgba(255, 146, 74, ${(0.014 + alive * 0.08 + chorusLift * 0.045) * washDim})`);
@@ -1623,14 +1559,14 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
   ctx.fillRect(0, 0, w, h);
 
   const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * (0.34 + alive * 0.22));
-  coreGlow.addColorStop(0, `rgba(255, 221, 188, ${0.035 + alive * 0.12 + chorusLift * 0.08})`);
-  coreGlow.addColorStop(0.3, `rgba(255, 103, 68, ${0.026 + alive * 0.1 + chorusLift * 0.07})`);
-  coreGlow.addColorStop(0.68, `rgba(255, 104, 164, ${0.01 + alive * 0.05 + chorusLift * 0.035})`);
+  coreGlow.addColorStop(0, `rgba(255, 221, 188, ${0.024 + alive * 0.075 + chorusLift * 0.05})`);
+  coreGlow.addColorStop(0.3, `rgba(255, 103, 68, ${0.018 + alive * 0.06 + chorusLift * 0.045})`);
+  coreGlow.addColorStop(0.68, `rgba(255, 104, 164, ${0.006 + alive * 0.034 + chorusLift * 0.025})`);
   coreGlow.addColorStop(1, 'rgba(255, 104, 164, 0)');
   ctx.fillStyle = coreGlow;
   ctx.fillRect(0, 0, w, h);
 
-  const beamDensity = 0.18 + chorusBoost * 0.38;
+  const beamDensity = 0.1 + chorusBoost * 0.22;
   TETO11_BEAMS.forEach((beam, i) => {
     if (seededUnit((i + 1) * 77.03) > beamDensity) return;
     const color = palette[i % 4];
@@ -1643,9 +1579,9 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
     const origin = origins[beam.side];
     const sweep = Math.sin(t * beam.speed + beam.phase) * (0.24 + chorusBoost * 0.16);
     const angle = origin.base + sweep + beatPulse * 0.035;
-    const length = Math.max(w, h) * (0.96 + chorusBoost * 0.24);
+    const length = Math.max(w, h) * (0.82 + chorusBoost * 0.18);
     const halfWidth = length * (beam.width + beatPulse * 0.008);
-    const alpha = quietGate * (0.018 + party * 0.018 + chorusLift * 0.065) * (0.6 + beatPulse * 0.45);
+    const alpha = quietGate * (0.012 + party * 0.012 + chorusLift * 0.04) * (0.5 + beatPulse * 0.34);
     ctx.save();
     ctx.translate(origin.x, origin.y);
     ctx.rotate(angle);
@@ -1663,12 +1599,6 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
     ctx.restore();
   });
 
-  TETO11_CIRCUITS.forEach((trace, i) => {
-    const twinkle = 0.5 + Math.sin(t * (0.55 + (i % 4) * 0.08) + trace.phase) * 0.5;
-    const alpha = quietGate * (0.018 + party * 0.02 + chorusBoost * 0.052 + bpmPulse * 0.03) * (0.55 + twinkle * 0.45);
-    drawCircuitTrace(ctx, w, h, trace, scale, alpha, rgbaColor(i % 3 === 0 ? rose : orange, 0.92), beatPulse);
-  });
-
   drawOutboundPulseRings(ctx, {
     theme: 'teto11',
     w,
@@ -1684,12 +1614,12 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
     palette: [red, orange, rose, chrome],
     baseRadius: Math.min(w, h) * (0.12 + alive * 0.015),
     travelRadius: Math.min(w, h) * (0.28 + alive * 0.1 + chorusBoost * 0.08),
-    alphaBase: 0.24 + chorusBoost * 0.13,
-    lineWidth: (1.1 + alive * 3.0) * scale,
-    life: 0.7,
+    alphaBase: 0.16 + chorusBoost * 0.08,
+    lineWidth: (1.0 + alive * 2.1) * scale,
+    life: 0.62,
   });
 
-  const heartAlpha = quietGate * (0.035 + alive * 0.09 + chorusLift * 0.16);
+  const heartAlpha = quietGate * (0.02 + alive * 0.045 + chorusLift * 0.08);
   if (heartAlpha > 0.02) {
     const heartWidth = Math.min(w, h) * (0.22 + alive * 0.08);
     const startX = cx - heartWidth * 0.5;
@@ -1705,7 +1635,7 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.shadowColor = rgbaColor(rose, 0.75);
-    ctx.shadowBlur = 8 * scale * (0.45 + alive);
+    ctx.shadowBlur = 5 * scale * (0.35 + alive);
     ctx.beginPath();
     points.forEach((point, index) => {
       const px = point[0] * heartWidth;
@@ -1717,43 +1647,43 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
     ctx.restore();
   }
 
-  const sparkleDensity = 0.42 + chorusBoost * 0.5;
+  const sparkleDensity = 0.22 + chorusBoost * 0.38;
   TETO11_SPARKS.forEach((dot, i) => {
     if (seededUnit((i + 1) * 61.41) > sparkleDensity) return;
     const color = palette[i % palette.length];
     const twinkle = 0.5 + Math.sin(t * (0.9 + (i % 8) * 0.12) + dot.phase) * 0.5;
     const appear = smoothStep(dot.threshold, Math.min(1, dot.threshold + 0.42), party * 0.72 + chorusLift * 0.62 + beatPulse * 0.12);
-    const alpha = appear * quietGate * (0.038 + twinkle * 0.17 + beatPulse * (0.045 + chorusBoost * 0.1));
+    const alpha = appear * quietGate * (0.022 + twinkle * 0.1 + beatPulse * (0.028 + chorusBoost * 0.055));
     if (alpha <= 0.01) return;
-    const drift = (4 + party * 10 + chorusBoost * 4) * scale;
+    const drift = (3 + party * 7 + chorusBoost * 3) * scale;
     const x = dot.x * w + Math.sin(t * 0.16 + dot.phase) * drift;
     const y = dot.y * h + Math.cos(t * 0.13 + dot.phase) * drift;
     if (protectedPoint(x, y)) return;
-    drawLedSpark(ctx, x, y, dot.size * scale * (0.9 + twinkle * 0.55 + beatPulse * 0.55), rgbaColor(color, 0.92), alpha, twinkle);
+    drawLedSpark(ctx, x, y, dot.size * scale * (0.78 + twinkle * 0.38 + beatPulse * 0.36), rgbaColor(color, 0.92), alpha, twinkle);
   });
 
-  const heartDensity = 0.22 + chorusBoost * 0.58;
+  const heartDensity = 0.12 + chorusBoost * 0.35;
   TETO11_HEARTS.forEach((heart, i) => {
     if (seededUnit((i + 1) * 19.73) > heartDensity) return;
     const appear = smoothStep(heart.threshold, Math.min(1, heart.threshold + 0.45), party * 0.58 + chorusLift * 0.7 + beatPulse * 0.12);
     if (appear <= 0.01) return;
-    const drift = (5 + party * 12 + chorusBoost * 5) * scale;
+    const drift = (4 + party * 8 + chorusBoost * 3) * scale;
     const x = heart.x * w + Math.sin(t * 0.13 + heart.phase) * drift;
     const y = heart.y * h + Math.cos(t * 0.16 + heart.phase * 0.8) * drift;
     if (protectedPoint(x, y)) return;
     const color = i % 3 === 0 ? '#ff82b0' : (i % 3 === 1 ? '#ff9d54' : '#ffd582');
-    const alpha = appear * quietGate * (0.055 + chorusBoost * 0.22 + beatPulse * (0.035 + chorusBoost * 0.08));
-    const size = heart.size * scale * (2.1 + chorusBoost * 0.58 + beatPulse * 0.35);
+    const alpha = appear * quietGate * (0.035 + chorusBoost * 0.12 + beatPulse * (0.025 + chorusBoost * 0.045));
+    const size = heart.size * scale * (1.7 + chorusBoost * 0.38 + beatPulse * 0.24);
     drawPixelHeart(ctx, x, y, size, color, alpha, Math.sin(t * 0.22 + heart.phase) * 0.08);
   });
 
-  const robotAppear = smoothStep(0.2, 0.88, party * 0.75 + chorusLift * 0.66 + beatPulse * 0.12);
+  const robotAppear = smoothStep(0.3, 0.94, party * 0.65 + chorusLift * 0.52 + beatPulse * 0.08);
   TETO11_ROBOTS.forEach((bot, i) => {
     const x = bot.x * w + Math.sin(t * 0.08 + bot.phase) * 8 * scale;
     const y = bot.y * h + Math.cos(t * 0.11 + bot.phase) * 8 * scale;
     if (protectedPoint(x, y)) return;
     const color = rgbaColor(i % 2 ? chrome : rose, 0.95);
-    const alpha = robotAppear * quietGate * (0.035 + chorusBoost * 0.1 + beatPulse * 0.04);
+    const alpha = robotAppear * quietGate * (0.022 + chorusBoost * 0.06 + beatPulse * 0.025);
     drawRobotHeartGlyph(ctx, x, y, bot.size * scale * (0.78 + chorusBoost * 0.14), alpha, color, beatPulse);
   });
 

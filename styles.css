@@ -255,16 +255,12 @@ body.teto-fx-active .hero-play::after {
 body.disco-fx-active .hero-play::after {
   border-color: rgba(255, 232, 91, calc(0.2 + var(--level) * 0.48));
   box-shadow:
-    0 0 calc(20px + var(--level) * 40px) rgba(255, 55, 155, calc(0.08 + var(--level) * 0.26)),
-    0 0 calc(42px + var(--level) * 72px) rgba(70, 218, 255, calc(0.06 + var(--level) * 0.22)),
-    0 0 calc(70px + var(--level) * 90px) rgba(255, 232, 91, calc(0.04 + var(--level) * 0.18));
+    0 0 calc(24px + var(--level) * 42px) rgba(70, 218, 255, calc(0.06 + var(--level) * 0.18));
 }
 body.teto11-fx-active .hero-play::after {
   border-color: rgba(255, 121, 92, calc(0.2 + var(--level) * 0.48));
   box-shadow:
-    0 0 calc(20px + var(--level) * 38px) rgba(255, 95, 74, calc(0.08 + var(--level) * 0.24)),
-    0 0 calc(44px + var(--level) * 70px) rgba(255, 139, 184, calc(0.04 + var(--level) * 0.18)),
-    0 0 calc(72px + var(--level) * 84px) rgba(255, 173, 91, calc(0.035 + var(--level) * 0.14));
+    0 0 calc(24px + var(--level) * 46px) rgba(255, 95, 74, calc(0.06 + var(--level) * 0.18));
 }
 .hero-play:hover { border-color: rgba(94, 234, 212, 0.55); }
 .hero-ring {
