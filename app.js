@@ -42,6 +42,8 @@ let calibratedBasePerf = 0;
 let calibratedClockRunning = false;
 let pendingClockSeekTime = null;
 let pendingClockSeekStartedAt = 0;
+let seekTransaction = null;
+let seekSettleTimer = null;
 const WAVE_BAR_COUNT = 84;
 const WAVE_GAIN = 1.34;
 const WAVE_SOFT_LIMIT = 0.94;
@@ -297,6 +299,70 @@ function resumeAudioFromCalibratedClock(song = currentSong()) {
   calibratedBasePerf = performance.now() / 1000;
   calibratedClockRunning = false;
   return audio.play();
+}
+
+function clearSeekSettleTimer() {
+  if (!seekSettleTimer) return;
+  clearTimeout(seekSettleTimer);
+  seekSettleTimer = null;
+}
+
+function beginSeekTransaction() {
+  if (seekTransaction) return seekTransaction;
+  const resumeAfterSeek = !!(audio.src && !audio.paused);
+  seekTransaction = {
+    resumeAfterSeek,
+    targetTime: currentCalibratedTime(),
+    finishOnSeeked: false,
+  };
+  pauseCalibratedClock();
+  if (resumeAfterSeek) audio.pause();
+  return seekTransaction;
+}
+
+function seekTargetFromControl() {
+  const duration = effectiveDuration();
+  if (!duration) return null;
+  return (parseFloat($('seek').value) / 100) * duration;
+}
+
+function previewSeekTarget(time) {
+  const tx = beginSeekTransaction();
+  const duration = effectiveDuration();
+  tx.targetTime = duration ? clamp(0, duration, time) : Math.max(0, time);
+  pendingClockSeekTime = null;
+  resetCalibratedClock(tx.targetTime);
+  updatePlaybackVisuals();
+}
+
+function commitSeekTransaction(finishOnSeeked = true) {
+  if (!seekTransaction) return;
+  const tx = seekTransaction;
+  tx.finishOnSeeked = tx.finishOnSeeked || finishOnSeeked;
+  clearSeekSettleTimer();
+  resetCalibratedClock(tx.targetTime);
+  const nativeTarget = nativeFromCalibratedTime(tx.targetTime);
+  const needsSeek = Math.abs((audio.currentTime || 0) - nativeTarget) > 0.001;
+  if (!setNativeTimeFromCalibratedClock(tx.targetTime, currentSong(), {force: true})) {
+    audio.currentTime = nativeTarget;
+  }
+  if (tx.finishOnSeeked) {
+    seekSettleTimer = setTimeout(() => finishSeekTransaction(), needsSeek ? 1200 : 0);
+  }
+  updatePlaybackVisuals();
+}
+
+function finishSeekTransaction() {
+  if (!seekTransaction) return;
+  const tx = seekTransaction;
+  clearSeekSettleTimer();
+  seekTransaction = null;
+  pendingClockSeekTime = null;
+  resetCalibratedClock(tx.targetTime);
+  updatePlaybackVisuals();
+  if (tx.resumeAfterSeek && audio.src) {
+    resumeAudioFromCalibratedClock(currentSong()).catch(err => console.warn('Play failed:', err));
+  }
 }
 
 function effectSectionAt(profile, time) {
@@ -1226,12 +1292,13 @@ audio.addEventListener('loadedmetadata', () => {
   updatePlaybackVisuals();
 });
 audio.addEventListener('seeking', () => {
-  syncCalibratedClockToNative(currentSong(), {allowBackward: false, keepRunning: false});
+  syncCalibratedClockToNative(currentSong(), {allowBackward: !!seekTransaction, keepRunning: false});
   updatePlaybackVisuals();
 });
 audio.addEventListener('seeked', () => {
-  syncCalibratedClockToNative(currentSong(), {allowBackward: false, consumePending: true, keepRunning: false});
+  syncCalibratedClockToNative(currentSong(), {allowBackward: !!seekTransaction, consumePending: true, keepRunning: false});
   updatePlaybackVisuals();
+  if (seekTransaction?.finishOnSeeked) finishSeekTransaction();
 });
 audio.addEventListener('ratechange', () => {
   pauseCalibratedClock();
@@ -1276,16 +1343,25 @@ $('loop').addEventListener('click', cycleLoop);
 $('refresh').addEventListener('click', loadLibrary);
 bindLibraryActionGuards();
 
-$('seek').addEventListener('input', (e) => {
-  const duration = effectiveDuration();
-  if (!duration) return;
-  const targetTime = (parseFloat(e.target.value) / 100) * duration;
-  resetCalibratedClock(targetTime);
-  if (!setNativeTimeFromCalibratedClock(targetTime, currentSong(), {force: true})) {
-    audio.currentTime = nativeFromCalibratedTime(targetTime);
-  }
-  updatePlaybackVisuals();
-});
+const seekEl = $('seek');
+function handleSeekPreview() {
+  const targetTime = seekTargetFromControl();
+  if (targetTime === null) return;
+  previewSeekTarget(targetTime);
+}
+
+function handleSeekCommit() {
+  if (!seekTransaction) return;
+  const targetTime = seekTargetFromControl();
+  if (targetTime !== null) previewSeekTarget(targetTime);
+  commitSeekTransaction(true);
+}
+
+seekEl.addEventListener('pointerdown', () => beginSeekTransaction(), {capture: true});
+seekEl.addEventListener('input', handleSeekPreview);
+seekEl.addEventListener('change', handleSeekCommit);
+seekEl.addEventListener('pointerup', handleSeekCommit);
+seekEl.addEventListener('pointercancel', handleSeekCommit);
 
 function updateVolumeIcon(volume = playerVolume) {
   const iconEl = document.querySelector('.volume span');
