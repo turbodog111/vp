@@ -63,6 +63,7 @@ const AUDIO_EXTENSION_RE = /\.(mp3|m4a)$/i;
 const PENTHOUSE_EFFECT_PROFILE = {
   bpm: 123,
   key: 'F# major',
+  constantRings: true,
   beatOffset: 0,
   sections: [
     {name: 'Intro', start: 0, end: 51, intensity: 0.24, chorus: false},
@@ -71,9 +72,22 @@ const PENTHOUSE_EFFECT_PROFILE = {
     {name: 'Last chorus', start: 179.5, end: 211.38, intensity: 1.08, chorus: true, fade: 0.5},
   ],
 };
+const bpmEffectProfile = (bpm, options = {}) => ({
+  bpm,
+  constantRings: true,
+  beatOffset: 0,
+  sections: [],
+  ...options,
+});
 const SONG_EFFECT_PROFILES = {
   'songs/Penthouse - One, Two, Three (一二三).mp3': PENTHOUSE_EFFECT_PROFILE,
   'songs/Penthouse - One, Two, Three (一二三).m4a': PENTHOUSE_EFFECT_PROFILE,
+  'songs/Jamie Paige - Machine Love.mp3': bpmEffectProfile(175),
+  'songs/Lambie - Machine Love (Drums).mp3': bpmEffectProfile(175),
+  'songs/The8BitDrummer - Machine Love (Drums).mp3': bpmEffectProfile(175),
+  'songs/christian/Forrest Frank - OKAY!.mp3': bpmEffectProfile(120, {allowFx: true}),
+  'songs/MIMI - Science.mp3': bpmEffectProfile(188),
+  'songs/Moonlit Star - Science (English).mp3': bpmEffectProfile(188),
 };
 const seededUnit = (seed) => {
   const x = Math.sin(seed) * 10000;
@@ -500,7 +514,7 @@ function updateTimingDebug(displayTime = currentCalibratedTime()) {
 
 function effectSectionAt(profile, time) {
   if (!profile || !Number.isFinite(time)) return null;
-  const section = profile.sections.find(item => time >= item.start && time <= item.end);
+  const section = (profile.sections || []).find(item => time >= item.start && time <= item.end);
   if (!section) return null;
   const fade = section.fade || 0;
   if (!fade) return {...section, fadeLevel: 1};
@@ -517,7 +531,8 @@ function beatPulseForProfile(profile, time) {
 }
 
 function activeFxTheme(song = currentSong()) {
-  if (!tetoFxEnabled || !song || song.collection !== 'secular') return 'off';
+  const profile = effectProfileForSong(song);
+  if (!tetoFxEnabled || !song || (song.collection !== 'secular' && !profile?.allowFx)) return 'off';
   return ['teto', 'disco', 'teto11'].includes(fxTheme) ? fxTheme : 'teto11';
 }
 
@@ -1316,21 +1331,25 @@ function drawOutboundPulseRings(ctx, options) {
     life = 0.76,
   } = options;
   const now = performance.now() / 1000;
-  const audible = !!(audio.src && !audio.paused && levels.motion > 0.035);
+  const audible = !!(audio.src && !audio.paused);
   const eventPower = clamp(0, 1, levels.glow * 0.44 + levels.motion * 0.26 + beatPulse * (0.38 + chorusPower * 0.36) + chorusPower * 0.18);
 
-  if (audible && eventPower > 0.12) {
+  if (audible) {
     let shouldEmit = false;
+    let ringPower = eventPower;
     if (profile?.bpm && Number.isFinite(fxTime)) {
       const beats = Math.max(0, (fxTime - (profile.beatOffset || 0)) * profile.bpm / 60);
       const beatIndex = Math.floor(beats);
       const song = currentSong();
       const beatKey = `${song?.path || song?.name || 'song'}:${theme}:${beatIndex}`;
-      if (beatPulse > 0.28 && beatKey !== lastFxRingBeatKey) {
+      if (beatKey !== lastFxRingBeatKey) {
         lastFxRingBeatKey = beatKey;
         shouldEmit = true;
+        const audioEnergy = clamp(0, 1, levels.glow * 0.72 + levels.motion * 0.42);
+        const floor = profile.constantRings ? 0.1 : 0;
+        ringPower = clamp(floor, 1, audioEnergy * 0.86 + chorusPower * 0.16 + beatPulse * 0.08);
       }
-    } else if (tetoRiseEnergy > 0.42 && now - lastFxRingFallbackAt > 0.34) {
+    } else if (eventPower > 0.12 && tetoRiseEnergy > 0.42 && now - lastFxRingFallbackAt > 0.34) {
       lastFxRingFallbackAt = now;
       shouldEmit = true;
     }
@@ -1343,7 +1362,7 @@ function drawOutboundPulseRings(ctx, options) {
         baseRadius,
         travelRadius * (0.82 + sectionPower * 0.18),
         palette,
-        eventPower,
+        ringPower,
         lineWidth,
         life
       );
@@ -1372,7 +1391,7 @@ function drawOutboundPulseRings(ctx, options) {
 function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse) {
   const quietGate = smoothStep(0.08, 0.34, levels.motion);
   const party = smoothStep(0.16, 0.72, levels.motion);
-  if (quietGate <= 0.01 && levels.glow <= 0.02) return;
+  if (!profile?.constantRings && quietGate <= 0.01 && levels.glow <= 0.02) return;
 
   const t = performance.now() / 1000;
   const scale = Math.max(1, Math.min(w, h) / 760);
@@ -1527,7 +1546,7 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
 function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, protectedPoint = () => false) {
   const quietGate = smoothStep(0.08, 0.34, levels.motion);
   const party = smoothStep(0.16, 0.72, levels.motion);
-  if (quietGate <= 0.01 && levels.glow <= 0.02) return;
+  if (!profile?.constantRings && quietGate <= 0.01 && levels.glow <= 0.02) return;
 
   const t = performance.now() / 1000;
   const scale = Math.max(1, Math.min(w, h) / 760);
@@ -1720,7 +1739,8 @@ function drawTetoFx(level) {
 
   const quietGate = smoothStep(0.12, 0.42, levels.motion);
   const party = smoothStep(0.22, 0.78, levels.motion);
-  if (quietGate <= 0.01 && levels.glow <= 0.02) return;
+  const profile = effectProfileForSong();
+  if (!profile?.constantRings && quietGate <= 0.01 && levels.glow <= 0.02) return;
 
   const fxRect = canvas.getBoundingClientRect();
   const heroRect = $('hero-play').getBoundingClientRect();
@@ -1730,7 +1750,6 @@ function drawTetoFx(level) {
   const cy = (heroRect.top - fxRect.top + heroRect.height / 2) * sy;
   const radius = Math.min(w, h) * (0.16 + party * 0.035);
   const t = performance.now() / 1000;
-  const profile = effectProfileForSong();
   const fxTime = currentCalibratedTime();
   const section = effectSectionAt(profile, fxTime);
   const sectionPower = profile ? ((section?.intensity || 0.28) * (section?.fadeLevel ?? 1)) : 1;
