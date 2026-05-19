@@ -23,6 +23,9 @@ let fxTheme = ['teto', 'disco', 'teto11'].includes(localStorage.getItem('vp_fx_t
 let timingDebugEnabled = localStorage.getItem('vp_timing_debug_enabled') === 'true';
 let addToActionOpenedAt = 0;
 let pendingPlaylistSongIdx = null;
+let openPlaylistAdder = null;
+let playlistAdderQueries = {};
+let playlistDragState = null;
 let audioCtx = null;
 let audioSource = null;
 let analyser = null;
@@ -196,6 +199,11 @@ function loadPlaylists() {
 function savePlaylists() {
   localStorage.setItem('vp_playlists', JSON.stringify(playlists));
 }
+
+window.addEventListener('pagehide', savePlaylists);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') savePlaylists();
+});
 
 function parseVolume(value, fallback = 1) {
   const parsed = parseFloat(value);
@@ -663,6 +671,7 @@ async function loadLibrary() {
   }
   renderCollectionFilters();
   renderLibrary($('search').value);
+  if ($('view-playlists')?.classList.contains('active')) renderPlaylists();
 }
 
 function renderCollectionFilters() {
@@ -2211,6 +2220,42 @@ function createPlaylistFromInput(input, songToAdd = null) {
   return name;
 }
 
+function playlistHasSong(name, song) {
+  return !!playlists[name]?.some(id => refMatchesSong(id, song));
+}
+
+function addSongToPlaylist(name, song) {
+  if (!song) return false;
+  if (!playlists[name]) playlists[name] = [];
+  if (playlistHasSong(name, song)) return false;
+  playlists[name].push(songRef(song));
+  savePlaylists();
+  renderPlaylists();
+  renderPlaylistActionPanel();
+  showToast('+', `Added ${song.title || song.displayName}`);
+  return true;
+}
+
+function reorderPlaylistSong(name, fromIdx, targetIdx) {
+  const songs = playlists[name];
+  if (!songs || fromIdx < 0 || fromIdx >= songs.length) return false;
+  if (targetIdx === fromIdx || targetIdx === fromIdx + 1) return false;
+  let insertAt = Math.max(0, Math.min(targetIdx, songs.length));
+  const [songId] = songs.splice(fromIdx, 1);
+  if (fromIdx < insertAt) insertAt -= 1;
+  songs.splice(insertAt, 0, songId);
+  savePlaylists();
+  renderPlaylists();
+  return true;
+}
+
+function movePlaylistSong(name, fromIdx, direction) {
+  const targetIdx = direction < 0 ? fromIdx - 1 : fromIdx + 2;
+  if (reorderPlaylistSong(name, fromIdx, targetIdx)) {
+    showToast('↕', 'Playlist order saved');
+  }
+}
+
 function startAddToPlaylistFlow(libIdx) {
   pendingPlaylistSongIdx = libIdx;
   switchView('playlists');
@@ -2295,9 +2340,14 @@ function renderPlaylists() {
       <div class="playlist-header">
         <span class="playlist-name"></span>
         <span class="playlist-count"></span>
+        <button class="playlist-add">+ Add songs</button>
         <button class="playlist-play">▶ Play</button>
         <button class="playlist-shuffle">🔀 Shuffle</button>
         <button class="playlist-delete">Delete</button>
+      </div>
+      <div class="playlist-adder hidden">
+        <input class="playlist-adder-search" type="text" placeholder="Search library">
+        <div class="playlist-adder-results"></div>
       </div>
       <ul class="playlist-songs"></ul>
     `;
@@ -2307,11 +2357,18 @@ function renderPlaylists() {
     const playButton = card.querySelector('.playlist-play');
     const shuffleButton = card.querySelector('.playlist-shuffle');
     const deleteButton = card.querySelector('.playlist-delete');
-    [playButton, shuffleButton, deleteButton].forEach(button => {
+    const addButton = card.querySelector('.playlist-add');
+    [addButton, playButton, shuffleButton, deleteButton].forEach(button => {
       button.addEventListener('pointerdown', (e) => {
         e.preventDefault();
         e.stopPropagation();
       });
+    });
+    addButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openPlaylistAdder = openPlaylistAdder === name ? null : name;
+      renderPlaylists();
     });
     playButton.addEventListener('click', (e) => {
       e.preventDefault();
@@ -2332,13 +2389,27 @@ function renderPlaylists() {
       renderPlaylistActionPanel();
       showToast('×', `Deleted ${name}`);
     });
+    renderPlaylistAdder(card, name);
     const ul = card.querySelector('.playlist-songs');
+    ul.addEventListener('dragover', (e) => {
+      if (!playlistDragState || playlistDragState.name !== name) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    });
+    ul.addEventListener('drop', (e) => {
+      if (!playlistDragState || playlistDragState.name !== name) return;
+      if (e.target.closest('.playlist-song')) return;
+      e.preventDefault();
+      if (reorderPlaylistSong(name, playlistDragState.index, songs.length)) {
+        showToast('↕', 'Playlist order saved');
+      }
+    });
     if (songs.length === 0) {
       const li = document.createElement('li');
       li.style.padding = '8px 10px';
       li.style.color = 'var(--fg-faint)';
       li.style.fontSize = '13px';
-      li.textContent = 'Empty. Add songs from the Library tab using the + button.';
+      li.textContent = 'Empty. Use Add songs above to build this playlist.';
       ul.appendChild(li);
     } else {
       songs.forEach((songId, i) => {
@@ -2347,24 +2418,73 @@ function renderPlaylists() {
         li.className = 'playlist-song';
         li.dataset.playlist = name;
         li.dataset.libIdx = libIdx;
+        li.dataset.playlistIdx = i;
+        li.draggable = true;
         const missingName = String(songId).split('/').pop();
         const label = libIdx >= 0 ? library[libIdx].displayName : `${missingName} (missing)`;
         li.innerHTML = `
+          <span class="drag-handle" title="Drag to reorder">☰</span>
           <span class="col-num">${i + 1}</span>
           <span class="title"></span>
+          <span class="playlist-move">
+            <button class="move-up" title="Move up" ${i === 0 ? 'disabled' : ''}>↑</button>
+            <button class="move-down" title="Move down" ${i === songs.length - 1 ? 'disabled' : ''}>↓</button>
+          </span>
           <button class="remove" title="Remove from playlist">×</button>
         `;
         li.querySelector('.title').textContent = label;
         if (libIdx < 0) li.querySelector('.title').style.color = 'var(--fg-faint)';
         li.addEventListener('click', (e) => {
-          if (e.target.closest('.remove')) return;
+          if (e.target.closest('button') || e.target.closest('.drag-handle')) return;
           if (libIdx >= 0) playPlaylist(name, i, false);
         });
-        const removeButton = li.querySelector('.remove');
-        removeButton.addEventListener('pointerdown', (e) => {
+        li.addEventListener('dragstart', (e) => {
+          playlistDragState = {name, index: i};
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', `${name}:${i}`);
+          requestAnimationFrame(() => li.classList.add('dragging'));
+        });
+        li.addEventListener('dragend', () => {
+          li.classList.remove('dragging');
+          li.classList.remove('drag-over');
+          playlistDragState = null;
+        });
+        li.addEventListener('dragover', (e) => {
+          if (!playlistDragState || playlistDragState.name !== name) return;
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          li.classList.add('drag-over');
+        });
+        li.addEventListener('dragleave', () => li.classList.remove('drag-over'));
+        li.addEventListener('drop', (e) => {
+          if (!playlistDragState || playlistDragState.name !== name) return;
           e.preventDefault();
           e.stopPropagation();
+          li.classList.remove('drag-over');
+          const rect = li.getBoundingClientRect();
+          const after = e.clientY > rect.top + rect.height / 2;
+          const targetIdx = after ? i + 1 : i;
+          if (reorderPlaylistSong(name, playlistDragState.index, targetIdx)) {
+            showToast('↕', 'Playlist order saved');
+          }
         });
+        li.querySelectorAll('button').forEach(button => {
+          button.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+        });
+        li.querySelector('.move-up').addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          movePlaylistSong(name, i, -1);
+        });
+        li.querySelector('.move-down').addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          movePlaylistSong(name, i, 1);
+        });
+        const removeButton = li.querySelector('.remove');
         removeButton.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -2376,6 +2496,65 @@ function renderPlaylists() {
       });
     }
     container.appendChild(card);
+  });
+}
+
+function renderPlaylistAdder(card, name) {
+  const adder = card.querySelector('.playlist-adder');
+  const search = card.querySelector('.playlist-adder-search');
+  const results = card.querySelector('.playlist-adder-results');
+  const isOpen = openPlaylistAdder === name;
+  adder.classList.toggle('hidden', !isOpen);
+  card.querySelector('.playlist-add').classList.toggle('on', isOpen);
+  if (!isOpen) return;
+
+  const query = playlistAdderQueries[name] || '';
+  search.value = query;
+  search.addEventListener('input', () => {
+    playlistAdderQueries[name] = search.value;
+    renderPlaylistAdderResults(results, name, search.value);
+  });
+  renderPlaylistAdderResults(results, name, query);
+}
+
+function renderPlaylistAdderResults(results, name, query) {
+  const q = query.trim().toLowerCase();
+  const candidates = library
+    .filter(song => !playlistHasSong(name, song))
+    .filter(song => !q || song.displayName.toLowerCase().includes(q) || song.collectionLabel.toLowerCase().includes(q));
+
+  results.innerHTML = '';
+  if (!library.length) {
+    const empty = document.createElement('div');
+    empty.className = 'playlist-adder-empty';
+    empty.textContent = 'Library is still loading.';
+    results.appendChild(empty);
+    return;
+  }
+  if (candidates.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'playlist-adder-empty';
+    empty.textContent = q ? 'No matching songs left to add.' : 'Every library song is already in this playlist.';
+    results.appendChild(empty);
+    return;
+  }
+
+  candidates.slice(0, 60).forEach(song => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'playlist-adder-song';
+    button.innerHTML =
+      `<span class="playlist-adder-song-title"></span>` +
+      `<span class="playlist-adder-song-meta"></span>` +
+      `<span class="playlist-adder-song-plus">+</span>`;
+    button.querySelector('.playlist-adder-song-title').textContent = song.displayName;
+    button.querySelector('.playlist-adder-song-meta').textContent = song.collectionLabel;
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      addSongToPlaylist(name, song);
+    });
+    results.appendChild(button);
   });
 }
 
