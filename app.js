@@ -162,6 +162,9 @@ const TETO11_ROBOTS = [
   {x: 0.24, y: 0.72, size: 38, phase: 1.8},
   {x: 0.9, y: 0.56, size: 34, phase: 3.1},
 ];
+let fxRingPulses = [];
+let lastFxRingBeatKey = '';
+let lastFxRingFallbackAt = 0;
 
 let toastTimeout = null;
 function showToast(icon, text) {
@@ -1327,6 +1330,105 @@ function drawRobotHeartGlyph(ctx, x, y, size, alpha, color, pulse) {
   ctx.restore();
 }
 
+function emitOutboundRingPulse(theme, now, cx, cy, baseRadius, travelRadius, palette, power, lineWidth, life) {
+  const color = palette[Math.floor(seededUnit(now * 1000 + theme.length * 17) * palette.length)] || palette[0];
+  fxRingPulses.push({
+    theme,
+    born: now,
+    cx,
+    cy,
+    baseRadius,
+    travelRadius,
+    color,
+    power,
+    lineWidth,
+    life,
+  });
+  if (fxRingPulses.length > 36) fxRingPulses.splice(0, fxRingPulses.length - 36);
+}
+
+function drawOutboundPulseRings(ctx, options) {
+  const {
+    theme,
+    w,
+    h,
+    cx,
+    cy,
+    levels,
+    profile,
+    fxTime,
+    sectionPower,
+    chorusPower,
+    beatPulse,
+    palette,
+    baseRadius,
+    travelRadius,
+    alphaBase,
+    lineWidth,
+    life = 0.76,
+  } = options;
+  const now = performance.now() / 1000;
+  const audible = !!(audio.src && !audio.paused && levels.motion > 0.035);
+  const eventPower = clamp(0, 1, levels.glow * 0.44 + levels.motion * 0.26 + beatPulse * (0.38 + chorusPower * 0.36) + chorusPower * 0.18);
+
+  if (audible && eventPower > 0.12) {
+    let shouldEmit = false;
+    if (profile?.bpm && Number.isFinite(fxTime)) {
+      const beats = Math.max(0, (fxTime - (profile.beatOffset || 0)) * profile.bpm / 60);
+      const beatIndex = Math.floor(beats);
+      const song = currentSong();
+      const beatKey = `${song?.path || song?.name || 'song'}:${theme}:${beatIndex}`;
+      if (beatPulse > 0.28 && beatKey !== lastFxRingBeatKey) {
+        lastFxRingBeatKey = beatKey;
+        shouldEmit = true;
+      }
+    } else if (tetoRiseEnergy > 0.42 && now - lastFxRingFallbackAt > 0.34) {
+      lastFxRingFallbackAt = now;
+      shouldEmit = true;
+    }
+    if (shouldEmit) {
+      emitOutboundRingPulse(
+        theme,
+        now,
+        cx,
+        cy,
+        baseRadius,
+        travelRadius * (0.82 + sectionPower * 0.18),
+        palette,
+        eventPower,
+        lineWidth,
+        life
+      );
+    }
+  }
+
+  fxRingPulses = fxRingPulses.filter(pulse => now - pulse.born <= pulse.life + 0.05);
+  fxRingPulses.forEach(pulse => {
+    if (pulse.theme !== theme) return;
+    const age = (now - pulse.born) / pulse.life;
+    if (age < 0 || age > 1) return;
+    const progress = easeOutCubic(age);
+    const radius = pulse.baseRadius + pulse.travelRadius * progress;
+    const fade = Math.pow(1 - age, 1.72);
+    const alpha = fade * pulse.power * alphaBase;
+    if (alpha <= 0.003) return;
+    const color = pulse.color;
+    ctx.beginPath();
+    ctx.arc(pulse.cx, pulse.cy, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = rgbaColor(color, alpha);
+    ctx.lineWidth = Math.max(1, pulse.lineWidth * (0.88 + fade * 0.22));
+    ctx.stroke();
+
+    const glowRadius = Math.max(w, h) * 0.01;
+    const glow = ctx.createRadialGradient(pulse.cx, pulse.cy, Math.max(1, radius - glowRadius), pulse.cx, pulse.cy, radius + glowRadius * 2.5);
+    glow.addColorStop(0, rgbaColor(color, 0));
+    glow.addColorStop(0.5, rgbaColor(color, alpha * 0.42));
+    glow.addColorStop(1, rgbaColor(color, 0));
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, w, h);
+  });
+}
+
 function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse) {
   const quietGate = smoothStep(0.08, 0.34, levels.motion);
   const party = smoothStep(0.16, 0.72, levels.motion);
@@ -1407,18 +1509,25 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
     ctx.restore();
   });
 
-  const ringCount = Math.round(4 + chorusBoost * 3);
-  for (let i = 0; i < ringCount; i++) {
-    const phase = (t * (profile?.bpm ? profile.bpm / 72 : 1.4) + i / ringCount) % 1;
-    const fade = Math.pow(1 - phase, 1.2);
-    const color = palette[(i + Math.floor(t * 2)) % palette.length];
-    const radius = Math.min(w, h) * (0.12 + phase * (0.34 + pulseLevel * 0.18));
-    ctx.beginPath();
-    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${fade * (0.022 + pulseLevel * 0.13 + chorusLift * 0.2)})`;
-    ctx.lineWidth = (1.2 + pulseLevel * 3.6) * scale;
-    ctx.stroke();
-  }
+  drawOutboundPulseRings(ctx, {
+    theme: 'disco',
+    w,
+    h,
+    cx,
+    cy,
+    levels,
+    profile,
+    fxTime,
+    sectionPower,
+    chorusPower,
+    beatPulse,
+    palette,
+    baseRadius: Math.min(w, h) * (0.11 + pulseLevel * 0.015),
+    travelRadius: Math.min(w, h) * (0.3 + pulseLevel * 0.12 + chorusBoost * 0.12),
+    alphaBase: 0.28 + chorusBoost * 0.14,
+    lineWidth: (1.2 + pulseLevel * 3.4) * scale,
+    life: 0.72,
+  });
 
   const ballRadius = Math.min(w, h) * (0.045 + pulseLevel * 0.018);
   const ballX = clamp(ballRadius * 1.4, w - ballRadius * 1.4, cx);
@@ -1560,19 +1669,25 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
     drawCircuitTrace(ctx, w, h, trace, scale, alpha, rgbaColor(i % 3 === 0 ? rose : orange, 0.92), beatPulse);
   });
 
-  const ringCount = Math.round(3 + chorusBoost * 2);
-  const ringSpeed = profile?.bpm ? profile.bpm / 60 : 1.35;
-  for (let i = 0; i < ringCount; i++) {
-    const phase = (t * ringSpeed + i / ringCount) % 1;
-    const fade = Math.pow(1 - phase, 1.45);
-    const radius = Math.min(w, h) * (0.13 + phase * (0.36 + alive * 0.12));
-    const color = i % 2 ? orange : red;
-    ctx.beginPath();
-    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-    ctx.strokeStyle = rgbaColor(color, fade * quietGate * (0.026 + alive * 0.12 + chorusLift * 0.11));
-    ctx.lineWidth = (1.2 + alive * 3.4) * scale;
-    ctx.stroke();
-  }
+  drawOutboundPulseRings(ctx, {
+    theme: 'teto11',
+    w,
+    h,
+    cx,
+    cy,
+    levels,
+    profile,
+    fxTime,
+    sectionPower,
+    chorusPower,
+    beatPulse,
+    palette: [red, orange, rose, chrome],
+    baseRadius: Math.min(w, h) * (0.12 + alive * 0.015),
+    travelRadius: Math.min(w, h) * (0.28 + alive * 0.1 + chorusBoost * 0.08),
+    alphaBase: 0.24 + chorusBoost * 0.13,
+    lineWidth: (1.1 + alive * 3.0) * scale,
+    life: 0.7,
+  });
 
   const heartAlpha = quietGate * (0.035 + alive * 0.09 + chorusLift * 0.16);
   if (heartAlpha > 0.02) {
@@ -1761,18 +1876,30 @@ function drawTetoFx(level) {
     }
   }
 
-  const ringSpeed = profile?.bpm ? profile.bpm / 60 : 0.12 + party * 0.16;
-  const ringCount = 5;
-  for (let j = 0; j < ringCount; j++) {
-    const phase = (t * ringSpeed + j / ringCount) % 1;
-    const fade = Math.pow(1 - phase, 1.55);
-    const ringRadius = radius * (0.95 + phase * (2.4 + pulseLevel * 1.35));
-    ctx.beginPath();
-    ctx.arc(cx, cy, ringRadius, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(255, ${112 + j * 16}, 48, ${fade * (0.025 + pulseLevel * 0.2 + chorusPower * beatPulse * 0.12)})`;
-    ctx.lineWidth = Math.max(1, (1.2 + pulseLevel * 3.4) * (1 - phase * 0.34) * sx);
-    ctx.stroke();
-  }
+  drawOutboundPulseRings(ctx, {
+    theme: 'teto',
+    w,
+    h,
+    cx,
+    cy,
+    levels,
+    profile,
+    fxTime,
+    sectionPower,
+    chorusPower,
+    beatPulse,
+    palette: [
+      [255, 96, 62],
+      [255, 153, 54],
+      [255, 210, 105],
+      [255, 92, 143],
+    ],
+    baseRadius: radius * 0.92,
+    travelRadius: radius * (2.05 + pulseLevel * 0.9 + chorusPower * 0.42),
+    alphaBase: 0.24 + chorusPower * 0.12,
+    lineWidth: Math.max(1, (1.15 + pulseLevel * 3.1) * sx),
+    life: 0.72,
+  });
 
   const palettes = [
     'rgba(255, 96, 62, 0.6)',

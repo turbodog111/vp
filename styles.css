@@ -242,8 +242,8 @@ body.teto11-fx-active .hero-play::before {
   inset: -24px;
   border-radius: inherit;
   border: 1px solid rgba(94, 234, 212, calc(0.18 + var(--level) * 0.45));
-  transform: scale(calc(1 + var(--level) * 0.08));
-  opacity: 0.7;
+  transform: none;
+  opacity: calc(0.48 + var(--level) * 0.18);
   z-index: -3;
 }
 body.teto-fx-active .hero-play::after {
