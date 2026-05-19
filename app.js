@@ -229,12 +229,13 @@ function ensureCalibratedClock(song = currentSong()) {
 
 function currentCalibratedTime(song = currentSong()) {
   ensureCalibratedClock(song);
-  const nativeTime = audio.currentTime || 0;
-  if (Number.isFinite(nativeTime) && nativeTime > 0) {
-    calibratedBaseTime = nativeTime;
-    calibratedBasePerf = performance.now() / 1000;
+  let time = calibratedBaseTime;
+  if (calibratedClockRunning && !audio.paused) {
+    time += Math.max(0, performance.now() / 1000 - calibratedBasePerf);
   }
-  return Math.max(0, calibratedBaseTime);
+  const duration = effectiveDuration(song);
+  if (duration) time = Math.min(time, duration);
+  return Math.max(0, time);
 }
 
 function setNativeTimeFromCalibratedClock(time, song = currentSong(), options = {}) {
@@ -268,15 +269,15 @@ function syncCalibratedClockToNative(song = currentSong(), options = {}) {
     }
   }
   resetCalibratedClock(nextTime, song);
-  if (wasRunning && !audio.paused && options.keepRunning !== false) startCalibratedClock(song);
+  if (wasRunning && !audio.paused && !audio.seeking && audio.readyState >= 3 && options.keepRunning !== false) {
+    startCalibratedClock(song);
+  }
 }
 
 function startCalibratedClock(song = currentSong()) {
   ensureCalibratedClock(song);
   if (pendingClockSeekTime !== null) {
     calibratedBaseTime = pendingClockSeekTime;
-  } else {
-    calibratedBaseTime = calibratedFromNativeTime(audio.currentTime || 0, song);
   }
   calibratedBasePerf = performance.now() / 1000;
   calibratedClockRunning = true;
@@ -292,6 +293,9 @@ function pauseCalibratedClock(song = currentSong()) {
 function resumeAudioFromCalibratedClock(song = currentSong()) {
   ensureAudioGraph();
   ensureCalibratedClock(song);
+  calibratedBaseTime = currentCalibratedTime(song);
+  calibratedBasePerf = performance.now() / 1000;
+  calibratedClockRunning = false;
   return audio.play();
 }
 
@@ -1222,11 +1226,11 @@ audio.addEventListener('loadedmetadata', () => {
   updatePlaybackVisuals();
 });
 audio.addEventListener('seeking', () => {
-  syncCalibratedClockToNative(currentSong(), {allowBackward: false});
+  syncCalibratedClockToNative(currentSong(), {allowBackward: false, keepRunning: false});
   updatePlaybackVisuals();
 });
 audio.addEventListener('seeked', () => {
-  syncCalibratedClockToNative(currentSong(), {allowBackward: false, consumePending: true});
+  syncCalibratedClockToNative(currentSong(), {allowBackward: false, consumePending: true, keepRunning: false});
   updatePlaybackVisuals();
 });
 audio.addEventListener('ratechange', () => {
@@ -1280,7 +1284,6 @@ $('seek').addEventListener('input', (e) => {
   if (!setNativeTimeFromCalibratedClock(targetTime, currentSong(), {force: true})) {
     audio.currentTime = nativeFromCalibratedTime(targetTime);
   }
-  if (!audio.paused) startCalibratedClock();
   updatePlaybackVisuals();
 });
 
