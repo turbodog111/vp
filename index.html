@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>vp</title>
-<link rel="stylesheet" href="styles.css?v=2026-05-18-debug-clock">
+<link rel="stylesheet" href="styles.css?v=2026-05-18-disco-fx">
 </head>
 <body>
 <div class="app">
@@ -16,7 +16,14 @@
     <div id="settings-menu" class="settings-menu hidden">
       <label class="setting-row">
         <input id="teto-fx-enabled" type="checkbox">
-        <span>Teto FX for secular songs</span>
+        <span>FX for secular songs</span>
+      </label>
+      <label class="setting-row setting-row-select">
+        <span>FX theme</span>
+        <select id="fx-theme">
+          <option value="teto">Orange Teto</option>
+          <option value="disco">Classic Disco</option>
+        </select>
       </label>
       <label class="setting-row">
         <input id="timing-debug-enabled" type="checkbox">
@@ -128,6 +135,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=2026-05-18-debug-clock"></script>
+<script src="app.js?v=2026-05-18-disco-fx"></script>
 </body>
 </html>

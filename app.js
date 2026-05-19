@@ -19,6 +19,7 @@ let playlists = loadPlaylists();
 let currentPlaylist = null;
 let activeCollection = localStorage.getItem('vp_collection') || 'all';
 let tetoFxEnabled = localStorage.getItem('vp_teto_fx_enabled') !== 'false';
+let fxTheme = ['teto', 'disco'].includes(localStorage.getItem('vp_fx_theme')) ? localStorage.getItem('vp_fx_theme') : 'teto';
 let timingDebugEnabled = localStorage.getItem('vp_timing_debug_enabled') === 'true';
 let addToActionOpenedAt = 0;
 let pendingPlaylistSongIdx = null;
@@ -102,6 +103,20 @@ const TETO_FX_OBJECTS = Array.from({ length: 24 }, (_, i) => {
     threshold: 0.08 + ((i * 7) % 10) * 0.052,
   };
 });
+const DISCO_BEAMS = Array.from({ length: 14 }, (_, i) => ({
+  phase: seededUnit((i + 1) * 9.81) * Math.PI * 2,
+  speed: 0.13 + seededUnit((i + 1) * 16.37) * 0.16,
+  width: 0.09 + seededUnit((i + 1) * 23.13) * 0.08,
+  colorIndex: i % 7,
+  origin: i % 4,
+}));
+const DISCO_SPARKLES = Array.from({ length: 72 }, (_, i) => ({
+  x: 0.04 + seededUnit((i + 1) * 13.117) * 0.92,
+  y: 0.05 + seededUnit((i + 1) * 41.91) * 0.86,
+  phase: seededUnit((i + 1) * 71.37) * Math.PI * 2,
+  size: 1.6 + seededUnit((i + 1) * 5.73) * 4.8,
+  threshold: 0.08 + seededUnit((i + 1) * 19.43) * 0.5,
+}));
 
 let toastTimeout = null;
 function showToast(icon, text) {
@@ -462,8 +477,21 @@ function beatPulseForProfile(profile, time) {
   return Math.pow(1 - phase, 4.2);
 }
 
+function activeFxTheme(song = currentSong()) {
+  if (!tetoFxEnabled || !song || song.collection !== 'secular') return 'off';
+  return fxTheme === 'disco' ? 'disco' : 'teto';
+}
+
+function isAnyFxActive(song = currentSong()) {
+  return activeFxTheme(song) !== 'off';
+}
+
 function isTetoFxActive(song = currentSong()) {
-  return !!(tetoFxEnabled && song && song.collection === 'secular');
+  return activeFxTheme(song) === 'teto';
+}
+
+function isDiscoFxActive(song = currentSong()) {
+  return activeFxTheme(song) === 'disco';
 }
 
 function setTetoFxEnabled(enabled) {
@@ -474,11 +502,24 @@ function setTetoFxEnabled(enabled) {
   updateFxState();
 }
 
+function setFxTheme(theme) {
+  fxTheme = theme === 'disco' ? 'disco' : 'teto';
+  localStorage.setItem('vp_fx_theme', fxTheme);
+  const select = $('fx-theme');
+  if (select) select.value = fxTheme;
+  updateFxState();
+}
+
 function updateFxState(levelOverride = tetoGlowLevel) {
-  const active = isTetoFxActive();
+  const theme = activeFxTheme();
+  const active = theme !== 'off';
   const level = active && !audio.paused ? levelOverride : 0;
-  document.body.classList.toggle('teto-fx-active', active);
+  document.body.classList.toggle('fx-active', active);
+  document.body.classList.toggle('disco-fx-active', theme === 'disco');
+  document.body.classList.toggle('teto-fx-active', theme === 'teto');
+  document.body.style.setProperty('--fx-level', level.toFixed(3));
   document.body.style.setProperty('--teto-level', level.toFixed(3));
+  document.body.style.setProperty('--disco-level', level.toFixed(3));
 }
 
 function switchView(view) {
@@ -1067,7 +1108,7 @@ function resetWaveEnvelope() {
 }
 
 function smoothTetoFxLevels(level) {
-  const audible = !!(isTetoFxActive() && audio.src && !audio.paused);
+  const audible = !!(isAnyFxActive() && audio.src && !audio.paused);
   if (!audible) {
     tetoFxLevel = 0;
     tetoGlowLevel = 0;
@@ -1099,6 +1140,148 @@ function drawDiamond(ctx, x, y, size, angle, fillStyle, alpha) {
   ctx.restore();
 }
 
+function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse) {
+  const quietGate = smoothStep(0.08, 0.34, levels.motion);
+  const party = smoothStep(0.16, 0.72, levels.motion);
+  if (quietGate <= 0.01 && levels.glow <= 0.02) return;
+
+  const t = performance.now() / 1000;
+  const scale = Math.max(1, Math.min(w, h) / 760);
+  const bpmPulse = profile ? beatPulse * (0.28 + sectionPower * 0.72) : 0;
+  const chorusLift = section?.chorus ? sectionPower * 0.72 : 0;
+  const pulseLevel = clamp(0, 1, levels.glow * 0.48 + party * 0.34 + bpmPulse * (0.32 + chorusLift));
+  const beamPower = quietGate * (0.2 + party * 0.5 + chorusLift * 0.78) * (0.76 + beatPulse * 0.46);
+  const palette = [
+    [255, 55, 155],
+    [70, 218, 255],
+    [255, 232, 91],
+    [129, 92, 255],
+    [78, 255, 167],
+    [255, 112, 74],
+    [246, 78, 255],
+  ];
+
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
+
+  const stageWash = ctx.createLinearGradient(0, 0, w, h);
+  stageWash.addColorStop(0, `rgba(255, 55, 155, ${0.025 + pulseLevel * 0.16})`);
+  stageWash.addColorStop(0.28, `rgba(79, 216, 255, ${0.02 + pulseLevel * 0.14})`);
+  stageWash.addColorStop(0.62, `rgba(255, 232, 91, ${0.012 + pulseLevel * 0.1})`);
+  stageWash.addColorStop(1, `rgba(124, 92, 255, ${0.03 + pulseLevel * 0.16})`);
+  ctx.fillStyle = stageWash;
+  ctx.fillRect(0, 0, w, h);
+
+  const centerGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * (0.35 + pulseLevel * 0.22));
+  centerGlow.addColorStop(0, `rgba(255, 255, 228, ${0.05 + pulseLevel * 0.13})`);
+  centerGlow.addColorStop(0.34, `rgba(70, 218, 255, ${0.03 + pulseLevel * 0.12})`);
+  centerGlow.addColorStop(0.68, `rgba(255, 55, 155, ${0.012 + pulseLevel * 0.08})`);
+  centerGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  ctx.fillStyle = centerGlow;
+  ctx.fillRect(0, 0, w, h);
+
+  DISCO_BEAMS.forEach((beam, i) => {
+    const color = palette[beam.colorIndex];
+    const originPhase = (beam.origin + Math.floor(t * 0.18)) % 4;
+    const origins = [
+      {x: w * (0.1 + seededUnit(i * 2.1) * 0.8), y: -h * 0.08, base: Math.PI * 0.5},
+      {x: w * 1.08, y: h * (0.12 + seededUnit(i * 3.2) * 0.78), base: Math.PI},
+      {x: w * (0.1 + seededUnit(i * 5.3) * 0.8), y: h * 1.08, base: -Math.PI * 0.5},
+      {x: -w * 0.08, y: h * (0.12 + seededUnit(i * 7.4) * 0.78), base: 0},
+    ];
+    const origin = origins[originPhase];
+    const sweep = Math.sin(t * beam.speed + beam.phase) * (0.42 + chorusLift * 0.22);
+    const angle = origin.base + sweep + beatPulse * 0.06;
+    const length = Math.max(w, h) * (1.08 + chorusLift * 0.42);
+    const halfWidth = length * (beam.width + beatPulse * 0.018);
+    const alpha = beamPower * (0.06 + (i % 3) * 0.014 + chorusLift * 0.045);
+    ctx.save();
+    ctx.translate(origin.x, origin.y);
+    ctx.rotate(angle);
+    const grad = ctx.createLinearGradient(0, 0, length, 0);
+    grad.addColorStop(0, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha * 1.8})`);
+    grad.addColorStop(0.42, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`);
+    grad.addColorStop(1, `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`);
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(length, halfWidth);
+    ctx.lineTo(length, -halfWidth);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  });
+
+  const ringCount = 7;
+  for (let i = 0; i < ringCount; i++) {
+    const phase = (t * (profile?.bpm ? profile.bpm / 72 : 1.4) + i / ringCount) % 1;
+    const fade = Math.pow(1 - phase, 1.2);
+    const color = palette[(i + Math.floor(t * 2)) % palette.length];
+    const radius = Math.min(w, h) * (0.12 + phase * (0.34 + pulseLevel * 0.18));
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${fade * (0.04 + pulseLevel * 0.2 + chorusLift * 0.14)})`;
+    ctx.lineWidth = (1.2 + pulseLevel * 3.6) * scale;
+    ctx.stroke();
+  }
+
+  const ballRadius = Math.min(w, h) * (0.045 + pulseLevel * 0.018);
+  const ballX = clamp(ballRadius * 1.4, w - ballRadius * 1.4, cx);
+  const ballY = clamp(ballRadius * 1.5, h - ballRadius * 1.5, cy - Math.min(h * 0.24, 160 * scale));
+  ctx.save();
+  ctx.translate(ballX, ballY);
+  ctx.rotate(t * 0.24);
+  const ballGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, ballRadius * 2.8);
+  ballGlow.addColorStop(0, `rgba(255, 255, 232, ${0.12 + pulseLevel * 0.18})`);
+  ballGlow.addColorStop(0.42, `rgba(70, 218, 255, ${0.06 + pulseLevel * 0.14})`);
+  ballGlow.addColorStop(1, 'rgba(70, 218, 255, 0)');
+  ctx.fillStyle = ballGlow;
+  ctx.beginPath();
+  ctx.arc(0, 0, ballRadius * 2.8, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(0, 0, ballRadius, 0, Math.PI * 2);
+  ctx.clip();
+  const tile = Math.max(3, ballRadius * 0.24);
+  for (let y = -ballRadius; y < ballRadius; y += tile) {
+    for (let x = -ballRadius; x < ballRadius; x += tile) {
+      const d = Math.hypot(x, y) / ballRadius;
+      if (d > 1) continue;
+      const color = palette[(Math.floor((x + ballRadius) / tile) + Math.floor((y + ballRadius) / tile)) % palette.length];
+      const shine = (1 - d) * (0.28 + pulseLevel * 0.44) + seededUnit(x * 3.7 + y * 9.1) * 0.12;
+      ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${shine})`;
+      ctx.fillRect(x, y, tile * 0.82, tile * 0.82);
+    }
+  }
+  ctx.restore();
+
+  DISCO_SPARKLES.forEach((dot, i) => {
+    const color = palette[i % palette.length];
+    const twinkle = 0.5 + Math.sin(t * (1.2 + (i % 7) * 0.24) + dot.phase) * 0.5;
+    const appear = smoothStep(dot.threshold, Math.min(1, dot.threshold + 0.5), party + chorusLift * 0.65 + beatPulse * 0.18);
+    const alpha = appear * quietGate * (0.08 + twinkle * 0.34 + beatPulse * 0.14);
+    if (alpha <= 0.01) return;
+    const drift = (8 + party * 22) * scale;
+    const x = dot.x * w + Math.sin(t * 0.24 + dot.phase) * drift;
+    const y = dot.y * h + Math.cos(t * 0.18 + dot.phase) * drift;
+    const size = dot.size * scale * (0.8 + beatPulse * 1.1 + twinkle * 0.5);
+    ctx.strokeStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
+    ctx.lineWidth = Math.max(1, scale * 1.1);
+    ctx.beginPath();
+    ctx.moveTo(x - size, y);
+    ctx.lineTo(x + size, y);
+    ctx.moveTo(x, y - size);
+    ctx.lineTo(x, y + size);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x, y, size * 0.22, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 245, ${alpha * 0.65})`;
+    ctx.fill();
+  });
+
+  ctx.restore();
+}
+
 function drawTetoFx(level) {
   const canvas = $('teto-fx');
   const view = $('view-now');
@@ -1109,8 +1292,9 @@ function drawTetoFx(level) {
   const h = canvas.height;
   ctx.clearRect(0, 0, w, h);
   const levels = smoothTetoFxLevels(level);
+  const theme = activeFxTheme();
   updateFxState(levels.glow);
-  if (!isTetoFxActive()) return;
+  if (theme === 'off') return;
 
   const quietGate = smoothStep(0.12, 0.42, levels.motion);
   const party = smoothStep(0.22, 0.78, levels.motion);
@@ -1130,6 +1314,12 @@ function drawTetoFx(level) {
   const sectionPower = profile ? ((section?.intensity || 0.28) * (section?.fadeLevel ?? 1)) : 1;
   const chorusPower = section?.chorus ? sectionPower : 0;
   const beatPulse = beatPulseForProfile(profile, fxTime);
+
+  if (theme === 'disco') {
+    drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse);
+    return;
+  }
+
   const protectedRects = ['.now-meta', '.now-queue'].map(selector => {
     const el = document.querySelector(selector);
     if (!el) return null;
@@ -1273,7 +1463,14 @@ function drawWaveform() {
   ctx.clearRect(0, 0, w, h);
 
   const gradient = ctx.createLinearGradient(0, 0, w, 0);
-  if (isTetoFxActive()) {
+  if (isDiscoFxActive()) {
+    gradient.addColorStop(0, 'rgba(255, 55, 155, 0.42)');
+    gradient.addColorStop(0.2, 'rgba(70, 218, 255, 0.92)');
+    gradient.addColorStop(0.4, 'rgba(255, 232, 91, 0.98)');
+    gradient.addColorStop(0.62, 'rgba(129, 92, 255, 0.94)');
+    gradient.addColorStop(0.82, 'rgba(78, 255, 167, 0.88)');
+    gradient.addColorStop(1, 'rgba(246, 78, 255, 0.58)');
+  } else if (isTetoFxActive()) {
     gradient.addColorStop(0, 'rgba(132, 42, 28, 0.32)');
     gradient.addColorStop(0.32, 'rgba(255, 93, 55, 0.88)');
     gradient.addColorStop(0.58, 'rgba(255, 150, 45, 0.98)');
@@ -1486,8 +1683,10 @@ volumeEl.addEventListener('change', (e) => setPlayerVolume(e.target.value, true)
 const settingsToggle = $('settings-toggle');
 const settingsMenu = $('settings-menu');
 const tetoFxCheckbox = $('teto-fx-enabled');
+const fxThemeSelect = $('fx-theme');
 const timingDebugCheckbox = $('timing-debug-enabled');
 if (tetoFxCheckbox) tetoFxCheckbox.checked = tetoFxEnabled;
+if (fxThemeSelect) fxThemeSelect.value = fxTheme;
 if (timingDebugCheckbox) timingDebugCheckbox.checked = timingDebugEnabled;
 if (settingsToggle && settingsMenu) {
   settingsToggle.addEventListener('click', (e) => {
@@ -1505,6 +1704,9 @@ if (settingsToggle && settingsMenu) {
 }
 if (tetoFxCheckbox) {
   tetoFxCheckbox.addEventListener('change', () => setTetoFxEnabled(tetoFxCheckbox.checked));
+}
+if (fxThemeSelect) {
+  fxThemeSelect.addEventListener('change', () => setFxTheme(fxThemeSelect.value));
 }
 if (timingDebugCheckbox) {
   timingDebugCheckbox.addEventListener('change', () => {
