@@ -48,18 +48,22 @@ const WAVE_SOFT_LIMIT = 0.94;
 const WAVE_LEVEL_WINDOW = 180;
 const WAVE_MIN_FREQ = 55;
 const WAVE_MAX_FREQ = 14000;
+const AUDIO_FILE_RE = /\.(mp3|m4a)$/i;
+const AUDIO_EXTENSION_RE = /\.(mp3|m4a)$/i;
+const PENTHOUSE_EFFECT_PROFILE = {
+  bpm: 123,
+  key: 'F# major',
+  beatOffset: 0,
+  sections: [
+    {name: 'Intro', start: 0, end: 51, intensity: 0.24, chorus: false},
+    {name: 'First chorus', start: 52.27, end: 84.01, intensity: 1, chorus: true, fade: 0.5},
+    {name: 'Altered second chorus', start: 128.89, end: 148.37, intensity: 0.92, chorus: true, fade: 0.5},
+    {name: 'Last chorus', start: 179.5, end: 211.38, intensity: 1.08, chorus: true, fade: 0.5},
+  ],
+};
 const SONG_EFFECT_PROFILES = {
-  'songs/Penthouse - One, Two, Three (一二三).mp3': {
-    bpm: 123,
-    key: 'F# major',
-    beatOffset: 0,
-    sections: [
-      {name: 'Intro', start: 0, end: 51, intensity: 0.24, chorus: false},
-      {name: 'First chorus', start: 52.27, end: 84.01, intensity: 1, chorus: true, fade: 0.5},
-      {name: 'Altered second chorus', start: 128.89, end: 148.37, intensity: 0.92, chorus: true, fade: 0.5},
-      {name: 'Last chorus', start: 179.5, end: 211.38, intensity: 1.08, chorus: true, fade: 0.5},
-    ],
-  },
+  'songs/Penthouse - One, Two, Three (一二三).mp3': PENTHOUSE_EFFECT_PROFILE,
+  'songs/Penthouse - One, Two, Three (一二三).m4a': PENTHOUSE_EFFECT_PROFILE,
 };
 const seededUnit = (seed) => {
   const x = Math.sin(seed) * 10000;
@@ -122,8 +126,32 @@ function parseVolume(value, fallback = 1) {
   return Math.min(1, Math.max(0, parsed));
 }
 
+function audioBaseName(filename) {
+  return filename.replace(AUDIO_EXTENSION_RE, '').trim();
+}
+
+function audioFormatRank(filename) {
+  if (/\.m4a$/i.test(filename)) return 2;
+  if (/\.mp3$/i.test(filename)) return 1;
+  return 0;
+}
+
+function preferredAudioFiles(items) {
+  const selected = new Map();
+  items
+    .filter(i => i.type === 'file' && AUDIO_FILE_RE.test(i.name))
+    .forEach(item => {
+      const key = audioBaseName(item.name).toLowerCase();
+      const existing = selected.get(key);
+      if (!existing || audioFormatRank(item.name) > audioFormatRank(existing.name)) {
+        selected.set(key, item);
+      }
+    });
+  return [...selected.values()].sort((a, b) => audioBaseName(a.name).localeCompare(audioBaseName(b.name)));
+}
+
 function prettyName(filename) {
-  const base = filename.replace(/\.mp3$/i, '').replace(/_/g, ' ').trim();
+  const base = audioBaseName(filename).replace(/_/g, ' ').trim();
   const m = base.match(/^(.+?)\s+-\s+(.+)$/);
   if (m) {
     const artist = m[1].trim();
@@ -173,7 +201,7 @@ function nativeAudioDuration() {
 }
 
 function effectiveDuration(song = currentSong()) {
-  return nativeAudioDuration();
+  return Math.max(nativeAudioDuration(), audio.currentTime || 0);
 }
 
 function calibratedFromNativeTime(nativeTime, song = currentSong()) {
@@ -187,9 +215,8 @@ function nativeFromCalibratedTime(time, song = currentSong()) {
 }
 
 function resetCalibratedClock(time = 0, song = currentSong()) {
-  const duration = effectiveDuration(song);
   calibratedClockSongId = songClockId(song);
-  calibratedBaseTime = duration ? clamp(0, duration, time) : Math.max(0, time);
+  calibratedBaseTime = Math.max(0, time);
   calibratedBasePerf = performance.now() / 1000;
   calibratedClockRunning = false;
 }
@@ -202,19 +229,12 @@ function ensureCalibratedClock(song = currentSong()) {
 
 function currentCalibratedTime(song = currentSong()) {
   ensureCalibratedClock(song);
-  if (pendingClockSeekTime !== null) {
-    if (calibratedClockRunning && !audio.seeking && performance.now() - pendingClockSeekStartedAt > 180) {
-      pendingClockSeekTime = null;
-    } else {
-      return clamp(0, profileDuration, pendingClockSeekTime);
-    }
-  }
-  if (calibratedClockRunning && !audio.seeking) {
-    calibratedBaseTime = calibratedFromNativeTime(audio.currentTime || 0, song);
+  const nativeTime = audio.currentTime || 0;
+  if (Number.isFinite(nativeTime) && nativeTime > 0) {
+    calibratedBaseTime = nativeTime;
     calibratedBasePerf = performance.now() / 1000;
   }
-  const duration = effectiveDuration(song);
-  return duration ? clamp(0, duration, calibratedBaseTime) : Math.max(0, calibratedBaseTime);
+  return Math.max(0, calibratedBaseTime);
 }
 
 function setNativeTimeFromCalibratedClock(time, song = currentSong(), options = {}) {
@@ -269,16 +289,9 @@ function pauseCalibratedClock(song = currentSong()) {
   calibratedClockRunning = false;
 }
 
-function lockNativeAudioToPausedClock(song = currentSong()) {
-  setNativeTimeFromCalibratedClock(calibratedBaseTime, song, {force: true});
-}
-
 function resumeAudioFromCalibratedClock(song = currentSong()) {
   ensureAudioGraph();
   ensureCalibratedClock(song);
-  if (!calibratedClockRunning) {
-    setNativeTimeFromCalibratedClock(calibratedBaseTime, song, {force: true});
-  }
   return audio.play();
 }
 
@@ -347,8 +360,7 @@ async function fetchCollection(collection) {
     throw error;
   }
   const items = await res.json();
-  return items
-    .filter(i => i.type === 'file' && /\.mp3$/i.test(i.name))
+  return preferredAudioFiles(items)
     .map(i => {
       const path = `${collection.folder}/${i.name}`;
       const p = prettyName(i.name);
@@ -427,7 +439,7 @@ function setActiveCollection(collection) {
 
 function emptyLibraryText(filter) {
   if (library.length === 0) {
-    return 'No songs found. Drop .mp3 files into songs/ or songs/christian/, commit, and push.';
+    return 'No songs found. Drop .mp3 or .m4a files into songs/ or songs/christian/, commit, and push.';
   }
   if (filter.trim()) {
     return `No ${activeCollection === 'all' ? '' : `${collectionLabel(activeCollection).toLowerCase()} `}songs match that search.`;
@@ -1238,7 +1250,6 @@ audio.addEventListener('play', () => {
 });
 audio.addEventListener('pause', () => {
   pauseCalibratedClock();
-  lockNativeAudioToPausedClock();
   $('play').textContent = '▶';
   $('hero-play').classList.remove('playing');
   $('hero-play').querySelector('.hero-icon').textContent = '▶';
