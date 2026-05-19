@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>vp</title>
-<link rel="stylesheet" href="styles.css?v=2026-05-18-seek-transaction">
+<link rel="stylesheet" href="styles.css?v=2026-05-18-debug-clock">
 </head>
 <body>
 <div class="app">
@@ -17,6 +17,10 @@
       <label class="setting-row">
         <input id="teto-fx-enabled" type="checkbox">
         <span>Teto FX for secular songs</span>
+      </label>
+      <label class="setting-row">
+        <input id="timing-debug-enabled" type="checkbox">
+        <span>Timing debug overlay</span>
       </label>
     </div>
   </header>
@@ -68,6 +72,7 @@
 
     <section id="view-now" class="view now-view">
       <canvas id="teto-fx" class="teto-fx-canvas" aria-hidden="true"></canvas>
+      <pre id="timing-debug" class="timing-debug hidden" aria-live="polite"></pre>
       <div class="now-stage">
         <div class="now-meta">
           <div class="now-kicker" id="now-kicker">vp</div>
@@ -123,6 +128,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=2026-05-18-seek-transaction"></script>
+<script src="app.js?v=2026-05-18-debug-clock"></script>
 </body>
 </html>

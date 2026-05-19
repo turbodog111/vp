@@ -19,6 +19,7 @@ let playlists = loadPlaylists();
 let currentPlaylist = null;
 let activeCollection = localStorage.getItem('vp_collection') || 'all';
 let tetoFxEnabled = localStorage.getItem('vp_teto_fx_enabled') !== 'false';
+let timingDebugEnabled = localStorage.getItem('vp_timing_debug_enabled') === 'true';
 let addToActionOpenedAt = 0;
 let pendingPlaylistSongIdx = null;
 let audioCtx = null;
@@ -44,6 +45,12 @@ let pendingClockSeekTime = null;
 let pendingClockSeekStartedAt = 0;
 let seekTransaction = null;
 let seekSettleTimer = null;
+let lastMediaEvent = 'boot';
+let lastTimingRepair = 'none';
+let timingRepairCount = 0;
+let lastWatchdogNativeTime = 0;
+let lastWatchdogDisplayTime = 0;
+let lastWatchdogPerf = performance.now();
 const WAVE_BAR_COUNT = 84;
 const WAVE_GAIN = 1.34;
 const WAVE_SOFT_LIMIT = 0.94;
@@ -202,8 +209,12 @@ function nativeAudioDuration() {
   return Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;
 }
 
+function nativePlaybackTime() {
+  return Number.isFinite(audio.currentTime) ? Math.max(0, audio.currentTime) : 0;
+}
+
 function effectiveDuration(song = currentSong()) {
-  return Math.max(nativeAudioDuration(), audio.currentTime || 0);
+  return Math.max(nativeAudioDuration(), nativePlaybackTime());
 }
 
 function calibratedFromNativeTime(nativeTime, song = currentSong()) {
@@ -225,15 +236,22 @@ function resetCalibratedClock(time = 0, song = currentSong()) {
 
 function ensureCalibratedClock(song = currentSong()) {
   if (calibratedClockSongId !== songClockId(song)) {
-    resetCalibratedClock(calibratedFromNativeTime(audio.currentTime || 0, song), song);
+    resetCalibratedClock(calibratedFromNativeTime(nativePlaybackTime(), song), song);
   }
 }
 
 function currentCalibratedTime(song = currentSong()) {
   ensureCalibratedClock(song);
-  let time = calibratedBaseTime;
-  if (calibratedClockRunning && !audio.paused) {
-    time += Math.max(0, performance.now() / 1000 - calibratedBasePerf);
+  let time;
+  if (seekTransaction) {
+    time = seekTransaction.targetTime;
+  } else if (audio.src) {
+    time = nativePlaybackTime();
+    calibratedBaseTime = time;
+    calibratedBasePerf = performance.now() / 1000;
+    calibratedClockRunning = !audio.paused && !audio.seeking && audio.readyState >= 3;
+  } else {
+    time = calibratedBaseTime;
   }
   const duration = effectiveDuration(song);
   if (duration) time = Math.min(time, duration);
@@ -246,7 +264,7 @@ function setNativeTimeFromCalibratedClock(time, song = currentSong(), options = 
   const nativeTarget = nativeFromCalibratedTime(targetTime, song);
   if (!Number.isFinite(nativeTarget)) return false;
   const tolerance = Number.isFinite(options.tolerance) ? options.tolerance : 0.012;
-  const diff = Math.abs((audio.currentTime || 0) - nativeTarget);
+  const diff = Math.abs(nativePlaybackTime() - nativeTarget);
   const shouldSeek = options.force ? diff > 0.001 : diff > tolerance;
   if (shouldSeek) {
     pendingClockSeekTime = targetTime;
@@ -264,8 +282,10 @@ function syncCalibratedClockToNative(song = currentSong(), options = {}) {
   if (pendingClockSeekTime !== null) {
     nextTime = pendingClockSeekTime;
     if (options.consumePending) pendingClockSeekTime = null;
+  } else if (seekTransaction) {
+    nextTime = seekTransaction.targetTime;
   } else {
-    nextTime = calibratedFromNativeTime(audio.currentTime || 0, song);
+    nextTime = calibratedFromNativeTime(nativePlaybackTime(), song);
     if (options.allowBackward === false && calibratedClockSongId === songClockId(song)) {
       nextTime = Math.max(currentCalibratedTime(song), nextTime);
     }
@@ -280,6 +300,8 @@ function startCalibratedClock(song = currentSong()) {
   ensureCalibratedClock(song);
   if (pendingClockSeekTime !== null) {
     calibratedBaseTime = pendingClockSeekTime;
+  } else if (!seekTransaction) {
+    calibratedBaseTime = nativePlaybackTime();
   }
   calibratedBasePerf = performance.now() / 1000;
   calibratedClockRunning = true;
@@ -307,6 +329,14 @@ function clearSeekSettleTimer() {
   seekSettleTimer = null;
 }
 
+function noteMediaEvent(name) {
+  lastMediaEvent = `${name} @ ${nativePlaybackTime().toFixed(3)}s`;
+}
+
+function timingDebugValue(value, digits = 3) {
+  return Number.isFinite(value) ? value.toFixed(digits) : String(value);
+}
+
 function beginSeekTransaction() {
   if (seekTransaction) return seekTransaction;
   const resumeAfterSeek = !!(audio.src && !audio.paused);
@@ -314,6 +344,7 @@ function beginSeekTransaction() {
     resumeAfterSeek,
     targetTime: currentCalibratedTime(),
     finishOnSeeked: false,
+    startedAt: performance.now(),
   };
   pauseCalibratedClock();
   if (resumeAfterSeek) audio.pause();
@@ -342,7 +373,7 @@ function commitSeekTransaction(finishOnSeeked = true) {
   clearSeekSettleTimer();
   resetCalibratedClock(tx.targetTime);
   const nativeTarget = nativeFromCalibratedTime(tx.targetTime);
-  const needsSeek = Math.abs((audio.currentTime || 0) - nativeTarget) > 0.001;
+  const needsSeek = Math.abs(nativePlaybackTime() - nativeTarget) > 0.001;
   if (!setNativeTimeFromCalibratedClock(tx.targetTime, currentSong(), {force: true})) {
     audio.currentTime = nativeTarget;
   }
@@ -363,6 +394,54 @@ function finishSeekTransaction() {
   if (tx.resumeAfterSeek && audio.src) {
     resumeAudioFromCalibratedClock(currentSong()).catch(err => console.warn('Play failed:', err));
   }
+}
+
+function repairTimingState(displayTime) {
+  const now = performance.now();
+  const nativeTime = nativePlaybackTime();
+  let repairedTime = displayTime;
+  const nativeAdvanced = nativeTime - lastWatchdogNativeTime;
+  const displayAdvanced = displayTime - lastWatchdogDisplayTime;
+  const nativeIsPlaying = !!(audio.src && !audio.paused && !audio.seeking && audio.readyState >= 2);
+
+  if (nativeIsPlaying && nativeAdvanced > 0.08 && displayAdvanced < 0.015 && Math.abs(nativeTime - displayTime) > 0.18) {
+    clearSeekSettleTimer();
+    seekTransaction = null;
+    pendingClockSeekTime = null;
+    resetCalibratedClock(nativeTime);
+    calibratedClockRunning = true;
+    repairedTime = nativeTime;
+    timingRepairCount++;
+    lastTimingRepair = `${new Date().toLocaleTimeString()} snapped ${timingDebugValue(displayTime)} -> ${timingDebugValue(nativeTime)}`;
+  }
+
+  if (now - lastWatchdogPerf > 180) {
+    lastWatchdogNativeTime = nativeTime;
+    lastWatchdogDisplayTime = repairedTime;
+    lastWatchdogPerf = now;
+  }
+  return repairedTime;
+}
+
+function updateTimingDebug(displayTime = currentCalibratedTime()) {
+  const el = $('timing-debug');
+  if (!el) return;
+  el.classList.toggle('hidden', !timingDebugEnabled);
+  if (!timingDebugEnabled) return;
+  const nativeTime = nativePlaybackTime();
+  const duration = nativeAudioDuration();
+  const txAge = seekTransaction ? `${Math.round(performance.now() - seekTransaction.startedAt)}ms` : 'none';
+  el.textContent = [
+    `display: ${timingDebugValue(displayTime)}s`,
+    `native:  ${timingDebugValue(nativeTime)}s / ${timingDebugValue(duration)}s`,
+    `delta:   ${timingDebugValue(displayTime - nativeTime)}s`,
+    `paused:${audio.paused} seeking:${audio.seeking} ended:${audio.ended}`,
+    `ready:${audio.readyState} network:${audio.networkState}`,
+    `tx:${seekTransaction ? 'yes' : 'no'} target:${seekTransaction ? timingDebugValue(seekTransaction.targetTime) : '-'} age:${txAge}`,
+    `pending:${pendingClockSeekTime === null ? '-' : timingDebugValue(pendingClockSeekTime)} running:${calibratedClockRunning}`,
+    `event:${lastMediaEvent}`,
+    `repairs:${timingRepairCount} ${lastTimingRepair}`,
+  ].join('\n');
 }
 
 function effectSectionAt(profile, time) {
@@ -688,7 +767,7 @@ function updateUpNext() {
 }
 
 function updatePlaybackVisuals() {
-  const current = currentCalibratedTime();
+  const current = repairTimingState(currentCalibratedTime());
   const duration = effectiveDuration();
   const pct = duration ? clamp(0, 1, current / duration) : 0;
   const deg = `${pct * 360}deg`;
@@ -699,6 +778,7 @@ function updatePlaybackVisuals() {
   $('seek').value = pct * 100;
   $('hero-time-current').textContent = fmtTime(current);
   $('hero-time-total').textContent = fmtTime(duration);
+  updateTimingDebug(current);
 }
 
 function updateMediaSession(song) {
@@ -1284,6 +1364,10 @@ function roundedBar(ctx, x, y, w, h, r) {
   ctx.fill();
 }
 
+['loadstart', 'loadedmetadata', 'canplay', 'play', 'playing', 'pause', 'waiting', 'seeking', 'seeked', 'stalled', 'suspend', 'ended', 'error'].forEach(eventName => {
+  audio.addEventListener(eventName, () => noteMediaEvent(eventName), {capture: true});
+});
+
 audio.addEventListener('timeupdate', () => {
   updatePlaybackVisuals();
 });
@@ -1402,7 +1486,9 @@ volumeEl.addEventListener('change', (e) => setPlayerVolume(e.target.value, true)
 const settingsToggle = $('settings-toggle');
 const settingsMenu = $('settings-menu');
 const tetoFxCheckbox = $('teto-fx-enabled');
+const timingDebugCheckbox = $('timing-debug-enabled');
 if (tetoFxCheckbox) tetoFxCheckbox.checked = tetoFxEnabled;
+if (timingDebugCheckbox) timingDebugCheckbox.checked = timingDebugEnabled;
 if (settingsToggle && settingsMenu) {
   settingsToggle.addEventListener('click', (e) => {
     e.preventDefault();
@@ -1419,6 +1505,13 @@ if (settingsToggle && settingsMenu) {
 }
 if (tetoFxCheckbox) {
   tetoFxCheckbox.addEventListener('change', () => setTetoFxEnabled(tetoFxCheckbox.checked));
+}
+if (timingDebugCheckbox) {
+  timingDebugCheckbox.addEventListener('change', () => {
+    timingDebugEnabled = timingDebugCheckbox.checked;
+    localStorage.setItem('vp_timing_debug_enabled', timingDebugEnabled ? 'true' : 'false');
+    updateTimingDebug();
+  });
 }
 
 $('search').addEventListener('input', (e) => renderLibrary(e.target.value));
