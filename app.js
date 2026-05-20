@@ -5,6 +5,22 @@ const COLLECTIONS = [
   { id: 'christian', label: 'Christian', folder: 'songs/christian' }
 ];
 const COLLECTION_ORDER = new Map(COLLECTIONS.map((collection, index) => [collection.id, index]));
+const DEFAULT_PLAYLISTS = {
+  'Secular 12': [
+    'songs/tripflag - Ochame Kinou (Old Teto).m4a',
+    'songs/Farewell225 - Window View.m4a',
+    'songs/Moonlit Star - Science (English).m4a',
+    'songs/hololive English - Ochame Kinou (English).m4a',
+    'songs/Lambie - Machine Love (Drums).m4a',
+    'songs/MiliSen - Ever Romantic.m4a',
+    'songs/hololive - Ochame Kinou (Japanese).m4a',
+    'songs/MIMI - Science.m4a',
+    'songs/Moonlit Star - Window View (English).m4a',
+    'songs/Jamie Paige - Machine Love.m4a',
+    'songs/Kasane Teto SV - Ochame Kinou (New Teto).m4a',
+    'songs/Penthouse - One, Two, Three (一二三).m4a',
+  ],
+};
 
 const $ = (id) => document.getElementById(id);
 const audio = $('audio');
@@ -198,8 +214,21 @@ function showToast(icon, text) {
 }
 
 function loadPlaylists() {
-  try { return JSON.parse(localStorage.getItem('vp_playlists') || '{}'); }
-  catch { return {}; }
+  let stored = {};
+  try { stored = JSON.parse(localStorage.getItem('vp_playlists') || '{}') || {}; }
+  catch { stored = {}; }
+  let changed = false;
+  Object.entries(DEFAULT_PLAYLISTS).forEach(([name, songIds]) => {
+    if (!Array.isArray(stored[name])) {
+      stored[name] = songIds.slice();
+      changed = true;
+    }
+  });
+  if (changed) {
+    try { localStorage.setItem('vp_playlists', JSON.stringify(stored)); }
+    catch {}
+  }
+  return stored;
 }
 function savePlaylists() {
   localStorage.setItem('vp_playlists', JSON.stringify(playlists));
