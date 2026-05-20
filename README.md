@@ -6,8 +6,8 @@ Live at: https://turbodog111.github.io/vp/
 
 ## Adding songs
 
-1. Drop secular `.mp3` files into `songs/` and Christian `.mp3` files into `songs/christian/`.
-2. For nicer display, name them `Artist - Title.mp3` (the dash is parsed for the now-playing label).
+1. Drop secular `.m4a` files into `songs/` and Christian `.m4a` files into `songs/christian/`. MP3 originals can live in the `mp3-backup/` folders.
+2. For nicer display, name them `Artist - Title.m4a` (the dash is parsed for the now-playing label).
 3. Commit and push:
    ```
    git add songs/
@@ -18,7 +18,7 @@ Live at: https://turbodog111.github.io/vp/
 
 ## Features
 
-- Auto-discovers every `.mp3` in `songs/` and `songs/christian/` via the GitHub contents API
+- Auto-discovers every `.m4a` or `.mp3` in `songs/` and `songs/christian/` via the GitHub contents API, preferring `.m4a` when both exist
 - Filter the library by All / Secular / Christian
 - Create / delete playlists (stored in `localStorage`)
 - Add/remove songs to playlists from the library
@@ -29,7 +29,7 @@ Live at: https://turbodog111.github.io/vp/
 
 ## Notes
 
-- GitHub recommends repos stay under 1 GB. If your library grows past that, switch to [Git LFS](https://git-lfs.com/) for the `.mp3` files.
+- GitHub recommends repos stay under 1 GB. If your library grows past that, switch to [Git LFS](https://git-lfs.com/) for the audio files.
 - Individual files >100 MB will be rejected by git.
 - The GitHub API allows 60 unauthenticated requests per IP per hour — plenty for normal use.
 - Playlists are per-browser since they live in `localStorage`. Export/import is not implemented yet.

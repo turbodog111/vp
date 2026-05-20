@@ -67,7 +67,7 @@ const PENTHOUSE_EFFECT_PROFILE = {
   bpm: 123,
   key: 'F# major',
   constantRings: true,
-  beatOffset: 0,
+  beatOffset: 0.122,
   sections: [
     {name: 'Intro', start: 0, end: 51, intensity: 0.24, chorus: false},
     {name: 'First chorus', start: 52.27, end: 84.01, intensity: 1, chorus: true, fade: 0.5},
@@ -82,16 +82,21 @@ const bpmEffectProfile = (bpm, options = {}) => ({
   sections: [],
   ...options,
 });
-const SONG_EFFECT_PROFILES = {
-  'songs/Penthouse - One, Two, Three (一二三).mp3': PENTHOUSE_EFFECT_PROFILE,
-  'songs/Penthouse - One, Two, Three (一二三).m4a': PENTHOUSE_EFFECT_PROFILE,
-  'songs/Jamie Paige - Machine Love.mp3': bpmEffectProfile(175),
-  'songs/Lambie - Machine Love (Drums).mp3': bpmEffectProfile(175),
-  'songs/The8BitDrummer - Machine Love (Drums).mp3': bpmEffectProfile(175),
-  'songs/christian/Forrest Frank - OKAY!.mp3': bpmEffectProfile(120, {allowFx: true}),
-  'songs/MIMI - Science.mp3': bpmEffectProfile(188),
-  'songs/Moonlit Star - Science (English).mp3': bpmEffectProfile(188),
-};
+function audioProfileEntries(basePath, profile) {
+  return [
+    [`${basePath}.mp3`, profile],
+    [`${basePath}.m4a`, profile],
+  ];
+}
+const SONG_EFFECT_PROFILES = Object.fromEntries([
+  ...audioProfileEntries('songs/Penthouse - One, Two, Three (一二三)', PENTHOUSE_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/Jamie Paige - Machine Love', bpmEffectProfile(175)),
+  ...audioProfileEntries('songs/Lambie - Machine Love (Drums)', bpmEffectProfile(175)),
+  ...audioProfileEntries('songs/The8BitDrummer - Machine Love (Drums)', bpmEffectProfile(175)),
+  ...audioProfileEntries('songs/christian/Forrest Frank - OKAY!', bpmEffectProfile(120, {allowFx: true})),
+  ...audioProfileEntries('songs/MIMI - Science', bpmEffectProfile(188)),
+  ...audioProfileEntries('songs/Moonlit Star - Science (English)', bpmEffectProfile(188)),
+]);
 const seededUnit = (seed) => {
   const x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
