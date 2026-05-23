@@ -20,6 +20,20 @@ const DEFAULT_PLAYLISTS = {
     'songs/Kasane Teto SV - Ochame Kinou (New Teto).m4a',
     'songs/Penthouse - One, Two, Three (一二三).m4a',
   ],
+  'Hybrid 12': [
+    'songs/christian/Forrest Frank - JESUS IS ALIVE.mp3',
+    'songs/hololive English - Ochame Kinou (English).m4a',
+    'songs/christian/Forrest Frank & Connor Price - UP!.m4a',
+    'songs/Jamie Paige - Machine Love.m4a',
+    'songs/christian/Forrest Frank - GOOD DAY.m4a',
+    'songs/Penthouse - One, Two, Three (一二三).m4a',
+    'songs/MIMI - Science.m4a',
+    'songs/christian/Forrest Frank - CELEBRATION.m4a',
+    'songs/Campus Village - Teto.m4a',
+    "songs/christian/Josiah Queen - Can't Steal My Joy feat. Brandon Lake.m4a",
+    'songs/christian/Forrest Frank - OKAY!.m4a',
+    'songs/hololive - Ochame Kinou (Japanese).m4a',
+  ],
 };
 
 const $ = (id) => document.getElementById(id);
