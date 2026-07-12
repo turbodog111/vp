@@ -34,6 +34,31 @@ const DEFAULT_PLAYLISTS = {
     'songs/christian/Forrest Frank - OKAY!.m4a',
     'songs/hololive - Ochame Kinou (Japanese).m4a',
   ],
+  'IN THE ROOM!': [
+    'songs/christian/Brandon Lake - INTRO - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake - KING OF HEARTS - IN THE ROOM!.m4a',
+    "songs/christian/Brandon Lake - COUNT 'EM - IN THE ROOM!.m4a",
+    "songs/christian/Brandon Lake - THAT'S WHO I PRAISE - IN THE ROOM!.m4a",
+    'songs/christian/Brandon Lake - BUT GOD - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake - PLANS - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake - RATTLE - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake - REST ON US - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake - TEAR OFF THE ROOF - IN THE ROOM!.m4a',
+    "songs/christian/Brandon Lake - DADDY'S DNA (ACOUSTIC) - IN THE ROOM!.m4a",
+    'songs/christian/Brandon Lake - AS FOR ME & MY HOME - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake - THE BLESSING - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake & Franni Cash - I KNOW A NAME - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake & Bailey Zimmerman - JUST BELIEVE - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake & Nick Jonas - THE AUTHOR - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake feat. Cody Johnson - WHEN A COWBOY PRAYS - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake - LION (ACOUSTIC) - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake & Pat Barrett - SAME GOD (ACOUSTIC) - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake & Pat Barrett - HOLY GHOST - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake - HARD FOUGHT HALLELUJAH - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake - GRATITUDE - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake, Pat Barrett & Franni Cash - PRAISE - IN THE ROOM!.m4a',
+    'songs/christian/Brandon Lake - SEVENS - IN THE ROOM!.m4a',
+  ],
 };
 
 const $ = (id) => document.getElementById(id);
@@ -64,6 +89,7 @@ let waveData = null;
 let waveTimeData = null;
 let waveRaf = null;
 let waveBars = [];
+let wavePitchFocus = 0.5;
 let smoothedLevel = 0;
 let tetoFxLevel = 0;
 let tetoGlowLevel = 0;
@@ -85,12 +111,14 @@ let timingRepairCount = 0;
 let lastWatchdogNativeTime = 0;
 let lastWatchdogDisplayTime = 0;
 let lastWatchdogPerf = performance.now();
-const WAVE_BAR_COUNT = 84;
-const WAVE_GAIN = 1.34;
-const WAVE_SOFT_LIMIT = 0.94;
+let audioGraphError = '';
+let audioGraphActivatedAt = 0;
+const WAVE_BAR_COUNT = 124;
+const WAVE_GAIN = 1.46;
+const WAVE_SOFT_LIMIT = 1.08;
 const WAVE_LEVEL_WINDOW = 180;
-const WAVE_MIN_FREQ = 55;
-const WAVE_MAX_FREQ = 14000;
+const WAVE_MIN_FREQ = 38;
+const WAVE_MAX_FREQ = 16500;
 const AUDIO_FILE_RE = /\.(mp3|m4a)$/i;
 const AUDIO_EXTENSION_RE = /\.(mp3|m4a)$/i;
 const PENTHOUSE_EFFECT_PROFILE = {
@@ -438,13 +466,31 @@ function pauseCalibratedClock(song = currentSong()) {
   calibratedClockRunning = false;
 }
 
+function primeAudioContextForGesture() {
+  const ctx = ensureAudioContext();
+  if (!ctx || ctx.state !== 'suspended') return Promise.resolve();
+  return ctx.resume().catch(err => {
+    rememberAudioGraphError(err);
+  });
+}
+
 function resumeAudioFromCalibratedClock(song = currentSong()) {
-  ensureAudioGraph();
+  const contextReady = primeAudioContextForGesture();
   ensureCalibratedClock(song);
   calibratedBaseTime = currentCalibratedTime(song);
   calibratedBasePerf = performance.now() / 1000;
   calibratedClockRunning = false;
-  return audio.play();
+  audio.muted = false;
+  audio.volume = analyser && audioCtx?.state === 'running' ? 1 : playerVolume;
+  return Promise.resolve(audio.play()).then(async result => {
+    await contextReady;
+    await activateAudioGraphIfPossible();
+    updateTimingDebug();
+    return result;
+  }).catch(err => {
+    updateTimingDebug();
+    throw err;
+  });
 }
 
 function clearSeekSettleTimer() {
@@ -555,12 +601,17 @@ function updateTimingDebug(displayTime = currentCalibratedTime()) {
   const nativeTime = nativePlaybackTime();
   const duration = nativeAudioDuration();
   const txAge = seekTransaction ? `${Math.round(performance.now() - seekTransaction.startedAt)}ms` : 'none';
+  const graphMode = analyser ? 'web-audio' : 'native';
+  const gainValue = outputGain ? timingDebugValue(outputGain.gain.value, 3) : '-';
+  const graphAge = audioGraphActivatedAt ? `${Math.round(performance.now() - audioGraphActivatedAt)}ms` : '-';
   el.textContent = [
     `display: ${timingDebugValue(displayTime)}s`,
     `native:  ${timingDebugValue(nativeTime)}s / ${timingDebugValue(duration)}s`,
     `delta:   ${timingDebugValue(displayTime - nativeTime)}s`,
     `paused:${audio.paused} seeking:${audio.seeking} ended:${audio.ended}`,
     `ready:${audio.readyState} network:${audio.networkState}`,
+    `audio:${graphMode} ctx:${audioCtx?.state || 'none'} player:${timingDebugValue(playerVolume, 2)} elem:${timingDebugValue(audio.volume, 2)} muted:${audio.muted} gain:${gainValue}`,
+    `graph age:${graphAge} error:${audioGraphError || '-'}`,
     `tx:${seekTransaction ? 'yes' : 'no'} target:${seekTransaction ? timingDebugValue(seekTransaction.targetTime) : '-'} age:${txAge}`,
     `pending:${pendingClockSeekTime === null ? '-' : timingDebugValue(pendingClockSeekTime)} running:${calibratedClockRunning}`,
     `event:${lastMediaEvent}`,
@@ -588,8 +639,11 @@ function beatPulseForProfile(profile, time) {
 
 function activeFxTheme(song = currentSong()) {
   const profile = effectProfileForSong(song);
-  if (!tetoFxEnabled || !song || (song.collection !== 'secular' && !profile?.allowFx)) return 'off';
-  return ['teto', 'disco', 'teto11'].includes(fxTheme) ? fxTheme : 'teto11';
+  if (!tetoFxEnabled || !song) return 'off';
+  const theme = ['teto', 'disco', 'teto11'].includes(fxTheme) ? fxTheme : 'teto11';
+  if (theme === 'teto11') return 'teto11';
+  if (song.collection === 'secular' || profile?.allowFx) return theme;
+  return 'off';
 }
 
 function isAnyFxActive(song = currentSong()) {
@@ -874,7 +928,6 @@ function playCurrent() {
   const libIdx = queue[queueIndex];
   const song = library[libIdx];
   if (!song) return;
-  ensureAudioGraph();
   const targetSrc = new URL(song.url, window.location.href).href;
   const sameSource = audio.currentSrc === targetSrc || audio.src === targetSrc;
   audio.playbackRate = 1;
@@ -1073,29 +1126,87 @@ function fmtTime(sec) {
   return `${m}:${s}`;
 }
 
-function ensureAudioGraph() {
-  if (analyser) {
-    if (audioCtx?.state === 'suspended') audioCtx.resume().catch(() => {});
-    return;
-  }
+function rememberAudioGraphError(error) {
+  audioGraphError = error?.message || String(error || 'Unknown audio graph error');
+}
+
+function ensureAudioContext() {
+  if (audioCtx && audioCtx.state !== 'closed') return audioCtx;
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContextClass) return;
-  audioCtx = new AudioContextClass();
-  audioSource = audioCtx.createMediaElementSource(audio);
-  analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 1024;
-  analyser.minDecibels = -92;
-  analyser.maxDecibels = -18;
-  analyser.smoothingTimeConstant = 0.36;
-  outputGain = audioCtx.createGain();
-  outputGain.gain.value = playerVolume;
-  waveData = new Float32Array(analyser.frequencyBinCount);
-  waveTimeData = new Uint8Array(analyser.fftSize);
-  audio.volume = 1;
-  audioSource.connect(analyser);
-  analyser.connect(outputGain);
-  outputGain.connect(audioCtx.destination);
-  startWaveform();
+  if (!AudioContextClass) {
+    audioGraphError = 'AudioContext unavailable';
+    return null;
+  }
+  try {
+    audioCtx = new AudioContextClass();
+    audioGraphError = '';
+    return audioCtx;
+  } catch (err) {
+    rememberAudioGraphError(err);
+    audioCtx = null;
+    return null;
+  }
+}
+
+function connectAudioGraph() {
+  if (analyser) {
+    if (audioCtx?.state === 'running') audio.volume = 1;
+    return true;
+  }
+  const ctx = ensureAudioContext();
+  if (!ctx || ctx.state !== 'running') return false;
+  try {
+    audioSource = ctx.createMediaElementSource(audio);
+    analyser = ctx.createAnalyser();
+    analyser.fftSize = 2048;
+    analyser.minDecibels = -92;
+    analyser.maxDecibels = -18;
+    analyser.smoothingTimeConstant = 0.24;
+    outputGain = ctx.createGain();
+    outputGain.gain.value = playerVolume;
+    waveData = new Float32Array(analyser.frequencyBinCount);
+    waveTimeData = new Uint8Array(analyser.fftSize);
+    audioSource.connect(analyser);
+    analyser.connect(outputGain);
+    outputGain.connect(ctx.destination);
+    audio.volume = 1;
+    audioGraphError = '';
+    audioGraphActivatedAt = performance.now();
+    startWaveform();
+    return true;
+  } catch (err) {
+    rememberAudioGraphError(err);
+    audio.volume = playerVolume;
+    return false;
+  }
+}
+
+async function activateAudioGraphIfPossible() {
+  const ctx = ensureAudioContext();
+  if (!ctx) {
+    audio.volume = playerVolume;
+    return false;
+  }
+  try {
+    if (ctx.state === 'suspended') await ctx.resume();
+  } catch (err) {
+    rememberAudioGraphError(err);
+    audio.volume = playerVolume;
+    return false;
+  }
+  if (ctx.state !== 'running') {
+    audioGraphError = `AudioContext ${ctx.state}`;
+    audio.volume = playerVolume;
+    return false;
+  }
+  return connectAudioGraph();
+}
+
+function ensureAudioGraph() {
+  activateAudioGraphIfPossible().catch(err => {
+    rememberAudioGraphError(err);
+    audio.volume = playerVolume;
+  });
 }
 
 function resizeWaveform() {
@@ -1181,14 +1292,16 @@ function normalizedWaveLevel(rms, peak) {
 
 function waveBaseShape(i, total) {
   const x = total <= 1 ? 0.5 : i / (total - 1);
-  const edgeTaper = Math.sin(Math.PI * x);
-  const centerLift = 1 - Math.abs(x - 0.5) * 0.42;
-  const slowLobes = 0.76 + 0.14 * Math.sin(x * Math.PI * 5.2) + 0.1 * Math.sin(x * Math.PI * 9.6 + 0.8);
-  return clamp(0.16, 1, (0.22 + edgeTaper * 0.78) * centerLift * slowLobes);
+  const edgeTaper = 0.58 + 0.42 * Math.sin(Math.PI * x);
+  const stableTexture = 0.92
+    + 0.055 * Math.sin(i * 0.71 + 0.8)
+    + 0.045 * Math.sin(i * 1.83 + 1.9)
+    + 0.03 * Math.sin(i * 3.17);
+  return clamp(0.34, 1, edgeTaper * stableTexture);
 }
 
-function waveBandEnergy(index, total) {
-  if (!analyser || !waveData || !audioCtx) return 0;
+function waveBandRange(index, total) {
+  if (!audioCtx) return {bin0: 0, bin1: 1, centerRatio: 0.5, centerFreq: 440};
   const nyquist = audioCtx.sampleRate / 2;
   const maxFreq = Math.min(WAVE_MAX_FREQ, nyquist * 0.92);
   const t0 = index / total;
@@ -1197,15 +1310,37 @@ function waveBandEnergy(index, total) {
   const f1 = WAVE_MIN_FREQ * Math.pow(maxFreq / WAVE_MIN_FREQ, t1);
   const bin0 = clamp(0, waveData.length - 1, Math.floor(f0 / nyquist * waveData.length));
   const bin1 = clamp(bin0 + 1, waveData.length, Math.ceil(f1 / nyquist * waveData.length));
+  const centerFreq = Math.sqrt(f0 * f1);
+  const centerRatio = clamp(0, 1, Math.log(centerFreq / WAVE_MIN_FREQ) / Math.log(maxFreq / WAVE_MIN_FREQ));
+  return {bin0, bin1, centerRatio, centerFreq};
+}
+
+function dbToWaveEnergy(db) {
+  if (!Number.isFinite(db) || !analyser) return 0;
+  const normalized = (db - analyser.minDecibels) / (analyser.maxDecibels - analyser.minDecibels);
+  return Math.pow(clamp(0, 1, normalized), 1.16);
+}
+
+function waveBandEnergy(index, total) {
+  if (!analyser || !waveData || !audioCtx) return 0;
+  const {bin0, bin1, centerFreq} = waveBandRange(index, total);
   let sum = 0;
+  let peak = 0;
   let count = 0;
   for (let b = bin0; b < bin1; b++) {
-    sum += waveData[b];
+    const energy = dbToWaveEnergy(waveData[b]);
+    sum += energy;
+    peak = Math.max(peak, energy);
     count++;
   }
-  const avgDb = count ? sum / count : analyser.minDecibels;
-  const normalized = (avgDb - analyser.minDecibels) / (analyser.maxDecibels - analyser.minDecibels);
-  return easeOutCubic(normalized);
+  const avg = count ? sum / count : 0;
+  const peakLift = Math.max(0, peak - avg);
+  const presenceBias = centerFreq < 90 ? 0.82
+    : centerFreq < 230 ? 1.12
+    : centerFreq < 1800 ? 1.02
+    : centerFreq < 7200 ? 1.18
+    : 0.94;
+  return clamp(0, 1, (avg * 0.46 + peak * 0.62 + peakLift * 0.58) * presenceBias);
 }
 
 function ensureWaveBars(count) {
@@ -1215,6 +1350,7 @@ function ensureWaveBars(count) {
 
 function resetWaveEnvelope() {
   smoothedLevel = 0;
+  wavePitchFocus = 0.5;
   tetoFxLevel = 0;
   tetoGlowLevel = 0;
   tetoRiseEnergy = 0;
@@ -2002,7 +2138,7 @@ function drawWaveform() {
     gradient.addColorStop(1, 'rgba(253, 230, 138, 0.62)');
   }
 
-  const bins = WAVE_BAR_COUNT;
+  const bins = Math.min(WAVE_BAR_COUNT, Math.max(64, Math.floor(w / 7)));
   ensureWaveBars(bins);
   const isAudible = !!(analyser && waveData && waveTimeData && !audio.paused);
   if (isAudible) {
@@ -2010,8 +2146,8 @@ function drawWaveform() {
     analyser.getByteTimeDomainData(waveTimeData);
   }
 
-  const mid = h * 0.54;
-  const barGap = Math.max(2, Math.round(w / 260));
+  const baseline = h * 0.78;
+  const barGap = Math.max(1, Math.round(w / 430));
   const barW = Math.max(3, Math.floor(w / bins) - barGap);
   let rmsEnergy = 0;
   let peakEnergy = 0;
@@ -2025,6 +2161,18 @@ function drawWaveform() {
     rmsEnergy = Math.sqrt(rmsEnergy / Math.max(1, waveTimeData.length));
     for (let i = 0; i < bins; i++) {
       bandTargets[i] = waveBandEnergy(i, bins);
+    }
+    let spectralWeight = 0;
+    let spectralSum = 0;
+    for (let i = 0; i < bins; i++) {
+      const {centerRatio} = waveBandRange(i, bins);
+      const energy = Math.pow(bandTargets[i], 1.22);
+      spectralWeight += energy;
+      spectralSum += centerRatio * energy;
+    }
+    if (spectralWeight > 0.0001) {
+      const pitchFocus = spectralSum / spectralWeight;
+      wavePitchFocus = wavePitchFocus * 0.84 + pitchFocus * 0.16;
     }
     const targetLevel = normalizedWaveLevel(rmsEnergy, peakEnergy);
     const upwardChange = Math.max(0, targetLevel - lastTetoAmplitude);
@@ -2043,28 +2191,64 @@ function drawWaveform() {
     lastTetoAmplitude = 0;
   }
 
+  ctx.save();
+  ctx.globalAlpha = isAudible ? 0.34 + smoothedLevel * 0.22 : 0.18;
+  ctx.fillStyle = isDiscoFxActive()
+    ? 'rgba(255, 255, 255, 0.46)'
+    : isTeto11FxActive()
+      ? 'rgba(236, 242, 255, 0.42)'
+      : isTetoFxActive()
+        ? 'rgba(255, 204, 168, 0.36)'
+        : 'rgba(235, 235, 240, 0.24)';
+  ctx.fillRect(Math.round(w * 0.015), baseline, Math.round(w * 0.97), Math.max(1, Math.round(h * 0.008)));
+  ctx.restore();
+
   for (let i = 0; i < bins; i++) {
     if (isAudible) {
       const shape = waveBaseShape(i, bins);
-      const left = bandTargets[Math.max(0, i - 1)];
       const center = bandTargets[i];
+      const left2 = bandTargets[Math.max(0, i - 2)];
+      const left = bandTargets[Math.max(0, i - 1)];
       const right = bandTargets[Math.min(bins - 1, i + 1)];
-      const bandEnergy = left * 0.16 + center * 0.68 + right * 0.16;
-      const staticTexture = 0.02 * Math.sin(i * 0.73);
-      const bandContrast = Math.pow(bandEnergy, 1.45);
-      const breathing = Math.pow(smoothedLevel, 1.12);
-      const target = 0.004 + shape * breathing * (0.2 + bandContrast * 1.6 + staticTexture);
-      const rate = target > waveBars[i] ? 0.72 : 0.4;
+      const right2 = bandTargets[Math.min(bins - 1, i + 2)];
+      const localAverage = (left2 * 0.09 + left * 0.2 + center * 0.42 + right * 0.2 + right2 * 0.09);
+      const localPeak = Math.max(0, center - (left + right) * 0.38);
+      const xRatio = bins <= 1 ? 0.5 : i / (bins - 1);
+      const pitchProximity = 1 - clamp(0, 1, Math.abs(xRatio - wavePitchFocus) / 0.34);
+      const globalGate = smoothStep(0.025, 0.22, smoothedLevel);
+      const breathing = Math.pow(smoothedLevel, 0.9);
+      const spectrumHeight = Math.pow(center, 1.08) * 0.64
+        + Math.pow(localAverage, 1.18) * 0.34
+        + Math.pow(localPeak, 0.9) * 0.74;
+      const pitchLift = 1 + pitchProximity * 0.18;
+      const target = 0.006
+        + breathing * 0.018
+        + globalGate * spectrumHeight * shape * pitchLift;
+      const rate = target > waveBars[i] ? 0.82 : 0.32;
       waveBars[i] = waveBars[i] * (1 - rate) + target * rate;
     } else if (!audio.src) {
       waveBars[i] = waveBars[i] * 0.99 + waveBaseShape(i, bins) * 0.08 * 0.01;
     }
-    const amp = Math.max(0.005, softLimit(Math.max(0, waveBars[i] * WAVE_GAIN), WAVE_SOFT_LIMIT));
+    const amp = Math.max(0.004, softLimit(Math.max(0, waveBars[i] * WAVE_GAIN), WAVE_SOFT_LIMIT));
     const x = i * (w / bins);
-    const barH = Math.max(2, amp * h * 0.74);
-    const radius = Math.min(8, barW / 2);
+    const barH = Math.min(baseline - 2, Math.max(2, amp * h * 0.78));
+    const radius = Math.min(7, barW / 2);
     ctx.fillStyle = gradient;
-    roundedBar(ctx, x, mid - barH / 2, barW, barH, radius);
+    roundedBar(ctx, x, baseline - barH, barW, barH, radius);
+    if (barH > h * 0.08) {
+      ctx.save();
+      ctx.globalAlpha = clamp(0.08, 0.34, amp * 0.42);
+      roundedBar(ctx, x, baseline + Math.max(3, h * 0.016), barW, Math.min(h * 0.18, barH * 0.18), radius);
+      ctx.restore();
+    }
+    if (barH > h * 0.2) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = clamp(0.08, 0.32, amp * 0.28);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+      roundedBar(ctx, x, baseline - barH - Math.max(1, h * 0.01), barW, Math.max(2, h * 0.018), radius);
+      ctx.restore();
+    }
   }
 
   $('hero-play').style.setProperty('--level', smoothedLevel.toFixed(3));
@@ -2177,7 +2361,7 @@ function setPlayerVolume(value, notify = false) {
   localStorage.setItem('vp_volume', playerVolume.toString());
   const volumeEl = $('volume');
   if (volumeEl) volumeEl.value = playerVolume.toString();
-  if (outputGain && audioCtx) {
+  if (outputGain && audioCtx?.state === 'running') {
     outputGain.gain.cancelScheduledValues(audioCtx.currentTime);
     outputGain.gain.setTargetAtTime(playerVolume, audioCtx.currentTime, 0.015);
     audio.volume = 1;
@@ -2185,11 +2369,30 @@ function setPlayerVolume(value, notify = false) {
     audio.volume = playerVolume;
   }
   updateVolumeIcon(playerVolume);
+  updateTimingDebug();
   if (notify) {
     const pct = Math.round(playerVolume * 100);
     const icon = pct === 0 ? '🔇' : pct < 50 ? '🔉' : '🔊';
     showToast(icon, `Volume ${pct}%`);
   }
+}
+
+function resetAudioOutput() {
+  audio.muted = false;
+  audioGraphError = '';
+  setPlayerVolume(1, false);
+  primeAudioContextForGesture()
+    .then(() => audio.src ? activateAudioGraphIfPossible() : false)
+    .then((graphActive) => {
+      updateTimingDebug();
+      showToast('🔊', graphActive ? 'Audio reset' : 'Native audio reset');
+    })
+    .catch(err => {
+      rememberAudioGraphError(err);
+      audio.volume = playerVolume;
+      updateTimingDebug();
+      showToast('🔊', 'Native audio reset');
+    });
 }
 
 const volumeEl = $('volume');
@@ -2206,6 +2409,7 @@ const settingsMenu = $('settings-menu');
 const tetoFxCheckbox = $('teto-fx-enabled');
 const fxThemeSelect = $('fx-theme');
 const timingDebugCheckbox = $('timing-debug-enabled');
+const audioResetButton = $('audio-reset');
 if (tetoFxCheckbox) tetoFxCheckbox.checked = tetoFxEnabled;
 if (fxThemeSelect) fxThemeSelect.value = fxTheme;
 if (timingDebugCheckbox) timingDebugCheckbox.checked = timingDebugEnabled;
@@ -2236,6 +2440,7 @@ if (timingDebugCheckbox) {
     updateTimingDebug();
   });
 }
+if (audioResetButton) audioResetButton.addEventListener('click', resetAudioOutput);
 
 $('search').addEventListener('input', (e) => renderLibrary(e.target.value));
 

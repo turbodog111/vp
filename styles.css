@@ -70,7 +70,7 @@ button { font: inherit; }
   position: relative;
   display: grid;
   min-height: 100%;
-  grid-template-rows: minmax(280px, 1fr) minmax(200px, 24vh);
+  grid-template-rows: minmax(280px, 1fr) minmax(180px, 22vh);
   gap: 18px;
   border-radius: 8px;
   overflow: hidden;
@@ -425,6 +425,21 @@ body.teto11-fx-active .hero-play::after {
   border-radius: 6px;
   padding: 5px 8px;
   font: inherit;
+}
+.setting-button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+.setting-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .timing-debug {
@@ -801,7 +816,7 @@ input[type="range"]:focus { outline: none; }
   .topbar { padding: 12px 16px; }
   .main { padding: 12px 16px; }
   .tabs { padding: 0 16px; }
-  .now-view.active { grid-template-rows: minmax(360px, 1fr) 150px; }
+  .now-view.active { grid-template-rows: minmax(330px, 1fr) 150px; }
   .now-stage {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -860,7 +875,7 @@ input[type="range"]:focus { outline: none; }
     padding: 10px 12px;
   }
   .now-view.active {
-    grid-template-rows: minmax(330px, 1fr) 126px;
+    grid-template-rows: minmax(300px, 1fr) 126px;
     gap: 12px;
   }
   .now-stage {
