@@ -1073,7 +1073,7 @@ function updateNowPlaying(song = currentSong()) {
 const SPATIAL_MAP_EMBEDDED = {
   id: 'doki-doki-forever-traveling-voices',
   transitionSec: 1.15,
-  description: 'Traveling Voices v3 — both voices same loudness, moving around you.',
+  description: 'Traveling Voices v4 — remastered vocals + equal dual leads, moving around you.',
   keyframes: [
     { t: 0.0, az: 40.0, el: 0.35, section: "hop0", cue: "front-right" },
     { t: 3.6, az: -90.0, el: 0.5, section: "hop1", cue: "high left mid" },
@@ -1170,7 +1170,10 @@ function travelingVoicesVersionLabel(song = currentSong()) {
   const m = hay.match(/Traveling Voices\s*(v\d+)/i) || hay.match(/\(v(\d+)\)/i);
   if (m) return m[1].toLowerCase().startsWith('v') ? m[1] : `v${m[1]}`;
   // fallback if file is known latest
-  if (/traveling voices/i.test(hay)) return 'v3';
+  if (/traveling voices/i.test(hay)) {
+    const mv = hay.match(/v(\d+)/i);
+    return mv ? `v${mv[1]}` : 'v4';
+  }
   return '';
 }
 
