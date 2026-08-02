@@ -1073,7 +1073,7 @@ function updateNowPlaying(song = currentSong()) {
 const SPATIAL_MAP_EMBEDDED = {
   id: 'doki-doki-forever-traveling-voices',
   transitionSec: 1.15,
-  description: 'v3 equal dual-lead levels; front/rear level-matched; lyric-accurate girl colors.',
+  description: 'Traveling Voices v3 — both voices same loudness, moving around you.',
   keyframes: [
     { t: 0.0, az: 40.0, el: 0.35, section: "hop0", cue: "front-right" },
     { t: 3.6, az: -90.0, el: 0.5, section: "hop1", cue: "high left mid" },
@@ -1149,7 +1149,10 @@ function songLooksLikeTravelingVoices(song) {
   const path = song.path || '';
   const id = song.id || '';
   const display = song.displayName || '';
+  // Match "Traveling Voices" and versioned titles like "Traveling Voices v3"
   if (name.includes('Traveling Voices') || name.includes('Travelling Voices')) return true;
+  if (title.includes('Traveling Voices') || title.includes('Travelling Voices')) return true;
+  if (display.includes('Traveling Voices') || display.includes('Travelling Voices')) return true;
   if (name.includes('DDF Travel') || name.includes('DDF_travel')) return true;
   if (/jumpy/i.test(name) || /jumpy/i.test(title)) return true;
   const hay = `${title} ${path} ${id} ${display} ${name}`.toLowerCase();
@@ -1158,6 +1161,17 @@ function songLooksLikeTravelingVoices(song) {
     || hay.includes('ddf travel')
     || hay.includes('ddf_travel')
     || hay.includes('jumpy');
+}
+
+/** Version string from title, e.g. "v3" from "Traveling Voices v3". */
+function travelingVoicesVersionLabel(song = currentSong()) {
+  if (!song) return '';
+  const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''}`;
+  const m = hay.match(/Traveling Voices\s*(v\d+)/i) || hay.match(/\(v(\d+)\)/i);
+  if (m) return m[1].toLowerCase().startsWith('v') ? m[1] : `v${m[1]}`;
+  // fallback if file is known latest
+  if (/traveling voices/i.test(hay)) return 'v3';
+  return '';
 }
 
 /** Map library filename → spatial JSON slug (batch10 paths + jumpy primary). */
@@ -1399,9 +1413,11 @@ function refreshNowKickerThemeHint(song = currentSong()) {
     ? lastDdlcGirlLabel
     : girl;
   if (songLooksLikeTravelingVoices(song)) {
+    const ver = travelingVoicesVersionLabel(song);
+    const verBit = ver ? ` ${ver}` : '';
     kicker.textContent = section
-      ? `Spatial · ${section}`
-      : `Spatial · ${spatialPathLabel(song)}`;
+      ? `Spatial${verBit} · ${section}`
+      : `Spatial${verBit}`;
     return;
   }
   if (section) kicker.textContent = `${base} · ${section}`;

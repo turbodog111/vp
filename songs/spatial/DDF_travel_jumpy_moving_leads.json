@@ -1,7 +1,7 @@
 {
   "id": "jumpy_moving_leads",
   "transitionSec": 1.15,
-  "description": "v3 equal dual-lead levels + jumpy depth (front not louder)",
+  "description": "Traveling Voices v3 \u2014 equal dual leads, moving voices",
   "keyframes": [
     {
       "t": 0.0,
