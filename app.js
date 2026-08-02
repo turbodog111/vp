@@ -1072,27 +1072,64 @@ function updateNowPlaying(song = currentSong()) {
 // Embedded so Desktop UI / offline / failed fetch still get full cue data.
 const SPATIAL_MAP_EMBEDDED = {
   id: 'doki-doki-forever-traveling-voices',
-  transitionSec: 3.2,
-  description: 'HQ extreme_jumps path + clean spatialize (no rear invert).',
+  transitionSec: 1.15,
+  description: 'Jumpy continuous motion + front/mid/rear depth tiers (primary Traveling Voices).',
   keyframes: [
-    { t: 0.0, az: 0.0, el: 1.0, section: "p0", cue: "Extreme 0,1" },
-    { t: 17.7, az: 180.0, el: -1.0, section: "p1", cue: "Extreme 180,-1" },
-    { t: 24.4, az: -135.0, el: 0.85, section: "p2", cue: "Extreme -135,0.85" },
-    { t: 30.3, az: 45.0, el: -0.85, section: "p3", cue: "Extreme 45,-0.85" },
-    { t: 41.2, az: 135.0, el: 0.95, section: "p4", cue: "Extreme 135,0.95" },
-    { t: 48.6, az: -45.0, el: -0.95, section: "p5", cue: "Extreme -45,-0.95" },
-    { t: 51.3, az: 180.0, el: 0.7, section: "p6", cue: "Extreme 180,0.7" },
-    { t: 61.0, az: 0.0, el: -0.7, section: "p7", cue: "Extreme 0,-0.7" },
-    { t: 67.5, az: -160.0, el: 0.4, section: "p8", cue: "Extreme -160,0.4" },
-    { t: 76.0, az: 20.0, el: -0.95, section: "p9", cue: "Extreme 20,-0.95" },
-    { t: 89.0, az: 160.0, el: 0.95, section: "p10", cue: "Extreme 160,0.95" },
-    { t: 100.0, az: -20.0, el: -0.4, section: "p11", cue: "Extreme -20,-0.4" },
-    { t: 112.0, az: 100.0, el: 1.0, section: "p12", cue: "Extreme 100,1" },
-    { t: 121.0, az: -80.0, el: -1.0, section: "p13", cue: "Extreme -80,-1" },
-    { t: 132.5, az: 10.0, el: 0.2, section: "p14", cue: "Extreme 10,0.2" },
-    { t: 146.5, az: -170.0, el: -0.2, section: "p15", cue: "Extreme -170,-0.2" },
-    { t: 163.0, az: 55.0, el: 0.9, section: "p16", cue: "Extreme 55,0.9" },
-    { t: 175.0, az: -125.0, el: -0.9, section: "p17", cue: "Extreme -125,-0.9" }
+    { t: 0.0, az: 40.0, el: 0.35, section: "hop0", cue: "front-right" },
+    { t: 3.6, az: -90.0, el: 0.5, section: "hop1", cue: "high left mid" },
+    { t: 7.2, az: -160.0, el: -0.3, section: "hop2", cue: "deep back-left" },
+    { t: 10.8, az: 0.0, el: 0.25, section: "hop3", cue: "dead front" },
+    { t: 14.4, az: -130.0, el: -0.7, section: "hop4", cue: "low back-left" },
+    { t: 18.0, az: -55.0, el: 0.15, section: "hop5b", cue: "wide front-left (quick)" },
+    { t: 20.34, az: -140.0, el: 0.1, section: "hop6", cue: "back-left" },
+    { t: 23.94, az: 130.0, el: -0.7, section: "hop7", cue: "low back-right" },
+    { t: 27.54, az: -55.0, el: 0.15, section: "hop8", cue: "wide front-left" },
+    { t: 31.14, az: 90.0, el: -0.4, section: "hop9", cue: "low right mid" },
+    { t: 34.74, az: 140.0, el: 0.1, section: "hop10b", cue: "back-right (quick)" },
+    { t: 37.08, az: -40.0, el: 0.35, section: "hop11", cue: "front-left" },
+    { t: 40.68, az: 90.0, el: 0.0, section: "hop12", cue: "hard right (mid)" },
+    { t: 44.28, az: 140.0, el: 0.1, section: "hop13", cue: "back-right" },
+    { t: 47.88, az: 50.0, el: 0.8, section: "hop14", cue: "high front-right" },
+    { t: 51.48, az: 40.0, el: 0.35, section: "hop15b", cue: "front-right (quick)" },
+    { t: 53.82, az: 180.0, el: -0.15, section: "hop16", cue: "dead back" },
+    { t: 57.42, az: -50.0, el: 0.8, section: "hop17", cue: "high front-left" },
+    { t: 61.02, az: 40.0, el: 0.35, section: "hop18", cue: "front-right" },
+    { t: 64.62, az: -90.0, el: 0.5, section: "hop19", cue: "high left mid" },
+    { t: 68.22, az: -90.0, el: 0.0, section: "hop20b", cue: "hard left (mid) (quick)" },
+    { t: 70.56, az: 0.0, el: 0.25, section: "hop21", cue: "dead front" },
+    { t: 74.16, az: -130.0, el: -0.7, section: "hop22", cue: "low back-left" },
+    { t: 77.76, az: -90.0, el: 0.0, section: "hop23", cue: "hard left (mid)" },
+    { t: 81.36, az: -140.0, el: 0.1, section: "hop24", cue: "back-left" },
+    { t: 84.96, az: 160.0, el: 0.4, section: "hop25b", cue: "high back-right (quick)" },
+    { t: 87.3, az: -55.0, el: 0.15, section: "hop26", cue: "wide front-left" },
+    { t: 90.9, az: 90.0, el: -0.4, section: "hop27", cue: "low right mid" },
+    { t: 94.5, az: 160.0, el: 0.4, section: "hop28", cue: "high back-right" },
+    { t: 98.1, az: -40.0, el: 0.35, section: "hop29", cue: "front-left" },
+    { t: 101.7, az: 55.0, el: 0.15, section: "hop30b", cue: "wide front-right (quick)" },
+    { t: 104.04, az: 140.0, el: 0.1, section: "hop31", cue: "back-right" },
+    { t: 107.64, az: 50.0, el: 0.8, section: "hop32", cue: "high front-right" },
+    { t: 111.24, az: 55.0, el: 0.15, section: "hop33", cue: "wide front-right" },
+    { t: 114.84, az: 180.0, el: -0.15, section: "hop34", cue: "dead back" },
+    { t: 118.44, az: -160.0, el: -0.3, section: "hop35b", cue: "deep back-left (quick)" },
+    { t: 120.78, az: 40.0, el: 0.35, section: "hop36", cue: "front-right" },
+    { t: 124.38, az: -90.0, el: 0.5, section: "hop37", cue: "high left mid" },
+    { t: 127.98, az: -160.0, el: -0.3, section: "hop38", cue: "deep back-left" },
+    { t: 131.58, az: 0.0, el: 0.25, section: "hop39", cue: "dead front" },
+    { t: 135.18, az: 130.0, el: -0.7, section: "hop40b", cue: "low back-right (quick)" },
+    { t: 137.52, az: -90.0, el: 0.0, section: "hop41", cue: "hard left (mid)" },
+    { t: 141.12, az: -140.0, el: 0.1, section: "hop42", cue: "back-left" },
+    { t: 144.72, az: 130.0, el: -0.7, section: "hop43", cue: "low back-right" },
+    { t: 148.32, az: -55.0, el: 0.15, section: "hop44", cue: "wide front-left" },
+    { t: 151.92, az: 90.0, el: 0.0, section: "hop45b", cue: "hard right (mid) (quick)" },
+    { t: 154.26, az: 160.0, el: 0.4, section: "hop46", cue: "high back-right" },
+    { t: 157.86, az: -40.0, el: 0.35, section: "hop47", cue: "front-left" },
+    { t: 161.46, az: 90.0, el: 0.0, section: "hop48", cue: "hard right (mid)" },
+    { t: 165.06, az: 140.0, el: 0.1, section: "hop49", cue: "back-right" },
+    { t: 168.66, az: -50.0, el: 0.8, section: "hop50b", cue: "high front-left (quick)" },
+    { t: 171.0, az: 55.0, el: 0.15, section: "hop51", cue: "wide front-right" },
+    { t: 174.6, az: 180.0, el: -0.15, section: "hop52", cue: "dead back" },
+    { t: 178.2, az: -50.0, el: 0.8, section: "hop53", cue: "high front-left" },
+    { t: 181.84, az: -45.0, el: 0.2, section: "end", cue: "settle front-leftish" }
   ],
 };
 const SPATIAL_MS = 125;
@@ -1121,10 +1158,11 @@ function songLooksLikeTravelingVoices(song) {
     || hay.includes('ddf_travel');
 }
 
-/** Map library filename → spatial JSON slug (batch10). */
+/** Map library filename → spatial JSON slug (batch10 / jumpy). */
 function spatialSlugForSong(song) {
   if (!song) return null;
   const n = `${song.name || ''} ${song.title || ''}`;
+  if (/jumpy/i.test(n) || /Traveling Voices/i.test(n)) return 'jumpy_moving_leads';
   const m = n.match(/DDF Travel\s+(\d{2})\s+(.+?)(?:\.m4a|\.mp3|$)/i)
     || n.match(/DDF_travel_(\d{2})_(.+?)(?:\.m4a|\.mp3|$)/i);
   if (m) {
@@ -1132,7 +1170,6 @@ function spatialSlugForSong(song) {
     const slug = m[2].trim().replace(/\s+/g, '_');
     return `${num}_${slug}`;
   }
-  if (/Traveling Voices/i.test(n)) return '09_extreme_jumps'; // primary HQ = extreme jumps
   return null;
 }
 
@@ -1238,45 +1275,46 @@ function resetSpatialUiCache() {
   spatialLastUi = { f: '', m: '', sec: '', cue: '', next: '', az: 999, el: 999 };
 }
 
-// Color themes only — never include spatial-song-active (layout flag for compact dock rows)
+// Girl color themes ONLY (not male/female dual-lead). Layout flag spatial-song-active is separate.
 const DDLC_THEME_CLASSES = [
   'theme-sayori', 'theme-natsuki', 'theme-yuri', 'theme-monika',
-  'theme-ddf-female', 'theme-ddf-male', 'theme-ddf-duet',
 ];
 
 function isMultiGirlDdfOriginal(song) {
   if (!song) return false;
   const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''}`.toLowerCase();
-  // OR3O cast track lists multiple club members
   const hits = ['sayori', 'natsuki', 'yuri', 'monika'].filter(g => hay.includes(g));
   return hits.length >= 3 && hay.includes('doki doki forever');
+}
+
+function isDdfFamilySong(song) {
+  if (!song) return false;
+  const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''} ${song.path || ''}`.toLowerCase();
+  return (
+    hay.includes('doki doki forever')
+    || hay.includes('traveling voices')
+    || hay.includes('travelling voices')
+    || hay.includes('ddf travel')
+    || hay.includes('ddf_travel')
+    || hay.includes('jumpy')
+    || hay.includes('drum-centered')
+    || hay.includes('ddlc')
+    || hay.includes('literature club')
+  );
 }
 
 function detectDdlcGirlTheme(song) {
   if (!song) return null;
   const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''} ${song.path || ''}`.toLowerCase();
-  // Multi-girl original → rotate club colors by section while playing
-  if (isMultiGirlDdfOriginal(song)) return 'theme-ddl-cast';
-  // Explicit girl markers in library titles (single-girl tracks)
+  // Explicit girl name in title wins
   if (hay.includes('sayori')) return 'theme-sayori';
   if (hay.includes('natsuki')) return 'theme-natsuki';
   if (hay.includes('yuri') && !hay.includes('forever')) return 'theme-yuri';
-  if (hay.includes('monika') && !hay.includes('forever')) return 'theme-monika';
-  // DDF family → reactive dual-vocal themes (Travel batch uses "DDF Travel NN …")
-  if (
-    hay.includes('doki doki forever') ||
-    hay.includes('traveling voices') ||
-    hay.includes('travelling voices') ||
-    hay.includes('ddf travel') ||
-    hay.includes('ddf_travel') ||
-    hay.includes('ddf_') ||
-    hay.includes('drum-centered')
-  ) {
-    return 'theme-ddf'; // special: resolved dynamically by lead
-  }
-  // Other DDLC-adjacent / single monika credit
+  if (hay.includes('monika') && !isDdfFamilySong(song)) return 'theme-monika';
+  // Multi-girl original OR any DDF-family / Travel track → rotate the four girls by section
+  // (user asked for girl themes, not male/female lead colors)
+  if (isMultiGirlDdfOriginal(song) || isDdfFamilySong(song)) return 'theme-ddl-cast';
   if (hay.includes('monika')) return 'theme-monika';
-  if (hay.includes('ddlc') || hay.includes('literature club')) return 'theme-monika';
   return null;
 }
 
@@ -1310,84 +1348,18 @@ function updateDdlcCastTheme(timeSec = currentCalibratedTime()) {
 
 function clearDdlcThemes() {
   DDLC_THEME_CLASSES.forEach(c => document.body.classList.remove(c));
-  document.body.style.removeProperty('--ddf-female-lead');
-  document.body.style.removeProperty('--ddf-male-lead');
 }
 
 function applySongTheme(song = currentSong()) {
   clearDdlcThemes();
   const theme = detectDdlcGirlTheme(song);
   if (!theme) return;
-  if (theme === 'theme-ddf') {
-    updateDdfSingerTheme(currentCalibratedTime());
-    return;
-  }
+  // All multi-DDF / Travel tracks rotate the four girls — never pink/teal "male vs female"
   if (theme === 'theme-ddl-cast') {
     updateDdlcCastTheme(currentCalibratedTime());
     return;
   }
   document.body.classList.add(theme);
-}
-
-/**
- * Who leads: arrangement duck/boost windows (exclusive) + phrase landmarks (soft).
- * Derived from ultimate_remaster_arrangement.json female/male volumeRegions + boosts.
- */
-const DDF_ARR_F_LEADS = [
-  [17.75, 18.75], [29.5, 30.5], [33.5, 34.75], [40.75, 41.5], [42.25, 42.75],
-  [51.5, 54.25], [55.75, 56.5], [61.25, 63.0], [66.5, 67.25], [68.0, 68.75],
-  [73.75, 76.25], [87.75, 89.5], [99.25, 100.25], [108.25, 109.0], [110.5, 111.25],
-  [112.0, 112.75], [118.5, 121.25], [125.5, 126.25], [131.0, 133.0], [133.5, 135.75],
-  [136.5, 137.25], [138.0, 138.75], [143.25, 144.0], [145.5, 146.25], [147.0, 151.75],
-  [171.0, 175.5],
-];
-const DDF_ARR_M_LEADS = [
-  [23.5, 24.5], [41.5, 42.25], [48.75, 51.5], [55.0, 55.75], [56.5, 57.25],
-  [64.0, 66.0], [67.25, 68.0], [92.75, 93.75], [107.75, 108.25], [109.0, 109.75],
-  [111.25, 112.0], [121.25, 124.25], [124.75, 125.5], [137.25, 138.0], [142.5, 143.25],
-  [144.0, 144.75], [146.25, 147.0],
-];
-// Broader phrase bands when arrangement is neutral (choruses / long female features)
-const DDF_PHRASE_F_LEADS = [
-  [17.5, 23.2], [29.0, 40.5], [51.0, 54.5], [60.5, 63.5], [73.0, 89.5],
-  [98.5, 107.5], [111.8, 118.5], [125.0, 132.5], [145.2, 151.5], [170.5, 175.5],
-];
-const DDF_PHRASE_M_LEADS = [
-  [23.3, 28.8], [41.0, 48.0], [48.5, 51.0], [92.0, 99.0], [118.5, 125.0],
-];
-
-function inLeadRange(ranges, timeSec) {
-  return ranges.some(([a, b]) => timeSec >= a && timeSec < b);
-}
-
-/** Approximate who leads from arrangement + phrase landmarks for DDF tracks. */
-function updateDdfSingerTheme(timeSec = currentCalibratedTime()) {
-  const song = currentSong();
-  const theme = detectDdlcGirlTheme(song);
-  const isDdf = theme === 'theme-ddf'
-    || document.body.classList.contains('theme-ddf-female')
-    || document.body.classList.contains('theme-ddf-male')
-    || document.body.classList.contains('theme-ddf-duet')
-    || document.body.classList.contains('spatial-song-active');
-  if (!isDdf) return;
-
-  // Arrangement exclusive windows win; else soft phrase bands; else duet
-  let f = 0;
-  let m = 0;
-  if (inLeadRange(DDF_ARR_F_LEADS, timeSec)) f = 1;
-  if (inLeadRange(DDF_ARR_M_LEADS, timeSec)) m = 1;
-  if (!f && !m) {
-    if (inLeadRange(DDF_PHRASE_F_LEADS, timeSec)) f = 1;
-    if (inLeadRange(DDF_PHRASE_M_LEADS, timeSec)) m = 1;
-  }
-
-  const nextClass = (f && !m) ? 'theme-ddf-female' : (m && !f) ? 'theme-ddf-male' : 'theme-ddf-duet';
-  if (!document.body.classList.contains(nextClass)) {
-    document.body.classList.remove('theme-ddf-female', 'theme-ddf-male', 'theme-ddf-duet');
-    document.body.classList.add(nextClass);
-  }
-  document.body.style.setProperty('--ddf-female-lead', f && !m ? '1' : (f && m ? '0.55' : '0.28'));
-  document.body.style.setProperty('--ddf-male-lead', m && !f ? '1' : (f && m ? '0.55' : '0.28'));
   refreshNowKickerThemeHint(song);
 }
 
@@ -1408,10 +1380,7 @@ function spatialPathLabel(song = currentSong(), { compact = true } = {}) {
   return `Path ${num} · ${pretty}`;
 }
 
-function ddfLeadStatusLabel(timeSec = currentCalibratedTime()) {
-  if (document.body.classList.contains('theme-ddf-female')) return 'Female lead';
-  if (document.body.classList.contains('theme-ddf-male')) return 'Male lead';
-  if (document.body.classList.contains('theme-ddf-duet')) return 'Duet';
+function activeGirlLabel() {
   if (document.body.classList.contains('theme-sayori')) return 'Sayori';
   if (document.body.classList.contains('theme-natsuki')) return 'Natsuki';
   if (document.body.classList.contains('theme-yuri')) return 'Yuri';
@@ -1423,19 +1392,14 @@ function refreshNowKickerThemeHint(song = currentSong()) {
   const kicker = $('now-kicker');
   if (!kicker) return;
   const base = currentPlaylist || song?.collectionLabel || 'vp';
-  const lead = ddfLeadStatusLabel();
+  const girl = activeGirlLabel();
   if (songLooksLikeTravelingVoices(song)) {
-    kicker.textContent = lead
-      ? `Spatial HQ · ${lead}`
-      : `Spatial HQ · ${spatialPathLabel(song)}`;
+    kicker.textContent = girl
+      ? `Spatial · ${girl} · ${spatialPathLabel(song)}`
+      : `Spatial · ${spatialPathLabel(song)}`;
     return;
   }
-  const th = detectDdlcGirlTheme(song);
-  if (th === 'theme-ddf' || th === 'theme-ddl-cast') {
-    kicker.textContent = lead ? `${base} · ${lead}` : base;
-    return;
-  }
-  if (lead) kicker.textContent = `${base} · ${lead}`;
+  if (girl) kicker.textContent = `${base} · ${girl}`;
   else kicker.textContent = base;
 }
 
@@ -1746,12 +1710,9 @@ function paintSpatialGuide(timeSec, force = false) {
     nextText = 'End of spatial cues';
   }
   setTextIfChanged(els.next, nextText, 'next');
-  // Reactive DDF background while spatial track plays
-  if (document.body.classList.contains('spatial-song-active')
-    || document.body.classList.contains('theme-ddf-female')
-    || document.body.classList.contains('theme-ddf-male')
-    || document.body.classList.contains('theme-ddf-duet')) {
-    updateDdfSingerTheme(timeSec);
+  // Rotate girl colors on cast / DDF-family tracks while playing
+  if (detectDdlcGirlTheme(currentSong()) === 'theme-ddl-cast') {
+    updateDdlcCastTheme(timeSec);
   }
 }
 
@@ -1776,15 +1737,14 @@ function updatePlaybackVisuals() {
   $('play').style.setProperty('--progress', deg);
   $('hero-play').style.setProperty('--progress', deg);
 
-  // DDF dual-lead / multi-girl cast themes tick during playback
-  if (!spatialActive) {
+  // Four-girl cast themes tick during playback (spatial dock also ticks cast)
+  {
     const th = detectDdlcGirlTheme(currentSong());
-    if (th === 'theme-ddf' || th === 'theme-ddl-cast') {
+    if (th === 'theme-ddl-cast') {
       const tick = Math.floor(current * 4); // 250ms
       if (tick !== lastDdfThemeTick) {
         lastDdfThemeTick = tick;
-        if (th === 'theme-ddf') updateDdfSingerTheme(current);
-        else updateDdlcCastTheme(current);
+        updateDdlcCastTheme(current);
       }
     }
   }

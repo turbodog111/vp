@@ -223,64 +223,60 @@ body.theme-ddf-duet .spatial-lead-m { flex-grow: 1; opacity: 0.9; }
   border: 1px solid rgba(94, 234, 212, 0.35);
 }
 
-/* ---- DDLC girl theme packs ---- */
+/* ---- DDLC girl themes (exact club colors; not male/female dual-lead) ---- */
 body.theme-sayori,
 body.theme-natsuki,
 body.theme-yuri,
-body.theme-monika,
-body.theme-ddf-female,
-body.theme-ddf-male,
-body.theme-ddf-duet {
-  /* accent chips / buttons follow lead smoothly */
-  transition: --accent 0.45s ease, --accent-2 0.45s ease;
+body.theme-monika {
+  transition: background 0.85s ease;
 }
+/* Sayori — sky blue */
 body.theme-sayori {
-  --accent: #7ec8ff;
-  --accent-2: #ffb7c5;
-  --accent-fg: #0a1520;
+  --accent: #57c7ff;
+  --accent-2: #b3e5fc;
+  --accent-fg: #041018;
 }
 body.theme-sayori .now-view.active {
   background:
-    radial-gradient(circle at 70% 30%, rgba(126, 200, 255, 0.16), transparent 50%),
-    radial-gradient(circle at 20% 80%, rgba(255, 183, 197, 0.1), transparent 55%),
-    linear-gradient(160deg, rgba(40, 70, 100, 0.25), transparent 50%);
-  transition: background 0.85s ease;
+    radial-gradient(circle at 68% 32%, rgba(87, 199, 255, 0.22), transparent 52%),
+    radial-gradient(circle at 18% 78%, rgba(160, 220, 255, 0.12), transparent 55%),
+    linear-gradient(160deg, rgba(30, 90, 130, 0.28), transparent 50%);
 }
+/* Natsuki — light pink */
 body.theme-natsuki {
-  --accent: #ff6b9d;
-  --accent-2: #ffb3c9;
-  --accent-fg: #1a0810;
+  --accent: #ffb3c9;
+  --accent-2: #ffe0ea;
+  --accent-fg: #1a0a10;
 }
 body.theme-natsuki .now-view.active {
   background:
-    radial-gradient(circle at 65% 35%, rgba(255, 107, 157, 0.18), transparent 48%),
-    radial-gradient(circle at 15% 75%, rgba(255, 180, 200, 0.1), transparent 55%),
-    linear-gradient(150deg, rgba(90, 20, 45, 0.28), transparent 52%);
-  transition: background 0.85s ease;
+    radial-gradient(circle at 65% 34%, rgba(255, 179, 201, 0.24), transparent 50%),
+    radial-gradient(circle at 16% 76%, rgba(255, 220, 230, 0.14), transparent 55%),
+    linear-gradient(150deg, rgba(100, 40, 60, 0.22), transparent 52%);
 }
+/* Yuri — dark purple */
 body.theme-yuri {
-  --accent: #b388ff;
-  --accent-2: #e1bee7;
-  --accent-fg: #120818;
+  --accent: #7c4dff;
+  --accent-2: #b388ff;
+  --accent-fg: #0c0614;
 }
 body.theme-yuri .now-view.active {
   background:
-    radial-gradient(circle at 68% 32%, rgba(179, 136, 255, 0.18), transparent 50%),
-    radial-gradient(circle at 18% 78%, rgba(100, 60, 140, 0.16), transparent 55%),
-    linear-gradient(155deg, rgba(50, 20, 80, 0.3), transparent 50%);
-  transition: background 0.85s ease;
+    radial-gradient(circle at 68% 32%, rgba(124, 77, 255, 0.22), transparent 50%),
+    radial-gradient(circle at 18% 78%, rgba(60, 20, 100, 0.28), transparent 55%),
+    linear-gradient(155deg, rgba(35, 10, 60, 0.4), transparent 50%);
 }
+/* Monika — emerald green */
 body.theme-monika {
-  --accent: #5dde7a;
-  --accent-2: #a5f0b5;
-  --accent-fg: #06140a;
+  --accent: #10b981;
+  --accent-2: #6ee7b7;
+  --accent-fg: #03140c;
 }
 body.theme-monika .now-view.active {
   background:
-    radial-gradient(circle at 66% 34%, rgba(93, 222, 122, 0.16), transparent 50%),
-    radial-gradient(circle at 20% 80%, rgba(40, 120, 60, 0.14), transparent 55%),
-    linear-gradient(155deg, rgba(15, 50, 28, 0.3), transparent 50%);
-  transition: background 0.85s ease;
+    radial-gradient(circle at 66% 34%, rgba(16, 185, 129, 0.2), transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(6, 95, 70, 0.22), transparent 55%),
+    linear-gradient(155deg, rgba(8, 45, 32, 0.38), transparent 50%);
 }
 /* Spatial dock HQ chip */
 .spatial-kicker .hq-chip,
@@ -296,43 +292,6 @@ body.theme-monika .now-view.active {
   color: var(--accent);
   border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
   background: color-mix(in srgb, var(--accent) 12%, transparent);
-}
-/* DDF dual-vocal reactive: blend when both; lead color when one leads */
-body.theme-ddf-female {
-  --accent: #ff7eb6;
-  --accent-2: #5eead4;
-  --accent-fg: #140810;
-}
-body.theme-ddf-female .now-view.active {
-  background:
-    radial-gradient(circle at 30% 40%, rgba(255, 126, 182, calc(0.14 + var(--ddf-female-lead, 0.5) * 0.2)), transparent 52%),
-    radial-gradient(circle at 75% 60%, rgba(94, 234, 212, calc(0.06 + var(--ddf-male-lead, 0.3) * 0.12)), transparent 55%),
-    linear-gradient(145deg, rgba(60, 20, 40, 0.28), transparent 50%);
-  transition: background 0.8s ease;
-}
-body.theme-ddf-male {
-  --accent: #5eead4;
-  --accent-2: #ff7eb6;
-  --accent-fg: #061412;
-}
-body.theme-ddf-male .now-view.active {
-  background:
-    radial-gradient(circle at 70% 40%, rgba(94, 234, 212, calc(0.14 + var(--ddf-male-lead, 0.5) * 0.2)), transparent 52%),
-    radial-gradient(circle at 25% 65%, rgba(255, 126, 182, calc(0.06 + var(--ddf-female-lead, 0.3) * 0.12)), transparent 55%),
-    linear-gradient(145deg, rgba(15, 45, 42, 0.28), transparent 50%);
-  transition: background 0.8s ease;
-}
-body.theme-ddf-duet {
-  --accent: #c4b5fd;
-  --accent-2: #f9a8d4;
-  --accent-fg: #100818;
-}
-body.theme-ddf-duet .now-view.active {
-  background:
-    radial-gradient(circle at 35% 40%, rgba(255, 126, 182, 0.14), transparent 50%),
-    radial-gradient(circle at 70% 55%, rgba(94, 234, 212, 0.14), transparent 50%),
-    linear-gradient(145deg, rgba(40, 25, 55, 0.28), transparent 50%);
-  transition: background 0.8s ease;
 }
 
 .teto-fx-canvas {
