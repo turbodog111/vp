@@ -1085,12 +1085,20 @@ input[type="range"]:focus { outline: none; }
   .main {
     padding: 10px 12px;
   }
+  /* Keep stage | spatial dock | waveform (3 rows) — 2-row layout clipped title/hero */
   .now-view.active {
-    grid-template-rows: minmax(300px, 1fr) 126px;
-    gap: 12px;
+    grid-template-rows: minmax(180px, 1fr) auto minmax(96px, 16vh);
+    gap: 10px;
+  }
+  body.spatial-song-active .now-view.active {
+    grid-template-rows: minmax(160px, 1fr) auto minmax(88px, 15vh);
+  }
+  .spatial-guide {
+    max-height: 112px;
+    padding: 5px 8px;
   }
   .now-stage {
-    min-height: 330px;
+    min-height: 220px;
   }
   .now-meta h1 {
     font-size: clamp(30px, 12vw, 46px);

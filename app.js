@@ -1207,14 +1207,24 @@ const DDLC_THEME_CLASSES = [
   'theme-ddf-female', 'theme-ddf-male', 'theme-ddf-duet', 'spatial-song-active',
 ];
 
+function isMultiGirlDdfOriginal(song) {
+  if (!song) return false;
+  const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''}`.toLowerCase();
+  // OR3O cast track lists multiple club members
+  const hits = ['sayori', 'natsuki', 'yuri', 'monika'].filter(g => hay.includes(g));
+  return hits.length >= 3 && hay.includes('doki doki forever');
+}
+
 function detectDdlcGirlTheme(song) {
   if (!song) return null;
   const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''} ${song.path || ''}`.toLowerCase();
-  // Explicit girl markers in library titles
+  // Multi-girl original → rotate club colors by section while playing
+  if (isMultiGirlDdfOriginal(song)) return 'theme-ddl-cast';
+  // Explicit girl markers in library titles (single-girl tracks)
   if (hay.includes('sayori')) return 'theme-sayori';
   if (hay.includes('natsuki')) return 'theme-natsuki';
   if (hay.includes('yuri') && !hay.includes('forever')) return 'theme-yuri';
-  if (hay.includes('monika')) return 'theme-monika';
+  if (hay.includes('monika') && !hay.includes('forever')) return 'theme-monika';
   // DDF family → reactive dual-vocal themes (Travel batch uses "DDF Travel NN …")
   if (
     hay.includes('doki doki forever') ||
@@ -1227,9 +1237,37 @@ function detectDdlcGirlTheme(song) {
   ) {
     return 'theme-ddf'; // special: resolved dynamically by lead
   }
-  // Other DDLC-adjacent
+  // Other DDLC-adjacent / single monika credit
+  if (hay.includes('monika')) return 'theme-monika';
   if (hay.includes('ddlc') || hay.includes('literature club')) return 'theme-monika';
   return null;
+}
+
+/** OR3O-style cast: rotate Sayori→Natsuki→Yuri→Monika across song phrases. */
+const DDLC_CAST_ORDER = ['theme-sayori', 'theme-natsuki', 'theme-yuri', 'theme-monika'];
+const DDLC_CAST_WINDOWS = [
+  // rough original DDF section map (sec)
+  [0, 24, 0],      // intro / early → Sayori
+  [24, 48, 1],     // mid verse → Natsuki
+  [48, 72, 2],     // pre/chorus texture → Yuri
+  [72, 100, 3],    // chorus lift → Monika
+  [100, 124, 0],
+  [124, 148, 1],
+  [148, 168, 2],
+  [168, 999, 3],
+];
+
+function updateDdlcCastTheme(timeSec = currentCalibratedTime()) {
+  let idx = 0;
+  for (const [a, b, i] of DDLC_CAST_WINDOWS) {
+    if (timeSec >= a && timeSec < b) { idx = i; break; }
+  }
+  const next = DDLC_CAST_ORDER[idx] || 'theme-monika';
+  const girls = ['theme-sayori', 'theme-natsuki', 'theme-yuri', 'theme-monika'];
+  if (!document.body.classList.contains(next)) {
+    girls.forEach(c => document.body.classList.remove(c));
+    document.body.classList.add(next);
+  }
 }
 
 function clearDdlcThemes() {
@@ -1244,6 +1282,10 @@ function applySongTheme(song = currentSong()) {
   if (!theme) return;
   if (theme === 'theme-ddf') {
     updateDdfSingerTheme(currentCalibratedTime());
+    return;
+  }
+  if (theme === 'theme-ddl-cast') {
+    updateDdlcCastTheme(currentCalibratedTime());
     return;
   }
   document.body.classList.add(theme);
@@ -1310,6 +1352,17 @@ function updateDdfSingerTheme(timeSec = currentCalibratedTime()) {
   document.body.style.setProperty('--ddf-male-lead', m && !f ? '1' : (f && m ? '0.55' : '0.28'));
 }
 
+function spatialPathLabel(song = currentSong()) {
+  const slug = spatialSlugForSong(song);
+  if (!slug) return 'Traveling opposite leads';
+  const pretty = slug
+    .replace(/^\d+_/, '')
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+  const num = slug.match(/^(\d+)/)?.[1];
+  return num ? `Path ${num} · ${pretty}` : pretty;
+}
+
 function setSpatialSong(song = currentSong()) {
   const els = cacheSpatialEls();
   applySongTheme(song);
@@ -1332,6 +1385,10 @@ function setSpatialSong(song = currentSong()) {
   if (els.panel) {
     els.panel.classList.remove('hidden');
     els.panel.style.display = '';
+    const kicker = els.panel.querySelector('.spatial-kicker');
+    if (kicker) kicker.textContent = 'Where the audio is';
+    // Show active path name in section until first cue paints
+    if (els.section) els.section.textContent = spatialPathLabel(song);
   }
   ensureSpatialRadar();
   paintSpatialGuide(currentCalibratedTime(), true);
@@ -1561,7 +1618,10 @@ function paintSpatialGuide(timeSec, force = false) {
 
   const mAz = normalizeAz(pose.az + 180);
   const mEl = -pose.el;
-  setTextIfChanged(els.section, pose.section, 'sec');
+  // Section line: path name + phrase key so dock stays informative without growing
+  const pathBit = spatialPathLabel(currentSong());
+  const secLabel = pose.section ? `${pathBit} · ${pose.section}` : pathBit;
+  setTextIfChanged(els.section, secLabel, 'sec');
   setTextIfChanged(els.female, describeDirection(pose.az, pose.el), 'f');
   setTextIfChanged(els.male, describeDirection(mAz, mEl), 'm');
   setTextIfChanged(els.cue, pose.cue || '', 'cue');
@@ -1606,12 +1666,16 @@ function updatePlaybackVisuals() {
   $('play').style.setProperty('--progress', deg);
   $('hero-play').style.setProperty('--progress', deg);
 
-  // DDF dual-lead themes tick even when spatial radar is off (remasters / dominance)
-  if (!spatialActive && detectDdlcGirlTheme(currentSong()) === 'theme-ddf') {
-    const tick = Math.floor(current * 4); // 250ms
-    if (tick !== lastDdfThemeTick) {
-      lastDdfThemeTick = tick;
-      updateDdfSingerTheme(current);
+  // DDF dual-lead / multi-girl cast themes tick during playback
+  if (!spatialActive) {
+    const th = detectDdlcGirlTheme(currentSong());
+    if (th === 'theme-ddf' || th === 'theme-ddl-cast') {
+      const tick = Math.floor(current * 4); // 250ms
+      if (tick !== lastDdfThemeTick) {
+        lastDdfThemeTick = tick;
+        if (th === 'theme-ddf') updateDdfSingerTheme(current);
+        else updateDdlcCastTheme(current);
+      }
     }
   }
 
