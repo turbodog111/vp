@@ -491,6 +491,24 @@ function resumeAudioFromCalibratedClock(song = currentSong()) {
   calibratedBasePerf = performance.now() / 1000;
   calibratedClockRunning = false;
   audio.muted = false;
+
+  // MUST run before play(): recreating <audio> after play() drops the stream.
+  // Also re-apply song URL if element was swapped for native spatial fidelity.
+  if (prefersNativeAudio(song) && (audioSource || analyser)) {
+    const wantSrc = song?.url ? new URL(song.url, window.location.href).href : '';
+    const t = currentCalibratedTime(song);
+    recreateAudioElementForNativePath();
+    if (wantSrc) {
+      audio.src = song.url;
+      audio.load();
+      const seekOnce = () => {
+        try { if (t > 0.05) audio.currentTime = t; } catch (_) {}
+        audio.removeEventListener('loadedmetadata', seekOnce);
+      };
+      audio.addEventListener('loadedmetadata', seekOnce);
+    }
+  }
+
   // Spatial track: never hang volume on Web Audio graph
   if (prefersNativeAudio(song) && !audioSource) {
     audio.volume = playerVolume;
@@ -2031,7 +2049,20 @@ async function activateAudioGraphIfPossible() {
   // Traveling Voices: stay on native <audio> path so levels/stereo match QuickTime.
   // (Web Audio MediaElementSource + sample-rate conversion was coloring the mix.)
   if (prefersNativeAudio()) {
-    if (audioSource || analyser) recreateAudioElementForNativePath();
+    // Recreate only if still hijacked — callers should do this before play().
+    // If we must recreate here, re-bind current song URL so playback can resume.
+    if (audioSource || analyser) {
+      const song = currentSong();
+      const want = song?.url || '';
+      const t = currentCalibratedTime(song);
+      recreateAudioElementForNativePath();
+      if (want) {
+        audio.src = want;
+        audio.load();
+        try { if (t > 0.05) audio.currentTime = t; } catch (_) {}
+        try { await audio.play(); } catch (_) {}
+      }
+    }
     audio.volume = playerVolume;
     audioGraphError = 'native-html-audio (spatial fidelity)';
     return false;
