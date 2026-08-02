@@ -103,6 +103,38 @@ body.spatial-song-active .now-view.active {
   gap: 4px 10px;
   margin-bottom: 4px;
 }
+/* Dual-lead dominance strip (female pink | male teal) */
+.spatial-lead-bar {
+  display: flex;
+  height: 3px;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0 0 6px;
+  background: rgba(255, 255, 255, 0.06);
+}
+.spatial-lead-f,
+.spatial-lead-m {
+  display: block;
+  height: 100%;
+  min-width: 0;
+  transition: flex-grow 0.45s ease, opacity 0.35s ease;
+}
+.spatial-lead-f {
+  flex: 1 1 50%;
+  background: linear-gradient(90deg, #ff7eb6, #ff9ec8);
+  opacity: 0.85;
+}
+.spatial-lead-m {
+  flex: 1 1 50%;
+  background: linear-gradient(90deg, #5eead4, #7af0dc);
+  opacity: 0.85;
+}
+body.theme-ddf-female .spatial-lead-f { flex-grow: 3.2; opacity: 1; }
+body.theme-ddf-female .spatial-lead-m { flex-grow: 0.55; opacity: 0.45; }
+body.theme-ddf-male .spatial-lead-f { flex-grow: 0.55; opacity: 0.45; }
+body.theme-ddf-male .spatial-lead-m { flex-grow: 3.2; opacity: 1; }
+body.theme-ddf-duet .spatial-lead-f,
+body.theme-ddf-duet .spatial-lead-m { flex-grow: 1; opacity: 0.9; }
 .spatial-kicker {
   color: var(--accent);
   font-size: 10px;
