@@ -1303,37 +1303,39 @@ function detectDdlcGirlTheme(song) {
 }
 
 /**
- * OR3O Doki Doki Forever — active girl by lyric section (Genius credits).
+ * OR3O Doki Doki Forever — active girl by REAL lyric timing.
  * Cast: rachie=Sayori, Chi-Chi=Natsuki, Kathy-chan=Yuri, OR3O=Monika.
- * Times aligned to ~182s remaster (lyrics ~11s after bed; phrase landmarks).
- * When multiple share a section, primary listed singer wins (not round-robin).
+ * Times from synced LRC (lrclib) + character labels (lyrics.com).
+ * Checked against remaster vocal energy (V2 restart ~81s after mid-song gap).
+ * [startSec, endSec, theme, label]
  */
 const DDLC_GIRL_BY_LYRIC = [
-  // [startSec, endSec, theme, label]
-  [0.0, 11.0, 'theme-monika', 'Intro · Monika'],
-  // Verse 1: rachie then Chi-Chi
-  [11.0, 17.7, 'theme-sayori', 'V1 · Sayori'],
-  [17.7, 30.3, 'theme-natsuki', 'V1 · Natsuki'],
-  // Pre-Chorus 1: Kathy-chan, *rachie*
-  [30.3, 38.5, 'theme-yuri', 'Pre1 · Yuri'],
-  [38.5, 41.2, 'theme-sayori', 'Pre1 · Sayori'],
-  // Chorus 1: Chi-Chi, *rachie*, **OR3O**
-  [41.2, 48.6, 'theme-natsuki', 'Ch1 · Natsuki'],
-  [48.6, 61.0, 'theme-monika', 'Ch1 · Monika'],
-  // Verse 2: Kathy-chan, *rachie*, **OR3O**
-  [61.0, 67.5, 'theme-yuri', 'V2 · Yuri'],
-  [67.5, 76.0, 'theme-sayori', 'V2 · Sayori'],
-  [76.0, 82.0, 'theme-monika', 'V2 · Monika'],
-  // Pre-Chorus 2: Chi-Chi, *Kathy-chan*
-  [82.0, 89.0, 'theme-natsuki', 'Pre2 · Natsuki'],
-  [89.0, 94.0, 'theme-yuri', 'Pre2 · Yuri'],
-  // Chorus 2: OR3O, *Kathy-chan*
-  [94.0, 112.0, 'theme-monika', 'Ch2 · Monika'],
-  // Bridge: OR3O
-  [112.0, 132.5, 'theme-monika', 'Bridge · Monika'],
-  // Outro: rachie, *OR3O*
-  [132.5, 151.0, 'theme-sayori', 'Outro · Sayori'],
-  [151.0, 999.0, 'theme-monika', 'Outro · Monika'],
+  [0.00, 11.56, 'theme-monika', 'Intro · Monika'],
+  // Verse 1
+  [11.56, 22.68, 'theme-sayori', 'Hey hey · Sayori'],
+  [22.68, 34.56, 'theme-natsuki', 'Sundae · Natsuki'],
+  // Pre-chorus 1
+  [34.56, 39.76, 'theme-yuri', 'When we touch · Yuri'],
+  [39.76, 46.06, 'theme-sayori', 'Choose one · Sayori'],
+  // Chorus 1
+  [46.06, 58.00, 'theme-natsuki', 'Tell me · Natsuki'],
+  [58.00, 67.63, 'theme-sayori', 'Will it be okay · Sayori'],
+  [67.63, 81.28, 'theme-monika', 'Never apart · Monika'],
+  // Verse 2 (after instrumental break)
+  [81.28, 92.44, 'theme-yuri', 'Next to you · Yuri'],
+  [92.44, 93.46, 'theme-sayori', 'I really love · Sayori'],
+  [93.46, 104.70, 'theme-monika', 'Way you write · Monika'],
+  // Pre-chorus 2
+  [104.70, 109.59, 'theme-natsuki', 'Tasty love · Natsuki'],
+  [109.59, 116.14, 'theme-yuri', 'Make the cut · Yuri'],
+  // Chorus 2
+  [116.14, 127.67, 'theme-monika', 'Leave you be · Monika'],
+  [127.67, 139.50, 'theme-yuri', 'How can I convey · Yuri'],
+  // Bridge
+  [139.50, 158.83, 'theme-monika', 'One by one · Monika'],
+  // Outro
+  [158.83, 170.96, 'theme-sayori', 'Together forever · Sayori'],
+  [170.96, 999.0, 'theme-monika', 'In my heart · Monika'],
 ];
 
 let lastDdlcGirlTheme = '';
@@ -1762,7 +1764,7 @@ function updatePlaybackVisuals() {
   {
     const th = detectDdlcGirlTheme(currentSong());
     if (th === 'theme-ddl-cast') {
-      const tick = Math.floor(current * 4); // 250ms
+      const tick = Math.floor(current * 10); // 100ms — short lyric lines need snappier color
       if (tick !== lastDdfThemeTick) {
         lastDdfThemeTick = tick;
         updateDdlcCastTheme(current);

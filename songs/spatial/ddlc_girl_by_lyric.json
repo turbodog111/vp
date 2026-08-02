@@ -1,101 +1,30 @@
 {
-  "source": "Genius OR3O Doki Doki Forever credits",
+  "source": "Synced LRC (lrclib OR3O Doki Doki Forever) + character labels (lyrics.com)",
+  "cast": {
+    "sayori": "rachie · sky blue",
+    "natsuki": "Chi-Chi · light pink",
+    "yuri": "Kathy-chan · dark purple",
+    "monika": "OR3O · emerald"
+  },
+  "note": "Times are playback seconds for Traveling Voices v3 / remaster timeline (~182s).",
   "windows": [
-    [
-      0.0,
-      11.0,
-      "monika",
-      "Intro \u00b7 Monika"
-    ],
-    [
-      11.0,
-      17.7,
-      "sayori",
-      "V1 \u00b7 Sayori"
-    ],
-    [
-      17.7,
-      30.3,
-      "natsuki",
-      "V1 \u00b7 Natsuki"
-    ],
-    [
-      30.3,
-      38.5,
-      "yuri",
-      "Pre1 \u00b7 Yuri"
-    ],
-    [
-      38.5,
-      41.2,
-      "sayori",
-      "Pre1 \u00b7 Sayori"
-    ],
-    [
-      41.2,
-      48.6,
-      "natsuki",
-      "Ch1 \u00b7 Natsuki"
-    ],
-    [
-      48.6,
-      61.0,
-      "monika",
-      "Ch1 \u00b7 Monika"
-    ],
-    [
-      61.0,
-      67.5,
-      "yuri",
-      "V2 \u00b7 Yuri"
-    ],
-    [
-      67.5,
-      76.0,
-      "sayori",
-      "V2 \u00b7 Sayori"
-    ],
-    [
-      76.0,
-      82.0,
-      "monika",
-      "V2 \u00b7 Monika"
-    ],
-    [
-      82.0,
-      89.0,
-      "natsuki",
-      "Pre2 \u00b7 Natsuki"
-    ],
-    [
-      89.0,
-      94.0,
-      "yuri",
-      "Pre2 \u00b7 Yuri"
-    ],
-    [
-      94.0,
-      112.0,
-      "monika",
-      "Ch2 \u00b7 Monika"
-    ],
-    [
-      112.0,
-      132.5,
-      "monika",
-      "Bridge \u00b7 Monika"
-    ],
-    [
-      132.5,
-      151.0,
-      "sayori",
-      "Outro \u00b7 Sayori"
-    ],
-    [
-      151.0,
-      999.0,
-      "monika",
-      "Outro \u00b7 Monika"
-    ]
+    { "start": 0.0, "end": 11.56, "girl": "monika", "label": "Intro · Monika" },
+    { "start": 11.56, "end": 22.68, "girl": "sayori", "label": "Hey hey · Sayori" },
+    { "start": 22.68, "end": 34.56, "girl": "natsuki", "label": "Sundae · Natsuki" },
+    { "start": 34.56, "end": 39.76, "girl": "yuri", "label": "When we touch · Yuri" },
+    { "start": 39.76, "end": 46.06, "girl": "sayori", "label": "Choose one · Sayori" },
+    { "start": 46.06, "end": 58.0, "girl": "natsuki", "label": "Tell me · Natsuki" },
+    { "start": 58.0, "end": 67.63, "girl": "sayori", "label": "Will it be okay · Sayori" },
+    { "start": 67.63, "end": 81.28, "girl": "monika", "label": "Never apart · Monika" },
+    { "start": 81.28, "end": 92.44, "girl": "yuri", "label": "Next to you · Yuri" },
+    { "start": 92.44, "end": 93.46, "girl": "sayori", "label": "I really love · Sayori" },
+    { "start": 93.46, "end": 104.7, "girl": "monika", "label": "Way you write · Monika" },
+    { "start": 104.7, "end": 109.59, "girl": "natsuki", "label": "Tasty love · Natsuki" },
+    { "start": 109.59, "end": 116.14, "girl": "yuri", "label": "Make the cut · Yuri" },
+    { "start": 116.14, "end": 127.67, "girl": "monika", "label": "Leave you be · Monika" },
+    { "start": 127.67, "end": 139.5, "girl": "yuri", "label": "How can I convey · Yuri" },
+    { "start": 139.5, "end": 158.83, "girl": "monika", "label": "One by one · Monika" },
+    { "start": 158.83, "end": 170.96, "girl": "sayori", "label": "Together forever · Sayori" },
+    { "start": 170.96, "end": 999.0, "girl": "monika", "label": "In my heart · Monika" }
   ]
 }
