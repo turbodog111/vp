@@ -1,0 +1,101 @@
+{
+  "source": "Genius OR3O Doki Doki Forever credits",
+  "windows": [
+    [
+      0.0,
+      11.0,
+      "monika",
+      "Intro \u00b7 Monika"
+    ],
+    [
+      11.0,
+      17.7,
+      "sayori",
+      "V1 \u00b7 Sayori"
+    ],
+    [
+      17.7,
+      30.3,
+      "natsuki",
+      "V1 \u00b7 Natsuki"
+    ],
+    [
+      30.3,
+      38.5,
+      "yuri",
+      "Pre1 \u00b7 Yuri"
+    ],
+    [
+      38.5,
+      41.2,
+      "sayori",
+      "Pre1 \u00b7 Sayori"
+    ],
+    [
+      41.2,
+      48.6,
+      "natsuki",
+      "Ch1 \u00b7 Natsuki"
+    ],
+    [
+      48.6,
+      61.0,
+      "monika",
+      "Ch1 \u00b7 Monika"
+    ],
+    [
+      61.0,
+      67.5,
+      "yuri",
+      "V2 \u00b7 Yuri"
+    ],
+    [
+      67.5,
+      76.0,
+      "sayori",
+      "V2 \u00b7 Sayori"
+    ],
+    [
+      76.0,
+      82.0,
+      "monika",
+      "V2 \u00b7 Monika"
+    ],
+    [
+      82.0,
+      89.0,
+      "natsuki",
+      "Pre2 \u00b7 Natsuki"
+    ],
+    [
+      89.0,
+      94.0,
+      "yuri",
+      "Pre2 \u00b7 Yuri"
+    ],
+    [
+      94.0,
+      112.0,
+      "monika",
+      "Ch2 \u00b7 Monika"
+    ],
+    [
+      112.0,
+      132.5,
+      "monika",
+      "Bridge \u00b7 Monika"
+    ],
+    [
+      132.5,
+      151.0,
+      "sayori",
+      "Outro \u00b7 Sayori"
+    ],
+    [
+      151.0,
+      999.0,
+      "monika",
+      "Outro \u00b7 Monika"
+    ]
+  ]
+}

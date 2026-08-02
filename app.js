@@ -1073,7 +1073,7 @@ function updateNowPlaying(song = currentSong()) {
 const SPATIAL_MAP_EMBEDDED = {
   id: 'doki-doki-forever-traveling-voices',
   transitionSec: 1.15,
-  description: 'v2 jumpy dual leads — rear delay history fix so both voices stay audible.',
+  description: 'v3 equal dual-lead levels; front/rear level-matched; lyric-accurate girl colors.',
   keyframes: [
     { t: 0.0, az: 40.0, el: 0.35, section: "hop0", cue: "front-right" },
     { t: 3.6, az: -90.0, el: 0.5, section: "hop1", cue: "high left mid" },
@@ -1288,31 +1288,62 @@ function detectDdlcGirlTheme(song) {
   return null;
 }
 
-/** OR3O-style cast: rotate Sayori→Natsuki→Yuri→Monika across song phrases. */
-const DDLC_CAST_ORDER = ['theme-sayori', 'theme-natsuki', 'theme-yuri', 'theme-monika'];
-const DDLC_CAST_WINDOWS = [
-  // rough original DDF section map (sec)
-  [0, 24, 0],      // intro / early → Sayori
-  [24, 48, 1],     // mid verse → Natsuki
-  [48, 72, 2],     // pre/chorus texture → Yuri
-  [72, 100, 3],    // chorus lift → Monika
-  [100, 124, 0],
-  [124, 148, 1],
-  [148, 168, 2],
-  [168, 999, 3],
+/**
+ * OR3O Doki Doki Forever — active girl by lyric section (Genius credits).
+ * Cast: rachie=Sayori, Chi-Chi=Natsuki, Kathy-chan=Yuri, OR3O=Monika.
+ * Times aligned to ~182s remaster (lyrics ~11s after bed; phrase landmarks).
+ * When multiple share a section, primary listed singer wins (not round-robin).
+ */
+const DDLC_GIRL_BY_LYRIC = [
+  // [startSec, endSec, theme, label]
+  [0.0, 11.0, 'theme-monika', 'Intro · Monika'],
+  // Verse 1: rachie then Chi-Chi
+  [11.0, 17.7, 'theme-sayori', 'V1 · Sayori'],
+  [17.7, 30.3, 'theme-natsuki', 'V1 · Natsuki'],
+  // Pre-Chorus 1: Kathy-chan, *rachie*
+  [30.3, 38.5, 'theme-yuri', 'Pre1 · Yuri'],
+  [38.5, 41.2, 'theme-sayori', 'Pre1 · Sayori'],
+  // Chorus 1: Chi-Chi, *rachie*, **OR3O**
+  [41.2, 48.6, 'theme-natsuki', 'Ch1 · Natsuki'],
+  [48.6, 61.0, 'theme-monika', 'Ch1 · Monika'],
+  // Verse 2: Kathy-chan, *rachie*, **OR3O**
+  [61.0, 67.5, 'theme-yuri', 'V2 · Yuri'],
+  [67.5, 76.0, 'theme-sayori', 'V2 · Sayori'],
+  [76.0, 82.0, 'theme-monika', 'V2 · Monika'],
+  // Pre-Chorus 2: Chi-Chi, *Kathy-chan*
+  [82.0, 89.0, 'theme-natsuki', 'Pre2 · Natsuki'],
+  [89.0, 94.0, 'theme-yuri', 'Pre2 · Yuri'],
+  // Chorus 2: OR3O, *Kathy-chan*
+  [94.0, 112.0, 'theme-monika', 'Ch2 · Monika'],
+  // Bridge: OR3O
+  [112.0, 132.5, 'theme-monika', 'Bridge · Monika'],
+  // Outro: rachie, *OR3O*
+  [132.5, 151.0, 'theme-sayori', 'Outro · Sayori'],
+  [151.0, 999.0, 'theme-monika', 'Outro · Monika'],
 ];
 
+let lastDdlcGirlTheme = '';
+let lastDdlcGirlLabel = '';
+
+function girlThemeAtTime(timeSec = 0) {
+  const t = Number(timeSec) || 0;
+  for (const [a, b, theme, label] of DDLC_GIRL_BY_LYRIC) {
+    if (t >= a && t < b) return { theme, label };
+  }
+  const last = DDLC_GIRL_BY_LYRIC[DDLC_GIRL_BY_LYRIC.length - 1];
+  return { theme: last[2], label: last[3] };
+}
+
 function updateDdlcCastTheme(timeSec = currentCalibratedTime()) {
-  let idx = 0;
-  for (const [a, b, i] of DDLC_CAST_WINDOWS) {
-    if (timeSec >= a && timeSec < b) { idx = i; break; }
+  const { theme: next, label } = girlThemeAtTime(timeSec);
+  lastDdlcGirlLabel = label || '';
+  if (next === lastDdlcGirlTheme && document.body.classList.contains(next)) {
+    refreshNowKickerThemeHint(currentSong());
+    return;
   }
-  const next = DDLC_CAST_ORDER[idx] || 'theme-monika';
-  const girls = ['theme-sayori', 'theme-natsuki', 'theme-yuri', 'theme-monika'];
-  if (!document.body.classList.contains(next)) {
-    girls.forEach(c => document.body.classList.remove(c));
-    document.body.classList.add(next);
-  }
+  lastDdlcGirlTheme = next;
+  DDLC_THEME_CLASSES.forEach(c => document.body.classList.remove(c));
+  document.body.classList.add(next);
   refreshNowKickerThemeHint(currentSong());
 }
 
@@ -1363,13 +1394,17 @@ function refreshNowKickerThemeHint(song = currentSong()) {
   if (!kicker) return;
   const base = currentPlaylist || song?.collectionLabel || 'vp';
   const girl = activeGirlLabel();
+  // Prefer lyric-section label (e.g. "Ch1 · Monika") when cast map is active
+  const section = (detectDdlcGirlTheme(song) === 'theme-ddl-cast' && lastDdlcGirlLabel)
+    ? lastDdlcGirlLabel
+    : girl;
   if (songLooksLikeTravelingVoices(song)) {
-    kicker.textContent = girl
-      ? `Spatial · ${girl} · ${spatialPathLabel(song)}`
+    kicker.textContent = section
+      ? `Spatial · ${section}`
       : `Spatial · ${spatialPathLabel(song)}`;
     return;
   }
-  if (girl) kicker.textContent = `${base} · ${girl}`;
+  if (section) kicker.textContent = `${base} · ${section}`;
   else kicker.textContent = base;
 }
 
