@@ -1179,7 +1179,7 @@ function loadSpatialMap(song = currentSong()) {
     spatialMapCache = spatialMapBySlug[slug];
     return spatialMapCache;
   }
-  // Per-variant JSON: warm cache async; do not permanently pin wrong embed when slug known
+  // Per-variant JSON: warm cache async; swap in as soon as ready (no sticky wrong path)
   if (slug && !spatialMapBySlug[slug]) {
     fetchSpatialSlug(slug).then(map => {
       if (!map) return;
@@ -1190,13 +1190,14 @@ function loadSpatialMap(song = currentSong()) {
       }
     });
   }
-  // Primary Traveling Voices / unknown → embedded extreme-jumps style map
+  // Unknown / primary Traveling Voices → embedded extreme-jumps map
   if (!slug) {
     spatialMapCache = normalizeSpatialMap(JSON.parse(JSON.stringify(SPATIAL_MAP_EMBEDDED)));
-  } else if (!spatialMapCache) {
-    // Brief fallback until fetch lands (slug-specific map preferred)
-    spatialMapCache = normalizeSpatialMap(JSON.parse(JSON.stringify(SPATIAL_MAP_EMBEDDED)));
+    return spatialMapCache;
   }
+  // Known variant but not fetched yet: prefer preloaded 09 (primary HQ) only as brief stand-in
+  spatialMapCache = spatialMapBySlug['09_extreme_jumps']
+    || normalizeSpatialMap(JSON.parse(JSON.stringify(SPATIAL_MAP_EMBEDDED)));
   return spatialMapCache;
 }
 
@@ -1417,7 +1418,11 @@ function setSpatialSong(song = currentSong()) {
     document.body.classList.remove('spatial-song-active');
     return;
   }
-  spatialMapCache = null; // re-resolve for this song's path
+  // Re-resolve map for this variant (uses preloaded batch10 JSON when available)
+  const wantSlug = spatialSlugForSong(song);
+  if (!(wantSlug && spatialMapBySlug[wantSlug] && spatialMapCache === spatialMapBySlug[wantSlug])) {
+    spatialMapCache = null;
+  }
   const map = loadSpatialMap(song);
   if (!map) return;
   spatialActive = true;
