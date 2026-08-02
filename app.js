@@ -62,7 +62,9 @@ const DEFAULT_PLAYLISTS = {
 };
 
 const $ = (id) => document.getElementById(id);
-const audio = $('audio');
+// Mutable: MediaElementSource permanently hijacks an <audio> node; spatial tracks
+// recreate the element to restore true native HTMLAudio routing (QuickTime-like).
+let audio = $('audio');
 
 let library = [];
 let queue = [];
@@ -998,8 +1000,10 @@ function playCurrent() {
   const libIdx = queue[queueIndex];
   const song = library[libIdx];
   if (!song) return;
+  // Spatial HQ: if a prior song attached Web Audio, rebuild <audio> for true native stereo
+  const recreatedNative = ensureNativeRoutingForSpatialSong(song);
   const targetSrc = new URL(song.url, window.location.href).href;
-  const sameSource = audio.currentSrc === targetSrc || audio.src === targetSrc;
+  const sameSource = !recreatedNative && (audio.currentSrc === targetSrc || audio.src === targetSrc);
   audio.playbackRate = 1;
   audio.preservesPitch = true;
   audio.webkitPreservesPitch = true;
@@ -1973,10 +1977,61 @@ function connectAudioGraph() {
   }
 }
 
+/**
+ * After createMediaElementSource, the browser never routes that <audio> natively again.
+ * Swap in a fresh element so spatial tracks can play pure stereo (no Web Audio graph).
+ */
+function recreateAudioElementForNativePath() {
+  if (!audioSource && !analyser) return false;
+  const old = audio;
+  const src = old?.currentSrc || old?.src || '';
+  const t = Number.isFinite(old?.currentTime) ? old.currentTime : 0;
+  try { old?.pause(); } catch (_) {}
+  try { audioSource?.disconnect(); } catch (_) {}
+  try { outputGain?.disconnect(); } catch (_) {}
+  try { analyser?.disconnect(); } catch (_) {}
+  audioSource = null;
+  analyser = null;
+  outputGain = null;
+  waveData = null;
+  waveTimeData = null;
+
+  const next = document.createElement('audio');
+  next.id = 'audio';
+  next.preload = 'metadata';
+  next.setAttribute('playsinline', '');
+  next.playsInline = true;
+  if (old?.parentNode) old.parentNode.replaceChild(next, old);
+  else document.body.appendChild(next);
+  audio = next;
+  if (typeof bindAudioElementEvents === 'function') bindAudioElementEvents(audio);
+  audio.muted = false;
+  audio.volume = playerVolume;
+  if (src) {
+    audio.src = src;
+    const onMeta = () => {
+      try { if (t > 0) audio.currentTime = t; } catch (_) {}
+      audio.removeEventListener('loadedmetadata', onMeta);
+    };
+    audio.addEventListener('loadedmetadata', onMeta);
+    try { audio.load(); } catch (_) {}
+  }
+  audioGraphError = 'native-html-audio (spatial; element recreated)';
+  audioGraphActivatedAt = 0;
+  return true;
+}
+
+function ensureNativeRoutingForSpatialSong(song = currentSong()) {
+  if (!prefersNativeAudio(song)) return false;
+  if (!audioSource && !analyser) return false;
+  return recreateAudioElementForNativePath();
+}
+
 async function activateAudioGraphIfPossible() {
   // Traveling Voices: stay on native <audio> path so levels/stereo match QuickTime.
   // (Web Audio MediaElementSource + sample-rate conversion was coloring the mix.)
   if (prefersNativeAudio()) {
+    if (audioSource || analyser) recreateAudioElementForNativePath();
     audio.volume = playerVolume;
     audioGraphError = 'native-html-audio (spatial fidelity)';
     return false;
@@ -3056,70 +3111,72 @@ function roundedBar(ctx, x, y, w, h, r) {
   ctx.fill();
 }
 
-['loadstart', 'loadedmetadata', 'canplay', 'play', 'playing', 'pause', 'waiting', 'seeking', 'seeked', 'stalled', 'suspend', 'ended', 'error'].forEach(eventName => {
-  audio.addEventListener(eventName, () => noteMediaEvent(eventName), {capture: true});
-});
+function bindAudioElementEvents(el) {
+  if (!el || el.dataset.vpBound === '1') return;
+  el.dataset.vpBound = '1';
+  ['loadstart', 'loadedmetadata', 'canplay', 'play', 'playing', 'pause', 'waiting', 'seeking', 'seeked', 'stalled', 'suspend', 'ended', 'error'].forEach(eventName => {
+    el.addEventListener(eventName, () => noteMediaEvent(eventName), { capture: true });
+  });
 
-// Progress is driven by startProgressClock() while playing — not by visualizer rAF
-// and not only by sparse timeupdate (which feels late under load).
-audio.addEventListener('timeupdate', () => {
-  // Lightweight fallback if progress clock isn't running
-  if (!progressTimer) updatePlaybackVisuals();
-});
-audio.addEventListener('loadedmetadata', () => {
-  syncCalibratedClockToNative();
-  updatePlaybackVisuals();
-});
-audio.addEventListener('seeking', () => {
-  syncCalibratedClockToNative(currentSong(), {allowBackward: !!seekTransaction, keepRunning: false});
-  updatePlaybackVisuals();
-});
-audio.addEventListener('seeked', () => {
-  syncCalibratedClockToNative(currentSong(), {allowBackward: !!seekTransaction, consumePending: true, keepRunning: false});
-  updatePlaybackVisuals();
-  spatialForcePaint = true;
-  if (spatialActive) paintSpatialGuide(currentCalibratedTime(), true);
-  if (seekTransaction?.finishOnSeeked) finishSeekTransaction();
-});
-audio.addEventListener('ratechange', () => {
-  pauseCalibratedClock();
-  if (!audio.paused && !audio.seeking && audio.readyState >= 3) startCalibratedClock();
-});
-audio.addEventListener('waiting', () => pauseCalibratedClock());
-audio.addEventListener('playing', () => startCalibratedClock());
-audio.addEventListener('ended', () => {
-  pauseCalibratedClock();
-  playNext(true);
-});
-audio.addEventListener('play', () => {
-  $('play').textContent = '⏸';
-  $('hero-play').classList.add('playing');
-  $('hero-play').querySelector('.hero-icon').textContent = '⏸';
-  document.body.classList.add('is-playing');
-  startProgressClock();
-  startWaveform();
-  updatePlaybackVisuals();
-  updateFxState();
-  syncSpatialLoop();
-});
-audio.addEventListener('pause', () => {
-  pauseCalibratedClock();
-  $('play').textContent = '▶';
-  $('hero-play').classList.remove('playing');
-  $('hero-play').querySelector('.hero-icon').textContent = '▶';
-  document.body.classList.remove('is-playing');
-  stopProgressClock();
-  updatePlaybackVisuals();
-  updateFxState();
-  // One idle frame so bars settle; no continuous 60fps when paused
-  drawWaveform(true);
-  syncSpatialLoop();
-});
-audio.addEventListener('error', () => {
-  console.warn('Audio error for', audio.src);
-  // Try next song if this one fails
-  if (queueIndex + 1 < queue.length) playNext(false);
-});
+  // Progress is driven by startProgressClock() while playing — not by visualizer rAF
+  // and not only by sparse timeupdate (which feels late under load).
+  el.addEventListener('timeupdate', () => {
+    if (!progressTimer) updatePlaybackVisuals();
+  });
+  el.addEventListener('loadedmetadata', () => {
+    syncCalibratedClockToNative();
+    updatePlaybackVisuals();
+  });
+  el.addEventListener('seeking', () => {
+    syncCalibratedClockToNative(currentSong(), { allowBackward: !!seekTransaction, keepRunning: false });
+    updatePlaybackVisuals();
+  });
+  el.addEventListener('seeked', () => {
+    syncCalibratedClockToNative(currentSong(), { allowBackward: !!seekTransaction, consumePending: true, keepRunning: false });
+    updatePlaybackVisuals();
+    spatialForcePaint = true;
+    if (spatialActive) paintSpatialGuide(currentCalibratedTime(), true);
+    if (seekTransaction?.finishOnSeeked) finishSeekTransaction();
+  });
+  el.addEventListener('ratechange', () => {
+    pauseCalibratedClock();
+    if (!el.paused && !el.seeking && el.readyState >= 3) startCalibratedClock();
+  });
+  el.addEventListener('waiting', () => pauseCalibratedClock());
+  el.addEventListener('playing', () => startCalibratedClock());
+  el.addEventListener('ended', () => {
+    pauseCalibratedClock();
+    playNext(true);
+  });
+  el.addEventListener('play', () => {
+    $('play').textContent = '⏸';
+    $('hero-play').classList.add('playing');
+    $('hero-play').querySelector('.hero-icon').textContent = '⏸';
+    document.body.classList.add('is-playing');
+    startProgressClock();
+    startWaveform();
+    updatePlaybackVisuals();
+    updateFxState();
+    syncSpatialLoop();
+  });
+  el.addEventListener('pause', () => {
+    pauseCalibratedClock();
+    $('play').textContent = '▶';
+    $('hero-play').classList.remove('playing');
+    $('hero-play').querySelector('.hero-icon').textContent = '▶';
+    document.body.classList.remove('is-playing');
+    stopProgressClock();
+    updatePlaybackVisuals();
+    updateFxState();
+    drawWaveform(true);
+    syncSpatialLoop();
+  });
+  el.addEventListener('error', () => {
+    console.warn('Audio error for', el.src);
+    if (queueIndex + 1 < queue.length) playNext(false);
+  });
+}
+bindAudioElementEvents(audio);
 
 $('play').addEventListener('click', togglePlay);
 $('hero-play').addEventListener('click', togglePlay);
@@ -3181,19 +3238,28 @@ function setPlayerVolume(value, notify = false) {
 function resetAudioOutput() {
   audio.muted = false;
   audioGraphError = '';
+  // Full native restore if graph was attached (also helps spatial HQ path)
+  if (audioSource || analyser) recreateAudioElementForNativePath();
   setPlayerVolume(1, false);
-  primeAudioContextForGesture()
-    .then(() => audio.src ? activateAudioGraphIfPossible() : false)
-    .then((graphActive) => {
-      updateTimingDebug();
-      showToast('🔊', graphActive ? 'Audio reset' : 'Native audio reset');
-    })
-    .catch(err => {
-      rememberAudioGraphError(err);
-      audio.volume = playerVolume;
-      updateTimingDebug();
-      showToast('🔊', 'Native audio reset');
-    });
+  const song = currentSong();
+  if (song && !prefersNativeAudio(song)) {
+    primeAudioContextForGesture()
+      .then(() => audio.src ? activateAudioGraphIfPossible() : false)
+      .then((graphActive) => {
+        updateTimingDebug();
+        showToast('🔊', graphActive ? 'Audio reset' : 'Native audio reset');
+      })
+      .catch(err => {
+        rememberAudioGraphError(err);
+        audio.volume = playerVolume;
+        updateTimingDebug();
+        showToast('🔊', 'Native audio reset');
+      });
+    return;
+  }
+  audio.volume = playerVolume;
+  updateTimingDebug();
+  showToast('🔊', 'Native audio reset');
 }
 
 const volumeEl = $('volume');
