@@ -87,10 +87,16 @@ let analyser = null;
 let outputGain = null;
 let waveData = null;
 let waveTimeData = null;
-let waveRaf = null;
+let waveRaf = 0;
+let progressTimer = 0;
+let waveFrame = 0;
+let waveSizeKey = '';
+let fxSizeKey = '';
 let waveBars = [];
 let wavePitchFocus = 0.5;
 let smoothedLevel = 0;
+let waveFloorDb = -48;
+let wavePeakDb = -18;
 let tetoFxLevel = 0;
 let tetoGlowLevel = 0;
 let tetoRiseEnergy = 0;
@@ -113,12 +119,15 @@ let lastWatchdogDisplayTime = 0;
 let lastWatchdogPerf = performance.now();
 let audioGraphError = '';
 let audioGraphActivatedAt = 0;
-const WAVE_BAR_COUNT = 124;
+const WAVE_BAR_COUNT = 72; // was 124 — main-thread heavy with full FFT path
 const WAVE_GAIN = 1.46;
 const WAVE_SOFT_LIMIT = 1.08;
-const WAVE_LEVEL_WINDOW = 180;
+const WAVE_LEVEL_WINDOW = 90;
 const WAVE_MIN_FREQ = 38;
-const WAVE_MAX_FREQ = 16500;
+const WAVE_MAX_FREQ = 14000;
+const WAVE_FFT_SIZE = 1024; // was 2048
+const PROGRESS_MS = 50; // dedicated lightweight progress clock (~20Hz)
+// (progress is NOT driven from the visualizer rAF — that was the lag source)
 const AUDIO_FILE_RE = /\.(mp3|m4a)$/i;
 const AUDIO_EXTENSION_RE = /\.(mp3|m4a)$/i;
 const PENTHOUSE_EFFECT_PROFILE = {
@@ -697,8 +706,13 @@ function switchView(view) {
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === `view-${view}`));
   if (view === 'playlists') renderPlaylists();
   if (view === 'now') {
-    resizeWaveform();
-    resizeFxCanvas();
+    resizeWaveform(true);
+    resizeFxCanvas(true);
+    spatialForcePaint = true;
+    syncSpatialLoop();
+    if (!audio.paused) startWaveform();
+  } else {
+    stopSpatialLoop();
   }
 }
 
@@ -710,7 +724,43 @@ function filteredLibraryEntries(filter = '') {
     .filter(({ song }) => !q || song.displayName.toLowerCase().includes(q));
 }
 
-async function fetchCollection(collection) {
+function isLocalHost() {
+  const h = location.hostname;
+  return h === 'localhost' || h === '127.0.0.1' || h === '0.0.0.0' || h === '[::1]' || h === '';
+}
+
+function mapCollectionItems(collection, items) {
+  return preferredAudioFiles(items).map(i => {
+    const path = `${collection.folder}/${i.name}`;
+    const p = prettyName(i.name);
+    return {
+      id: path,
+      name: i.name,
+      path,
+      url: `./${encodePath(path)}`,
+      collection: collection.id,
+      collectionLabel: collection.label,
+      displayName: p.display,
+      artist: p.artist,
+      title: p.title,
+      size: i.size
+    };
+  });
+}
+
+async function fetchCollectionLocal(collection) {
+  const url = `./${encodePath(collection.folder)}/manifest.json`;
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) {
+    const error = new Error(`local manifest HTTP ${res.status}`);
+    error.status = res.status;
+    throw error;
+  }
+  const items = await res.json();
+  return mapCollectionItems(collection, items);
+}
+
+async function fetchCollectionGitHub(collection) {
   const apiPath = encodePath(collection.folder);
   const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${apiPath}?ref=main`;
   const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
@@ -720,23 +770,17 @@ async function fetchCollection(collection) {
     throw error;
   }
   const items = await res.json();
-  return preferredAudioFiles(items)
-    .map(i => {
-      const path = `${collection.folder}/${i.name}`;
-      const p = prettyName(i.name);
-      return {
-        id: path,
-        name: i.name,
-        path,
-        url: `./${encodePath(path)}`,
-        collection: collection.id,
-        collectionLabel: collection.label,
-        displayName: p.display,
-        artist: p.artist,
-        title: p.title,
-        size: i.size
-      };
-    });
+  return mapCollectionItems(collection, items);
+}
+
+async function fetchCollection(collection) {
+  // Prefer local manifest (works on localhost + includes unpushed tracks).
+  try {
+    return await fetchCollectionLocal(collection);
+  } catch (localErr) {
+    if (isLocalHost()) throw localErr;
+    return fetchCollectionGitHub(collection);
+  }
 }
 
 async function loadLibrary() {
@@ -774,6 +818,8 @@ async function loadLibrary() {
   renderCollectionFilters();
   renderLibrary($('search').value);
   if ($('view-playlists')?.classList.contains('active')) renderPlaylists();
+  // Auto-focus new traveling mix when available on first load of this session
+  maybeHighlightTravelingSong();
 }
 
 function renderCollectionFilters() {
@@ -969,6 +1015,318 @@ function updateNowPlaying(song = currentSong()) {
   updateUpNext();
   updatePlaybackVisuals();
   updateFxState();
+  setSpatialSong(song);
+}
+
+/* ---------- Spatial guide (Traveling Voices) — low-cost ---------- */
+const SPATIAL_MAP_URL = './songs/spatial/doki-doki-forever-traveling-voices.json';
+const SPATIAL_MS = 125; // 8 Hz — enough for smooth labels, cheap
+let spatialMapCache = null;
+let spatialMapLoadPromise = null;
+let spatialActive = false;
+let spatialTimer = 0;
+let spatialForcePaint = false;
+let spatialRadarReady = false;
+let spatialLastUi = { f: '', m: '', sec: '', cue: '', next: '', az: 999, el: 999 };
+let spatialEls = null;
+let spatialCtx = null;
+
+function songLooksLikeTravelingVoices(song) {
+  if (!song) return false;
+  const name = song.name || '';
+  const title = song.title || '';
+  const path = song.path || '';
+  // cheap checks first (filename)
+  if (name.includes('Traveling Voices') || name.includes('Travelling Voices')) return true;
+  const hay = (title + path).toLowerCase();
+  return hay.includes('traveling voices') || hay.includes('travelling voices');
+}
+
+function maybeHighlightTravelingSong() {}
+
+function cacheSpatialEls() {
+  if (spatialEls) return spatialEls;
+  spatialEls = {
+    panel: $('spatial-guide'),
+    radar: $('spatial-radar'),
+    section: $('spatial-section'),
+    female: $('spatial-female-text'),
+    male: $('spatial-male-text'),
+    cue: $('spatial-cue'),
+    next: $('spatial-next'),
+  };
+  return spatialEls;
+}
+
+function loadSpatialMap() {
+  if (spatialMapCache) return Promise.resolve(spatialMapCache);
+  if (spatialMapLoadPromise) return spatialMapLoadPromise;
+  spatialMapLoadPromise = fetch(SPATIAL_MAP_URL)
+    .then(res => {
+      if (!res.ok) throw new Error(`spatial map HTTP ${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      // Precompute times array for binary search
+      data._times = (data.keyframes || []).map(k => k.t);
+      spatialMapCache = data;
+      return data;
+    })
+    .catch(err => {
+      console.warn('Spatial map load failed:', err);
+      spatialMapLoadPromise = null;
+      return null;
+    });
+  return spatialMapLoadPromise;
+}
+
+function resetSpatialUiCache() {
+  spatialLastUi = { f: '', m: '', sec: '', cue: '', next: '', az: 999, el: 999 };
+}
+
+function setSpatialSong(song = currentSong()) {
+  const want = songLooksLikeTravelingVoices(song);
+  if (!want) {
+    spatialActive = false;
+    stopSpatialLoop();
+    resetSpatialUiCache();
+    const els = cacheSpatialEls();
+    if (els.panel && !els.panel.classList.contains('hidden')) {
+      els.panel.classList.add('hidden');
+    }
+    return;
+  }
+  loadSpatialMap().then(map => {
+    if (!map || !songLooksLikeTravelingVoices(currentSong())) return;
+    spatialActive = true;
+    spatialForcePaint = true;
+    resetSpatialUiCache();
+    const els = cacheSpatialEls();
+    if (els.panel) els.panel.classList.remove('hidden');
+    ensureSpatialRadar();
+    syncSpatialLoop();
+  });
+}
+
+function isNowViewActive() {
+  return !!document.getElementById('view-now')?.classList.contains('active');
+}
+
+function syncSpatialLoop() {
+  if (spatialActive && isNowViewActive()) startSpatialLoop();
+  else stopSpatialLoop();
+}
+
+function startSpatialLoop() {
+  if (spatialTimer) return;
+  const run = () => {
+    if (!spatialActive || !isNowViewActive()) {
+      stopSpatialLoop();
+      return;
+    }
+    const force = spatialForcePaint;
+    spatialForcePaint = false;
+    paintSpatialGuide(currentCalibratedTime(), force);
+  };
+  run();
+  spatialTimer = setInterval(run, SPATIAL_MS);
+}
+
+function stopSpatialLoop() {
+  if (spatialTimer) {
+    clearInterval(spatialTimer);
+    spatialTimer = 0;
+  }
+}
+
+function wrapAzDelta(a, b) {
+  let d = (b - a + 180) % 360;
+  if (d < 0) d += 360;
+  return d - 180;
+}
+
+function normalizeAz(az) {
+  let a = (az + 180) % 360;
+  if (a < 0) a += 360;
+  return a - 180;
+}
+
+function smoothstep(u) {
+  const x = u < 0 ? 0 : u > 1 ? 1 : u;
+  return x * x * (3 - 2 * x);
+}
+
+function findKeyframeIndex(times, t) {
+  // largest i with times[i] <= t
+  let lo = 0;
+  let hi = times.length - 1;
+  if (t <= times[0]) return 0;
+  if (t >= times[hi]) return hi;
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (times[mid] <= t) lo = mid;
+    else hi = mid - 1;
+  }
+  return lo;
+}
+
+function interpolateSpatialPose(map, timeSec) {
+  const kfs = map.keyframes;
+  const times = map._times;
+  if (!kfs || !kfs.length) return null;
+  const t = timeSec > 0 ? timeSec : 0;
+  const transition = map.transitionSec || 3;
+  if (t <= times[0]) {
+    const k = kfs[0];
+    return { az: k.az, el: k.el, section: k.section, cue: k.cue, next: kfs[1] || null, progress: 1 };
+  }
+  const lastI = kfs.length - 1;
+  if (t >= times[lastI]) {
+    const k = kfs[lastI];
+    return { az: k.az, el: k.el, section: k.section, cue: k.cue, next: null, progress: 1 };
+  }
+  const i = Math.min(findKeyframeIndex(times, t), lastI - 1);
+  const a = kfs[i];
+  const b = kfs[i + 1];
+  const tStart = a.t > b.t - transition ? a.t : b.t - transition;
+  let u = 0;
+  if (t > tStart) u = smoothstep((t - tStart) / (b.t - tStart || 1e-6));
+  const az = normalizeAz(a.az + wrapAzDelta(a.az, b.az) * u);
+  const el = a.el + (b.el - a.el) * u;
+  const section = u < 0.5 ? a.section : b.section;
+  const cue = u < 0.15 ? a.cue : (u > 0.85 ? b.cue : `Moving → ${b.cue}`);
+  return { az, el, section, cue, next: b, progress: u };
+}
+
+function describeDirection(az, el) {
+  const rad = (az * Math.PI) / 180;
+  const rear = 0.5 * (1 - Math.cos(rad));
+  const pan = Math.sin(rad);
+  let horiz;
+  if (rear > 0.72 && pan * pan < 0.1225) horiz = 'directly behind';
+  else if (rear < 0.22 && pan * pan < 0.078) horiz = 'directly in front';
+  else if (pan < -0.72) horiz = rear > 0.45 ? 'back-left' : (rear < 0.25 ? 'front-left' : 'hard left');
+  else if (pan > 0.72) horiz = rear > 0.45 ? 'back-right' : (rear < 0.25 ? 'front-right' : 'hard right');
+  else if (pan < -0.25) horiz = rear > 0.5 ? 'rear-left' : 'front-left';
+  else if (pan > 0.25) horiz = rear > 0.5 ? 'rear-right' : 'front-right';
+  else horiz = rear > 0.5 ? 'behind' : 'in front';
+
+  let height = '';
+  if (el > 0.55) height = ' · high';
+  else if (el > 0.2) height = ' · slightly high';
+  else if (el < -0.55) height = ' · low';
+  else if (el < -0.2) height = ' · slightly low';
+  return horiz + height;
+}
+
+function ensureSpatialRadar() {
+  const els = cacheSpatialEls();
+  const canvas = els.radar;
+  if (!canvas) return null;
+  // Fixed 1x pixel canvas — transparent (no black plate)
+  if (canvas.width !== 120 || canvas.height !== 120) {
+    canvas.width = 120;
+    canvas.height = 120;
+  }
+  if (!spatialCtx) spatialCtx = canvas.getContext('2d', { alpha: true });
+  spatialRadarReady = true;
+  return spatialCtx;
+}
+
+function drawSpatialRadar(pose) {
+  const ctx = ensureSpatialRadar();
+  if (!ctx || !pose) return;
+  const size = 120;
+  const cx = size / 2;
+  const cy = size / 2;
+  const r = 42;
+
+  ctx.clearRect(0, 0, size, size);
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.14)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 0.45, 0, Math.PI * 2);
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(cx - r, cy);
+  ctx.lineTo(cx + r, cy);
+  ctx.moveTo(cx, cy - r);
+  ctx.lineTo(cx, cy + r);
+  ctx.stroke();
+
+  ctx.fillStyle = 'rgba(235,235,240,0.45)';
+  ctx.font = '10px system-ui,sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('F', cx, cy - r - 8);
+  ctx.fillText('B', cx, cy + r + 8);
+  ctx.fillText('L', cx - r - 8, cy);
+  ctx.fillText('R', cx + r + 8, cy);
+
+  ctx.fillStyle = 'rgba(235,235,240,0.9)';
+  ctx.beginPath();
+  ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+  ctx.fill();
+
+  function plot(az, el, color) {
+    const rad = (az * Math.PI) / 180;
+    const ring = r * (0.62 + Math.min(0.2, Math.abs(el) * 0.15));
+    const x = cx + Math.sin(rad) * ring;
+    const y = cy - Math.cos(rad) * ring;
+    const s = 5 + Math.max(0, el) * 2;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y, s, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  plot(pose.az, pose.el, '#ff7eb6');
+  plot(normalizeAz(pose.az + 180), -pose.el, '#5eead4');
+}
+
+function setTextIfChanged(el, value, key) {
+  if (!el) return;
+  if (spatialLastUi[key] === value) return;
+  spatialLastUi[key] = value;
+  el.textContent = value;
+}
+
+function paintSpatialGuide(timeSec, force = false) {
+  if (!spatialActive || !spatialMapCache) return;
+  const els = cacheSpatialEls();
+  if (!els.panel || els.panel.classList.contains('hidden')) return;
+
+  const pose = interpolateSpatialPose(spatialMapCache, timeSec);
+  if (!pose) return;
+
+  // Coarse snap for canvas: only redraw when ~4° or el moves meaningfully
+  const azQ = Math.round(pose.az / 4) * 4;
+  const elQ = Math.round(pose.el * 5) / 5;
+  if (force || spatialLastUi.az !== azQ || spatialLastUi.el !== elQ) {
+    spatialLastUi.az = azQ;
+    spatialLastUi.el = elQ;
+    drawSpatialRadar(pose);
+  }
+
+  const mAz = normalizeAz(pose.az + 180);
+  const mEl = -pose.el;
+  setTextIfChanged(els.section, pose.section, 'sec');
+  setTextIfChanged(els.female, describeDirection(pose.az, pose.el), 'f');
+  setTextIfChanged(els.male, describeDirection(mAz, mEl), 'm');
+  setTextIfChanged(els.cue, pose.cue || '', 'cue');
+
+  let nextText = '';
+  if (pose.next) {
+    const eta = pose.next.t - timeSec;
+    nextText = eta > 0.05
+      ? `Next in ${eta.toFixed(0)}s: ${pose.next.cue}`
+      : `Next: ${pose.next.cue}`;
+  } else {
+    nextText = 'End of spatial cues';
+  }
+  setTextIfChanged(els.next, nextText, 'next');
 }
 
 function updateUpNext() {
@@ -977,19 +1335,38 @@ function updateUpNext() {
   $('queue-next').textContent = next ? next.displayName : 'End of queue';
 }
 
+let lastUiTimeText = '';
+let lastUiTotalText = '';
+let lastUiSeekPct = -1;
+
 function updatePlaybackVisuals() {
+  // Uses native-backed calibrated time; kept off the visualizer rAF path
   const current = repairTimingState(currentCalibratedTime());
   const duration = effectiveDuration();
   const pct = duration ? clamp(0, 1, current / duration) : 0;
-  const deg = `${pct * 360}deg`;
+  const deg = `${(pct * 360).toFixed(2)}deg`;
   $('play').style.setProperty('--progress', deg);
   $('hero-play').style.setProperty('--progress', deg);
-  $('time-current').textContent = fmtTime(current);
-  $('time-total').textContent = fmtTime(duration);
-  $('seek').value = pct * 100;
-  $('hero-time-current').textContent = fmtTime(current);
-  $('hero-time-total').textContent = fmtTime(duration);
-  updateTimingDebug(current);
+
+  const curText = fmtTime(current);
+  const totText = fmtTime(duration);
+  if (curText !== lastUiTimeText) {
+    lastUiTimeText = curText;
+    $('time-current').textContent = curText;
+    $('hero-time-current').textContent = curText;
+  }
+  if (totText !== lastUiTotalText) {
+    lastUiTotalText = totText;
+    $('time-total').textContent = totText;
+    $('hero-time-total').textContent = totText;
+  }
+  // Avoid writing identical seek values (layout thrash)
+  const seekPct = Math.round(pct * 1000) / 10;
+  if (seekPct !== lastUiSeekPct) {
+    lastUiSeekPct = seekPct;
+    $('seek').value = seekPct;
+  }
+  if (timingDebugEnabled) updateTimingDebug(current);
 }
 
 function updateMediaSession(song) {
@@ -1158,10 +1535,10 @@ function connectAudioGraph() {
   try {
     audioSource = ctx.createMediaElementSource(audio);
     analyser = ctx.createAnalyser();
-    analyser.fftSize = 2048;
+    analyser.fftSize = WAVE_FFT_SIZE;
     analyser.minDecibels = -92;
     analyser.maxDecibels = -18;
-    analyser.smoothingTimeConstant = 0.24;
+    analyser.smoothingTimeConstant = 0.35;
     outputGain = ctx.createGain();
     outputGain.gain.value = playerVolume;
     waveData = new Float32Array(analyser.frequencyBinCount);
@@ -1209,28 +1586,36 @@ function ensureAudioGraph() {
   });
 }
 
-function resizeWaveform() {
+function resizeWaveform(force = false) {
   const canvas = $('waveform');
   if (!canvas) return;
-  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  // Cap DPR at 1.5 — full 2x/3x retina on a wide waveform is very expensive
+  const dpr = Math.min(1.5, Math.max(1, window.devicePixelRatio || 1));
   const rect = canvas.getBoundingClientRect();
   const w = Math.max(320, Math.floor(rect.width * dpr));
   const h = Math.max(120, Math.floor(rect.height * dpr));
+  const key = `${w}x${h}`;
+  if (!force && key === waveSizeKey) return;
+  waveSizeKey = key;
   if (canvas.width !== w || canvas.height !== h) {
     canvas.width = w;
     canvas.height = h;
   }
 }
 
-function resizeFxCanvas() {
+function resizeFxCanvas(force = false) {
   const canvas = $('teto-fx');
   const view = $('view-now');
   if (!canvas || !view) return;
-  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  // FX is full-view; keep DPR low so particle/beam frames stay on budget
+  const dpr = Math.min(1.25, Math.max(1, window.devicePixelRatio || 1));
   const rect = view.getBoundingClientRect();
   if (rect.width <= 0 || rect.height <= 0) return;
   const w = Math.max(320, Math.floor(rect.width * dpr));
   const h = Math.max(320, Math.floor(rect.height * dpr));
+  const key = `${w}x${h}`;
+  if (!force && key === fxSizeKey) return;
+  fxSizeKey = key;
   if (canvas.width !== w || canvas.height !== h) {
     canvas.width = w;
     canvas.height = h;
@@ -1241,9 +1626,42 @@ function startWaveform() {
   if (waveRaf) return;
   const draw = () => {
     waveRaf = requestAnimationFrame(draw);
-    drawWaveform();
+    // Visualizer only needs to run on Now Playing. Progress clock handles timing elsewhere.
+    if (!isNowViewActive()) return;
+    if (audio.paused) {
+      // Idle settle frame occasionally, not 60fps
+      if (waveFrame % 30 === 0) drawWaveform(true);
+      waveFrame++;
+      return;
+    }
+    drawWaveform(false);
   };
-  draw();
+  waveRaf = requestAnimationFrame(draw);
+}
+
+function stopWaveformLoop() {
+  if (waveRaf) {
+    cancelAnimationFrame(waveRaf);
+    waveRaf = 0;
+  }
+}
+
+function startProgressClock() {
+  if (progressTimer) return;
+  const tick = () => {
+    // Lightweight: only progress ring / seek / times — never full visualizer
+    if (!audio.src) return;
+    updatePlaybackVisuals();
+  };
+  tick();
+  progressTimer = setInterval(tick, PROGRESS_MS);
+}
+
+function stopProgressClock() {
+  if (progressTimer) {
+    clearInterval(progressTimer);
+    progressTimer = 0;
+  }
 }
 
 function clamp(min, max, value) {
@@ -1275,16 +1693,14 @@ function percentile(sortedValues, percent) {
 }
 
 function normalizedWaveLevel(rms, peak) {
+  // EMA floor/peak — O(1). Old path sorted a 180-sample window every frame.
   const blendedEnergy = Math.max(0.00002, rms * 0.72 + peak * 0.28);
   const db = 20 * Math.log10(blendedEnergy);
-  waveLevelWindow.push(db);
-  if (waveLevelWindow.length > WAVE_LEVEL_WINDOW) waveLevelWindow.shift();
-
-  const sorted = [...waveLevelWindow].sort((a, b) => a - b);
-  const floorDb = percentile(sorted, 0.18);
-  const peakDb = percentile(sorted, 0.92);
-  const dynamicSpan = Math.max(2.8, peakDb - floorDb);
-  const relativeLevel = clamp(0, 1, (db - floorDb) / dynamicSpan);
+  waveFloorDb = waveFloorDb * 0.995 + db * 0.005;
+  if (db > wavePeakDb) wavePeakDb = wavePeakDb * 0.85 + db * 0.15;
+  else wavePeakDb = wavePeakDb * 0.997 + db * 0.003;
+  const dynamicSpan = Math.max(2.8, wavePeakDb - waveFloorDb);
+  const relativeLevel = clamp(0, 1, (db - waveFloorDb) / dynamicSpan);
   const absoluteLevel = smoothStep(-44, -14, db);
   const gatedRelative = smoothStep(0.12, 0.92, relativeLevel);
   return clamp(0, 1, Math.max(gatedRelative, absoluteLevel * 0.18));
@@ -1356,6 +1772,8 @@ function resetWaveEnvelope() {
   tetoRiseEnergy = 0;
   lastTetoAmplitude = 0;
   waveLevelWindow = [];
+  waveFloorDb = -48;
+  wavePeakDb = -18;
   waveBars = waveBars.map((_, i) => waveBaseShape(i, waveBars.length) * 0.01);
   updateFxState();
 }
@@ -1486,99 +1904,14 @@ function drawRobotHeartGlyph(ctx, x, y, size, alpha, color, pulse) {
   ctx.restore();
 }
 
-function emitOutboundRingPulse(theme, now, cx, cy, baseRadius, travelRadius, palette, power, lineWidth, life) {
-  const color = palette[Math.floor(seededUnit(now * 1000 + theme.length * 17) * palette.length)] || palette[0];
-  fxRingPulses.push({
-    theme,
-    born: now,
-    cx,
-    cy,
-    baseRadius,
-    travelRadius,
-    color,
-    power,
-    lineWidth,
-    life,
-  });
-  if (fxRingPulses.length > 18) fxRingPulses.splice(0, fxRingPulses.length - 18);
+// Outbound rings from the hero play button were a major lag source (spawn + stroke every beat).
+// Disabled permanently — keep stubs so theme drawers can still call them safely.
+function emitOutboundRingPulse() {
+  /* no-op */
 }
 
-function drawOutboundPulseRings(ctx, options) {
-  const {
-    theme,
-    w,
-    h,
-    cx,
-    cy,
-    levels,
-    profile,
-    fxTime,
-    sectionPower,
-    chorusPower,
-    beatPulse,
-    palette,
-    baseRadius,
-    travelRadius,
-    alphaBase,
-    lineWidth,
-    life = 0.76,
-  } = options;
-  const now = performance.now() / 1000;
-  const audible = !!(audio.src && !audio.paused);
-  const eventPower = clamp(0, 1, levels.glow * 0.44 + levels.motion * 0.26 + beatPulse * (0.38 + chorusPower * 0.36) + chorusPower * 0.18);
-
-  if (audible) {
-    let shouldEmit = false;
-    let ringPower = eventPower;
-    if (profile?.bpm && Number.isFinite(fxTime)) {
-      const beats = Math.max(0, (fxTime - (profile.beatOffset || 0)) * profile.bpm / 60);
-      const beatIndex = Math.floor(beats);
-      const song = currentSong();
-      const beatKey = `${song?.path || song?.name || 'song'}:${theme}:${beatIndex}`;
-      if (beatKey !== lastFxRingBeatKey) {
-        lastFxRingBeatKey = beatKey;
-        shouldEmit = true;
-        const audioEnergy = clamp(0, 1, levels.glow * 0.72 + levels.motion * 0.42);
-        const floor = profile.constantRings ? 0.1 : 0;
-        ringPower = clamp(floor, 1, audioEnergy * 0.86 + chorusPower * 0.16 + beatPulse * 0.08);
-      }
-    } else if (eventPower > 0.12 && tetoRiseEnergy > 0.42 && now - lastFxRingFallbackAt > 0.34) {
-      lastFxRingFallbackAt = now;
-      shouldEmit = true;
-    }
-    if (shouldEmit) {
-      emitOutboundRingPulse(
-        theme,
-        now,
-        cx,
-        cy,
-        baseRadius,
-        travelRadius * (0.82 + sectionPower * 0.18),
-        palette,
-        ringPower,
-        lineWidth,
-        life
-      );
-    }
-  }
-
-  fxRingPulses = fxRingPulses.filter(pulse => now - pulse.born <= pulse.life + 0.05);
-  fxRingPulses.forEach(pulse => {
-    if (pulse.theme !== theme) return;
-    const age = (now - pulse.born) / pulse.life;
-    if (age < 0 || age > 1) return;
-    const progress = easeOutCubic(age);
-    const radius = pulse.baseRadius + pulse.travelRadius * progress;
-    const fade = Math.pow(1 - age, 1.72);
-    const alpha = fade * pulse.power * alphaBase;
-    if (alpha <= 0.003) return;
-    const color = pulse.color;
-    ctx.beginPath();
-    ctx.arc(pulse.cx, pulse.cy, radius, 0, Math.PI * 2);
-    ctx.strokeStyle = rgbaColor(color, alpha);
-    ctx.lineWidth = Math.max(1, pulse.lineWidth * (0.88 + fade * 0.22));
-    ctx.stroke();
-  });
+function drawOutboundPulseRings() {
+  if (fxRingPulses.length) fxRingPulses.length = 0;
 }
 
 function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse) {
@@ -1920,8 +2253,8 @@ function drawTetoFx(level) {
   const canvas = $('teto-fx');
   const view = $('view-now');
   if (!canvas || !view) return;
-  resizeFxCanvas();
-  const ctx = canvas.getContext('2d');
+  if (!fxSizeKey) resizeFxCanvas(true);
+  const ctx = canvas.getContext('2d', { alpha: true });
   const w = canvas.width;
   const h = canvas.height;
   ctx.clearRect(0, 0, w, h);
@@ -2103,44 +2436,43 @@ function drawTetoFx(level) {
   ctx.restore();
 }
 
-function drawWaveform() {
+function drawWaveform(idle = false) {
   const canvas = $('waveform');
   if (!canvas) return;
-  resizeWaveform();
-  const ctx = canvas.getContext('2d');
+  // Never resize every frame — layout thrash was a major lag source
+  if (!waveSizeKey) resizeWaveform(true);
+  const ctx = canvas.getContext('2d', { alpha: true });
   const w = canvas.width;
   const h = canvas.height;
+  if (!w || !h) return;
   ctx.clearRect(0, 0, w, h);
+
+  waveFrame++;
+  // Skip alternate analysis frames when playing to keep UI clock smooth
+  const analyseThisFrame = !idle && !audio.paused && (waveFrame % 2 === 0);
 
   const gradient = ctx.createLinearGradient(0, 0, w, 0);
   if (isDiscoFxActive()) {
     gradient.addColorStop(0, 'rgba(255, 55, 155, 0.42)');
-    gradient.addColorStop(0.2, 'rgba(70, 218, 255, 0.92)');
-    gradient.addColorStop(0.4, 'rgba(255, 232, 91, 0.98)');
-    gradient.addColorStop(0.62, 'rgba(129, 92, 255, 0.94)');
-    gradient.addColorStop(0.82, 'rgba(78, 255, 167, 0.88)');
+    gradient.addColorStop(0.5, 'rgba(70, 218, 255, 0.95)');
     gradient.addColorStop(1, 'rgba(246, 78, 255, 0.58)');
   } else if (isTeto11FxActive()) {
     gradient.addColorStop(0, 'rgba(255, 91, 54, 0.44)');
-    gradient.addColorStop(0.22, 'rgba(255, 58, 171, 0.9)');
-    gradient.addColorStop(0.45, 'rgba(70, 218, 255, 0.98)');
-    gradient.addColorStop(0.68, 'rgba(255, 232, 91, 0.88)');
-    gradient.addColorStop(0.86, 'rgba(132, 102, 255, 0.82)');
+    gradient.addColorStop(0.5, 'rgba(70, 218, 255, 0.98)');
     gradient.addColorStop(1, 'rgba(236, 242, 255, 0.58)');
   } else if (isTetoFxActive()) {
     gradient.addColorStop(0, 'rgba(132, 42, 28, 0.32)');
-    gradient.addColorStop(0.32, 'rgba(255, 93, 55, 0.88)');
-    gradient.addColorStop(0.58, 'rgba(255, 150, 45, 0.98)');
+    gradient.addColorStop(0.55, 'rgba(255, 150, 45, 0.98)');
     gradient.addColorStop(1, 'rgba(172, 111, 48, 0.72)');
   } else {
     gradient.addColorStop(0, 'rgba(94, 234, 212, 0.25)');
-    gradient.addColorStop(0.48, 'rgba(94, 234, 212, 0.95)');
+    gradient.addColorStop(0.5, 'rgba(94, 234, 212, 0.95)');
     gradient.addColorStop(1, 'rgba(253, 230, 138, 0.62)');
   }
 
-  const bins = Math.min(WAVE_BAR_COUNT, Math.max(64, Math.floor(w / 7)));
+  const bins = Math.min(WAVE_BAR_COUNT, Math.max(48, Math.floor(w / 10)));
   ensureWaveBars(bins);
-  const isAudible = !!(analyser && waveData && waveTimeData && !audio.paused);
+  const isAudible = !!(analyser && waveData && waveTimeData && !audio.paused && analyseThisFrame);
   if (isAudible) {
     analyser.getFloatFrequencyData(waveData);
     analyser.getByteTimeDomainData(waveTimeData);
@@ -2153,26 +2485,27 @@ function drawWaveform() {
   let peakEnergy = 0;
   const bandTargets = new Array(bins).fill(0);
   if (isAudible) {
-    for (let i = 0; i < waveTimeData.length; i++) {
+    // Subsample time-domain for RMS (every 4th sample)
+    const step = 4;
+    let n = 0;
+    for (let i = 0; i < waveTimeData.length; i += step) {
       const centered = (waveTimeData[i] - 128) / 128;
       peakEnergy = Math.max(peakEnergy, Math.abs(centered));
       rmsEnergy += centered * centered;
+      n++;
     }
-    rmsEnergy = Math.sqrt(rmsEnergy / Math.max(1, waveTimeData.length));
-    for (let i = 0; i < bins; i++) {
-      bandTargets[i] = waveBandEnergy(i, bins);
-    }
+    rmsEnergy = Math.sqrt(rmsEnergy / Math.max(1, n));
     let spectralWeight = 0;
     let spectralSum = 0;
     for (let i = 0; i < bins; i++) {
-      const {centerRatio} = waveBandRange(i, bins);
-      const energy = Math.pow(bandTargets[i], 1.22);
+      const range = waveBandRange(i, bins);
+      bandTargets[i] = waveBandEnergyFromRange(range);
+      const energy = bandTargets[i] * bandTargets[i];
       spectralWeight += energy;
-      spectralSum += centerRatio * energy;
+      spectralSum += range.centerRatio * energy;
     }
     if (spectralWeight > 0.0001) {
-      const pitchFocus = spectralSum / spectralWeight;
-      wavePitchFocus = wavePitchFocus * 0.84 + pitchFocus * 0.16;
+      wavePitchFocus = wavePitchFocus * 0.84 + (spectralSum / spectralWeight) * 0.16;
     }
     const targetLevel = normalizedWaveLevel(rmsEnergy, peakEnergy);
     const upwardChange = Math.max(0, targetLevel - lastTetoAmplitude);
@@ -2185,49 +2518,39 @@ function drawWaveform() {
     smoothedLevel = smoothedLevel * 0.98 + 0.08 * 0.02;
     tetoRiseEnergy *= 0.86;
     lastTetoAmplitude = 0;
-    waveLevelWindow = [];
-  } else {
+  } else if (audio.paused) {
     tetoRiseEnergy *= 0.86;
-    lastTetoAmplitude = 0;
   }
 
   ctx.save();
-  ctx.globalAlpha = isAudible ? 0.34 + smoothedLevel * 0.22 : 0.18;
-  ctx.fillStyle = isDiscoFxActive()
-    ? 'rgba(255, 255, 255, 0.46)'
-    : isTeto11FxActive()
-      ? 'rgba(236, 242, 255, 0.42)'
-      : isTetoFxActive()
-        ? 'rgba(255, 204, 168, 0.36)'
-        : 'rgba(235, 235, 240, 0.24)';
+  ctx.globalAlpha = (!audio.paused && analyser) ? 0.34 + smoothedLevel * 0.22 : 0.18;
+  ctx.fillStyle = isTeto11FxActive()
+    ? 'rgba(236, 242, 255, 0.42)'
+    : isTetoFxActive()
+      ? 'rgba(255, 204, 168, 0.36)'
+      : 'rgba(235, 235, 240, 0.24)';
   ctx.fillRect(Math.round(w * 0.015), baseline, Math.round(w * 0.97), Math.max(1, Math.round(h * 0.008)));
   ctx.restore();
 
+  const drawAnalysis = isAudible;
   for (let i = 0; i < bins; i++) {
-    if (isAudible) {
+    if (drawAnalysis) {
       const shape = waveBaseShape(i, bins);
       const center = bandTargets[i];
-      const left2 = bandTargets[Math.max(0, i - 2)];
       const left = bandTargets[Math.max(0, i - 1)];
       const right = bandTargets[Math.min(bins - 1, i + 1)];
-      const right2 = bandTargets[Math.min(bins - 1, i + 2)];
-      const localAverage = (left2 * 0.09 + left * 0.2 + center * 0.42 + right * 0.2 + right2 * 0.09);
+      const localAverage = left * 0.25 + center * 0.5 + right * 0.25;
       const localPeak = Math.max(0, center - (left + right) * 0.38);
       const xRatio = bins <= 1 ? 0.5 : i / (bins - 1);
       const pitchProximity = 1 - clamp(0, 1, Math.abs(xRatio - wavePitchFocus) / 0.34);
       const globalGate = smoothStep(0.025, 0.22, smoothedLevel);
       const breathing = Math.pow(smoothedLevel, 0.9);
-      const spectrumHeight = Math.pow(center, 1.08) * 0.64
-        + Math.pow(localAverage, 1.18) * 0.34
-        + Math.pow(localPeak, 0.9) * 0.74;
-      const pitchLift = 1 + pitchProximity * 0.18;
-      const target = 0.006
-        + breathing * 0.018
-        + globalGate * spectrumHeight * shape * pitchLift;
+      const spectrumHeight = center * 0.7 + localAverage * 0.3 + localPeak * 0.5;
+      const target = 0.006 + breathing * 0.018 + globalGate * spectrumHeight * shape * (1 + pitchProximity * 0.18);
       const rate = target > waveBars[i] ? 0.82 : 0.32;
       waveBars[i] = waveBars[i] * (1 - rate) + target * rate;
     } else if (!audio.src) {
-      waveBars[i] = waveBars[i] * 0.99 + waveBaseShape(i, bins) * 0.08 * 0.01;
+      waveBars[i] = waveBars[i] * 0.99 + waveBaseShape(i, bins) * 0.0008;
     }
     const amp = Math.max(0.004, softLimit(Math.max(0, waveBars[i] * WAVE_GAIN), WAVE_SOFT_LIMIT));
     const x = i * (w / bins);
@@ -2235,25 +2558,38 @@ function drawWaveform() {
     const radius = Math.min(7, barW / 2);
     ctx.fillStyle = gradient;
     roundedBar(ctx, x, baseline - barH, barW, barH, radius);
-    if (barH > h * 0.08) {
-      ctx.save();
-      ctx.globalAlpha = clamp(0.08, 0.34, amp * 0.42);
-      roundedBar(ctx, x, baseline + Math.max(3, h * 0.016), barW, Math.min(h * 0.18, barH * 0.18), radius);
-      ctx.restore();
-    }
-    if (barH > h * 0.2) {
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      ctx.globalAlpha = clamp(0.08, 0.32, amp * 0.28);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-      roundedBar(ctx, x, baseline - barH - Math.max(1, h * 0.01), barW, Math.max(2, h * 0.018), radius);
-      ctx.restore();
-    }
   }
 
-  $('hero-play').style.setProperty('--level', smoothedLevel.toFixed(3));
-  if (audio.src) updatePlaybackVisuals();
-  drawTetoFx(smoothedLevel);
+  // Hero level only — do NOT call updatePlaybackVisuals here (was starving the clock)
+  const hero = $('hero-play');
+  if (hero) hero.style.setProperty('--level', smoothedLevel.toFixed(3));
+
+  // FX every other frame, and only on Now view
+  if (isNowViewActive() && isAnyFxActive() && waveFrame % 2 === 0) {
+    drawTetoFx(smoothedLevel);
+  }
+}
+
+function waveBandEnergyFromRange(range) {
+  if (!analyser || !waveData || !range) return 0;
+  const {bin0, bin1, centerFreq} = range;
+  let sum = 0;
+  let peak = 0;
+  let count = 0;
+  for (let b = bin0; b < bin1; b++) {
+    const energy = dbToWaveEnergy(waveData[b]);
+    sum += energy;
+    peak = Math.max(peak, energy);
+    count++;
+  }
+  const avg = count ? sum / count : 0;
+  const peakLift = Math.max(0, peak - avg);
+  const presenceBias = centerFreq < 90 ? 0.82
+    : centerFreq < 230 ? 1.12
+    : centerFreq < 1800 ? 1.02
+    : centerFreq < 7200 ? 1.18
+    : 0.94;
+  return clamp(0, 1, (avg * 0.46 + peak * 0.62 + peakLift * 0.58) * presenceBias);
 }
 
 function roundedBar(ctx, x, y, w, h, r) {
@@ -2270,8 +2606,11 @@ function roundedBar(ctx, x, y, w, h, r) {
   audio.addEventListener(eventName, () => noteMediaEvent(eventName), {capture: true});
 });
 
+// Progress is driven by startProgressClock() while playing — not by visualizer rAF
+// and not only by sparse timeupdate (which feels late under load).
 audio.addEventListener('timeupdate', () => {
-  updatePlaybackVisuals();
+  // Lightweight fallback if progress clock isn't running
+  if (!progressTimer) updatePlaybackVisuals();
 });
 audio.addEventListener('loadedmetadata', () => {
   syncCalibratedClockToNative();
@@ -2284,6 +2623,8 @@ audio.addEventListener('seeking', () => {
 audio.addEventListener('seeked', () => {
   syncCalibratedClockToNative(currentSong(), {allowBackward: !!seekTransaction, consumePending: true, keepRunning: false});
   updatePlaybackVisuals();
+  spatialForcePaint = true;
+  if (spatialActive) paintSpatialGuide(currentCalibratedTime(), true);
   if (seekTransaction?.finishOnSeeked) finishSeekTransaction();
 });
 audio.addEventListener('ratechange', () => {
@@ -2301,9 +2642,11 @@ audio.addEventListener('play', () => {
   $('hero-play').classList.add('playing');
   $('hero-play').querySelector('.hero-icon').textContent = '⏸';
   document.body.classList.add('is-playing');
+  startProgressClock();
   startWaveform();
   updatePlaybackVisuals();
   updateFxState();
+  syncSpatialLoop();
 });
 audio.addEventListener('pause', () => {
   pauseCalibratedClock();
@@ -2311,8 +2654,12 @@ audio.addEventListener('pause', () => {
   $('hero-play').classList.remove('playing');
   $('hero-play').querySelector('.hero-icon').textContent = '▶';
   document.body.classList.remove('is-playing');
+  stopProgressClock();
   updatePlaybackVisuals();
   updateFxState();
+  // One idle frame so bars settle; no continuous 60fps when paused
+  drawWaveform(true);
+  syncSpatialLoop();
 });
 audio.addEventListener('error', () => {
   console.warn('Audio error for', audio.src);
@@ -2853,11 +3200,12 @@ document.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('resize', () => {
-  resizeWaveform();
-  resizeFxCanvas();
+  resizeWaveform(true);
+  resizeFxCanvas(true);
 });
-resizeWaveform();
-resizeFxCanvas();
+resizeWaveform(true);
+resizeFxCanvas(true);
 updateFxState();
-drawWaveform();
+drawWaveform(true);
+loadSpatialMap();
 loadLibrary();

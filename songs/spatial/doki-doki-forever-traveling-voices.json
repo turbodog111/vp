@@ -1,0 +1,33 @@
+{
+  "id": "doki-doki-forever-traveling-voices",
+  "match": [
+    "Traveling Voices",
+    "Doki Doki Forever (Traveling Voices)"
+  ],
+  "transitionSec": 3.0,
+  "description": "Female + male always opposite on a sphere; pose drifts over ~3s into each cue.",
+  "voices": {
+    "female": { "label": "Female", "color": "#ff7eb6" },
+    "male": { "label": "Male", "color": "#5eead4" }
+  },
+  "keyframes": [
+    { "t": 0.0, "az": -90.0, "el": 0.0, "section": "intro", "cue": "Classic hard L/R" },
+    { "t": 17.7, "az": -50.0, "el": 0.25, "section": "verse1 open", "cue": "First lyric — FL vs BR" },
+    { "t": 24.4, "az": 90.0, "el": 0.0, "section": "verse1", "cue": "Flip F right / M left" },
+    { "t": 30.3, "az": 0.0, "el": 0.35, "section": "verse1", "cue": "F front-high / M back-low" },
+    { "t": 41.2, "az": -75.0, "el": 0.85, "section": "verse1 late", "cue": "Top-left vs bottom-right" },
+    { "t": 48.6, "az": -140.0, "el": 0.1, "section": "pre-chorus", "cue": "F back-left / M front-right" },
+    { "t": 51.3, "az": 45.0, "el": 0.45, "section": "chorus1", "cue": "Chorus — FR-high / BL-low" },
+    { "t": 61.0, "az": -15.0, "el": -0.85, "section": "post-chorus", "cue": "F front-bottom / M back-top" },
+    { "t": 67.5, "az": -90.0, "el": 0.3, "section": "verse2 entry", "cue": "Hard L/R with height" },
+    { "t": 76.0, "az": 180.0, "el": 0.2, "section": "verse2", "cue": "F behind / M front" },
+    { "t": 89.0, "az": 70.0, "el": 0.9, "section": "verse2 / lift", "cue": "Top-right vs bottom-left" },
+    { "t": 100.0, "az": -55.0, "el": 0.0, "section": "mid", "cue": "Front-left vs back-right" },
+    { "t": 112.0, "az": 100.0, "el": 0.55, "section": "call-response", "cue": "F right-high / M left-low" },
+    { "t": 121.0, "az": 0.0, "el": 1.0, "section": "bridge / build", "cue": "F front TOP / M back BOTTOM" },
+    { "t": 132.5, "az": -125.0, "el": 0.35, "section": "bridge", "cue": "F rear-left / M front-right" },
+    { "t": 146.5, "az": 85.0, "el": 0.15, "section": "final chorus", "cue": "F right / M left" },
+    { "t": 163.0, "az": 20.0, "el": 0.5, "section": "outro", "cue": "Soft front-right-high settle" },
+    { "t": 175.0, "az": -40.0, "el": 0.0, "section": "end", "cue": "Soft FL / BR close" }
+  ]
+}
