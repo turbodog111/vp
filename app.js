@@ -1268,6 +1268,7 @@ function updateDdlcCastTheme(timeSec = currentCalibratedTime()) {
     girls.forEach(c => document.body.classList.remove(c));
     document.body.classList.add(next);
   }
+  refreshNowKickerThemeHint(currentSong());
 }
 
 function clearDdlcThemes() {
@@ -1350,17 +1351,55 @@ function updateDdfSingerTheme(timeSec = currentCalibratedTime()) {
   }
   document.body.style.setProperty('--ddf-female-lead', f && !m ? '1' : (f && m ? '0.55' : '0.28'));
   document.body.style.setProperty('--ddf-male-lead', m && !f ? '1' : (f && m ? '0.55' : '0.28'));
+  refreshNowKickerThemeHint(song);
 }
 
-function spatialPathLabel(song = currentSong()) {
+function spatialPathLabel(song = currentSong(), { compact = true } = {}) {
   const slug = spatialSlugForSong(song);
-  if (!slug) return 'Traveling opposite leads';
+  if (!slug) return 'Opposite leads';
   const pretty = slug
     .replace(/^\d+_/, '')
     .replace(/_/g, ' ')
     .replace(/\b\w/g, c => c.toUpperCase());
   const num = slug.match(/^(\d+)/)?.[1];
-  return num ? `Path ${num} · ${pretty}` : pretty;
+  if (!num) return pretty;
+  // Compact for dock max-height / ellipsis (e.g. "04 · Clockwise Ring")
+  if (compact) {
+    const short = pretty.length > 18 ? `${pretty.slice(0, 16)}…` : pretty;
+    return `${num} · ${short}`;
+  }
+  return `Path ${num} · ${pretty}`;
+}
+
+function ddfLeadStatusLabel(timeSec = currentCalibratedTime()) {
+  if (document.body.classList.contains('theme-ddf-female')) return 'Female lead';
+  if (document.body.classList.contains('theme-ddf-male')) return 'Male lead';
+  if (document.body.classList.contains('theme-ddf-duet')) return 'Duet';
+  if (document.body.classList.contains('theme-sayori')) return 'Sayori';
+  if (document.body.classList.contains('theme-natsuki')) return 'Natsuki';
+  if (document.body.classList.contains('theme-yuri')) return 'Yuri';
+  if (document.body.classList.contains('theme-monika')) return 'Monika';
+  return '';
+}
+
+function refreshNowKickerThemeHint(song = currentSong()) {
+  const kicker = $('now-kicker');
+  if (!kicker) return;
+  const base = currentPlaylist || song?.collectionLabel || 'vp';
+  const lead = ddfLeadStatusLabel();
+  if (songLooksLikeTravelingVoices(song)) {
+    kicker.textContent = lead
+      ? `Spatial HQ · ${lead}`
+      : `Spatial HQ · ${spatialPathLabel(song)}`;
+    return;
+  }
+  const th = detectDdlcGirlTheme(song);
+  if (th === 'theme-ddf' || th === 'theme-ddl-cast') {
+    kicker.textContent = lead ? `${base} · ${lead}` : base;
+    return;
+  }
+  if (lead) kicker.textContent = `${base} · ${lead}`;
+  else kicker.textContent = base;
 }
 
 function setSpatialSong(song = currentSong()) {
@@ -1386,10 +1425,13 @@ function setSpatialSong(song = currentSong()) {
     els.panel.classList.remove('hidden');
     els.panel.style.display = '';
     const kicker = els.panel.querySelector('.spatial-kicker');
-    if (kicker) kicker.textContent = 'Where the audio is';
+    if (kicker) {
+      kicker.innerHTML = 'Where the audio is <span class="spatial-hq-chip" title="Native HTMLAudio · AAC stereo, no Web Audio coloring">HQ</span>';
+    }
     // Show active path name in section until first cue paints
     if (els.section) els.section.textContent = spatialPathLabel(song);
   }
+  refreshNowKickerThemeHint(song);
   ensureSpatialRadar();
   paintSpatialGuide(currentCalibratedTime(), true);
   syncSpatialLoop();
@@ -1618,8 +1660,8 @@ function paintSpatialGuide(timeSec, force = false) {
 
   const mAz = normalizeAz(pose.az + 180);
   const mEl = -pose.el;
-  // Section line: path name + phrase key so dock stays informative without growing
-  const pathBit = spatialPathLabel(currentSong());
+  // Compact path + phrase (dock is height-capped)
+  const pathBit = spatialPathLabel(currentSong(), { compact: true });
   const secLabel = pose.section ? `${pathBit} · ${pose.section}` : pathBit;
   setTextIfChanged(els.section, secLabel, 'sec');
   setTextIfChanged(els.female, describeDirection(pose.az, pose.el), 'f');
@@ -2835,6 +2877,8 @@ function drawWaveform(idle = false) {
   const bins = Math.min(WAVE_BAR_COUNT, Math.max(48, Math.floor(w / 10)));
   ensureWaveBars(bins);
   const isAudible = !!(analyser && waveData && waveTimeData && !audio.paused && analyseThisFrame);
+  // Spatial tracks stay on native <audio> (no analyser) — still animate a soft dual-lead viz
+  const nativeSpatialViz = !!(spatialActive && prefersNativeAudio() && !analyser && !audio.paused && audio.src);
   if (isAudible) {
     analyser.getFloatFrequencyData(waveData);
     analyser.getByteTimeDomainData(waveTimeData);
@@ -2876,6 +2920,24 @@ function drawWaveform(idle = false) {
     lastTetoAmplitude = targetLevel;
     const attack = targetLevel > smoothedLevel ? 0.7 : 0.34;
     smoothedLevel = smoothedLevel * (1 - attack) + targetLevel * attack;
+  } else if (nativeSpatialViz) {
+    // Decorative motion keyed to pose + time — does not touch the audio graph
+    const t = currentCalibratedTime();
+    const pose = spatialMapCache ? interpolateSpatialPose(spatialMapCache, t) : null;
+    const pan = pose ? Math.sin((pose.az * Math.PI) / 180) : 0;
+    const elev = pose ? pose.el : 0;
+    const pulse = 0.32 + 0.22 * (0.5 + 0.5 * Math.sin(t * 2.4)) + 0.12 * Math.abs(pan) + 0.08 * Math.abs(elev);
+    smoothedLevel = smoothedLevel * 0.82 + pulse * 0.18;
+    lastTetoAmplitude = pulse;
+    tetoRiseEnergy = Math.max(tetoRiseEnergy * 0.88, pulse * 0.35);
+    for (let i = 0; i < bins; i++) {
+      const x = bins <= 1 ? 0.5 : i / (bins - 1);
+      // L-biased female energy + R-biased male shimmer (opposite leads)
+      const fWave = 0.55 + 0.45 * Math.sin(t * 3.1 + x * 7 - pan * 1.2);
+      const mWave = 0.55 + 0.45 * Math.sin(t * 2.7 + x * 9 + pan * 1.2 + 1.3);
+      const side = x < 0.5 ? fWave : mWave;
+      bandTargets[i] = clamp(0, 1, (0.22 + 0.55 * Math.abs(side) * pulse) * (0.75 + 0.25 * Math.abs(Math.sin(t + x * 5))));
+    }
   } else if (!audio.src) {
     smoothedLevel = smoothedLevel * 0.98 + 0.08 * 0.02;
     tetoRiseEnergy *= 0.86;
@@ -2885,7 +2947,7 @@ function drawWaveform(idle = false) {
   }
 
   ctx.save();
-  ctx.globalAlpha = (!audio.paused && analyser) ? 0.34 + smoothedLevel * 0.22 : 0.18;
+  ctx.globalAlpha = (!audio.paused && (analyser || nativeSpatialViz)) ? 0.34 + smoothedLevel * 0.22 : 0.18;
   ctx.fillStyle = isTeto11FxActive()
     ? 'rgba(236, 242, 255, 0.42)'
     : isTetoFxActive()
@@ -2894,7 +2956,7 @@ function drawWaveform(idle = false) {
   ctx.fillRect(Math.round(w * 0.015), baseline, Math.round(w * 0.97), Math.max(1, Math.round(h * 0.008)));
   ctx.restore();
 
-  const drawAnalysis = isAudible;
+  const drawAnalysis = isAudible || nativeSpatialViz;
   for (let i = 0; i < bins; i++) {
     if (drawAnalysis) {
       const shape = waveBaseShape(i, bins);
@@ -2908,7 +2970,9 @@ function drawWaveform(idle = false) {
       const globalGate = smoothStep(0.025, 0.22, smoothedLevel);
       const breathing = Math.pow(smoothedLevel, 0.9);
       const spectrumHeight = center * 0.7 + localAverage * 0.3 + localPeak * 0.5;
-      const target = 0.006 + breathing * 0.018 + globalGate * spectrumHeight * shape * (1 + pitchProximity * 0.18);
+      // Native spatial viz is softer so it doesn't look like a fake analyser
+      const gain = nativeSpatialViz && !isAudible ? 0.72 : 1;
+      const target = (0.006 + breathing * 0.018 + globalGate * spectrumHeight * shape * (1 + pitchProximity * 0.18)) * gain;
       const rate = target > waveBars[i] ? 0.82 : 0.32;
       waveBars[i] = waveBars[i] * (1 - rate) + target * rate;
     } else if (!audio.src) {
