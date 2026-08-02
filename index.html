@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>vp</title>
-<link rel="stylesheet" href="styles.css?v=2026-08-02-noring">
+<link rel="stylesheet" href="styles.css?v=2026-08-02-transfer">
 </head>
 <body>
 <div class="app">
@@ -87,6 +87,35 @@
           <div class="now-kicker" id="now-kicker">vp</div>
           <h1 id="now-title">Nothing playing</h1>
           <div id="now-subtitle" class="now-subtitle">Pick a song from the library.</div>
+
+          <!-- Embedded spatial guide: shown only for Traveling Voices (no extra black box) -->
+          <div id="spatial-guide" class="spatial-guide hidden" aria-live="polite">
+            <div class="spatial-guide-head">
+              <div class="spatial-kicker">Where the audio is</div>
+              <div id="spatial-section" class="spatial-section">—</div>
+            </div>
+            <div class="spatial-body">
+              <canvas id="spatial-radar" width="120" height="120" aria-label="Top-down listener map"></canvas>
+              <div class="spatial-readout">
+                <div class="spatial-voice female">
+                  <span class="spatial-dot" aria-hidden="true"></span>
+                  <div>
+                    <div class="spatial-voice-label">Female</div>
+                    <div id="spatial-female-text" class="spatial-voice-text">—</div>
+                  </div>
+                </div>
+                <div class="spatial-voice male">
+                  <span class="spatial-dot" aria-hidden="true"></span>
+                  <div>
+                    <div class="spatial-voice-label">Male</div>
+                    <div id="spatial-male-text" class="spatial-voice-text">—</div>
+                  </div>
+                </div>
+                <div id="spatial-cue" class="spatial-cue"></div>
+                <div id="spatial-next" class="spatial-next"></div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="hero-control">
@@ -103,34 +132,6 @@
         <div class="now-queue">
           <div class="queue-label">Up next</div>
           <div id="queue-next">No queue yet</div>
-        </div>
-
-        <div id="spatial-guide" class="spatial-guide hidden" aria-live="polite">
-          <div class="spatial-guide-head">
-            <div class="spatial-kicker">Where the audio is</div>
-            <div id="spatial-section" class="spatial-section">—</div>
-          </div>
-          <div class="spatial-body">
-            <canvas id="spatial-radar" width="160" height="160" aria-label="Top-down listener map"></canvas>
-            <div class="spatial-readout">
-              <div class="spatial-voice female">
-                <span class="spatial-dot" aria-hidden="true"></span>
-                <div>
-                  <div class="spatial-voice-label">Female</div>
-                  <div id="spatial-female-text" class="spatial-voice-text">—</div>
-                </div>
-              </div>
-              <div class="spatial-voice male">
-                <span class="spatial-dot" aria-hidden="true"></span>
-                <div>
-                  <div class="spatial-voice-label">Male</div>
-                  <div id="spatial-male-text" class="spatial-voice-text">—</div>
-                </div>
-              </div>
-              <div id="spatial-cue" class="spatial-cue"></div>
-              <div id="spatial-next" class="spatial-next"></div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -165,6 +166,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=2026-08-02-noring"></script>
+<script src="app.js?v=2026-08-02-transfer"></script>
 </body>
 </html>

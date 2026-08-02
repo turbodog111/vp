@@ -484,16 +484,26 @@ function primeAudioContextForGesture() {
 }
 
 function resumeAudioFromCalibratedClock(song = currentSong()) {
-  const contextReady = primeAudioContextForGesture();
   ensureCalibratedClock(song);
   calibratedBaseTime = currentCalibratedTime(song);
   calibratedBasePerf = performance.now() / 1000;
   calibratedClockRunning = false;
   audio.muted = false;
-  audio.volume = analyser && audioCtx?.state === 'running' ? 1 : playerVolume;
+  // Spatial track: never hang volume on Web Audio graph
+  if (prefersNativeAudio(song) && !audioSource) {
+    audio.volume = playerVolume;
+  } else {
+    audio.volume = analyser && audioCtx?.state === 'running' ? 1 : playerVolume;
+  }
+  const contextReady = prefersNativeAudio(song) && !audioSource
+    ? Promise.resolve()
+    : primeAudioContextForGesture();
   return Promise.resolve(audio.play()).then(async result => {
     await contextReady;
     await activateAudioGraphIfPossible();
+    // Re-apply volume after graph decision
+    if (prefersNativeAudio(song) && !audioSource) audio.volume = playerVolume;
+    setSpatialSong(song);
     updateTimingDebug();
     return result;
   }).catch(err => {
@@ -647,6 +657,8 @@ function beatPulseForProfile(profile, time) {
 }
 
 function activeFxTheme(song = currentSong()) {
+  // Spatial track: no disco/teto FX — keeps imaging pure (matches QuickTime intent)
+  if (songLooksLikeTravelingVoices(song)) return 'off';
   const profile = effectProfileForSong(song);
   if (!tetoFxEnabled || !song) return 'off';
   const theme = ['teto', 'disco', 'teto11'].includes(fxTheme) ? fxTheme : 'teto11';
@@ -929,8 +941,13 @@ function renderLibrary(filter = '') {
     li.querySelector('.col-num').textContent = displayIdx + 1;
     li.querySelector('.song-title-text').textContent = song.displayName;
     const badge = li.querySelector('.song-badge');
-    badge.textContent = song.collectionLabel;
-    badge.classList.add(song.collection);
+    if (songLooksLikeTravelingVoices(song)) {
+      badge.textContent = 'Spatial';
+      badge.classList.add('spatial-track');
+    } else {
+      badge.textContent = song.collectionLabel;
+      badge.classList.add(song.collection);
+    }
     li.addEventListener('click', (e) => {
       if (e.defaultPrevented || openAddToMenuFromEvent(e)) return;
       if (e.target.closest('.col-actions')) return;
@@ -991,7 +1008,8 @@ function playCurrent() {
   $('np-title').textContent = song.title || song.displayName;
   const parts = [];
   if (song.artist) parts.push(song.artist);
-  if (song.collectionLabel) parts.push(song.collectionLabel);
+  if (songLooksLikeTravelingVoices(song)) parts.push('Spatial 3D guide on Now Playing');
+  else if (song.collectionLabel) parts.push(song.collectionLabel);
   if (currentPlaylist) parts.push(`Playlist: ${currentPlaylist}`);
   $('np-sub').textContent = parts.join(' · ');
   $('play').textContent = '⏸';
@@ -1019,10 +1037,34 @@ function updateNowPlaying(song = currentSong()) {
 }
 
 /* ---------- Spatial guide (Traveling Voices) — low-cost ---------- */
-const SPATIAL_MAP_URL = './songs/spatial/doki-doki-forever-traveling-voices.json';
-const SPATIAL_MS = 125; // 8 Hz — enough for smooth labels, cheap
+// Embedded so Desktop UI / offline / failed fetch still get full cue data.
+const SPATIAL_MAP_EMBEDDED = {
+  id: 'doki-doki-forever-traveling-voices',
+  transitionSec: 3.5,
+  description: 'Female + male always opposite; v2 stronger ILD/ITD/elevation.',
+  keyframes: [
+    { t: 0.0, az: -90.0, el: 0.0, section: 'intro', cue: 'Intro — hard left vs hard right' },
+    { t: 17.7, az: -55.0, el: 0.45, section: 'verse1 open', cue: 'Verse open — front-left high vs back-right low' },
+    { t: 24.4, az: 95.0, el: -0.15, section: 'verse1', cue: 'Flip — F hard right / M hard left' },
+    { t: 30.3, az: 5.0, el: 0.75, section: 'verse1', cue: 'F dead-front high / M dead-back low' },
+    { t: 41.2, az: -80.0, el: 0.95, section: 'verse1 late', cue: 'Top-left vs bottom-right' },
+    { t: 48.6, az: -155.0, el: 0.2, section: 'pre-chorus', cue: 'Pre-chorus — F deep back-left / M front-right' },
+    { t: 51.3, az: 50.0, el: 0.7, section: 'chorus1', cue: 'Chorus — front-right high vs back-left low' },
+    { t: 61.0, az: -10.0, el: -0.95, section: 'post-chorus', cue: 'F front-bottom / M back-top' },
+    { t: 67.5, az: -95.0, el: 0.4, section: 'verse2 entry', cue: 'Hard L/R with height split' },
+    { t: 76.0, az: 175.0, el: 0.35, section: 'verse2', cue: 'F behind / M front' },
+    { t: 89.0, az: 75.0, el: 0.95, section: 'verse2 / lift', cue: 'Top-right vs bottom-left' },
+    { t: 100.0, az: -60.0, el: -0.25, section: 'mid', cue: 'Front-left low vs back-right high' },
+    { t: 112.0, az: 110.0, el: 0.65, section: 'call-response', cue: 'Call-response — F right-high / M left-low' },
+    { t: 121.0, az: 0.0, el: 1.0, section: 'bridge / build', cue: 'Build — F front TOP / M back BOTTOM' },
+    { t: 132.5, az: -130.0, el: 0.55, section: 'bridge', cue: 'Bridge — rear-left high vs front-right low' },
+    { t: 146.5, az: 90.0, el: 0.0, section: 'final chorus', cue: 'Final chorus — pure right vs pure left' },
+    { t: 163.0, az: 25.0, el: 0.7, section: 'outro', cue: 'Outro — front-right high vs back-left low' },
+    { t: 175.0, az: -45.0, el: 0.0, section: 'end', cue: 'Close — soft FL / BR settle' },
+  ],
+};
+const SPATIAL_MS = 125;
 let spatialMapCache = null;
-let spatialMapLoadPromise = null;
 let spatialActive = false;
 let spatialTimer = 0;
 let spatialForcePaint = false;
@@ -1036,16 +1078,22 @@ function songLooksLikeTravelingVoices(song) {
   const name = song.name || '';
   const title = song.title || '';
   const path = song.path || '';
-  // cheap checks first (filename)
+  const id = song.id || '';
+  const display = song.displayName || '';
   if (name.includes('Traveling Voices') || name.includes('Travelling Voices')) return true;
-  const hay = (title + path).toLowerCase();
+  const hay = `${title} ${path} ${id} ${display} ${name}`.toLowerCase();
   return hay.includes('traveling voices') || hay.includes('travelling voices');
+}
+
+/** Native HTMLAudio path (no Web Audio graph) — closest to QuickTime levels/stereo. */
+function prefersNativeAudio(song = currentSong()) {
+  return songLooksLikeTravelingVoices(song);
 }
 
 function maybeHighlightTravelingSong() {}
 
 function cacheSpatialEls() {
-  if (spatialEls) return spatialEls;
+  if (spatialEls?.panel?.isConnected) return spatialEls;
   spatialEls = {
     panel: $('spatial-guide'),
     radar: $('spatial-radar'),
@@ -1059,25 +1107,12 @@ function cacheSpatialEls() {
 }
 
 function loadSpatialMap() {
-  if (spatialMapCache) return Promise.resolve(spatialMapCache);
-  if (spatialMapLoadPromise) return spatialMapLoadPromise;
-  spatialMapLoadPromise = fetch(SPATIAL_MAP_URL)
-    .then(res => {
-      if (!res.ok) throw new Error(`spatial map HTTP ${res.status}`);
-      return res.json();
-    })
-    .then(data => {
-      // Precompute times array for binary search
-      data._times = (data.keyframes || []).map(k => k.t);
-      spatialMapCache = data;
-      return data;
-    })
-    .catch(err => {
-      console.warn('Spatial map load failed:', err);
-      spatialMapLoadPromise = null;
-      return null;
-    });
-  return spatialMapLoadPromise;
+  if (spatialMapCache) return spatialMapCache;
+  // Always use embedded map first so Desktop UI never depends on network fetch.
+  const data = JSON.parse(JSON.stringify(SPATIAL_MAP_EMBEDDED));
+  data._times = (data.keyframes || []).map(k => k.t);
+  spatialMapCache = data;
+  return spatialMapCache;
 }
 
 function resetSpatialUiCache() {
@@ -1085,27 +1120,30 @@ function resetSpatialUiCache() {
 }
 
 function setSpatialSong(song = currentSong()) {
+  const els = cacheSpatialEls();
   const want = songLooksLikeTravelingVoices(song);
   if (!want) {
     spatialActive = false;
     stopSpatialLoop();
     resetSpatialUiCache();
-    const els = cacheSpatialEls();
-    if (els.panel && !els.panel.classList.contains('hidden')) {
-      els.panel.classList.add('hidden');
-    }
+    if (els.panel) els.panel.classList.add('hidden');
+    document.body.classList.remove('spatial-song-active');
     return;
   }
-  loadSpatialMap().then(map => {
-    if (!map || !songLooksLikeTravelingVoices(currentSong())) return;
-    spatialActive = true;
-    spatialForcePaint = true;
-    resetSpatialUiCache();
-    const els = cacheSpatialEls();
-    if (els.panel) els.panel.classList.remove('hidden');
-    ensureSpatialRadar();
-    syncSpatialLoop();
-  });
+  const map = loadSpatialMap();
+  if (!map) return;
+  spatialActive = true;
+  spatialForcePaint = true;
+  resetSpatialUiCache();
+  document.body.classList.add('spatial-song-active');
+  if (els.panel) {
+    els.panel.classList.remove('hidden');
+    // Force visible even if a parent style was sticky
+    els.panel.style.display = '';
+  }
+  ensureSpatialRadar();
+  paintSpatialGuide(currentCalibratedTime(), true);
+  syncSpatialLoop();
 }
 
 function isNowViewActive() {
@@ -1515,7 +1553,12 @@ function ensureAudioContext() {
     return null;
   }
   try {
-    audioCtx = new AudioContextClass();
+    // Prefer 48 kHz to match remaster/traveling renders (avoids resampler smear)
+    try {
+      audioCtx = new AudioContextClass({ latencyHint: 'playback', sampleRate: 48000 });
+    } catch (_) {
+      audioCtx = new AudioContextClass({ latencyHint: 'playback' });
+    }
     audioGraphError = '';
     return audioCtx;
   } catch (err) {
@@ -1528,6 +1571,7 @@ function ensureAudioContext() {
 function connectAudioGraph() {
   if (analyser) {
     if (audioCtx?.state === 'running') audio.volume = 1;
+    if (outputGain) outputGain.gain.value = playerVolume;
     return true;
   }
   const ctx = ensureAudioContext();
@@ -1539,13 +1583,21 @@ function connectAudioGraph() {
     analyser.minDecibels = -92;
     analyser.maxDecibels = -18;
     analyser.smoothingTimeConstant = 0.35;
+    analyser.channelCount = 2;
+    analyser.channelCountMode = 'explicit';
+    analyser.channelInterpretation = 'speakers';
     outputGain = ctx.createGain();
+    outputGain.channelCount = 2;
+    outputGain.channelCountMode = 'explicit';
+    outputGain.channelInterpretation = 'speakers';
     outputGain.gain.value = playerVolume;
     waveData = new Float32Array(analyser.frequencyBinCount);
     waveTimeData = new Uint8Array(analyser.fftSize);
+    // Preserve stereo: source -> gain -> speakers; analyser taps in parallel
+    audioSource.connect(outputGain);
     audioSource.connect(analyser);
-    analyser.connect(outputGain);
     outputGain.connect(ctx.destination);
+    // analyser is sink-only (no connection to destination) so it cannot color the mix
     audio.volume = 1;
     audioGraphError = '';
     audioGraphActivatedAt = performance.now();
@@ -1559,6 +1611,23 @@ function connectAudioGraph() {
 }
 
 async function activateAudioGraphIfPossible() {
+  // Traveling Voices: stay on native <audio> path so levels/stereo match QuickTime.
+  // (Web Audio MediaElementSource + sample-rate conversion was coloring the mix.)
+  if (prefersNativeAudio()) {
+    audio.volume = playerVolume;
+    audioGraphError = 'native-html-audio (spatial fidelity)';
+    return false;
+  }
+  // If graph was already created for a prior song, we must keep using it
+  if (audioSource) {
+    const ctx = ensureAudioContext();
+    if (ctx?.state === 'suspended') {
+      try { await ctx.resume(); } catch (err) { rememberAudioGraphError(err); }
+    }
+    if (outputGain) outputGain.gain.value = playerVolume;
+    audio.volume = 1;
+    return true;
+  }
   const ctx = ensureAudioContext();
   if (!ctx) {
     audio.volume = playerVolume;
@@ -3207,5 +3276,5 @@ resizeWaveform(true);
 resizeFxCanvas(true);
 updateFxState();
 drawWaveform(true);
-loadSpatialMap();
+loadSpatialMap(); // embed into cache immediately
 loadLibrary();
