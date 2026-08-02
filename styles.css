@@ -543,6 +543,14 @@ body.teto11-fx-active .hero-play::after {
   overflow: hidden;
   padding: 12px 0 16px;
 }
+/* Spatial dock already uses a row — don't let wave min-height steal title/hero space */
+body.spatial-song-active .wave-panel {
+  min-height: 0;
+  padding: 6px 0 10px;
+}
+body.spatial-song-active #waveform {
+  max-height: 100%;
+}
 #waveform {
   width: 100%;
   height: 100%;
@@ -1063,12 +1071,19 @@ input[type="range"]:focus { outline: none; }
     text-align: center;
     min-height: 280px;
   }
+  body.spatial-song-active .now-stage {
+    min-height: 0; /* let grid row size the stage; fixed min was clipping title */
+    gap: 12px;
+  }
   .now-meta h1 { font-size: clamp(36px, 13vw, 58px); }
   .now-subtitle { white-space: normal; }
   .hero-play { width: 150px; height: 150px; }
   .hero-icon { font-size: 42px; }
+  body.spatial-song-active .hero-play { width: 120px; height: 120px; }
+  body.spatial-song-active .hero-icon { font-size: 34px; }
   .now-queue { align-self: auto; }
   #waveform { height: 140px; }
+  body.spatial-song-active #waveform { height: 96px; }
   .library-toolbar { gap: 6px; }
   .collection-tab { padding: 6px 10px; font-size: 12px; }
   .col-actions { opacity: 1; }
@@ -1129,6 +1144,12 @@ input[type="range"]:focus { outline: none; }
   .now-stage {
     min-height: 220px;
   }
+  body.spatial-song-active .now-stage {
+    min-height: 0;
+  }
+  body.spatial-song-active .hero-play { width: 108px; height: 108px; }
+  body.spatial-song-active .hero-icon { font-size: 30px; }
+  body.spatial-song-active #waveform { height: 80px; }
   .now-meta h1 {
     font-size: clamp(30px, 12vw, 46px);
   }
