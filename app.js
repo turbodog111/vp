@@ -1040,8 +1040,10 @@ function updateNowPlaying(song = currentSong()) {
   updateUpNext();
   updatePlaybackVisuals();
   updateFxState();
+  // setSpatialSong applies DDF/girl themes and toggles spatial-song-active layout class
   setSpatialSong(song);
-  applySongTheme(song);
+  // Non-spatial DDF/remasters still need themes when spatial path is inactive
+  if (!songLooksLikeTravelingVoices(song)) applySongTheme(song);
 }
 
 /* ---------- Spatial guide (Traveling Voices) — low-cost ---------- */
@@ -1202,9 +1204,10 @@ function resetSpatialUiCache() {
   spatialLastUi = { f: '', m: '', sec: '', cue: '', next: '', az: 999, el: 999 };
 }
 
+// Color themes only — never include spatial-song-active (layout flag for compact dock rows)
 const DDLC_THEME_CLASSES = [
   'theme-sayori', 'theme-natsuki', 'theme-yuri', 'theme-monika',
-  'theme-ddf-female', 'theme-ddf-male', 'theme-ddf-duet', 'spatial-song-active',
+  'theme-ddf-female', 'theme-ddf-male', 'theme-ddf-duet',
 ];
 
 function isMultiGirlDdfOriginal(song) {
@@ -1568,11 +1571,24 @@ function drawSpatialRadar(pose) {
   const size = 64;
   const cx = size / 2;
   const cy = size / 2;
-  const r = 22;
+  // Slightly smaller ring so F/B/L/R labels stay inside the 64px canvas
+  const r = 18;
 
   ctx.clearRect(0, 0, size, size);
 
-  ctx.strokeStyle = 'rgba(255,255,255,0.14)';
+  // Front hemisphere hint (subtle) so front/back reads faster
+  ctx.fillStyle = 'rgba(255,255,255,0.035)';
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, Math.PI, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = 'rgba(0,0,0,0.08)';
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.16)';
   ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.arc(cx, cy, r * 0.45, 0, Math.PI * 2);
@@ -1585,14 +1601,14 @@ function drawSpatialRadar(pose) {
   ctx.lineTo(cx, cy + r);
   ctx.stroke();
 
-  ctx.fillStyle = 'rgba(235,235,240,0.45)';
-  ctx.font = '8px system-ui,sans-serif';
+  ctx.fillStyle = 'rgba(235,235,240,0.5)';
+  ctx.font = '700 8px system-ui,sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('F', cx, cy - r - 5);
-  ctx.fillText('B', cx, cy + r + 5);
-  ctx.fillText('L', cx - r - 5, cy);
-  ctx.fillText('R', cx + r + 5, cy);
+  ctx.fillText('F', cx, cy - r + 7);
+  ctx.fillText('B', cx, cy + r - 7);
+  ctx.fillText('L', cx - r + 6, cy);
+  ctx.fillText('R', cx + r - 6, cy);
 
   ctx.fillStyle = 'rgba(235,235,240,0.9)';
   ctx.beginPath();
@@ -1601,31 +1617,27 @@ function drawSpatialRadar(pose) {
 
   function plot(az, el, color) {
     const rad = (az * Math.PI) / 180;
-    // Front (az≈0) sits near top of radar; rear near bottom — ring radius encodes depth a bit
+    // Front (az≈0) top; rear bottom — ring radius + halo encode depth
     const rear = 0.5 * (1 - Math.cos(rad));
-    const ring = r * (0.55 + rear * 0.22 + Math.min(0.18, Math.abs(el) * 0.12));
+    const ring = r * (0.42 + rear * 0.38 + Math.min(0.14, Math.abs(el) * 0.1));
     const x = cx + Math.sin(rad) * ring;
     const y = cy - Math.cos(rad) * ring;
-    const s = 3.0 + Math.max(0, el) * 1.6 + (el < 0 ? Math.abs(el) * 0.4 : 0);
-    // Soft halo for rear (externalized) vs solid for front
+    const s = 2.8 + Math.max(0, el) * 1.5 + (el < 0 ? Math.abs(el) * 0.35 : 0);
     if (rear > 0.55) {
-      ctx.fillStyle = color.replace(')', ',0.28)').replace('rgb', 'rgba').replace('#ff7eb6', 'rgba(255,126,182,0.28)').replace('#5eead4', 'rgba(94,234,212,0.28)');
-      if (color === '#ff7eb6') ctx.fillStyle = 'rgba(255,126,182,0.28)';
-      if (color === '#5eead4') ctx.fillStyle = 'rgba(94,234,212,0.28)';
+      ctx.fillStyle = color === '#ff7eb6' ? 'rgba(255,126,182,0.28)' : 'rgba(94,234,212,0.28)';
       ctx.beginPath();
-      ctx.arc(x, y, s + 2.5, 0, Math.PI * 2);
+      ctx.arc(x, y, s + 2.4, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x, y, s, 0, Math.PI * 2);
     ctx.fill();
-    // Tiny elevation tick: up = open ring, down = filled smaller core already
     if (el > 0.35) {
       ctx.strokeStyle = color;
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.arc(x, y, s + 1.8, 0, Math.PI * 2);
+      ctx.arc(x, y, s + 1.6, 0, Math.PI * 2);
       ctx.stroke();
     }
   }
