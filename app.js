@@ -1073,7 +1073,7 @@ function updateNowPlaying(song = currentSong()) {
 const SPATIAL_MAP_EMBEDDED = {
   id: 'doki-doki-forever-traveling-voices',
   transitionSec: 1.15,
-  description: 'Jumpy continuous motion + front/mid/rear depth tiers (primary Traveling Voices).',
+  description: 'v2 jumpy dual leads — rear delay history fix so both voices stay audible.',
   keyframes: [
     { t: 0.0, az: 40.0, el: 0.35, section: "hop0", cue: "front-right" },
     { t: 3.6, az: -90.0, el: 0.5, section: "hop1", cue: "high left mid" },
