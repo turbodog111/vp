@@ -1014,14 +1014,25 @@ input[type="range"]:focus { outline: none; }
   .topbar { padding: 12px 16px; }
   .main { padding: 12px 16px; }
   .tabs { padding: 0 16px; }
-  .now-view.active { grid-template-rows: minmax(330px, 1fr) 150px; }
-  .spatial-body { grid-template-columns: 120px minmax(0, 1fr); }
-  #spatial-radar { width: 120px; height: 120px; }
+  /* Keep 3-row stage | spatial dock | waveform so title/hero never get clipped */
+  .now-view.active {
+    grid-template-rows: minmax(240px, 1fr) auto minmax(120px, 18vh);
+  }
+  body.spatial-song-active .now-view.active {
+    grid-template-rows: minmax(200px, 1fr) auto minmax(100px, 16vh);
+  }
+  /* Compact radar on mobile — large radar overflowed max-height and clipped text */
+  .spatial-guide {
+    max-height: 118px;
+    padding: 6px 8px;
+  }
+  .spatial-body { grid-template-columns: 64px minmax(0, 1fr); }
+  #spatial-radar { width: 64px; height: 64px; }
   .now-stage {
     grid-template-columns: 1fr;
     gap: 20px;
     text-align: center;
-    min-height: 360px;
+    min-height: 280px;
   }
   .now-meta h1 { font-size: clamp(36px, 13vw, 58px); }
   .now-subtitle { white-space: normal; }

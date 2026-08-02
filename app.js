@@ -942,8 +942,15 @@ function renderLibrary(filter = '') {
     li.querySelector('.song-title-text').textContent = song.displayName;
     const badge = li.querySelector('.song-badge');
     if (songLooksLikeTravelingVoices(song)) {
-      badge.textContent = 'Spatial';
+      const slug = spatialSlugForSong(song);
+      // e.g. "01 · Spatial" or short path label for batch variants
+      const short = slug
+        ? slug.replace(/^\d+_/, '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+        : 'Spatial';
+      const num = slug && slug.match(/^(\d+)/)?.[1];
+      badge.textContent = num ? `${num} · ${short.length > 18 ? short.slice(0, 16) + '…' : short}` : 'Spatial';
       badge.classList.add('spatial-track');
+      badge.title = short;
     } else {
       badge.textContent = song.collectionLabel;
       badge.classList.add(song.collection);
@@ -1242,36 +1249,65 @@ function applySongTheme(song = currentSong()) {
   document.body.classList.add(theme);
 }
 
-/** Approximate who leads from arrangement landmarks for DDF tracks. */
+/**
+ * Who leads: arrangement duck/boost windows (exclusive) + phrase landmarks (soft).
+ * Derived from ultimate_remaster_arrangement.json female/male volumeRegions + boosts.
+ */
+const DDF_ARR_F_LEADS = [
+  [17.75, 18.75], [29.5, 30.5], [33.5, 34.75], [40.75, 41.5], [42.25, 42.75],
+  [51.5, 54.25], [55.75, 56.5], [61.25, 63.0], [66.5, 67.25], [68.0, 68.75],
+  [73.75, 76.25], [87.75, 89.5], [99.25, 100.25], [108.25, 109.0], [110.5, 111.25],
+  [112.0, 112.75], [118.5, 121.25], [125.5, 126.25], [131.0, 133.0], [133.5, 135.75],
+  [136.5, 137.25], [138.0, 138.75], [143.25, 144.0], [145.5, 146.25], [147.0, 151.75],
+  [171.0, 175.5],
+];
+const DDF_ARR_M_LEADS = [
+  [23.5, 24.5], [41.5, 42.25], [48.75, 51.5], [55.0, 55.75], [56.5, 57.25],
+  [64.0, 66.0], [67.25, 68.0], [92.75, 93.75], [107.75, 108.25], [109.0, 109.75],
+  [111.25, 112.0], [121.25, 124.25], [124.75, 125.5], [137.25, 138.0], [142.5, 143.25],
+  [144.0, 144.75], [146.25, 147.0],
+];
+// Broader phrase bands when arrangement is neutral (choruses / long female features)
+const DDF_PHRASE_F_LEADS = [
+  [17.5, 23.2], [29.0, 40.5], [51.0, 54.5], [60.5, 63.5], [73.0, 89.5],
+  [98.5, 107.5], [111.8, 118.5], [125.0, 132.5], [145.2, 151.5], [170.5, 175.5],
+];
+const DDF_PHRASE_M_LEADS = [
+  [23.3, 28.8], [41.0, 48.0], [48.5, 51.0], [92.0, 99.0], [118.5, 125.0],
+];
+
+function inLeadRange(ranges, timeSec) {
+  return ranges.some(([a, b]) => timeSec >= a && timeSec < b);
+}
+
+/** Approximate who leads from arrangement + phrase landmarks for DDF tracks. */
 function updateDdfSingerTheme(timeSec = currentCalibratedTime()) {
-  const theme = detectDdlcGirlTheme(currentSong());
+  const song = currentSong();
+  const theme = detectDdlcGirlTheme(song);
   const isDdf = theme === 'theme-ddf'
     || document.body.classList.contains('theme-ddf-female')
     || document.body.classList.contains('theme-ddf-male')
     || document.body.classList.contains('theme-ddf-duet')
     || document.body.classList.contains('spatial-song-active');
   if (!isDdf) return;
-  // Phrase-based lead guess from arrangement-like landmarks (matches our mix automation)
-  const fLeads = [
-    [17.5, 23.2], [29.0, 40.5], [51.0, 54.5], [60.5, 63.5], [66.0, 67.2],
-    [73.0, 89.5], [98.5, 107.5], [108.0, 108.9], [110.2, 111.0], [111.8, 118.5],
-    [125.0, 132.5], [136.0, 137.0], [137.8, 142.0], [143.0, 143.7], [145.2, 151.5],
-    [170.5, 175.5],
-  ];
-  const mLeads = [
-    [23.3, 28.8], [41.0, 48.0], [48.5, 51.0], [54.6, 56.0], [63.6, 66.0],
-    [67.2, 68.5], [92.0, 99.0], [107.5, 108.0], [109.0, 110.2], [111.0, 111.7],
-    [118.5, 125.0], [142.0, 143.0], [143.7, 145.2],
-  ];
-  const inRange = (ranges) => ranges.some(([a, b]) => timeSec >= a && timeSec < b);
-  const f = inRange(fLeads) ? 1 : 0;
-  const m = inRange(mLeads) ? 1 : 0;
-  document.body.classList.remove('theme-ddf-female', 'theme-ddf-male', 'theme-ddf-duet');
-  if (f && !m) document.body.classList.add('theme-ddf-female');
-  else if (m && !f) document.body.classList.add('theme-ddf-male');
-  else document.body.classList.add('theme-ddf-duet');
-  document.body.style.setProperty('--ddf-female-lead', f && !m ? '1' : (f && m ? '0.55' : '0.25'));
-  document.body.style.setProperty('--ddf-male-lead', m && !f ? '1' : (f && m ? '0.55' : '0.25'));
+
+  // Arrangement exclusive windows win; else soft phrase bands; else duet
+  let f = 0;
+  let m = 0;
+  if (inLeadRange(DDF_ARR_F_LEADS, timeSec)) f = 1;
+  if (inLeadRange(DDF_ARR_M_LEADS, timeSec)) m = 1;
+  if (!f && !m) {
+    if (inLeadRange(DDF_PHRASE_F_LEADS, timeSec)) f = 1;
+    if (inLeadRange(DDF_PHRASE_M_LEADS, timeSec)) m = 1;
+  }
+
+  const nextClass = (f && !m) ? 'theme-ddf-female' : (m && !f) ? 'theme-ddf-male' : 'theme-ddf-duet';
+  if (!document.body.classList.contains(nextClass)) {
+    document.body.classList.remove('theme-ddf-female', 'theme-ddf-male', 'theme-ddf-duet');
+    document.body.classList.add(nextClass);
+  }
+  document.body.style.setProperty('--ddf-female-lead', f && !m ? '1' : (f && m ? '0.55' : '0.28'));
+  document.body.style.setProperty('--ddf-male-lead', m && !f ? '1' : (f && m ? '0.55' : '0.28'));
 }
 
 function setSpatialSong(song = currentSong()) {
@@ -1559,6 +1595,8 @@ let lastUiTimeText = '';
 let lastUiTotalText = '';
 let lastUiSeekPct = -1;
 
+let lastDdfThemeTick = -1;
+
 function updatePlaybackVisuals() {
   // Uses native-backed calibrated time; kept off the visualizer rAF path
   const current = repairTimingState(currentCalibratedTime());
@@ -1567,6 +1605,15 @@ function updatePlaybackVisuals() {
   const deg = `${(pct * 360).toFixed(2)}deg`;
   $('play').style.setProperty('--progress', deg);
   $('hero-play').style.setProperty('--progress', deg);
+
+  // DDF dual-lead themes tick even when spatial radar is off (remasters / dominance)
+  if (!spatialActive && detectDdlcGirlTheme(currentSong()) === 'theme-ddf') {
+    const tick = Math.floor(current * 4); // 250ms
+    if (tick !== lastDdfThemeTick) {
+      lastDdfThemeTick = tick;
+      updateDdfSingerTheme(current);
+    }
+  }
 
   const curText = fmtTime(current);
   const totText = fmtTime(duration);
