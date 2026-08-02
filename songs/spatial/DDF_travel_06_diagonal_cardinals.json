@@ -1,0 +1,139 @@
+{
+  "id": 6,
+  "slug": "diagonal_cardinals",
+  "description": "Diagonal / cardinal jumps",
+  "transition_sec": 3.2,
+  "keyframes": [
+    {
+      "t": 0.0,
+      "az": -135,
+      "el": 0.7,
+      "section": "p0",
+      "cue": "Diag -135,0.7"
+    },
+    {
+      "t": 17.7,
+      "az": -45,
+      "el": -0.7,
+      "section": "p1",
+      "cue": "Diag -45,-0.7"
+    },
+    {
+      "t": 24.4,
+      "az": 135,
+      "el": -0.7,
+      "section": "p2",
+      "cue": "Diag 135,-0.7"
+    },
+    {
+      "t": 30.3,
+      "az": 45,
+      "el": 0.7,
+      "section": "p3",
+      "cue": "Diag 45,0.7"
+    },
+    {
+      "t": 41.2,
+      "az": -140,
+      "el": 0.9,
+      "section": "p4",
+      "cue": "Diag -140,0.9"
+    },
+    {
+      "t": 48.6,
+      "az": -40,
+      "el": -0.9,
+      "section": "p5",
+      "cue": "Diag -40,-0.9"
+    },
+    {
+      "t": 51.3,
+      "az": 140,
+      "el": -0.35,
+      "section": "p6",
+      "cue": "Diag 140,-0.3"
+    },
+    {
+      "t": 61.0,
+      "az": 40,
+      "el": 0.35,
+      "section": "p7",
+      "cue": "Diag 40,0.3"
+    },
+    {
+      "t": 67.5,
+      "az": -135,
+      "el": 0.7,
+      "section": "p8",
+      "cue": "Diag -135,0.7"
+    },
+    {
+      "t": 76.0,
+      "az": -45,
+      "el": -0.7,
+      "section": "p9",
+      "cue": "Diag -45,-0.7"
+    },
+    {
+      "t": 89.0,
+      "az": 135,
+      "el": -0.7,
+      "section": "p10",
+      "cue": "Diag 135,-0.7"
+    },
+    {
+      "t": 100.0,
+      "az": 45,
+      "el": 0.7,
+      "section": "p11",
+      "cue": "Diag 45,0.7"
+    },
+    {
+      "t": 112.0,
+      "az": -140,
+      "el": 0.9,
+      "section": "p12",
+      "cue": "Diag -140,0.9"
+    },
+    {
+      "t": 121.0,
+      "az": -40,
+      "el": -0.9,
+      "section": "p13",
+      "cue": "Diag -40,-0.9"
+    },
+    {
+      "t": 132.5,
+      "az": 140,
+      "el": -0.35,
+      "section": "p14",
+      "cue": "Diag 140,-0.3"
+    },
+    {
+      "t": 146.5,
+      "az": 40,
+      "el": 0.35,
+      "section": "p15",
+      "cue": "Diag 40,0.3"
+    },
+    {
+      "t": 163.0,
+      "az": -135,
+      "el": 0.7,
+      "section": "p16",
+      "cue": "Diag -135,0.7"
+    },
+    {
+      "t": 175.0,
+      "az": -45,
+      "el": -0.7,
+      "section": "p17",
+      "cue": "Diag -45,-0.7"
+    }
+  ],
+  "files": {
+    "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_06_diagonal_cardinals.wav",
+    "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_06_diagonal_cardinals.m4a",
+    "mp3": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_06_diagonal_cardinals.mp3"
+  }
+}

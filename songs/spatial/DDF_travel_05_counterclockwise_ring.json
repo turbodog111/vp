@@ -1,0 +1,139 @@
+{
+  "id": 5,
+  "slug": "counterclockwise_ring",
+  "description": "Counter-clockwise azimuth ring",
+  "transition_sec": 3.2,
+  "keyframes": [
+    {
+      "t": 0.0,
+      "az": 180.0,
+      "el": -0.0,
+      "section": "p0",
+      "cue": "CCW az=180"
+    },
+    {
+      "t": 17.7,
+      "az": 158.8235294117647,
+      "el": -0.19583172740687085,
+      "section": "p1",
+      "cue": "CCW az=159"
+    },
+    {
+      "t": 24.4,
+      "az": 137.64705882352942,
+      "el": -0.2434619077195488,
+      "section": "p2",
+      "cue": "CCW az=138"
+    },
+    {
+      "t": 30.3,
+      "az": 116.47058823529412,
+      "el": -0.10684497005845744,
+      "section": "p3",
+      "cue": "CCW az=116"
+    },
+    {
+      "t": 41.2,
+      "az": 95.29411764705883,
+      "el": 0.11063011082371312,
+      "section": "p4",
+      "cue": "CCW az=95"
+    },
+    {
+      "t": 48.6,
+      "az": 74.11764705882352,
+      "el": 0.24438252941627425,
+      "section": "p5",
+      "cue": "CCW az=74"
+    },
+    {
+      "t": 51.3,
+      "az": 52.94117647058823,
+      "el": 0.1931911218889968,
+      "section": "p6",
+      "cue": "CCW az=53"
+    },
+    {
+      "t": 61.0,
+      "az": 31.764705882352956,
+      "el": -0.004203475121087428,
+      "section": "p7",
+      "cue": "CCW az=32"
+    },
+    {
+      "t": 67.5,
+      "az": 10.588235294117652,
+      "el": -0.19841696596228828,
+      "section": "p8",
+      "cue": "CCW az=11"
+    },
+    {
+      "t": 76.0,
+      "az": -10.588235294117652,
+      "el": -0.24247245271127157,
+      "section": "p9",
+      "cue": "CCW az=-11"
+    },
+    {
+      "t": 89.0,
+      "az": -31.764705882352956,
+      "el": -0.10302962131043915,
+      "section": "p10",
+      "cue": "CCW az=-32"
+    },
+    {
+      "t": 100.0,
+      "az": -52.94117647058826,
+      "el": 0.11438397344383035,
+      "section": "p11",
+      "cue": "CCW az=-53"
+    },
+    {
+      "t": 112.0,
+      "az": -74.11764705882354,
+      "el": 0.2452340575166229,
+      "section": "p12",
+      "cue": "CCW az=-74"
+    },
+    {
+      "t": 121.0,
+      "az": -95.29411764705878,
+      "el": 0.19049589597975802,
+      "section": "p13",
+      "cue": "CCW az=-95"
+    },
+    {
+      "t": 132.5,
+      "az": -116.47058823529409,
+      "el": -0.008405761805284174,
+      "section": "p14",
+      "cue": "CCW az=-116"
+    },
+    {
+      "t": 146.5,
+      "az": -137.6470588235294,
+      "el": -0.20094610663790521,
+      "section": "p15",
+      "cue": "CCW az=-138"
+    },
+    {
+      "t": 163.0,
+      "az": -158.8235294117647,
+      "el": -0.24141444413731936,
+      "section": "p16",
+      "cue": "CCW az=-159"
+    },
+    {
+      "t": 175.0,
+      "az": -180.0,
+      "el": -0.09918514328265302,
+      "section": "p17",
+      "cue": "CCW az=-180"
+    }
+  ],
+  "files": {
+    "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_05_counterclockwise_ring.wav",
+    "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_05_counterclockwise_ring.m4a",
+    "mp3": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_05_counterclockwise_ring.mp3"
+  }
+}
