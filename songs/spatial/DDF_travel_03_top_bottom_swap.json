@@ -1,0 +1,139 @@
+{
+  "id": 3,
+  "slug": "top_bottom_swap",
+  "description": "Elevation extremes top/bottom",
+  "transition_sec": 3.2,
+  "keyframes": [
+    {
+      "t": 0.0,
+      "az": -70.0,
+      "el": 0.95,
+      "section": "p0",
+      "cue": "Top-L"
+    },
+    {
+      "t": 17.7,
+      "az": 70.0,
+      "el": 0.95,
+      "section": "p1",
+      "cue": "Top-R"
+    },
+    {
+      "t": 24.4,
+      "az": -70.0,
+      "el": -0.95,
+      "section": "p2",
+      "cue": "Bottom-L"
+    },
+    {
+      "t": 30.3,
+      "az": 70.0,
+      "el": -0.95,
+      "section": "p3",
+      "cue": "Bottom-R"
+    },
+    {
+      "t": 41.2,
+      "az": -70.0,
+      "el": 0.95,
+      "section": "p4",
+      "cue": "Top-L"
+    },
+    {
+      "t": 48.6,
+      "az": 70.0,
+      "el": 0.95,
+      "section": "p5",
+      "cue": "Top-R"
+    },
+    {
+      "t": 51.3,
+      "az": -70.0,
+      "el": -0.95,
+      "section": "p6",
+      "cue": "Bottom-L"
+    },
+    {
+      "t": 61.0,
+      "az": 70.0,
+      "el": -0.95,
+      "section": "p7",
+      "cue": "Bottom-R"
+    },
+    {
+      "t": 67.5,
+      "az": -70.0,
+      "el": 0.95,
+      "section": "p8",
+      "cue": "Top-L"
+    },
+    {
+      "t": 76.0,
+      "az": 70.0,
+      "el": 0.95,
+      "section": "p9",
+      "cue": "Top-R"
+    },
+    {
+      "t": 89.0,
+      "az": -70.0,
+      "el": -0.95,
+      "section": "p10",
+      "cue": "Bottom-L"
+    },
+    {
+      "t": 100.0,
+      "az": 70.0,
+      "el": -0.95,
+      "section": "p11",
+      "cue": "Bottom-R"
+    },
+    {
+      "t": 112.0,
+      "az": -70.0,
+      "el": 0.95,
+      "section": "p12",
+      "cue": "Top-L"
+    },
+    {
+      "t": 121.0,
+      "az": 70.0,
+      "el": 0.95,
+      "section": "p13",
+      "cue": "Top-R"
+    },
+    {
+      "t": 132.5,
+      "az": -70.0,
+      "el": -0.95,
+      "section": "p14",
+      "cue": "Bottom-L"
+    },
+    {
+      "t": 146.5,
+      "az": 70.0,
+      "el": -0.95,
+      "section": "p15",
+      "cue": "Bottom-R"
+    },
+    {
+      "t": 163.0,
+      "az": -70.0,
+      "el": 0.95,
+      "section": "p16",
+      "cue": "Top-L"
+    },
+    {
+      "t": 175.0,
+      "az": 70.0,
+      "el": 0.95,
+      "section": "p17",
+      "cue": "Top-R"
+    }
+  ],
+  "files": {
+    "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_03_top_bottom_swap.wav",
+    "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_03_top_bottom_swap.m4a",
+    "mp3": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_03_top_bottom_swap.mp3"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "id": 1,
+  "slug": "hard_LR_flip",
+  "description": "Hard left/right flips each phrase",
+  "transition_sec": 3.2,
+  "keyframes": [
+    {
+      "t": 0.0,
+      "az": -90.0,
+      "el": 0.0,
+      "section": "p0",
+      "cue": "Hard L"
+    },
+    {
+      "t": 17.7,
+      "az": 90.0,
+      "el": 0.0,
+      "section": "p1",
+      "cue": "Hard R"
+    },
+    {
+      "t": 24.4,
+      "az": -90.0,
+      "el": 0.0,
+      "section": "p2",
+      "cue": "Hard L"
+    },
+    {
+      "t": 30.3,
+      "az": 90.0,
+      "el": 0.0,
+      "section": "p3",
+      "cue": "Hard R"
+    },
+    {
+      "t": 41.2,
+      "az": -90.0,
+      "el": 0.0,
+      "section": "p4",
+      "cue": "Hard L"
+    },
+    {
+      "t": 48.6,
+      "az": 90.0,
+      "el": 0.0,
+      "section": "p5",
+      "cue": "Hard R"
+    },
+    {
+      "t": 51.3,
+      "az": -90.0,
+      "el": 0.0,
+      "section": "p6",
+      "cue": "Hard L"
+    },
+    {
+      "t": 61.0,
+      "az": 90.0,
+      "el": 0.0,
+      "section": "p7",
+      "cue": "Hard R"
+    },
+    {
+      "t": 67.5,
+      "az": -90.0,
+      "el": 0.0,
+      "section": "p8",
+      "cue": "Hard L"
+    },
+    {
+      "t": 76.0,
+      "az": 90.0,
+      "el": 0.0,
+      "section": "p9",
+      "cue": "Hard R"
+    },
+    {
+      "t": 89.0,
+      "az": -90.0,
+      "el": 0.0,
+      "section": "p10",
+      "cue": "Hard L"
+    },
+    {
+      "t": 100.0,
+      "az": 90.0,
+      "el": 0.0,
+      "section": "p11",
+      "cue": "Hard R"
+    },
+    {
+      "t": 112.0,
+      "az": -90.0,
+      "el": 0.0,
+      "section": "p12",
+      "cue": "Hard L"
+    },
+    {
+      "t": 121.0,
+      "az": 90.0,
+      "el": 0.0,
+      "section": "p13",
+      "cue": "Hard R"
+    },
+    {
+      "t": 132.5,
+      "az": -90.0,
+      "el": 0.0,
+      "section": "p14",
+      "cue": "Hard L"
+    },
+    {
+      "t": 146.5,
+      "az": 90.0,
+      "el": 0.0,
+      "section": "p15",
+      "cue": "Hard R"
+    },
+    {
+      "t": 163.0,
+      "az": -90.0,
+      "el": 0.0,
+      "section": "p16",
+      "cue": "Hard L"
+    },
+    {
+      "t": 175.0,
+      "az": 90.0,
+      "el": 0.0,
+      "section": "p17",
+      "cue": "Hard R"
+    }
+  ],
+  "files": {
+    "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_01_hard_LR_flip.wav",
+    "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_01_hard_LR_flip.m4a",
+    "mp3": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_01_hard_LR_flip.mp3"
+  }
+}

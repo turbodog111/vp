@@ -1,0 +1,139 @@
+{
+  "id": 2,
+  "slug": "front_back_poles",
+  "description": "Front vs back poles",
+  "transition_sec": 3.2,
+  "keyframes": [
+    {
+      "t": 0.0,
+      "az": 0.0,
+      "el": 0.35,
+      "section": "p0",
+      "cue": "Front"
+    },
+    {
+      "t": 17.7,
+      "az": 180.0,
+      "el": -0.2,
+      "section": "p1",
+      "cue": "Back"
+    },
+    {
+      "t": 24.4,
+      "az": 0.0,
+      "el": 0.35,
+      "section": "p2",
+      "cue": "Front"
+    },
+    {
+      "t": 30.3,
+      "az": 180.0,
+      "el": -0.2,
+      "section": "p3",
+      "cue": "Back"
+    },
+    {
+      "t": 41.2,
+      "az": 0.0,
+      "el": 0.35,
+      "section": "p4",
+      "cue": "Front"
+    },
+    {
+      "t": 48.6,
+      "az": 180.0,
+      "el": -0.2,
+      "section": "p5",
+      "cue": "Back"
+    },
+    {
+      "t": 51.3,
+      "az": 0.0,
+      "el": 0.35,
+      "section": "p6",
+      "cue": "Front"
+    },
+    {
+      "t": 61.0,
+      "az": 180.0,
+      "el": -0.2,
+      "section": "p7",
+      "cue": "Back"
+    },
+    {
+      "t": 67.5,
+      "az": 0.0,
+      "el": 0.35,
+      "section": "p8",
+      "cue": "Front"
+    },
+    {
+      "t": 76.0,
+      "az": 180.0,
+      "el": -0.2,
+      "section": "p9",
+      "cue": "Back"
+    },
+    {
+      "t": 89.0,
+      "az": 0.0,
+      "el": 0.35,
+      "section": "p10",
+      "cue": "Front"
+    },
+    {
+      "t": 100.0,
+      "az": 180.0,
+      "el": -0.2,
+      "section": "p11",
+      "cue": "Back"
+    },
+    {
+      "t": 112.0,
+      "az": 0.0,
+      "el": 0.35,
+      "section": "p12",
+      "cue": "Front"
+    },
+    {
+      "t": 121.0,
+      "az": 180.0,
+      "el": -0.2,
+      "section": "p13",
+      "cue": "Back"
+    },
+    {
+      "t": 132.5,
+      "az": 0.0,
+      "el": 0.35,
+      "section": "p14",
+      "cue": "Front"
+    },
+    {
+      "t": 146.5,
+      "az": 180.0,
+      "el": -0.2,
+      "section": "p15",
+      "cue": "Back"
+    },
+    {
+      "t": 163.0,
+      "az": 0.0,
+      "el": 0.35,
+      "section": "p16",
+      "cue": "Front"
+    },
+    {
+      "t": 175.0,
+      "az": 180.0,
+      "el": -0.2,
+      "section": "p17",
+      "cue": "Back"
+    }
+  ],
+  "files": {
+    "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_02_front_back_poles.wav",
+    "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_02_front_back_poles.m4a",
+    "mp3": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_02_front_back_poles.mp3"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "id": 8,
+  "slug": "figure_eight",
+  "description": "Figure-8 az/el path",
+  "transition_sec": 3.2,
+  "keyframes": [
+    {
+      "t": 0.0,
+      "az": 0.0,
+      "el": 0.0,
+      "section": "p0",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 17.7,
+      "az": 60.63260792819015,
+      "el": 0.30705541625907995,
+      "section": "p1",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 24.4,
+      "az": 89.6160758665531,
+      "el": 0.5726412970995736,
+      "section": "p2",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 30.3,
+      "az": 71.82155045522157,
+      "el": 0.760888797651803,
+      "section": "p3",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 41.2,
+      "az": 16.537456603491332,
+      "el": 0.8463740498507792,
+      "section": "p4",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 48.6,
+      "az": -47.378894658962025,
+      "el": 0.8175517966968961,
+      "section": "p5",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 51.3,
+      "az": -86.56430788555372,
+      "el": 0.6783146431882037,
+      "section": "p6",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 61.0,
+      "az": -80.56469622195563,
+      "el": 0.44746733844575265,
+      "section": "p7",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 67.5,
+      "az": -32.51174995684377,
+      "el": 0.1561870901440848,
+      "section": "p8",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 76.0,
+      "az": 32.51174995684373,
+      "el": -0.1561870901440846,
+      "section": "p9",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 89.0,
+      "az": 80.56469622195561,
+      "el": -0.4474673384457524,
+      "section": "p10",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 100.0,
+      "az": 86.56430788555372,
+      "el": -0.6783146431882034,
+      "section": "p11",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 112.0,
+      "az": 47.37889465896207,
+      "el": -0.8175517966968961,
+      "section": "p12",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 121.0,
+      "az": -16.53745660349125,
+      "el": -0.8463740498507794,
+      "section": "p13",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 132.5,
+      "az": -71.82155045522148,
+      "el": -0.7608887976518032,
+      "section": "p14",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 146.5,
+      "az": -89.61607586655312,
+      "el": -0.5726412970995741,
+      "section": "p15",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 163.0,
+      "az": -60.63260792819016,
+      "el": -0.30705541625908006,
+      "section": "p16",
+      "cue": "Figure-8 path"
+    },
+    {
+      "t": 175.0,
+      "az": -4.4087284769304716e-14,
+      "el": -2.0818995585505003e-16,
+      "section": "p17",
+      "cue": "Figure-8 path"
+    }
+  ],
+  "files": {
+    "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_08_figure_eight.wav",
+    "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_08_figure_eight.m4a",
+    "mp3": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_batch10/DDF_travel_08_figure_eight.mp3"
+  }
+}

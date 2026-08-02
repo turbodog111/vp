@@ -1034,33 +1034,34 @@ function updateNowPlaying(song = currentSong()) {
   updatePlaybackVisuals();
   updateFxState();
   setSpatialSong(song);
+  applySongTheme(song);
 }
 
 /* ---------- Spatial guide (Traveling Voices) — low-cost ---------- */
 // Embedded so Desktop UI / offline / failed fetch still get full cue data.
 const SPATIAL_MAP_EMBEDDED = {
   id: 'doki-doki-forever-traveling-voices',
-  transitionSec: 3.5,
-  description: 'Female + male always opposite; v2 stronger ILD/ITD/elevation.',
+  transitionSec: 3.2,
+  description: 'HQ extreme_jumps path + clean spatialize (no rear invert).',
   keyframes: [
-    { t: 0.0, az: -90.0, el: 0.0, section: 'intro', cue: 'Intro — hard left vs hard right' },
-    { t: 17.7, az: -55.0, el: 0.45, section: 'verse1 open', cue: 'Verse open — front-left high vs back-right low' },
-    { t: 24.4, az: 95.0, el: -0.15, section: 'verse1', cue: 'Flip — F hard right / M hard left' },
-    { t: 30.3, az: 5.0, el: 0.75, section: 'verse1', cue: 'F dead-front high / M dead-back low' },
-    { t: 41.2, az: -80.0, el: 0.95, section: 'verse1 late', cue: 'Top-left vs bottom-right' },
-    { t: 48.6, az: -155.0, el: 0.2, section: 'pre-chorus', cue: 'Pre-chorus — F deep back-left / M front-right' },
-    { t: 51.3, az: 50.0, el: 0.7, section: 'chorus1', cue: 'Chorus — front-right high vs back-left low' },
-    { t: 61.0, az: -10.0, el: -0.95, section: 'post-chorus', cue: 'F front-bottom / M back-top' },
-    { t: 67.5, az: -95.0, el: 0.4, section: 'verse2 entry', cue: 'Hard L/R with height split' },
-    { t: 76.0, az: 175.0, el: 0.35, section: 'verse2', cue: 'F behind / M front' },
-    { t: 89.0, az: 75.0, el: 0.95, section: 'verse2 / lift', cue: 'Top-right vs bottom-left' },
-    { t: 100.0, az: -60.0, el: -0.25, section: 'mid', cue: 'Front-left low vs back-right high' },
-    { t: 112.0, az: 110.0, el: 0.65, section: 'call-response', cue: 'Call-response — F right-high / M left-low' },
-    { t: 121.0, az: 0.0, el: 1.0, section: 'bridge / build', cue: 'Build — F front TOP / M back BOTTOM' },
-    { t: 132.5, az: -130.0, el: 0.55, section: 'bridge', cue: 'Bridge — rear-left high vs front-right low' },
-    { t: 146.5, az: 90.0, el: 0.0, section: 'final chorus', cue: 'Final chorus — pure right vs pure left' },
-    { t: 163.0, az: 25.0, el: 0.7, section: 'outro', cue: 'Outro — front-right high vs back-left low' },
-    { t: 175.0, az: -45.0, el: 0.0, section: 'end', cue: 'Close — soft FL / BR settle' },
+    { t: 0.0, az: -90.0, el: 0.0, section: "p0", cue: "Extreme -90,0" },
+    { t: 17.7, az: 90.0, el: 0.0, section: "p1", cue: "Extreme 90,0" },
+    { t: 24.4, az: 0.0, el: 1.0, section: "p2", cue: "Extreme 0,1" },
+    { t: 30.3, az: 180.0, el: -1.0, section: "p3", cue: "Extreme 180,-1" },
+    { t: 41.2, az: -45.0, el: 0.9, section: "p4", cue: "Extreme -45,0.9" },
+    { t: 48.6, az: 135.0, el: -0.9, section: "p5", cue: "Extreme 135,-0.9" },
+    { t: 51.3, az: -135.0, el: 0.9, section: "p6", cue: "Extreme -135,0.9" },
+    { t: 61.0, az: 45.0, el: -0.9, section: "p7", cue: "Extreme 45,-0.9" },
+    { t: 67.5, az: -90.0, el: 1.0, section: "p8", cue: "Extreme -90,1" },
+    { t: 76.0, az: 90.0, el: -1.0, section: "p9", cue: "Extreme 90,-1" },
+    { t: 89.0, az: 0.0, el: -1.0, section: "p10", cue: "Extreme 0,-1" },
+    { t: 100.0, az: 180.0, el: 1.0, section: "p11", cue: "Extreme 180,1" },
+    { t: 112.0, az: -120.0, el: 0.5, section: "p12", cue: "Extreme -120,0.5" },
+    { t: 121.0, az: 60.0, el: -0.5, section: "p13", cue: "Extreme 60,-0.5" },
+    { t: 132.5, az: -30.0, el: -0.8, section: "p14", cue: "Extreme -30,-0.8" },
+    { t: 146.5, az: 150.0, el: 0.8, section: "p15", cue: "Extreme 150,0.8" },
+    { t: 163.0, az: -90.0, el: 0.0, section: "p16", cue: "Extreme -90,0" },
+    { t: 175.0, az: 0.0, el: 0.5, section: "p17", cue: "Extreme 0,0.5" }
   ],
 };
 const SPATIAL_MS = 125;
@@ -1081,8 +1082,27 @@ function songLooksLikeTravelingVoices(song) {
   const id = song.id || '';
   const display = song.displayName || '';
   if (name.includes('Traveling Voices') || name.includes('Travelling Voices')) return true;
+  if (name.includes('DDF Travel') || name.includes('DDF_travel')) return true;
   const hay = `${title} ${path} ${id} ${display} ${name}`.toLowerCase();
-  return hay.includes('traveling voices') || hay.includes('travelling voices');
+  return hay.includes('traveling voices')
+    || hay.includes('travelling voices')
+    || hay.includes('ddf travel')
+    || hay.includes('ddf_travel');
+}
+
+/** Map library filename → spatial JSON slug (batch10). */
+function spatialSlugForSong(song) {
+  if (!song) return null;
+  const n = `${song.name || ''} ${song.title || ''}`;
+  const m = n.match(/DDF Travel\s+(\d{2})\s+(.+?)(?:\.m4a|\.mp3|$)/i)
+    || n.match(/DDF_travel_(\d{2})_(.+?)(?:\.m4a|\.mp3|$)/i);
+  if (m) {
+    const num = m[1];
+    const slug = m[2].trim().replace(/\s+/g, '_');
+    return `${num}_${slug}`;
+  }
+  if (/Traveling Voices/i.test(n)) return '09_extreme_jumps'; // primary HQ = extreme jumps
+  return null;
 }
 
 /** Native HTMLAudio path (no Web Audio graph) — closest to QuickTime levels/stereo. */
@@ -1106,12 +1126,42 @@ function cacheSpatialEls() {
   return spatialEls;
 }
 
-function loadSpatialMap() {
-  if (spatialMapCache) return spatialMapCache;
-  // Always use embedded map first so Desktop UI never depends on network fetch.
-  const data = JSON.parse(JSON.stringify(SPATIAL_MAP_EMBEDDED));
-  data._times = (data.keyframes || []).map(k => k.t);
-  spatialMapCache = data;
+const spatialMapBySlug = {};
+
+function normalizeSpatialMap(data) {
+  const map = data && data.keyframes ? data : { keyframes: data?.keyframes || SPATIAL_MAP_EMBEDDED.keyframes, transitionSec: data?.transition_sec || data?.transitionSec || 3.2 };
+  if (!map.transitionSec && data?.transition_sec) map.transitionSec = data.transition_sec;
+  if (!map.keyframes && data?.keyframes) map.keyframes = data.keyframes;
+  map._times = (map.keyframes || []).map(k => k.t);
+  return map;
+}
+
+function loadSpatialMap(song = currentSong()) {
+  const slug = spatialSlugForSong(song);
+  if (slug && spatialMapBySlug[slug]) {
+    spatialMapCache = spatialMapBySlug[slug];
+    return spatialMapCache;
+  }
+  // Try per-variant JSON on disk (async warm later); sync path uses embed / cache
+  if (slug && !spatialMapBySlug[slug]) {
+    // fire-and-forget fetch; meanwhile use embed with same transition
+    fetch(`./songs/spatial/DDF_travel_${slug}.json`)
+      .then(r => (r.ok ? r.json() : null))
+      .then(data => {
+        if (!data) return;
+        spatialMapBySlug[slug] = normalizeSpatialMap(data);
+        if (spatialSlugForSong(currentSong()) === slug) {
+          spatialMapCache = spatialMapBySlug[slug];
+          spatialForcePaint = true;
+          paintSpatialGuide(currentCalibratedTime(), true);
+        }
+      })
+      .catch(() => {});
+  }
+  // Default embed (matches primary Traveling Voices / extreme jumps style)
+  if (!spatialMapCache || !slug) {
+    spatialMapCache = normalizeSpatialMap(JSON.parse(JSON.stringify(SPATIAL_MAP_EMBEDDED)));
+  }
   return spatialMapCache;
 }
 
@@ -1119,8 +1169,85 @@ function resetSpatialUiCache() {
   spatialLastUi = { f: '', m: '', sec: '', cue: '', next: '', az: 999, el: 999 };
 }
 
+const DDLC_THEME_CLASSES = [
+  'theme-sayori', 'theme-natsuki', 'theme-yuri', 'theme-monika',
+  'theme-ddf-female', 'theme-ddf-male', 'theme-ddf-duet', 'spatial-song-active',
+];
+
+function detectDdlcGirlTheme(song) {
+  if (!song) return null;
+  const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''} ${song.path || ''}`.toLowerCase();
+  // Explicit girl markers in library titles
+  if (hay.includes('sayori')) return 'theme-sayori';
+  if (hay.includes('natsuki')) return 'theme-natsuki';
+  if (hay.includes('yuri') && !hay.includes('forever')) return 'theme-yuri';
+  if (hay.includes('monika')) return 'theme-monika';
+  // DDF family → reactive dual-vocal themes
+  if (
+    hay.includes('doki doki forever') ||
+    hay.includes('traveling voices') ||
+    hay.includes('ddf_') ||
+    hay.includes('drum-centered')
+  ) {
+    return 'theme-ddf'; // special: resolved dynamically by lead
+  }
+  // Other DDLC-adjacent
+  if (hay.includes('ddlc') || hay.includes('literature club')) return 'theme-monika';
+  return null;
+}
+
+function clearDdlcThemes() {
+  DDLC_THEME_CLASSES.forEach(c => document.body.classList.remove(c));
+  document.body.style.removeProperty('--ddf-female-lead');
+  document.body.style.removeProperty('--ddf-male-lead');
+}
+
+function applySongTheme(song = currentSong()) {
+  clearDdlcThemes();
+  const theme = detectDdlcGirlTheme(song);
+  if (!theme) return;
+  if (theme === 'theme-ddf') {
+    updateDdfSingerTheme(currentCalibratedTime());
+    return;
+  }
+  document.body.classList.add(theme);
+}
+
+/** Approximate who leads from arrangement landmarks for DDF tracks. */
+function updateDdfSingerTheme(timeSec = currentCalibratedTime()) {
+  const theme = detectDdlcGirlTheme(currentSong());
+  const isDdf = theme === 'theme-ddf'
+    || document.body.classList.contains('theme-ddf-female')
+    || document.body.classList.contains('theme-ddf-male')
+    || document.body.classList.contains('theme-ddf-duet')
+    || document.body.classList.contains('spatial-song-active');
+  if (!isDdf) return;
+  // Phrase-based lead guess from arrangement-like landmarks (matches our mix automation)
+  const fLeads = [
+    [17.5, 23.2], [29.0, 40.5], [51.0, 54.5], [60.5, 63.5], [66.0, 67.2],
+    [73.0, 89.5], [98.5, 107.5], [108.0, 108.9], [110.2, 111.0], [111.8, 118.5],
+    [125.0, 132.5], [136.0, 137.0], [137.8, 142.0], [143.0, 143.7], [145.2, 151.5],
+    [170.5, 175.5],
+  ];
+  const mLeads = [
+    [23.3, 28.8], [41.0, 48.0], [48.5, 51.0], [54.6, 56.0], [63.6, 66.0],
+    [67.2, 68.5], [92.0, 99.0], [107.5, 108.0], [109.0, 110.2], [111.0, 111.7],
+    [118.5, 125.0], [142.0, 143.0], [143.7, 145.2],
+  ];
+  const inRange = (ranges) => ranges.some(([a, b]) => timeSec >= a && timeSec < b);
+  const f = inRange(fLeads) ? 1 : 0;
+  const m = inRange(mLeads) ? 1 : 0;
+  document.body.classList.remove('theme-ddf-female', 'theme-ddf-male', 'theme-ddf-duet');
+  if (f && !m) document.body.classList.add('theme-ddf-female');
+  else if (m && !f) document.body.classList.add('theme-ddf-male');
+  else document.body.classList.add('theme-ddf-duet');
+  document.body.style.setProperty('--ddf-female-lead', f && !m ? '1' : (f && m ? '0.55' : '0.25'));
+  document.body.style.setProperty('--ddf-male-lead', m && !f ? '1' : (f && m ? '0.55' : '0.25'));
+}
+
 function setSpatialSong(song = currentSong()) {
   const els = cacheSpatialEls();
+  applySongTheme(song);
   const want = songLooksLikeTravelingVoices(song);
   if (!want) {
     spatialActive = false;
@@ -1130,7 +1257,8 @@ function setSpatialSong(song = currentSong()) {
     document.body.classList.remove('spatial-song-active');
     return;
   }
-  const map = loadSpatialMap();
+  spatialMapCache = null; // re-resolve for this song's path
+  const map = loadSpatialMap(song);
   if (!map) return;
   spatialActive = true;
   spatialForcePaint = true;
@@ -1138,7 +1266,6 @@ function setSpatialSong(song = currentSong()) {
   document.body.classList.add('spatial-song-active');
   if (els.panel) {
     els.panel.classList.remove('hidden');
-    // Force visible even if a parent style was sticky
     els.panel.style.display = '';
   }
   ensureSpatialRadar();
@@ -1261,10 +1388,10 @@ function ensureSpatialRadar() {
   const els = cacheSpatialEls();
   const canvas = els.radar;
   if (!canvas) return null;
-  // Fixed 1x pixel canvas — transparent (no black plate)
-  if (canvas.width !== 120 || canvas.height !== 120) {
-    canvas.width = 120;
-    canvas.height = 120;
+  // Compact dock radar (64 CSS px)
+  if (canvas.width !== 64 || canvas.height !== 64) {
+    canvas.width = 64;
+    canvas.height = 64;
   }
   if (!spatialCtx) spatialCtx = canvas.getContext('2d', { alpha: true });
   spatialRadarReady = true;
@@ -1274,10 +1401,10 @@ function ensureSpatialRadar() {
 function drawSpatialRadar(pose) {
   const ctx = ensureSpatialRadar();
   if (!ctx || !pose) return;
-  const size = 120;
+  const size = 64;
   const cx = size / 2;
   const cy = size / 2;
-  const r = 42;
+  const r = 22;
 
   ctx.clearRect(0, 0, size, size);
 
@@ -1295,17 +1422,17 @@ function drawSpatialRadar(pose) {
   ctx.stroke();
 
   ctx.fillStyle = 'rgba(235,235,240,0.45)';
-  ctx.font = '10px system-ui,sans-serif';
+  ctx.font = '8px system-ui,sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('F', cx, cy - r - 8);
-  ctx.fillText('B', cx, cy + r + 8);
-  ctx.fillText('L', cx - r - 8, cy);
-  ctx.fillText('R', cx + r + 8, cy);
+  ctx.fillText('F', cx, cy - r - 5);
+  ctx.fillText('B', cx, cy + r + 5);
+  ctx.fillText('L', cx - r - 5, cy);
+  ctx.fillText('R', cx + r + 5, cy);
 
   ctx.fillStyle = 'rgba(235,235,240,0.9)';
   ctx.beginPath();
-  ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+  ctx.arc(cx, cy, 2, 0, Math.PI * 2);
   ctx.fill();
 
   function plot(az, el, color) {
@@ -1313,7 +1440,7 @@ function drawSpatialRadar(pose) {
     const ring = r * (0.62 + Math.min(0.2, Math.abs(el) * 0.15));
     const x = cx + Math.sin(rad) * ring;
     const y = cy - Math.cos(rad) * ring;
-    const s = 5 + Math.max(0, el) * 2;
+    const s = 3.2 + Math.max(0, el) * 1.4;
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x, y, s, 0, Math.PI * 2);
@@ -1365,6 +1492,13 @@ function paintSpatialGuide(timeSec, force = false) {
     nextText = 'End of spatial cues';
   }
   setTextIfChanged(els.next, nextText, 'next');
+  // Reactive DDF background while spatial track plays
+  if (document.body.classList.contains('spatial-song-active')
+    || document.body.classList.contains('theme-ddf-female')
+    || document.body.classList.contains('theme-ddf-male')
+    || document.body.classList.contains('theme-ddf-duet')) {
+    updateDdfSingerTheme(timeSec);
+  }
 }
 
 function updateUpNext() {
