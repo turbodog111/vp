@@ -1127,6 +1127,18 @@ function cacheSpatialEls() {
 }
 
 const spatialMapBySlug = {};
+const BATCH10_SPATIAL_SLUGS = [
+  '01_hard_LR_flip',
+  '02_front_back_poles',
+  '03_top_bottom_swap',
+  '04_clockwise_ring',
+  '05_counterclockwise_ring',
+  '06_diagonal_cardinals',
+  '07_vertical_spin_sides',
+  '08_figure_eight',
+  '09_extreme_jumps',
+  '10_fast_orbit_then_hold',
+];
 
 function normalizeSpatialMap(data) {
   const map = data && data.keyframes ? data : { keyframes: data?.keyframes || SPATIAL_MAP_EMBEDDED.keyframes, transitionSec: data?.transition_sec || data?.transitionSec || 3.2 };
@@ -1136,30 +1148,44 @@ function normalizeSpatialMap(data) {
   return map;
 }
 
+function fetchSpatialSlug(slug) {
+  if (!slug || spatialMapBySlug[slug]) return Promise.resolve(spatialMapBySlug[slug] || null);
+  return fetch(`./songs/spatial/DDF_travel_${slug}.json`)
+    .then(r => (r.ok ? r.json() : null))
+    .then(data => {
+      if (!data) return null;
+      spatialMapBySlug[slug] = normalizeSpatialMap(data);
+      return spatialMapBySlug[slug];
+    })
+    .catch(() => null);
+}
+
+function preloadBatch10SpatialMaps() {
+  BATCH10_SPATIAL_SLUGS.forEach(slug => { fetchSpatialSlug(slug); });
+}
+
 function loadSpatialMap(song = currentSong()) {
   const slug = spatialSlugForSong(song);
   if (slug && spatialMapBySlug[slug]) {
     spatialMapCache = spatialMapBySlug[slug];
     return spatialMapCache;
   }
-  // Try per-variant JSON on disk (async warm later); sync path uses embed / cache
+  // Per-variant JSON: warm cache async; do not permanently pin wrong embed when slug known
   if (slug && !spatialMapBySlug[slug]) {
-    // fire-and-forget fetch; meanwhile use embed with same transition
-    fetch(`./songs/spatial/DDF_travel_${slug}.json`)
-      .then(r => (r.ok ? r.json() : null))
-      .then(data => {
-        if (!data) return;
-        spatialMapBySlug[slug] = normalizeSpatialMap(data);
-        if (spatialSlugForSong(currentSong()) === slug) {
-          spatialMapCache = spatialMapBySlug[slug];
-          spatialForcePaint = true;
-          paintSpatialGuide(currentCalibratedTime(), true);
-        }
-      })
-      .catch(() => {});
+    fetchSpatialSlug(slug).then(map => {
+      if (!map) return;
+      if (spatialSlugForSong(currentSong()) === slug) {
+        spatialMapCache = map;
+        spatialForcePaint = true;
+        paintSpatialGuide(currentCalibratedTime(), true);
+      }
+    });
   }
-  // Default embed (matches primary Traveling Voices / extreme jumps style)
-  if (!spatialMapCache || !slug) {
+  // Primary Traveling Voices / unknown → embedded extreme-jumps style map
+  if (!slug) {
+    spatialMapCache = normalizeSpatialMap(JSON.parse(JSON.stringify(SPATIAL_MAP_EMBEDDED)));
+  } else if (!spatialMapCache) {
+    // Brief fallback until fetch lands (slug-specific map preferred)
     spatialMapCache = normalizeSpatialMap(JSON.parse(JSON.stringify(SPATIAL_MAP_EMBEDDED)));
   }
   return spatialMapCache;
@@ -1182,10 +1208,13 @@ function detectDdlcGirlTheme(song) {
   if (hay.includes('natsuki')) return 'theme-natsuki';
   if (hay.includes('yuri') && !hay.includes('forever')) return 'theme-yuri';
   if (hay.includes('monika')) return 'theme-monika';
-  // DDF family → reactive dual-vocal themes
+  // DDF family → reactive dual-vocal themes (Travel batch uses "DDF Travel NN …")
   if (
     hay.includes('doki doki forever') ||
     hay.includes('traveling voices') ||
+    hay.includes('travelling voices') ||
+    hay.includes('ddf travel') ||
+    hay.includes('ddf_travel') ||
     hay.includes('ddf_') ||
     hay.includes('drum-centered')
   ) {
@@ -1437,14 +1466,33 @@ function drawSpatialRadar(pose) {
 
   function plot(az, el, color) {
     const rad = (az * Math.PI) / 180;
-    const ring = r * (0.62 + Math.min(0.2, Math.abs(el) * 0.15));
+    // Front (az≈0) sits near top of radar; rear near bottom — ring radius encodes depth a bit
+    const rear = 0.5 * (1 - Math.cos(rad));
+    const ring = r * (0.55 + rear * 0.22 + Math.min(0.18, Math.abs(el) * 0.12));
     const x = cx + Math.sin(rad) * ring;
     const y = cy - Math.cos(rad) * ring;
-    const s = 3.2 + Math.max(0, el) * 1.4;
+    const s = 3.0 + Math.max(0, el) * 1.6 + (el < 0 ? Math.abs(el) * 0.4 : 0);
+    // Soft halo for rear (externalized) vs solid for front
+    if (rear > 0.55) {
+      ctx.fillStyle = color.replace(')', ',0.28)').replace('rgb', 'rgba').replace('#ff7eb6', 'rgba(255,126,182,0.28)').replace('#5eead4', 'rgba(94,234,212,0.28)');
+      if (color === '#ff7eb6') ctx.fillStyle = 'rgba(255,126,182,0.28)';
+      if (color === '#5eead4') ctx.fillStyle = 'rgba(94,234,212,0.28)';
+      ctx.beginPath();
+      ctx.arc(x, y, s + 2.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x, y, s, 0, Math.PI * 2);
     ctx.fill();
+    // Tiny elevation tick: up = open ring, down = filled smaller core already
+    if (el > 0.35) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(x, y, s + 1.8, 0, Math.PI * 2);
+      ctx.stroke();
+    }
   }
 
   plot(pose.az, pose.el, '#ff7eb6');
@@ -3411,4 +3459,5 @@ resizeFxCanvas(true);
 updateFxState();
 drawWaveform(true);
 loadSpatialMap(); // embed into cache immediately
+preloadBatch10SpatialMaps(); // warm all 10 travel path maps
 loadLibrary();
