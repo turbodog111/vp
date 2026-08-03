@@ -776,8 +776,15 @@
       "drums"
     ],
     "monika_f_lead": 1.1,
-    "spatial": "stereo_homes_v5",
-    "spatial_note": "Female lives left hemisphere, male right. Lead steps toward center on their side; under goes wider. Clean pan+ITD only \u2014 abandoned front/back EQ and random jumpy hops."
+    "spatial": "stereo_homes_kemar_hrtf_v6",
+    "spatial_note": "Female left / male right (stereo homes). Placement uses free MIT KEMAR ear measurements (HRTF), not pan-only and not fake muffling. Headphones recommended. Beds stay normal stereo.",
+    "hrtf": {
+      "dataset": "MIT KEMAR compact",
+      "source": "https://sound.media.mit.edu/resources/KEMAR.html",
+      "cost": "free",
+      "elevation": 0,
+      "citation": "Gardner, Bill and Martin, Keith. HRTF Measurements of a KEMAR Dummy-Head Microphone. MIT Media Lab, 1994."
+    }
   },
   "default": {
     "both_f": 0.78,

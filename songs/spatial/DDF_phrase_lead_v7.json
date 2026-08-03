@@ -1,7 +1,7 @@
 {
   "id": "v7_phrase_word_lead",
   "title": "Traveling Voices v7 Phrase-Word Lead",
-  "blurb": "Locked phrase/word lead map (108 units). Monika F lead \u00d71.1 + non-vocal \u00d70.6; spatial v5 stereo homes (F left / M right, lead-linked, no F/B muffling).",
+  "blurb": "Locked phrase/word lead map (108 units). Monika F lead \u00d71.1 + non-vocal \u00d70.6; spatial v6 stereo homes + free MIT KEMAR HRTF (real ear recipes, headphones).",
   "both_f": 0.78,
   "both_m": 0.78,
   "lead": 1.05,
@@ -13,8 +13,15 @@
     "instrumental",
     "drums"
   ],
-  "spatial": "stereo_homes_v5",
-  "spatial_note": "Female lives left hemisphere, male right. Lead steps toward center on their side; under goes wider. Clean pan+ITD only \u2014 abandoned front/back EQ and random jumpy hops.",
+  "spatial": "stereo_homes_kemar_hrtf_v6",
+  "spatial_note": "Female left / male right (stereo homes). Placement uses free MIT KEMAR ear measurements (HRTF), not pan-only and not fake muffling. Headphones recommended. Beds stay normal stereo.",
+  "hrtf": {
+    "dataset": "MIT KEMAR compact",
+    "source": "https://sound.media.mit.edu/resources/KEMAR.html",
+    "cost": "free",
+    "elevation": 0,
+    "citation": "Gardner, Bill and Martin, Keith. HRTF Measurements of a KEMAR Dummy-Head Microphone. MIT Media Lab, 1994."
+  },
   "stats": {
     "pct_both_high": 46.0,
     "pct_female_lead": 46.3,
