@@ -776,8 +776,8 @@
       "drums"
     ],
     "monika_f_lead": 1.1,
-    "spatial": "compass_jumpy_kemar_hrtf_v6b",
-    "spatial_note": "WHERE = Audio Compass keyframe map (female az/el; male opposite az+180, -el). WHO is loud = phrase/word lead map. Placement via free MIT KEMAR HRTF. Headphones recommended.",
+    "spatial": "compass_jumpy_kemar_hrtf_v6c",
+    "spatial_note": "WHERE = Audio Compass map (F az/el; M opposite). Poses exaggerated toward front/back poles + stronger elevation, then free MIT KEMAR HRTF + mild F/B/up/down tone emphasis on vocals only. WHO is loud = phrase lead. Headphones recommended.",
     "hrtf": {
       "dataset": "MIT KEMAR compact",
       "source": "https://sound.media.mit.edu/resources/KEMAR.html",
@@ -786,7 +786,13 @@
       "citation": "Gardner, Bill and Martin, Keith. HRTF Measurements of a KEMAR Dummy-Head Microphone. MIT Media Lab, 1994."
     },
     "compass_map": "/Users/joshua/Documents/Codex/2026-05-16/hey-codex-i-was-working-with/vp/songs/spatial/DDF_travel_jumpy_moving_leads.json",
-    "compass_keyframes": 55
+    "compass_keyframes": 55,
+    "spatial_exaggerate": {
+      "azimuth_fb_power": 0.52,
+      "elevation_gain": 1.85,
+      "elevation_deg_scale": 70,
+      "fb_el_emphasis": true
+    }
   },
   "default": {
     "both_f": 0.78,
