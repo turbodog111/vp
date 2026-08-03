@@ -1,0 +1,123 @@
+{
+  "version": 3,
+  "target_active_rms_db": -23.0,
+  "inputs": {
+    "male": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/stems/best_v3/male_vocals.wav",
+    "female": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/stems/best_v3/female_vocals.wav"
+  },
+  "separation": {
+    "male_models": [
+      "kim_ft2_bleedless",
+      "bs_revive_v2",
+      "kim_vocals_mbr"
+    ],
+    "female_models": [
+      "kim_ft2_bleedless",
+      "bs_revive_v2"
+    ],
+    "male_final": {
+      "name": "male",
+      "intro": -199.91,
+      "early": -26.78,
+      "active": -24.78,
+      "sub": 4.4,
+      "low": 25.268,
+      "mid": 54.239,
+      "bleed": -10.91
+    },
+    "female_final": {
+      "name": "female",
+      "intro": -199.91,
+      "early": -31.72,
+      "active": -31.74,
+      "sub": 0.0,
+      "low": 45.56,
+      "mid": 41.374,
+      "bleed": -52.91
+    },
+    "notes": "min-FFT ensemble + aggressive spectral debleed + HPSS low harmonic + HPF"
+  },
+  "pre": {
+    "female": {
+      "name": "female_in",
+      "peak_db": -14.739226652454839,
+      "rms_db": -32.23533693436511,
+      "active_rms_db": -27.011295517814006,
+      "band_pct": {
+        "sub_20_150": 0.00040000563196574876,
+        "low_80_250": 4.062883266936993,
+        "mid_500_2k": 58.84424553341596,
+        "presence_2_4k": 24.73629252632599,
+        "harsh_4_8k": 6.001169264113303,
+        "air_8_12k": 6.3550094035757905
+      },
+      "sib_p90": 1.0609654066408776,
+      "early_sub_pct": 0.0003187193179981221
+    },
+    "male": {
+      "name": "male_in",
+      "peak_db": -6.674563045841446,
+      "rms_db": -24.960091836036668,
+      "active_rms_db": -21.212203797432455,
+      "band_pct": {
+        "sub_20_150": 0.8994953814660528,
+        "low_80_250": 7.186286650394941,
+        "mid_500_2k": 43.195841640831844,
+        "presence_2_4k": 28.87884081143797,
+        "harsh_4_8k": 14.675394937799146,
+        "air_8_12k": 5.164140578070044
+      },
+      "sib_p90": 3.8971302268524886,
+      "early_sub_pct": 4.58230266846324
+    }
+  },
+  "post": {
+    "female": {
+      "name": "female_out",
+      "peak_db": -11.79039617323026,
+      "rms_db": -28.55647401245916,
+      "active_rms_db": -24.250046704856842,
+      "band_pct": {
+        "sub_20_150": 0.00031319989675187345,
+        "low_80_250": 3.70978931534291,
+        "mid_500_2k": 72.8112135734185,
+        "presence_2_4k": 17.31776865452812,
+        "harsh_4_8k": 2.948307398659024,
+        "air_8_12k": 3.2126078581546973
+      },
+      "sib_p90": 0.3850608635775431,
+      "early_sub_pct": 0.00024392676888234822
+    },
+    "male": {
+      "name": "male_out",
+      "peak_db": -9.324830336242192,
+      "rms_db": -27.322064807226205,
+      "active_rms_db": -22.871099688523003,
+      "band_pct": {
+        "sub_20_150": 0.37066515574430886,
+        "low_80_250": 3.135779835087723,
+        "mid_500_2k": 78.01877256746397,
+        "presence_2_4k": 15.56501080766441,
+        "harsh_4_8k": 1.4117069706893377,
+        "air_8_12k": 1.4980646633502368
+      },
+      "sib_p90": 0.14282055263685683,
+      "early_sub_pct": 2.0772425141200532
+    }
+  },
+  "gains": {
+    "male": 0.9381051853399461,
+    "female": 1.6421771585709752
+  },
+  "files": {
+    "female": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/female_remastered_v3.wav",
+    "male": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/male_remastered_v3.wav"
+  },
+  "notes": [
+    "INPUTS are clean re-separated vocals (not full-mix remasters).",
+    "Male: Kim FT2 bleedless + BS Revive v2 + Kim MelBand min-FFT ensemble,",
+    "      spectral debleed + HPSS low-harmonic + tone polish.",
+    "Female: Kim FT2 bleedless + BS Revive v2 ensemble + light polish.",
+    "Early sub leakage (male): check post.male.early_sub_pct << pre."
+  ]
+}

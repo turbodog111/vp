@@ -1,0 +1,32 @@
+{
+  "male_models": [
+    "kim_ft2_bleedless",
+    "bs_revive_v2",
+    "kim_vocals_mbr"
+  ],
+  "female_models": [
+    "kim_ft2_bleedless",
+    "bs_revive_v2"
+  ],
+  "male_final": {
+    "name": "male",
+    "intro": -199.91,
+    "early": -26.78,
+    "active": -24.78,
+    "sub": 4.4,
+    "low": 25.268,
+    "mid": 54.239,
+    "bleed": -10.91
+  },
+  "female_final": {
+    "name": "female",
+    "intro": -199.91,
+    "early": -31.72,
+    "active": -31.74,
+    "sub": 0.0,
+    "low": 45.56,
+    "mid": 41.374,
+    "bleed": -52.91
+  },
+  "notes": "min-FFT ensemble + aggressive spectral debleed + HPSS low harmonic + HPF"
+}
