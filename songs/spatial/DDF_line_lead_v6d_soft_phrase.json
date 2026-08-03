@@ -5,10 +5,10 @@
   "both_f": 0.85,
   "both_m": 0.85,
   "lead": 1.02,
-  "under": 0.58,
+  "under": 0.15,
   "ramp": 0.48,
   "stats": {
-    "pct_both_high": 52.7,
+    "pct_both_high": 51.7,
     "pct_female_lead": 23.4,
     "pct_male_lead": 23.8
   },

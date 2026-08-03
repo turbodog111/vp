@@ -6,8 +6,8 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-08-02-natsuki4">
-<link rel="stylesheet" href="styles.css?v=20260802-natsuki4">
+<meta name="vp-build" content="2026-08-02-lyrics-fix">
+<link rel="stylesheet" href="styles.css?v=20260802-lyrics-fix">
 </head>
 <body>
 <div class="app">
@@ -132,15 +132,40 @@
           </div>
 
           <div class="ddf-lyrics-block" id="ddf-lyrics-block" data-mode="dual">
+            <div class="ddf-active-banner" id="ddf-active-banner" aria-live="polite">
+              <span class="ddf-active-chip both" id="ddf-active-chip">BOTH TRACKS</span>
+              <span class="ddf-active-hint" id="ddf-active-hint">dual lead</span>
+            </div>
             <div class="ddf-lyrics-stage" id="ddf-lyrics-stage">
               <div class="ddf-lyric-pane female" id="ddf-pane-female">
-                <div class="ddf-track-label">Female track</div>
+                <div class="ddf-track-label" id="ddf-label-female">
+                  <span class="ddf-track-name">Female track</span>
+                  <span class="ddf-track-state" id="ddf-state-female">LEAD</span>
+                </div>
                 <div class="ddf-current-line" id="ddf-line-female">…</div>
               </div>
               <div class="ddf-lyric-pane male" id="ddf-pane-male">
-                <div class="ddf-track-label">Male track</div>
+                <div class="ddf-track-label" id="ddf-label-male">
+                  <span class="ddf-track-name">Male track</span>
+                  <span class="ddf-track-state" id="ddf-state-male">LEAD</span>
+                </div>
                 <div class="ddf-current-line" id="ddf-line-male">…</div>
               </div>
+            </div>
+          </div>
+
+          <div class="ddf-full-lyrics-wrap">
+            <button type="button" class="ddf-full-toggle" id="ddf-full-toggle" aria-expanded="false">
+              Full lyrics map ▾
+            </button>
+            <div class="ddf-full-lyrics hidden" id="ddf-full-lyrics" role="region" aria-label="Full lyrics with active track">
+              <div class="ddf-full-legend">
+                <span class="leg F">F lead</span>
+                <span class="leg M">M lead</span>
+                <span class="leg both">Both</span>
+                <span class="leg now">● now</span>
+              </div>
+              <div class="ddf-full-list" id="ddf-full-list"></div>
             </div>
           </div>
 
@@ -247,6 +272,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=20260802-natsuki4"></script>
+<script src="app.js?v=20260802-lyrics-fix"></script>
 </body>
 </html>

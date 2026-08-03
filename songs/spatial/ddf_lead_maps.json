@@ -3,7 +3,7 @@
     "both_f": 0.78,
     "both_m": 0.78,
     "lead": 1.05,
-    "under": 0.48,
+    "under": 0.15,
     "segments": [
       {
         "start": 53.93,
@@ -156,7 +156,7 @@
     "both_f": 0.75,
     "both_m": 0.75,
     "lead": 1.08,
-    "under": 0.42,
+    "under": 0.15,
     "segments": [
       {
         "start": 53.93,
@@ -329,7 +329,7 @@
     "both_f": 0.82,
     "both_m": 0.82,
     "lead": 1.05,
-    "under": 0.52,
+    "under": 0.15,
     "segments": [
       {
         "start": 16.44,
@@ -432,7 +432,7 @@
     "both_f": 0.85,
     "both_m": 0.85,
     "lead": 1.02,
-    "under": 0.58,
+    "under": 0.15,
     "segments": [
       {
         "start": 12.45,
@@ -520,7 +520,7 @@
     "both_f": 1,
     "both_m": 1,
     "lead": 1,
-    "under": 1,
+    "under": 0.15,
     "segments": []
   }
 }

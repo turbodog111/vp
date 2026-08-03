@@ -1320,15 +1320,18 @@ body.theme-monika .ddf-sil { background-image: url('./songs/spatial/ddf-ui/sil_m
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 16px 10px;
-  gap: 8px;
-  overflow: hidden;
+  padding: 8px 14px 8px;
+  gap: 6px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ddf-header {
   text-align: center;
   flex-shrink: 0;
   width: min(920px, 100%);
+  padding-top: 4px;
 }
 .ddf-club-badge {
   display: inline-flex;
@@ -1354,13 +1357,17 @@ body.theme-monika .ddf-sil { background-image: url('./songs/spatial/ddf-ui/sil_m
 .ddf-song-title {
   margin: 0;
   font-family: "Georgia", "Times New Roman", serif;
-  font-size: clamp(22px, 4.2vw, 34px);
+  font-size: clamp(18px, 3.2vw, 28px);
   font-weight: 700;
   color: #fff;
   text-shadow:
     0 2px 0 rgba(255, 107, 157, 0.35),
     0 4px 24px rgba(0, 0, 0, 0.55);
   letter-spacing: 0.02em;
+  line-height: 1.15;
+  overflow: visible;
+  white-space: normal;
+  word-break: break-word;
 }
 .ddf-song-sub {
   margin-top: 2px;
@@ -1415,7 +1422,7 @@ body.theme-monika .ddf-pill.monika {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   width: min(360px, 100%);
 }
 .ddf-compass-title {
@@ -1428,10 +1435,10 @@ body.theme-monika .ddf-pill.monika {
 }
 .ddf-compass-frame {
   position: relative;
-  width: min(280px, 62vw);
-  height: min(280px, 62vw);
-  max-height: min(36vh, 300px);
-  max-width: min(36vh, 300px);
+  width: min(220px, 48vw);
+  height: min(220px, 48vw);
+  max-height: min(28vh, 240px);
+  max-width: min(28vh, 240px);
   border-radius: 50%;
   padding: 6px;
   background:
@@ -1504,100 +1511,260 @@ body.theme-monika .ddf-pill.monika {
   max-width: 340px;
 }
 
-/* ---- Dual scrolling lyrics ---- */
+/* ---- Current-line lyrics (single or dual by lead state) ---- */
 .ddf-lyrics-block {
-  flex: 1 1 auto;
-  min-height: 0;
-  width: min(920px, 100%);
+  flex: 0 0 auto;
+  width: min(720px, 100%);
   display: flex;
   flex-direction: column;
-  background: rgba(255, 250, 252, 0.92);
-  border: 2px solid rgba(255, 107, 157, 0.45);
+  gap: 0;
+  border: 2px solid rgba(255, 107, 157, 0.5);
   border-radius: 16px;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.35),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
   overflow: hidden;
-  /* notebook paper */
-  background-image:
-    linear-gradient(90deg, rgba(255, 160, 190, 0.15) 0 2px, transparent 2px),
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 27px,
-      rgba(255, 140, 180, 0.18) 27px,
-      rgba(255, 140, 180, 0.18) 28px
-    ),
-    linear-gradient(180deg, #fff8fb, #ffeef5);
-  background-size: 100% 100%, 100% 28px, 100% 100%;
-  background-position: 28px 0, 0 0, 0 0;
+  background: linear-gradient(180deg, #fff8fb, #ffeef5);
 }
-.ddf-lyrics-headers {
+.ddf-active-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(26, 16, 32, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.ddf-active-chip {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  color: #1a1020;
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+}
+.ddf-active-chip.both {
+  background: linear-gradient(90deg, #ff9ec8, #5eead4);
+  box-shadow: 0 0 16px rgba(255, 158, 200, 0.45);
+}
+.ddf-active-chip.F {
+  background: #ff7eb6;
+  box-shadow: 0 0 18px rgba(255, 126, 182, 0.55);
+  color: #2a1020;
+}
+.ddf-active-chip.M {
+  background: #5eead4;
+  box-shadow: 0 0 18px rgba(94, 234, 212, 0.5);
+  color: #0a2020;
+}
+.ddf-active-hint {
+  font-size: 11px;
+  font-weight: 650;
+  color: rgba(255, 255, 255, 0.7);
+}
+.ddf-lyrics-stage {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0;
-  flex-shrink: 0;
-  border-bottom: 2px solid rgba(255, 107, 157, 0.25);
-  background: rgba(255, 255, 255, 0.65);
+  min-height: 88px;
+  transition: grid-template-columns 0.3s ease;
 }
-.ddf-lyrics-h {
-  padding: 8px 12px;
+.ddf-lyrics-block[data-mode="female"] .ddf-lyrics-stage,
+.ddf-lyrics-block[data-mode="male"] .ddf-lyrics-stage {
+  grid-template-columns: 1fr;
+}
+.ddf-lyrics-block[data-mode="female"] .ddf-lyric-pane.male,
+.ddf-lyrics-block[data-mode="male"] .ddf-lyric-pane.female {
+  display: none;
+}
+.ddf-lyric-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 16px 16px;
+  text-align: center;
+  min-width: 0;
+  transition: opacity 0.25s, background 0.25s;
+}
+.ddf-lyric-pane.female {
+  border-right: 1px dashed rgba(255, 107, 157, 0.3);
+  background: rgba(255, 126, 182, 0.06);
+}
+.ddf-lyric-pane.male {
+  background: rgba(94, 234, 212, 0.06);
+}
+.ddf-lyrics-block[data-mode="female"] .ddf-lyric-pane.female,
+.ddf-lyrics-block[data-mode="male"] .ddf-lyric-pane.male {
+  border-right: none;
+  background: transparent;
+  padding: 18px 20px 20px;
+}
+.ddf-lyric-pane.is-support {
+  opacity: 0.35;
+  filter: grayscale(0.25);
+}
+.ddf-lyric-pane.is-lead {
+  opacity: 1;
+}
+.ddf-track-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ddf-track-name {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ddf-lyric-pane.female .ddf-track-name { color: #d63384; }
+.ddf-lyric-pane.male .ddf-track-name { color: #0d9488; }
+.ddf-lyrics-block[data-mode="female"] .ddf-track-name,
+.ddf-lyrics-block[data-mode="male"] .ddf-track-name {
+  font-size: 13px;
+  letter-spacing: 0.18em;
+}
+.ddf-track-state {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(26, 16, 32, 0.12);
+  color: rgba(26, 16, 32, 0.55);
+}
+.ddf-lyric-pane.is-lead .ddf-track-state {
+  background: #1a1020;
+  color: #fff;
+}
+.ddf-lyric-pane.female.is-lead .ddf-track-state { background: #d63384; }
+.ddf-lyric-pane.male.is-lead .ddf-track-state { background: #0d9488; }
+.ddf-current-line {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: clamp(15px, 2.4vw, 20px);
+  font-weight: 700;
+  line-height: 1.35;
+  color: #1a1020;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+.ddf-lyrics-block[data-mode="female"] .ddf-current-line,
+.ddf-lyrics-block[data-mode="male"] .ddf-current-line {
+  font-size: clamp(17px, 2.8vw, 24px);
+}
+.ddf-current-line.is-empty {
+  color: rgba(26, 16, 32, 0.35);
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* Full lyrics map */
+.ddf-full-lyrics-wrap {
+  flex: 0 1 auto;
+  width: min(720px, 100%);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: min(28vh, 220px);
+}
+.ddf-full-toggle {
+  flex-shrink: 0;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(12, 8, 18, 0.65);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  text-align: center;
+  padding: 7px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
 }
-.ddf-lyrics-h.female { color: #d63384; border-right: 1px solid rgba(255, 107, 157, 0.2); }
-.ddf-lyrics-h.male { color: #0d9488; }
-.ddf-lyrics-scroll {
+.ddf-full-toggle[aria-expanded="true"] {
+  border-radius: 10px 10px 0 0;
+  border-bottom-color: transparent;
+}
+.ddf-full-lyrics {
   flex: 1 1 auto;
-  min-height: 120px;
-  max-height: min(28vh, 260px);
-  overflow: hidden;
+  min-height: 0;
+  overflow: auto;
+  background: rgba(12, 8, 18, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 8px 10px 10px;
+  -webkit-overflow-scrolling: touch;
+}
+.ddf-full-lyrics.hidden { display: none !important; }
+.ddf-full-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+.ddf-full-legend .leg {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.ddf-full-legend .leg.F { color: #ff9ec8; }
+.ddf-full-legend .leg.M { color: #5eead4; }
+.ddf-full-legend .leg.both { color: #fde68a; }
+.ddf-full-legend .leg.now { color: #fff; }
+.ddf-full-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  position: relative;
+  grid-template-columns: 52px 44px minmax(0, 1fr);
+  gap: 8px;
+  align-items: baseline;
+  padding: 5px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  border-left: 3px solid transparent;
 }
-.ddf-lyrics-col {
-  overflow: hidden;
-  position: relative;
-  padding: 8px 10px 8px 18px;
+.ddf-full-row .t {
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  opacity: 0.7;
 }
-.ddf-lyrics-col.female { border-right: 1px dashed rgba(255, 107, 157, 0.28); }
-.ddf-lyrics-track {
-  position: relative;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
+.ddf-full-row .who {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
-.ddf-line {
-  font-family: "Georgia", "Times New Roman", serif;
-  font-size: clamp(12px, 1.9vw, 15px);
-  line-height: 28px; /* match notebook rule */
-  height: 28px;
-  color: rgba(40, 20, 35, 0.38);
-  white-space: nowrap;
+.ddf-full-row .txt {
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 4px;
-  transition: color 0.25s, font-weight 0.25s, text-shadow 0.25s, transform 0.25s;
+  white-space: nowrap;
 }
-.ddf-line.active {
-  color: #1a1020;
-  font-weight: 700;
-  text-shadow: 0 0 12px rgba(255, 126, 182, 0.35);
-  transform: scale(1.02);
-  transform-origin: left center;
+.ddf-full-row.lead-F { border-left-color: #ff7eb6; }
+.ddf-full-row.lead-F .who { color: #ff9ec8; }
+.ddf-full-row.lead-M { border-left-color: #5eead4; }
+.ddf-full-row.lead-M .who { color: #5eead4; }
+.ddf-full-row.lead-both { border-left-color: #fde68a; }
+.ddf-full-row.lead-both .who { color: #fde68a; }
+.ddf-full-row.is-now {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-weight: 650;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
-.ddf-lyrics-col.male .ddf-line.active {
-  text-shadow: 0 0 12px rgba(94, 234, 212, 0.4);
-}
-.ddf-line.near {
-  color: rgba(40, 20, 35, 0.62);
-}
-.ddf-line.past {
-  color: rgba(40, 20, 35, 0.28);
-}
+.ddf-full-row.is-now .txt { white-space: normal; }
 
 /* Mini pause under theater */
 .ddf-mini-controls {
@@ -1643,17 +1810,17 @@ body.ddf-theater-active .hero-play { display: none; }
 
 @media (max-height: 720px) {
   .ddf-compass-frame {
-    max-height: min(28vh, 220px);
-    max-width: min(28vh, 220px);
+    max-height: min(22vh, 180px);
+    max-width: min(22vh, 180px);
   }
-  .ddf-lyrics-scroll { max-height: min(22vh, 180px); }
-  .ddf-song-title { font-size: clamp(18px, 3.5vw, 26px); }
+  .ddf-song-title { font-size: clamp(16px, 3vw, 22px); }
   .ddf-cast-pills { display: none; }
+  .ddf-club-badge { display: none; }
+  .ddf-full-lyrics-wrap { max-height: min(22vh, 160px); }
 }
 
 @media (max-width: 640px) {
-  .ddf-theater-inner { padding: 8px 10px 6px; gap: 6px; }
-  .ddf-lyrics-h { font-size: 9px; padding: 6px; }
-  .ddf-line { font-size: 12px; }
+  .ddf-theater-inner { padding: 6px 10px 6px; gap: 5px; }
   .ddf-voice-readout { gap: 6px; }
+  .ddf-current-line { font-size: 15px; }
 }

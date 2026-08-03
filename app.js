@@ -1631,6 +1631,7 @@ function fetchSpatialSlug(slug) {
 function preloadSpatialMaps() {
   fetchSpatialSlug('jumpy_moving_leads');
   loadDdfLyrics();
+  loadDdfLeadMaps();
 }
 
 function loadSpatialMap(song = currentSong()) {
@@ -2182,12 +2183,14 @@ function paintSpatialGuide(timeSec, force = false) {
 
 /* ---------- DDF Theater (full DDLC custom UI) ---------- */
 let ddfLyricsCache = null;
-let ddfLyricsBuilt = false;
+let ddfLeadMaps = null;
 let ddfLastLineIdx = -1;
+let ddfLastLeadMode = '';
+let ddfFullListBuilt = false;
 let ddfTheaterEls = null;
+let ddfFullOpen = false;
 
 function wantsDdfTheater(song = currentSong()) {
-  // Full custom theater for Traveling Voices dual-lead family
   return songLooksLikeTravelingVoices(song);
 }
 
@@ -2201,8 +2204,19 @@ function cacheDdfTheaterEls() {
     femaleDir: $('ddf-female-dir'),
     maleDir: $('ddf-male-dir'),
     cue: $('ddf-cue'),
-    fCol: $('ddf-lyrics-female'),
-    mCol: $('ddf-lyrics-male'),
+    block: $('ddf-lyrics-block'),
+    paneF: $('ddf-pane-female'),
+    paneM: $('ddf-pane-male'),
+    lineF: $('ddf-line-female'),
+    lineM: $('ddf-line-male'),
+    stateF: $('ddf-state-female'),
+    stateM: $('ddf-state-male'),
+    banner: $('ddf-active-banner'),
+    chip: $('ddf-active-chip'),
+    hint: $('ddf-active-hint'),
+    fullToggle: $('ddf-full-toggle'),
+    fullPanel: $('ddf-full-lyrics'),
+    fullList: $('ddf-full-list'),
     playIcon: $('ddf-play-icon'),
     timeCur: $('ddf-time-current'),
     timeTot: $('ddf-time-total'),
@@ -2212,7 +2226,7 @@ function cacheDdfTheaterEls() {
 
 function loadDdfLyrics() {
   if (ddfLyricsCache) return Promise.resolve(ddfLyricsCache);
-  return fetch('./songs/spatial/ddf_dual_lyrics.json')
+  return fetch(`./songs/spatial/ddf_dual_lyrics.json?v=${encodeURIComponent(document.querySelector('meta[name="vp-build"]')?.content || '1')}`)
     .then(r => (r.ok ? r.json() : null))
     .then(data => {
       ddfLyricsCache = data;
@@ -2221,30 +2235,51 @@ function loadDdfLyrics() {
     .catch(() => null);
 }
 
-function buildDdfLyricsDom() {
-  const els = cacheDdfTheaterEls();
-  if (!els.fCol || !els.mCol || !ddfLyricsCache?.lines) return;
-  const lines = ddfLyricsCache.lines;
-  const mkTrack = (side) => {
-    const track = document.createElement('div');
-    track.className = 'ddf-lyrics-track';
-    track.dataset.side = side;
-    lines.forEach((ln, i) => {
-      const row = document.createElement('div');
-      row.className = 'ddf-line';
-      row.dataset.i = String(i);
-      row.dataset.t = String(ln.t);
-      row.textContent = ln.text;
-      track.appendChild(row);
+function loadDdfLeadMaps() {
+  if (ddfLeadMaps) return Promise.resolve(ddfLeadMaps);
+  return fetch(`./songs/spatial/ddf_lead_maps.json?v=${encodeURIComponent(document.querySelector('meta[name="vp-build"]')?.content || '1')}`)
+    .then(r => (r.ok ? r.json() : null))
+    .then(data => {
+      ddfLeadMaps = data || {};
+      return ddfLeadMaps;
+    })
+    .catch(() => {
+      ddfLeadMaps = {};
+      return ddfLeadMaps;
     });
-    return track;
-  };
-  els.fCol.innerHTML = '';
-  els.mCol.innerHTML = '';
-  els.fCol.appendChild(mkTrack('female'));
-  els.mCol.appendChild(mkTrack('male'));
-  ddfLyricsBuilt = true;
-  ddfLastLineIdx = -1;
+}
+
+/** Map song title → lead map id */
+function leadMapIdForSong(song = currentSong()) {
+  const hay = `${song?.name || ''} ${song?.title || ''} ${song?.displayName || ''}`;
+  if (/v6a/i.test(hay) || /story\s*line/i.test(hay)) return 'v6a_story_line';
+  if (/v6b/i.test(hay) || /frequent/i.test(hay)) return 'v6b_frequent_line';
+  if (/v6c/i.test(hay) || /call[- ]?response/i.test(hay)) return 'v6c_call_response';
+  if (/v6d/i.test(hay) || /soft\s*phrase/i.test(hay)) return 'v6d_soft_phrase';
+  return 'v5_flat';
+}
+
+/**
+ * Active lead at time: 'F' | 'M' | 'both'
+ * F/M = that track is lead, other is support only.
+ * both = dual (both main).
+ */
+function leadAtTime(t, song = currentSong()) {
+  const maps = ddfLeadMaps || {};
+  const id = leadMapIdForSong(song);
+  const map = maps[id] || maps.v5_flat;
+  if (!map || !map.segments || !map.segments.length) return 'both';
+  let lead = 'both';
+  for (const s of map.segments) {
+    const a = Number(s.start);
+    const b = Number(s.end);
+    if (t >= a && t < b) {
+      const L = String(s.lead || 'both');
+      if (L === 'F' || L === 'M' || L === 'both' || L === 'none') lead = L;
+    }
+  }
+  if (lead === 'none') return 'both';
+  return lead;
 }
 
 function lyricIndexAtTime(t) {
@@ -2252,34 +2287,163 @@ function lyricIndexAtTime(t) {
   if (!lines?.length) return -1;
   let idx = -1;
   for (let i = 0; i < lines.length; i++) {
-    if (t + 0.05 >= lines[i].t) idx = i;
+    const start = Number(lines[i].t);
+    const end = lines[i].end != null ? Number(lines[i].end) : (lines[i + 1] ? Number(lines[i + 1].t) : start + 4);
+    if (t + 0.04 >= start && t < end + 0.05) idx = i;
+    else if (t + 0.04 >= start) idx = i; // keep last started
+  }
+  // Prefer last line whose start has passed
+  idx = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (t + 0.05 >= Number(lines[i].t)) idx = i;
     else break;
   }
   return idx;
 }
 
-function scrollDdfLyrics(timeSec, force = false) {
-  if (!ddfLyricsBuilt || !ddfLyricsCache?.lines) return;
-  const idx = lyricIndexAtTime(timeSec);
-  if (idx < 0) return;
-  if (!force && idx === ddfLastLineIdx) return;
-  ddfLastLineIdx = idx;
+function fmtLyricTime(sec) {
+  const s = Math.max(0, Math.floor(Number(sec) || 0));
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return `${m}:${String(r).padStart(2, '0')}`;
+}
+
+function buildFullLyricsList(song = currentSong()) {
   const els = cacheDdfTheaterEls();
-  const lineH = 28;
-  // Center active line in each column viewport
-  for (const col of [els.fCol, els.mCol]) {
-    if (!col) continue;
-    const track = col.querySelector('.ddf-lyrics-track');
-    if (!track) continue;
-    const viewH = col.clientHeight || 160;
-    const y = Math.max(0, idx * lineH - (viewH / 2 - lineH / 2));
-    track.style.transform = `translateY(${-y}px)`;
-    track.querySelectorAll('.ddf-line').forEach((node, i) => {
-      node.classList.toggle('active', i === idx);
-      node.classList.toggle('near', i === idx - 1 || i === idx + 1);
-      node.classList.toggle('past', i < idx - 1);
+  if (!els.fullList || !ddfLyricsCache?.lines) return;
+  const lines = ddfLyricsCache.lines;
+  const frag = document.createDocumentFragment();
+  lines.forEach((ln, i) => {
+    const mid = (Number(ln.t) + Number(ln.end != null ? ln.end : ln.t + 2)) / 2;
+    const lead = leadAtTime(mid, song);
+    const who = lead === 'F' ? 'F' : lead === 'M' ? 'M' : 'BOTH';
+    const row = document.createElement('div');
+    row.className = `ddf-full-row lead-${lead === 'F' || lead === 'M' ? lead : 'both'}`;
+    row.dataset.i = String(i);
+    row.dataset.t = String(ln.t);
+    row.innerHTML =
+      `<span class="t">${fmtLyricTime(ln.t)}</span>` +
+      `<span class="who">${who}</span>` +
+      `<span class="txt"></span>`;
+    row.querySelector('.txt').textContent = ln.text || '';
+    row.addEventListener('click', () => {
+      const target = Number(ln.t);
+      if (Number.isFinite(target)) {
+        // Seek via existing seek machinery if available
+        try {
+          if (typeof setNativeTimeFromCalibratedClock === 'function') {
+            setNativeTimeFromCalibratedClock(target, currentSong(), { force: true });
+          } else if (audio) {
+            audio.currentTime = target;
+          }
+        } catch (_) { /* ignore */ }
+      }
     });
+    frag.appendChild(row);
+  });
+  els.fullList.innerHTML = '';
+  els.fullList.appendChild(frag);
+  ddfFullListBuilt = true;
+}
+
+function updateFullLyricsNow(idx) {
+  const els = cacheDdfTheaterEls();
+  if (!els.fullList || !ddfFullListBuilt) return;
+  const rows = els.fullList.querySelectorAll('.ddf-full-row');
+  rows.forEach((row, i) => {
+    const on = i === idx;
+    row.classList.toggle('is-now', on);
+    if (on) {
+      // keep current row visible
+      const parent = els.fullPanel;
+      if (parent && !parent.classList.contains('hidden')) {
+        const rTop = row.offsetTop;
+        const rH = row.offsetHeight;
+        const view = parent.clientHeight;
+        const scroll = parent.scrollTop;
+        if (rTop < scroll + 40 || rTop + rH > scroll + view - 20) {
+          parent.scrollTop = Math.max(0, rTop - view * 0.35);
+        }
+      }
+    }
+  });
+}
+
+function updateCurrentLyrics(timeSec, force = false) {
+  const els = cacheDdfTheaterEls();
+  if (!els.block || !ddfLyricsCache?.lines) return;
+  const idx = lyricIndexAtTime(timeSec);
+  const lead = leadAtTime(timeSec);
+  const mode = lead === 'F' ? 'female' : lead === 'M' ? 'male' : 'dual';
+  const line = idx >= 0 ? ddfLyricsCache.lines[idx] : null;
+  const text = (line && line.text) ? line.text : (timeSec < 10.4 ? '(intro)' : '…');
+
+  if (!force && idx === ddfLastLineIdx && mode === ddfLastLeadMode) {
+    // still refresh full-list now marker occasionally
+    return;
   }
+  ddfLastLineIdx = idx;
+  ddfLastLeadMode = mode;
+
+  els.block.dataset.mode = mode;
+
+  // Banner
+  if (els.chip) {
+    els.chip.className = 'ddf-active-chip ' + (lead === 'F' || lead === 'M' ? lead : 'both');
+    els.chip.textContent =
+      lead === 'F' ? 'FEMALE TRACK' :
+      lead === 'M' ? 'MALE TRACK' :
+      'BOTH TRACKS';
+  }
+  if (els.hint) {
+    els.hint.textContent =
+      lead === 'F' ? 'male on support · 15%' :
+      lead === 'M' ? 'female on support · 15%' :
+      'dual lead · equal';
+  }
+
+  // Panes
+  const setPane = (pane, lineEl, stateEl, isLead, isVisible) => {
+    if (!pane || !lineEl) return;
+    pane.classList.toggle('is-lead', isLead);
+    pane.classList.toggle('is-support', !isLead && mode === 'dual');
+    lineEl.textContent = text;
+    lineEl.classList.toggle('is-empty', !line || !line.text);
+    if (stateEl) {
+      stateEl.textContent = isLead ? (mode === 'dual' ? 'ACTIVE' : 'LEAD') : 'SUPPORT';
+    }
+  };
+
+  if (mode === 'dual') {
+    setPane(els.paneF, els.lineF, els.stateF, true, true);
+    setPane(els.paneM, els.lineM, els.stateM, true, true);
+  } else if (mode === 'female') {
+    setPane(els.paneF, els.lineF, els.stateF, true, true);
+    if (els.paneM) els.paneM.classList.remove('is-lead');
+  } else {
+    setPane(els.paneM, els.lineM, els.stateM, true, true);
+    if (els.paneF) els.paneF.classList.remove('is-lead');
+  }
+
+  updateFullLyricsNow(idx);
+}
+
+function bindDdfFullToggle() {
+  const els = cacheDdfTheaterEls();
+  if (!els.fullToggle || els.fullToggle.dataset.bound) return;
+  els.fullToggle.dataset.bound = '1';
+  els.fullToggle.addEventListener('click', () => {
+    ddfFullOpen = !ddfFullOpen;
+    els.fullToggle.setAttribute('aria-expanded', ddfFullOpen ? 'true' : 'false');
+    els.fullToggle.textContent = ddfFullOpen ? 'Full lyrics map ▴' : 'Full lyrics map ▾';
+    if (els.fullPanel) {
+      els.fullPanel.classList.toggle('hidden', !ddfFullOpen);
+    }
+    if (ddfFullOpen) {
+      if (!ddfFullListBuilt) buildFullLyricsList(currentSong());
+      updateFullLyricsNow(ddfLastLineIdx);
+    }
+  });
 }
 
 function setDdfTheaterActive(want, song = currentSong()) {
@@ -2289,19 +2453,20 @@ function setDdfTheaterActive(want, song = currentSong()) {
     document.body.classList.add('ddf-theater-active');
     els.root.classList.remove('hidden');
     const ver = travelingVoicesVersionLabel(song);
-    if (els.title) {
-      els.title.textContent = 'Doki Doki Forever';
-    }
+    if (els.title) els.title.textContent = 'Doki Doki Forever';
     if (els.sub) {
       els.sub.textContent = ver
         ? `Traveling Voices ${ver} · dual lead · Literature Club`
         : 'Traveling Voices · dual lead · Literature Club';
     }
-    loadDdfLyrics().then(() => {
-      if (!ddfLyricsBuilt) buildDdfLyricsDom();
-      scrollDdfLyrics(currentCalibratedTime(), true);
+    bindDdfFullToggle();
+    ddfLastLineIdx = -1;
+    ddfLastLeadMode = '';
+    ddfFullListBuilt = false;
+    Promise.all([loadDdfLyrics(), loadDdfLeadMaps()]).then(() => {
+      buildFullLyricsList(song);
+      updateCurrentLyrics(currentCalibratedTime(), true);
     });
-    // Force compass redraw at large size
     spatialCtx = null;
     spatialForcePaint = true;
     ensureSpatialRadar();
@@ -2310,6 +2475,8 @@ function setDdfTheaterActive(want, song = currentSong()) {
     document.body.classList.remove('ddf-theater-active');
     els.root.classList.add('hidden');
     ddfLastLineIdx = -1;
+    ddfLastLeadMode = '';
+    ddfFullOpen = false;
     spatialCtx = null;
   }
 }
@@ -2327,7 +2494,7 @@ function paintDdfTheater(timeSec, pose, fDir, mDir, force) {
   if (els.section) {
     els.section.textContent = lastDdlcGirlLabel || pose?.section || '—';
   }
-  scrollDdfLyrics(timeSec, force);
+  updateCurrentLyrics(timeSec, force);
 }
 
 function updateUpNext() {
