@@ -7,10 +7,11 @@
     "ramp": 0.18,
     "monika_instrumental_duck": 0.75,
     "stats": {
-      "pct_both_high": 46.2,
-      "pct_female_lead": 46.1,
+      "pct_both_high": 46.0,
+      "pct_female_lead": 46.3,
       "pct_male_lead": 6.3
     },
+    "male_stem": "male_remastered_v3_1",
     "segments": [
       {
         "start": 10.49,
@@ -77,13 +78,13 @@
       },
       {
         "start": 22.68,
-        "end": 23.925,
+        "end": 23.52,
         "lead": "both",
         "lyric": "Just like a",
         "girl": "natsuki"
       },
       {
-        "start": 23.925,
+        "start": 23.52,
         "end": 24.34,
         "lead": "F",
         "lyric": "sundae,",
@@ -778,10 +779,11 @@
     "ramp": 0.18,
     "monika_instrumental_duck": 0.75,
     "stats": {
-      "pct_both_high": 46.2,
-      "pct_female_lead": 46.1,
+      "pct_both_high": 46.0,
+      "pct_female_lead": 46.3,
       "pct_male_lead": 6.3
     },
+    "male_stem": "male_remastered_v3_1",
     "segments": [
       {
         "start": 10.49,
@@ -848,13 +850,13 @@
       },
       {
         "start": 22.68,
-        "end": 23.925,
+        "end": 23.52,
         "lead": "both",
         "lyric": "Just like a",
         "girl": "natsuki"
       },
       {
-        "start": 23.925,
+        "start": 23.52,
         "end": 24.34,
         "lead": "F",
         "lyric": "sundae,",
@@ -1549,10 +1551,11 @@
     "ramp": 0.18,
     "monika_instrumental_duck": 0.75,
     "stats": {
-      "pct_both_high": 46.2,
-      "pct_female_lead": 46.1,
+      "pct_both_high": 46.0,
+      "pct_female_lead": 46.3,
       "pct_male_lead": 6.3
     },
+    "male_stem": "male_remastered_v3_1",
     "segments": [
       {
         "start": 10.49,
@@ -1619,13 +1622,13 @@
       },
       {
         "start": 22.68,
-        "end": 23.925,
+        "end": 23.52,
         "lead": "both",
         "lyric": "Just like a",
         "girl": "natsuki"
       },
       {
-        "start": 23.925,
+        "start": 23.52,
         "end": 24.34,
         "lead": "F",
         "lyric": "sundae,",

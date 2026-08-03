@@ -218,7 +218,7 @@
     {
       "id": 10,
       "start": 22.68,
-      "end": 23.925,
+      "end": 23.52,
       "text": "Just like a",
       "parent_line": "Just like a sundae,",
       "parent_t": [
@@ -230,12 +230,12 @@
       "lead": "both",
       "why": "Playful simile setup \u2014 both genders covered. Unit text is 'Just like a' for melodic sense (not stopping before 'a').",
       "status": "agreed",
-      "timing_note": "re-sliced parent 22.68\u201324.34 word weight 3:1 after adding 'a'",
+      "timing_note": "sundae timing fix: end moved 23.925\u219223.52 (ear energy)",
       "user_note": "Reslice to 'Just like a'; both genders."
     },
     {
       "id": 11,
-      "start": 23.925,
+      "start": 23.52,
       "end": 24.34,
       "text": "sundae,",
       "parent_line": "Just like a sundae,",
@@ -248,8 +248,8 @@
       "lead": "F",
       "why": "Word-level: 'sundae' is feminine-connotated (sweet dessert image). Split from 'Just like a' (both) so only this punch goes F \u2014 first deliberate F after rebalance, justified by the word itself.",
       "status": "agreed",
-      "timing_note": "remainder after unit 10 took 'a'",
-      "user_note": "Disagreement with both: F only; feminine-connotated word. Split purpose.",
+      "timing_note": "sundae F lead starts 23.52 (was 23.925); linear share put F mid-word; male was still dual-loud through first half of sung sundae",
+      "user_note": "Disagreement with both: F only; feminine-connotated word. Split purpose. | timing fix 2026-08-03: earlier F for full word",
       "revised_from": "both"
     },
     {
