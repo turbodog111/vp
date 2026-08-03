@@ -887,5 +887,11 @@
   "female_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/female_remastered_v3.wav",
   "male_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/male_philsterman_timeline.wav",
   "vp_filename": "Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Phrase-Word Lead).m4a",
-  "male_align_fix": "Philsterman lag -10.85s (was +0.64 false peak); multi-anchor"
+  "male_align": {
+    "ref": "male_remastered_v3 placed (proven dual-lead lock)",
+    "method": "place@0 + delay -0.076s; stretch 1.0",
+    "env_score_vs_old_male": 0.939,
+    "env_score_vs_female": 0.818,
+    "first_onset_match_s": 10.901
+  }
 }
