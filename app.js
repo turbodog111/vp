@@ -2269,7 +2269,8 @@ const DDF_GIRL_PALETTE = {
   },
 };
 
-const DDF_FX_PARTICLES = Array.from({ length: 96 }, (_, i) => ({
+/* Same visual density, cheaper draws: fewer path objects, no pixel-heart loops */
+const DDF_FX_PARTICLES = Array.from({ length: 72 }, (_, i) => ({
   x: seededUnit((i + 1) * 17.3),
   y: seededUnit((i + 1) * 41.9),
   z: 0.35 + seededUnit((i + 1) * 7.7) * 0.65,
@@ -2279,16 +2280,21 @@ const DDF_FX_PARTICLES = Array.from({ length: 96 }, (_, i) => ({
   size: 6 + seededUnit((i + 1) * 3.3) * 22,
 }));
 
-const DDF_FX_BEAMS = Array.from({ length: 14 }, (_, i) => ({
+const DDF_FX_BEAMS = Array.from({ length: 12 }, (_, i) => ({
   origin: i % 4,
   phase: seededUnit((i + 1) * 13.1) * Math.PI * 2,
   speed: 0.18 + seededUnit((i + 1) * 19.7) * 0.55,
   width: 0.018 + seededUnit((i + 1) * 8.2) * 0.04,
   colorIndex: i % 3,
+  ox: seededUnit(i * 2.1),
+  oy: seededUnit(i * 3.3),
 }));
 
 let ddfFxSizeKey = '';
 let ddfFxLastPaint = 0;
+let ddfFxRaf = 0;
+let ddfFxCtx = null;
+const DDF_FX_MIN_MS = 33; // ~30fps — keeps effects, cuts main-thread load vs 60+
 
 function activeDdfGirlKey() {
   if (document.body.classList.contains('theme-sayori')) return 'sayori';
@@ -2298,22 +2304,65 @@ function activeDdfGirlKey() {
   return 'monika';
 }
 
+/** Cheap vector heart (2 arcs + triangle) — same look as pixel heart, ~40x less work */
+function drawFastHeart(ctx, x, y, size, fillStyle, alpha, angle = 0) {
+  if (alpha <= 0.01 || size < 1) return;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.globalAlpha *= alpha;
+  ctx.fillStyle = fillStyle;
+  const s = size * 0.5;
+  ctx.beginPath();
+  ctx.moveTo(0, s * 0.7);
+  ctx.bezierCurveTo(-s * 1.2, s * 0.05, -s * 0.9, -s * 0.85, 0, -s * 0.35);
+  ctx.bezierCurveTo(s * 0.9, -s * 0.85, s * 1.2, s * 0.05, 0, s * 0.7);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
 function resizeDdfFxCanvas(force = false) {
   const canvas = $('ddf-fx');
   const root = $('ddf-theater');
   if (!canvas || !root || root.classList.contains('hidden')) return false;
   const rect = root.getBoundingClientRect();
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  if (rect.width < 2 || rect.height < 2) return false;
+  // Cap DPR at 1 — full retina on a full-bleed FX canvas is the main lag source
+  const dpr = 1;
   const w = Math.max(2, Math.floor(rect.width * dpr));
   const h = Math.max(2, Math.floor(rect.height * dpr));
   const key = `${w}x${h}`;
-  if (!force && key === ddfFxSizeKey) return true;
+  if (!force && key === ddfFxSizeKey && ddfFxCtx) return true;
   canvas.width = w;
   canvas.height = h;
   canvas.style.width = `${rect.width}px`;
   canvas.style.height = `${rect.height}px`;
   ddfFxSizeKey = key;
-  return true;
+  ddfFxCtx = canvas.getContext('2d', { alpha: false, desynchronized: true });
+  return !!ddfFxCtx;
+}
+
+function startDdfFxLoop() {
+  if (ddfFxRaf) return;
+  const tick = (now) => {
+    ddfFxRaf = requestAnimationFrame(tick);
+    if (!document.body.classList.contains('ddf-theater-active')) {
+      stopDdfFxLoop();
+      return;
+    }
+    if (!isNowViewActive()) return;
+    if (now - ddfFxLastPaint < DDF_FX_MIN_MS) return;
+    paintDdfTheaterFx(currentCalibratedTime());
+  };
+  ddfFxRaf = requestAnimationFrame(tick);
+}
+
+function stopDdfFxLoop() {
+  if (ddfFxRaf) {
+    cancelAnimationFrame(ddfFxRaf);
+    ddfFxRaf = 0;
+  }
 }
 
 function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
@@ -2321,8 +2370,9 @@ function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
   const root = $('ddf-theater');
   if (!canvas || !root || root.classList.contains('hidden')) return;
   if (!resizeDdfFxCanvas()) return;
+  const ctx = ddfFxCtx;
+  if (!ctx) return;
 
-  const ctx = canvas.getContext('2d', { alpha: false });
   const w = canvas.width;
   const h = canvas.height;
   const girl = activeDdfGirlKey();
@@ -2344,51 +2394,49 @@ function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
   const cx = w * 0.5;
   const cy = h * 0.48;
   const scale = Math.max(1, Math.min(w, h) / 700);
+  const maxDim = Math.max(w, h);
+  const minDim = Math.min(w, h);
 
-  // Solid girl-tinted stage base (replaces any image background)
-  ctx.fillStyle = `rgb(${bg[0]}, ${bg[1]}, ${bg[2]})`;
+  // Base fill
+  ctx.fillStyle = `rgb(${bg[0]},${bg[1]},${bg[2]})`;
   ctx.fillRect(0, 0, w, h);
 
-  // Animated color field
+  // One radial wash (not per-particle)
   const field = ctx.createRadialGradient(
     cx + Math.sin(t * 0.4) * w * 0.08,
     cy + Math.cos(t * 0.35) * h * 0.06,
-    0,
-    cx, cy,
-    Math.max(w, h) * (0.55 + energy * 0.25)
+    0, cx, cy, maxDim * (0.55 + energy * 0.25)
   );
-  field.addColorStop(0, `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.55 + energy * 0.35})`);
-  field.addColorStop(0.35, `rgba(${s[0]}, ${s[1]}, ${s[2]}, ${0.35 + energy * 0.25})`);
-  field.addColorStop(0.7, `rgba(${bg[0]}, ${bg[1]}, ${bg[2]}, 0.9)`);
-  field.addColorStop(1, `rgba(${Math.max(0, bg[0] - 8)}, ${Math.max(0, bg[1] - 8)}, ${Math.max(0, bg[2] - 8)}, 1)`);
+  field.addColorStop(0, `rgba(${p[0]},${p[1]},${p[2]},${0.55 + energy * 0.35})`);
+  field.addColorStop(0.4, `rgba(${s[0]},${s[1]},${s[2]},${0.32 + energy * 0.22})`);
+  field.addColorStop(1, `rgba(${bg[0]},${bg[1]},${bg[2]},1)`);
   ctx.fillStyle = field;
   ctx.fillRect(0, 0, w, h);
 
   ctx.save();
   ctx.globalCompositeOperation = 'lighter';
 
-  // Sweeping beams (disco-loud)
-  DDF_FX_BEAMS.forEach((beam, i) => {
-    const color = [p, s, a][beam.colorIndex];
-    const origins = [
-      { x: w * (0.08 + seededUnit(i * 2.1) * 0.84), y: -h * 0.05, base: Math.PI * 0.5 },
-      { x: w * 1.05, y: h * (0.1 + seededUnit(i * 3.3) * 0.8), base: Math.PI },
-      { x: w * (0.08 + seededUnit(i * 4.7) * 0.84), y: h * 1.05, base: -Math.PI * 0.5 },
-      { x: -w * 0.05, y: h * (0.1 + seededUnit(i * 6.1) * 0.8), base: 0 },
-    ];
-    const origin = origins[(beam.origin + Math.floor(t * 0.2)) % 4];
-    const sweep = Math.sin(t * beam.speed + beam.phase) * (0.5 + chorus * 0.3);
-    const angle = origin.base + sweep + beat * 0.12;
-    const length = Math.max(w, h) * (1.05 + chorus * 0.35);
+  // Beams — keep all, skip nested save when possible
+  const length = maxDim * (1.05 + chorus * 0.35);
+  for (let i = 0; i < DDF_FX_BEAMS.length; i++) {
+    const beam = DDF_FX_BEAMS[i];
+    const color = i % 3 === 0 ? p : i % 3 === 1 ? s : a;
+    const originPhase = (beam.origin + ((t * 0.2) | 0)) & 3;
+    let ox; let oy; let base;
+    if (originPhase === 0) { ox = w * (0.08 + beam.ox * 0.84); oy = -h * 0.05; base = Math.PI * 0.5; }
+    else if (originPhase === 1) { ox = w * 1.05; oy = h * (0.1 + beam.oy * 0.8); base = Math.PI; }
+    else if (originPhase === 2) { ox = w * (0.08 + beam.ox * 0.84); oy = h * 1.05; base = -Math.PI * 0.5; }
+    else { ox = -w * 0.05; oy = h * (0.1 + beam.oy * 0.8); base = 0; }
+    const angle = base + Math.sin(t * beam.speed + beam.phase) * (0.5 + chorus * 0.3) + beat * 0.12;
     const half = length * (beam.width + beat * 0.025 + energy * 0.01);
-    const alpha = (0.06 + energy * 0.12 + chorus * 0.14 + beat * 0.1) * (0.7 + (i % 3) * 0.12);
+    const alpha = (0.07 + energy * 0.14 + chorus * 0.16 + beat * 0.12) * (0.7 + (i % 3) * 0.12);
     ctx.save();
-    ctx.translate(origin.x, origin.y);
+    ctx.translate(ox, oy);
     ctx.rotate(angle);
     const g = ctx.createLinearGradient(0, 0, length, 0);
-    g.addColorStop(0, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha * 1.8})`);
-    g.addColorStop(0.45, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`);
-    g.addColorStop(1, `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`);
+    g.addColorStop(0, `rgba(${color[0]},${color[1]},${color[2]},${alpha * 1.7})`);
+    g.addColorStop(0.5, `rgba(${color[0]},${color[1]},${color[2]},${alpha})`);
+    g.addColorStop(1, `rgba(${color[0]},${color[1]},${color[2]},0)`);
     ctx.fillStyle = g;
     ctx.beginPath();
     ctx.moveTo(0, 0);
@@ -2397,69 +2445,68 @@ function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
     ctx.closePath();
     ctx.fill();
     ctx.restore();
-  });
+  }
 
-  // Expanding beat rings
-  for (let r = 0; r < 6; r++) {
-    const life = (beat * 0.85 + r * 0.16 + heartWave * 0.08) % 1;
-    const rad = Math.min(w, h) * (0.06 + life * (0.42 + chorus * 0.18));
-    const alpha = (1 - life) * (0.18 + energy * 0.22 + beat * 0.2);
+  // Beat rings
+  for (let r = 0; r < 5; r++) {
+    const life = (beat * 0.85 + r * 0.18 + heartWave * 0.08) % 1;
+    const rad = minDim * (0.06 + life * (0.42 + chorus * 0.18));
+    const alpha = (1 - life) * (0.2 + energy * 0.24 + beat * 0.22);
     if (alpha < 0.02) continue;
-    const col = r % 2 ? s : p;
-    ctx.strokeStyle = `rgba(${col[0]}, ${col[1]}, ${col[2]}, ${alpha})`;
+    const col = r & 1 ? s : p;
+    ctx.strokeStyle = `rgba(${col[0]},${col[1]},${col[2]},${alpha})`;
     ctx.lineWidth = (2 + (1 - life) * 5) * scale;
     ctx.beginPath();
     ctx.arc(cx, cy, rad, 0, Math.PI * 2);
     ctx.stroke();
   }
 
-  // Particle field — mode-specific
-  DDF_FX_PARTICLES.forEach((pt, i) => {
+  // Particles — solid fills/strokes (no per-particle gradients)
+  const mode = pal.mode;
+  for (let i = 0; i < DDF_FX_PARTICLES.length; i++) {
+    const pt = DDF_FX_PARTICLES[i];
     const drift = t * pt.sp * (0.08 + energy * 0.12);
-    let x = ((pt.x + Math.sin(t * 0.35 + pt.ph) * 0.06) % 1) * w;
-    let y = ((pt.y + drift) % 1.15) * h - h * 0.08;
-    const size = pt.size * scale * pt.z * (0.7 + beat * 0.6 + energy * 0.4);
-    const alpha = (0.08 + energy * 0.2 + beat * 0.12) * pt.z;
-    const col = i % 2 ? p : s;
+    const x = ((pt.x + Math.sin(t * 0.35 + pt.ph) * 0.06 + 1) % 1) * w;
+    const y = ((pt.y + drift) % 1.15) * h - h * 0.08;
+    const size = pt.size * scale * pt.z * (0.7 + beat * 0.55 + energy * 0.35);
+    const alpha = (0.1 + energy * 0.22 + beat * 0.14) * pt.z;
+    const col = i & 1 ? p : s;
+    const colCss = `rgb(${col[0]},${col[1]},${col[2]})`;
 
-    if (pal.mode === 'hearts' || girl === 'sayori') {
-      // Floating hearts + soft orbs
+    if (mode === 'hearts') {
       if (pt.kind < 3) {
-        drawPixelHeart(ctx, x, y, size, `rgb(${col[0]}, ${col[1]}, ${col[2]})`, alpha * 1.4, t * 0.4 + pt.ph);
+        drawFastHeart(ctx, x, y, size, colCss, alpha * 1.35, t * 0.4 + pt.ph);
       } else {
-        const g = ctx.createRadialGradient(x, y, 0, x, y, size);
-        g.addColorStop(0, `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${alpha * 1.6})`);
-        g.addColorStop(1, `rgba(${p[0]}, ${p[1]}, ${p[2]}, 0)`);
-        ctx.fillStyle = g;
+        ctx.globalAlpha = alpha * 1.2;
+        ctx.fillStyle = `rgb(${a[0]},${a[1]},${a[2]})`;
         ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.arc(x, y, size * 0.55, 0, Math.PI * 2);
         ctx.fill();
+        ctx.globalAlpha = 1;
       }
-    } else if (pal.mode === 'spark' || girl === 'natsuki') {
-      // Sharp sparkles + diamond bursts
+    } else if (mode === 'spark') {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(t * (1.2 + pt.sp) + pt.ph);
-      ctx.strokeStyle = `rgba(${col[0]}, ${col[1]}, ${col[2]}, ${alpha * 1.8})`;
-      ctx.lineWidth = Math.max(1.2, scale * 1.4);
-      const arm = size * (0.9 + beat * 0.8);
+      ctx.strokeStyle = `rgba(${col[0]},${col[1]},${col[2]},${alpha * 1.7})`;
+      ctx.lineWidth = Math.max(1.2, scale * 1.3);
+      const arm = size * (0.9 + beat * 0.75);
       ctx.beginPath();
       ctx.moveTo(-arm, 0); ctx.lineTo(arm, 0);
       ctx.moveTo(0, -arm); ctx.lineTo(0, arm);
-      if (pt.kind % 2 === 0) {
+      if (!(pt.kind & 1)) {
         ctx.moveTo(-arm * 0.7, -arm * 0.7); ctx.lineTo(arm * 0.7, arm * 0.7);
         ctx.moveTo(-arm * 0.7, arm * 0.7); ctx.lineTo(arm * 0.7, -arm * 0.7);
       }
       ctx.stroke();
-      ctx.fillStyle = `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${alpha})`;
+      ctx.fillStyle = `rgba(${a[0]},${a[1]},${a[2]},${alpha})`;
       ctx.beginPath();
-      ctx.arc(0, 0, size * 0.18, 0, Math.PI * 2);
+      ctx.arc(0, 0, size * 0.16, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
-    } else if (pal.mode === 'ink' || girl === 'yuri') {
-      // Ink blobs + falling page shards
+    } else if (mode === 'ink') {
       if (pt.kind < 2) {
-        ctx.fillStyle = `rgba(${col[0]}, ${col[1]}, ${col[2]}, ${alpha * 1.3})`;
+        ctx.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${alpha * 1.25})`;
         ctx.beginPath();
         ctx.ellipse(x, y, size * 0.55, size * 0.9, pt.ph + t * 0.2, 0, Math.PI * 2);
         ctx.fill();
@@ -2467,92 +2514,75 @@ function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
         ctx.save();
         ctx.translate(x, y);
         ctx.rotate(pt.ph + t * 0.5);
-        ctx.fillStyle = `rgba(${s[0]}, ${s[1]}, ${s[2]}, ${alpha * 1.1})`;
+        ctx.fillStyle = `rgba(${s[0]},${s[1]},${s[2]},${alpha * 1.05})`;
         ctx.fillRect(-size * 0.35, -size * 0.55, size * 0.7, size * 1.1);
-        ctx.strokeStyle = `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${alpha * 0.8})`;
-        ctx.lineWidth = 1;
-        ctx.strokeRect(-size * 0.35, -size * 0.55, size * 0.7, size * 1.1);
         ctx.restore();
       }
     } else {
-      // Monika glitch blocks + scan bars
+      // glitch blocks
       const gw = size * (0.8 + beat);
       const gh = size * (0.25 + (i % 3) * 0.15);
-      ctx.fillStyle = `rgba(${col[0]}, ${col[1]}, ${col[2]}, ${alpha * (0.8 + beat)})`;
+      ctx.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${alpha * (0.85 + beat)})`;
       ctx.fillRect(x - gw / 2, y - gh / 2, gw, gh);
       if (pt.kind === 0 && beat > 0.2) {
-        ctx.fillStyle = `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${alpha * 1.4})`;
-        ctx.fillRect(x + size * 0.4, y - gh, gw * 0.35, gh * 0.5);
+        ctx.fillStyle = `rgba(${a[0]},${a[1]},${a[2]},${alpha * 1.3})`;
+        ctx.fillRect(x + size * 0.35, y - gh, gw * 0.35, gh * 0.5);
       }
-    }
-  });
-
-  // Girl-specific full-screen overlays
-  if (girl === 'sayori') {
-    // Heartbeat double-thump rings
-    for (let k = 0; k < 2; k++) {
-      const phase = (heartWave + k * 0.18) % 1;
-      const rad = Math.min(w, h) * (0.12 + phase * 0.28);
-      ctx.strokeStyle = `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${(1 - phase) * 0.35})`;
-      ctx.lineWidth = 3 * scale;
-      ctx.beginPath();
-      ctx.arc(cx, cy, rad, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-  } else if (girl === 'natsuki') {
-    // Hot pink strobe wash on beats
-    if (beat > 0.35) {
-      ctx.fillStyle = `rgba(${s[0]}, ${s[1]}, ${s[2]}, ${beat * 0.18})`;
-      ctx.fillRect(0, 0, w, h);
-    }
-    // Cupcake-dot confetti burst
-    for (let i = 0; i < 24; i++) {
-      const ang = (i / 24) * Math.PI * 2 + t * 0.8;
-      const dist = Math.min(w, h) * (0.15 + beat * 0.2 + (i % 5) * 0.03);
-      const x = cx + Math.cos(ang) * dist;
-      const y = cy + Math.sin(ang) * dist * 0.7;
-      ctx.fillStyle = `rgba(${(i % 2 ? p : a)[0]}, ${(i % 2 ? p : a)[1]}, ${(i % 2 ? p : a)[2]}, ${0.25 + beat * 0.4})`;
-      ctx.beginPath();
-      ctx.arc(x, y, (4 + (i % 4)) * scale, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  } else if (girl === 'yuri') {
-    // Slow violet mist bands
-    for (let i = 0; i < 5; i++) {
-      const yy = ((t * 0.04 + i * 0.2) % 1) * h;
-      const band = ctx.createLinearGradient(0, yy - 40 * scale, 0, yy + 80 * scale);
-      band.addColorStop(0, 'rgba(124,77,255,0)');
-      band.addColorStop(0.5, `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.12 + chorus * 0.1})`);
-      band.addColorStop(1, 'rgba(124,77,255,0)');
-      ctx.fillStyle = band;
-      ctx.fillRect(0, yy - 40 * scale, w, 120 * scale);
-    }
-  } else if (girl === 'monika') {
-    // Scanlines + digital corruption
-    const lineH = Math.max(2, 2 * scale);
-    for (let y = 0; y < h; y += lineH * 3) {
-      const flick = seededUnit(y * 0.07 + Math.floor(t * 18));
-      if (flick > 0.55) continue;
-      ctx.fillStyle = `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.04 + beat * 0.08 + flick * 0.06})`;
-      ctx.fillRect(0, y, w, lineH);
-    }
-    // Random glitch strips
-    for (let g = 0; g < 8; g++) {
-      if (seededUnit(t * 30 + g * 4.2) > 0.45 + beat * 0.2) continue;
-      const gy = seededUnit(g * 9.1 + Math.floor(t * 12)) * h;
-      const gh = (8 + seededUnit(g * 2.3) * 40) * scale;
-      const gx = (seededUnit(g * 5.5 + t) - 0.5) * w * 0.15;
-      ctx.fillStyle = `rgba(${s[0]}, ${s[1]}, ${s[2]}, ${0.12 + beat * 0.2})`;
-      ctx.fillRect(gx, gy, w, gh);
-      ctx.fillStyle = `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${0.08 + beat * 0.15})`;
-      ctx.fillRect(w * 0.2 + gx, gy + gh * 0.3, w * 0.35, gh * 0.35);
     }
   }
 
-  // Center core bloom
-  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(w, h) * (0.2 + energy * 0.15));
-  core.addColorStop(0, `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${0.35 + beat * 0.35 + chorus * 0.2})`);
-  core.addColorStop(0.4, `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.18 + energy * 0.15})`);
+  // Girl overlays (kept, cheaper where possible)
+  if (girl === 'sayori') {
+    for (let k = 0; k < 2; k++) {
+      const phase = (heartWave + k * 0.18) % 1;
+      ctx.strokeStyle = `rgba(${p[0]},${p[1]},${p[2]},${(1 - phase) * 0.35})`;
+      ctx.lineWidth = 3 * scale;
+      ctx.beginPath();
+      ctx.arc(cx, cy, minDim * (0.12 + phase * 0.28), 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  } else if (girl === 'natsuki') {
+    if (beat > 0.35) {
+      ctx.fillStyle = `rgba(${s[0]},${s[1]},${s[2]},${beat * 0.16})`;
+      ctx.fillRect(0, 0, w, h);
+    }
+    for (let i = 0; i < 20; i++) {
+      const ang = (i / 20) * Math.PI * 2 + t * 0.8;
+      const dist = minDim * (0.15 + beat * 0.2 + (i % 5) * 0.03);
+      const col = i & 1 ? p : a;
+      ctx.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${0.28 + beat * 0.4})`;
+      ctx.beginPath();
+      ctx.arc(cx + Math.cos(ang) * dist, cy + Math.sin(ang) * dist * 0.7, (4 + (i % 4)) * scale, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else if (girl === 'yuri') {
+    for (let i = 0; i < 4; i++) {
+      const yy = ((t * 0.04 + i * 0.22) % 1) * h;
+      ctx.fillStyle = `rgba(${p[0]},${p[1]},${p[2]},${0.1 + chorus * 0.1})`;
+      ctx.fillRect(0, yy, w, 28 * scale);
+    }
+  } else if (girl === 'monika') {
+    const step = Math.max(6, 6 * scale);
+    const flickBase = (t * 18) | 0;
+    for (let y = 0; y < h; y += step) {
+      if (seededUnit(y * 0.07 + flickBase) > 0.5) continue;
+      ctx.fillStyle = `rgba(${p[0]},${p[1]},${p[2]},${0.05 + beat * 0.08})`;
+      ctx.fillRect(0, y, w, 2);
+    }
+    for (let g = 0; g < 7; g++) {
+      if (seededUnit(t * 30 + g * 4.2) > 0.42 + beat * 0.2) continue;
+      const gy = seededUnit(g * 9.1 + ((t * 12) | 0)) * h;
+      const gh = (8 + seededUnit(g * 2.3) * 40) * scale;
+      const gx = (seededUnit(g * 5.5 + t) - 0.5) * w * 0.15;
+      ctx.fillStyle = `rgba(${s[0]},${s[1]},${s[2]},${0.14 + beat * 0.2})`;
+      ctx.fillRect(gx, gy, w, gh);
+    }
+  }
+
+  // Core bloom
+  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, minDim * (0.2 + energy * 0.15));
+  core.addColorStop(0, `rgba(${a[0]},${a[1]},${a[2]},${0.32 + beat * 0.32 + chorus * 0.18})`);
+  core.addColorStop(0.45, `rgba(${p[0]},${p[1]},${p[2]},${0.16 + energy * 0.14})`);
   core.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = core;
   ctx.fillRect(0, 0, w, h);
@@ -2825,6 +2855,7 @@ function setDdfTheaterActive(want, song = currentSong()) {
     ddfLastLeadMode = '';
     ddfFullListBuilt = false;
     ddfFxSizeKey = '';
+    ddfFxCtx = null;
     Promise.all([loadDdfLyrics(), loadDdfLeadMaps()]).then(() => {
       buildFullLyricsList(song);
       updateCurrentLyrics(currentCalibratedTime(), true);
@@ -2832,10 +2863,11 @@ function setDdfTheaterActive(want, song = currentSong()) {
     spatialCtx = null;
     spatialForcePaint = true;
     ensureSpatialRadar();
-    // Paint FX immediately so stage is never blank
+    // Dedicated ~30fps FX loop (not tied to spatial interval / wave rAF)
     requestAnimationFrame(() => {
       resizeDdfFxCanvas(true);
       paintDdfTheaterFx(currentCalibratedTime());
+      startDdfFxLoop();
     });
     paintSpatialGuide(currentCalibratedTime(), true);
     updateFxState();
@@ -2846,6 +2878,8 @@ function setDdfTheaterActive(want, song = currentSong()) {
     ddfLastLeadMode = '';
     ddfFullOpen = false;
     ddfFxSizeKey = '';
+    ddfFxCtx = null;
+    stopDdfFxLoop();
     spatialCtx = null;
     updateFxState();
   }
@@ -2865,8 +2899,7 @@ function paintDdfTheater(timeSec, pose, fDir, mDir, force) {
     const short = label.includes('·') ? label.split('·').pop().trim() : label;
     els.section.textContent = short || activeGirlLabel() || '—';
   }
-  // Full-bleed girl FX every spatial paint (no images)
-  paintDdfTheaterFx(timeSec);
+  // FX is painted by startDdfFxLoop — avoid double-paint here
   updateCurrentLyrics(timeSec, force);
 }
 
@@ -3246,8 +3279,19 @@ function resizeWaveform(force = false) {
   // Cap DPR at 1.5 — full 2x/3x retina on a wide waveform is very expensive
   const dpr = Math.min(1.5, Math.max(1, window.devicePixelRatio || 1));
   const rect = canvas.getBoundingClientRect();
-  const w = Math.max(320, Math.floor(rect.width * dpr));
-  const h = Math.max(120, Math.floor(rect.height * dpr));
+  // Match buffer to *actual* CSS box. Forcing min 120/320 when the panel is
+  // shorter made the browser scale the bitmap and distort the bars.
+  let cssW = Math.max(1, rect.width);
+  let cssH = Math.max(1, rect.height);
+  if (cssH < 48) {
+    // Collapsed layout: try parent panel, then a safe floor only for buffer math
+    const panel = canvas.parentElement?.getBoundingClientRect();
+    if (panel && panel.height > cssH) cssH = Math.max(cssH, panel.height - 8);
+  }
+  if (cssW < 2) cssW = 320;
+  if (cssH < 2) cssH = 100;
+  const w = Math.max(2, Math.floor(cssW * dpr));
+  const h = Math.max(2, Math.floor(cssH * dpr));
   const key = `${w}x${h}`;
   if (!force && key === waveSizeKey) return;
   waveSizeKey = key;
@@ -4405,8 +4449,11 @@ function drawWaveform(idle = false) {
     }
     const amp = Math.max(0.004, softLimit(Math.max(0, waveBars[i] * WAVE_GAIN), WAVE_SOFT_LIMIT));
     const x = i * (w / bins);
-    const barH = Math.min(baseline - 2, Math.max(2, amp * h * 0.78));
-    const radius = Math.min(7, barW / 2);
+    // Scale bars to baseline (usable height), not full canvas — keeps proportions
+    // consistent when the panel is short or tall across songs/layouts.
+    const maxBar = Math.max(8, baseline - 2);
+    const barH = Math.min(maxBar, Math.max(2, amp * maxBar * 0.92));
+    const radius = Math.min(Math.max(2, barW / 2), barH / 2);
     ctx.fillStyle = gradient;
     roundedBar(ctx, x, baseline - barH, barW, barH, radius);
   }
@@ -4415,8 +4462,14 @@ function drawWaveform(idle = false) {
   const hero = $('hero-play');
   if (hero) hero.style.setProperty('--level', smoothedLevel.toFixed(3));
 
-  // FX every other frame, and only on Now view
-  if (isNowViewActive() && isAnyFxActive() && waveFrame % 2 === 0) {
+  // FX every other frame on Now view. Skip teto overlay when DDF theater owns the stage
+  // (theater has its own optimized canvas loop — drawing both is pure lag).
+  if (
+    isNowViewActive()
+    && isAnyFxActive()
+    && waveFrame % 2 === 0
+    && !document.body.classList.contains('ddf-theater-active')
+  ) {
     drawTetoFx(smoothedLevel);
   }
 }
@@ -5083,9 +5136,12 @@ document.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('resize', () => {
+  waveSizeKey = '';
+  fxSizeKey = '';
   resizeWaveform(true);
   resizeFxCanvas(true);
   ddfFxSizeKey = '';
+  ddfFxCtx = null;
   if (document.body.classList.contains('ddf-theater-active')) {
     resizeDdfFxCanvas(true);
     paintDdfTheaterFx(currentCalibratedTime());
