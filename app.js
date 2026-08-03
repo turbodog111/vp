@@ -2252,11 +2252,11 @@ function loadDdfLeadMaps() {
 /** Map song title → lead map id */
 function leadMapIdForSong(song = currentSong()) {
   const hay = `${song?.name || ''} ${song?.title || ''} ${song?.displayName || ''}`;
-  if (/v6a/i.test(hay) || /story\s*line/i.test(hay)) return 'v6a_story_line';
-  if (/v6b/i.test(hay) || /frequent/i.test(hay)) return 'v6b_frequent_line';
-  if (/v6c/i.test(hay) || /call[- ]?response/i.test(hay)) return 'v6c_call_response';
-  if (/v6d/i.test(hay) || /soft\s*phrase/i.test(hay)) return 'v6d_soft_phrase';
-  return 'v5_flat';
+  // Sole Traveling Voices cut: phrase/word lead map (v7)
+  if (/v7/i.test(hay) || /phrase[- ]?word/i.test(hay) || songLooksLikeTravelingVoices(song)) {
+    return 'v7_phrase_word_lead';
+  }
+  return 'v7_phrase_word_lead';
 }
 
 /**
@@ -2267,8 +2267,9 @@ function leadMapIdForSong(song = currentSong()) {
 function leadAtTime(t, song = currentSong()) {
   const maps = ddfLeadMaps || {};
   const id = leadMapIdForSong(song);
-  const map = maps[id] || maps.v5_flat;
+  const map = maps[id] || maps.v7_phrase_word_lead || maps.default || maps.v5_flat;
   if (!map || !map.segments || !map.segments.length) return 'both';
+  // Last matching segment wins (phrase/word units are ordered; overlaps rare)
   let lead = 'both';
   for (const s of map.segments) {
     const a = Number(s.start);

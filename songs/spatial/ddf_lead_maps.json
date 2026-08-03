@@ -1,526 +1,2315 @@
 {
-  "v6a_story_line": {
+  "v7_phrase_word_lead": {
     "both_f": 0.78,
     "both_m": 0.78,
     "lead": 1.05,
     "under": 0.15,
+    "ramp": 0.18,
+    "monika_instrumental_duck": 0.75,
+    "stats": {
+      "pct_both_high": 46.2,
+      "pct_female_lead": 46.1,
+      "pct_male_lead": 6.3
+    },
     "segments": [
       {
-        "start": 53.93,
-        "end": 58.0,
-        "lead": "both"
+        "start": 10.49,
+        "end": 11.56,
+        "lead": "F",
+        "lyric": "Doki Doki!",
+        "girl": "transitionary"
       },
       {
-        "start": 65.72,
-        "end": 77.4,
-        "lead": "both"
-      },
-      {
-        "start": 123.63,
-        "end": 127.67,
-        "lead": "both"
-      },
-      {
-        "start": 135.49,
-        "end": 139.5,
-        "lead": "both"
-      },
-      {
-        "start": 158.83,
-        "end": 170.96,
-        "lead": "both"
+        "start": 11.56,
+        "end": 12.45,
+        "lead": "F",
+        "lyric": "Hey hey!",
+        "girl": "sayori"
       },
       {
         "start": 12.45,
+        "end": 13.78,
+        "lead": "F",
+        "lyric": "My heart's beating",
+        "girl": "sayori"
+      },
+      {
+        "start": 13.78,
         "end": 16.44,
-        "lead": "F"
+        "lead": "F",
+        "lyric": "when I'm hanging out with you!",
+        "girl": "sayori"
       },
       {
         "start": 16.44,
+        "end": 17.526,
+        "lead": "F",
+        "lyric": "Why does my",
+        "girl": "sayori"
+      },
+      {
+        "start": 17.526,
+        "end": 18.25,
+        "lead": "F",
+        "lyric": "heart ache,",
+        "girl": "sayori"
+      },
+      {
+        "start": 18.25,
+        "end": 19.339,
+        "lead": "F",
+        "lyric": "When I hear you",
+        "girl": "sayori"
+      },
+      {
+        "start": 19.339,
         "end": 20.7,
-        "lead": "F"
-      },
-      {
-        "start": 27.99,
-        "end": 32.31,
-        "lead": "M"
-      },
-      {
-        "start": 32.31,
-        "end": 34.56,
-        "lead": "M"
-      },
-      {
-        "start": 34.56,
-        "end": 39.76,
-        "lead": "F"
-      },
-      {
-        "start": 39.76,
-        "end": 46.06,
-        "lead": "both"
-      },
-      {
-        "start": 46.06,
-        "end": 51.34,
-        "lead": "M"
-      },
-      {
-        "start": 51.34,
-        "end": 53.93,
-        "lead": "F"
-      },
-      {
-        "start": 58.0,
-        "end": 62.61,
-        "lead": "F"
-      },
-      {
-        "start": 62.61,
-        "end": 65.72,
-        "lead": "M"
-      },
-      {
-        "start": 82.38,
-        "end": 90.14,
-        "lead": "F"
-      },
-      {
-        "start": 90.14,
-        "end": 92.44,
-        "lead": "F"
-      },
-      {
-        "start": 93.46,
-        "end": 97.79,
-        "lead": "M"
-      },
-      {
-        "start": 97.79,
-        "end": 104.7,
-        "lead": "M"
-      },
-      {
-        "start": 104.7,
-        "end": 109.59,
-        "lead": "both"
-      },
-      {
-        "start": 109.59,
-        "end": 116.14,
-        "lead": "both"
-      },
-      {
-        "start": 116.14,
-        "end": 121.19,
-        "lead": "M"
-      },
-      {
-        "start": 121.19,
-        "end": 123.63,
-        "lead": "both"
-      },
-      {
-        "start": 127.67,
-        "end": 132.78,
-        "lead": "F"
-      },
-      {
-        "start": 132.78,
-        "end": 135.49,
-        "lead": "F"
-      },
-      {
-        "start": 139.5,
-        "end": 144.59,
-        "lead": "M"
-      },
-      {
-        "start": 144.59,
-        "end": 147.01,
-        "lead": "M"
-      },
-      {
-        "start": 147.01,
-        "end": 152.53,
-        "lead": "M"
-      },
-      {
-        "start": 170.96,
-        "end": 175.93,
-        "lead": "F"
-      }
-    ]
-  },
-  "v6b_frequent_line": {
-    "both_f": 0.75,
-    "both_m": 0.75,
-    "lead": 1.08,
-    "under": 0.15,
-    "segments": [
-      {
-        "start": 53.93,
-        "end": 58.0,
-        "lead": "both"
-      },
-      {
-        "start": 65.72,
-        "end": 77.4,
-        "lead": "both"
-      },
-      {
-        "start": 123.63,
-        "end": 127.67,
-        "lead": "both"
-      },
-      {
-        "start": 135.49,
-        "end": 139.5,
-        "lead": "both"
-      },
-      {
-        "start": 158.83,
-        "end": 170.96,
-        "lead": "both"
-      },
-      {
-        "start": 12.45,
-        "end": 16.44,
-        "lead": "F"
-      },
-      {
-        "start": 16.44,
-        "end": 20.7,
-        "lead": "F"
-      },
-      {
-        "start": 27.99,
-        "end": 32.31,
-        "lead": "M"
-      },
-      {
-        "start": 32.31,
-        "end": 34.56,
-        "lead": "M"
-      },
-      {
-        "start": 34.56,
-        "end": 39.76,
-        "lead": "F"
-      },
-      {
-        "start": 39.76,
-        "end": 46.06,
-        "lead": "both"
-      },
-      {
-        "start": 46.06,
-        "end": 51.34,
-        "lead": "M"
-      },
-      {
-        "start": 51.34,
-        "end": 53.93,
-        "lead": "F"
-      },
-      {
-        "start": 58.0,
-        "end": 62.61,
-        "lead": "F"
-      },
-      {
-        "start": 62.61,
-        "end": 65.72,
-        "lead": "M"
-      },
-      {
-        "start": 82.38,
-        "end": 90.14,
-        "lead": "F"
-      },
-      {
-        "start": 90.14,
-        "end": 92.44,
-        "lead": "F"
-      },
-      {
-        "start": 93.46,
-        "end": 97.79,
-        "lead": "M"
-      },
-      {
-        "start": 97.79,
-        "end": 104.7,
-        "lead": "M"
-      },
-      {
-        "start": 104.7,
-        "end": 109.59,
-        "lead": "both"
-      },
-      {
-        "start": 109.59,
-        "end": 116.14,
-        "lead": "both"
-      },
-      {
-        "start": 116.14,
-        "end": 121.19,
-        "lead": "M"
-      },
-      {
-        "start": 121.19,
-        "end": 123.63,
-        "lead": "both"
-      },
-      {
-        "start": 127.67,
-        "end": 132.78,
-        "lead": "F"
-      },
-      {
-        "start": 132.78,
-        "end": 135.49,
-        "lead": "F"
-      },
-      {
-        "start": 139.5,
-        "end": 144.59,
-        "lead": "M"
-      },
-      {
-        "start": 144.59,
-        "end": 147.01,
-        "lead": "M"
-      },
-      {
-        "start": 147.01,
-        "end": 152.53,
-        "lead": "M"
-      },
-      {
-        "start": 170.96,
-        "end": 175.93,
-        "lead": "F"
+        "lead": "F",
+        "lyric": "feel the same way too?",
+        "girl": "sayori"
       },
       {
         "start": 20.7,
         "end": 22.68,
-        "lead": "both"
+        "lead": "both",
+        "lyric": "(Eheheh)",
+        "girl": "sayori"
       },
       {
         "start": 22.68,
+        "end": 23.925,
+        "lead": "both",
+        "lyric": "Just like a",
+        "girl": "natsuki"
+      },
+      {
+        "start": 23.925,
+        "end": 24.34,
+        "lead": "F",
+        "lyric": "sundae,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 24.34,
+        "end": 25.962,
+        "lead": "both",
+        "lyric": "It's sweet every time",
+        "girl": "natsuki"
+      },
+      {
+        "start": 25.962,
         "end": 27.99,
-        "lead": "F"
+        "lead": "both",
+        "lyric": "I teach you something new!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 27.99,
+        "end": 28.94,
+        "lead": "both",
+        "lyric": "Is this by chance,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 28.94,
+        "end": 30.08,
+        "lead": "M",
+        "lyric": "Or fate?",
+        "girl": "natsuki"
+      },
+      {
+        "start": 30.08,
+        "end": 31.195,
+        "lead": "both",
+        "lyric": "Whenever it's just",
+        "girl": "natsuki"
+      },
+      {
+        "start": 31.195,
+        "end": 31.543,
+        "lead": "F",
+        "lyric": "me",
+        "girl": "natsuki"
+      },
+      {
+        "start": 31.543,
+        "end": 31.892,
+        "lead": "both",
+        "lyric": "and",
+        "girl": "natsuki"
+      },
+      {
+        "start": 31.892,
+        "end": 32.31,
+        "lead": "M",
+        "lyric": "you?",
+        "girl": "natsuki"
+      },
+      {
+        "start": 32.31,
+        "end": 34.56,
+        "lead": "both",
+        "lyric": "(E-Eh! Don't get the wrong idea!)",
+        "girl": "natsuki"
+      },
+      {
+        "start": 34.56,
+        "end": 36.789,
+        "lead": "F",
+        "lyric": "When we touch,",
+        "girl": "yuri"
+      },
+      {
+        "start": 36.789,
+        "end": 39.76,
+        "lead": "F",
+        "lyric": "it'll never be enough",
+        "girl": "yuri"
+      },
+      {
+        "start": 39.76,
+        "end": 42.01,
+        "lead": "both",
+        "lyric": "Is it way too much",
+        "girl": "sayori"
+      },
+      {
+        "start": 42.01,
+        "end": 44.26,
+        "lead": "M",
+        "lyric": "if you had to choose",
+        "girl": "sayori"
+      },
+      {
+        "start": 44.26,
+        "end": 46.06,
+        "lead": "F",
+        "lyric": "just one of us?",
+        "girl": "sayori"
+      },
+      {
+        "start": 46.06,
+        "end": 46.964,
+        "lead": "both",
+        "lyric": "Tell me,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 46.964,
+        "end": 47.868,
+        "lead": "both",
+        "lyric": "tell me,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 47.868,
+        "end": 48.32,
+        "lead": "both",
+        "lyric": "please!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 48.32,
+        "end": 49.65,
+        "lead": "F",
+        "lyric": "Is this what I think,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 49.65,
+        "end": 51.34,
+        "lead": "F",
+        "lyric": "Or is it just me?",
+        "girl": "natsuki"
+      },
+      {
+        "start": 51.34,
+        "end": 52.779,
+        "lead": "M",
+        "lyric": "Don't wake me up from",
+        "girl": "natsuki"
+      },
+      {
+        "start": 52.779,
+        "end": 53.93,
+        "lead": "F",
+        "lyric": "this sweet little dream!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 53.93,
+        "end": 55.262,
+        "lead": "both",
+        "lyric": "Where we'll be",
+        "girl": "natsuki"
+      },
+      {
+        "start": 55.262,
+        "end": 55.706,
+        "lead": "F",
+        "lyric": "together",
+        "girl": "natsuki"
+      },
+      {
+        "start": 55.706,
+        "end": 56.15,
+        "lead": "M",
+        "lyric": "forever",
+        "girl": "natsuki"
+      },
+      {
+        "start": 56.15,
+        "end": 57.63,
+        "lead": "both",
+        "lyric": "We're never gonna be",
+        "girl": "natsuki"
+      },
+      {
+        "start": 57.63,
+        "end": 58.0,
+        "lead": "both",
+        "lyric": "apart!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 58.0,
+        "end": 59.9,
+        "lead": "both",
+        "lyric": "Will it be okay",
+        "girl": "sayori"
+      },
+      {
+        "start": 59.9,
+        "end": 60.803,
+        "lead": "F",
+        "lyric": "If I express",
+        "girl": "sayori"
+      },
+      {
+        "start": 60.803,
+        "end": 62.008,
+        "lead": "F",
+        "lyric": "my love for you",
+        "girl": "sayori"
+      },
+      {
+        "start": 62.008,
+        "end": 62.61,
+        "lead": "F",
+        "lyric": "this way?",
+        "girl": "sayori"
+      },
+      {
+        "start": 62.61,
+        "end": 64.338,
+        "lead": "M",
+        "lyric": "No matter what you do",
+        "girl": "sayori"
+      },
+      {
+        "start": 64.338,
+        "end": 65.72,
+        "lead": "F",
+        "lyric": "or what you say,",
+        "girl": "sayori"
+      },
+      {
+        "start": 65.72,
+        "end": 66.675,
+        "lead": "both",
+        "lyric": "We'll be",
+        "girl": "sayori"
+      },
+      {
+        "start": 66.675,
+        "end": 67.153,
+        "lead": "F",
+        "lyric": "together",
+        "girl": "sayori"
+      },
+      {
+        "start": 67.153,
+        "end": 67.63,
+        "lead": "M",
+        "lyric": "forever",
+        "girl": "sayori"
+      },
+      {
+        "start": 67.63,
+        "end": 72.006,
+        "lead": "both",
+        "lyric": "We're never gonna be",
+        "girl": "sayori"
+      },
+      {
+        "start": 72.006,
+        "end": 73.1,
+        "lead": "both",
+        "lyric": "apart!",
+        "girl": "sayori"
+      },
+      {
+        "start": 73.1,
+        "end": 77.4,
+        "lead": "F",
+        "lyric": "(We're never gonna be apart)",
+        "girl": "monika"
+      },
+      {
+        "start": 81.28,
+        "end": 82.38,
+        "lead": "both",
+        "lyric": "Hey hey",
+        "girl": "yuri"
+      },
+      {
+        "start": 82.38,
+        "end": 84.053,
+        "lead": "both",
+        "lyric": "When I'm next to you,",
+        "girl": "yuri"
+      },
+      {
+        "start": 84.053,
+        "end": 86.06,
+        "lead": "both",
+        "lyric": "I don't know what to do",
+        "girl": "yuri"
+      },
+      {
+        "start": 86.06,
+        "end": 87.36,
+        "lead": "both",
+        "lyric": "Why does it feel",
+        "girl": "yuri"
+      },
+      {
+        "start": 87.36,
+        "end": 88.01,
+        "lead": "F",
+        "lyric": "so great,",
+        "girl": "yuri"
+      },
+      {
+        "start": 88.01,
+        "end": 89.075,
+        "lead": "F",
+        "lyric": "When our eyes meet",
+        "girl": "yuri"
+      },
+      {
+        "start": 89.075,
+        "end": 90.14,
+        "lead": "F",
+        "lyric": "out of the blue?",
+        "girl": "yuri"
+      },
+      {
+        "start": 90.14,
+        "end": 90.907,
+        "lead": "F",
+        "lyric": "(I-I'm sorry,",
+        "girl": "yuri"
+      },
+      {
+        "start": 90.907,
+        "end": 92.44,
+        "lead": "F",
+        "lyric": "I said too much!)",
+        "girl": "yuri"
       },
       {
         "start": 92.44,
         "end": 93.46,
-        "lead": "F"
+        "lead": "both",
+        "lyric": "I really love\u2014",
+        "girl": "sayori"
+      },
+      {
+        "start": 93.46,
+        "end": 95.035,
+        "lead": "F",
+        "lyric": "The way you write",
+        "girl": "monika"
+      },
+      {
+        "start": 95.035,
+        "end": 97.79,
+        "lead": "F",
+        "lyric": "even when you don't have a clue!",
+        "girl": "monika"
+      },
+      {
+        "start": 97.79,
+        "end": 99.462,
+        "lead": "F",
+        "lyric": "I wanna hear you",
+        "girl": "monika"
+      },
+      {
+        "start": 99.462,
+        "end": 99.88,
+        "lead": "F",
+        "lyric": "say:",
+        "girl": "monika"
+      },
+      {
+        "start": 99.88,
+        "end": 101.085,
+        "lead": "F",
+        "lyric": "\"This love",
+        "girl": "monika"
+      },
+      {
+        "start": 101.085,
+        "end": 103.495,
+        "lead": "F",
+        "lyric": "that I am feeling",
+        "girl": "monika"
+      },
+      {
+        "start": 103.495,
+        "end": 104.7,
+        "lead": "F",
+        "lyric": "is true!\"",
+        "girl": "monika"
+      },
+      {
+        "start": 104.7,
+        "end": 106.097,
+        "lead": "both",
+        "lyric": "Tasty love,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 106.097,
+        "end": 109.59,
+        "lead": "both",
+        "lyric": "something I want more of!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 109.59,
+        "end": 112.47,
+        "lead": "both",
+        "lyric": "Will it make the cut,",
+        "girl": "yuri"
+      },
+      {
+        "start": 112.47,
+        "end": 114.509,
+        "lead": "M",
+        "lyric": "If you had to choose",
+        "girl": "yuri"
+      },
+      {
+        "start": 114.509,
+        "end": 116.14,
+        "lead": "F",
+        "lyric": "just one of us?",
+        "girl": "yuri"
+      },
+      {
+        "start": 116.14,
+        "end": 116.92,
+        "lead": "F",
+        "lyric": "Shall I",
+        "girl": "monika"
+      },
+      {
+        "start": 116.92,
+        "end": 118.09,
+        "lead": "F",
+        "lyric": "leave you be?",
+        "girl": "monika"
+      },
+      {
+        "start": 118.09,
+        "end": 119.123,
+        "lead": "F",
+        "lyric": "Is it love",
+        "girl": "monika"
+      },
+      {
+        "start": 119.123,
+        "end": 121.19,
+        "lead": "F",
+        "lyric": "if I can set you free?",
+        "girl": "monika"
+      },
+      {
+        "start": 121.19,
+        "end": 122.41,
+        "lead": "F",
+        "lyric": "But even if",
+        "girl": "monika"
+      },
+      {
+        "start": 122.41,
+        "end": 123.63,
+        "lead": "F",
+        "lyric": "it's not reality,",
+        "girl": "monika"
+      },
+      {
+        "start": 123.63,
+        "end": 124.665,
+        "lead": "F",
+        "lyric": "Let's be",
+        "girl": "monika"
+      },
+      {
+        "start": 124.665,
+        "end": 125.7,
+        "lead": "F",
+        "lyric": "together forever,",
+        "girl": "monika"
+      },
+      {
+        "start": 125.7,
+        "end": 127.276,
+        "lead": "F",
+        "lyric": "We're never gonna be",
+        "girl": "monika"
+      },
+      {
+        "start": 127.276,
+        "end": 127.67,
+        "lead": "F",
+        "lyric": "apart!",
+        "girl": "monika"
+      },
+      {
+        "start": 127.67,
+        "end": 129.79,
+        "lead": "both",
+        "lyric": "How can I convey,",
+        "girl": "yuri"
+      },
+      {
+        "start": 129.79,
+        "end": 131.285,
+        "lead": "both",
+        "lyric": "My love for you",
+        "girl": "yuri"
+      },
+      {
+        "start": 131.285,
+        "end": 132.78,
+        "lead": "both",
+        "lyric": "before they fly away?",
+        "girl": "yuri"
+      },
+      {
+        "start": 132.78,
+        "end": 134.329,
+        "lead": "M",
+        "lyric": "I think about it",
+        "girl": "yuri"
+      },
+      {
+        "start": 134.329,
+        "end": 135.49,
+        "lead": "F",
+        "lyric": "all day everyday",
+        "girl": "yuri"
+      },
+      {
+        "start": 135.49,
+        "end": 136.415,
+        "lead": "F",
+        "lyric": "We'll be",
+        "girl": "monika"
+      },
+      {
+        "start": 136.415,
+        "end": 137.34,
+        "lead": "F",
+        "lyric": "together forever,",
+        "girl": "monika"
+      },
+      {
+        "start": 137.34,
+        "end": 139.068,
+        "lead": "F",
+        "lyric": "We're never gonna be",
+        "girl": "monika"
+      },
+      {
+        "start": 139.068,
+        "end": 139.5,
+        "lead": "F",
+        "lyric": "apart!",
+        "girl": "monika"
+      },
+      {
+        "start": 139.5,
+        "end": 141.312,
+        "lead": "F",
+        "lyric": "One by one",
+        "girl": "monika"
+      },
+      {
+        "start": 141.312,
+        "end": 142.52,
+        "lead": "F",
+        "lyric": "they only",
+        "girl": "monika"
+      },
+      {
+        "start": 142.52,
+        "end": 144.59,
+        "lead": "F",
+        "lyric": "Fall apart",
+        "girl": "monika"
+      },
+      {
+        "start": 144.59,
+        "end": 147.01,
+        "lead": "F",
+        "lyric": "Can it be undone?",
+        "girl": "monika"
+      },
+      {
+        "start": 147.01,
+        "end": 148.85,
+        "lead": "F",
+        "lyric": "Why can't I",
+        "girl": "monika"
+      },
+      {
+        "start": 148.85,
+        "end": 151.303,
+        "lead": "F",
+        "lyric": "just be the one",
+        "girl": "monika"
+      },
+      {
+        "start": 151.303,
+        "end": 152.53,
+        "lead": "F",
+        "lyric": "for once?",
+        "girl": "monika"
+      },
+      {
+        "start": 158.83,
+        "end": 159.77,
+        "lead": "both",
+        "lyric": "We'll be",
+        "girl": "sayori"
+      },
+      {
+        "start": 159.77,
+        "end": 160.24,
+        "lead": "F",
+        "lyric": "together",
+        "girl": "sayori"
+      },
+      {
+        "start": 160.24,
+        "end": 160.71,
+        "lead": "M",
+        "lyric": "forever,",
+        "girl": "sayori"
+      },
+      {
+        "start": 160.71,
+        "end": 164.566,
+        "lead": "both",
+        "lyric": "We're never gonna be",
+        "girl": "sayori"
+      },
+      {
+        "start": 164.566,
+        "end": 165.53,
+        "lead": "both",
+        "lyric": "apart!",
+        "girl": "sayori"
       },
       {
         "start": 165.53,
+        "end": 168.245,
+        "lead": "both",
+        "lyric": "(Forever,",
+        "girl": "sayori"
+      },
+      {
+        "start": 168.245,
         "end": 170.96,
-        "lead": "both"
+        "lead": "both",
+        "lyric": "forever)",
+        "girl": "sayori"
+      },
+      {
+        "start": 170.96,
+        "end": 171.95,
+        "lead": "F",
+        "lyric": "Maybe we'll never",
+        "girl": "monika"
+      },
+      {
+        "start": 171.95,
+        "end": 172.61,
+        "lead": "F",
+        "lyric": "be together,",
+        "girl": "monika"
+      },
+      {
+        "start": 172.61,
+        "end": 173.559,
+        "lead": "F",
+        "lyric": "But forever",
+        "girl": "monika"
+      },
+      {
+        "start": 173.559,
+        "end": 175.93,
+        "lead": "F",
+        "lyric": "you'll be in my heart!",
+        "girl": "monika"
       }
     ]
   },
-  "v6c_call_response": {
-    "both_f": 0.82,
-    "both_m": 0.82,
+  "default": {
+    "both_f": 0.78,
+    "both_m": 0.78,
     "lead": 1.05,
     "under": 0.15,
+    "ramp": 0.18,
+    "monika_instrumental_duck": 0.75,
+    "stats": {
+      "pct_both_high": 46.2,
+      "pct_female_lead": 46.1,
+      "pct_male_lead": 6.3
+    },
     "segments": [
       {
+        "start": 10.49,
+        "end": 11.56,
+        "lead": "F",
+        "lyric": "Doki Doki!",
+        "girl": "transitionary"
+      },
+      {
+        "start": 11.56,
+        "end": 12.45,
+        "lead": "F",
+        "lyric": "Hey hey!",
+        "girl": "sayori"
+      },
+      {
+        "start": 12.45,
+        "end": 13.78,
+        "lead": "F",
+        "lyric": "My heart's beating",
+        "girl": "sayori"
+      },
+      {
+        "start": 13.78,
+        "end": 16.44,
+        "lead": "F",
+        "lyric": "when I'm hanging out with you!",
+        "girl": "sayori"
+      },
+      {
         "start": 16.44,
+        "end": 17.526,
+        "lead": "F",
+        "lyric": "Why does my",
+        "girl": "sayori"
+      },
+      {
+        "start": 17.526,
+        "end": 18.25,
+        "lead": "F",
+        "lyric": "heart ache,",
+        "girl": "sayori"
+      },
+      {
+        "start": 18.25,
+        "end": 19.339,
+        "lead": "F",
+        "lyric": "When I hear you",
+        "girl": "sayori"
+      },
+      {
+        "start": 19.339,
         "end": 20.7,
-        "lead": "F"
+        "lead": "F",
+        "lyric": "feel the same way too?",
+        "girl": "sayori"
+      },
+      {
+        "start": 20.7,
+        "end": 22.68,
+        "lead": "both",
+        "lyric": "(Eheheh)",
+        "girl": "sayori"
+      },
+      {
+        "start": 22.68,
+        "end": 23.925,
+        "lead": "both",
+        "lyric": "Just like a",
+        "girl": "natsuki"
+      },
+      {
+        "start": 23.925,
+        "end": 24.34,
+        "lead": "F",
+        "lyric": "sundae,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 24.34,
+        "end": 25.962,
+        "lead": "both",
+        "lyric": "It's sweet every time",
+        "girl": "natsuki"
+      },
+      {
+        "start": 25.962,
+        "end": 27.99,
+        "lead": "both",
+        "lyric": "I teach you something new!",
+        "girl": "natsuki"
       },
       {
         "start": 27.99,
+        "end": 28.94,
+        "lead": "both",
+        "lyric": "Is this by chance,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 28.94,
+        "end": 30.08,
+        "lead": "M",
+        "lyric": "Or fate?",
+        "girl": "natsuki"
+      },
+      {
+        "start": 30.08,
+        "end": 31.195,
+        "lead": "both",
+        "lyric": "Whenever it's just",
+        "girl": "natsuki"
+      },
+      {
+        "start": 31.195,
+        "end": 31.543,
+        "lead": "F",
+        "lyric": "me",
+        "girl": "natsuki"
+      },
+      {
+        "start": 31.543,
+        "end": 31.892,
+        "lead": "both",
+        "lyric": "and",
+        "girl": "natsuki"
+      },
+      {
+        "start": 31.892,
+        "end": 32.31,
+        "lead": "M",
+        "lyric": "you?",
+        "girl": "natsuki"
+      },
+      {
+        "start": 32.31,
         "end": 34.56,
-        "lead": "M"
+        "lead": "both",
+        "lyric": "(E-Eh! Don't get the wrong idea!)",
+        "girl": "natsuki"
       },
       {
         "start": 34.56,
+        "end": 36.789,
+        "lead": "F",
+        "lyric": "When we touch,",
+        "girl": "yuri"
+      },
+      {
+        "start": 36.789,
         "end": 39.76,
-        "lead": "F"
+        "lead": "F",
+        "lyric": "it'll never be enough",
+        "girl": "yuri"
       },
       {
         "start": 39.76,
+        "end": 42.01,
+        "lead": "both",
+        "lyric": "Is it way too much",
+        "girl": "sayori"
+      },
+      {
+        "start": 42.01,
+        "end": 44.26,
+        "lead": "M",
+        "lyric": "if you had to choose",
+        "girl": "sayori"
+      },
+      {
+        "start": 44.26,
         "end": 46.06,
-        "lead": "both"
+        "lead": "F",
+        "lyric": "just one of us?",
+        "girl": "sayori"
       },
       {
         "start": 46.06,
+        "end": 46.964,
+        "lead": "both",
+        "lyric": "Tell me,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 46.964,
+        "end": 47.868,
+        "lead": "both",
+        "lyric": "tell me,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 47.868,
+        "end": 48.32,
+        "lead": "both",
+        "lyric": "please!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 48.32,
+        "end": 49.65,
+        "lead": "F",
+        "lyric": "Is this what I think,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 49.65,
         "end": 51.34,
-        "lead": "M"
+        "lead": "F",
+        "lyric": "Or is it just me?",
+        "girl": "natsuki"
+      },
+      {
+        "start": 51.34,
+        "end": 52.779,
+        "lead": "M",
+        "lyric": "Don't wake me up from",
+        "girl": "natsuki"
+      },
+      {
+        "start": 52.779,
+        "end": 53.93,
+        "lead": "F",
+        "lyric": "this sweet little dream!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 53.93,
+        "end": 55.262,
+        "lead": "both",
+        "lyric": "Where we'll be",
+        "girl": "natsuki"
+      },
+      {
+        "start": 55.262,
+        "end": 55.706,
+        "lead": "F",
+        "lyric": "together",
+        "girl": "natsuki"
+      },
+      {
+        "start": 55.706,
+        "end": 56.15,
+        "lead": "M",
+        "lyric": "forever",
+        "girl": "natsuki"
+      },
+      {
+        "start": 56.15,
+        "end": 57.63,
+        "lead": "both",
+        "lyric": "We're never gonna be",
+        "girl": "natsuki"
+      },
+      {
+        "start": 57.63,
+        "end": 58.0,
+        "lead": "both",
+        "lyric": "apart!",
+        "girl": "natsuki"
       },
       {
         "start": 58.0,
+        "end": 59.9,
+        "lead": "both",
+        "lyric": "Will it be okay",
+        "girl": "sayori"
+      },
+      {
+        "start": 59.9,
+        "end": 60.803,
+        "lead": "F",
+        "lyric": "If I express",
+        "girl": "sayori"
+      },
+      {
+        "start": 60.803,
+        "end": 62.008,
+        "lead": "F",
+        "lyric": "my love for you",
+        "girl": "sayori"
+      },
+      {
+        "start": 62.008,
         "end": 62.61,
-        "lead": "F"
+        "lead": "F",
+        "lyric": "this way?",
+        "girl": "sayori"
       },
       {
         "start": 62.61,
+        "end": 64.338,
+        "lead": "M",
+        "lyric": "No matter what you do",
+        "girl": "sayori"
+      },
+      {
+        "start": 64.338,
         "end": 65.72,
-        "lead": "M"
-      },
-      {
-        "start": 53.93,
-        "end": 58.0,
-        "lead": "both"
+        "lead": "F",
+        "lyric": "or what you say,",
+        "girl": "sayori"
       },
       {
         "start": 65.72,
+        "end": 66.675,
+        "lead": "both",
+        "lyric": "We'll be",
+        "girl": "sayori"
+      },
+      {
+        "start": 66.675,
+        "end": 67.153,
+        "lead": "F",
+        "lyric": "together",
+        "girl": "sayori"
+      },
+      {
+        "start": 67.153,
+        "end": 67.63,
+        "lead": "M",
+        "lyric": "forever",
+        "girl": "sayori"
+      },
+      {
+        "start": 67.63,
+        "end": 72.006,
+        "lead": "both",
+        "lyric": "We're never gonna be",
+        "girl": "sayori"
+      },
+      {
+        "start": 72.006,
+        "end": 73.1,
+        "lead": "both",
+        "lyric": "apart!",
+        "girl": "sayori"
+      },
+      {
+        "start": 73.1,
         "end": 77.4,
-        "lead": "both"
+        "lead": "F",
+        "lyric": "(We're never gonna be apart)",
+        "girl": "monika"
       },
       {
-        "start": 123.63,
-        "end": 127.67,
-        "lead": "both"
-      },
-      {
-        "start": 135.49,
-        "end": 139.5,
-        "lead": "both"
-      },
-      {
-        "start": 158.83,
-        "end": 170.96,
-        "lead": "both"
+        "start": 81.28,
+        "end": 82.38,
+        "lead": "both",
+        "lyric": "Hey hey",
+        "girl": "yuri"
       },
       {
         "start": 82.38,
+        "end": 84.053,
+        "lead": "both",
+        "lyric": "When I'm next to you,",
+        "girl": "yuri"
+      },
+      {
+        "start": 84.053,
+        "end": 86.06,
+        "lead": "both",
+        "lyric": "I don't know what to do",
+        "girl": "yuri"
+      },
+      {
+        "start": 86.06,
+        "end": 87.36,
+        "lead": "both",
+        "lyric": "Why does it feel",
+        "girl": "yuri"
+      },
+      {
+        "start": 87.36,
+        "end": 88.01,
+        "lead": "F",
+        "lyric": "so great,",
+        "girl": "yuri"
+      },
+      {
+        "start": 88.01,
+        "end": 89.075,
+        "lead": "F",
+        "lyric": "When our eyes meet",
+        "girl": "yuri"
+      },
+      {
+        "start": 89.075,
+        "end": 90.14,
+        "lead": "F",
+        "lyric": "out of the blue?",
+        "girl": "yuri"
+      },
+      {
+        "start": 90.14,
+        "end": 90.907,
+        "lead": "F",
+        "lyric": "(I-I'm sorry,",
+        "girl": "yuri"
+      },
+      {
+        "start": 90.907,
         "end": 92.44,
-        "lead": "F"
+        "lead": "F",
+        "lyric": "I said too much!)",
+        "girl": "yuri"
+      },
+      {
+        "start": 92.44,
+        "end": 93.46,
+        "lead": "both",
+        "lyric": "I really love\u2014",
+        "girl": "sayori"
       },
       {
         "start": 93.46,
+        "end": 95.035,
+        "lead": "F",
+        "lyric": "The way you write",
+        "girl": "monika"
+      },
+      {
+        "start": 95.035,
+        "end": 97.79,
+        "lead": "F",
+        "lyric": "even when you don't have a clue!",
+        "girl": "monika"
+      },
+      {
+        "start": 97.79,
+        "end": 99.462,
+        "lead": "F",
+        "lyric": "I wanna hear you",
+        "girl": "monika"
+      },
+      {
+        "start": 99.462,
+        "end": 99.88,
+        "lead": "F",
+        "lyric": "say:",
+        "girl": "monika"
+      },
+      {
+        "start": 99.88,
+        "end": 101.085,
+        "lead": "F",
+        "lyric": "\"This love",
+        "girl": "monika"
+      },
+      {
+        "start": 101.085,
+        "end": 103.495,
+        "lead": "F",
+        "lyric": "that I am feeling",
+        "girl": "monika"
+      },
+      {
+        "start": 103.495,
         "end": 104.7,
-        "lead": "M"
+        "lead": "F",
+        "lyric": "is true!\"",
+        "girl": "monika"
+      },
+      {
+        "start": 104.7,
+        "end": 106.097,
+        "lead": "both",
+        "lyric": "Tasty love,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 106.097,
+        "end": 109.59,
+        "lead": "both",
+        "lyric": "something I want more of!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 109.59,
+        "end": 112.47,
+        "lead": "both",
+        "lyric": "Will it make the cut,",
+        "girl": "yuri"
+      },
+      {
+        "start": 112.47,
+        "end": 114.509,
+        "lead": "M",
+        "lyric": "If you had to choose",
+        "girl": "yuri"
+      },
+      {
+        "start": 114.509,
+        "end": 116.14,
+        "lead": "F",
+        "lyric": "just one of us?",
+        "girl": "yuri"
       },
       {
         "start": 116.14,
+        "end": 116.92,
+        "lead": "F",
+        "lyric": "Shall I",
+        "girl": "monika"
+      },
+      {
+        "start": 116.92,
+        "end": 118.09,
+        "lead": "F",
+        "lyric": "leave you be?",
+        "girl": "monika"
+      },
+      {
+        "start": 118.09,
+        "end": 119.123,
+        "lead": "F",
+        "lyric": "Is it love",
+        "girl": "monika"
+      },
+      {
+        "start": 119.123,
         "end": 121.19,
-        "lead": "M"
+        "lead": "F",
+        "lyric": "if I can set you free?",
+        "girl": "monika"
       },
       {
-        "start": 127.67,
-        "end": 135.49,
-        "lead": "F"
+        "start": 121.19,
+        "end": 122.41,
+        "lead": "F",
+        "lyric": "But even if",
+        "girl": "monika"
       },
       {
-        "start": 139.5,
-        "end": 152.53,
-        "lead": "M"
-      },
-      {
-        "start": 158.83,
-        "end": 170.96,
-        "lead": "both"
-      },
-      {
-        "start": 170.96,
-        "end": 175.93,
-        "lead": "F"
-      }
-    ]
-  },
-  "v6d_soft_phrase": {
-    "both_f": 0.85,
-    "both_m": 0.85,
-    "lead": 1.02,
-    "under": 0.15,
-    "segments": [
-      {
-        "start": 12.45,
-        "end": 22.68,
-        "lead": "F"
-      },
-      {
-        "start": 27.99,
-        "end": 34.56,
-        "lead": "M"
-      },
-      {
-        "start": 34.56,
-        "end": 39.76,
-        "lead": "F"
-      },
-      {
-        "start": 46.06,
-        "end": 51.34,
-        "lead": "M"
-      },
-      {
-        "start": 58.0,
-        "end": 62.61,
-        "lead": "F"
-      },
-      {
-        "start": 53.93,
-        "end": 58.0,
-        "lead": "both"
-      },
-      {
-        "start": 65.72,
-        "end": 77.4,
-        "lead": "both"
+        "start": 122.41,
+        "end": 123.63,
+        "lead": "F",
+        "lyric": "it's not reality,",
+        "girl": "monika"
       },
       {
         "start": 123.63,
+        "end": 124.665,
+        "lead": "F",
+        "lyric": "Let's be",
+        "girl": "monika"
+      },
+      {
+        "start": 124.665,
+        "end": 125.7,
+        "lead": "F",
+        "lyric": "together forever,",
+        "girl": "monika"
+      },
+      {
+        "start": 125.7,
+        "end": 127.276,
+        "lead": "F",
+        "lyric": "We're never gonna be",
+        "girl": "monika"
+      },
+      {
+        "start": 127.276,
         "end": 127.67,
-        "lead": "both"
-      },
-      {
-        "start": 135.49,
-        "end": 139.5,
-        "lead": "both"
-      },
-      {
-        "start": 158.83,
-        "end": 170.96,
-        "lead": "both"
-      },
-      {
-        "start": 82.38,
-        "end": 92.44,
-        "lead": "F"
-      },
-      {
-        "start": 93.46,
-        "end": 104.7,
-        "lead": "M"
-      },
-      {
-        "start": 116.14,
-        "end": 123.63,
-        "lead": "M"
+        "lead": "F",
+        "lyric": "apart!",
+        "girl": "monika"
       },
       {
         "start": 127.67,
+        "end": 129.79,
+        "lead": "both",
+        "lyric": "How can I convey,",
+        "girl": "yuri"
+      },
+      {
+        "start": 129.79,
+        "end": 131.285,
+        "lead": "both",
+        "lyric": "My love for you",
+        "girl": "yuri"
+      },
+      {
+        "start": 131.285,
+        "end": 132.78,
+        "lead": "both",
+        "lyric": "before they fly away?",
+        "girl": "yuri"
+      },
+      {
+        "start": 132.78,
+        "end": 134.329,
+        "lead": "M",
+        "lyric": "I think about it",
+        "girl": "yuri"
+      },
+      {
+        "start": 134.329,
         "end": 135.49,
-        "lead": "F"
+        "lead": "F",
+        "lyric": "all day everyday",
+        "girl": "yuri"
+      },
+      {
+        "start": 135.49,
+        "end": 136.415,
+        "lead": "F",
+        "lyric": "We'll be",
+        "girl": "monika"
+      },
+      {
+        "start": 136.415,
+        "end": 137.34,
+        "lead": "F",
+        "lyric": "together forever,",
+        "girl": "monika"
+      },
+      {
+        "start": 137.34,
+        "end": 139.068,
+        "lead": "F",
+        "lyric": "We're never gonna be",
+        "girl": "monika"
+      },
+      {
+        "start": 139.068,
+        "end": 139.5,
+        "lead": "F",
+        "lyric": "apart!",
+        "girl": "monika"
       },
       {
         "start": 139.5,
+        "end": 141.312,
+        "lead": "F",
+        "lyric": "One by one",
+        "girl": "monika"
+      },
+      {
+        "start": 141.312,
+        "end": 142.52,
+        "lead": "F",
+        "lyric": "they only",
+        "girl": "monika"
+      },
+      {
+        "start": 142.52,
+        "end": 144.59,
+        "lead": "F",
+        "lyric": "Fall apart",
+        "girl": "monika"
+      },
+      {
+        "start": 144.59,
+        "end": 147.01,
+        "lead": "F",
+        "lyric": "Can it be undone?",
+        "girl": "monika"
+      },
+      {
+        "start": 147.01,
+        "end": 148.85,
+        "lead": "F",
+        "lyric": "Why can't I",
+        "girl": "monika"
+      },
+      {
+        "start": 148.85,
+        "end": 151.303,
+        "lead": "F",
+        "lyric": "just be the one",
+        "girl": "monika"
+      },
+      {
+        "start": 151.303,
         "end": 152.53,
-        "lead": "M"
+        "lead": "F",
+        "lyric": "for once?",
+        "girl": "monika"
+      },
+      {
+        "start": 158.83,
+        "end": 159.77,
+        "lead": "both",
+        "lyric": "We'll be",
+        "girl": "sayori"
+      },
+      {
+        "start": 159.77,
+        "end": 160.24,
+        "lead": "F",
+        "lyric": "together",
+        "girl": "sayori"
+      },
+      {
+        "start": 160.24,
+        "end": 160.71,
+        "lead": "M",
+        "lyric": "forever,",
+        "girl": "sayori"
+      },
+      {
+        "start": 160.71,
+        "end": 164.566,
+        "lead": "both",
+        "lyric": "We're never gonna be",
+        "girl": "sayori"
+      },
+      {
+        "start": 164.566,
+        "end": 165.53,
+        "lead": "both",
+        "lyric": "apart!",
+        "girl": "sayori"
+      },
+      {
+        "start": 165.53,
+        "end": 168.245,
+        "lead": "both",
+        "lyric": "(Forever,",
+        "girl": "sayori"
+      },
+      {
+        "start": 168.245,
+        "end": 170.96,
+        "lead": "both",
+        "lyric": "forever)",
+        "girl": "sayori"
       },
       {
         "start": 170.96,
+        "end": 171.95,
+        "lead": "F",
+        "lyric": "Maybe we'll never",
+        "girl": "monika"
+      },
+      {
+        "start": 171.95,
+        "end": 172.61,
+        "lead": "F",
+        "lyric": "be together,",
+        "girl": "monika"
+      },
+      {
+        "start": 172.61,
+        "end": 173.559,
+        "lead": "F",
+        "lyric": "But forever",
+        "girl": "monika"
+      },
+      {
+        "start": 173.559,
         "end": 175.93,
-        "lead": "F"
+        "lead": "F",
+        "lyric": "you'll be in my heart!",
+        "girl": "monika"
       }
     ]
   },
   "v5_flat": {
-    "both_f": 1,
-    "both_m": 1,
-    "lead": 1,
+    "both_f": 0.78,
+    "both_m": 0.78,
+    "lead": 1.05,
     "under": 0.15,
-    "segments": []
+    "ramp": 0.18,
+    "monika_instrumental_duck": 0.75,
+    "stats": {
+      "pct_both_high": 46.2,
+      "pct_female_lead": 46.1,
+      "pct_male_lead": 6.3
+    },
+    "segments": [
+      {
+        "start": 10.49,
+        "end": 11.56,
+        "lead": "F",
+        "lyric": "Doki Doki!",
+        "girl": "transitionary"
+      },
+      {
+        "start": 11.56,
+        "end": 12.45,
+        "lead": "F",
+        "lyric": "Hey hey!",
+        "girl": "sayori"
+      },
+      {
+        "start": 12.45,
+        "end": 13.78,
+        "lead": "F",
+        "lyric": "My heart's beating",
+        "girl": "sayori"
+      },
+      {
+        "start": 13.78,
+        "end": 16.44,
+        "lead": "F",
+        "lyric": "when I'm hanging out with you!",
+        "girl": "sayori"
+      },
+      {
+        "start": 16.44,
+        "end": 17.526,
+        "lead": "F",
+        "lyric": "Why does my",
+        "girl": "sayori"
+      },
+      {
+        "start": 17.526,
+        "end": 18.25,
+        "lead": "F",
+        "lyric": "heart ache,",
+        "girl": "sayori"
+      },
+      {
+        "start": 18.25,
+        "end": 19.339,
+        "lead": "F",
+        "lyric": "When I hear you",
+        "girl": "sayori"
+      },
+      {
+        "start": 19.339,
+        "end": 20.7,
+        "lead": "F",
+        "lyric": "feel the same way too?",
+        "girl": "sayori"
+      },
+      {
+        "start": 20.7,
+        "end": 22.68,
+        "lead": "both",
+        "lyric": "(Eheheh)",
+        "girl": "sayori"
+      },
+      {
+        "start": 22.68,
+        "end": 23.925,
+        "lead": "both",
+        "lyric": "Just like a",
+        "girl": "natsuki"
+      },
+      {
+        "start": 23.925,
+        "end": 24.34,
+        "lead": "F",
+        "lyric": "sundae,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 24.34,
+        "end": 25.962,
+        "lead": "both",
+        "lyric": "It's sweet every time",
+        "girl": "natsuki"
+      },
+      {
+        "start": 25.962,
+        "end": 27.99,
+        "lead": "both",
+        "lyric": "I teach you something new!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 27.99,
+        "end": 28.94,
+        "lead": "both",
+        "lyric": "Is this by chance,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 28.94,
+        "end": 30.08,
+        "lead": "M",
+        "lyric": "Or fate?",
+        "girl": "natsuki"
+      },
+      {
+        "start": 30.08,
+        "end": 31.195,
+        "lead": "both",
+        "lyric": "Whenever it's just",
+        "girl": "natsuki"
+      },
+      {
+        "start": 31.195,
+        "end": 31.543,
+        "lead": "F",
+        "lyric": "me",
+        "girl": "natsuki"
+      },
+      {
+        "start": 31.543,
+        "end": 31.892,
+        "lead": "both",
+        "lyric": "and",
+        "girl": "natsuki"
+      },
+      {
+        "start": 31.892,
+        "end": 32.31,
+        "lead": "M",
+        "lyric": "you?",
+        "girl": "natsuki"
+      },
+      {
+        "start": 32.31,
+        "end": 34.56,
+        "lead": "both",
+        "lyric": "(E-Eh! Don't get the wrong idea!)",
+        "girl": "natsuki"
+      },
+      {
+        "start": 34.56,
+        "end": 36.789,
+        "lead": "F",
+        "lyric": "When we touch,",
+        "girl": "yuri"
+      },
+      {
+        "start": 36.789,
+        "end": 39.76,
+        "lead": "F",
+        "lyric": "it'll never be enough",
+        "girl": "yuri"
+      },
+      {
+        "start": 39.76,
+        "end": 42.01,
+        "lead": "both",
+        "lyric": "Is it way too much",
+        "girl": "sayori"
+      },
+      {
+        "start": 42.01,
+        "end": 44.26,
+        "lead": "M",
+        "lyric": "if you had to choose",
+        "girl": "sayori"
+      },
+      {
+        "start": 44.26,
+        "end": 46.06,
+        "lead": "F",
+        "lyric": "just one of us?",
+        "girl": "sayori"
+      },
+      {
+        "start": 46.06,
+        "end": 46.964,
+        "lead": "both",
+        "lyric": "Tell me,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 46.964,
+        "end": 47.868,
+        "lead": "both",
+        "lyric": "tell me,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 47.868,
+        "end": 48.32,
+        "lead": "both",
+        "lyric": "please!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 48.32,
+        "end": 49.65,
+        "lead": "F",
+        "lyric": "Is this what I think,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 49.65,
+        "end": 51.34,
+        "lead": "F",
+        "lyric": "Or is it just me?",
+        "girl": "natsuki"
+      },
+      {
+        "start": 51.34,
+        "end": 52.779,
+        "lead": "M",
+        "lyric": "Don't wake me up from",
+        "girl": "natsuki"
+      },
+      {
+        "start": 52.779,
+        "end": 53.93,
+        "lead": "F",
+        "lyric": "this sweet little dream!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 53.93,
+        "end": 55.262,
+        "lead": "both",
+        "lyric": "Where we'll be",
+        "girl": "natsuki"
+      },
+      {
+        "start": 55.262,
+        "end": 55.706,
+        "lead": "F",
+        "lyric": "together",
+        "girl": "natsuki"
+      },
+      {
+        "start": 55.706,
+        "end": 56.15,
+        "lead": "M",
+        "lyric": "forever",
+        "girl": "natsuki"
+      },
+      {
+        "start": 56.15,
+        "end": 57.63,
+        "lead": "both",
+        "lyric": "We're never gonna be",
+        "girl": "natsuki"
+      },
+      {
+        "start": 57.63,
+        "end": 58.0,
+        "lead": "both",
+        "lyric": "apart!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 58.0,
+        "end": 59.9,
+        "lead": "both",
+        "lyric": "Will it be okay",
+        "girl": "sayori"
+      },
+      {
+        "start": 59.9,
+        "end": 60.803,
+        "lead": "F",
+        "lyric": "If I express",
+        "girl": "sayori"
+      },
+      {
+        "start": 60.803,
+        "end": 62.008,
+        "lead": "F",
+        "lyric": "my love for you",
+        "girl": "sayori"
+      },
+      {
+        "start": 62.008,
+        "end": 62.61,
+        "lead": "F",
+        "lyric": "this way?",
+        "girl": "sayori"
+      },
+      {
+        "start": 62.61,
+        "end": 64.338,
+        "lead": "M",
+        "lyric": "No matter what you do",
+        "girl": "sayori"
+      },
+      {
+        "start": 64.338,
+        "end": 65.72,
+        "lead": "F",
+        "lyric": "or what you say,",
+        "girl": "sayori"
+      },
+      {
+        "start": 65.72,
+        "end": 66.675,
+        "lead": "both",
+        "lyric": "We'll be",
+        "girl": "sayori"
+      },
+      {
+        "start": 66.675,
+        "end": 67.153,
+        "lead": "F",
+        "lyric": "together",
+        "girl": "sayori"
+      },
+      {
+        "start": 67.153,
+        "end": 67.63,
+        "lead": "M",
+        "lyric": "forever",
+        "girl": "sayori"
+      },
+      {
+        "start": 67.63,
+        "end": 72.006,
+        "lead": "both",
+        "lyric": "We're never gonna be",
+        "girl": "sayori"
+      },
+      {
+        "start": 72.006,
+        "end": 73.1,
+        "lead": "both",
+        "lyric": "apart!",
+        "girl": "sayori"
+      },
+      {
+        "start": 73.1,
+        "end": 77.4,
+        "lead": "F",
+        "lyric": "(We're never gonna be apart)",
+        "girl": "monika"
+      },
+      {
+        "start": 81.28,
+        "end": 82.38,
+        "lead": "both",
+        "lyric": "Hey hey",
+        "girl": "yuri"
+      },
+      {
+        "start": 82.38,
+        "end": 84.053,
+        "lead": "both",
+        "lyric": "When I'm next to you,",
+        "girl": "yuri"
+      },
+      {
+        "start": 84.053,
+        "end": 86.06,
+        "lead": "both",
+        "lyric": "I don't know what to do",
+        "girl": "yuri"
+      },
+      {
+        "start": 86.06,
+        "end": 87.36,
+        "lead": "both",
+        "lyric": "Why does it feel",
+        "girl": "yuri"
+      },
+      {
+        "start": 87.36,
+        "end": 88.01,
+        "lead": "F",
+        "lyric": "so great,",
+        "girl": "yuri"
+      },
+      {
+        "start": 88.01,
+        "end": 89.075,
+        "lead": "F",
+        "lyric": "When our eyes meet",
+        "girl": "yuri"
+      },
+      {
+        "start": 89.075,
+        "end": 90.14,
+        "lead": "F",
+        "lyric": "out of the blue?",
+        "girl": "yuri"
+      },
+      {
+        "start": 90.14,
+        "end": 90.907,
+        "lead": "F",
+        "lyric": "(I-I'm sorry,",
+        "girl": "yuri"
+      },
+      {
+        "start": 90.907,
+        "end": 92.44,
+        "lead": "F",
+        "lyric": "I said too much!)",
+        "girl": "yuri"
+      },
+      {
+        "start": 92.44,
+        "end": 93.46,
+        "lead": "both",
+        "lyric": "I really love\u2014",
+        "girl": "sayori"
+      },
+      {
+        "start": 93.46,
+        "end": 95.035,
+        "lead": "F",
+        "lyric": "The way you write",
+        "girl": "monika"
+      },
+      {
+        "start": 95.035,
+        "end": 97.79,
+        "lead": "F",
+        "lyric": "even when you don't have a clue!",
+        "girl": "monika"
+      },
+      {
+        "start": 97.79,
+        "end": 99.462,
+        "lead": "F",
+        "lyric": "I wanna hear you",
+        "girl": "monika"
+      },
+      {
+        "start": 99.462,
+        "end": 99.88,
+        "lead": "F",
+        "lyric": "say:",
+        "girl": "monika"
+      },
+      {
+        "start": 99.88,
+        "end": 101.085,
+        "lead": "F",
+        "lyric": "\"This love",
+        "girl": "monika"
+      },
+      {
+        "start": 101.085,
+        "end": 103.495,
+        "lead": "F",
+        "lyric": "that I am feeling",
+        "girl": "monika"
+      },
+      {
+        "start": 103.495,
+        "end": 104.7,
+        "lead": "F",
+        "lyric": "is true!\"",
+        "girl": "monika"
+      },
+      {
+        "start": 104.7,
+        "end": 106.097,
+        "lead": "both",
+        "lyric": "Tasty love,",
+        "girl": "natsuki"
+      },
+      {
+        "start": 106.097,
+        "end": 109.59,
+        "lead": "both",
+        "lyric": "something I want more of!",
+        "girl": "natsuki"
+      },
+      {
+        "start": 109.59,
+        "end": 112.47,
+        "lead": "both",
+        "lyric": "Will it make the cut,",
+        "girl": "yuri"
+      },
+      {
+        "start": 112.47,
+        "end": 114.509,
+        "lead": "M",
+        "lyric": "If you had to choose",
+        "girl": "yuri"
+      },
+      {
+        "start": 114.509,
+        "end": 116.14,
+        "lead": "F",
+        "lyric": "just one of us?",
+        "girl": "yuri"
+      },
+      {
+        "start": 116.14,
+        "end": 116.92,
+        "lead": "F",
+        "lyric": "Shall I",
+        "girl": "monika"
+      },
+      {
+        "start": 116.92,
+        "end": 118.09,
+        "lead": "F",
+        "lyric": "leave you be?",
+        "girl": "monika"
+      },
+      {
+        "start": 118.09,
+        "end": 119.123,
+        "lead": "F",
+        "lyric": "Is it love",
+        "girl": "monika"
+      },
+      {
+        "start": 119.123,
+        "end": 121.19,
+        "lead": "F",
+        "lyric": "if I can set you free?",
+        "girl": "monika"
+      },
+      {
+        "start": 121.19,
+        "end": 122.41,
+        "lead": "F",
+        "lyric": "But even if",
+        "girl": "monika"
+      },
+      {
+        "start": 122.41,
+        "end": 123.63,
+        "lead": "F",
+        "lyric": "it's not reality,",
+        "girl": "monika"
+      },
+      {
+        "start": 123.63,
+        "end": 124.665,
+        "lead": "F",
+        "lyric": "Let's be",
+        "girl": "monika"
+      },
+      {
+        "start": 124.665,
+        "end": 125.7,
+        "lead": "F",
+        "lyric": "together forever,",
+        "girl": "monika"
+      },
+      {
+        "start": 125.7,
+        "end": 127.276,
+        "lead": "F",
+        "lyric": "We're never gonna be",
+        "girl": "monika"
+      },
+      {
+        "start": 127.276,
+        "end": 127.67,
+        "lead": "F",
+        "lyric": "apart!",
+        "girl": "monika"
+      },
+      {
+        "start": 127.67,
+        "end": 129.79,
+        "lead": "both",
+        "lyric": "How can I convey,",
+        "girl": "yuri"
+      },
+      {
+        "start": 129.79,
+        "end": 131.285,
+        "lead": "both",
+        "lyric": "My love for you",
+        "girl": "yuri"
+      },
+      {
+        "start": 131.285,
+        "end": 132.78,
+        "lead": "both",
+        "lyric": "before they fly away?",
+        "girl": "yuri"
+      },
+      {
+        "start": 132.78,
+        "end": 134.329,
+        "lead": "M",
+        "lyric": "I think about it",
+        "girl": "yuri"
+      },
+      {
+        "start": 134.329,
+        "end": 135.49,
+        "lead": "F",
+        "lyric": "all day everyday",
+        "girl": "yuri"
+      },
+      {
+        "start": 135.49,
+        "end": 136.415,
+        "lead": "F",
+        "lyric": "We'll be",
+        "girl": "monika"
+      },
+      {
+        "start": 136.415,
+        "end": 137.34,
+        "lead": "F",
+        "lyric": "together forever,",
+        "girl": "monika"
+      },
+      {
+        "start": 137.34,
+        "end": 139.068,
+        "lead": "F",
+        "lyric": "We're never gonna be",
+        "girl": "monika"
+      },
+      {
+        "start": 139.068,
+        "end": 139.5,
+        "lead": "F",
+        "lyric": "apart!",
+        "girl": "monika"
+      },
+      {
+        "start": 139.5,
+        "end": 141.312,
+        "lead": "F",
+        "lyric": "One by one",
+        "girl": "monika"
+      },
+      {
+        "start": 141.312,
+        "end": 142.52,
+        "lead": "F",
+        "lyric": "they only",
+        "girl": "monika"
+      },
+      {
+        "start": 142.52,
+        "end": 144.59,
+        "lead": "F",
+        "lyric": "Fall apart",
+        "girl": "monika"
+      },
+      {
+        "start": 144.59,
+        "end": 147.01,
+        "lead": "F",
+        "lyric": "Can it be undone?",
+        "girl": "monika"
+      },
+      {
+        "start": 147.01,
+        "end": 148.85,
+        "lead": "F",
+        "lyric": "Why can't I",
+        "girl": "monika"
+      },
+      {
+        "start": 148.85,
+        "end": 151.303,
+        "lead": "F",
+        "lyric": "just be the one",
+        "girl": "monika"
+      },
+      {
+        "start": 151.303,
+        "end": 152.53,
+        "lead": "F",
+        "lyric": "for once?",
+        "girl": "monika"
+      },
+      {
+        "start": 158.83,
+        "end": 159.77,
+        "lead": "both",
+        "lyric": "We'll be",
+        "girl": "sayori"
+      },
+      {
+        "start": 159.77,
+        "end": 160.24,
+        "lead": "F",
+        "lyric": "together",
+        "girl": "sayori"
+      },
+      {
+        "start": 160.24,
+        "end": 160.71,
+        "lead": "M",
+        "lyric": "forever,",
+        "girl": "sayori"
+      },
+      {
+        "start": 160.71,
+        "end": 164.566,
+        "lead": "both",
+        "lyric": "We're never gonna be",
+        "girl": "sayori"
+      },
+      {
+        "start": 164.566,
+        "end": 165.53,
+        "lead": "both",
+        "lyric": "apart!",
+        "girl": "sayori"
+      },
+      {
+        "start": 165.53,
+        "end": 168.245,
+        "lead": "both",
+        "lyric": "(Forever,",
+        "girl": "sayori"
+      },
+      {
+        "start": 168.245,
+        "end": 170.96,
+        "lead": "both",
+        "lyric": "forever)",
+        "girl": "sayori"
+      },
+      {
+        "start": 170.96,
+        "end": 171.95,
+        "lead": "F",
+        "lyric": "Maybe we'll never",
+        "girl": "monika"
+      },
+      {
+        "start": 171.95,
+        "end": 172.61,
+        "lead": "F",
+        "lyric": "be together,",
+        "girl": "monika"
+      },
+      {
+        "start": 172.61,
+        "end": 173.559,
+        "lead": "F",
+        "lyric": "But forever",
+        "girl": "monika"
+      },
+      {
+        "start": 173.559,
+        "end": 175.93,
+        "lead": "F",
+        "lyric": "you'll be in my heart!",
+        "girl": "monika"
+      }
+    ]
   }
 }
