@@ -1,0 +1,72 @@
+{
+  "clip_start_sec": 46.0,
+  "clip_duration_sec": 30.0,
+  "section": "Chorus 1 (same Slow Glide map + phrase leads)",
+  "note": "Headphones required. A/B quickly \u2014 pick the one that externalizes best for YOU.",
+  "clips": [
+    {
+      "id": "kemar",
+      "title": "MIT KEMAR (baseline)",
+      "blurb": "Current Slow Glide default. Dummy-head lab standard \u2014 start here.",
+      "family": "dummy",
+      "file": "clips/kemar.m4a",
+      "source": "full-mix cut"
+    },
+    {
+      "id": "sadie_d1",
+      "title": "SADIE II D1",
+      "blurb": "York high-res dummy. Same map as KEMAR; usually subtle color shift.",
+      "family": "dummy",
+      "file": "clips/sadie_d1.m4a",
+      "source": "full-mix cut"
+    },
+    {
+      "id": "sadie_h3",
+      "title": "SADIE II H3",
+      "blurb": "York human subject H3. Often hard to tell from D1 on dense music.",
+      "family": "human",
+      "file": "clips/sadie_h3.m4a",
+      "source": "full-mix cut"
+    },
+    {
+      "id": "cipic_003",
+      "title": "CIPIC subject 003",
+      "blurb": "Classic free human HRTF (UC Davis). Often a clearer color change than SADIE-H3.",
+      "family": "human",
+      "file": "clips/cipic_003.m4a",
+      "source": "30s re-bake"
+    },
+    {
+      "id": "cipic_050",
+      "title": "CIPIC subject 050",
+      "blurb": "Second CIPIC human \u2014 compare pinna fit vs 003.",
+      "family": "human",
+      "file": "clips/cipic_050.m4a",
+      "source": "30s re-bake"
+    },
+    {
+      "id": "cipic_165",
+      "title": "CIPIC subject 165",
+      "blurb": "Third CIPIC human for a quick \u2018which ear fits me\u2019 pass.",
+      "family": "human",
+      "file": "clips/cipic_165.m4a",
+      "source": "30s re-bake"
+    },
+    {
+      "id": "ari_nh2",
+      "title": "ARI nh2 (Vienna)",
+      "blurb": "Austrian Academy free human set \u2014 different measurement chain from CIPIC/SADIE.",
+      "family": "human",
+      "file": "clips/ari_nh2.m4a",
+      "source": "30s re-bake"
+    },
+    {
+      "id": "aachen_kemar",
+      "title": "Aachen high-res KEMAR",
+      "blurb": "Another free KEMAR measurement (dense grid). Compare vs MIT compact KEMAR.",
+      "family": "dummy",
+      "file": "clips/aachen_kemar.m4a",
+      "source": "30s re-bake"
+    }
+  ]
+}
