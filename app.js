@@ -2129,8 +2129,9 @@ function drawSpatialRadar(pose) {
   const theater = size >= 200;
   const cx = size / 2;
   const cy = size / 2;
-  // Ring radius scales with canvas
-  const r = theater ? size * 0.34 : 18;
+  // Theater: fill most of the circular frame (CSS frame + canvas are the same circle)
+  // Dock: compact 64px radar
+  const r = theater ? size * 0.40 : 20;
 
   ctx.clearRect(0, 0, size, size);
 
@@ -2460,20 +2461,25 @@ function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
   const beatHz = bpm / 60;
   const heartWave = 0.5 + 0.5 * Math.sin(t * beatHz * Math.PI * 2);
   const energy = clamp(0, 1, 0.35 + sectionPower * 0.45 + beat * 0.35 + chorus * 0.35);
-  const cx = w * 0.5;
-  const cy = h * 0.48;
+  // Rings + bloom MUST sit on the Audio Compass, not a guessed canvas midpoint
+  const compass = getCompassFxAnchor(canvas);
+  const cx = compass?.cx ?? w * 0.5;
+  const cy = compass?.cy ?? h * 0.42;
+  const ringBase = compass?.radius ?? Math.min(w, h) * 0.12;
   const scale = Math.max(1, Math.min(w, h) / 700);
   const maxDim = Math.max(w, h);
   const minDim = Math.min(w, h);
+  // Travel distance: leave the compass rim and expand into the stage
+  const ringTravel = Math.max(ringBase * 1.8, minDim * 0.38);
 
   // Base fill
   ctx.fillStyle = `rgb(${bg[0]},${bg[1]},${bg[2]})`;
   ctx.fillRect(0, 0, w, h);
 
-  // One radial wash (not per-particle)
+  // One radial wash (not per-particle) — centered on compass
   const field = ctx.createRadialGradient(
-    cx + Math.sin(t * 0.4) * w * 0.08,
-    cy + Math.cos(t * 0.35) * h * 0.06,
+    cx + Math.sin(t * 0.4) * w * 0.04,
+    cy + Math.cos(t * 0.35) * h * 0.03,
     0, cx, cy, maxDim * (0.55 + energy * 0.25)
   );
   field.addColorStop(0, `rgba(${p[0]},${p[1]},${p[2]},${0.55 + energy * 0.35})`);
@@ -2516,11 +2522,11 @@ function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
     ctx.restore();
   }
 
-  // Beat rings
+  // Beat rings — start at compass rim and expand outward (aligned with Audio Compass)
   for (let r = 0; r < 5; r++) {
     const life = (beat * 0.85 + r * 0.18 + heartWave * 0.08) % 1;
-    const rad = minDim * (0.06 + life * (0.42 + chorus * 0.18));
-    const alpha = (1 - life) * (0.2 + energy * 0.24 + beat * 0.22);
+    const rad = ringBase * 0.98 + ringTravel * life * (0.95 + chorus * 0.25);
+    const alpha = (1 - life) * (0.22 + energy * 0.24 + beat * 0.22);
     if (alpha < 0.02) continue;
     const col = r & 1 ? s : p;
     ctx.strokeStyle = `rgba(${col[0]},${col[1]},${col[2]},${alpha})`;
@@ -2600,14 +2606,14 @@ function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
     }
   }
 
-  // Girl overlays (kept, cheaper where possible)
+  // Girl overlays (kept, cheaper where possible) — orbit the compass, not canvas center
   if (girl === 'sayori') {
     for (let k = 0; k < 2; k++) {
       const phase = (heartWave + k * 0.18) % 1;
       ctx.strokeStyle = `rgba(${p[0]},${p[1]},${p[2]},${(1 - phase) * 0.35})`;
       ctx.lineWidth = 3 * scale;
       ctx.beginPath();
-      ctx.arc(cx, cy, minDim * (0.12 + phase * 0.28), 0, Math.PI * 2);
+      ctx.arc(cx, cy, ringBase * (1.05 + phase * 1.55), 0, Math.PI * 2);
       ctx.stroke();
     }
   } else if (girl === 'natsuki') {
@@ -2617,11 +2623,11 @@ function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
     }
     for (let i = 0; i < 20; i++) {
       const ang = (i / 20) * Math.PI * 2 + t * 0.8;
-      const dist = minDim * (0.15 + beat * 0.2 + (i % 5) * 0.03);
+      const dist = ringBase * (1.05 + beat * 0.55 + (i % 5) * 0.08);
       const col = i & 1 ? p : a;
       ctx.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${0.28 + beat * 0.4})`;
       ctx.beginPath();
-      ctx.arc(cx + Math.cos(ang) * dist, cy + Math.sin(ang) * dist * 0.7, (4 + (i % 4)) * scale, 0, Math.PI * 2);
+      ctx.arc(cx + Math.cos(ang) * dist, cy + Math.sin(ang) * dist, (4 + (i % 4)) * scale, 0, Math.PI * 2);
       ctx.fill();
     }
   } else if (girl === 'yuri') {
@@ -2648,8 +2654,8 @@ function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
     }
   }
 
-  // Core bloom
-  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, minDim * (0.2 + energy * 0.15));
+  // Core bloom — same compass center as rings
+  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, ringBase * (1.15 + energy * 0.85));
   core.addColorStop(0, `rgba(${a[0]},${a[1]},${a[2]},${0.32 + beat * 0.32 + chorus * 0.18})`);
   core.addColorStop(0.45, `rgba(${p[0]},${p[1]},${p[2]},${0.16 + energy * 0.14})`);
   core.addColorStop(1, 'rgba(0,0,0,0)');
@@ -3695,17 +3701,141 @@ function drawRobotHeartGlyph(ctx, x, y, size, alpha, color, pulse) {
   ctx.restore();
 }
 
-// Outbound rings from the hero play button were a major lag source (spawn + stroke every beat).
-// Disabled permanently — keep stubs so theme drawers can still call them safely.
-function emitOutboundRingPulse() {
-  /* no-op */
+/**
+ * Map a laid-out DOM element into canvas pixel space.
+ * Rings must start at the visual edge of the play button / Audio Compass, not the canvas midpoint.
+ */
+function fxAnchorFromDom(canvas, el, { outerPadCss = 0 } = {}) {
+  if (!canvas || !el) return null;
+  const fxRect = canvas.getBoundingClientRect();
+  const r = el.getBoundingClientRect();
+  if (fxRect.width < 2 || fxRect.height < 2 || r.width < 2 || r.height < 2) return null;
+  const sx = canvas.width / fxRect.width;
+  const sy = canvas.height / fxRect.height;
+  // Uniform scale keeps circles round when canvas DPR aspect ≠ CSS aspect
+  const s = Math.min(sx, sy);
+  const cx = (r.left - fxRect.left + r.width / 2) * sx;
+  const cy = (r.top - fxRect.top + r.height / 2) * sy;
+  const halfCss = Math.max(r.width, r.height) / 2 + outerPadCss;
+  return { cx, cy, radius: halfCss * s, sx, sy, s };
 }
 
-function drawOutboundPulseRings() {
-  if (fxRingPulses.length) fxRingPulses.length = 0;
+/** Hero play button + CSS progress ring (::before inset −8px). */
+function getHeroFxAnchor(canvas) {
+  return fxAnchorFromDom(canvas, $('hero-play'), { outerPadCss: 8 });
 }
 
-function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse) {
+/** Large Audio Compass frame (theater) — rings expand from its rim. */
+function getCompassFxAnchor(canvas) {
+  const el = document.querySelector('.ddf-compass-frame') || $('ddf-compass');
+  return fxAnchorFromDom(canvas, el, { outerPadCss: 2 });
+}
+
+// Lightweight outbound beat rings (stroke only — radial fillRect was the lag source).
+function emitOutboundRingPulse(theme, now, cx, cy, baseRadius, travelRadius, palette, power, lineWidth, life) {
+  const color = palette[Math.floor(seededUnit(now * 1000 + theme.length * 17) * palette.length)] || palette[0];
+  fxRingPulses.push({
+    theme,
+    born: now,
+    cx,
+    cy,
+    baseRadius,
+    travelRadius,
+    color,
+    power,
+    lineWidth,
+    life,
+  });
+  if (fxRingPulses.length > 14) fxRingPulses.splice(0, fxRingPulses.length - 14);
+}
+
+function drawOutboundPulseRings(ctx, options) {
+  if (!ctx || !options) {
+    if (fxRingPulses.length) fxRingPulses.length = 0;
+    return;
+  }
+  const {
+    theme,
+    cx,
+    cy,
+    levels,
+    profile,
+    fxTime,
+    sectionPower,
+    chorusPower,
+    beatPulse,
+    palette,
+    baseRadius,
+    travelRadius,
+    alphaBase,
+    lineWidth,
+    life = 0.72,
+  } = options;
+  const now = performance.now() / 1000;
+  const audible = !!(audio.src && !audio.paused && (levels?.motion ?? 0) > 0.03);
+  const eventPower = clamp(
+    0,
+    1,
+    (levels?.glow ?? 0) * 0.4
+      + (levels?.motion ?? 0) * 0.22
+      + (beatPulse || 0) * (0.4 + (chorusPower || 0) * 0.32)
+      + (chorusPower || 0) * 0.16
+  );
+
+  if (audible && eventPower > 0.1) {
+    let shouldEmit = false;
+    if (profile?.bpm && Number.isFinite(fxTime)) {
+      const beats = Math.max(0, (fxTime - (profile.beatOffset || 0)) * profile.bpm / 60);
+      const beatIndex = Math.floor(beats);
+      const song = currentSong();
+      const beatKey = `${song?.path || song?.name || 'song'}:${theme}:${beatIndex}`;
+      if (beatPulse > 0.26 && beatKey !== lastFxRingBeatKey) {
+        lastFxRingBeatKey = beatKey;
+        shouldEmit = true;
+      }
+    } else if (typeof tetoRiseEnergy === 'number' && tetoRiseEnergy > 0.42 && now - lastFxRingFallbackAt > 0.36) {
+      lastFxRingFallbackAt = now;
+      shouldEmit = true;
+    }
+    if (shouldEmit) {
+      emitOutboundRingPulse(
+        theme,
+        now,
+        cx,
+        cy,
+        baseRadius,
+        travelRadius * (0.82 + (sectionPower || 0) * 0.18),
+        palette,
+        eventPower,
+        lineWidth,
+        life
+      );
+    }
+  }
+
+  // Drop finished pulses; draw active ones as simple strokes from the anchor
+  let write = 0;
+  for (let i = 0; i < fxRingPulses.length; i++) {
+    const pulse = fxRingPulses[i];
+    const age = (now - pulse.born) / pulse.life;
+    if (age < 0 || age > 1) continue;
+    fxRingPulses[write++] = pulse;
+    if (pulse.theme !== theme) continue;
+    const progress = easeOutCubic(age);
+    const radius = pulse.baseRadius + pulse.travelRadius * progress;
+    const fade = Math.pow(1 - age, 1.65);
+    const alpha = fade * pulse.power * alphaBase;
+    if (alpha <= 0.004) continue;
+    ctx.beginPath();
+    ctx.arc(pulse.cx, pulse.cy, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = rgbaColor(pulse.color, alpha);
+    ctx.lineWidth = Math.max(1, pulse.lineWidth * (0.9 + fade * 0.2));
+    ctx.stroke();
+  }
+  fxRingPulses.length = write;
+}
+
+function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, baseRadius = null) {
   const quietGate = smoothStep(0.08, 0.34, levels.motion);
   const party = smoothStep(0.16, 0.72, levels.motion);
   if (!profile?.constantRings && quietGate <= 0.01 && levels.glow <= 0.02) return;
@@ -3723,6 +3853,8 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
   const sparkleDim = 0.3 + chorusBoost * 0.46;
   const pulseLevel = clamp(0, 1, levels.glow * 0.48 + party * 0.34 + bpmPulse * (0.32 + chorusLift));
   const beamPower = quietGate * (0.1 + party * 0.32 + chorusLift * 0.96) * (0.62 + beatPulse * 0.56) * beamDim;
+  const ringBase = baseRadius ?? Math.min(w, h) * (0.11 + pulseLevel * 0.015);
+  const ringTravel = Math.max(ringBase * 1.6, Math.min(w, h) * (0.28 + pulseLevel * 0.1 + chorusBoost * 0.1));
   const palette = [
     [255, 55, 155],
     [70, 218, 255],
@@ -3798,14 +3930,14 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
     chorusPower,
     beatPulse,
     palette,
-    baseRadius: Math.min(w, h) * (0.11 + pulseLevel * 0.015),
-    travelRadius: Math.min(w, h) * (0.3 + pulseLevel * 0.12 + chorusBoost * 0.12),
+    baseRadius: ringBase,
+    travelRadius: ringTravel,
     alphaBase: 0.18 + chorusBoost * 0.09,
     lineWidth: (1.05 + pulseLevel * 2.4) * scale,
     life: 0.62,
   });
 
-  const ballRadius = Math.min(w, h) * (0.045 + pulseLevel * 0.018);
+  const ballRadius = Math.min(ringBase * 0.42, Math.min(w, h) * (0.045 + pulseLevel * 0.018));
   const ballX = clamp(ballRadius * 1.4, w - ballRadius * 1.4, cx);
   const ballY = clamp(ballRadius * 1.5, h - ballRadius * 1.5, cy - Math.min(h * 0.24, 160 * scale));
   ctx.save();
@@ -3860,7 +3992,7 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
   ctx.restore();
 }
 
-function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, protectedPoint = () => false) {
+function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, protectedPoint = () => false, baseRadius = null) {
   const quietGate = smoothStep(0.08, 0.34, levels.motion);
   const party = smoothStep(0.16, 0.72, levels.motion);
   if (!profile?.constantRings && quietGate <= 0.01 && levels.glow <= 0.02) return;
@@ -3949,6 +4081,8 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
     ctx.restore();
   });
 
+  const ringBase = baseRadius ?? Math.min(w, h) * (0.11 + alive * 0.015);
+  const ringTravel = Math.max(ringBase * 1.6, Math.min(w, h) * (0.28 + alive * 0.1 + chorusBoost * 0.1));
   drawOutboundPulseRings(ctx, {
     theme: 'teto11',
     w,
@@ -3962,8 +4096,8 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
     chorusPower,
     beatPulse,
     palette: [tetoOrange, pink, cyan, yellow, violet, chrome],
-    baseRadius: Math.min(w, h) * (0.11 + alive * 0.015),
-    travelRadius: Math.min(w, h) * (0.3 + alive * 0.12 + chorusBoost * 0.12),
+    baseRadius: ringBase,
+    travelRadius: ringTravel,
     alphaBase: 0.2 + chorusBoost * 0.1,
     lineWidth: (1.05 + alive * 2.7) * scale,
     life: 0.66,
@@ -4076,9 +4210,10 @@ const DDLC_BEAMS = Array.from({ length: 8 }, (_, i) => ({
 /**
  * DDLC overlay FX on the main Now canvas — girl colors, loud.
  * Theater stage uses paintDdfTheaterFx; this adds page-wide wash.
+ * Rings / bloom center on the hero play button (cx/cy/baseRadius from drawTetoFx).
  * Visual only; does not touch the spatial audio graph.
  */
-function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse) {
+function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, baseRadius = null) {
   // Always paint when DDF is active (even quiet intros) — user wants full effects
   // Lofi cut: same girl palette, calmer pulse / wash (custom chill profile)
   const lofiEase = profile?.lofi ? 0.68 : 1;
@@ -4097,6 +4232,9 @@ function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, section
   const bpmPulse = (profile ? beatPulse * (0.45 + sectionPower * 0.7) : beatPulse) * (profile?.lofi ? 0.8 : 1);
   const alive = clamp(0, 1, 0.45 + levels.glow * 0.35 + party * 0.25 + bpmPulse * 0.45 + chorusLift * 0.4);
   const glowDim = 0.75 + chorusBoost * 0.35;
+  // Anchor radius = hero progress ring; travel outward so rings hug the play button
+  const ringBase = baseRadius ?? Math.min(w, h) * 0.1;
+  const ringTravel = Math.max(ringBase * 1.7, Math.min(w, h) * 0.28);
 
   ctx.save();
   ctx.globalCompositeOperation = 'lighter';
@@ -4109,10 +4247,10 @@ function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, section
   ctx.fillStyle = wash;
   ctx.fillRect(0, 0, w, h);
 
-  // Center bloom (heartbeat)
+  // Center bloom (heartbeat) — true play-button center (was cy*0.92, which floated above)
   const heartPulse = 0.55 + bpmPulse * 0.55 + Math.sin(t * (profile?.bpm ? profile.bpm / 60 : 2.75) * Math.PI * 2) * 0.08;
-  const coreR = Math.max(w, h) * (0.22 + alive * 0.18 + bpmPulse * 0.08);
-  const core = ctx.createRadialGradient(cx, cy * 0.92, 0, cx, cy * 0.92, coreR);
+  const coreR = ringBase * (1.6 + alive * 1.1 + bpmPulse * 0.35);
+  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
   core.addColorStop(0, `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${0.03 + alive * 0.1 + bpmPulse * 0.08})`);
   core.addColorStop(0.4, `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.02 + alive * 0.07 + chorusLift * 0.04})`);
   core.addColorStop(1, `rgba(${p[0]}, ${p[1]}, ${p[2]}, 0)`);
@@ -4156,22 +4294,43 @@ function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, section
     ctx.restore();
   });
 
-  // Beat rings (inline — shared pulse helper is a no-op stub)
+  // Beat rings — expand from the play button rim (same center as hero-play)
   if (bpmPulse > 0.08 || chorusBoost > 0.15) {
     const ringCount = 3;
     for (let r = 0; r < ringCount; r++) {
       const life = (bpmPulse + r * 0.22) % 1;
-      const rad = Math.min(w, h) * (0.08 + life * (0.22 + chorusBoost * 0.1));
-      const alpha = (1 - life) * (0.1 + chorusBoost * 0.08 + bpmPulse * 0.1) * alive;
+      const rad = ringBase * 0.98 + ringTravel * life * (0.95 + chorusBoost * 0.2);
+      const alpha = (1 - life) * (0.12 + chorusBoost * 0.1 + bpmPulse * 0.12) * alive;
       if (alpha < 0.01) continue;
       const col = r % 2 ? s : p;
       ctx.strokeStyle = `rgba(${col[0]}, ${col[1]}, ${col[2]}, ${alpha})`;
       ctx.lineWidth = (1.2 + (1 - life) * 2.4) * scale;
       ctx.beginPath();
-      ctx.arc(cx, cy * 0.92, rad, 0, Math.PI * 2);
+      ctx.arc(cx, cy, rad, 0, Math.PI * 2);
       ctx.stroke();
     }
   }
+
+  // Shared beat-spawned rings (lightweight strokes) for Lofi / non-theater DDF
+  drawOutboundPulseRings(ctx, {
+    theme: 'ddlc',
+    w,
+    h,
+    cx,
+    cy,
+    levels,
+    profile,
+    fxTime,
+    sectionPower,
+    chorusPower,
+    beatPulse,
+    palette: [p, s, a],
+    baseRadius: ringBase,
+    travelRadius: ringTravel * (0.9 + chorusBoost * 0.25),
+    alphaBase: 0.22 + chorusBoost * 0.1,
+    lineWidth: (1.15 + bpmPulse * 2.2) * scale,
+    life: profile?.lofi ? 0.82 : 0.7,
+  });
 
   // Floating pixel hearts — denser on chorus / monika bridge glitch tint handled via color
   const heartDensity = 0.4 + chorusBoost * 0.55 + bpmPulse * 0.15;
@@ -4201,12 +4360,12 @@ function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, section
     }
   }
 
-  // Sayori: extra soft heart ring on strong beats
+  // Sayori: extra soft heart ring on strong beats — same play-button center
   if (girl === 'sayori' && bpmPulse > 0.35) {
     ctx.strokeStyle = `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.08 + bpmPulse * 0.12})`;
     ctx.lineWidth = 2 * scale;
     ctx.beginPath();
-    ctx.arc(cx, cy * 0.9, Math.min(w, h) * (0.12 + bpmPulse * 0.06), 0, Math.PI * 2);
+    ctx.arc(cx, cy, ringBase * (1.15 + bpmPulse * 0.35), 0, Math.PI * 2);
     ctx.stroke();
   }
 
@@ -4232,13 +4391,15 @@ function drawTetoFx(level) {
   const profile = effectProfileForSong();
   if (!profile?.constantRings && quietGate <= 0.01 && levels.glow <= 0.02) return;
 
+  // Anchor rings to the real hero play button (progress ring rim), not canvas midpoint
+  const hero = getHeroFxAnchor(canvas);
   const fxRect = canvas.getBoundingClientRect();
-  const heroRect = $('hero-play').getBoundingClientRect();
-  const sx = fxRect.width ? canvas.width / fxRect.width : 1;
-  const sy = fxRect.height ? canvas.height / fxRect.height : 1;
-  const cx = (heroRect.left - fxRect.left + heroRect.width / 2) * sx;
-  const cy = (heroRect.top - fxRect.top + heroRect.height / 2) * sy;
-  const radius = Math.min(w, h) * (0.16 + party * 0.035);
+  const sx = hero?.sx ?? (fxRect.width ? canvas.width / fxRect.width : 1);
+  const sy = hero?.sy ?? (fxRect.height ? canvas.height / fxRect.height : 1);
+  const cx = hero?.cx ?? w * 0.5;
+  const cy = hero?.cy ?? h * 0.5;
+  // Radius matches CSS hero-play + ::before progress ring
+  const radius = hero?.radius ?? Math.min(w, h) * (0.12 + party * 0.02);
   const t = performance.now() / 1000;
   const fxTime = currentCalibratedTime();
   const section = effectSectionAt(profile, fxTime);
@@ -4263,15 +4424,15 @@ function drawTetoFx(level) {
   );
 
   if (theme === 'disco') {
-    drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse);
+    drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, radius);
     return;
   }
   if (theme === 'ddlc') {
-    drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse);
+    drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, radius);
     return;
   }
   if (theme === 'teto11') {
-    drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, protectedPoint);
+    drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, protectedPoint, radius);
     return;
   }
 
@@ -4351,8 +4512,9 @@ function drawTetoFx(level) {
       [255, 210, 105],
       [255, 92, 143],
     ],
-    baseRadius: radius * 0.92,
-    travelRadius: radius * (2.05 + pulseLevel * 0.9 + chorusPower * 0.42),
+    // Start at hero progress-ring rim; expand outward from the play button
+    baseRadius: radius,
+    travelRadius: Math.max(radius * 1.8, Math.min(w, h) * (0.22 + pulseLevel * 0.12 + chorusPower * 0.1)),
     alphaBase: 0.24 + chorusPower * 0.12,
     lineWidth: Math.max(1, (1.15 + pulseLevel * 3.1) * sx),
     life: 0.72,
