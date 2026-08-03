@@ -3942,6 +3942,21 @@ if (timingDebugCheckbox) {
 }
 if (audioResetButton) audioResetButton.addEventListener('click', resetAudioOutput);
 
+// Force a full page reload with a unique query so iOS/GitHub Pages can't serve stale JS/CSS/images
+const forceReloadButton = $('force-reload');
+if (forceReloadButton) {
+  forceReloadButton.addEventListener('click', () => {
+    const u = new URL(window.location.href);
+    u.searchParams.set('_vp', String(Date.now()));
+    window.location.replace(u.toString());
+  });
+}
+const buildMeta = document.querySelector('meta[name="vp-build"]');
+const buildLabel = $('vp-build-label');
+if (buildLabel) {
+  buildLabel.textContent = buildMeta?.content || 'unknown';
+}
+
 $('search').addEventListener('input', (e) => renderLibrary(e.target.value));
 
 document.querySelectorAll('.collection-tab').forEach(button => {

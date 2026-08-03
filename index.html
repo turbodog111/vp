@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>vp</title>
-<link rel="stylesheet" href="styles.css?v=ddf-theater-1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="vp-build" content="2026-08-02-natsuki4">
+<link rel="stylesheet" href="styles.css?v=20260802-natsuki4">
 </head>
 <body>
 <div class="app">
@@ -31,6 +34,10 @@
         <span>Timing debug overlay</span>
       </label>
       <button id="audio-reset" class="setting-button" type="button">Reset audio</button>
+      <button id="force-reload" class="setting-button" type="button" title="Bypass cache and reload the latest app">Reload latest app</button>
+      <div class="setting-row" style="opacity:0.65;font-size:11px;padding:4px 0 0">
+        Build: <span id="vp-build-label">—</span>
+      </div>
     </div>
   </header>
 
@@ -86,6 +93,7 @@
       <!-- DDLC Theater: full custom Now Playing for Traveling Voices / DDF dual-lead -->
       <div id="ddf-theater" class="ddf-theater hidden" aria-live="polite">
         <div class="ddf-bg" id="ddf-bg" aria-hidden="true"></div>
+        <div class="ddf-sil" id="ddf-sil" aria-hidden="true"></div>
         <div class="ddf-bg-overlay" aria-hidden="true"></div>
         <div class="ddf-hearts" aria-hidden="true"></div>
         <div class="ddf-theater-inner">
@@ -123,14 +131,16 @@
             <div class="ddf-cue" id="ddf-cue"></div>
           </div>
 
-          <div class="ddf-lyrics-block">
-            <div class="ddf-lyrics-headers">
-              <div class="ddf-lyrics-h female">Female track</div>
-              <div class="ddf-lyrics-h male">Male track</div>
-            </div>
-            <div class="ddf-lyrics-scroll" id="ddf-lyrics-scroll">
-              <div class="ddf-lyrics-col female" id="ddf-lyrics-female"></div>
-              <div class="ddf-lyrics-col male" id="ddf-lyrics-male"></div>
+          <div class="ddf-lyrics-block" id="ddf-lyrics-block" data-mode="dual">
+            <div class="ddf-lyrics-stage" id="ddf-lyrics-stage">
+              <div class="ddf-lyric-pane female" id="ddf-pane-female">
+                <div class="ddf-track-label">Female track</div>
+                <div class="ddf-current-line" id="ddf-line-female">…</div>
+              </div>
+              <div class="ddf-lyric-pane male" id="ddf-pane-male">
+                <div class="ddf-track-label">Male track</div>
+                <div class="ddf-current-line" id="ddf-line-male">…</div>
+              </div>
             </div>
           </div>
 
@@ -237,6 +247,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=ddf-theater-1"></script>
+<script src="app.js?v=20260802-natsuki4"></script>
 </body>
 </html>
