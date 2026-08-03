@@ -144,6 +144,25 @@ const PENTHOUSE_EFFECT_PROFILE = {
     {name: 'Last chorus', start: 179.5, end: 211.38, intensity: 1.08, chorus: true, fade: 0.5},
   ],
 };
+/** Doki Doki Forever — BPM from OR3O charting (165). Sections track lyric choruses. */
+const DDF_EFFECT_PROFILE = {
+  bpm: 165,
+  key: 'G major',
+  constantRings: true,
+  beatOffset: 0.08,
+  allowFx: true,
+  sections: [
+    {name: 'Intro', start: 0, end: 11.56, intensity: 0.22, chorus: false},
+    {name: 'Verse 1', start: 11.56, end: 34.56, intensity: 0.42, chorus: false, fade: 0.4},
+    {name: 'Pre-chorus 1', start: 34.56, end: 46.06, intensity: 0.58, chorus: false, fade: 0.35},
+    {name: 'Chorus 1', start: 46.06, end: 81.28, intensity: 1.0, chorus: true, fade: 0.45},
+    {name: 'Verse 2', start: 81.28, end: 104.7, intensity: 0.48, chorus: false, fade: 0.4},
+    {name: 'Pre-chorus 2', start: 104.7, end: 116.14, intensity: 0.62, chorus: false, fade: 0.3},
+    {name: 'Chorus 2', start: 116.14, end: 139.5, intensity: 1.05, chorus: true, fade: 0.4},
+    {name: 'Bridge', start: 139.5, end: 158.83, intensity: 0.78, chorus: true, fade: 0.5},
+    {name: 'Outro', start: 158.83, end: 182.0, intensity: 0.88, chorus: true, fade: 0.6},
+  ],
+};
 const bpmEffectProfile = (bpm, options = {}) => ({
   bpm,
   constantRings: true,
@@ -165,6 +184,14 @@ const SONG_EFFECT_PROFILES = Object.fromEntries([
   ...audioProfileEntries('songs/christian/Forrest Frank - OKAY!', bpmEffectProfile(120, {allowFx: true})),
   ...audioProfileEntries('songs/MIMI - Science', bpmEffectProfile(188)),
   ...audioProfileEntries('songs/Moonlit Star - Science (English)', bpmEffectProfile(188)),
+  // All Traveling Voices / DDF remasters share the DDLC story FX profile
+  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Phrase-Word Lead)', DDF_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide)', DDF_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide SADIE D1)', DDF_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide SADIE H3)', DDF_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Female Vocal Remaster v3)', DDF_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Male Vocal Remaster v3)', DDF_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/OR3O (Monika) feat. Rachie (Sayori), Kathy-chan (Yuri) & Chi Chi (Natsuki) - Doki Doki Forever', DDF_EFFECT_PROFILE),
 ]);
 const seededUnit = (seed) => {
   const x = Math.sin(seed) * 10000;
@@ -361,7 +388,11 @@ function currentSong() {
 
 function effectProfileForSong(song = currentSong()) {
   if (!song) return null;
-  return SONG_EFFECT_PROFILES[song.path] || SONG_EFFECT_PROFILES[song.id] || SONG_EFFECT_PROFILES[song.name] || null;
+  const direct = SONG_EFFECT_PROFILES[song.path] || SONG_EFFECT_PROFILES[song.id] || SONG_EFFECT_PROFILES[song.name];
+  if (direct) return direct;
+  // Any DDF / Traveling Voices cut gets the DDLC BPM profile even if path casing differs
+  if (songLooksLikeTravelingVoices(song) || isDdfFamilySong(song)) return DDF_EFFECT_PROFILE;
+  return null;
 }
 
 function songClockId(song = currentSong()) {
@@ -677,8 +708,10 @@ function beatPulseForProfile(profile, time) {
 }
 
 function activeFxTheme(song = currentSong()) {
-  // Spatial track: no disco/teto FX — keeps imaging pure (matches QuickTime intent)
-  if (songLooksLikeTravelingVoices(song)) return 'off';
+  // Traveling Voices / DDF: dedicated DDLC story FX (visual only — audio stays native)
+  if (songLooksLikeTravelingVoices(song) || isDdfFamilySong(song)) {
+    return tetoFxEnabled ? 'ddlc' : 'off';
+  }
   const profile = effectProfileForSong(song);
   if (!tetoFxEnabled || !song) return 'off';
   const theme = ['teto', 'disco', 'teto11'].includes(fxTheme) ? fxTheme : 'teto11';
@@ -701,6 +734,10 @@ function isDiscoFxActive(song = currentSong()) {
 
 function isTeto11FxActive(song = currentSong()) {
   return activeFxTheme(song) === 'teto11';
+}
+
+function isDdlcFxActive(song = currentSong()) {
+  return activeFxTheme(song) === 'ddlc';
 }
 
 function setTetoFxEnabled(enabled) {
@@ -727,10 +764,12 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.classList.toggle('disco-fx-active', theme === 'disco');
   document.body.classList.toggle('teto-fx-active', theme === 'teto');
   document.body.classList.toggle('teto11-fx-active', theme === 'teto11');
+  document.body.classList.toggle('ddlc-fx-active', theme === 'ddlc');
   document.body.style.setProperty('--fx-level', level.toFixed(3));
   document.body.style.setProperty('--teto-level', level.toFixed(3));
   document.body.style.setProperty('--disco-level', level.toFixed(3));
   document.body.style.setProperty('--teto11-level', level.toFixed(3));
+  document.body.style.setProperty('--ddlc-level', level.toFixed(3));
 }
 
 function switchView(view) {
@@ -1820,11 +1859,8 @@ function refreshNowKickerThemeHint(song = currentSong()) {
     ? lastDdlcGirlLabel
     : girl;
   if (songLooksLikeTravelingVoices(song)) {
-    const ver = travelingVoicesVersionLabel(song);
-    const verBit = ver ? ` ${ver}` : '';
-    kicker.textContent = section
-      ? `Spatial${verBit} · ${section}`
-      : `Spatial${verBit}`;
+    // Minimal: just the active girl / section — no "Spatial / dual lead" tech chrome
+    kicker.textContent = section || 'Doki Doki Forever';
     return;
   }
   if (section) kicker.textContent = `${base} · ${section}`;
@@ -2197,6 +2233,184 @@ let ddfFullListBuilt = false;
 let ddfTheaterEls = null;
 let ddfFullOpen = false;
 
+/** Story panel art cache-bust (bump when regenerating assets). */
+const DDF_ART_V = '5';
+const DDF_UI_BASE = './songs/spatial/ddf-ui';
+
+/**
+ * Story progression panels — timed to DDF lyric narrative (not just girl color).
+ * Each row: [startSec, endSec, panelFile, silKey, hasCast]
+ * hasCast=true → story art already features character(s); silhouette stays soft.
+ */
+const DDF_STORY_PANELS = [
+  [0.00, 11.56, 'story/panel_intro.jpg', 'club', false],
+  [11.56, 22.68, 'story/panel_sayori_heart.jpg', 'sayori', true],
+  [22.68, 34.56, 'story/panel_natsuki_sundae.jpg', 'natsuki', true],
+  [34.56, 39.76, 'story/panel_yuri_touch.jpg', 'yuri', true],
+  [39.76, 46.06, 'story/panel_choose.jpg', 'club', true],
+  [46.06, 58.00, 'story/panel_chorus_tell.jpg', 'natsuki', true],
+  [58.00, 67.63, 'story/panel_chorus_forever.jpg', 'sayori', true],
+  [67.63, 81.28, 'story/panel_monika_never.jpg', 'monika', true],
+  [81.28, 92.44, 'story/panel_yuri_shy.jpg', 'yuri', true],
+  [92.44, 104.70, 'story/panel_monika_write.jpg', 'monika', true],
+  [104.70, 116.14, 'story/panel_choose.jpg', 'club', true],
+  [116.14, 139.50, 'story/panel_chorus_forever.jpg', 'monika', true],
+  [139.50, 158.83, 'story/panel_bridge_glitch.jpg', 'monika', true],
+  [158.83, 170.96, 'story/panel_sayori_forever.jpg', 'sayori', true],
+  [170.96, 999.0, 'story/panel_finale_heart.jpg', 'monika', true],
+];
+
+const DDF_SIL_FILES = {
+  club: 'sil_club.jpg',
+  sayori: 'sil_sayori.jpg',
+  natsuki: 'sil_natsuki.jpg',
+  yuri: 'sil_yuri.jpg',
+  monika: 'sil_monika.jpg',
+};
+
+const ddfArtPreload = new Map(); // url -> Promise | true
+let ddfBgFrontIsA = true;
+let ddfSilFrontIsA = true;
+let ddfLastPanelUrl = '';
+let ddfLastSilUrl = '';
+let ddfCrossfadeBusy = false;
+
+function ddfArtUrl(rel) {
+  return `${DDF_UI_BASE}/${rel}?v=${DDF_ART_V}`;
+}
+
+function preloadDdfArtUrl(url) {
+  if (!url) return Promise.resolve(false);
+  if (ddfArtPreload.get(url) === true) return Promise.resolve(true);
+  const existing = ddfArtPreload.get(url);
+  if (existing && typeof existing.then === 'function') return existing;
+  const p = new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      ddfArtPreload.set(url, true);
+      resolve(true);
+    };
+    img.onerror = () => {
+      ddfArtPreload.delete(url);
+      resolve(false);
+    };
+    img.src = url;
+  });
+  ddfArtPreload.set(url, p);
+  return p;
+}
+
+function preloadAllDdfStoryArt() {
+  const urls = [];
+  DDF_STORY_PANELS.forEach((row) => urls.push(ddfArtUrl(row[2])));
+  Object.values(DDF_SIL_FILES).forEach((f) => urls.push(ddfArtUrl(f)));
+  // Character room fallbacks
+  ['bg_club.jpg', 'bg_sayori.jpg', 'bg_natsuki.jpg', 'bg_yuri.jpg', 'bg_monika.jpg']
+    .forEach((f) => urls.push(ddfArtUrl(f)));
+  return Promise.all(urls.map(preloadDdfArtUrl));
+}
+
+function storyPanelAtTime(timeSec = 0) {
+  const t = Number(timeSec) || 0;
+  for (const [a, b, panel, sil, hasCast] of DDF_STORY_PANELS) {
+    if (t >= a && t < b) {
+      return {
+        panelUrl: ddfArtUrl(panel),
+        silUrl: ddfArtUrl(DDF_SIL_FILES[sil] || DDF_SIL_FILES.club),
+        hasCast: !!hasCast,
+        silKey: sil,
+      };
+    }
+  }
+  const last = DDF_STORY_PANELS[DDF_STORY_PANELS.length - 1];
+  return {
+    panelUrl: ddfArtUrl(last[2]),
+    silUrl: ddfArtUrl(DDF_SIL_FILES[last[3]] || DDF_SIL_FILES.club),
+    hasCast: !!last[4],
+    silKey: last[3],
+  };
+}
+
+function setLayerBg(el, url) {
+  if (!el || !url) return;
+  el.style.backgroundImage = `url("${url}")`;
+}
+
+/**
+ * Dual-layer opacity crossfade. Always paints onto the hidden layer first,
+ * then flips visibility — never blanks both layers (no black flash).
+ * Returns the new frontIsA flag.
+ */
+function crossfadeLayerPair(aEl, bEl, frontIsA, url) {
+  if (!aEl || !bEl || !url) return frontIsA;
+  const front = frontIsA ? aEl : bEl;
+  const back = frontIsA ? bEl : aEl;
+  if (front.dataset.url === url && front.classList.contains('is-visible')) {
+    return frontIsA;
+  }
+  // First paint: show immediately on front (both may be empty)
+  if (!front.dataset.url) {
+    setLayerBg(front, url);
+    front.dataset.url = url;
+    front.classList.add('is-visible');
+    back.classList.remove('is-visible');
+    return frontIsA;
+  }
+  // Same URL already on back waiting — just reveal
+  setLayerBg(back, url);
+  back.dataset.url = url;
+  void back.offsetWidth;
+  back.classList.add('is-visible');
+  front.classList.remove('is-visible');
+  return !frontIsA;
+}
+
+function updateDdfStoryArt(timeSec = 0, force = false) {
+  const els = cacheDdfTheaterEls();
+  if (!els.root || els.root.classList.contains('hidden')) return;
+  const story = storyPanelAtTime(timeSec);
+  els.root.classList.toggle('story-has-cast', !!story.hasCast);
+  els.root.classList.toggle('story-room-only', !story.hasCast);
+
+  const applyPanel = () => {
+    if (!force && story.panelUrl === ddfLastPanelUrl) return;
+    ddfLastPanelUrl = story.panelUrl;
+    ddfBgFrontIsA = crossfadeLayerPair(els.bgA, els.bgB, ddfBgFrontIsA, story.panelUrl);
+  };
+  const applySil = () => {
+    if (!force && story.silUrl === ddfLastSilUrl) return;
+    ddfLastSilUrl = story.silUrl;
+    ddfSilFrontIsA = crossfadeLayerPair(els.silA, els.silB, ddfSilFrontIsA, story.silUrl);
+  };
+
+  // Prefer preloaded assets; if cold, still paint current URL then refine
+  if (ddfArtPreload.get(story.panelUrl) === true) {
+    applyPanel();
+  } else {
+    // Keep previous visible while loading next — paint only when ready
+    preloadDdfArtUrl(story.panelUrl).then(() => {
+      if (storyPanelAtTime(currentCalibratedTime()).panelUrl === story.panelUrl) {
+        ddfLastPanelUrl = ''; // force re-apply
+        applyPanel();
+      }
+    });
+    // If nothing showing yet, paint optimistically
+    if (!els.bgA?.dataset.url && !els.bgB?.dataset.url) applyPanel();
+  }
+
+  if (ddfArtPreload.get(story.silUrl) === true) {
+    applySil();
+  } else {
+    preloadDdfArtUrl(story.silUrl).then(() => {
+      if (storyPanelAtTime(currentCalibratedTime()).silUrl === story.silUrl) {
+        ddfLastSilUrl = '';
+        applySil();
+      }
+    });
+    if (!els.silA?.dataset.url && !els.silB?.dataset.url) applySil();
+  }
+}
+
 function wantsDdfTheater(song = currentSong()) {
   return songLooksLikeTravelingVoices(song);
 }
@@ -2205,8 +2419,11 @@ function cacheDdfTheaterEls() {
   if (ddfTheaterEls?.root?.isConnected) return ddfTheaterEls;
   ddfTheaterEls = {
     root: $('ddf-theater'),
+    bgA: $('ddf-bg-a'),
+    bgB: $('ddf-bg-b'),
+    silA: $('ddf-sil-a'),
+    silB: $('ddf-sil-b'),
     title: $('ddf-song-title'),
-    sub: $('ddf-song-sub'),
     section: $('ddf-section-label'),
     femaleDir: $('ddf-female-dir'),
     maleDir: $('ddf-male-dir'),
@@ -2218,9 +2435,6 @@ function cacheDdfTheaterEls() {
     lineM: $('ddf-line-male'),
     stateF: $('ddf-state-female'),
     stateM: $('ddf-state-male'),
-    banner: $('ddf-active-banner'),
-    chip: $('ddf-active-chip'),
-    hint: $('ddf-active-hint'),
     fullToggle: $('ddf-full-toggle'),
     fullPanel: $('ddf-full-lyrics'),
     fullList: $('ddf-full-list'),
@@ -2331,7 +2545,7 @@ function buildFullLyricsList(song = currentSong()) {
   lines.forEach((ln, i) => {
     const mid = (Number(ln.t) + Number(ln.end != null ? ln.end : ln.t + 2)) / 2;
     const lead = leadAtTime(mid, song);
-    const who = lead === 'F' ? 'F' : lead === 'M' ? 'M' : 'BOTH';
+    const who = lead === 'F' ? '♀' : lead === 'M' ? '♂' : '♥';
     const row = document.createElement('div');
     row.className = `ddf-full-row lead-${lead === 'F' || lead === 'M' ? lead : 'both'}`;
     row.dataset.i = String(i);
@@ -2402,42 +2616,33 @@ function updateCurrentLyrics(timeSec, force = false) {
 
   els.block.dataset.mode = mode;
 
-  // Banner
-  if (els.chip) {
-    els.chip.className = 'ddf-active-chip ' + (lead === 'F' || lead === 'M' ? lead : 'both');
-    els.chip.textContent =
-      lead === 'F' ? 'FEMALE TRACK' :
-      lead === 'M' ? 'MALE TRACK' :
-      'BOTH TRACKS';
-  }
-  if (els.hint) {
-    els.hint.textContent =
-      lead === 'F' ? 'male on support · 15%' :
-      lead === 'M' ? 'female on support · 15%' :
-      'dual lead · equal';
-  }
-
-  // Panes
-  const setPane = (pane, lineEl, stateEl, isLead, isVisible) => {
+  // Panes (minimal chrome — no dual-lead / support % labels)
+  const setPane = (pane, lineEl, stateEl, isLead) => {
     if (!pane || !lineEl) return;
     pane.classList.toggle('is-lead', isLead);
     pane.classList.toggle('is-support', !isLead && mode === 'dual');
     lineEl.textContent = text;
     lineEl.classList.toggle('is-empty', !line || !line.text);
     if (stateEl) {
-      stateEl.textContent = isLead ? (mode === 'dual' ? 'ACTIVE' : 'LEAD') : 'SUPPORT';
+      stateEl.textContent = '';
     }
   };
 
   if (mode === 'dual') {
-    setPane(els.paneF, els.lineF, els.stateF, true, true);
-    setPane(els.paneM, els.lineM, els.stateM, true, true);
+    setPane(els.paneF, els.lineF, els.stateF, true);
+    setPane(els.paneM, els.lineM, els.stateM, true);
   } else if (mode === 'female') {
-    setPane(els.paneF, els.lineF, els.stateF, true, true);
-    if (els.paneM) els.paneM.classList.remove('is-lead');
+    setPane(els.paneF, els.lineF, els.stateF, true);
+    if (els.paneM) {
+      els.paneM.classList.remove('is-lead');
+      els.paneM.classList.add('is-support');
+    }
   } else {
-    setPane(els.paneM, els.lineM, els.stateM, true, true);
-    if (els.paneF) els.paneF.classList.remove('is-lead');
+    setPane(els.paneM, els.lineM, els.stateM, true);
+    if (els.paneF) {
+      els.paneF.classList.remove('is-lead');
+      els.paneF.classList.add('is-support');
+    }
   }
 
   updateFullLyricsNow(idx);
@@ -2450,7 +2655,7 @@ function bindDdfFullToggle() {
   els.fullToggle.addEventListener('click', () => {
     ddfFullOpen = !ddfFullOpen;
     els.fullToggle.setAttribute('aria-expanded', ddfFullOpen ? 'true' : 'false');
-    els.fullToggle.textContent = ddfFullOpen ? 'Full lyrics map ▴' : 'Full lyrics map ▾';
+    els.fullToggle.textContent = ddfFullOpen ? 'Lyrics ▴' : 'Lyrics ▾';
     if (els.fullPanel) {
       els.fullPanel.classList.toggle('hidden', !ddfFullOpen);
     }
@@ -2467,17 +2672,21 @@ function setDdfTheaterActive(want, song = currentSong()) {
   if (want) {
     document.body.classList.add('ddf-theater-active');
     els.root.classList.remove('hidden');
-    const ver = travelingVoicesVersionLabel(song);
     if (els.title) els.title.textContent = 'Doki Doki Forever';
-    if (els.sub) {
-      els.sub.textContent = ver
-        ? `Traveling Voices ${ver} · dual lead · Literature Club`
-        : 'Traveling Voices · dual lead · Literature Club';
-    }
     bindDdfFullToggle();
     ddfLastLineIdx = -1;
     ddfLastLeadMode = '';
     ddfFullListBuilt = false;
+    ddfLastPanelUrl = '';
+    ddfLastSilUrl = '';
+    ddfBgFrontIsA = true;
+    ddfSilFrontIsA = true;
+    // Preload ALL story art before first panel paint — kills first-load blackout
+    preloadAllDdfStoryArt().then(() => {
+      updateDdfStoryArt(currentCalibratedTime(), true);
+    });
+    // Optimistic first panel immediately (may still decode if cache cold)
+    updateDdfStoryArt(currentCalibratedTime(), true);
     Promise.all([loadDdfLyrics(), loadDdfLeadMaps()]).then(() => {
       buildFullLyricsList(song);
       updateCurrentLyrics(currentCalibratedTime(), true);
@@ -2486,13 +2695,17 @@ function setDdfTheaterActive(want, song = currentSong()) {
     spatialForcePaint = true;
     ensureSpatialRadar();
     paintSpatialGuide(currentCalibratedTime(), true);
+    updateFxState();
   } else {
     document.body.classList.remove('ddf-theater-active');
     els.root.classList.add('hidden');
     ddfLastLineIdx = -1;
     ddfLastLeadMode = '';
     ddfFullOpen = false;
+    ddfLastPanelUrl = '';
+    ddfLastSilUrl = '';
     spatialCtx = null;
+    updateFxState();
   }
 }
 
@@ -2501,14 +2714,18 @@ function paintDdfTheater(timeSec, pose, fDir, mDir, force) {
   if (!els.root || els.root.classList.contains('hidden')) return;
   if (els.femaleDir) els.femaleDir.textContent = fDir;
   if (els.maleDir) els.maleDir.textContent = mDir;
+  // Minimal cue: girl name only (drop technical pose text when possible)
   if (els.cue) {
-    const girl = lastDdlcGirlLabel || activeGirlLabel() || '';
-    const cue = pose?.cue || '';
-    els.cue.textContent = girl && cue ? `${girl} · ${cue}` : (cue || girl);
+    const girl = activeGirlLabel() || '';
+    els.cue.textContent = girl;
   }
   if (els.section) {
-    els.section.textContent = lastDdlcGirlLabel || pose?.section || '—';
+    // Prefer short girl-forward label without technical dual-lead jargon
+    const label = lastDdlcGirlLabel || '';
+    const short = label.includes('·') ? label.split('·').pop().trim() : label;
+    els.section.textContent = short || activeGirlLabel() || '—';
   }
+  updateDdfStoryArt(timeSec, force);
   updateCurrentLyrics(timeSec, force);
 }
 
@@ -3545,6 +3762,176 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
   ctx.restore();
 }
 
+/** Primary colors per Literature Club girl (exact club palette). */
+const DDLC_GIRL_COLORS = {
+  sayori: { primary: [87, 199, 255], secondary: [255, 143, 171], accent: [255, 232, 245] },
+  natsuki: { primary: [255, 179, 201], secondary: [255, 92, 143], accent: [255, 245, 248] },
+  yuri: { primary: [124, 77, 255], secondary: [183, 148, 246], accent: [236, 230, 255] },
+  monika: { primary: [16, 185, 129], secondary: [110, 231, 183], accent: [220, 255, 240] },
+};
+
+function activeDdlcGirlKey() {
+  if (document.body.classList.contains('theme-sayori')) return 'sayori';
+  if (document.body.classList.contains('theme-natsuki')) return 'natsuki';
+  if (document.body.classList.contains('theme-yuri')) return 'yuri';
+  if (document.body.classList.contains('theme-monika')) return 'monika';
+  return 'monika';
+}
+
+const DDLC_HEARTS = Array.from({ length: 18 }, (_, i) => ({
+  x: seededUnit((i + 1) * 13.7),
+  y: seededUnit((i + 1) * 29.1),
+  size: 10 + seededUnit((i + 1) * 41.3) * 18,
+  phase: seededUnit((i + 1) * 7.9) * Math.PI * 2,
+  speed: 0.35 + seededUnit((i + 1) * 19.2) * 0.85,
+  spin: (seededUnit((i + 1) * 5.5) - 0.5) * 0.8,
+}));
+
+const DDLC_BEAMS = Array.from({ length: 8 }, (_, i) => ({
+  origin: i % 4,
+  phase: seededUnit((i + 1) * 11.3) * Math.PI * 2,
+  speed: 0.22 + seededUnit((i + 1) * 17.8) * 0.4,
+  width: 0.012 + seededUnit((i + 1) * 23.1) * 0.02,
+  colorIndex: i % 3,
+}));
+
+/**
+ * DDLC story FX — character-primary-color wash + BPM-synced hearts / beams.
+ * Visual only; does not touch the spatial audio graph.
+ */
+function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse) {
+  const quietGate = smoothStep(0.06, 0.28, levels.motion);
+  const party = smoothStep(0.12, 0.7, levels.motion);
+  if (!profile?.constantRings && quietGate <= 0.01 && levels.glow <= 0.02) return;
+
+  const girl = activeDdlcGirlKey();
+  const colors = DDLC_GIRL_COLORS[girl] || DDLC_GIRL_COLORS.monika;
+  const p = colors.primary;
+  const s = colors.secondary;
+  const a = colors.accent;
+  const t = performance.now() / 1000;
+  const scale = Math.max(1, Math.min(w, h) / 760);
+  const chorusLift = section?.chorus ? sectionPower * 0.75 : 0;
+  const chorusBoost = clamp(0, 1, chorusLift / 0.75);
+  const bpmPulse = profile ? beatPulse * (0.32 + sectionPower * 0.68) : 0;
+  const alive = clamp(0, 1, levels.glow * 0.4 + party * 0.3 + bpmPulse * (0.36 + chorusLift * 0.7));
+  const glowDim = 0.55 + chorusBoost * 0.4;
+
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
+
+  // Soft character color stage wash
+  const wash = ctx.createLinearGradient(0, 0, w, h);
+  wash.addColorStop(0, `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${(0.014 + alive * 0.09 + chorusLift * 0.05) * glowDim})`);
+  wash.addColorStop(0.45, `rgba(${s[0]}, ${s[1]}, ${s[2]}, ${(0.01 + alive * 0.07 + chorusLift * 0.04) * glowDim})`);
+  wash.addColorStop(1, `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${(0.008 + alive * 0.05) * glowDim})`);
+  ctx.fillStyle = wash;
+  ctx.fillRect(0, 0, w, h);
+
+  // Center bloom (heartbeat)
+  const heartPulse = 0.55 + bpmPulse * 0.55 + Math.sin(t * (profile?.bpm ? profile.bpm / 60 : 2.75) * Math.PI * 2) * 0.08;
+  const coreR = Math.max(w, h) * (0.22 + alive * 0.18 + bpmPulse * 0.08);
+  const core = ctx.createRadialGradient(cx, cy * 0.92, 0, cx, cy * 0.92, coreR);
+  core.addColorStop(0, `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${0.03 + alive * 0.1 + bpmPulse * 0.08})`);
+  core.addColorStop(0.4, `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.02 + alive * 0.07 + chorusLift * 0.04})`);
+  core.addColorStop(1, `rgba(${p[0]}, ${p[1]}, ${p[2]}, 0)`);
+  ctx.fillStyle = core;
+  ctx.fillRect(0, 0, w, h);
+
+  // Soft side beams in girl palette (disco-like but softer / pastel)
+  const beamDensity = 0.28 + chorusBoost * 0.48;
+  const beamPower = quietGate * (0.07 + party * 0.24 + chorusLift * 0.7) * (0.5 + beatPulse * 0.5);
+  const palette = [p, s, a];
+  DDLC_BEAMS.forEach((beam, i) => {
+    if (seededUnit((i + 1) * 31.77) > beamDensity) return;
+    const color = palette[beam.colorIndex % palette.length];
+    const originPhase = (beam.origin + Math.floor(t * 0.14)) % 4;
+    const origins = [
+      { x: w * (0.12 + seededUnit(i * 2.1) * 0.76), y: -h * 0.06, base: Math.PI * 0.5 },
+      { x: w * 1.06, y: h * (0.15 + seededUnit(i * 3.2) * 0.7), base: Math.PI },
+      { x: w * (0.12 + seededUnit(i * 5.3) * 0.76), y: h * 1.06, base: -Math.PI * 0.5 },
+      { x: -w * 0.06, y: h * (0.15 + seededUnit(i * 7.4) * 0.7), base: 0 },
+    ];
+    const origin = origins[originPhase];
+    const sweep = Math.sin(t * beam.speed + beam.phase) * (0.36 + chorusLift * 0.18);
+    const angle = origin.base + sweep + beatPulse * 0.05;
+    const length = Math.max(w, h) * (0.9 + chorusLift * 0.22);
+    const halfWidth = length * (beam.width + beatPulse * 0.012);
+    const alpha = beamPower * (0.02 + (i % 3) * 0.006 + chorusLift * 0.04);
+    ctx.save();
+    ctx.translate(origin.x, origin.y);
+    ctx.rotate(angle);
+    const grad = ctx.createLinearGradient(0, 0, length, 0);
+    grad.addColorStop(0, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha * 1.6})`);
+    grad.addColorStop(0.45, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`);
+    grad.addColorStop(1, `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`);
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(length, halfWidth);
+    ctx.lineTo(length, -halfWidth);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  });
+
+  // Beat rings (inline — shared pulse helper is a no-op stub)
+  if (bpmPulse > 0.08 || chorusBoost > 0.15) {
+    const ringCount = 3;
+    for (let r = 0; r < ringCount; r++) {
+      const life = (bpmPulse + r * 0.22) % 1;
+      const rad = Math.min(w, h) * (0.08 + life * (0.22 + chorusBoost * 0.1));
+      const alpha = (1 - life) * (0.1 + chorusBoost * 0.08 + bpmPulse * 0.1) * alive;
+      if (alpha < 0.01) continue;
+      const col = r % 2 ? s : p;
+      ctx.strokeStyle = `rgba(${col[0]}, ${col[1]}, ${col[2]}, ${alpha})`;
+      ctx.lineWidth = (1.2 + (1 - life) * 2.4) * scale;
+      ctx.beginPath();
+      ctx.arc(cx, cy * 0.92, rad, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  }
+
+  // Floating pixel hearts — denser on chorus / monika bridge glitch tint handled via color
+  const heartDensity = 0.4 + chorusBoost * 0.55 + bpmPulse * 0.15;
+  DDLC_HEARTS.forEach((dot, i) => {
+    if (seededUnit((i + 1) * 47.19) > heartDensity) return;
+    const color = i % 2 === 0 ? p : s;
+    const floatY = (dot.y + (t * dot.speed * 0.04) % 1.2) % 1.2 - 0.1;
+    const x = (dot.x + Math.sin(t * 0.3 + dot.phase) * 0.04) * w;
+    const y = floatY * h;
+    const twinkle = 0.5 + Math.sin(t * (1.1 + (i % 5) * 0.2) + dot.phase) * 0.5;
+    const alpha = quietGate * (0.04 + twinkle * 0.14 + bpmPulse * 0.1 + chorusLift * 0.08) * heartPulse;
+    if (alpha < 0.01) return;
+    const size = dot.size * scale * (0.7 + bpmPulse * 0.45 + twinkle * 0.2);
+    const css = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+    drawPixelHeart(ctx, x, y, size, css, alpha, t * dot.spin + dot.phase);
+  });
+
+  // Monika: light scanline glitch shimmer
+  if (girl === 'monika' && (chorusBoost > 0.2 || section?.name === 'Bridge')) {
+    const glitchAlpha = (0.02 + chorusBoost * 0.05 + bpmPulse * 0.04) * alive;
+    for (let g = 0; g < 5; g++) {
+      if (seededUnit(t * 40 + g * 9.1) > 0.55) continue;
+      const gy = seededUnit(t * 12 + g) * h;
+      const gh = (2 + seededUnit(g * 3.3) * 8) * scale;
+      ctx.fillStyle = `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${glitchAlpha})`;
+      ctx.fillRect(0, gy, w, gh);
+    }
+  }
+
+  // Sayori: extra soft heart ring on strong beats
+  if (girl === 'sayori' && bpmPulse > 0.35) {
+    ctx.strokeStyle = `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.08 + bpmPulse * 0.12})`;
+    ctx.lineWidth = 2 * scale;
+    ctx.beginPath();
+    ctx.arc(cx, cy * 0.9, Math.min(w, h) * (0.12 + bpmPulse * 0.06), 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
 function drawTetoFx(level) {
   const canvas = $('teto-fx');
   const view = $('view-now');
@@ -3596,6 +3983,10 @@ function drawTetoFx(level) {
 
   if (theme === 'disco') {
     drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse);
+    return;
+  }
+  if (theme === 'ddlc') {
+    drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse);
     return;
   }
   if (theme === 'teto11') {
@@ -4559,4 +4950,8 @@ updateFxState();
 drawWaveform(true);
 loadSpatialMap(); // embed into cache immediately
 preloadSpatialMaps(); // warm jumpy/traveling-voices map
+// Warm DDF story panels + silhouettes so first theater open has no black flash
+if (typeof preloadAllDdfStoryArt === 'function') {
+  preloadAllDdfStoryArt().catch(() => {});
+}
 loadLibrary();

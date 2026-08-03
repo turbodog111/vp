@@ -6,8 +6,8 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-08-03-sadie-d1-h3">
-<link rel="stylesheet" href="styles.css?v=20260803-male-align-lock">
+<meta name="vp-build" content="2026-08-03-ddf-story-art">
+<link rel="stylesheet" href="styles.css?v=20260803-ddf-story-art">
 </head>
 <body>
 <div class="app">
@@ -90,19 +90,21 @@
       <canvas id="teto-fx" class="teto-fx-canvas" aria-hidden="true"></canvas>
       <pre id="timing-debug" class="timing-debug hidden" aria-live="polite"></pre>
 
-      <!-- DDLC Theater: full custom Now Playing for Traveling Voices / DDF dual-lead -->
+      <!-- DDLC Theater: story panels + compass for Doki Doki Forever / Traveling Voices -->
       <div id="ddf-theater" class="ddf-theater hidden" aria-live="polite">
-        <div class="ddf-bg" id="ddf-bg" aria-hidden="true"></div>
-        <div class="ddf-sil" id="ddf-sil" aria-hidden="true"></div>
+        <div class="ddf-bg-stack" aria-hidden="true">
+          <div class="ddf-bg-layer is-visible" id="ddf-bg-a"></div>
+          <div class="ddf-bg-layer" id="ddf-bg-b"></div>
+        </div>
+        <div class="ddf-sil-stack" aria-hidden="true">
+          <div class="ddf-sil-layer is-visible" id="ddf-sil-a"></div>
+          <div class="ddf-sil-layer" id="ddf-sil-b"></div>
+        </div>
         <div class="ddf-bg-overlay" aria-hidden="true"></div>
         <div class="ddf-hearts" aria-hidden="true"></div>
         <div class="ddf-theater-inner">
           <header class="ddf-header">
-            <div class="ddf-club-badge">
-              <span class="ddf-club-heart">♥</span> Literature Club
-            </div>
             <h1 class="ddf-song-title" id="ddf-song-title">Doki Doki Forever</h1>
-            <div class="ddf-song-sub" id="ddf-song-sub">Traveling Voices · dual lead</div>
             <div class="ddf-cast-pills" id="ddf-cast-pills" aria-hidden="true">
               <span class="ddf-pill sayori" data-girl="sayori">Sayori</span>
               <span class="ddf-pill natsuki" data-girl="natsuki">Natsuki</span>
@@ -113,18 +115,18 @@
           </header>
 
           <div class="ddf-compass-block">
-            <div class="ddf-compass-title">Audio Compass</div>
+            <div class="ddf-compass-title">Compass</div>
             <div class="ddf-compass-frame">
-              <canvas id="ddf-compass" width="300" height="300" aria-label="Audio Compass — top-down dual-lead map"></canvas>
+              <canvas id="ddf-compass" width="300" height="300" aria-label="Audio Compass"></canvas>
               <div class="ddf-you-label">YOU</div>
             </div>
             <div class="ddf-voice-readout">
               <div class="ddf-voice female">
-                <span class="ddf-voice-tag">♀ Female</span>
+                <span class="ddf-voice-tag">♀</span>
                 <span id="ddf-female-dir" class="ddf-voice-dir">—</span>
               </div>
               <div class="ddf-voice male">
-                <span class="ddf-voice-tag">♂ Male</span>
+                <span class="ddf-voice-tag">♂</span>
                 <span id="ddf-male-dir" class="ddf-voice-dir">—</span>
               </div>
             </div>
@@ -132,22 +134,18 @@
           </div>
 
           <div class="ddf-lyrics-block" id="ddf-lyrics-block" data-mode="dual">
-            <div class="ddf-active-banner" id="ddf-active-banner" aria-live="polite">
-              <span class="ddf-active-chip both" id="ddf-active-chip">BOTH TRACKS</span>
-              <span class="ddf-active-hint" id="ddf-active-hint">dual lead</span>
-            </div>
             <div class="ddf-lyrics-stage" id="ddf-lyrics-stage">
               <div class="ddf-lyric-pane female" id="ddf-pane-female">
                 <div class="ddf-track-label" id="ddf-label-female">
-                  <span class="ddf-track-name">Female track</span>
-                  <span class="ddf-track-state" id="ddf-state-female">LEAD</span>
+                  <span class="ddf-track-name">♀</span>
+                  <span class="ddf-track-state" id="ddf-state-female"></span>
                 </div>
                 <div class="ddf-current-line" id="ddf-line-female">…</div>
               </div>
               <div class="ddf-lyric-pane male" id="ddf-pane-male">
                 <div class="ddf-track-label" id="ddf-label-male">
-                  <span class="ddf-track-name">Male track</span>
-                  <span class="ddf-track-state" id="ddf-state-male">LEAD</span>
+                  <span class="ddf-track-name">♂</span>
+                  <span class="ddf-track-state" id="ddf-state-male"></span>
                 </div>
                 <div class="ddf-current-line" id="ddf-line-male">…</div>
               </div>
@@ -156,15 +154,9 @@
 
           <div class="ddf-full-lyrics-wrap">
             <button type="button" class="ddf-full-toggle" id="ddf-full-toggle" aria-expanded="false">
-              Full lyrics map ▾
+              Lyrics ▾
             </button>
-            <div class="ddf-full-lyrics hidden" id="ddf-full-lyrics" role="region" aria-label="Full lyrics with active track">
-              <div class="ddf-full-legend">
-                <span class="leg F">F lead</span>
-                <span class="leg M">M lead</span>
-                <span class="leg both">Both</span>
-                <span class="leg now">● now</span>
-              </div>
+            <div class="ddf-full-lyrics hidden" id="ddf-full-lyrics" role="region" aria-label="Full lyrics">
               <div class="ddf-full-list" id="ddf-full-list"></div>
             </div>
           </div>
@@ -272,6 +264,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=20260803-male-align-lock"></script>
+<script src="app.js?v=20260803-ddf-story-art"></script>
 </body>
 </html>
