@@ -23,13 +23,20 @@ html, body {
 button { font: inherit; }
 
 .app {
-  display: flex; flex-direction: column;
-  height: 100vh; max-height: 100vh; overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* dvh avoids mobile URL-bar jump; 100vh fallback */
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow: hidden;
 }
 /* Whole-page scroll when DDF theater is taller than the viewport */
 body.ddf-theater-active .app {
   height: auto;
   min-height: 100vh;
+  min-height: 100dvh;
   max-height: none;
   overflow-x: hidden;
   overflow-y: auto;
@@ -72,39 +79,48 @@ body.ddf-theater-active .app {
 .tab:hover { color: var(--fg); }
 
 .main {
-  flex: 1;
-  min-height: 0; /* critical: allow flex child to shrink inside 100vh app */
-  overflow-y: auto;
-  padding: 16px 24px 24px;
+  /* flex-basis 0 + min-height 0 = definite height for percentage/grid children */
+  flex: 1 1 0%;
+  min-height: 0;
+  overflow: hidden; /* Now Playing must not grow the app; library scrolls inside */
+  padding: 12px 20px 12px;
   display: flex;
   flex-direction: column;
 }
-.view { display: none; }
+.view { display: none; min-height: 0; }
 .view.active { display: block; }
-/* Now Playing fills the main pane without overflowing the viewport */
-#view-now.view.active {
-  display: grid;
-  flex: 1 1 auto;
+/* Library / playlists need their own scroll inside main */
+#view-library.view.active,
+#view-playlists.view.active {
+  flex: 1 1 0%;
   min-height: 0;
-  height: 100%;
-  max-height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
+/*
+ * Now Playing: fixed 3-row shell that ALWAYS fits main.
+ * Wave row uses pixel minmax (not %), so canvas height is stable and bars don't squash.
+ * stage (1fr) | spatial dock (auto, 0 when hidden) | waveform (110–160px)
+ */
+#view-now.view.active,
 .now-view.active {
   position: relative;
   display: grid;
-  /* Fill available main height; rows share space instead of forcing overflow */
+  flex: 1 1 0%;
   min-height: 0;
+  width: 100%;
   height: 100%;
   max-height: 100%;
-  /* stage | optional spatial dock | waveform — all fit on screen */
-  grid-template-rows: minmax(0, 1fr) auto minmax(100px, 22%);
-  gap: 10px;
+  grid-template-rows: minmax(0, 1fr) auto minmax(110px, 150px);
+  gap: 8px;
   border-radius: 8px;
   overflow: hidden;
+  box-sizing: border-box;
 }
+body.spatial-song-active #view-now.view.active,
 body.spatial-song-active .now-view.active {
-  grid-template-rows: minmax(0, 1fr) auto minmax(90px, 20%);
+  grid-template-rows: minmax(0, 1fr) auto minmax(96px, 130px);
 }
 
 /* Compact spatial dock between stage and waveform — never steals title column */
@@ -371,13 +387,17 @@ body.teto11-fx-active .now-view.active {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(120px, min(28vmin, 220px)) minmax(100px, 200px);
+  /* Title grows; hero is fixed-ish; queue is narrow */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 220px);
   align-items: center;
-  gap: clamp(12px, 2vw, 28px);
-  min-height: 0; /* let grid row allocate space — fixed 320px was distorting short viewports */
+  justify-items: stretch;
+  gap: 16px 28px;
+  min-height: 0;
   max-height: 100%;
-  overflow: hidden;
-  padding: 4px 0;
+  /* visible so hero glow rings aren't clipped (was looking "cut off") */
+  overflow: visible;
+  padding: 8px 8px 4px;
+  box-sizing: border-box;
 }
 
 .now-meta { min-width: 0; align-self: center; }
@@ -391,21 +411,21 @@ body.teto11-fx-active .now-view.active {
 }
 .now-meta h1 {
   margin: 0;
-  /* Cap title so it never pushes hero/wave off-screen */
-  font-size: clamp(26px, 4.8vw, 64px);
+  /* Scale with height so short windows don't overflow the stage row */
+  font-size: clamp(28px, 5.5vh, 68px);
   line-height: 1.05;
   letter-spacing: 0;
   max-width: 900px;
   overflow-wrap: anywhere;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
 }
 .now-subtitle {
-  margin-top: 12px;
+  margin-top: 10px;
   color: var(--fg-dim);
-  font-size: clamp(13px, 1.5vw, 16px);
+  font-size: 15px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -416,16 +436,19 @@ body.teto11-fx-active .now-view.active {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(8px, 1.5vh, 16px);
+  gap: 10px;
   min-width: 0;
   min-height: 0;
+  /* Reserve room for ::after glow so neighbors aren't covered */
+  padding: 12px;
+  box-sizing: content-box;
 }
 .hero-play {
   position: relative;
   isolation: isolate;
-  /* Scales with viewport — no fixed 190px that overflows short windows */
-  width: clamp(100px, 18vmin, 180px);
-  height: clamp(100px, 18vmin, 180px);
+  /* Height-based so it always fits the stage row */
+  width: clamp(104px, 18vh, 168px);
+  height: clamp(104px, 18vh, 168px);
   border-radius: 50%;
   border: 1px solid rgba(94, 234, 212, 0.28);
   background:
@@ -435,7 +458,7 @@ body.teto11-fx-active .now-view.active {
   cursor: pointer;
   display: grid;
   place-items: center;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.38);
   --progress: 0deg;
   --level: 0;
   flex-shrink: 0;
@@ -467,13 +490,14 @@ body.teto11-fx-active .hero-play {
 .hero-play::before {
   content: "";
   position: absolute;
-  inset: -12px;
+  inset: -8px;
   border-radius: inherit;
   background: conic-gradient(var(--accent) var(--progress), rgba(94, 234, 212, 0.12) 0deg);
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 15px), #000 calc(100% - 14px));
-  mask: radial-gradient(farthest-side, transparent calc(100% - 15px), #000 calc(100% - 14px));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 12px), #000 calc(100% - 11px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 12px), #000 calc(100% - 11px));
   opacity: 0.95;
   z-index: -2;
+  pointer-events: none;
 }
 body.teto-fx-active .hero-play::before {
   background: conic-gradient(#ff6a3d var(--progress), rgba(136, 42, 24, 0.22) 0deg);
@@ -491,12 +515,14 @@ body.teto11-fx-active .hero-play::before {
 .hero-play::after {
   content: "";
   position: absolute;
-  inset: -24px;
+  /* Was -24px and clipped by overflow:hidden → looked broken/distorted */
+  inset: -10px;
   border-radius: inherit;
   border: 1px solid rgba(94, 234, 212, calc(0.18 + var(--level) * 0.45));
   transform: none;
   opacity: calc(0.48 + var(--level) * 0.18);
   z-index: -3;
+  pointer-events: none;
 }
 body.teto-fx-active .hero-play::after {
   border-color: rgba(255, 122, 66, calc(0.22 + var(--level) * 0.52));
@@ -523,13 +549,14 @@ body.teto11-fx-active .hero-play::after {
   border: 1px solid rgba(235, 235, 240, 0.08);
 }
 .hero-icon {
-  font-size: clamp(28px, 5.5vmin, 50px);
+  font-size: clamp(30px, 5vh, 48px);
   line-height: 1;
   transform: translateX(3px);
 }
 .hero-play.playing .hero-icon { transform: none; }
 .hero-time {
-  width: min(180px, 100%);
+  width: 100%;
+  max-width: 168px;
   display: flex;
   justify-content: space-between;
   color: var(--fg-dim);
@@ -560,26 +587,33 @@ body.teto11-fx-active .hero-play::after {
 .wave-panel {
   position: relative;
   z-index: 1;
-  min-height: 0; /* grid row owns height — fixed min-height was crushing/stretching bars */
+  /* Grid cell is the only height source — no competing min-heights */
+  min-height: 0;
   height: 100%;
   max-height: 100%;
   border-top: 1px solid var(--border);
-  display: flex;
-  align-items: stretch;
   overflow: hidden;
-  padding: 8px 0 10px;
+  padding: 0;
+  margin: 0;
+  /* Creates a definite box for absolute canvas children */
+  box-sizing: border-box;
 }
 body.spatial-song-active .wave-panel {
   min-height: 0;
-  padding: 6px 0 8px;
 }
+/*
+ * Canvas fills the panel via absolute positioning so the HTML width/height
+ * attributes (and JS buffer size) never drive layout or aspect distortion.
+ */
 #waveform {
-  width: 100%;
-  height: 100%;
-  min-height: 80px;
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
   display: block;
-  /* Prevent aspect distortion from mismatched canvas/CSS sizes */
-  object-fit: fill;
+  box-sizing: border-box;
 }
 
 .library-toolbar {
@@ -1058,54 +1092,52 @@ input[type="range"]:focus { outline: none; }
 
 @media (max-width: 900px) {
   .now-stage {
-    grid-template-columns: minmax(0, 1fr) minmax(110px, 180px);
-    gap: 16px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px 18px;
   }
   .now-meta h1 {
-    font-size: clamp(28px, 6vw, 48px);
+    font-size: clamp(26px, 5vh, 48px);
     line-height: 1.05;
     overflow-wrap: normal;
   }
   .now-queue {
-    grid-column: 2;
+    grid-column: 1 / -1;
     align-self: start;
   }
 }
 
 @media (max-width: 760px) {
   .topbar { padding: 12px 16px; }
-  .main { padding: 12px 16px; }
+  .main { padding: 10px 12px; }
   .tabs { padding: 0 16px; }
+  #view-now.view.active,
   .now-view.active {
-    grid-template-rows: minmax(0, 1fr) auto minmax(90px, 24%);
+    grid-template-rows: minmax(0, 1fr) auto minmax(96px, 120px);
+    gap: 6px;
   }
+  body.spatial-song-active #view-now.view.active,
   body.spatial-song-active .now-view.active {
-    grid-template-rows: minmax(0, 1fr) auto minmax(80px, 22%);
+    grid-template-rows: minmax(0, 1fr) auto minmax(88px, 110px);
   }
   .spatial-guide {
-    max-height: 100px;
-    padding: 6px 8px;
+    max-height: 92px;
+    padding: 5px 8px;
   }
-  .spatial-body { grid-template-columns: 56px minmax(0, 1fr); }
-  #spatial-radar { width: 56px; height: 56px; }
+  .spatial-body { grid-template-columns: 52px minmax(0, 1fr); }
+  #spatial-radar { width: 52px; height: 52px; }
   .now-stage {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
     text-align: center;
     min-height: 0;
+    padding: 4px 0;
   }
-  body.spatial-song-active .now-stage {
-    min-height: 0;
-    gap: 10px;
-  }
-  .now-meta h1 { font-size: clamp(26px, 9vw, 44px); -webkit-line-clamp: 2; }
+  .hero-control { padding: 6px; }
+  .now-meta h1 { font-size: clamp(24px, 4.5vh, 40px); -webkit-line-clamp: 2; }
   .now-subtitle { white-space: normal; }
-  .hero-play { width: clamp(96px, 28vw, 140px); height: clamp(96px, 28vw, 140px); }
-  .hero-icon { font-size: clamp(28px, 8vw, 40px); }
-  body.spatial-song-active .hero-play { width: clamp(88px, 24vw, 120px); height: clamp(88px, 24vw, 120px); }
-  .now-queue { align-self: auto; }
-  #waveform { min-height: 72px; height: 100%; }
-  body.spatial-song-active #waveform { height: 96px; }
+  .hero-play { width: clamp(96px, 16vh, 132px); height: clamp(96px, 16vh, 132px); }
+  .hero-icon { font-size: clamp(28px, 4.5vh, 40px); }
+  .now-queue { align-self: auto; grid-column: auto; }
   .library-toolbar { gap: 6px; }
   .collection-tab { padding: 6px 10px; font-size: 12px; }
   .col-actions { opacity: 1; }
@@ -1149,15 +1181,16 @@ input[type="range"]:focus { outline: none; }
     white-space: nowrap;
   }
   .main {
-    padding: 10px 12px;
+    padding: 8px 10px;
   }
-  /* Keep stage | spatial dock | waveform (3 rows) — 2-row layout clipped title/hero */
+  #view-now.view.active,
   .now-view.active {
-    grid-template-rows: minmax(180px, 1fr) auto minmax(96px, 16vh);
-    gap: 10px;
+    grid-template-rows: minmax(0, 1fr) auto minmax(88px, 108px);
+    gap: 6px;
   }
+  body.spatial-song-active #view-now.view.active,
   body.spatial-song-active .now-view.active {
-    grid-template-rows: minmax(160px, 1fr) auto minmax(88px, 15vh);
+    grid-template-rows: minmax(0, 1fr) auto minmax(80px, 100px);
   }
   .spatial-guide {
     max-height: 112px;

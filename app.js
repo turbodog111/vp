@@ -777,8 +777,8 @@ function switchView(view) {
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === `view-${view}`));
   if (view === 'playlists') renderPlaylists();
   if (view === 'now') {
-    resizeWaveform(true);
-    resizeFxCanvas(true);
+    // Layout must settle before measuring wave-panel (was sizing against stale boxes)
+    scheduleNowLayoutSync();
     spatialForcePaint = true;
     syncSpatialLoop();
     if (!audio.paused) startWaveform();
@@ -1916,6 +1916,8 @@ function setSpatialSong(song = currentSong()) {
   ensureSpatialRadar();
   paintSpatialGuide(currentCalibratedTime(), true);
   syncSpatialLoop();
+  // spatial-song-active / ddf-theater-active change grid rows — remeasure bars
+  if (isNowViewActive()) scheduleNowLayoutSync();
 }
 
 function isNowViewActive() {
@@ -3275,30 +3277,54 @@ function ensureAudioGraph() {
 
 function resizeWaveform(force = false) {
   const canvas = $('waveform');
-  if (!canvas) return;
-  // Cap DPR at 1.5 — full 2x/3x retina on a wide waveform is very expensive
+  // Measure the PANEL, never the canvas — canvas is position:absolute with
+  // width/height 100%, so reading its box before buffer sync was circular
+  // and produced wrong aspect (bars looked stretched/squashed).
+  const panel = canvas?.closest?.('.wave-panel') || canvas?.parentElement;
+  if (!canvas || !panel) return;
+  // Hidden (DDF theater hides wave) — skip so we don't stamp 0-size buffers
+  if (panel.offsetParent === null && getComputedStyle(panel).display === 'none') return;
+
   const dpr = Math.min(1.5, Math.max(1, window.devicePixelRatio || 1));
-  const rect = canvas.getBoundingClientRect();
-  // Match buffer to *actual* CSS box. Forcing min 120/320 when the panel is
-  // shorter made the browser scale the bitmap and distort the bars.
-  let cssW = Math.max(1, rect.width);
-  let cssH = Math.max(1, rect.height);
-  if (cssH < 48) {
-    // Collapsed layout: try parent panel, then a safe floor only for buffer math
-    const panel = canvas.parentElement?.getBoundingClientRect();
-    if (panel && panel.height > cssH) cssH = Math.max(cssH, panel.height - 8);
+  const rect = panel.getBoundingClientRect();
+  const cssW = Math.max(2, Math.floor(rect.width));
+  const cssH = Math.max(2, Math.floor(rect.height));
+  // Not laid out yet (0×0) — try again next frame instead of inventing sizes
+  if (cssW < 8 || cssH < 8) {
+    if (force) {
+      requestAnimationFrame(() => resizeWaveform(true));
+    }
+    return;
   }
-  if (cssW < 2) cssW = 320;
-  if (cssH < 2) cssH = 100;
+
   const w = Math.max(2, Math.floor(cssW * dpr));
   const h = Math.max(2, Math.floor(cssH * dpr));
-  const key = `${w}x${h}`;
+  const key = `${w}x${h}@${cssW}x${cssH}`;
   if (!force && key === waveSizeKey) return;
   waveSizeKey = key;
+  // Drawing buffer only — CSS size is controlled by stylesheet (absolute fill)
   if (canvas.width !== w || canvas.height !== h) {
     canvas.width = w;
     canvas.height = h;
   }
+}
+
+/** Double-rAF: wait for CSS grid to settle, then size canvases to real boxes. */
+function scheduleNowLayoutSync() {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      waveSizeKey = '';
+      fxSizeKey = '';
+      resizeWaveform(true);
+      resizeFxCanvas(true);
+      if (document.body.classList.contains('ddf-theater-active')) {
+        ddfFxSizeKey = '';
+        ddfFxCtx = null;
+        resizeDdfFxCanvas(true);
+        paintDdfTheaterFx(currentCalibratedTime());
+      }
+    });
+  });
 }
 
 function resizeFxCanvas(force = false) {
@@ -5136,21 +5162,11 @@ document.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('resize', () => {
-  waveSizeKey = '';
-  fxSizeKey = '';
-  resizeWaveform(true);
-  resizeFxCanvas(true);
-  ddfFxSizeKey = '';
-  ddfFxCtx = null;
-  if (document.body.classList.contains('ddf-theater-active')) {
-    resizeDdfFxCanvas(true);
-    paintDdfTheaterFx(currentCalibratedTime());
-  }
+  scheduleNowLayoutSync();
 });
-resizeWaveform(true);
-resizeFxCanvas(true);
+// Initial measure after first paint (DOM may not have final grid sizes yet)
+scheduleNowLayoutSync();
 updateFxState();
-drawWaveform(true);
 loadSpatialMap(); // embed into cache immediately
 preloadSpatialMaps(); // warm jumpy/traveling-voices map
 loadLibrary();
