@@ -1575,8 +1575,8 @@ function spatialSlugForSong(song) {
   if (!song) return null;
   if (!songLooksLikeTravelingVoices(song)) return null;
   const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''}`;
-  // Slow Glide sister cut uses long full-interval whooshes (separate compass map)
-  if (/slow\s*glide/i.test(hay) || /whoosh/i.test(hay) || /v7_glide/i.test(hay)) {
+  // Slow Glide + SADIE A/B cuts share the long-whoosh compass map
+  if (/slow\s*glide/i.test(hay) || /whoosh/i.test(hay) || /v7_glide/i.test(hay) || /sadie\s*(d1|h3)/i.test(hay)) {
     return 'jumpy_slow_glide';
   }
   return 'jumpy_moving_leads';
@@ -2259,6 +2259,9 @@ function loadDdfLeadMaps() {
 /** Map song title → lead map id */
 function leadMapIdForSong(song = currentSong()) {
   const hay = `${song?.name || ''} ${song?.title || ''} ${song?.displayName || ''}`;
+  // SADIE A/B Slow Glide variants
+  if (/sadie\s*d1/i.test(hay)) return 'v7_phrase_word_lead_glide_sadie_d1';
+  if (/sadie\s*h3/i.test(hay)) return 'v7_phrase_word_lead_glide_sadie_h3';
   // Slow Glide sister cut shares phrase leads, separate id for spatial metadata
   if (/slow\s*glide/i.test(hay) || /whoosh/i.test(hay)) {
     return 'v7_phrase_word_lead_glide';
