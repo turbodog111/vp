@@ -1,0 +1,156 @@
+{
+  "id": "v6c_call_response",
+  "title": "Traveling Voices v6c Call\u2013Response",
+  "blurb": "Highest dual baseline. Leads only on clear call\u2192response pairs (ache\u2192fate, touch\u2192tell me, confession\u2192resolve, shy\u2192meta, free\u2192convey, bridge claim). Hooks dual.",
+  "both_f": 0.82,
+  "both_m": 0.82,
+  "lead": 1.05,
+  "under": 0.52,
+  "ramp": 0.32,
+  "stats": {
+    "pct_both_high": 55.3,
+    "pct_female_lead": 20.2,
+    "pct_male_lead": 24.2
+  },
+  "segments": [
+    {
+      "start": 16.44,
+      "end": 20.7,
+      "lead": "F",
+      "lyric": "Why does my heart ache\u2026",
+      "why": "call: ache"
+    },
+    {
+      "start": 27.99,
+      "end": 34.56,
+      "lead": "M",
+      "lyric": "chance or fate / don't get the wrong idea",
+      "why": "response: fate + push-back"
+    },
+    {
+      "start": 34.56,
+      "end": 39.76,
+      "lead": "F",
+      "lyric": "When we touch\u2026",
+      "why": "call: intimacy"
+    },
+    {
+      "start": 39.76,
+      "end": 46.06,
+      "lead": "both",
+      "lyric": "choose just one of us",
+      "why": "both ask the player"
+    },
+    {
+      "start": 46.06,
+      "end": 51.34,
+      "lead": "M",
+      "lyric": "Tell me, tell me please\u2026",
+      "why": "response: demand an answer"
+    },
+    {
+      "start": 58.0,
+      "end": 62.61,
+      "lead": "F",
+      "lyric": "Will it be okay / express my love",
+      "why": "call: confession"
+    },
+    {
+      "start": 62.61,
+      "end": 65.72,
+      "lead": "M",
+      "lyric": "No matter what you do or say",
+      "why": "response: resolve"
+    },
+    {
+      "start": 53.93,
+      "end": 58.0,
+      "lead": "both",
+      "lyric": "together forever / never apart",
+      "why": "shared vow hook"
+    },
+    {
+      "start": 65.72,
+      "end": 77.4,
+      "lead": "both",
+      "lyric": "together forever / never apart (x2)",
+      "why": "chorus stack"
+    },
+    {
+      "start": 123.63,
+      "end": 127.67,
+      "lead": "both",
+      "lyric": "together forever / never apart",
+      "why": "shared vow"
+    },
+    {
+      "start": 135.49,
+      "end": 139.5,
+      "lead": "both",
+      "lyric": "together forever / never apart",
+      "why": "shared vow into bridge"
+    },
+    {
+      "start": 158.83,
+      "end": 170.96,
+      "lead": "both",
+      "lyric": "together forever / never apart / forever forever",
+      "why": "final dual stack before bittersweet"
+    },
+    {
+      "start": 82.38,
+      "end": 92.44,
+      "lead": "F",
+      "lyric": "next to you\u2026 said too much",
+      "why": "call: shy"
+    },
+    {
+      "start": 93.46,
+      "end": 104.7,
+      "lead": "M",
+      "lyric": "way you write / love is true",
+      "why": "response: meta demand"
+    },
+    {
+      "start": 116.14,
+      "end": 121.19,
+      "lead": "M",
+      "lyric": "leave you be / set you free",
+      "why": "call: release"
+    },
+    {
+      "start": 127.67,
+      "end": 135.49,
+      "lead": "F",
+      "lyric": "How can I convey\u2026 before they fly away",
+      "why": "response: can't let go"
+    },
+    {
+      "start": 139.5,
+      "end": 152.53,
+      "lead": "M",
+      "lyric": "fall apart / be the one for once",
+      "why": "story climax claim"
+    },
+    {
+      "start": 158.83,
+      "end": 170.96,
+      "lead": "both",
+      "lyric": "together forever / forever forever",
+      "why": "dual vow"
+    },
+    {
+      "start": 170.96,
+      "end": 175.93,
+      "lead": "F",
+      "lyric": "maybe never / in my heart",
+      "why": "bittersweet close"
+    }
+  ],
+  "files": {
+    "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6c_call_response.wav",
+    "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6c_call_response.m4a"
+  },
+  "female_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/female_remastered_v3.wav",
+  "male_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/male_remastered_v3.wav"
+}

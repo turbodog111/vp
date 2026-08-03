@@ -1,0 +1,773 @@
+[
+  {
+    "id": "v6a_story_line",
+    "title": "Traveling Voices v6a Story Line-Lead",
+    "blurb": "Both tracks ~full most of the song. Leads only on story-meaningful or gender-fitting lines (confession/intimacy \u2192 female; fate/free/claim/dark bridge \u2192 male). Shared forever-hooks stay dual.",
+    "both_f": 0.78,
+    "both_m": 0.78,
+    "lead": 1.05,
+    "under": 0.48,
+    "ramp": 0.38,
+    "stats": {
+      "pct_both_high": 51.3,
+      "pct_female_lead": 23.6,
+      "pct_male_lead": 24.1
+    },
+    "segments": [
+      {
+        "start": 53.93,
+        "end": 58.0,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow hook"
+      },
+      {
+        "start": 65.72,
+        "end": 77.4,
+        "lead": "both",
+        "lyric": "together forever / never apart (x2)",
+        "why": "chorus stack"
+      },
+      {
+        "start": 123.63,
+        "end": 127.67,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow"
+      },
+      {
+        "start": 135.49,
+        "end": 139.5,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow into bridge"
+      },
+      {
+        "start": 158.83,
+        "end": 170.96,
+        "lead": "both",
+        "lyric": "together forever / never apart / forever forever",
+        "why": "final dual stack before bittersweet"
+      },
+      {
+        "start": 12.45,
+        "end": 16.44,
+        "lead": "F",
+        "lyric": "My heart's beating when I'm hanging out with you",
+        "why": "soft romantic open \u2014 feminine lead"
+      },
+      {
+        "start": 16.44,
+        "end": 20.7,
+        "lead": "F",
+        "lyric": "Why does my heart ache / when I hear you feel the same",
+        "why": "vulnerable ache \u2014 keep female"
+      },
+      {
+        "start": 27.99,
+        "end": 32.31,
+        "lead": "M",
+        "lyric": "Is this by chance or fate / whenever it's just me and you",
+        "why": "fate/claim \u2014 assertive; male fits"
+      },
+      {
+        "start": 32.31,
+        "end": 34.56,
+        "lead": "M",
+        "lyric": "Don't get the wrong idea",
+        "why": "defensive push-back \u2014 male edge"
+      },
+      {
+        "start": 34.56,
+        "end": 39.76,
+        "lead": "F",
+        "lyric": "When we touch, it'll never be enough",
+        "why": "intimate touch \u2014 feminine"
+      },
+      {
+        "start": 39.76,
+        "end": 46.06,
+        "lead": "both",
+        "lyric": "Is it way too much if you had to choose just one of us?",
+        "why": "choice question hits harder as dual plea"
+      },
+      {
+        "start": 46.06,
+        "end": 51.34,
+        "lead": "M",
+        "lyric": "Tell me, tell me please / is this what I think or just me",
+        "why": "urgent demand for truth \u2014 male"
+      },
+      {
+        "start": 51.34,
+        "end": 53.93,
+        "lead": "F",
+        "lyric": "Don't wake me up from this sweet little dream",
+        "why": "soft dream image \u2014 female"
+      },
+      {
+        "start": 58.0,
+        "end": 62.61,
+        "lead": "F",
+        "lyric": "Will it be okay / if I express my love for you this way",
+        "why": "confession anxiety \u2014 female"
+      },
+      {
+        "start": 62.61,
+        "end": 65.72,
+        "lead": "M",
+        "lyric": "No matter what you do or what you say",
+        "why": "steadfast resolve before dual hook \u2014 male"
+      },
+      {
+        "start": 82.38,
+        "end": 90.14,
+        "lead": "F",
+        "lyric": "When I'm next to you\u2026 eyes meet out of the blue",
+        "why": "shy flutter \u2014 female"
+      },
+      {
+        "start": 90.14,
+        "end": 92.44,
+        "lead": "F",
+        "lyric": "I'm sorry, I said too much",
+        "why": "self-conscious apology \u2014 female"
+      },
+      {
+        "start": 93.46,
+        "end": 97.79,
+        "lead": "M",
+        "lyric": "The way you write even when you don't have a clue",
+        "why": "meta address to the player/writer \u2014 declarative male"
+      },
+      {
+        "start": 97.79,
+        "end": 104.7,
+        "lead": "M",
+        "lyric": "I wanna hear you say: \"This love\u2026 is true!\"",
+        "why": "demands spoken confirmation \u2014 male"
+      },
+      {
+        "start": 104.7,
+        "end": 109.59,
+        "lead": "both",
+        "lyric": "Tasty love, something I want more of",
+        "why": "playful color \u2014 dual fine"
+      },
+      {
+        "start": 109.59,
+        "end": 116.14,
+        "lead": "both",
+        "lyric": "Will it make the cut / choose just one of us",
+        "why": "choice pressure \u2014 dual"
+      },
+      {
+        "start": 116.14,
+        "end": 121.19,
+        "lead": "M",
+        "lyric": "Shall I leave you be? / Is it love if I can set you free?",
+        "why": "agency + letting go \u2014 male-coded moral weight"
+      },
+      {
+        "start": 121.19,
+        "end": 123.63,
+        "lead": "both",
+        "lyric": "But even if it's not reality",
+        "why": "bridge into shared vow"
+      },
+      {
+        "start": 127.67,
+        "end": 132.78,
+        "lead": "F",
+        "lyric": "How can I convey / my love before they fly away",
+        "why": "urgency about others disappearing \u2014 female emotional"
+      },
+      {
+        "start": 132.78,
+        "end": 135.49,
+        "lead": "F",
+        "lyric": "I think about it all day everyday",
+        "why": "obsessive longing \u2014 female"
+      },
+      {
+        "start": 139.5,
+        "end": 144.59,
+        "lead": "M",
+        "lyric": "One by one they only fall apart",
+        "why": "dark plot reveal \u2014 male weight"
+      },
+      {
+        "start": 144.59,
+        "end": 147.01,
+        "lead": "M",
+        "lyric": "Can it be undone?",
+        "why": "heavy question \u2014 male"
+      },
+      {
+        "start": 147.01,
+        "end": 152.53,
+        "lead": "M",
+        "lyric": "Why can't I just be the one for once?",
+        "why": "jealous claim for the player \u2014 male drive"
+      },
+      {
+        "start": 170.96,
+        "end": 175.93,
+        "lead": "F",
+        "lyric": "Maybe we'll never be together / forever in my heart",
+        "why": "bittersweet acceptance \u2014 female bookend"
+      }
+    ],
+    "files": {
+      "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6a_story_line.wav",
+      "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6a_story_line.m4a"
+    },
+    "female_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/female_remastered_v3.wav",
+    "male_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/male_remastered_v3.wav"
+  },
+  {
+    "id": "v6b_frequent_line",
+    "title": "Traveling Voices v6b Frequent Line-Lead",
+    "blurb": "More frequent switches than v6a (e.g. sundae\u2192fate flip, glitch love\u2192meta). Still dual majority; undertrack a bit lower so switches read clearer.",
+    "both_f": 0.75,
+    "both_m": 0.75,
+    "lead": 1.08,
+    "under": 0.42,
+    "ramp": 0.3,
+    "stats": {
+      "pct_both_high": 47.8,
+      "pct_female_lead": 27.1,
+      "pct_male_lead": 24.1
+    },
+    "segments": [
+      {
+        "start": 53.93,
+        "end": 58.0,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow hook"
+      },
+      {
+        "start": 65.72,
+        "end": 77.4,
+        "lead": "both",
+        "lyric": "together forever / never apart (x2)",
+        "why": "chorus stack"
+      },
+      {
+        "start": 123.63,
+        "end": 127.67,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow"
+      },
+      {
+        "start": 135.49,
+        "end": 139.5,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow into bridge"
+      },
+      {
+        "start": 158.83,
+        "end": 170.96,
+        "lead": "both",
+        "lyric": "together forever / never apart / forever forever",
+        "why": "final dual stack before bittersweet"
+      },
+      {
+        "start": 12.45,
+        "end": 16.44,
+        "lead": "F",
+        "lyric": "My heart's beating when I'm hanging out with you",
+        "why": "soft romantic open \u2014 feminine lead"
+      },
+      {
+        "start": 16.44,
+        "end": 20.7,
+        "lead": "F",
+        "lyric": "Why does my heart ache / when I hear you feel the same",
+        "why": "vulnerable ache \u2014 keep female"
+      },
+      {
+        "start": 27.99,
+        "end": 32.31,
+        "lead": "M",
+        "lyric": "Is this by chance or fate / whenever it's just me and you",
+        "why": "fate/claim \u2014 assertive; male fits"
+      },
+      {
+        "start": 32.31,
+        "end": 34.56,
+        "lead": "M",
+        "lyric": "Don't get the wrong idea",
+        "why": "defensive push-back \u2014 male edge"
+      },
+      {
+        "start": 34.56,
+        "end": 39.76,
+        "lead": "F",
+        "lyric": "When we touch, it'll never be enough",
+        "why": "intimate touch \u2014 feminine"
+      },
+      {
+        "start": 39.76,
+        "end": 46.06,
+        "lead": "both",
+        "lyric": "Is it way too much if you had to choose just one of us?",
+        "why": "choice question hits harder as dual plea"
+      },
+      {
+        "start": 46.06,
+        "end": 51.34,
+        "lead": "M",
+        "lyric": "Tell me, tell me please / is this what I think or just me",
+        "why": "urgent demand for truth \u2014 male"
+      },
+      {
+        "start": 51.34,
+        "end": 53.93,
+        "lead": "F",
+        "lyric": "Don't wake me up from this sweet little dream",
+        "why": "soft dream image \u2014 female"
+      },
+      {
+        "start": 58.0,
+        "end": 62.61,
+        "lead": "F",
+        "lyric": "Will it be okay / if I express my love for you this way",
+        "why": "confession anxiety \u2014 female"
+      },
+      {
+        "start": 62.61,
+        "end": 65.72,
+        "lead": "M",
+        "lyric": "No matter what you do or what you say",
+        "why": "steadfast resolve before dual hook \u2014 male"
+      },
+      {
+        "start": 82.38,
+        "end": 90.14,
+        "lead": "F",
+        "lyric": "When I'm next to you\u2026 eyes meet out of the blue",
+        "why": "shy flutter \u2014 female"
+      },
+      {
+        "start": 90.14,
+        "end": 92.44,
+        "lead": "F",
+        "lyric": "I'm sorry, I said too much",
+        "why": "self-conscious apology \u2014 female"
+      },
+      {
+        "start": 93.46,
+        "end": 97.79,
+        "lead": "M",
+        "lyric": "The way you write even when you don't have a clue",
+        "why": "meta address to the player/writer \u2014 declarative male"
+      },
+      {
+        "start": 97.79,
+        "end": 104.7,
+        "lead": "M",
+        "lyric": "I wanna hear you say: \"This love\u2026 is true!\"",
+        "why": "demands spoken confirmation \u2014 male"
+      },
+      {
+        "start": 104.7,
+        "end": 109.59,
+        "lead": "both",
+        "lyric": "Tasty love, something I want more of",
+        "why": "playful color \u2014 dual fine"
+      },
+      {
+        "start": 109.59,
+        "end": 116.14,
+        "lead": "both",
+        "lyric": "Will it make the cut / choose just one of us",
+        "why": "choice pressure \u2014 dual"
+      },
+      {
+        "start": 116.14,
+        "end": 121.19,
+        "lead": "M",
+        "lyric": "Shall I leave you be? / Is it love if I can set you free?",
+        "why": "agency + letting go \u2014 male-coded moral weight"
+      },
+      {
+        "start": 121.19,
+        "end": 123.63,
+        "lead": "both",
+        "lyric": "But even if it's not reality",
+        "why": "bridge into shared vow"
+      },
+      {
+        "start": 127.67,
+        "end": 132.78,
+        "lead": "F",
+        "lyric": "How can I convey / my love before they fly away",
+        "why": "urgency about others disappearing \u2014 female emotional"
+      },
+      {
+        "start": 132.78,
+        "end": 135.49,
+        "lead": "F",
+        "lyric": "I think about it all day everyday",
+        "why": "obsessive longing \u2014 female"
+      },
+      {
+        "start": 139.5,
+        "end": 144.59,
+        "lead": "M",
+        "lyric": "One by one they only fall apart",
+        "why": "dark plot reveal \u2014 male weight"
+      },
+      {
+        "start": 144.59,
+        "end": 147.01,
+        "lead": "M",
+        "lyric": "Can it be undone?",
+        "why": "heavy question \u2014 male"
+      },
+      {
+        "start": 147.01,
+        "end": 152.53,
+        "lead": "M",
+        "lyric": "Why can't I just be the one for once?",
+        "why": "jealous claim for the player \u2014 male drive"
+      },
+      {
+        "start": 170.96,
+        "end": 175.93,
+        "lead": "F",
+        "lyric": "Maybe we'll never be together / forever in my heart",
+        "why": "bittersweet acceptance \u2014 female bookend"
+      },
+      {
+        "start": 20.7,
+        "end": 22.68,
+        "lead": "both",
+        "lyric": "(Eheheh)",
+        "why": "laugh \u2014 dual, not forced"
+      },
+      {
+        "start": 22.68,
+        "end": 27.99,
+        "lead": "F",
+        "lyric": "Just like a sundae / sweet every time I teach you",
+        "why": "sweet teaching image \u2014 female before fate flip"
+      },
+      {
+        "start": 92.44,
+        "end": 93.46,
+        "lead": "F",
+        "lyric": "I really love\u2014 (glitch)",
+        "why": "broken love utterance \u2014 female before male meta"
+      },
+      {
+        "start": 165.53,
+        "end": 170.96,
+        "lead": "both",
+        "lyric": "(Forever, forever) hold",
+        "why": "hold dual before bittersweet female close"
+      }
+    ],
+    "files": {
+      "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6b_frequent_line.wav",
+      "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6b_frequent_line.m4a"
+    },
+    "female_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/female_remastered_v3.wav",
+    "male_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/male_remastered_v3.wav"
+  },
+  {
+    "id": "v6c_call_response",
+    "title": "Traveling Voices v6c Call\u2013Response",
+    "blurb": "Highest dual baseline. Leads only on clear call\u2192response pairs (ache\u2192fate, touch\u2192tell me, confession\u2192resolve, shy\u2192meta, free\u2192convey, bridge claim). Hooks dual.",
+    "both_f": 0.82,
+    "both_m": 0.82,
+    "lead": 1.05,
+    "under": 0.52,
+    "ramp": 0.32,
+    "stats": {
+      "pct_both_high": 55.3,
+      "pct_female_lead": 20.2,
+      "pct_male_lead": 24.2
+    },
+    "segments": [
+      {
+        "start": 16.44,
+        "end": 20.7,
+        "lead": "F",
+        "lyric": "Why does my heart ache\u2026",
+        "why": "call: ache"
+      },
+      {
+        "start": 27.99,
+        "end": 34.56,
+        "lead": "M",
+        "lyric": "chance or fate / don't get the wrong idea",
+        "why": "response: fate + push-back"
+      },
+      {
+        "start": 34.56,
+        "end": 39.76,
+        "lead": "F",
+        "lyric": "When we touch\u2026",
+        "why": "call: intimacy"
+      },
+      {
+        "start": 39.76,
+        "end": 46.06,
+        "lead": "both",
+        "lyric": "choose just one of us",
+        "why": "both ask the player"
+      },
+      {
+        "start": 46.06,
+        "end": 51.34,
+        "lead": "M",
+        "lyric": "Tell me, tell me please\u2026",
+        "why": "response: demand an answer"
+      },
+      {
+        "start": 58.0,
+        "end": 62.61,
+        "lead": "F",
+        "lyric": "Will it be okay / express my love",
+        "why": "call: confession"
+      },
+      {
+        "start": 62.61,
+        "end": 65.72,
+        "lead": "M",
+        "lyric": "No matter what you do or say",
+        "why": "response: resolve"
+      },
+      {
+        "start": 53.93,
+        "end": 58.0,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow hook"
+      },
+      {
+        "start": 65.72,
+        "end": 77.4,
+        "lead": "both",
+        "lyric": "together forever / never apart (x2)",
+        "why": "chorus stack"
+      },
+      {
+        "start": 123.63,
+        "end": 127.67,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow"
+      },
+      {
+        "start": 135.49,
+        "end": 139.5,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow into bridge"
+      },
+      {
+        "start": 158.83,
+        "end": 170.96,
+        "lead": "both",
+        "lyric": "together forever / never apart / forever forever",
+        "why": "final dual stack before bittersweet"
+      },
+      {
+        "start": 82.38,
+        "end": 92.44,
+        "lead": "F",
+        "lyric": "next to you\u2026 said too much",
+        "why": "call: shy"
+      },
+      {
+        "start": 93.46,
+        "end": 104.7,
+        "lead": "M",
+        "lyric": "way you write / love is true",
+        "why": "response: meta demand"
+      },
+      {
+        "start": 116.14,
+        "end": 121.19,
+        "lead": "M",
+        "lyric": "leave you be / set you free",
+        "why": "call: release"
+      },
+      {
+        "start": 127.67,
+        "end": 135.49,
+        "lead": "F",
+        "lyric": "How can I convey\u2026 before they fly away",
+        "why": "response: can't let go"
+      },
+      {
+        "start": 139.5,
+        "end": 152.53,
+        "lead": "M",
+        "lyric": "fall apart / be the one for once",
+        "why": "story climax claim"
+      },
+      {
+        "start": 158.83,
+        "end": 170.96,
+        "lead": "both",
+        "lyric": "together forever / forever forever",
+        "why": "dual vow"
+      },
+      {
+        "start": 170.96,
+        "end": 175.93,
+        "lead": "F",
+        "lyric": "maybe never / in my heart",
+        "why": "bittersweet close"
+      }
+    ],
+    "files": {
+      "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6c_call_response.wav",
+      "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6c_call_response.m4a"
+    },
+    "female_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/female_remastered_v3.wav",
+    "male_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/male_remastered_v3.wav"
+  },
+  {
+    "id": "v6d_soft_phrase",
+    "title": "Traveling Voices v6d Soft Phrase-Lead",
+    "blurb": "Gentlest: fewer, longer phrase leads; undertrack highest so both almost always present. Good if frequent switches feel busy.",
+    "both_f": 0.85,
+    "both_m": 0.85,
+    "lead": 1.02,
+    "under": 0.58,
+    "ramp": 0.48,
+    "stats": {
+      "pct_both_high": 52.7,
+      "pct_female_lead": 23.4,
+      "pct_male_lead": 23.8
+    },
+    "segments": [
+      {
+        "start": 12.45,
+        "end": 22.68,
+        "lead": "F",
+        "lyric": "Hey hey / heart's beating / heart ache",
+        "why": "whole soft open as female arc"
+      },
+      {
+        "start": 27.99,
+        "end": 34.56,
+        "lead": "M",
+        "lyric": "fate / don't get the wrong idea",
+        "why": "assertive pocket"
+      },
+      {
+        "start": 34.56,
+        "end": 39.76,
+        "lead": "F",
+        "lyric": "When we touch\u2026",
+        "why": "intimacy"
+      },
+      {
+        "start": 46.06,
+        "end": 51.34,
+        "lead": "M",
+        "lyric": "Tell me\u2026",
+        "why": "demand"
+      },
+      {
+        "start": 58.0,
+        "end": 62.61,
+        "lead": "F",
+        "lyric": "Will it be okay / express my love",
+        "why": "confession"
+      },
+      {
+        "start": 53.93,
+        "end": 58.0,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow hook"
+      },
+      {
+        "start": 65.72,
+        "end": 77.4,
+        "lead": "both",
+        "lyric": "together forever / never apart (x2)",
+        "why": "chorus stack"
+      },
+      {
+        "start": 123.63,
+        "end": 127.67,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow"
+      },
+      {
+        "start": 135.49,
+        "end": 139.5,
+        "lead": "both",
+        "lyric": "together forever / never apart",
+        "why": "shared vow into bridge"
+      },
+      {
+        "start": 158.83,
+        "end": 170.96,
+        "lead": "both",
+        "lyric": "together forever / never apart / forever forever",
+        "why": "final dual stack before bittersweet"
+      },
+      {
+        "start": 82.38,
+        "end": 92.44,
+        "lead": "F",
+        "lyric": "next to you\u2026 said too much",
+        "why": "shy verse"
+      },
+      {
+        "start": 93.46,
+        "end": 104.7,
+        "lead": "M",
+        "lyric": "way you write / love is true",
+        "why": "meta monologue"
+      },
+      {
+        "start": 116.14,
+        "end": 123.63,
+        "lead": "M",
+        "lyric": "leave you be / set you free / not reality",
+        "why": "hard choice block"
+      },
+      {
+        "start": 127.67,
+        "end": 135.49,
+        "lead": "F",
+        "lyric": "How can I convey\u2026 everyday",
+        "why": "emotional climb"
+      },
+      {
+        "start": 139.5,
+        "end": 152.53,
+        "lead": "M",
+        "lyric": "one by one\u2026 be the one for once",
+        "why": "dark bridge"
+      },
+      {
+        "start": 170.96,
+        "end": 175.93,
+        "lead": "F",
+        "lyric": "maybe never / in my heart",
+        "why": "close"
+      }
+    ],
+    "files": {
+      "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6d_soft_phrase.wav",
+      "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6d_soft_phrase.m4a"
+    },
+    "female_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/female_remastered_v3.wav",
+    "male_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/male_remastered_v3.wav"
+  }
+]

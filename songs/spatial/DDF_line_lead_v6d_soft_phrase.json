@@ -1,0 +1,135 @@
+{
+  "id": "v6d_soft_phrase",
+  "title": "Traveling Voices v6d Soft Phrase-Lead",
+  "blurb": "Gentlest: fewer, longer phrase leads; undertrack highest so both almost always present. Good if frequent switches feel busy.",
+  "both_f": 0.85,
+  "both_m": 0.85,
+  "lead": 1.02,
+  "under": 0.58,
+  "ramp": 0.48,
+  "stats": {
+    "pct_both_high": 52.7,
+    "pct_female_lead": 23.4,
+    "pct_male_lead": 23.8
+  },
+  "segments": [
+    {
+      "start": 12.45,
+      "end": 22.68,
+      "lead": "F",
+      "lyric": "Hey hey / heart's beating / heart ache",
+      "why": "whole soft open as female arc"
+    },
+    {
+      "start": 27.99,
+      "end": 34.56,
+      "lead": "M",
+      "lyric": "fate / don't get the wrong idea",
+      "why": "assertive pocket"
+    },
+    {
+      "start": 34.56,
+      "end": 39.76,
+      "lead": "F",
+      "lyric": "When we touch\u2026",
+      "why": "intimacy"
+    },
+    {
+      "start": 46.06,
+      "end": 51.34,
+      "lead": "M",
+      "lyric": "Tell me\u2026",
+      "why": "demand"
+    },
+    {
+      "start": 58.0,
+      "end": 62.61,
+      "lead": "F",
+      "lyric": "Will it be okay / express my love",
+      "why": "confession"
+    },
+    {
+      "start": 53.93,
+      "end": 58.0,
+      "lead": "both",
+      "lyric": "together forever / never apart",
+      "why": "shared vow hook"
+    },
+    {
+      "start": 65.72,
+      "end": 77.4,
+      "lead": "both",
+      "lyric": "together forever / never apart (x2)",
+      "why": "chorus stack"
+    },
+    {
+      "start": 123.63,
+      "end": 127.67,
+      "lead": "both",
+      "lyric": "together forever / never apart",
+      "why": "shared vow"
+    },
+    {
+      "start": 135.49,
+      "end": 139.5,
+      "lead": "both",
+      "lyric": "together forever / never apart",
+      "why": "shared vow into bridge"
+    },
+    {
+      "start": 158.83,
+      "end": 170.96,
+      "lead": "both",
+      "lyric": "together forever / never apart / forever forever",
+      "why": "final dual stack before bittersweet"
+    },
+    {
+      "start": 82.38,
+      "end": 92.44,
+      "lead": "F",
+      "lyric": "next to you\u2026 said too much",
+      "why": "shy verse"
+    },
+    {
+      "start": 93.46,
+      "end": 104.7,
+      "lead": "M",
+      "lyric": "way you write / love is true",
+      "why": "meta monologue"
+    },
+    {
+      "start": 116.14,
+      "end": 123.63,
+      "lead": "M",
+      "lyric": "leave you be / set you free / not reality",
+      "why": "hard choice block"
+    },
+    {
+      "start": 127.67,
+      "end": 135.49,
+      "lead": "F",
+      "lyric": "How can I convey\u2026 everyday",
+      "why": "emotional climb"
+    },
+    {
+      "start": 139.5,
+      "end": 152.53,
+      "lead": "M",
+      "lyric": "one by one\u2026 be the one for once",
+      "why": "dark bridge"
+    },
+    {
+      "start": 170.96,
+      "end": 175.93,
+      "lead": "F",
+      "lyric": "maybe never / in my heart",
+      "why": "close"
+    }
+  ],
+  "files": {
+    "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6d_soft_phrase.wav",
+    "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/line_lead/DDF_line_lead_v6d_soft_phrase.m4a"
+  },
+  "female_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/female_remastered_v3.wav",
+  "male_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/male_remastered_v3.wav"
+}
