@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>vp</title>
-<link rel="stylesheet" href="styles.css?v=8a7133c">
+<link rel="stylesheet" href="styles.css?v=ddf-theater-1">
 </head>
 <body>
 <div class="app">
@@ -82,6 +82,71 @@
     <section id="view-now" class="view now-view">
       <canvas id="teto-fx" class="teto-fx-canvas" aria-hidden="true"></canvas>
       <pre id="timing-debug" class="timing-debug hidden" aria-live="polite"></pre>
+
+      <!-- DDLC Theater: full custom Now Playing for Traveling Voices / DDF dual-lead -->
+      <div id="ddf-theater" class="ddf-theater hidden" aria-live="polite">
+        <div class="ddf-bg" id="ddf-bg" aria-hidden="true"></div>
+        <div class="ddf-bg-overlay" aria-hidden="true"></div>
+        <div class="ddf-hearts" aria-hidden="true"></div>
+        <div class="ddf-theater-inner">
+          <header class="ddf-header">
+            <div class="ddf-club-badge">
+              <span class="ddf-club-heart">♥</span> Literature Club
+            </div>
+            <h1 class="ddf-song-title" id="ddf-song-title">Doki Doki Forever</h1>
+            <div class="ddf-song-sub" id="ddf-song-sub">Traveling Voices · dual lead</div>
+            <div class="ddf-cast-pills" id="ddf-cast-pills" aria-hidden="true">
+              <span class="ddf-pill sayori" data-girl="sayori">Sayori</span>
+              <span class="ddf-pill natsuki" data-girl="natsuki">Natsuki</span>
+              <span class="ddf-pill yuri" data-girl="yuri">Yuri</span>
+              <span class="ddf-pill monika" data-girl="monika">Monika</span>
+            </div>
+            <div class="ddf-section-label" id="ddf-section-label">—</div>
+          </header>
+
+          <div class="ddf-compass-block">
+            <div class="ddf-compass-title">Audio Compass</div>
+            <div class="ddf-compass-frame">
+              <canvas id="ddf-compass" width="300" height="300" aria-label="Audio Compass — top-down dual-lead map"></canvas>
+              <div class="ddf-you-label">YOU</div>
+            </div>
+            <div class="ddf-voice-readout">
+              <div class="ddf-voice female">
+                <span class="ddf-voice-tag">♀ Female</span>
+                <span id="ddf-female-dir" class="ddf-voice-dir">—</span>
+              </div>
+              <div class="ddf-voice male">
+                <span class="ddf-voice-tag">♂ Male</span>
+                <span id="ddf-male-dir" class="ddf-voice-dir">—</span>
+              </div>
+            </div>
+            <div class="ddf-cue" id="ddf-cue"></div>
+          </div>
+
+          <div class="ddf-lyrics-block">
+            <div class="ddf-lyrics-headers">
+              <div class="ddf-lyrics-h female">Female track</div>
+              <div class="ddf-lyrics-h male">Male track</div>
+            </div>
+            <div class="ddf-lyrics-scroll" id="ddf-lyrics-scroll">
+              <div class="ddf-lyrics-col female" id="ddf-lyrics-female"></div>
+              <div class="ddf-lyrics-col male" id="ddf-lyrics-male"></div>
+            </div>
+          </div>
+
+          <div class="ddf-mini-controls">
+            <button id="ddf-play" class="ddf-play-mini" type="button" title="Play / Pause (Space)">
+              <span id="ddf-play-icon">▶</span>
+            </button>
+            <div class="ddf-mini-time">
+              <span id="ddf-time-current">0:00</span>
+              <span class="ddf-time-sep">/</span>
+              <span id="ddf-time-total">0:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="now-stage">
         <div class="now-meta">
           <div class="now-kicker" id="now-kicker">vp</div>
@@ -172,6 +237,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=8a7133c"></script>
+<script src="app.js?v=ddf-theater-1"></script>
 </body>
 </html>

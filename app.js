@@ -1630,6 +1630,7 @@ function fetchSpatialSlug(slug) {
 
 function preloadSpatialMaps() {
   fetchSpatialSlug('jumpy_moving_leads');
+  loadDdfLyrics();
 }
 
 function loadSpatialMap(song = currentSong()) {
@@ -1832,6 +1833,7 @@ function setSpatialSong(song = currentSong()) {
     resetSpatialUiCache();
     if (els.panel) els.panel.classList.add('hidden');
     document.body.classList.remove('spatial-song-active');
+    setDdfTheaterActive(false, song);
     return;
   }
   // Re-resolve map for this variant (uses preloaded batch10 JSON when available)
@@ -1845,15 +1847,26 @@ function setSpatialSong(song = currentSong()) {
   spatialForcePaint = true;
   resetSpatialUiCache();
   document.body.classList.add('spatial-song-active');
-  if (els.panel) {
-    els.panel.classList.remove('hidden');
-    els.panel.style.display = '';
-    const kicker = els.panel.querySelector('.spatial-kicker');
-    if (kicker) {
-      kicker.innerHTML = 'Where the audio is <span class="spatial-hq-chip" title="Native HTMLAudio · AAC stereo, no Web Audio coloring">HQ</span>';
+
+  const theater = wantsDdfTheater(song);
+  if (theater) {
+    // Full DDLC theater owns the UI; keep compact dock hidden
+    if (els.panel) {
+      els.panel.classList.add('hidden');
+      els.panel.style.display = 'none';
     }
-    // Show active path name in section until first cue paints
-    if (els.section) els.section.textContent = spatialPathLabel(song);
+    setDdfTheaterActive(true, song);
+  } else {
+    setDdfTheaterActive(false, song);
+    if (els.panel) {
+      els.panel.classList.remove('hidden');
+      els.panel.style.display = '';
+      const kicker = els.panel.querySelector('.spatial-kicker');
+      if (kicker) {
+        kicker.innerHTML = 'Where the audio is <span class="spatial-hq-chip" title="Native HTMLAudio · AAC stereo, no Web Audio coloring">HQ</span>';
+      }
+      if (els.section) els.section.textContent = spatialPathLabel(song);
+    }
   }
   refreshNowKickerThemeHint(song);
   ensureSpatialRadar();
@@ -1972,16 +1985,28 @@ function describeDirection(az, el) {
   return horiz + height;
 }
 
+function isDdfTheaterMode() {
+  return document.body.classList.contains('ddf-theater-active');
+}
+
+function compassCanvas() {
+  if (isDdfTheaterMode()) return $('ddf-compass') || $('spatial-radar');
+  return $('spatial-radar');
+}
+
 function ensureSpatialRadar() {
-  const els = cacheSpatialEls();
-  const canvas = els.radar;
+  const canvas = compassCanvas();
   if (!canvas) return null;
-  // Compact dock radar (64 CSS px)
-  if (canvas.width !== 64 || canvas.height !== 64) {
-    canvas.width = 64;
-    canvas.height = 64;
+  // Theater: large Audio Compass; dock: compact 64px
+  const size = isDdfTheaterMode() ? 300 : 64;
+  if (canvas.width !== size || canvas.height !== size) {
+    canvas.width = size;
+    canvas.height = size;
+    spatialCtx = null; // force new context after resize
   }
-  if (!spatialCtx) spatialCtx = canvas.getContext('2d', { alpha: true });
+  if (!spatialCtx || spatialCtx.canvas !== canvas) {
+    spatialCtx = canvas.getContext('2d', { alpha: true });
+  }
   spatialRadarReady = true;
   return spatialCtx;
 }
@@ -1989,11 +2014,12 @@ function ensureSpatialRadar() {
 function drawSpatialRadar(pose) {
   const ctx = ensureSpatialRadar();
   if (!ctx || !pose) return;
-  const size = 64;
+  const size = ctx.canvas.width || 64;
+  const theater = size >= 200;
   const cx = size / 2;
   const cy = size / 2;
-  // Slightly smaller ring so F/B/L/R labels stay inside the 64px canvas
-  const r = 18;
+  // Ring radius scales with canvas
+  const r = theater ? size * 0.34 : 18;
 
   ctx.clearRect(0, 0, size, size);
 
@@ -2022,18 +2048,20 @@ function drawSpatialRadar(pose) {
   ctx.lineTo(cx, cy + r);
   ctx.stroke();
 
-  ctx.fillStyle = 'rgba(235,235,240,0.5)';
-  ctx.font = '700 8px system-ui,sans-serif';
+  const labelPx = theater ? 13 : 8;
+  ctx.fillStyle = theater ? 'rgba(255,220,235,0.85)' : 'rgba(235,235,240,0.5)';
+  ctx.font = `700 ${labelPx}px system-ui,sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('F', cx, cy - r + 7);
-  ctx.fillText('B', cx, cy + r - 7);
-  ctx.fillText('L', cx - r + 6, cy);
-  ctx.fillText('R', cx + r - 6, cy);
+  const edge = theater ? 16 : 7;
+  ctx.fillText('F', cx, cy - r + edge);
+  ctx.fillText('B', cx, cy + r - edge);
+  ctx.fillText('L', cx - r + edge, cy);
+  ctx.fillText('R', cx + r - edge, cy);
 
   ctx.fillStyle = 'rgba(235,235,240,0.9)';
   ctx.beginPath();
-  ctx.arc(cx, cy, 2, 0, Math.PI * 2);
+  ctx.arc(cx, cy, theater ? 4 : 2, 0, Math.PI * 2);
   ctx.fill();
 
   function plot(az, el, color) {
@@ -2043,18 +2071,18 @@ function drawSpatialRadar(pose) {
     const ring = r * (0.42 + rear * 0.42 + Math.min(0.14, Math.abs(el) * 0.1));
     const x = cx + Math.sin(rad) * ring;
     const y = cy - Math.cos(rad) * ring;
-    const s = 2.8 + Math.max(0, el) * 1.5 + (el < 0 ? Math.abs(el) * 0.35 : 0);
+    const s = (theater ? 7 : 2.8) + Math.max(0, el) * (theater ? 3 : 1.5) + (el < 0 ? Math.abs(el) * 0.35 : 0);
     // Rear: dashed outer ring + dim fill so F/B reads without stereo headphones
     if (rear > 0.55) {
       ctx.fillStyle = color === '#ff7eb6' ? 'rgba(255,126,182,0.22)' : 'rgba(94,234,212,0.22)';
       ctx.beginPath();
-      ctx.arc(x, y, s + 3.2, 0, Math.PI * 2);
+      ctx.arc(x, y, s + (theater ? 6 : 3.2), 0, Math.PI * 2);
       ctx.fill();
-      ctx.setLineDash([2, 2]);
+      ctx.setLineDash(theater ? [4, 4] : [2, 2]);
       ctx.strokeStyle = color === '#ff7eb6' ? 'rgba(255,126,182,0.7)' : 'rgba(94,234,212,0.7)';
-      ctx.lineWidth = 1.25;
+      ctx.lineWidth = theater ? 2 : 1.25;
       ctx.beginPath();
-      ctx.arc(x, y, s + 2.6, 0, Math.PI * 2);
+      ctx.arc(x, y, s + (theater ? 5 : 2.6), 0, Math.PI * 2);
       ctx.stroke();
       ctx.setLineDash([]);
     }
@@ -2064,16 +2092,24 @@ function drawSpatialRadar(pose) {
     ctx.arc(x, y, s, 0, Math.PI * 2);
     ctx.fill();
     ctx.globalAlpha = 1;
+    // Gender letter on theater dots
+    if (theater) {
+      ctx.fillStyle = 'rgba(20,10,24,0.9)';
+      ctx.font = '800 11px system-ui,sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(color === '#ff7eb6' ? 'F' : 'M', x, y + 0.5);
+    }
     if (el > 0.35) {
       ctx.strokeStyle = color;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = theater ? 2 : 1;
       ctx.beginPath();
-      ctx.arc(x, y, s + 1.6, 0, Math.PI * 2);
+      ctx.arc(x, y, s + (theater ? 3 : 1.6), 0, Math.PI * 2);
       ctx.stroke();
     } else if (el < -0.35) {
       // Low elevation: small underline tick
       ctx.strokeStyle = color;
-      ctx.lineWidth = 1.25;
+      ctx.lineWidth = theater ? 2 : 1.25;
       ctx.beginPath();
       ctx.moveTo(x - s, y + s + 1.5);
       ctx.lineTo(x + s, y + s + 1.5);
@@ -2095,7 +2131,9 @@ function setTextIfChanged(el, value, key) {
 function paintSpatialGuide(timeSec, force = false) {
   if (!spatialActive || !spatialMapCache) return;
   const els = cacheSpatialEls();
-  if (!els.panel || els.panel.classList.contains('hidden')) return;
+  const theater = isDdfTheaterMode();
+  // Dock hidden in theater; still paint large compass + lyrics
+  if (!theater && (!els.panel || els.panel.classList.contains('hidden'))) return;
 
   const pose = interpolateSpatialPose(spatialMapCache, timeSec);
   if (!pose) return;
@@ -2111,12 +2149,14 @@ function paintSpatialGuide(timeSec, force = false) {
 
   const mAz = normalizeAz(pose.az + 180);
   const mEl = -pose.el;
+  const fDir = describeDirection(pose.az, pose.el);
+  const mDir = describeDirection(mAz, mEl);
   // Compact path + phrase (dock is height-capped)
   const pathBit = spatialPathLabel(currentSong(), { compact: true });
   const secLabel = pose.section ? `${pathBit} · ${pose.section}` : pathBit;
   setTextIfChanged(els.section, secLabel, 'sec');
-  setTextIfChanged(els.female, describeDirection(pose.az, pose.el), 'f');
-  setTextIfChanged(els.male, describeDirection(mAz, mEl), 'm');
+  setTextIfChanged(els.female, fDir, 'f');
+  setTextIfChanged(els.male, mDir, 'm');
   setTextIfChanged(els.cue, pose.cue || '', 'cue');
 
   let nextText = '';
@@ -2129,10 +2169,165 @@ function paintSpatialGuide(timeSec, force = false) {
     nextText = 'End of spatial cues';
   }
   setTextIfChanged(els.next, nextText, 'next');
+
+  if (theater) {
+    paintDdfTheater(timeSec, pose, fDir, mDir, force);
+  }
+
   // Rotate girl colors on cast / DDF-family tracks while playing
   if (detectDdlcGirlTheme(currentSong()) === 'theme-ddl-cast') {
     updateDdlcCastTheme(timeSec);
   }
+}
+
+/* ---------- DDF Theater (full DDLC custom UI) ---------- */
+let ddfLyricsCache = null;
+let ddfLyricsBuilt = false;
+let ddfLastLineIdx = -1;
+let ddfTheaterEls = null;
+
+function wantsDdfTheater(song = currentSong()) {
+  // Full custom theater for Traveling Voices dual-lead family
+  return songLooksLikeTravelingVoices(song);
+}
+
+function cacheDdfTheaterEls() {
+  if (ddfTheaterEls?.root?.isConnected) return ddfTheaterEls;
+  ddfTheaterEls = {
+    root: $('ddf-theater'),
+    title: $('ddf-song-title'),
+    sub: $('ddf-song-sub'),
+    section: $('ddf-section-label'),
+    femaleDir: $('ddf-female-dir'),
+    maleDir: $('ddf-male-dir'),
+    cue: $('ddf-cue'),
+    fCol: $('ddf-lyrics-female'),
+    mCol: $('ddf-lyrics-male'),
+    playIcon: $('ddf-play-icon'),
+    timeCur: $('ddf-time-current'),
+    timeTot: $('ddf-time-total'),
+  };
+  return ddfTheaterEls;
+}
+
+function loadDdfLyrics() {
+  if (ddfLyricsCache) return Promise.resolve(ddfLyricsCache);
+  return fetch('./songs/spatial/ddf_dual_lyrics.json')
+    .then(r => (r.ok ? r.json() : null))
+    .then(data => {
+      ddfLyricsCache = data;
+      return data;
+    })
+    .catch(() => null);
+}
+
+function buildDdfLyricsDom() {
+  const els = cacheDdfTheaterEls();
+  if (!els.fCol || !els.mCol || !ddfLyricsCache?.lines) return;
+  const lines = ddfLyricsCache.lines;
+  const mkTrack = (side) => {
+    const track = document.createElement('div');
+    track.className = 'ddf-lyrics-track';
+    track.dataset.side = side;
+    lines.forEach((ln, i) => {
+      const row = document.createElement('div');
+      row.className = 'ddf-line';
+      row.dataset.i = String(i);
+      row.dataset.t = String(ln.t);
+      row.textContent = ln.text;
+      track.appendChild(row);
+    });
+    return track;
+  };
+  els.fCol.innerHTML = '';
+  els.mCol.innerHTML = '';
+  els.fCol.appendChild(mkTrack('female'));
+  els.mCol.appendChild(mkTrack('male'));
+  ddfLyricsBuilt = true;
+  ddfLastLineIdx = -1;
+}
+
+function lyricIndexAtTime(t) {
+  const lines = ddfLyricsCache?.lines;
+  if (!lines?.length) return -1;
+  let idx = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (t + 0.05 >= lines[i].t) idx = i;
+    else break;
+  }
+  return idx;
+}
+
+function scrollDdfLyrics(timeSec, force = false) {
+  if (!ddfLyricsBuilt || !ddfLyricsCache?.lines) return;
+  const idx = lyricIndexAtTime(timeSec);
+  if (idx < 0) return;
+  if (!force && idx === ddfLastLineIdx) return;
+  ddfLastLineIdx = idx;
+  const els = cacheDdfTheaterEls();
+  const lineH = 28;
+  // Center active line in each column viewport
+  for (const col of [els.fCol, els.mCol]) {
+    if (!col) continue;
+    const track = col.querySelector('.ddf-lyrics-track');
+    if (!track) continue;
+    const viewH = col.clientHeight || 160;
+    const y = Math.max(0, idx * lineH - (viewH / 2 - lineH / 2));
+    track.style.transform = `translateY(${-y}px)`;
+    track.querySelectorAll('.ddf-line').forEach((node, i) => {
+      node.classList.toggle('active', i === idx);
+      node.classList.toggle('near', i === idx - 1 || i === idx + 1);
+      node.classList.toggle('past', i < idx - 1);
+    });
+  }
+}
+
+function setDdfTheaterActive(want, song = currentSong()) {
+  const els = cacheDdfTheaterEls();
+  if (!els.root) return;
+  if (want) {
+    document.body.classList.add('ddf-theater-active');
+    els.root.classList.remove('hidden');
+    const ver = travelingVoicesVersionLabel(song);
+    if (els.title) {
+      els.title.textContent = 'Doki Doki Forever';
+    }
+    if (els.sub) {
+      els.sub.textContent = ver
+        ? `Traveling Voices ${ver} · dual lead · Literature Club`
+        : 'Traveling Voices · dual lead · Literature Club';
+    }
+    loadDdfLyrics().then(() => {
+      if (!ddfLyricsBuilt) buildDdfLyricsDom();
+      scrollDdfLyrics(currentCalibratedTime(), true);
+    });
+    // Force compass redraw at large size
+    spatialCtx = null;
+    spatialForcePaint = true;
+    ensureSpatialRadar();
+    paintSpatialGuide(currentCalibratedTime(), true);
+  } else {
+    document.body.classList.remove('ddf-theater-active');
+    els.root.classList.add('hidden');
+    ddfLastLineIdx = -1;
+    spatialCtx = null;
+  }
+}
+
+function paintDdfTheater(timeSec, pose, fDir, mDir, force) {
+  const els = cacheDdfTheaterEls();
+  if (!els.root || els.root.classList.contains('hidden')) return;
+  if (els.femaleDir) els.femaleDir.textContent = fDir;
+  if (els.maleDir) els.maleDir.textContent = mDir;
+  if (els.cue) {
+    const girl = lastDdlcGirlLabel || activeGirlLabel() || '';
+    const cue = pose?.cue || '';
+    els.cue.textContent = girl && cue ? `${girl} · ${cue}` : (cue || girl);
+  }
+  if (els.section) {
+    els.section.textContent = lastDdlcGirlLabel || pose?.section || '—';
+  }
+  scrollDdfLyrics(timeSec, force);
 }
 
 function updateUpNext() {
@@ -2174,11 +2369,15 @@ function updatePlaybackVisuals() {
     lastUiTimeText = curText;
     $('time-current').textContent = curText;
     $('hero-time-current').textContent = curText;
+    const ddfCur = $('ddf-time-current');
+    if (ddfCur) ddfCur.textContent = curText;
   }
   if (totText !== lastUiTotalText) {
     lastUiTotalText = totText;
     $('time-total').textContent = totText;
     $('hero-time-total').textContent = totText;
+    const ddfTot = $('ddf-time-total');
+    if (ddfTot) ddfTot.textContent = totText;
   }
   // Avoid writing identical seek values (layout thrash)
   const seekPct = Math.round(pct * 1000) / 10;
@@ -3580,6 +3779,8 @@ function bindAudioElementEvents(el) {
     $('play').textContent = '⏸';
     $('hero-play').classList.add('playing');
     $('hero-play').querySelector('.hero-icon').textContent = '⏸';
+    const ddfIcon = $('ddf-play-icon');
+    if (ddfIcon) ddfIcon.textContent = '⏸';
     document.body.classList.add('is-playing');
     startProgressClock();
     startWaveform();
@@ -3592,6 +3793,8 @@ function bindAudioElementEvents(el) {
     $('play').textContent = '▶';
     $('hero-play').classList.remove('playing');
     $('hero-play').querySelector('.hero-icon').textContent = '▶';
+    const ddfIcon = $('ddf-play-icon');
+    if (ddfIcon) ddfIcon.textContent = '▶';
     document.body.classList.remove('is-playing');
     stopProgressClock();
     updatePlaybackVisuals();
@@ -3608,6 +3811,8 @@ bindAudioElementEvents(audio);
 
 $('play').addEventListener('click', togglePlay);
 $('hero-play').addEventListener('click', togglePlay);
+const ddfPlayBtn = $('ddf-play');
+if (ddfPlayBtn) ddfPlayBtn.addEventListener('click', togglePlay);
 $('next').addEventListener('click', () => playNext(false));
 $('prev').addEventListener('click', playPrev);
 $('shuffle').addEventListener('click', toggleShuffle);
