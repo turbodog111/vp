@@ -7,6 +7,7 @@
 | Phrase-Word Lead / Slow Glide | **MIT KEMAR** | Dummy-head lab standard. Dense, neutral, very common. |
 | Slow Glide SADIE **D1** | **SADIE II D1** | High-res **dummy** set from York. |
 | Slow Glide SADIE **H3** | **SADIE II H3** | One **human** subject from the same database. |
+| Slow Glide **CIPIC 050** | **CIPIC subject 050** | Full-length bake of HRTF Clip Lab pick (UC Davis human). |
 
 ### Why D1 vs H3 can feel “the same”
 

@@ -213,6 +213,7 @@ const SONG_EFFECT_PROFILES = Object.fromEntries([
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide SADIE D1)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide SADIE H3)', DDF_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide CIPIC 050)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Female Vocal Remaster v3)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Male Vocal Remaster v3)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/OR3O (Monika) feat. Rachie (Sayori), Kathy-chan (Yuri) & Chi Chi (Natsuki) - Doki Doki Forever', DDF_EFFECT_PROFILE),
@@ -1655,8 +1656,8 @@ function spatialSlugForSong(song) {
   const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''}`;
   // Experimental 4-source fixed rectangle (♀ L/R + ♂ F/B)
   if (isFemaleDomRectangleSong(song)) return 'female_dom_rectangle';
-  // Slow Glide + SADIE A/B cuts share the long-whoosh compass map
-  if (/slow\s*glide/i.test(hay) || /whoosh/i.test(hay) || /v7_glide/i.test(hay) || /sadie\s*(d1|h3)/i.test(hay)) {
+  // Slow Glide + SADIE/CIPIC A/B cuts share the long-whoosh compass map
+  if (/slow\s*glide/i.test(hay) || /whoosh/i.test(hay) || /v7_glide/i.test(hay) || /sadie\s*(d1|h3)/i.test(hay) || /cipic/i.test(hay)) {
     return 'jumpy_slow_glide';
   }
   return 'jumpy_moving_leads';
@@ -2806,9 +2807,10 @@ function loadDdfLeadMaps() {
 /** Map song title → lead map id */
 function leadMapIdForSong(song = currentSong()) {
   const hay = `${song?.name || ''} ${song?.title || ''} ${song?.displayName || ''}`;
-  // SADIE A/B Slow Glide variants
+  // SADIE / CIPIC A/B Slow Glide variants (same phrase leads; separate ids for metadata)
   if (/sadie\s*d1/i.test(hay)) return 'v7_phrase_word_lead_glide_sadie_d1';
   if (/sadie\s*h3/i.test(hay)) return 'v7_phrase_word_lead_glide_sadie_h3';
+  if (/cipic\s*0*50/i.test(hay)) return 'v7_phrase_word_lead_glide_cipic_050';
   // Slow Glide sister cut shares phrase leads, separate id for spatial metadata
   if (/slow\s*glide/i.test(hay) || /whoosh/i.test(hay)) {
     return 'v7_phrase_word_lead_glide';
