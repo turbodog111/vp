@@ -1246,118 +1246,76 @@ body.ddf-theater-active .main {
   overflow: visible;
   border-radius: 0;
   isolation: isolate;
-  /* Instant solid wash — never waits on a JPEG for first paint */
-  background: #1a1020;
+  /* FX canvas paints the entire stage — no image backgrounds */
+  background: #0c0812;
+  min-height: min(78vh, 900px);
 }
 .ddf-theater.hidden { display: none !important; }
 
-/* CSS-only color wash (no image decode / no buffer thrash) */
-.ddf-bg-wash {
+/* Full-bleed girl-color FX canvas (the page stage itself) */
+.ddf-fx-canvas {
   position: absolute;
   inset: 0;
   z-index: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 90% 70% at 50% 40%, rgba(255, 255, 255, 0.06), transparent 65%),
-    linear-gradient(165deg, #2a2030 0%, #1a1020 55%, #120c18 100%);
-  transition: background 0.55s ease;
-}
-body.theme-sayori .ddf-bg-wash {
-  background:
-    radial-gradient(ellipse 85% 65% at 50% 38%, rgba(87, 199, 255, 0.22), transparent 62%),
-    linear-gradient(165deg, #3a6a8a 0%, #1e3a52 50%, #142030 100%);
-}
-body.theme-natsuki .ddf-bg-wash {
-  background:
-    radial-gradient(ellipse 85% 65% at 50% 38%, rgba(255, 179, 201, 0.28), transparent 62%),
-    linear-gradient(165deg, #8a4a62 0%, #4a2438 50%, #2a1420 100%);
-}
-body.theme-yuri .ddf-bg-wash {
-  background:
-    radial-gradient(ellipse 85% 65% at 50% 38%, rgba(124, 77, 255, 0.24), transparent 62%),
-    linear-gradient(165deg, #4a3a72 0%, #2a1a48 50%, #181028 100%);
-}
-body.theme-monika .ddf-bg-wash {
-  background:
-    radial-gradient(ellipse 85% 65% at 50% 38%, rgba(16, 185, 129, 0.22), transparent 62%),
-    linear-gradient(165deg, #2a6a52 0%, #1a4030 50%, #10241c 100%);
-}
-
-/* Dual <img> silhouette stage — object-fit:contain so figures never crop */
-.ddf-sil-stage {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-.ddf-sil-img {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  /* Fit full figure inside theater without cropping head/feet */
-  width: min(920px, 96%);
-  height: min(72vh, 640px);
-  max-height: 78%;
-  object-fit: contain;
-  object-position: center bottom;
-  opacity: 0;
-  transition: opacity 0.45s ease;
-  will-change: opacity;
-  user-select: none;
-  -webkit-user-drag: none;
-  /* Soften pure black slightly so it sits in the wash */
-  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.35));
-}
-.ddf-sil-img.is-visible {
-  opacity: 0.92;
+  display: block;
 }
 
 .ddf-bg-overlay {
   position: absolute;
   inset: 0;
   z-index: 2;
+  /* Light veil so UI stays readable; FX remains loud underneath */
   background:
-    linear-gradient(180deg, rgba(20, 8, 24, 0.42) 0%, rgba(20, 8, 24, 0.12) 42%, rgba(20, 8, 24, 0.62) 100%);
+    linear-gradient(180deg, rgba(8, 4, 12, 0.28) 0%, rgba(8, 4, 12, 0.06) 40%, rgba(8, 4, 12, 0.45) 100%);
   pointer-events: none;
-  transition: background 0.55s ease;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 body.theme-sayori .ddf-bg-overlay {
   background:
-    linear-gradient(180deg, rgba(12, 40, 64, 0.35) 0%, rgba(12, 28, 48, 0.08) 42%, rgba(12, 28, 48, 0.58) 100%);
+    linear-gradient(180deg, rgba(10, 30, 50, 0.22) 0%, rgba(10, 30, 50, 0.04) 40%, rgba(8, 20, 36, 0.42) 100%);
+  box-shadow: inset 0 0 120px rgba(87, 199, 255, 0.18);
 }
 body.theme-natsuki .ddf-bg-overlay {
   background:
-    linear-gradient(180deg, rgba(64, 16, 36, 0.35) 0%, rgba(48, 12, 28, 0.08) 42%, rgba(48, 12, 28, 0.58) 100%);
+    linear-gradient(180deg, rgba(50, 12, 28, 0.22) 0%, rgba(50, 12, 28, 0.04) 40%, rgba(36, 8, 20, 0.42) 100%);
+  box-shadow: inset 0 0 120px rgba(255, 120, 170, 0.2);
 }
 body.theme-yuri .ddf-bg-overlay {
   background:
-    linear-gradient(180deg, rgba(28, 12, 56, 0.38) 0%, rgba(20, 8, 40, 0.1) 42%, rgba(20, 8, 40, 0.6) 100%);
+    linear-gradient(180deg, rgba(28, 10, 50, 0.24) 0%, rgba(28, 10, 50, 0.05) 40%, rgba(18, 6, 36, 0.45) 100%);
+  box-shadow: inset 0 0 120px rgba(124, 77, 255, 0.22);
 }
 body.theme-monika .ddf-bg-overlay {
   background:
-    linear-gradient(180deg, rgba(8, 40, 28, 0.35) 0%, rgba(8, 32, 24, 0.08) 42%, rgba(8, 32, 24, 0.58) 100%);
+    linear-gradient(180deg, rgba(6, 36, 24, 0.22) 0%, rgba(6, 36, 24, 0.04) 40%, rgba(4, 24, 16, 0.42) 100%);
+  box-shadow: inset 0 0 120px rgba(16, 185, 129, 0.2);
 }
 
+/* Theater UI sits above FX */
+.ddf-theater-inner { position: relative; z-index: 4; }
+
 body.ddlc-fx-active.theme-sayori {
-  --ddlc-glow: rgba(87, 199, 255, calc(0.04 + var(--ddlc-level, 0) * 0.14));
+  --ddlc-glow: rgba(87, 199, 255, calc(0.06 + var(--ddlc-level, 0) * 0.22));
 }
 body.ddlc-fx-active.theme-natsuki {
-  --ddlc-glow: rgba(255, 179, 201, calc(0.05 + var(--ddlc-level, 0) * 0.16));
+  --ddlc-glow: rgba(255, 140, 180, calc(0.07 + var(--ddlc-level, 0) * 0.24));
 }
 body.ddlc-fx-active.theme-yuri {
-  --ddlc-glow: rgba(124, 77, 255, calc(0.05 + var(--ddlc-level, 0) * 0.16));
+  --ddlc-glow: rgba(124, 77, 255, calc(0.07 + var(--ddlc-level, 0) * 0.24));
 }
 body.ddlc-fx-active.theme-monika {
-  --ddlc-glow: rgba(16, 185, 129, calc(0.04 + var(--ddlc-level, 0) * 0.14));
+  --ddlc-glow: rgba(16, 185, 129, calc(0.06 + var(--ddlc-level, 0) * 0.22));
 }
 body.ddlc-fx-active .now-view.active {
-  box-shadow: inset 0 0 120px var(--ddlc-glow, transparent);
+  box-shadow: inset 0 0 140px var(--ddlc-glow, transparent);
 }
+body.ddf-theater-active.theme-sayori { --accent: #57c7ff; }
+body.ddf-theater-active.theme-natsuki { --accent: #ff8fb8; }
+body.ddf-theater-active.theme-yuri { --accent: #9b6bff; }
+body.ddf-theater-active.theme-monika { --accent: #10b981; }
 
 /* Floating hearts (CSS only) */
 .ddf-hearts {

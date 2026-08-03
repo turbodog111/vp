@@ -2234,146 +2234,331 @@ let ddfTheaterEls = null;
 let ddfFullOpen = false;
 
 /**
- * DDF art — SILHOUETTES ONLY.
- * Lore (Satchely / DDLC cast silhouette checklist, kept in-code for QA):
- *  - Sayori: short side pigtails + large bow, medium height, open cheerful pose
- *  - Natsuki: shortest, short bob + two small side twin-tails, arms crossed
- *  - Yuri: tallest, very long hair, book, reserved
- *  - Monika: long side ponytail + large bow, hand on hip
- * No full-color character art, no text in assets, no story-panel JPEG thrash.
- * Background = CSS color wash only (instant, no decode).
+ * DDF stage FX — NO character images.
+ * Full-bleed canvas effects color-coded per active girl (Sayori/Natsuki/Yuri/Monika).
+ * Aggressive by design; dial down later if needed.
  */
-const DDF_ART_V = '6';
-const DDF_UI_BASE = './songs/spatial/ddf-ui';
-
-/** [startSec, endSec, silKey] — follows lyric cast progression */
-const DDF_SIL_TIMELINE = [
-  [0.00, 11.56, 'club'],
-  [11.56, 22.68, 'sayori'],
-  [22.68, 34.56, 'natsuki'],
-  [34.56, 39.76, 'yuri'],
-  [39.76, 46.06, 'club'],
-  [46.06, 58.00, 'natsuki'],
-  [58.00, 67.63, 'sayori'],
-  [67.63, 81.28, 'monika'],
-  [81.28, 92.44, 'yuri'],
-  [92.44, 104.70, 'monika'],
-  [104.70, 116.14, 'club'],
-  [116.14, 139.50, 'monika'],
-  [139.50, 158.83, 'monika'],
-  [158.83, 170.96, 'sayori'],
-  [170.96, 999.0, 'monika'],
-];
-
-const DDF_SIL_FILES = {
-  club: 'sil_club.jpg',
-  sayori: 'sil_sayori.jpg',
-  natsuki: 'sil_natsuki.jpg',
-  yuri: 'sil_yuri.jpg',
-  monika: 'sil_monika.jpg',
+const DDF_GIRL_PALETTE = {
+  sayori: {
+    bg: [14, 28, 48],
+    primary: [87, 199, 255],
+    secondary: [255, 143, 171],
+    accent: [255, 240, 250],
+    mode: 'hearts',
+  },
+  natsuki: {
+    bg: [48, 14, 28],
+    primary: [255, 140, 180],
+    secondary: [255, 80, 140],
+    accent: [255, 230, 100],
+    mode: 'spark',
+  },
+  yuri: {
+    bg: [22, 10, 42],
+    primary: [124, 77, 255],
+    secondary: [180, 140, 255],
+    accent: [230, 220, 255],
+    mode: 'ink',
+  },
+  monika: {
+    bg: [8, 28, 20],
+    primary: [16, 185, 129],
+    secondary: [80, 255, 180],
+    accent: [200, 255, 230],
+    mode: 'glitch',
+  },
 };
 
-const ddfArtPreload = new Map(); // url -> true | Promise
-let ddfSilFrontIsA = true;
-let ddfLastSilKey = '';
-let ddfLastSilUrl = '';
-let ddfSilSwapToken = 0;
+const DDF_FX_PARTICLES = Array.from({ length: 96 }, (_, i) => ({
+  x: seededUnit((i + 1) * 17.3),
+  y: seededUnit((i + 1) * 41.9),
+  z: 0.35 + seededUnit((i + 1) * 7.7) * 0.65,
+  sp: 0.25 + seededUnit((i + 1) * 29.1) * 1.4,
+  ph: seededUnit((i + 1) * 11.5) * Math.PI * 2,
+  kind: i % 5,
+  size: 6 + seededUnit((i + 1) * 3.3) * 22,
+}));
 
-function ddfArtUrl(rel) {
-  return `${DDF_UI_BASE}/${rel}?v=${DDF_ART_V}`;
+const DDF_FX_BEAMS = Array.from({ length: 14 }, (_, i) => ({
+  origin: i % 4,
+  phase: seededUnit((i + 1) * 13.1) * Math.PI * 2,
+  speed: 0.18 + seededUnit((i + 1) * 19.7) * 0.55,
+  width: 0.018 + seededUnit((i + 1) * 8.2) * 0.04,
+  colorIndex: i % 3,
+}));
+
+let ddfFxSizeKey = '';
+let ddfFxLastPaint = 0;
+
+function activeDdfGirlKey() {
+  if (document.body.classList.contains('theme-sayori')) return 'sayori';
+  if (document.body.classList.contains('theme-natsuki')) return 'natsuki';
+  if (document.body.classList.contains('theme-yuri')) return 'yuri';
+  if (document.body.classList.contains('theme-monika')) return 'monika';
+  return 'monika';
 }
 
-function preloadDdfArtUrl(url) {
-  if (!url) return Promise.resolve(false);
-  if (ddfArtPreload.get(url) === true) return Promise.resolve(true);
-  const existing = ddfArtPreload.get(url);
-  if (existing && typeof existing.then === 'function') return existing;
-  const p = new Promise((resolve) => {
-    const img = new Image();
-    img.decoding = 'async';
-    img.onload = () => {
-      ddfArtPreload.set(url, true);
-      resolve(true);
-    };
-    img.onerror = () => {
-      ddfArtPreload.delete(url);
-      resolve(false);
-    };
-    img.src = url;
+function resizeDdfFxCanvas(force = false) {
+  const canvas = $('ddf-fx');
+  const root = $('ddf-theater');
+  if (!canvas || !root || root.classList.contains('hidden')) return false;
+  const rect = root.getBoundingClientRect();
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = Math.max(2, Math.floor(rect.width * dpr));
+  const h = Math.max(2, Math.floor(rect.height * dpr));
+  const key = `${w}x${h}`;
+  if (!force && key === ddfFxSizeKey) return true;
+  canvas.width = w;
+  canvas.height = h;
+  canvas.style.width = `${rect.width}px`;
+  canvas.style.height = `${rect.height}px`;
+  ddfFxSizeKey = key;
+  return true;
+}
+
+function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
+  const canvas = $('ddf-fx');
+  const root = $('ddf-theater');
+  if (!canvas || !root || root.classList.contains('hidden')) return;
+  if (!resizeDdfFxCanvas()) return;
+
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const w = canvas.width;
+  const h = canvas.height;
+  const girl = activeDdfGirlKey();
+  const pal = DDF_GIRL_PALETTE[girl] || DDF_GIRL_PALETTE.monika;
+  const p = pal.primary;
+  const s = pal.secondary;
+  const a = pal.accent;
+  const bg = pal.bg;
+  const t = performance.now() / 1000;
+  const profile = effectProfileForSong() || DDF_EFFECT_PROFILE;
+  const section = effectSectionAt(profile, timeSec);
+  const sectionPower = ((section?.intensity || 0.4) * (section?.fadeLevel ?? 1));
+  const chorus = section?.chorus ? sectionPower : 0;
+  const beat = beatPulseForProfile(profile, timeSec);
+  const bpm = profile.bpm || 165;
+  const beatHz = bpm / 60;
+  const heartWave = 0.5 + 0.5 * Math.sin(t * beatHz * Math.PI * 2);
+  const energy = clamp(0, 1, 0.35 + sectionPower * 0.45 + beat * 0.35 + chorus * 0.35);
+  const cx = w * 0.5;
+  const cy = h * 0.48;
+  const scale = Math.max(1, Math.min(w, h) / 700);
+
+  // Solid girl-tinted stage base (replaces any image background)
+  ctx.fillStyle = `rgb(${bg[0]}, ${bg[1]}, ${bg[2]})`;
+  ctx.fillRect(0, 0, w, h);
+
+  // Animated color field
+  const field = ctx.createRadialGradient(
+    cx + Math.sin(t * 0.4) * w * 0.08,
+    cy + Math.cos(t * 0.35) * h * 0.06,
+    0,
+    cx, cy,
+    Math.max(w, h) * (0.55 + energy * 0.25)
+  );
+  field.addColorStop(0, `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.55 + energy * 0.35})`);
+  field.addColorStop(0.35, `rgba(${s[0]}, ${s[1]}, ${s[2]}, ${0.35 + energy * 0.25})`);
+  field.addColorStop(0.7, `rgba(${bg[0]}, ${bg[1]}, ${bg[2]}, 0.9)`);
+  field.addColorStop(1, `rgba(${Math.max(0, bg[0] - 8)}, ${Math.max(0, bg[1] - 8)}, ${Math.max(0, bg[2] - 8)}, 1)`);
+  ctx.fillStyle = field;
+  ctx.fillRect(0, 0, w, h);
+
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
+
+  // Sweeping beams (disco-loud)
+  DDF_FX_BEAMS.forEach((beam, i) => {
+    const color = [p, s, a][beam.colorIndex];
+    const origins = [
+      { x: w * (0.08 + seededUnit(i * 2.1) * 0.84), y: -h * 0.05, base: Math.PI * 0.5 },
+      { x: w * 1.05, y: h * (0.1 + seededUnit(i * 3.3) * 0.8), base: Math.PI },
+      { x: w * (0.08 + seededUnit(i * 4.7) * 0.84), y: h * 1.05, base: -Math.PI * 0.5 },
+      { x: -w * 0.05, y: h * (0.1 + seededUnit(i * 6.1) * 0.8), base: 0 },
+    ];
+    const origin = origins[(beam.origin + Math.floor(t * 0.2)) % 4];
+    const sweep = Math.sin(t * beam.speed + beam.phase) * (0.5 + chorus * 0.3);
+    const angle = origin.base + sweep + beat * 0.12;
+    const length = Math.max(w, h) * (1.05 + chorus * 0.35);
+    const half = length * (beam.width + beat * 0.025 + energy * 0.01);
+    const alpha = (0.06 + energy * 0.12 + chorus * 0.14 + beat * 0.1) * (0.7 + (i % 3) * 0.12);
+    ctx.save();
+    ctx.translate(origin.x, origin.y);
+    ctx.rotate(angle);
+    const g = ctx.createLinearGradient(0, 0, length, 0);
+    g.addColorStop(0, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha * 1.8})`);
+    g.addColorStop(0.45, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`);
+    g.addColorStop(1, `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(length, half);
+    ctx.lineTo(length, -half);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
   });
-  ddfArtPreload.set(url, p);
-  return p;
-}
 
-/** Only 5 small silhouettes — no story-panel megabyte thrash. */
-function preloadAllDdfStoryArt() {
-  return Promise.all(Object.values(DDF_SIL_FILES).map((f) => preloadDdfArtUrl(ddfArtUrl(f))));
-}
-
-function silKeyAtTime(timeSec = 0) {
-  const t = Number(timeSec) || 0;
-  for (const [a, b, key] of DDF_SIL_TIMELINE) {
-    if (t >= a && t < b) return key;
+  // Expanding beat rings
+  for (let r = 0; r < 6; r++) {
+    const life = (beat * 0.85 + r * 0.16 + heartWave * 0.08) % 1;
+    const rad = Math.min(w, h) * (0.06 + life * (0.42 + chorus * 0.18));
+    const alpha = (1 - life) * (0.18 + energy * 0.22 + beat * 0.2);
+    if (alpha < 0.02) continue;
+    const col = r % 2 ? s : p;
+    ctx.strokeStyle = `rgba(${col[0]}, ${col[1]}, ${col[2]}, ${alpha})`;
+    ctx.lineWidth = (2 + (1 - life) * 5) * scale;
+    ctx.beginPath();
+    ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+    ctx.stroke();
   }
-  return DDF_SIL_TIMELINE[DDF_SIL_TIMELINE.length - 1][2];
-}
 
-/**
- * Dual <img> opacity crossfade. Never clears the visible layer until the
- * next silhouette has fully decoded — kills first-load blackout / buffer hitch.
- */
-function crossfadeSilImg(aEl, bEl, frontIsA, url) {
-  if (!aEl || !bEl || !url) return frontIsA;
-  const front = frontIsA ? aEl : bEl;
-  const back = frontIsA ? bEl : aEl;
-  if (front.dataset.url === url && front.classList.contains('is-visible')) {
-    return frontIsA;
-  }
-  // First paint
-  if (!front.dataset.url) {
-    front.src = url;
-    front.dataset.url = url;
-    front.classList.add('is-visible');
-    back.classList.remove('is-visible');
-    return frontIsA;
-  }
-  back.src = url;
-  back.dataset.url = url;
-  void back.offsetWidth;
-  back.classList.add('is-visible');
-  front.classList.remove('is-visible');
-  return !frontIsA;
-}
+  // Particle field — mode-specific
+  DDF_FX_PARTICLES.forEach((pt, i) => {
+    const drift = t * pt.sp * (0.08 + energy * 0.12);
+    let x = ((pt.x + Math.sin(t * 0.35 + pt.ph) * 0.06) % 1) * w;
+    let y = ((pt.y + drift) % 1.15) * h - h * 0.08;
+    const size = pt.size * scale * pt.z * (0.7 + beat * 0.6 + energy * 0.4);
+    const alpha = (0.08 + energy * 0.2 + beat * 0.12) * pt.z;
+    const col = i % 2 ? p : s;
 
-function updateDdfStoryArt(timeSec = 0, force = false) {
-  const els = cacheDdfTheaterEls();
-  if (!els.root || els.root.classList.contains('hidden')) return;
-  if (!els.silA || !els.silB) return;
-
-  const silKey = silKeyAtTime(timeSec);
-  if (!force && silKey === ddfLastSilKey) return;
-
-  const silUrl = ddfArtUrl(DDF_SIL_FILES[silKey] || DDF_SIL_FILES.club);
-  const token = ++ddfSilSwapToken;
-  const apply = () => {
-    if (token !== ddfSilSwapToken) return; // superseded by newer section
-    ddfLastSilKey = silKey;
-    ddfLastSilUrl = silUrl;
-    ddfSilFrontIsA = crossfadeSilImg(els.silA, els.silB, ddfSilFrontIsA, silUrl);
-  };
-
-  if (ddfArtPreload.get(silUrl) === true) {
-    apply();
-    return;
-  }
-  // Keep previous silhouette visible while next decodes
-  preloadDdfArtUrl(silUrl).then((ok) => {
-    if (!ok) return;
-    if (silKeyAtTime(currentCalibratedTime()) !== silKey) return;
-    apply();
+    if (pal.mode === 'hearts' || girl === 'sayori') {
+      // Floating hearts + soft orbs
+      if (pt.kind < 3) {
+        drawPixelHeart(ctx, x, y, size, `rgb(${col[0]}, ${col[1]}, ${col[2]})`, alpha * 1.4, t * 0.4 + pt.ph);
+      } else {
+        const g = ctx.createRadialGradient(x, y, 0, x, y, size);
+        g.addColorStop(0, `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${alpha * 1.6})`);
+        g.addColorStop(1, `rgba(${p[0]}, ${p[1]}, ${p[2]}, 0)`);
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    } else if (pal.mode === 'spark' || girl === 'natsuki') {
+      // Sharp sparkles + diamond bursts
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(t * (1.2 + pt.sp) + pt.ph);
+      ctx.strokeStyle = `rgba(${col[0]}, ${col[1]}, ${col[2]}, ${alpha * 1.8})`;
+      ctx.lineWidth = Math.max(1.2, scale * 1.4);
+      const arm = size * (0.9 + beat * 0.8);
+      ctx.beginPath();
+      ctx.moveTo(-arm, 0); ctx.lineTo(arm, 0);
+      ctx.moveTo(0, -arm); ctx.lineTo(0, arm);
+      if (pt.kind % 2 === 0) {
+        ctx.moveTo(-arm * 0.7, -arm * 0.7); ctx.lineTo(arm * 0.7, arm * 0.7);
+        ctx.moveTo(-arm * 0.7, arm * 0.7); ctx.lineTo(arm * 0.7, -arm * 0.7);
+      }
+      ctx.stroke();
+      ctx.fillStyle = `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${alpha})`;
+      ctx.beginPath();
+      ctx.arc(0, 0, size * 0.18, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    } else if (pal.mode === 'ink' || girl === 'yuri') {
+      // Ink blobs + falling page shards
+      if (pt.kind < 2) {
+        ctx.fillStyle = `rgba(${col[0]}, ${col[1]}, ${col[2]}, ${alpha * 1.3})`;
+        ctx.beginPath();
+        ctx.ellipse(x, y, size * 0.55, size * 0.9, pt.ph + t * 0.2, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(pt.ph + t * 0.5);
+        ctx.fillStyle = `rgba(${s[0]}, ${s[1]}, ${s[2]}, ${alpha * 1.1})`;
+        ctx.fillRect(-size * 0.35, -size * 0.55, size * 0.7, size * 1.1);
+        ctx.strokeStyle = `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${alpha * 0.8})`;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(-size * 0.35, -size * 0.55, size * 0.7, size * 1.1);
+        ctx.restore();
+      }
+    } else {
+      // Monika glitch blocks + scan bars
+      const gw = size * (0.8 + beat);
+      const gh = size * (0.25 + (i % 3) * 0.15);
+      ctx.fillStyle = `rgba(${col[0]}, ${col[1]}, ${col[2]}, ${alpha * (0.8 + beat)})`;
+      ctx.fillRect(x - gw / 2, y - gh / 2, gw, gh);
+      if (pt.kind === 0 && beat > 0.2) {
+        ctx.fillStyle = `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${alpha * 1.4})`;
+        ctx.fillRect(x + size * 0.4, y - gh, gw * 0.35, gh * 0.5);
+      }
+    }
   });
-  // Cold start only: show immediately so stage is never empty
-  if (!els.silA.dataset.url && !els.silB.dataset.url) apply();
+
+  // Girl-specific full-screen overlays
+  if (girl === 'sayori') {
+    // Heartbeat double-thump rings
+    for (let k = 0; k < 2; k++) {
+      const phase = (heartWave + k * 0.18) % 1;
+      const rad = Math.min(w, h) * (0.12 + phase * 0.28);
+      ctx.strokeStyle = `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${(1 - phase) * 0.35})`;
+      ctx.lineWidth = 3 * scale;
+      ctx.beginPath();
+      ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  } else if (girl === 'natsuki') {
+    // Hot pink strobe wash on beats
+    if (beat > 0.35) {
+      ctx.fillStyle = `rgba(${s[0]}, ${s[1]}, ${s[2]}, ${beat * 0.18})`;
+      ctx.fillRect(0, 0, w, h);
+    }
+    // Cupcake-dot confetti burst
+    for (let i = 0; i < 24; i++) {
+      const ang = (i / 24) * Math.PI * 2 + t * 0.8;
+      const dist = Math.min(w, h) * (0.15 + beat * 0.2 + (i % 5) * 0.03);
+      const x = cx + Math.cos(ang) * dist;
+      const y = cy + Math.sin(ang) * dist * 0.7;
+      ctx.fillStyle = `rgba(${(i % 2 ? p : a)[0]}, ${(i % 2 ? p : a)[1]}, ${(i % 2 ? p : a)[2]}, ${0.25 + beat * 0.4})`;
+      ctx.beginPath();
+      ctx.arc(x, y, (4 + (i % 4)) * scale, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else if (girl === 'yuri') {
+    // Slow violet mist bands
+    for (let i = 0; i < 5; i++) {
+      const yy = ((t * 0.04 + i * 0.2) % 1) * h;
+      const band = ctx.createLinearGradient(0, yy - 40 * scale, 0, yy + 80 * scale);
+      band.addColorStop(0, 'rgba(124,77,255,0)');
+      band.addColorStop(0.5, `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.12 + chorus * 0.1})`);
+      band.addColorStop(1, 'rgba(124,77,255,0)');
+      ctx.fillStyle = band;
+      ctx.fillRect(0, yy - 40 * scale, w, 120 * scale);
+    }
+  } else if (girl === 'monika') {
+    // Scanlines + digital corruption
+    const lineH = Math.max(2, 2 * scale);
+    for (let y = 0; y < h; y += lineH * 3) {
+      const flick = seededUnit(y * 0.07 + Math.floor(t * 18));
+      if (flick > 0.55) continue;
+      ctx.fillStyle = `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.04 + beat * 0.08 + flick * 0.06})`;
+      ctx.fillRect(0, y, w, lineH);
+    }
+    // Random glitch strips
+    for (let g = 0; g < 8; g++) {
+      if (seededUnit(t * 30 + g * 4.2) > 0.45 + beat * 0.2) continue;
+      const gy = seededUnit(g * 9.1 + Math.floor(t * 12)) * h;
+      const gh = (8 + seededUnit(g * 2.3) * 40) * scale;
+      const gx = (seededUnit(g * 5.5 + t) - 0.5) * w * 0.15;
+      ctx.fillStyle = `rgba(${s[0]}, ${s[1]}, ${s[2]}, ${0.12 + beat * 0.2})`;
+      ctx.fillRect(gx, gy, w, gh);
+      ctx.fillStyle = `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${0.08 + beat * 0.15})`;
+      ctx.fillRect(w * 0.2 + gx, gy + gh * 0.3, w * 0.35, gh * 0.35);
+    }
+  }
+
+  // Center core bloom
+  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(w, h) * (0.2 + energy * 0.15));
+  core.addColorStop(0, `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${0.35 + beat * 0.35 + chorus * 0.2})`);
+  core.addColorStop(0.4, `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${0.18 + energy * 0.15})`);
+  core.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = core;
+  ctx.fillRect(0, 0, w, h);
+
+  ctx.restore();
+  ddfFxLastPaint = performance.now();
 }
 
 function wantsDdfTheater(song = currentSong()) {
@@ -2384,9 +2569,7 @@ function cacheDdfTheaterEls() {
   if (ddfTheaterEls?.root?.isConnected) return ddfTheaterEls;
   ddfTheaterEls = {
     root: $('ddf-theater'),
-    bgWash: $('ddf-bg-wash'),
-    silA: $('ddf-sil-a'),
-    silB: $('ddf-sil-b'),
+    fx: $('ddf-fx'),
     title: $('ddf-song-title'),
     section: $('ddf-section-label'),
     femaleDir: $('ddf-female-dir'),
@@ -2641,14 +2824,7 @@ function setDdfTheaterActive(want, song = currentSong()) {
     ddfLastLineIdx = -1;
     ddfLastLeadMode = '';
     ddfFullListBuilt = false;
-    ddfLastSilKey = '';
-    ddfLastSilUrl = '';
-    ddfSilFrontIsA = true;
-    // Warm only 5 silhouettes (tiny) — CSS wash needs no images
-    preloadAllDdfStoryArt().then(() => {
-      updateDdfStoryArt(currentCalibratedTime(), true);
-    });
-    updateDdfStoryArt(currentCalibratedTime(), true);
+    ddfFxSizeKey = '';
     Promise.all([loadDdfLyrics(), loadDdfLeadMaps()]).then(() => {
       buildFullLyricsList(song);
       updateCurrentLyrics(currentCalibratedTime(), true);
@@ -2656,6 +2832,11 @@ function setDdfTheaterActive(want, song = currentSong()) {
     spatialCtx = null;
     spatialForcePaint = true;
     ensureSpatialRadar();
+    // Paint FX immediately so stage is never blank
+    requestAnimationFrame(() => {
+      resizeDdfFxCanvas(true);
+      paintDdfTheaterFx(currentCalibratedTime());
+    });
     paintSpatialGuide(currentCalibratedTime(), true);
     updateFxState();
   } else {
@@ -2664,8 +2845,7 @@ function setDdfTheaterActive(want, song = currentSong()) {
     ddfLastLineIdx = -1;
     ddfLastLeadMode = '';
     ddfFullOpen = false;
-    ddfLastSilKey = '';
-    ddfLastSilUrl = '';
+    ddfFxSizeKey = '';
     spatialCtx = null;
     updateFxState();
   }
@@ -2676,18 +2856,17 @@ function paintDdfTheater(timeSec, pose, fDir, mDir, force) {
   if (!els.root || els.root.classList.contains('hidden')) return;
   if (els.femaleDir) els.femaleDir.textContent = fDir;
   if (els.maleDir) els.maleDir.textContent = mDir;
-  // Minimal cue: girl name only (drop technical pose text when possible)
   if (els.cue) {
     const girl = activeGirlLabel() || '';
     els.cue.textContent = girl;
   }
   if (els.section) {
-    // Prefer short girl-forward label without technical dual-lead jargon
     const label = lastDdlcGirlLabel || '';
     const short = label.includes('·') ? label.split('·').pop().trim() : label;
     els.section.textContent = short || activeGirlLabel() || '—';
   }
-  updateDdfStoryArt(timeSec, force);
+  // Full-bleed girl FX every spatial paint (no images)
+  paintDdfTheaterFx(timeSec);
   updateCurrentLyrics(timeSec, force);
 }
 
@@ -3758,13 +3937,14 @@ const DDLC_BEAMS = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 /**
- * DDLC story FX — character-primary-color wash + BPM-synced hearts / beams.
+ * DDLC overlay FX on the main Now canvas — girl colors, loud.
+ * Theater stage uses paintDdfTheaterFx; this adds page-wide wash.
  * Visual only; does not touch the spatial audio graph.
  */
 function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse) {
-  const quietGate = smoothStep(0.06, 0.28, levels.motion);
-  const party = smoothStep(0.12, 0.7, levels.motion);
-  if (!profile?.constantRings && quietGate <= 0.01 && levels.glow <= 0.02) return;
+  // Always paint when DDF is active (even quiet intros) — user wants full effects
+  const quietGate = Math.max(0.35, smoothStep(0.02, 0.2, levels.motion));
+  const party = Math.max(0.4, smoothStep(0.05, 0.55, levels.motion));
 
   const girl = activeDdlcGirlKey();
   const colors = DDLC_GIRL_COLORS[girl] || DDLC_GIRL_COLORS.monika;
@@ -3773,11 +3953,11 @@ function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, section
   const a = colors.accent;
   const t = performance.now() / 1000;
   const scale = Math.max(1, Math.min(w, h) / 760);
-  const chorusLift = section?.chorus ? sectionPower * 0.75 : 0;
-  const chorusBoost = clamp(0, 1, chorusLift / 0.75);
-  const bpmPulse = profile ? beatPulse * (0.32 + sectionPower * 0.68) : 0;
-  const alive = clamp(0, 1, levels.glow * 0.4 + party * 0.3 + bpmPulse * (0.36 + chorusLift * 0.7));
-  const glowDim = 0.55 + chorusBoost * 0.4;
+  const chorusLift = section?.chorus ? sectionPower * 0.9 : sectionPower * 0.35;
+  const chorusBoost = clamp(0, 1, chorusLift / 0.9);
+  const bpmPulse = profile ? beatPulse * (0.45 + sectionPower * 0.7) : beatPulse;
+  const alive = clamp(0, 1, 0.45 + levels.glow * 0.35 + party * 0.25 + bpmPulse * 0.45 + chorusLift * 0.4);
+  const glowDim = 0.75 + chorusBoost * 0.35;
 
   ctx.save();
   ctx.globalCompositeOperation = 'lighter';
@@ -4905,6 +5085,11 @@ document.addEventListener('keydown', (e) => {
 window.addEventListener('resize', () => {
   resizeWaveform(true);
   resizeFxCanvas(true);
+  ddfFxSizeKey = '';
+  if (document.body.classList.contains('ddf-theater-active')) {
+    resizeDdfFxCanvas(true);
+    paintDdfTheaterFx(currentCalibratedTime());
+  }
 });
 resizeWaveform(true);
 resizeFxCanvas(true);
@@ -4912,8 +5097,4 @@ updateFxState();
 drawWaveform(true);
 loadSpatialMap(); // embed into cache immediately
 preloadSpatialMaps(); // warm jumpy/traveling-voices map
-// Warm DDF story panels + silhouettes so first theater open has no black flash
-if (typeof preloadAllDdfStoryArt === 'function') {
-  preloadAllDdfStoryArt().catch(() => {});
-}
 loadLibrary();
