@@ -1,0 +1,63 @@
+{
+  "name": "DDF_female_dom_rectangle",
+  "description": "Female-Dominant Rectangle: F left/right opposite, M front/back between them. Fixed poses \u2014 no traveling / no lead switching.",
+  "architecture": "female_dominant_rectangle",
+  "transition_sec": 0.0,
+  "static": true,
+  "sources": [
+    {
+      "id": "F1",
+      "az": -90.0,
+      "el": 0.18,
+      "role": "female",
+      "label": "\u2640 left",
+      "gain": 0.78
+    },
+    {
+      "id": "F2",
+      "az": 90.0,
+      "el": 0.18,
+      "role": "female",
+      "label": "\u2640 right",
+      "gain": 0.78
+    },
+    {
+      "id": "M1",
+      "az": 0.0,
+      "el": 0.08,
+      "role": "male",
+      "label": "\u2642 front",
+      "gain": 0.34
+    },
+    {
+      "id": "M2",
+      "az": 180.0,
+      "el": -0.18,
+      "role": "male",
+      "label": "\u2642 back",
+      "gain": 0.34
+    }
+  ],
+  "keyframes": [
+    {
+      "t": 0.0,
+      "az": -90.0,
+      "el": 0.18,
+      "depth": 0.9,
+      "section": "rectangle",
+      "cue": "\u2640 L/R \u00b7 \u2642 F/B support"
+    },
+    {
+      "t": 182.04,
+      "az": -90.0,
+      "el": 0.18,
+      "depth": 0.9,
+      "section": "rectangle",
+      "cue": "\u2640 L/R \u00b7 \u2642 F/B support"
+    }
+  ],
+  "readout": {
+    "female": "left + right (dual lead)",
+    "male": "front + back (dual support)"
+  }
+}

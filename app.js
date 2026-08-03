@@ -218,6 +218,7 @@ const SONG_EFFECT_PROFILES = Object.fromEntries([
   ...audioProfileEntries('songs/OR3O (Monika) feat. Rachie (Sayori), Kathy-chan (Yuri) & Chi Chi (Natsuki) - Doki Doki Forever', DDF_EFFECT_PROFILE),
   // Lofi cut — stretched timeline + chill intensity (do NOT share full-speed DDF profile)
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Lofi)', DDF_LOFI_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Female-Dominant Rectangle)', DDF_EFFECT_PROFILE),
 ]);
 const seededUnit = (seed) => {
   const x = Math.sin(seed) * 10000;
@@ -1616,11 +1617,21 @@ function songLooksLikeTravelingVoices(song) {
   if (name.includes('DDF Travel') || name.includes('DDF_travel')) return true;
   if (/jumpy/i.test(name) || /jumpy/i.test(title)) return true;
   const hay = `${title} ${path} ${id} ${display} ${name}`.toLowerCase();
+  // Female-Dominant Rectangle — experimental 4-source spatial (same theater/native path)
+  if (hay.includes('female-dominant') || hay.includes('female dominant') || hay.includes('female_dom')) {
+    return true;
+  }
   return hay.includes('traveling voices')
     || hay.includes('travelling voices')
     || hay.includes('ddf travel')
     || hay.includes('ddf_travel')
     || hay.includes('jumpy');
+}
+
+function isFemaleDomRectangleSong(song = currentSong()) {
+  if (!song) return false;
+  const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''} ${song.path || ''}`.toLowerCase();
+  return hay.includes('female-dominant') || hay.includes('female dominant') || hay.includes('female_dom');
 }
 
 /** Version string from title, e.g. "v3" from "Traveling Voices v3". */
@@ -1642,6 +1653,8 @@ function spatialSlugForSong(song) {
   if (!song) return null;
   if (!songLooksLikeTravelingVoices(song)) return null;
   const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''}`;
+  // Experimental 4-source fixed rectangle (♀ L/R + ♂ F/B)
+  if (isFemaleDomRectangleSong(song)) return 'female_dom_rectangle';
   // Slow Glide + SADIE A/B cuts share the long-whoosh compass map
   if (/slow\s*glide/i.test(hay) || /whoosh/i.test(hay) || /v7_glide/i.test(hay) || /sadie\s*(d1|h3)/i.test(hay)) {
     return 'jumpy_slow_glide';
@@ -1674,13 +1687,18 @@ const spatialMapBySlug = {};
 
 function normalizeSpatialMap(data) {
   const map = data && data.keyframes
-    ? data
+    ? { ...data }
     : {
         keyframes: data?.keyframes || SPATIAL_MAP_EMBEDDED.keyframes,
         transitionSec: data?.transition_sec || data?.transitionSec || 1.15,
       };
   if (!map.transitionSec && data?.transition_sec) map.transitionSec = data.transition_sec;
   if (!map.keyframes && data?.keyframes) map.keyframes = data.keyframes;
+  // Preserve multi-source rectangle architecture (4 fixed corners)
+  if (data?.sources) map.sources = data.sources;
+  if (data?.architecture) map.architecture = data.architecture;
+  if (data?.static) map.static = data.static;
+  if (data?.readout) map.readout = data.readout;
   map._times = (map.keyframes || []).map(k => k.t);
   return map;
 }
@@ -1704,6 +1722,7 @@ function fetchSpatialSlug(slug) {
 function preloadSpatialMaps() {
   fetchSpatialSlug('jumpy_moving_leads');
   fetchSpatialSlug('jumpy_slow_glide');
+  fetchSpatialSlug('female_dom_rectangle');
   loadDdfLyrics();
   loadDdfLeadMaps();
 }
@@ -1892,6 +1911,9 @@ function applySongTheme(song = currentSong()) {
 function spatialPathLabel(song = currentSong(), { compact = true } = {}) {
   const slug = spatialSlugForSong(song);
   if (!slug) return 'Opposite leads';
+  if (slug === 'female_dom_rectangle') {
+    return compact ? '♀ dom · rectangle' : 'Female-Dominant Rectangle (♀ L/R · ♂ F/B)';
+  }
   const pretty = slug
     .replace(/^\d+_/, '')
     .replace(/_/g, ' ')
@@ -2122,7 +2144,7 @@ function ensureSpatialRadar() {
   return spatialCtx;
 }
 
-function drawSpatialRadar(pose) {
+function drawSpatialRadar(pose, map = spatialMapCache) {
   const ctx = ensureSpatialRadar();
   if (!ctx || !pose) return;
   const size = ctx.canvas.width || 64;
@@ -2176,14 +2198,20 @@ function drawSpatialRadar(pose) {
   ctx.arc(cx, cy, theater ? 4 : 2, 0, Math.PI * 2);
   ctx.fill();
 
-  function plot(az, el, color) {
+  function xyFor(az, el) {
     const rad = (az * Math.PI) / 180;
-    // Front (az≈0) top; rear bottom — ring radius + halo encode depth
     const rear = 0.5 * (1 - Math.cos(rad));
     const ring = r * (0.42 + rear * 0.42 + Math.min(0.14, Math.abs(el) * 0.1));
-    const x = cx + Math.sin(rad) * ring;
-    const y = cy - Math.cos(rad) * ring;
-    const s = (theater ? 7 : 2.8) + Math.max(0, el) * (theater ? 3 : 1.5) + (el < 0 ? Math.abs(el) * 0.35 : 0);
+    return {
+      x: cx + Math.sin(rad) * ring,
+      y: cy - Math.cos(rad) * ring,
+      rear,
+      s: (theater ? 7 : 2.8) + Math.max(0, el) * (theater ? 3 : 1.5) + (el < 0 ? Math.abs(el) * 0.35 : 0),
+    };
+  }
+
+  function plot(az, el, color, letter = null) {
+    const { x, y, rear, s } = xyFor(az, el);
     // Rear: dashed outer ring + dim fill so F/B reads without stereo headphones
     if (rear > 0.55) {
       ctx.fillStyle = color === '#ff7eb6' ? 'rgba(255,126,182,0.22)' : 'rgba(94,234,212,0.22)';
@@ -2210,7 +2238,8 @@ function drawSpatialRadar(pose) {
       ctx.font = '800 11px system-ui,sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(color === '#ff7eb6' ? 'F' : 'M', x, y + 0.5);
+      const ch = letter || (color === '#ff7eb6' ? 'F' : 'M');
+      ctx.fillText(ch, x, y + 0.5);
     }
     if (el > 0.35) {
       ctx.strokeStyle = color;
@@ -2227,10 +2256,42 @@ function drawSpatialRadar(pose) {
       ctx.lineTo(x + s, y + s + 1.5);
       ctx.stroke();
     }
+    return { x, y };
   }
 
-  plot(pose.az, pose.el, '#ff7eb6');
-  plot(normalizeAz(pose.az + 180), -pose.el, '#5eead4');
+  // Multi-source rectangle architecture (♀ L/R + ♂ F/B) — draw all corners + edges
+  const sources = map?.sources;
+  if (sources && sources.length >= 2) {
+    const pts = sources.map(s => {
+      const color = s.role === 'female' ? '#ff7eb6' : '#5eead4';
+      const letter = s.role === 'female' ? 'F' : 'M';
+      const p = plot(s.az, s.el ?? 0, color, letter);
+      return { ...p, role: s.role, id: s.id };
+    });
+    // Faint rectangle edges (F1–M1–F2–M2–F1) when we have the classic 4 corners
+    if (pts.length >= 4 && theater) {
+      const byId = Object.fromEntries(pts.map(p => [p.id, p]));
+      const order = ['F1', 'M1', 'F2', 'M2', 'F1'];
+      if (order.every((id, i) => i === order.length - 1 || byId[id])) {
+        ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        order.forEach((id, i) => {
+          const p = byId[id];
+          if (i === 0) ctx.moveTo(p.x, p.y);
+          else ctx.lineTo(p.x, p.y);
+        });
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+    return;
+  }
+
+  // Legacy dual-lead: female at pose, male opposite
+  plot(pose.az, pose.el, '#ff7eb6', 'F');
+  plot(normalizeAz(pose.az + 180), -pose.el, '#5eead4', 'M');
 }
 
 function setTextIfChanged(el, value, key) {
@@ -2251,18 +2312,34 @@ function paintSpatialGuide(timeSec, force = false) {
   if (!pose) return;
 
   // Coarse snap for canvas: only redraw when ~4° or el moves meaningfully
-  const azQ = Math.round(pose.az / 4) * 4;
-  const elQ = Math.round(pose.el * 5) / 5;
+  // Static multi-source maps (rectangle) only need a forced/first paint
+  const isStaticRect = !!(spatialMapCache?.static || spatialMapCache?.sources?.length);
+  const azQ = isStaticRect ? 0 : Math.round(pose.az / 4) * 4;
+  const elQ = isStaticRect ? 0 : Math.round(pose.el * 5) / 5;
   if (force || spatialLastUi.az !== azQ || spatialLastUi.el !== elQ) {
     spatialLastUi.az = azQ;
     spatialLastUi.el = elQ;
-    drawSpatialRadar(pose);
+    drawSpatialRadar(pose, spatialMapCache);
   }
 
-  const mAz = normalizeAz(pose.az + 180);
-  const mEl = -pose.el;
-  const fDir = describeDirection(pose.az, pose.el);
-  const mDir = describeDirection(mAz, mEl);
+  let fDir;
+  let mDir;
+  if (spatialMapCache?.sources?.length) {
+    // Rectangle readout: dual female L/R + dual male F/B (not "opposite pair")
+    const fs = spatialMapCache.sources.filter(s => s.role === 'female');
+    const ms = spatialMapCache.sources.filter(s => s.role === 'male');
+    fDir = fs.length
+      ? fs.map(s => describeDirection(s.az, s.el ?? 0)).join(' · ')
+      : 'dual lead';
+    mDir = ms.length
+      ? ms.map(s => describeDirection(s.az, s.el ?? 0)).join(' · ')
+      : 'dual support';
+  } else {
+    const mAz = normalizeAz(pose.az + 180);
+    const mEl = -pose.el;
+    fDir = describeDirection(pose.az, pose.el);
+    mDir = describeDirection(mAz, mEl);
+  }
   // Compact path + phrase (dock is height-capped)
   const pathBit = spatialPathLabel(currentSong(), { compact: true });
   const secLabel = pose.section ? `${pathBit} · ${pose.section}` : pathBit;

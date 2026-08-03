@@ -1,0 +1,62 @@
+{
+  "id": "female_dominant_rectangle_v1",
+  "title": "Female-Dominant Rectangle",
+  "blurb": "Experimental 4-source architecture: dual female leads opposite (L/R) + dual male support on the front/back midpoints between them. No phrase switching \u2014 female always dominant.",
+  "architecture": "female_dominant_rectangle",
+  "rectangle": {
+    "F1": {
+      "az": -90.0,
+      "el": 0.18,
+      "role": "female",
+      "label": "\u2640 left"
+    },
+    "F2": {
+      "az": 90.0,
+      "el": 0.18,
+      "role": "female",
+      "label": "\u2640 right"
+    },
+    "M1": {
+      "az": 0.0,
+      "el": 0.08,
+      "role": "male",
+      "label": "\u2642 front"
+    },
+    "M2": {
+      "az": 180.0,
+      "el": -0.18,
+      "role": "male",
+      "label": "\u2642 back"
+    }
+  },
+  "gains": {
+    "F1": 0.78,
+    "F2": 0.78,
+    "M1": 0.34,
+    "M2": 0.34
+  },
+  "delay_ms": {
+    "F1": 0.0,
+    "F2": 5.5,
+    "M1": 2.0,
+    "M2": 9.0
+  },
+  "lead_switching": false,
+  "monika_instrumental_duck": 0.6,
+  "spatial": "fixed_rectangle_kemar_physics_v1",
+  "spatial_note": "WHERE = static rectangle on Audio Compass (F @ \u00b190\u00b0, M @ 0\u00b0/180\u00b0). WHO is loud = always female pair; males are permanent support. Headphones.",
+  "hrtf": {
+    "dataset": "MIT KEMAR compact",
+    "source": "https://sound.media.mit.edu/resources/KEMAR.html",
+    "cost": "free"
+  },
+  "files": {
+    "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/female_dom_rect/DDF_female_dom_rectangle.wav",
+    "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/female_dom_rect/DDF_female_dom_rectangle.m4a",
+    "vp": "/Users/joshua/Documents/Codex/2026-05-16/hey-codex-i-was-working-with/vp/songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Female-Dominant Rectangle).m4a"
+  },
+  "female_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/female_remastered_v3.wav",
+  "male_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/male_philsterman_timeline.wav",
+  "vp_filename": "Joshua Glass & Grok 4.5 - Doki Doki Forever (Female-Dominant Rectangle).m4a",
+  "compass_map": "/Users/joshua/Documents/Codex/2026-05-16/hey-codex-i-was-working-with/vp/songs/spatial/DDF_travel_female_dom_rectangle.json"
+}
