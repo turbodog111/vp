@@ -776,15 +776,17 @@
       "drums"
     ],
     "monika_f_lead": 1.1,
-    "spatial": "stereo_homes_kemar_hrtf_v6",
-    "spatial_note": "Female left / male right (stereo homes). Placement uses free MIT KEMAR ear measurements (HRTF), not pan-only and not fake muffling. Headphones recommended. Beds stay normal stereo.",
+    "spatial": "compass_jumpy_kemar_hrtf_v6b",
+    "spatial_note": "WHERE = Audio Compass keyframe map (female az/el; male opposite az+180, -el). WHO is loud = phrase/word lead map. Placement via free MIT KEMAR HRTF. Headphones recommended.",
     "hrtf": {
       "dataset": "MIT KEMAR compact",
       "source": "https://sound.media.mit.edu/resources/KEMAR.html",
       "cost": "free",
-      "elevation": 0,
+      "elevations": "all rings in compact set",
       "citation": "Gardner, Bill and Martin, Keith. HRTF Measurements of a KEMAR Dummy-Head Microphone. MIT Media Lab, 1994."
-    }
+    },
+    "compass_map": "/Users/joshua/Documents/Codex/2026-05-16/hey-codex-i-was-working-with/vp/songs/spatial/DDF_travel_jumpy_moving_leads.json",
+    "compass_keyframes": 55
   },
   "default": {
     "both_f": 0.78,

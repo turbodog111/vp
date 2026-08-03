@@ -1,7 +1,7 @@
 {
   "id": "v7_phrase_word_lead",
   "title": "Traveling Voices v7 Phrase-Word Lead",
-  "blurb": "Locked phrase/word lead map (108 units). Monika F lead \u00d71.1 + non-vocal \u00d70.6; spatial v6 stereo homes + free MIT KEMAR HRTF (real ear recipes, headphones).",
+  "blurb": "Locked phrase/word lead map (108 units). Monika F lead \u00d71.1 + non-vocal \u00d70.6; spatial follows Audio Compass jumpy map via free MIT KEMAR HRTF.",
   "both_f": 0.78,
   "both_m": 0.78,
   "lead": 1.05,
@@ -13,13 +13,15 @@
     "instrumental",
     "drums"
   ],
-  "spatial": "stereo_homes_kemar_hrtf_v6",
-  "spatial_note": "Female left / male right (stereo homes). Placement uses free MIT KEMAR ear measurements (HRTF), not pan-only and not fake muffling. Headphones recommended. Beds stay normal stereo.",
+  "spatial": "compass_jumpy_kemar_hrtf_v6b",
+  "spatial_note": "WHERE = Audio Compass keyframe map (female az/el; male opposite az+180, -el). WHO is loud = phrase/word lead map. Placement via free MIT KEMAR HRTF. Headphones recommended.",
+  "compass_map": "/Users/joshua/Documents/Codex/2026-05-16/hey-codex-i-was-working-with/vp/songs/spatial/DDF_travel_jumpy_moving_leads.json",
+  "compass_keyframes": 55,
   "hrtf": {
     "dataset": "MIT KEMAR compact",
     "source": "https://sound.media.mit.edu/resources/KEMAR.html",
     "cost": "free",
-    "elevation": 0,
+    "elevations": "all rings in compact set",
     "citation": "Gardner, Bill and Martin, Keith. HRTF Measurements of a KEMAR Dummy-Head Microphone. MIT Media Lab, 1994."
   },
   "stats": {
