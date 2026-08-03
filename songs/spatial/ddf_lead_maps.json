@@ -776,8 +776,8 @@
       "drums"
     ],
     "monika_f_lead": 1.1,
-    "spatial": "compass_jumpy_kemar_hrtf_v6c",
-    "spatial_note": "WHERE = Audio Compass map (F az/el; M opposite). Poses exaggerated toward front/back poles + stronger elevation, then free MIT KEMAR HRTF + mild F/B/up/down tone emphasis on vocals only. WHO is loud = phrase lead. Headphones recommended.",
+    "spatial": "compass_jumpy_kemar_physics_v6d",
+    "spatial_note": "WHERE = Audio Compass (F az/el; M opposite). Clean MIT KEMAR HRTF + physics: Wallach-style micro head-yaw, image-source early reflections (direct-to-reverb), bright IACC decorrelation for rear. No darkening EQ. WHO is loud = phrase lead. Headphones.",
     "hrtf": {
       "dataset": "MIT KEMAR compact",
       "source": "https://sound.media.mit.edu/resources/KEMAR.html",
@@ -787,11 +787,19 @@
     },
     "compass_map": "/Users/joshua/Documents/Codex/2026-05-16/hey-codex-i-was-working-with/vp/songs/spatial/DDF_travel_jumpy_moving_leads.json",
     "compass_keyframes": 55,
-    "spatial_exaggerate": {
-      "azimuth_fb_power": 0.52,
-      "elevation_gain": 1.85,
-      "elevation_deg_scale": 70,
-      "fb_el_emphasis": true
+    "blurb": "Locked phrase/word lead map (108 units). Monika F lead \u00d71.1 + non-vocal \u00d70.6; spatial follows Audio Compass jumpy map via free MIT KEMAR HRTF.",
+    "spatial_physics": {
+      "head_yaw_deg": 6.0,
+      "head_yaw_hz": 0.22,
+      "image_source_reflections": true,
+      "iacc_decorrelate_rear": true,
+      "no_darkening_eq": true,
+      "refs": [
+        "Wallach (1940) head-movement / front-back disambiguation",
+        "Direct-to-reverberant ratio as distance/behind cue (room acoustics)",
+        "Interaural coherence (IACC) for externalization / diffuse fields",
+        "MIT KEMAR HRTF (Gardner & Martin 1994) free dataset"
+      ]
     }
   },
   "default": {
