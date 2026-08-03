@@ -1574,6 +1574,11 @@ function travelingVoicesVersionLabel(song = currentSong()) {
 function spatialSlugForSong(song) {
   if (!song) return null;
   if (!songLooksLikeTravelingVoices(song)) return null;
+  const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''}`;
+  // Slow Glide sister cut uses long full-interval whooshes (separate compass map)
+  if (/slow\s*glide/i.test(hay) || /whoosh/i.test(hay) || /v7_glide/i.test(hay)) {
+    return 'jumpy_slow_glide';
+  }
   return 'jumpy_moving_leads';
 }
 
@@ -1618,6 +1623,7 @@ spatialMapBySlug['jumpy_moving_leads'] = normalizeSpatialMap(JSON.parse(JSON.str
 
 function fetchSpatialSlug(slug) {
   if (!slug || spatialMapBySlug[slug]) return Promise.resolve(spatialMapBySlug[slug] || null);
+  // slow glide file is DDF_travel_jumpy_slow_glide.json (slug jumpy_slow_glide)
   return fetch(`./songs/spatial/DDF_travel_${slug}.json`)
     .then(r => (r.ok ? r.json() : null))
     .then(data => {
@@ -1630,6 +1636,7 @@ function fetchSpatialSlug(slug) {
 
 function preloadSpatialMaps() {
   fetchSpatialSlug('jumpy_moving_leads');
+  fetchSpatialSlug('jumpy_slow_glide');
   loadDdfLyrics();
   loadDdfLeadMaps();
 }
@@ -2252,7 +2259,11 @@ function loadDdfLeadMaps() {
 /** Map song title → lead map id */
 function leadMapIdForSong(song = currentSong()) {
   const hay = `${song?.name || ''} ${song?.title || ''} ${song?.displayName || ''}`;
-  // Sole Traveling Voices cut: phrase/word lead map (v7)
+  // Slow Glide sister cut shares phrase leads, separate id for spatial metadata
+  if (/slow\s*glide/i.test(hay) || /whoosh/i.test(hay)) {
+    return 'v7_phrase_word_lead_glide';
+  }
+  // Default Traveling Voices cut: phrase/word lead map (v7)
   if (/v7/i.test(hay) || /phrase[- ]?word/i.test(hay) || songLooksLikeTravelingVoices(song)) {
     return 'v7_phrase_word_lead';
   }

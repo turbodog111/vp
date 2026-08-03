@@ -1,0 +1,235 @@
+{
+  "name": "DDF_jumpy_slow_glide_v1",
+  "description": "Slow-glide dual-lead map: same pose vocabulary as jumpy, fewer hops, each move fills the full interval (~6s whoosh) instead of a 1.15s snap.",
+  "variant": "slow_glide",
+  "parent": "DDF_jumpy_moving_leads_v5",
+  "transition_sec": 6.761,
+  "hop_sec": 6.711,
+  "pose_subsample": 2,
+  "keyframes": [
+    {
+      "t": 0.0,
+      "az": 40.0,
+      "el": 0.35,
+      "depth": 0.9,
+      "section": "glide0",
+      "cue": "front-right \u00b7 slow glide"
+    },
+    {
+      "t": 6.711,
+      "az": -160.0,
+      "el": -0.3,
+      "depth": -0.7,
+      "section": "glide1",
+      "cue": "deep back-left \u00b7 slow glide"
+    },
+    {
+      "t": 13.422,
+      "az": -130.0,
+      "el": -0.7,
+      "depth": -0.55,
+      "section": "glide2",
+      "cue": "low back-left \u00b7 slow glide"
+    },
+    {
+      "t": 20.133,
+      "az": -140.0,
+      "el": 0.1,
+      "depth": -0.85,
+      "section": "glide3",
+      "cue": "back-left \u00b7 slow glide"
+    },
+    {
+      "t": 26.844,
+      "az": -55.0,
+      "el": 0.15,
+      "depth": 0.75,
+      "section": "glide4",
+      "cue": "wide front-left \u00b7 slow glide"
+    },
+    {
+      "t": 33.556,
+      "az": 140.0,
+      "el": 0.1,
+      "depth": -0.85,
+      "section": "glide5",
+      "cue": "back-right \u00b7 slow glide"
+    },
+    {
+      "t": 40.267,
+      "az": 90.0,
+      "el": 0.0,
+      "depth": 0.0,
+      "section": "glide6",
+      "cue": "hard right (mid) \u00b7 slow glide"
+    },
+    {
+      "t": 46.978,
+      "az": 50.0,
+      "el": 0.8,
+      "depth": 0.55,
+      "section": "glide7",
+      "cue": "high front-right \u00b7 slow glide"
+    },
+    {
+      "t": 53.689,
+      "az": 180.0,
+      "el": -0.15,
+      "depth": -1.0,
+      "section": "glide8",
+      "cue": "dead back \u00b7 slow glide"
+    },
+    {
+      "t": 60.4,
+      "az": 40.0,
+      "el": 0.35,
+      "depth": 0.9,
+      "section": "glide9",
+      "cue": "front-right \u00b7 slow glide"
+    },
+    {
+      "t": 67.111,
+      "az": -90.0,
+      "el": 0.0,
+      "depth": 0.0,
+      "section": "glide10",
+      "cue": "hard left (mid) \u00b7 slow glide"
+    },
+    {
+      "t": 73.822,
+      "az": -130.0,
+      "el": -0.7,
+      "depth": -0.55,
+      "section": "glide11",
+      "cue": "low back-left \u00b7 slow glide"
+    },
+    {
+      "t": 80.533,
+      "az": -140.0,
+      "el": 0.1,
+      "depth": -0.85,
+      "section": "glide12",
+      "cue": "back-left \u00b7 slow glide"
+    },
+    {
+      "t": 87.244,
+      "az": -55.0,
+      "el": 0.15,
+      "depth": 0.75,
+      "section": "glide13",
+      "cue": "wide front-left \u00b7 slow glide"
+    },
+    {
+      "t": 93.956,
+      "az": 160.0,
+      "el": 0.4,
+      "depth": -0.7,
+      "section": "glide14",
+      "cue": "high back-right \u00b7 slow glide"
+    },
+    {
+      "t": 100.667,
+      "az": 55.0,
+      "el": 0.15,
+      "depth": 0.75,
+      "section": "glide15",
+      "cue": "wide front-right \u00b7 slow glide"
+    },
+    {
+      "t": 107.378,
+      "az": 50.0,
+      "el": 0.8,
+      "depth": 0.55,
+      "section": "glide16",
+      "cue": "high front-right \u00b7 slow glide"
+    },
+    {
+      "t": 114.089,
+      "az": 180.0,
+      "el": -0.15,
+      "depth": -1.0,
+      "section": "glide17",
+      "cue": "dead back \u00b7 slow glide"
+    },
+    {
+      "t": 120.8,
+      "az": 40.0,
+      "el": 0.35,
+      "depth": 0.9,
+      "section": "glide18",
+      "cue": "front-right \u00b7 slow glide"
+    },
+    {
+      "t": 127.511,
+      "az": -160.0,
+      "el": -0.3,
+      "depth": -0.7,
+      "section": "glide19",
+      "cue": "deep back-left \u00b7 slow glide"
+    },
+    {
+      "t": 134.222,
+      "az": 130.0,
+      "el": -0.7,
+      "depth": -0.6,
+      "section": "glide20",
+      "cue": "low back-right \u00b7 slow glide"
+    },
+    {
+      "t": 140.933,
+      "az": -140.0,
+      "el": 0.1,
+      "depth": -0.85,
+      "section": "glide21",
+      "cue": "back-left \u00b7 slow glide"
+    },
+    {
+      "t": 147.644,
+      "az": -55.0,
+      "el": 0.15,
+      "depth": 0.75,
+      "section": "glide22",
+      "cue": "wide front-left \u00b7 slow glide"
+    },
+    {
+      "t": 154.356,
+      "az": 160.0,
+      "el": 0.4,
+      "depth": -0.7,
+      "section": "glide23",
+      "cue": "high back-right \u00b7 slow glide"
+    },
+    {
+      "t": 161.067,
+      "az": 90.0,
+      "el": 0.0,
+      "depth": 0.0,
+      "section": "glide24",
+      "cue": "hard right (mid) \u00b7 slow glide"
+    },
+    {
+      "t": 167.778,
+      "az": -50.0,
+      "el": 0.8,
+      "depth": 0.6,
+      "section": "glide25",
+      "cue": "high front-left \u00b7 slow glide"
+    },
+    {
+      "t": 174.489,
+      "az": 180.0,
+      "el": -0.15,
+      "depth": -1.0,
+      "section": "glide26",
+      "cue": "dead back \u00b7 slow glide"
+    },
+    {
+      "t": 181.2,
+      "az": -45.0,
+      "el": 0.2,
+      "depth": 0.5,
+      "section": "glide27",
+      "cue": "settle front-leftish \u00b7 settle"
+    }
+  ]
+}
