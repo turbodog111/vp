@@ -30,7 +30,8 @@
     { "start": 156.5, "end": 163.78, "girl": "natsuki", "label": "Tasty love · Natsuki" },
     { "start": 163.78, "end": 173.53, "girl": "yuri", "label": "Make the cut · Yuri" },
     { "start": 173.53, "end": 190.7, "girl": "monika", "label": "Leave you be · Monika" },
-    { "start": 190.7, "end": 208.32, "girl": "yuri", "label": "How can I convey · Yuri" },
+    { "start": 190.7, "end": 202.34, "girl": "yuri", "label": "How can I convey · Yuri" },
+    { "start": 202.34, "end": 208.32, "girl": "monika", "label": "Together forever · Monika" },
     { "start": 208.32, "end": 237.1, "girl": "monika", "label": "One by one · Monika" },
     { "start": 237.1, "end": 255.16, "girl": "sayori", "label": "Together forever · Sayori" },
     { "start": 255.16, "end": 999.0, "girl": "monika", "label": "In my heart · Monika" }

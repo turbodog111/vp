@@ -1828,7 +1828,9 @@ const DDLC_GIRL_BY_LYRIC = [
   [109.59, 116.14, 'theme-yuri', 'Make the cut · Yuri'],
   // Chorus 2
   [116.14, 127.67, 'theme-monika', 'Leave you be · Monika'],
-  [127.67, 139.50, 'theme-yuri', 'How can I convey · Yuri'],
+  // "How can I convey…" is Yuri; vow return is Monika (user correction — was wrongly lumped as Yuri)
+  [127.67, 135.49, 'theme-yuri', 'How can I convey · Yuri'],
+  [135.49, 139.50, 'theme-monika', 'Together forever · Monika'],
   // Bridge
   [139.50, 158.83, 'theme-monika', 'One by one · Monika'],
   // Outro
@@ -1855,7 +1857,9 @@ const DDLC_GIRL_BY_LYRIC_LOFI = [
   [156.50, 163.78, 'theme-natsuki', 'Tasty love · Natsuki'],
   [163.78, 173.53, 'theme-yuri', 'Make the cut · Yuri'],
   [173.53, 190.70, 'theme-monika', 'Leave you be · Monika'],
-  [190.70, 208.32, 'theme-yuri', 'How can I convey · Yuri'],
+  // Lofi stretch of 127.67–135.49 (Yuri) then 135.49–139.50 (Monika vow — user correction)
+  [190.70, 202.34, 'theme-yuri', 'How can I convey · Yuri'],
+  [202.34, 208.32, 'theme-monika', 'Together forever · Monika'],
   [208.32, 237.10, 'theme-monika', 'One by one · Monika'],
   [237.10, 255.16, 'theme-sayori', 'Together forever · Sayori'],
   [255.16, 999.0, 'theme-monika', 'In my heart · Monika'],
