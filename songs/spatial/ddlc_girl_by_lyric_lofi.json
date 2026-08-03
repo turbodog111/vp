@@ -1,0 +1,38 @@
+{
+  "source": "Stretched from ddlc_girl_by_lyric / OR3O LRC cast map for the Lofi cut",
+  "audio": "Joshua Glass & Grok 4.5 - Doki Doki Forever (Lofi).m4a",
+  "durationSec": 268.266,
+  "mapping": {
+    "ref": "OR3O Doki Doki Forever ~180.35s",
+    "formula": "t_lofi ≈ 0.60 + t_orig * 1.489",
+    "method": "RMS envelope cross-correlation vs OR3O original",
+    "bpm": 111,
+    "bpmNote": "165 / 1.489 ≈ 110.8 → 111"
+  },
+  "cast": {
+    "sayori": "rachie · sky blue",
+    "natsuki": "Chi-Chi · light pink",
+    "yuri": "Kathy-chan · dark purple",
+    "monika": "OR3O · emerald"
+  },
+  "windows": [
+    { "start": 0.0, "end": 17.81, "girl": "monika", "label": "Intro · Monika" },
+    { "start": 17.81, "end": 34.37, "girl": "sayori", "label": "Hey hey · Sayori" },
+    { "start": 34.37, "end": 52.06, "girl": "natsuki", "label": "Sundae · Natsuki" },
+    { "start": 52.06, "end": 59.8, "girl": "yuri", "label": "When we touch · Yuri" },
+    { "start": 59.8, "end": 69.18, "girl": "sayori", "label": "Choose one · Sayori" },
+    { "start": 69.18, "end": 86.96, "girl": "natsuki", "label": "Tell me · Natsuki" },
+    { "start": 86.96, "end": 101.3, "girl": "sayori", "label": "Will it be okay · Sayori" },
+    { "start": 101.3, "end": 121.63, "girl": "monika", "label": "Never apart · Monika" },
+    { "start": 121.63, "end": 138.24, "girl": "yuri", "label": "Next to you · Yuri" },
+    { "start": 138.24, "end": 139.76, "girl": "sayori", "label": "I really love · Sayori" },
+    { "start": 139.76, "end": 156.5, "girl": "monika", "label": "Way you write · Monika" },
+    { "start": 156.5, "end": 163.78, "girl": "natsuki", "label": "Tasty love · Natsuki" },
+    { "start": 163.78, "end": 173.53, "girl": "yuri", "label": "Make the cut · Yuri" },
+    { "start": 173.53, "end": 190.7, "girl": "monika", "label": "Leave you be · Monika" },
+    { "start": 190.7, "end": 208.32, "girl": "yuri", "label": "How can I convey · Yuri" },
+    { "start": 208.32, "end": 237.1, "girl": "monika", "label": "One by one · Monika" },
+    { "start": 237.1, "end": 255.16, "girl": "sayori", "label": "Together forever · Sayori" },
+    { "start": 255.16, "end": 999.0, "girl": "monika", "label": "In my heart · Monika" }
+  ]
+}

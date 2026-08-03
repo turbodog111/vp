@@ -163,6 +163,30 @@ const DDF_EFFECT_PROFILE = {
     {name: 'Outro', start: 158.83, end: 182.0, intensity: 0.88, chorus: true, fade: 0.6},
   ],
 };
+/**
+ * Doki Doki Forever (Lofi) — custom stretch of the OR3O timeline.
+ * Duration ~268.3s vs OR3O ~180.3s. RMS-fit: t_lofi ≈ 0.60 + t_orig * 1.489.
+ * BPM ≈ 111 (165 / 1.489). Softer intensities for chill lofi character.
+ */
+const DDF_LOFI_EFFECT_PROFILE = {
+  bpm: 111,
+  key: 'G major',
+  constantRings: true,
+  beatOffset: 0.72,
+  allowFx: true,
+  lofi: true,
+  sections: [
+    {name: 'Intro', start: 0, end: 17.81, intensity: 0.18, chorus: false},
+    {name: 'Verse 1', start: 17.81, end: 52.06, intensity: 0.32, chorus: false, fade: 0.45},
+    {name: 'Pre-chorus 1', start: 52.06, end: 69.18, intensity: 0.42, chorus: false, fade: 0.4},
+    {name: 'Chorus 1', start: 69.18, end: 121.63, intensity: 0.72, chorus: true, fade: 0.5},
+    {name: 'Verse 2', start: 121.63, end: 156.5, intensity: 0.36, chorus: false, fade: 0.45},
+    {name: 'Pre-chorus 2', start: 156.5, end: 173.53, intensity: 0.44, chorus: false, fade: 0.35},
+    {name: 'Chorus 2', start: 173.53, end: 208.32, intensity: 0.76, chorus: true, fade: 0.45},
+    {name: 'Bridge', start: 208.32, end: 237.1, intensity: 0.55, chorus: true, fade: 0.55},
+    {name: 'Outro', start: 237.1, end: 268.3, intensity: 0.62, chorus: true, fade: 0.65},
+  ],
+};
 const bpmEffectProfile = (bpm, options = {}) => ({
   bpm,
   constantRings: true,
@@ -192,6 +216,8 @@ const SONG_EFFECT_PROFILES = Object.fromEntries([
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Female Vocal Remaster v3)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Male Vocal Remaster v3)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/OR3O (Monika) feat. Rachie (Sayori), Kathy-chan (Yuri) & Chi Chi (Natsuki) - Doki Doki Forever', DDF_EFFECT_PROFILE),
+  // Lofi cut — stretched timeline + chill intensity (do NOT share full-speed DDF profile)
+  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Lofi)', DDF_LOFI_EFFECT_PROFILE),
 ]);
 const seededUnit = (seed) => {
   const x = Math.sin(seed) * 10000;
@@ -390,6 +416,8 @@ function effectProfileForSong(song = currentSong()) {
   if (!song) return null;
   const direct = SONG_EFFECT_PROFILES[song.path] || SONG_EFFECT_PROFILES[song.id] || SONG_EFFECT_PROFILES[song.name];
   if (direct) return direct;
+  // Lofi has its own stretched BPM / section map — never the full-speed 165 profile
+  if (isDdfLofiSong(song)) return DDF_LOFI_EFFECT_PROFILE;
   // Any DDF / Traveling Voices cut gets the DDLC BPM profile even if path casing differs
   if (songLooksLikeTravelingVoices(song) || isDdfFamilySong(song)) return DDF_EFFECT_PROFILE;
   return null;
@@ -1715,6 +1743,13 @@ function isMultiGirlDdfOriginal(song) {
   return hits.length >= 3 && hay.includes('doki doki forever');
 }
 
+/** Doki Doki Forever (Lofi) — slower ~111 BPM stretch of the OR3O cut. */
+function isDdfLofiSong(song) {
+  if (!song) return false;
+  const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''} ${song.path || ''} ${song.id || ''}`.toLowerCase();
+  return hay.includes('doki doki forever') && /\blofi\b/.test(hay);
+}
+
 function isDdfFamilySong(song) {
   if (!song) return false;
   const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''} ${song.path || ''}`.toLowerCase();
@@ -1782,29 +1817,59 @@ const DDLC_GIRL_BY_LYRIC = [
   [170.96, 999.0, 'theme-monika', 'In my heart · Monika'],
 ];
 
+/**
+ * Lofi girl map — same cast order as DDLC_GIRL_BY_LYRIC, times stretched to the
+ * ~268s Lofi file (RMS fit vs OR3O: t_lofi ≈ 0.60 + t_orig * 1.489).
+ */
+const DDLC_GIRL_BY_LYRIC_LOFI = [
+  [0.00, 17.81, 'theme-monika', 'Intro · Monika'],
+  [17.81, 34.37, 'theme-sayori', 'Hey hey · Sayori'],
+  [34.37, 52.06, 'theme-natsuki', 'Sundae · Natsuki'],
+  [52.06, 59.80, 'theme-yuri', 'When we touch · Yuri'],
+  [59.80, 69.18, 'theme-sayori', 'Choose one · Sayori'],
+  [69.18, 86.96, 'theme-natsuki', 'Tell me · Natsuki'],
+  [86.96, 101.30, 'theme-sayori', 'Will it be okay · Sayori'],
+  [101.30, 121.63, 'theme-monika', 'Never apart · Monika'],
+  [121.63, 138.24, 'theme-yuri', 'Next to you · Yuri'],
+  [138.24, 139.76, 'theme-sayori', 'I really love · Sayori'],
+  [139.76, 156.50, 'theme-monika', 'Way you write · Monika'],
+  [156.50, 163.78, 'theme-natsuki', 'Tasty love · Natsuki'],
+  [163.78, 173.53, 'theme-yuri', 'Make the cut · Yuri'],
+  [173.53, 190.70, 'theme-monika', 'Leave you be · Monika'],
+  [190.70, 208.32, 'theme-yuri', 'How can I convey · Yuri'],
+  [208.32, 237.10, 'theme-monika', 'One by one · Monika'],
+  [237.10, 255.16, 'theme-sayori', 'Together forever · Sayori'],
+  [255.16, 999.0, 'theme-monika', 'In my heart · Monika'],
+];
+
 let lastDdlcGirlTheme = '';
 let lastDdlcGirlLabel = '';
 
-function girlThemeAtTime(timeSec = 0) {
+function girlLyricMapForSong(song = currentSong()) {
+  return isDdfLofiSong(song) ? DDLC_GIRL_BY_LYRIC_LOFI : DDLC_GIRL_BY_LYRIC;
+}
+
+function girlThemeAtTime(timeSec = 0, song = currentSong()) {
   const t = Number(timeSec) || 0;
-  for (const [a, b, theme, label] of DDLC_GIRL_BY_LYRIC) {
+  const map = girlLyricMapForSong(song);
+  for (const [a, b, theme, label] of map) {
     if (t >= a && t < b) return { theme, label };
   }
-  const last = DDLC_GIRL_BY_LYRIC[DDLC_GIRL_BY_LYRIC.length - 1];
+  const last = map[map.length - 1];
   return { theme: last[2], label: last[3] };
 }
 
-function updateDdlcCastTheme(timeSec = currentCalibratedTime()) {
-  const { theme: next, label } = girlThemeAtTime(timeSec);
+function updateDdlcCastTheme(timeSec = currentCalibratedTime(), song = currentSong()) {
+  const { theme: next, label } = girlThemeAtTime(timeSec, song);
   lastDdlcGirlLabel = label || '';
   if (next === lastDdlcGirlTheme && document.body.classList.contains(next)) {
-    refreshNowKickerThemeHint(currentSong());
+    refreshNowKickerThemeHint(song);
     return;
   }
   lastDdlcGirlTheme = next;
   DDLC_THEME_CLASSES.forEach(c => document.body.classList.remove(c));
   document.body.classList.add(next);
-  refreshNowKickerThemeHint(currentSong());
+  refreshNowKickerThemeHint(song);
 }
 
 function clearDdlcThemes() {
@@ -2386,9 +2451,11 @@ function paintDdfTheaterFx(timeSec = currentCalibratedTime()) {
   const t = performance.now() / 1000;
   const profile = effectProfileForSong() || DDF_EFFECT_PROFILE;
   const section = effectSectionAt(profile, timeSec);
-  const sectionPower = ((section?.intensity || 0.4) * (section?.fadeLevel ?? 1));
+  // Lofi profile already uses softer section intensities; extra chill dampener for canvas FX
+  const lofiEase = profile.lofi ? 0.72 : 1;
+  const sectionPower = ((section?.intensity || 0.4) * (section?.fadeLevel ?? 1)) * lofiEase;
   const chorus = section?.chorus ? sectionPower : 0;
-  const beat = beatPulseForProfile(profile, timeSec);
+  const beat = beatPulseForProfile(profile, timeSec) * (profile.lofi ? 0.85 : 1);
   const bpm = profile.bpm || 165;
   const beatHz = bpm / 60;
   const heartWave = 0.5 + 0.5 * Math.sin(t * beatHz * Math.PI * 2);
@@ -4013,8 +4080,10 @@ const DDLC_BEAMS = Array.from({ length: 8 }, (_, i) => ({
  */
 function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse) {
   // Always paint when DDF is active (even quiet intros) — user wants full effects
-  const quietGate = Math.max(0.35, smoothStep(0.02, 0.2, levels.motion));
-  const party = Math.max(0.4, smoothStep(0.05, 0.55, levels.motion));
+  // Lofi cut: same girl palette, calmer pulse / wash (custom chill profile)
+  const lofiEase = profile?.lofi ? 0.68 : 1;
+  const quietGate = Math.max(0.35, smoothStep(0.02, 0.2, levels.motion)) * (profile?.lofi ? 0.9 : 1);
+  const party = Math.max(0.4, smoothStep(0.05, 0.55, levels.motion)) * lofiEase;
 
   const girl = activeDdlcGirlKey();
   const colors = DDLC_GIRL_COLORS[girl] || DDLC_GIRL_COLORS.monika;
@@ -4023,9 +4092,9 @@ function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, section
   const a = colors.accent;
   const t = performance.now() / 1000;
   const scale = Math.max(1, Math.min(w, h) / 760);
-  const chorusLift = section?.chorus ? sectionPower * 0.9 : sectionPower * 0.35;
+  const chorusLift = (section?.chorus ? sectionPower * 0.9 : sectionPower * 0.35) * lofiEase;
   const chorusBoost = clamp(0, 1, chorusLift / 0.9);
-  const bpmPulse = profile ? beatPulse * (0.45 + sectionPower * 0.7) : beatPulse;
+  const bpmPulse = (profile ? beatPulse * (0.45 + sectionPower * 0.7) : beatPulse) * (profile?.lofi ? 0.8 : 1);
   const alive = clamp(0, 1, 0.45 + levels.glow * 0.35 + party * 0.25 + bpmPulse * 0.45 + chorusLift * 0.4);
   const glowDim = 0.75 + chorusBoost * 0.35;
 
