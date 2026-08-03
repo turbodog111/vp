@@ -774,7 +774,9 @@
     "monika_nonvocal_targets": [
       "instrumental",
       "drums"
-    ]
+    ],
+    "monika_f_lead": 1.1,
+    "spatial": "jumpy_spatialize_depth_v4"
   },
   "default": {
     "both_f": 0.78,

@@ -9,7 +9,8 @@
     "lead": 1.05,
     "under": 0.15,
     "ramp": 0.18,
-    "note": "Shorter ramp than line-lead so word/phrase flips read; still no clicks."
+    "note": "Shorter ramp than line-lead so word/phrase flips read; still no clicks.",
+    "monika_f_lead": 1.1
   },
   "rules": [
     "MONIKA NON-VOCAL: while Monika is the active girl theme / her vocal units, duck ALL non-vocal stems (instrumental + drums) to ×0.60 (−40%). Tribute (authority over the world). Male vocal support still under F lead.",
@@ -2174,5 +2175,14 @@
     "status": "active"
   },
   "map_status": "complete",
-  "completed_at": "2026-08-03"
+  "completed_at": "2026-08-03",
+  "monika_f_lead": {
+    "id": "monika_f_lead",
+    "set": "2026-08-03",
+    "rule": "On Monika units with lead=F, female gain is 1.10 (global lead remains 1.05).",
+    "gain": 1.1,
+    "global_lead": 1.05,
+    "rationale": "Extra presence for Monika standout on top of non-vocal duck −40%.",
+    "status": "active"
+  }
 }
