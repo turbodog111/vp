@@ -2233,31 +2233,36 @@ let ddfFullListBuilt = false;
 let ddfTheaterEls = null;
 let ddfFullOpen = false;
 
-/** Story panel art cache-bust (bump when regenerating assets). */
-const DDF_ART_V = '5';
+/**
+ * DDF art — SILHOUETTES ONLY.
+ * Lore (Satchely / DDLC cast silhouette checklist, kept in-code for QA):
+ *  - Sayori: short side pigtails + large bow, medium height, open cheerful pose
+ *  - Natsuki: shortest, short bob + two small side twin-tails, arms crossed
+ *  - Yuri: tallest, very long hair, book, reserved
+ *  - Monika: long side ponytail + large bow, hand on hip
+ * No full-color character art, no text in assets, no story-panel JPEG thrash.
+ * Background = CSS color wash only (instant, no decode).
+ */
+const DDF_ART_V = '6';
 const DDF_UI_BASE = './songs/spatial/ddf-ui';
 
-/**
- * Story progression panels — timed to DDF lyric narrative (not just girl color).
- * Each row: [startSec, endSec, panelFile, silKey, hasCast]
- * hasCast=true → story art already features character(s); silhouette stays soft.
- */
-const DDF_STORY_PANELS = [
-  [0.00, 11.56, 'story/panel_intro.jpg', 'club', false],
-  [11.56, 22.68, 'story/panel_sayori_heart.jpg', 'sayori', true],
-  [22.68, 34.56, 'story/panel_natsuki_sundae.jpg', 'natsuki', true],
-  [34.56, 39.76, 'story/panel_yuri_touch.jpg', 'yuri', true],
-  [39.76, 46.06, 'story/panel_choose.jpg', 'club', true],
-  [46.06, 58.00, 'story/panel_chorus_tell.jpg', 'natsuki', true],
-  [58.00, 67.63, 'story/panel_chorus_forever.jpg', 'sayori', true],
-  [67.63, 81.28, 'story/panel_monika_never.jpg', 'monika', true],
-  [81.28, 92.44, 'story/panel_yuri_shy.jpg', 'yuri', true],
-  [92.44, 104.70, 'story/panel_monika_write.jpg', 'monika', true],
-  [104.70, 116.14, 'story/panel_choose.jpg', 'club', true],
-  [116.14, 139.50, 'story/panel_chorus_forever.jpg', 'monika', true],
-  [139.50, 158.83, 'story/panel_bridge_glitch.jpg', 'monika', true],
-  [158.83, 170.96, 'story/panel_sayori_forever.jpg', 'sayori', true],
-  [170.96, 999.0, 'story/panel_finale_heart.jpg', 'monika', true],
+/** [startSec, endSec, silKey] — follows lyric cast progression */
+const DDF_SIL_TIMELINE = [
+  [0.00, 11.56, 'club'],
+  [11.56, 22.68, 'sayori'],
+  [22.68, 34.56, 'natsuki'],
+  [34.56, 39.76, 'yuri'],
+  [39.76, 46.06, 'club'],
+  [46.06, 58.00, 'natsuki'],
+  [58.00, 67.63, 'sayori'],
+  [67.63, 81.28, 'monika'],
+  [81.28, 92.44, 'yuri'],
+  [92.44, 104.70, 'monika'],
+  [104.70, 116.14, 'club'],
+  [116.14, 139.50, 'monika'],
+  [139.50, 158.83, 'monika'],
+  [158.83, 170.96, 'sayori'],
+  [170.96, 999.0, 'monika'],
 ];
 
 const DDF_SIL_FILES = {
@@ -2268,12 +2273,11 @@ const DDF_SIL_FILES = {
   monika: 'sil_monika.jpg',
 };
 
-const ddfArtPreload = new Map(); // url -> Promise | true
-let ddfBgFrontIsA = true;
+const ddfArtPreload = new Map(); // url -> true | Promise
 let ddfSilFrontIsA = true;
-let ddfLastPanelUrl = '';
+let ddfLastSilKey = '';
 let ddfLastSilUrl = '';
-let ddfCrossfadeBusy = false;
+let ddfSilSwapToken = 0;
 
 function ddfArtUrl(rel) {
   return `${DDF_UI_BASE}/${rel}?v=${DDF_ART_V}`;
@@ -2286,6 +2290,7 @@ function preloadDdfArtUrl(url) {
   if (existing && typeof existing.then === 'function') return existing;
   const p = new Promise((resolve) => {
     const img = new Image();
+    img.decoding = 'async';
     img.onload = () => {
       ddfArtPreload.set(url, true);
       resolve(true);
@@ -2300,64 +2305,39 @@ function preloadDdfArtUrl(url) {
   return p;
 }
 
+/** Only 5 small silhouettes — no story-panel megabyte thrash. */
 function preloadAllDdfStoryArt() {
-  const urls = [];
-  DDF_STORY_PANELS.forEach((row) => urls.push(ddfArtUrl(row[2])));
-  Object.values(DDF_SIL_FILES).forEach((f) => urls.push(ddfArtUrl(f)));
-  // Character room fallbacks
-  ['bg_club.jpg', 'bg_sayori.jpg', 'bg_natsuki.jpg', 'bg_yuri.jpg', 'bg_monika.jpg']
-    .forEach((f) => urls.push(ddfArtUrl(f)));
-  return Promise.all(urls.map(preloadDdfArtUrl));
+  return Promise.all(Object.values(DDF_SIL_FILES).map((f) => preloadDdfArtUrl(ddfArtUrl(f))));
 }
 
-function storyPanelAtTime(timeSec = 0) {
+function silKeyAtTime(timeSec = 0) {
   const t = Number(timeSec) || 0;
-  for (const [a, b, panel, sil, hasCast] of DDF_STORY_PANELS) {
-    if (t >= a && t < b) {
-      return {
-        panelUrl: ddfArtUrl(panel),
-        silUrl: ddfArtUrl(DDF_SIL_FILES[sil] || DDF_SIL_FILES.club),
-        hasCast: !!hasCast,
-        silKey: sil,
-      };
-    }
+  for (const [a, b, key] of DDF_SIL_TIMELINE) {
+    if (t >= a && t < b) return key;
   }
-  const last = DDF_STORY_PANELS[DDF_STORY_PANELS.length - 1];
-  return {
-    panelUrl: ddfArtUrl(last[2]),
-    silUrl: ddfArtUrl(DDF_SIL_FILES[last[3]] || DDF_SIL_FILES.club),
-    hasCast: !!last[4],
-    silKey: last[3],
-  };
-}
-
-function setLayerBg(el, url) {
-  if (!el || !url) return;
-  el.style.backgroundImage = `url("${url}")`;
+  return DDF_SIL_TIMELINE[DDF_SIL_TIMELINE.length - 1][2];
 }
 
 /**
- * Dual-layer opacity crossfade. Always paints onto the hidden layer first,
- * then flips visibility — never blanks both layers (no black flash).
- * Returns the new frontIsA flag.
+ * Dual <img> opacity crossfade. Never clears the visible layer until the
+ * next silhouette has fully decoded — kills first-load blackout / buffer hitch.
  */
-function crossfadeLayerPair(aEl, bEl, frontIsA, url) {
+function crossfadeSilImg(aEl, bEl, frontIsA, url) {
   if (!aEl || !bEl || !url) return frontIsA;
   const front = frontIsA ? aEl : bEl;
   const back = frontIsA ? bEl : aEl;
   if (front.dataset.url === url && front.classList.contains('is-visible')) {
     return frontIsA;
   }
-  // First paint: show immediately on front (both may be empty)
+  // First paint
   if (!front.dataset.url) {
-    setLayerBg(front, url);
+    front.src = url;
     front.dataset.url = url;
     front.classList.add('is-visible');
     back.classList.remove('is-visible');
     return frontIsA;
   }
-  // Same URL already on back waiting — just reveal
-  setLayerBg(back, url);
+  back.src = url;
   back.dataset.url = url;
   void back.offsetWidth;
   back.classList.add('is-visible');
@@ -2368,47 +2348,32 @@ function crossfadeLayerPair(aEl, bEl, frontIsA, url) {
 function updateDdfStoryArt(timeSec = 0, force = false) {
   const els = cacheDdfTheaterEls();
   if (!els.root || els.root.classList.contains('hidden')) return;
-  const story = storyPanelAtTime(timeSec);
-  els.root.classList.toggle('story-has-cast', !!story.hasCast);
-  els.root.classList.toggle('story-room-only', !story.hasCast);
+  if (!els.silA || !els.silB) return;
 
-  const applyPanel = () => {
-    if (!force && story.panelUrl === ddfLastPanelUrl) return;
-    ddfLastPanelUrl = story.panelUrl;
-    ddfBgFrontIsA = crossfadeLayerPair(els.bgA, els.bgB, ddfBgFrontIsA, story.panelUrl);
+  const silKey = silKeyAtTime(timeSec);
+  if (!force && silKey === ddfLastSilKey) return;
+
+  const silUrl = ddfArtUrl(DDF_SIL_FILES[silKey] || DDF_SIL_FILES.club);
+  const token = ++ddfSilSwapToken;
+  const apply = () => {
+    if (token !== ddfSilSwapToken) return; // superseded by newer section
+    ddfLastSilKey = silKey;
+    ddfLastSilUrl = silUrl;
+    ddfSilFrontIsA = crossfadeSilImg(els.silA, els.silB, ddfSilFrontIsA, silUrl);
   };
-  const applySil = () => {
-    if (!force && story.silUrl === ddfLastSilUrl) return;
-    ddfLastSilUrl = story.silUrl;
-    ddfSilFrontIsA = crossfadeLayerPair(els.silA, els.silB, ddfSilFrontIsA, story.silUrl);
-  };
 
-  // Prefer preloaded assets; if cold, still paint current URL then refine
-  if (ddfArtPreload.get(story.panelUrl) === true) {
-    applyPanel();
-  } else {
-    // Keep previous visible while loading next — paint only when ready
-    preloadDdfArtUrl(story.panelUrl).then(() => {
-      if (storyPanelAtTime(currentCalibratedTime()).panelUrl === story.panelUrl) {
-        ddfLastPanelUrl = ''; // force re-apply
-        applyPanel();
-      }
-    });
-    // If nothing showing yet, paint optimistically
-    if (!els.bgA?.dataset.url && !els.bgB?.dataset.url) applyPanel();
+  if (ddfArtPreload.get(silUrl) === true) {
+    apply();
+    return;
   }
-
-  if (ddfArtPreload.get(story.silUrl) === true) {
-    applySil();
-  } else {
-    preloadDdfArtUrl(story.silUrl).then(() => {
-      if (storyPanelAtTime(currentCalibratedTime()).silUrl === story.silUrl) {
-        ddfLastSilUrl = '';
-        applySil();
-      }
-    });
-    if (!els.silA?.dataset.url && !els.silB?.dataset.url) applySil();
-  }
+  // Keep previous silhouette visible while next decodes
+  preloadDdfArtUrl(silUrl).then((ok) => {
+    if (!ok) return;
+    if (silKeyAtTime(currentCalibratedTime()) !== silKey) return;
+    apply();
+  });
+  // Cold start only: show immediately so stage is never empty
+  if (!els.silA.dataset.url && !els.silB.dataset.url) apply();
 }
 
 function wantsDdfTheater(song = currentSong()) {
@@ -2419,8 +2384,7 @@ function cacheDdfTheaterEls() {
   if (ddfTheaterEls?.root?.isConnected) return ddfTheaterEls;
   ddfTheaterEls = {
     root: $('ddf-theater'),
-    bgA: $('ddf-bg-a'),
-    bgB: $('ddf-bg-b'),
+    bgWash: $('ddf-bg-wash'),
     silA: $('ddf-sil-a'),
     silB: $('ddf-sil-b'),
     title: $('ddf-song-title'),
@@ -2677,15 +2641,13 @@ function setDdfTheaterActive(want, song = currentSong()) {
     ddfLastLineIdx = -1;
     ddfLastLeadMode = '';
     ddfFullListBuilt = false;
-    ddfLastPanelUrl = '';
+    ddfLastSilKey = '';
     ddfLastSilUrl = '';
-    ddfBgFrontIsA = true;
     ddfSilFrontIsA = true;
-    // Preload ALL story art before first panel paint — kills first-load blackout
+    // Warm only 5 silhouettes (tiny) — CSS wash needs no images
     preloadAllDdfStoryArt().then(() => {
       updateDdfStoryArt(currentCalibratedTime(), true);
     });
-    // Optimistic first panel immediately (may still decode if cache cold)
     updateDdfStoryArt(currentCalibratedTime(), true);
     Promise.all([loadDdfLyrics(), loadDdfLeadMaps()]).then(() => {
       buildFullLyricsList(song);
@@ -2702,7 +2664,7 @@ function setDdfTheaterActive(want, song = currentSong()) {
     ddfLastLineIdx = -1;
     ddfLastLeadMode = '';
     ddfFullOpen = false;
-    ddfLastPanelUrl = '';
+    ddfLastSilKey = '';
     ddfLastSilUrl = '';
     spatialCtx = null;
     updateFxState();

@@ -6,8 +6,8 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-08-03-ddf-story-art">
-<link rel="stylesheet" href="styles.css?v=20260803-ddf-story-art">
+<meta name="vp-build" content="2026-08-03-ddf-sil-only">
+<link rel="stylesheet" href="styles.css?v=20260803-ddf-sil-only">
 </head>
 <body>
 <div class="app">
@@ -90,15 +90,12 @@
       <canvas id="teto-fx" class="teto-fx-canvas" aria-hidden="true"></canvas>
       <pre id="timing-debug" class="timing-debug hidden" aria-live="polite"></pre>
 
-      <!-- DDLC Theater: story panels + compass for Doki Doki Forever / Traveling Voices -->
+      <!-- DDLC Theater: pure silhouettes + CSS color wash (no cartoon story panels) -->
       <div id="ddf-theater" class="ddf-theater hidden" aria-live="polite">
-        <div class="ddf-bg-stack" aria-hidden="true">
-          <div class="ddf-bg-layer is-visible" id="ddf-bg-a"></div>
-          <div class="ddf-bg-layer" id="ddf-bg-b"></div>
-        </div>
-        <div class="ddf-sil-stack" aria-hidden="true">
-          <div class="ddf-sil-layer is-visible" id="ddf-sil-a"></div>
-          <div class="ddf-sil-layer" id="ddf-sil-b"></div>
+        <div class="ddf-bg-wash" id="ddf-bg-wash" aria-hidden="true"></div>
+        <div class="ddf-sil-stage" aria-hidden="true">
+          <img class="ddf-sil-img is-visible" id="ddf-sil-a" alt="" decoding="async" draggable="false">
+          <img class="ddf-sil-img" id="ddf-sil-b" alt="" decoding="async" draggable="false">
         </div>
         <div class="ddf-bg-overlay" aria-hidden="true"></div>
         <div class="ddf-hearts" aria-hidden="true"></div>
@@ -264,6 +261,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=20260803-ddf-story-art"></script>
+<script src="app.js?v=20260803-ddf-sil-only"></script>
 </body>
 </html>

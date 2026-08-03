@@ -1246,54 +1246,75 @@ body.ddf-theater-active .main {
   overflow: visible;
   border-radius: 0;
   isolation: isolate;
-  /* Avoid flash while first panel decodes */
+  /* Instant solid wash — never waits on a JPEG for first paint */
   background: #1a1020;
 }
 .ddf-theater.hidden { display: none !important; }
 
-/* Dual-layer crossfade stacks — never swap background-image mid-transition */
-.ddf-bg-stack,
-.ddf-sil-stack {
+/* CSS-only color wash (no image decode / no buffer thrash) */
+.ddf-bg-wash {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 40%, rgba(255, 255, 255, 0.06), transparent 65%),
+    linear-gradient(165deg, #2a2030 0%, #1a1020 55%, #120c18 100%);
+  transition: background 0.55s ease;
 }
-.ddf-sil-stack { z-index: 1; }
-.ddf-bg-layer,
-.ddf-sil-layer {
+body.theme-sayori .ddf-bg-wash {
+  background:
+    radial-gradient(ellipse 85% 65% at 50% 38%, rgba(87, 199, 255, 0.22), transparent 62%),
+    linear-gradient(165deg, #3a6a8a 0%, #1e3a52 50%, #142030 100%);
+}
+body.theme-natsuki .ddf-bg-wash {
+  background:
+    radial-gradient(ellipse 85% 65% at 50% 38%, rgba(255, 179, 201, 0.28), transparent 62%),
+    linear-gradient(165deg, #8a4a62 0%, #4a2438 50%, #2a1420 100%);
+}
+body.theme-yuri .ddf-bg-wash {
+  background:
+    radial-gradient(ellipse 85% 65% at 50% 38%, rgba(124, 77, 255, 0.24), transparent 62%),
+    linear-gradient(165deg, #4a3a72 0%, #2a1a48 50%, #181028 100%);
+}
+body.theme-monika .ddf-bg-wash {
+  background:
+    radial-gradient(ellipse 85% 65% at 50% 38%, rgba(16, 185, 129, 0.22), transparent 62%),
+    linear-gradient(165deg, #2a6a52 0%, #1a4030 50%, #10241c 100%);
+}
+
+/* Dual <img> silhouette stage — object-fit:contain so figures never crop */
+.ddf-sil-stage {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.ddf-sil-img {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  /* Fit full figure inside theater without cropping head/feet */
+  width: min(920px, 96%);
+  height: min(72vh, 640px);
+  max-height: 78%;
+  object-fit: contain;
+  object-position: center bottom;
   opacity: 0;
-  transition: opacity 0.7s ease;
+  transition: opacity 0.45s ease;
   will-change: opacity;
+  user-select: none;
+  -webkit-user-drag: none;
+  /* Soften pure black slightly so it sits in the wash */
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.35));
 }
-.ddf-bg-layer {
-  filter: saturate(1.08) brightness(0.9);
-  background-color: #1a1020; /* prevents black flash if image late */
-}
-.ddf-bg-layer.is-visible,
-.ddf-sil-layer.is-visible {
-  opacity: 1;
-}
-.ddf-sil-layer {
-  background-position: center bottom;
-  opacity: 0;
-  mix-blend-mode: normal;
-}
-.ddf-sil-layer.is-visible {
-  opacity: 0.55;
-}
-/* Story panels already feature characters — keep silhouette soft */
-.ddf-theater.story-has-cast .ddf-sil-layer.is-visible {
-  opacity: 0.18;
-}
-.ddf-theater.story-room-only .ddf-sil-layer.is-visible {
-  opacity: 0.78;
+.ddf-sil-img.is-visible {
+  opacity: 0.92;
 }
 
 .ddf-bg-overlay {
@@ -1301,37 +1322,27 @@ body.ddf-theater-active .main {
   inset: 0;
   z-index: 2;
   background:
-    linear-gradient(180deg, rgba(20, 8, 24, 0.5) 0%, rgba(20, 8, 24, 0.28) 38%, rgba(20, 8, 24, 0.7) 100%),
-    radial-gradient(ellipse 80% 50% at 50% 20%, rgba(255, 126, 182, 0.1), transparent 60%);
+    linear-gradient(180deg, rgba(20, 8, 24, 0.42) 0%, rgba(20, 8, 24, 0.12) 42%, rgba(20, 8, 24, 0.62) 100%);
   pointer-events: none;
-  transition: background 0.6s ease;
+  transition: background 0.55s ease;
 }
-/* Character-tinted overlay washes (pair with DDLC FX) */
 body.theme-sayori .ddf-bg-overlay {
   background:
-    linear-gradient(180deg, rgba(12, 40, 64, 0.45) 0%, rgba(20, 8, 24, 0.25) 40%, rgba(12, 28, 48, 0.72) 100%),
-    radial-gradient(ellipse 80% 50% at 50% 18%, rgba(87, 199, 255, 0.16), transparent 60%);
+    linear-gradient(180deg, rgba(12, 40, 64, 0.35) 0%, rgba(12, 28, 48, 0.08) 42%, rgba(12, 28, 48, 0.58) 100%);
 }
 body.theme-natsuki .ddf-bg-overlay {
   background:
-    linear-gradient(180deg, rgba(64, 16, 36, 0.45) 0%, rgba(20, 8, 24, 0.25) 40%, rgba(48, 12, 28, 0.72) 100%),
-    radial-gradient(ellipse 80% 50% at 50% 18%, rgba(255, 179, 201, 0.18), transparent 60%);
+    linear-gradient(180deg, rgba(64, 16, 36, 0.35) 0%, rgba(48, 12, 28, 0.08) 42%, rgba(48, 12, 28, 0.58) 100%);
 }
 body.theme-yuri .ddf-bg-overlay {
   background:
-    linear-gradient(180deg, rgba(28, 12, 56, 0.5) 0%, rgba(20, 8, 24, 0.28) 40%, rgba(20, 8, 40, 0.75) 100%),
-    radial-gradient(ellipse 80% 50% at 50% 18%, rgba(124, 77, 255, 0.18), transparent 60%);
+    linear-gradient(180deg, rgba(28, 12, 56, 0.38) 0%, rgba(20, 8, 40, 0.1) 42%, rgba(20, 8, 40, 0.6) 100%);
 }
 body.theme-monika .ddf-bg-overlay {
   background:
-    linear-gradient(180deg, rgba(8, 40, 28, 0.48) 0%, rgba(20, 8, 24, 0.26) 40%, rgba(8, 32, 24, 0.74) 100%),
-    radial-gradient(ellipse 80% 50% at 50% 18%, rgba(16, 185, 129, 0.16), transparent 60%);
-}
-body.ddlc-fx-active .ddf-bg-overlay {
-  background-blend-mode: screen, normal;
+    linear-gradient(180deg, rgba(8, 40, 28, 0.35) 0%, rgba(8, 32, 24, 0.08) 42%, rgba(8, 32, 24, 0.58) 100%);
 }
 
-/* DDLC FX body wash (pairs with canvas hearts/beams) */
 body.ddlc-fx-active.theme-sayori {
   --ddlc-glow: rgba(87, 199, 255, calc(0.04 + var(--ddlc-level, 0) * 0.14));
 }
