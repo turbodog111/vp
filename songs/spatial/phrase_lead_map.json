@@ -12,14 +12,14 @@
     "note": "Shorter ramp than line-lead so word/phrase flips read; still no clicks."
   },
   "rules": [
-    "MONIKA INSTRUMENTAL: while Monika is the active girl theme / her vocal units, duck instrumental to \u00d70.75 (\u221225%). Preliminary tribute (authority over the world). Male vocal support still under F lead.",
-    "Male is never fully removed on Monika F leads \u2014 always support undertrack.",
-    "CHARACTER DEFAULT: monika \u2192 F lead (male support under). Other girls / transitionary \u2192 both, unless unit argument overrides.",
-    "Grain is phrase by default; single WORD only when that word carries the turn (fate, true, free, apart, forever\u2026).",
-    "Feminine / soft / intimate / confession / shy \u2192 F lead.",
-    "Assertive / fate / free / claim / dark agency / demand \u2192 M lead.",
-    "Shared vow material (together forever / never apart) \u2192 both, unless a single word inside needs a punch.",
-    "Girl theme (Sayori/Natsuki/Yuri/Monika) is UI/story color \u2014 not the same as F/M stem lead.",
+    "MONIKA NON-VOCAL: while Monika is the active girl theme / her vocal units, duck ALL non-vocal stems (instrumental + drums) to ×0.60 (−40%). Tribute (authority over the world). Male vocal support still under F lead.",
+    "Male is never fully removed on Monika F leads — always support undertrack.",
+    "CHARACTER DEFAULT: monika → F lead (male support under). Other girls / transitionary → both, unless unit argument overrides.",
+    "Grain is phrase by default; single WORD only when that word carries the turn (fate, true, free, apart, forever…).",
+    "Feminine / soft / intimate / confession / shy → F lead.",
+    "Assertive / fate / free / claim / dark agency / demand → M lead.",
+    "Shared vow material (together forever / never apart) → both, unless a single word inside needs a punch.",
+    "Girl theme (Sayori/Natsuki/Yuri/Monika) is UI/story color — not the same as F/M stem lead.",
     "Times are provisional shares inside LRC line bounds until we ear-check.",
     "Review one unit at a time. Do not dump the full list in chat."
   ],
@@ -42,7 +42,7 @@
   },
   "corrections": [
     {
-      "what": "135.49\u2013139.50 'We'll be together forever / We're never gonna be apart' girl theme",
+      "what": "135.49–139.50 'We'll be together forever / We're never gonna be apart' girl theme",
       "was": "yuri",
       "now": "monika",
       "files": [
@@ -65,9 +65,9 @@
       "girl": "transitionary",
       "grain": "phrase",
       "lead": "F",
-      "why": "Introductory chant \u2014 not tied to a character. Feminine-only lead (male under) like keeping two instrumental versions with one voice in front. Girl theme is transitionary (not Monika); transition CGs later.",
+      "why": "Introductory chant — not tied to a character. Feminine-only lead (male under) like keeping two instrumental versions with one voice in front. Girl theme is transitionary (not Monika); transition CGs later.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "revised_from": "both",
       "user_note": "Overturn: F only; theme transitionary not monika."
     },
@@ -86,7 +86,7 @@
       "lead": "F",
       "why": "Feminine lead for continuity from intro chant. Either F or both was fine; chose F so the open stays one voice color into verse 1.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "user_note": "F or both OK; F for continuity fine."
     },
     {
@@ -102,9 +102,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "F",
-      "why": "Feminine clause \u2014 soft romantic open. No further split needed.",
+      "why": "Feminine clause — soft romantic open. No further split needed.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "user_note": "No isolate; feminine clause."
     },
     {
@@ -120,9 +120,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "F",
-      "why": "Completes Sayori open sentence \u2014 warm hang-out close; F for full-clause continuity.",
+      "why": "Completes Sayori open sentence — warm hang-out close; F for full-clause continuity.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "user_note": "Agreed."
     },
     {
@@ -138,9 +138,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "F",
-      "why": "Feminine lead, but weaker case for parking male under \u2014 soft question could sit dual. Still F for continuity into the ache couplet. Unit extended to include 'my' (more melodically sound).",
+      "why": "Feminine lead, but weaker case for parking male under — soft question could sit dual. Still F for continuity into the ache couplet. Unit extended to include 'my' (more melodically sound).",
       "status": "agreed",
-      "timing_note": "re-sliced parent 16.44\u201318.25 by word weight 3:2 after adding 'my'",
+      "timing_note": "re-sliced parent 16.44–18.25 by word weight 3:2 after adding 'my'",
       "user_note": "F slightly less defensible for excluding M; include 'my' in this unit."
     },
     {
@@ -156,7 +156,7 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "F",
-      "why": "Heart-ache image \u2014 feminine strongly defensible (more than unit 5).",
+      "why": "Heart-ache image — feminine strongly defensible (more than unit 5).",
       "status": "agreed",
       "timing_note": "remainder of parent after unit 5 took 'my'",
       "user_note": "Feminine here, much more defensible."
@@ -174,10 +174,10 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "F",
-      "why": "Ache couplet \u2014 relational soft open. Feminine for clause continuity.",
+      "why": "Ache couplet — relational soft open. Feminine for clause continuity.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
-      "user_note": "User: 7\u20138 both F."
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
+      "user_note": "User: 7–8 both F."
     },
     {
       "id": 8,
@@ -192,10 +192,10 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "F",
-      "why": "Completes 'feel the same way too?' \u2014 reciprocal feeling; feminine.",
+      "why": "Completes 'feel the same way too?' — reciprocal feeling; feminine.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
-      "user_note": "User: 7\u20138 both F."
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
+      "user_note": "User: 7–8 both F."
     },
     {
       "id": 9,
@@ -210,9 +210,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "both",
-      "why": "Ad-lib laugh \u2014 no claim. Dual so both stems share the breath between Sayori ache and Natsuki. Also rebalances after a long F run at the open.",
+      "why": "Ad-lib laugh — no claim. Dual so both stems share the breath between Sayori ache and Natsuki. Also rebalances after a long F run at the open.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "user_note": "both; concern that open is already F-heavy."
     },
     {
@@ -228,9 +228,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Playful simile setup \u2014 both genders covered. Unit text is 'Just like a' for melodic sense (not stopping before 'a').",
+      "why": "Playful simile setup — both genders covered. Unit text is 'Just like a' for melodic sense (not stopping before 'a').",
       "status": "agreed",
-      "timing_note": "sundae timing fix: end moved 23.925\u219223.52 (ear energy)",
+      "timing_note": "sundae timing fix: end moved 23.925→23.52 (ear energy)",
       "user_note": "Reslice to 'Just like a'; both genders."
     },
     {
@@ -246,7 +246,7 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "F",
-      "why": "Word-level: 'sundae' is feminine-connotated (sweet dessert image). Split from 'Just like a' (both) so only this punch goes F \u2014 first deliberate F after rebalance, justified by the word itself.",
+      "why": "Word-level: 'sundae' is feminine-connotated (sweet dessert image). Split from 'Just like a' (both) so only this punch goes F — first deliberate F after rebalance, justified by the word itself.",
       "status": "agreed",
       "timing_note": "sundae F lead starts 23.52 (was 23.925); linear share put F mid-word; male was still dual-loud through first half of sung sundae",
       "user_note": "Disagreement with both: F only; feminine-connotated word. Split purpose. | timing fix 2026-08-03: earlier F for full word",
@@ -265,9 +265,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Playful Natsuki clause \u2014 both; not intimacy. Avoids stacking F after sundae.",
+      "why": "Playful Natsuki clause — both; not intimacy. Avoids stacking F after sundae.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "user_note": "Agreed both."
     },
     {
@@ -283,9 +283,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Playful agency close \u2014 both; M was optional on 'teach you'.",
+      "why": "Playful agency close — both; M was optional on 'teach you'.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "user_note": "Both, agreed."
     },
     {
@@ -301,9 +301,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Open question on 'chance' \u2014 both. (User aside: weakest lyric theologically; lead still dual.)",
+      "why": "Open question on 'chance' — both. (User aside: weakest lyric theologically; lead still dual.)",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "user_note": "both; dumbest lyric as Christian with DDLC niche interest."
     },
     {
@@ -319,9 +319,9 @@
       "girl": "natsuki",
       "grain": "word",
       "lead": "M",
-      "why": "Word punch 'fate' \u2014 M. User: even though transcendentalist/philosophical ideas can associate with female thinkers (Monika-influenced), male lead feels right for this delivery.",
+      "why": "Word punch 'fate' — M. User: even though transcendentalist/philosophical ideas can associate with female thinkers (Monika-influenced), male lead feels right for this delivery.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "user_note": "Agree M; Monika/transcendentalist F association set aside for this word."
     },
     {
@@ -337,9 +337,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Clause setup into exclusive claim \u2014 both.",
+      "why": "Clause setup into exclusive claim — both.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "user_note": "Both."
     },
     {
@@ -355,7 +355,7 @@
       "girl": "natsuki",
       "grain": "word",
       "lead": "F",
-      "why": "Self/intimate pole of the pair \u2014 feminine word lead.",
+      "why": "Self/intimate pole of the pair — feminine word lead.",
       "status": "agreed",
       "user_note": "Split: me=F, and=both, you=M",
       "timing_note": "word reslice of former unit 17 'me and you?' equal-ish shares"
@@ -373,7 +373,7 @@
       "girl": "natsuki",
       "grain": "word",
       "lead": "both",
-      "why": "Shared hinge between self and addressee \u2014 dual glue.",
+      "why": "Shared hinge between self and addressee — dual glue.",
       "status": "agreed",
       "user_note": "Split: me=F, and=both, you=M",
       "timing_note": "word reslice of former unit 17"
@@ -391,7 +391,7 @@
       "girl": "natsuki",
       "grain": "word",
       "lead": "M",
-      "why": "Addressee/claim pole \u2014 masculine word lead.",
+      "why": "Addressee/claim pole — masculine word lead.",
       "status": "agreed",
       "user_note": "Split: me=F, and=both, you=M",
       "timing_note": "word reslice of former unit 17"
@@ -409,7 +409,7 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Whole tsundere parent kept as one unit \u2014 never split. Dual: startled defense without a single-stem punch.",
+      "why": "Whole tsundere parent kept as one unit — never split. Dual: startled defense without a single-stem punch.",
       "status": "agreed",
       "user_note": "Merge whole parent; both. Never separate.",
       "timing_note": "merged former units 20+21"
@@ -427,9 +427,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "F",
-      "why": "Yuri intimacy open \u2014 tactile. F; same lead as 22 but kept as separate unit.",
+      "why": "Yuri intimacy open — tactile. F; same lead as 22 but kept as separate unit.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 22,
       "user_note": "21-22 both F; same inevitably; do not merge."
     },
@@ -446,9 +446,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "F",
-      "why": "Completes intimacy clause \u2014 'never be enough'. F with 21; not merged.",
+      "why": "Completes intimacy clause — 'never be enough'. F with 21; not merged.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 23,
       "user_note": "21-22 both F; same inevitably; do not merge."
     },
@@ -465,11 +465,11 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "both",
-      "why": "Opens choose-one pressure \u2014 dual plea. Semantic justification is both; user remix had word styling is it=B / way=F / too=M / much=F for motion only (no semantic case here) \u2014 not applied.",
+      "why": "Opens choose-one pressure — dual plea. Semantic justification is both; user remix had word styling is it=B / way=F / too=M / much=F for motion only (no semantic case here) — not applied.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 24,
-      "user_note": "both. Remix note: way=F too=M much=F styling only \u2014 unjustifyable semantically here.",
+      "user_note": "both. Remix note: way=F too=M much=F styling only — unjustifyable semantically here.",
       "styling_alt": {
         "note": "user remix word styling (not adopted for semantic map)",
         "slices": [
@@ -505,9 +505,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "M",
-      "why": "M as deliberate ping-pong into F on unit 25. Both voices independently (then collectively) press the choice: this clause is the male-led half; 'just one of us?' is the feminine land. Defensible as independent\u2192collective ask.",
+      "why": "M as deliberate ping-pong into F on unit 25. Both voices independently (then collectively) press the choice: this clause is the male-led half; 'just one of us?' is the feminine land. Defensible as independent→collective ask.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 25,
       "user_note": "M for ping-pong; wants unit 25 F; independent yet collective asking.",
       "revised_from": "both"
@@ -527,7 +527,7 @@
       "lead": "F",
       "why": "Feminine land of choice ping-pong after M on 'if you had to choose'.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 26,
       "user_note": "No brainer."
     },
@@ -544,9 +544,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Opens demand stack \u2014 both. User will shake up leads soon.",
+      "why": "Opens demand stack — both. User will shake up leads soon.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 27,
       "user_note": "both; will shake it up soon."
     },
@@ -563,9 +563,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Second tell-me echo \u2014 both; shake-up not yet.",
+      "why": "Second tell-me echo — both; shake-up not yet.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 28,
       "user_note": "also still just both."
     },
@@ -582,9 +582,9 @@
       "girl": "natsuki",
       "grain": "word",
       "lead": "both",
-      "why": "Closes demand parent \u2014 both.",
+      "why": "Closes demand parent — both.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 29,
       "user_note": "Both."
     },
@@ -601,9 +601,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "F",
-      "why": "Shake-up: F not both. 'Is this what I think' reads as Natsuki tsundere stubbornness / self-certain push \u2014 feminine-coded trait in this framing.",
+      "why": "Shake-up: F not both. 'Is this what I think' reads as Natsuki tsundere stubbornness / self-certain push — feminine-coded trait in this framing.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 30,
       "user_note": "F; tsundere stubbornness feminine; expected opposite gender from dual default.",
       "revised_from": "both"
@@ -621,9 +621,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "F",
-      "why": "Vulnerability close of self-check \u2014 F no doubt; Natsuki personal frame.",
+      "why": "Vulnerability close of self-check — F no doubt; Natsuki personal frame.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 31,
       "user_note": "Feminine no doubt."
     },
@@ -640,11 +640,11 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "M",
-      "why": "Imperative/command \u2014 M. Includes 'from' for melodic sense. No dream image in this unit yet (that stays on the next unit). Distinct from tsundere soft.",
+      "why": "Imperative/command — M. Includes 'from' for melodic sense. No dream image in this unit yet (that stays on the next unit). Distinct from tsundere soft.",
       "status": "agreed",
-      "timing_note": "re-sliced parent 51.34\u201353.93 weight 5:4 after adding 'from'",
+      "timing_note": "re-sliced parent 51.34–53.93 weight 5:4 after adding 'from'",
       "prev_id": 32,
-      "user_note": "Include 'from'; M \u2014 imperative not dream; stretch but defensible.",
+      "user_note": "Include 'from'; M — imperative not dream; stretch but defensible.",
       "revised_from": "F"
     },
     {
@@ -660,7 +660,7 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "F",
-      "why": "Dream image land after M imperative \u2014 sweet/little/dream = F.",
+      "why": "Dream image land after M imperative — sweet/little/dream = F.",
       "status": "agreed",
       "timing_note": "remainder after unit 31 took 'from'",
       "prev_id": 33,
@@ -679,9 +679,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Forever-hook setup \u2014 both.",
+      "why": "Forever-hook setup — both.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 34,
       "user_note": "Both."
     },
@@ -698,7 +698,7 @@
       "girl": "natsuki",
       "grain": "word",
       "lead": "F",
-      "why": "Ping-pong half of shared vow: 'together' = feminine (relational join). Both parties answering the call to be together \u2014 F first.",
+      "why": "Ping-pong half of shared vow: 'together' = feminine (relational join). Both parties answering the call to be together — F first.",
       "status": "agreed",
       "user_note": "Split together=F forever=M; justifiable ping-pong.",
       "timing_note": "word split of former unit 34 'together forever'"
@@ -734,9 +734,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Builds into apart \u2014 both while clause incomplete.",
+      "why": "Builds into apart — both while clause incomplete.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 35,
       "user_note": "Both."
     },
@@ -753,9 +753,9 @@
       "girl": "natsuki",
       "grain": "word",
       "lead": "both",
-      "why": "Neither side alone better \u2014 shared never-apart punch = both.",
+      "why": "Neither side alone better — shared never-apart punch = both.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 36,
       "user_note": "Both; neither alone better."
     },
@@ -772,9 +772,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "both",
-      "why": "Setup only for 'if I express my love' \u2014 both; confession content lands later.",
+      "why": "Setup only for 'if I express my love' — both; confession content lands later.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 37,
       "user_note": "Both because only sets up if I express my love.",
       "revised_from": "F"
@@ -792,9 +792,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "F",
-      "why": "Confession act open \u2014 'If I express' = F.",
+      "why": "Confession act open — 'If I express' = F.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 38,
       "user_note": "Feminine 39 and 40."
     },
@@ -811,9 +811,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "F",
-      "why": "Core confession object \u2014 'my love for you' = F with 39.",
+      "why": "Core confession object — 'my love for you' = F with 39.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 39,
       "user_note": "Feminine 39 and 40."
     },
@@ -830,9 +830,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "F",
-      "why": "Closes confession question \u2014 F obviously.",
+      "why": "Closes confession question — F obviously.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 40,
       "user_note": "Feminine obviously."
     },
@@ -849,9 +849,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "M",
-      "why": "Assertive stance half \u2014 'No matter what you do' = M (actions/grit). Split with 43 F so loyalty/soft verbal half lands feminine.",
+      "why": "Assertive stance half — 'No matter what you do' = M (actions/grit). Split with 43 F so loyalty/soft verbal half lands feminine.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 41,
       "user_note": "Split: M 42 / F 43 (user accepted agent recommendation)."
     },
@@ -868,9 +868,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "F",
-      "why": "Softer verbal half \u2014 'or what you say,' = F (words/reassurance/loyalty). Completes resolve parent after M on do.",
+      "why": "Softer verbal half — 'or what you say,' = F (words/reassurance/loyalty). Completes resolve parent after M on do.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 42,
       "user_note": "Split: M 42 / F 43."
     },
@@ -887,9 +887,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "both",
-      "why": "Chorus setup 'We'll be' \u2014 both. M-to-preempt-F considered but unjustified; dual until vow words earn a lead.",
+      "why": "Chorus setup 'We'll be' — both. M-to-preempt-F considered but unjustified; dual until vow words earn a lead.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 43,
       "user_note": "Both; considered M preempt but can't justify."
     },
@@ -942,9 +942,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "both",
-      "why": "Setup into apart \u2014 both. Girl theme corrected to Sayori (not Monika).",
+      "why": "Setup into apart — both. Girl theme corrected to Sayori (not Monika).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 46,
       "user_note": "Both; girl=sayori (user correction)."
     },
@@ -961,9 +961,9 @@
       "girl": "sayori",
       "grain": "word",
       "lead": "both",
-      "why": "Never-apart punch \u2014 both; neither side alone better.",
+      "why": "Never-apart punch — both; neither side alone better.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 47,
       "user_note": "Both."
     },
@@ -980,9 +980,9 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika harmony \u2014 F by new character default (Monika \u2192 feminine lead; male always support under, not muted). Vow echo stays soft/feminine.",
+      "why": "Monika harmony — F by new character default (Monika → feminine lead; male always support under, not muted). Vow echo stays soft/feminine.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 48,
       "user_note": "Standard: non-Monika default both; Monika default F with male support. This unit feminine.",
       "revised_from": "both"
@@ -1000,9 +1000,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "both",
-      "why": "Yuri tag \u2014 both by non-Monika default.",
+      "why": "Yuri tag — both by non-Monika default.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 49,
       "user_note": "Both."
     },
@@ -1019,9 +1019,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "both",
-      "why": "Yuri open \u2014 both by default.",
+      "why": "Yuri open — both by default.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 50,
       "user_note": "Both."
     },
@@ -1038,9 +1038,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "both",
-      "why": "Fluster could be F (and last verse too), but both \u2014 hold pure F for an upcoming feminine verse the user wants to land harder.",
+      "why": "Fluster could be F (and last verse too), but both — hold pure F for an upcoming feminine verse the user wants to land harder.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 51,
       "user_note": "Arguably F + last verse F-capable; both to reserve feminine verse upcoming."
     },
@@ -1057,9 +1057,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "both",
-      "why": "Building phrase \u2014 both.",
+      "why": "Building phrase — both.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 52,
       "user_note": "Both."
     },
@@ -1076,9 +1076,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "F",
-      "why": "F override: begins Yuri's exemplary shyness beat \u2014 soft peak 'so great' as the turn into her unique shy register (reserved feminine stretch starts here).",
+      "why": "F override: begins Yuri's exemplary shyness beat — soft peak 'so great' as the turn into her unique shy register (reserved feminine stretch starts here).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 53,
       "user_note": "F; begins Yuri shyness (exemplary/unique feature).",
       "revised_from": "both"
@@ -1096,9 +1096,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "F",
-      "why": "Continues Yuri shy stretch after 'so great' \u2014 eyes-meet intimacy = F.",
+      "why": "Continues Yuri shy stretch after 'so great' — eyes-meet intimacy = F.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 54,
       "user_note": "Continuing (F shy run)."
     },
@@ -1115,9 +1115,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "F",
-      "why": "Completes eyes-meet shy line \u2014 F; no reason not to keep feminine.",
+      "why": "Completes eyes-meet shy line — F; no reason not to keep feminine.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 55,
       "user_note": "No reason not to keep feminine."
     },
@@ -1134,9 +1134,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "F",
-      "why": "Classic Yuri shy apology \u2014 F.",
+      "why": "Classic Yuri shy apology — F.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 56,
       "user_note": "Classic. Keep feminine."
     },
@@ -1153,9 +1153,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "F",
-      "why": "Apology close \u2014 F with shy Yuri run.",
+      "why": "Apology close — F with shy Yuri run.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 57,
       "user_note": "Feminine."
     },
@@ -1163,8 +1163,8 @@
       "id": 59,
       "start": 92.44,
       "end": 93.46,
-      "text": "I really love\u2014",
-      "parent_line": "I really love\u2014",
+      "text": "I really love—",
+      "parent_line": "I really love—",
       "parent_t": [
         92.44,
         93.46
@@ -1172,9 +1172,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "both",
-      "why": "Cut-off into Monika \u2014 both by Sayori default.",
+      "why": "Cut-off into Monika — both by Sayori default.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 58,
       "user_note": "Both."
     },
@@ -1191,9 +1191,9 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika meta address 'The way you write' \u2014 F default + male support.",
+      "why": "Monika meta address 'The way you write' — F default + male support.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 59,
       "user_note": "Meta address indeed. Feminine."
     },
@@ -1210,9 +1210,9 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Completes Monika meta \u2014 F default.",
+      "why": "Completes Monika meta — F default.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 60,
       "user_note": "Feminine."
     },
@@ -1229,9 +1229,9 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika 4th-wall demand 'I wanna hear you' \u2014 F. Stick with wall-break as feminine Monika voice; male support under.",
+      "why": "Monika 4th-wall demand 'I wanna hear you' — F. Stick with wall-break as feminine Monika voice; male support under.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 61,
       "user_note": "Feminine. Stick with 4th wall breaking."
     },
@@ -1248,9 +1248,9 @@
       "girl": "monika",
       "grain": "word",
       "lead": "F",
-      "why": "Hinge 'say:' \u2014 F Monika default into quote.",
+      "why": "Hinge 'say:' — F Monika default into quote.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 62,
       "user_note": "Feminine."
     },
@@ -1267,9 +1267,9 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Quoted 'This love' \u2014 F Monika 4th-wall.",
+      "why": "Quoted 'This love' — F Monika 4th-wall.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 63,
       "user_note": "Feminine."
     },
@@ -1286,9 +1286,9 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Quote interior 'that I am feeling' \u2014 F Monika.",
+      "why": "Quote interior 'that I am feeling' — F Monika.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 64,
       "user_note": "Feminine."
     },
@@ -1305,9 +1305,9 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Quote close 'is true!' \u2014 F Monika 4th-wall stack.",
+      "why": "Quote close 'is true!' — F Monika 4th-wall stack.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 65,
       "user_note": "Feminine."
     },
@@ -1324,9 +1324,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Playful Natsuki \u2014 both. Rebalance after long Monika F run; not for lack of F-defensibility on 'tasty love'.",
+      "why": "Playful Natsuki — both. Rebalance after long Monika F run; not for lack of F-defensibility on 'tasty love'.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 66,
       "user_note": "Both because of massive preceding feminine stretch."
     },
@@ -1343,9 +1343,9 @@
       "girl": "natsuki",
       "grain": "phrase",
       "lead": "both",
-      "why": "Desire close \u2014 both.",
+      "why": "Desire close — both.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 67,
       "user_note": "Both."
     },
@@ -1362,9 +1362,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "both",
-      "why": "Choice-pressure open \u2014 both.",
+      "why": "Choice-pressure open — both.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 68,
       "user_note": "Both."
     },
@@ -1383,7 +1383,7 @@
       "lead": "M",
       "why": "Choose ping-pong (like 24): 'If you had to choose' = M assertive half. Pairs with 71 F on 'just one of us?'",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 69,
       "user_note": "Ping-pong accepted; didn't plan it but works great."
     },
@@ -1402,7 +1402,7 @@
       "lead": "F",
       "why": "Choose ping-pong land: 'just one of us?' = F (plea/collective ask half), mirrors unit 25.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 70,
       "user_note": "Ping-pong with 70 M."
     },
@@ -1419,12 +1419,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Instrumental \u00d70.75 during Monika.",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) ×0.60 during Monika.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 71,
-      "user_note": "Skipped batch; Monika F default. Instr \u221225% rule noted.",
-      "monika_instrumental_duck": 0.75
+      "user_note": "Skipped batch; Monika F default. Instr −25% rule noted.",
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 73,
@@ -1439,12 +1439,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Instrumental \u00d70.75 during Monika.",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) ×0.60 during Monika.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 72,
-      "user_note": "Skipped batch; Monika F default. Instr \u221225% rule noted.",
-      "monika_instrumental_duck": 0.75
+      "user_note": "Skipped batch; Monika F default. Instr −25% rule noted.",
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 74,
@@ -1459,12 +1459,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Instrumental \u00d70.75 during Monika.",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) ×0.60 during Monika.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 73,
-      "user_note": "Skipped batch; Monika F default. Instr \u221225% rule noted.",
-      "monika_instrumental_duck": 0.75
+      "user_note": "Skipped batch; Monika F default. Instr −25% rule noted.",
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 75,
@@ -1479,12 +1479,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Instrumental \u00d70.75 during Monika.",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) ×0.60 during Monika.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 74,
-      "user_note": "Skipped batch; Monika F default. Instr \u221225% rule noted.",
-      "monika_instrumental_duck": 0.75
+      "user_note": "Skipped batch; Monika F default. Instr −25% rule noted.",
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 76,
@@ -1499,12 +1499,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Instrumental \u00d70.75 during Monika.",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) ×0.60 during Monika.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 75,
-      "user_note": "Skipped batch; Monika F default. Instr \u221225% rule noted.",
-      "monika_instrumental_duck": 0.75
+      "user_note": "Skipped batch; Monika F default. Instr −25% rule noted.",
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 77,
@@ -1519,12 +1519,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Instrumental \u00d70.75 during Monika.",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) ×0.60 during Monika.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 76,
-      "user_note": "Skipped batch; Monika F default. Instr \u221225% rule noted.",
-      "monika_instrumental_duck": 0.75
+      "user_note": "Skipped batch; Monika F default. Instr −25% rule noted.",
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 78,
@@ -1539,12 +1539,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Instrumental \u00d70.75 during Monika.",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) ×0.60 during Monika.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 77,
-      "user_note": "Skipped batch; Monika F default. Instr \u221225% rule noted.",
-      "monika_instrumental_duck": 0.75
+      "user_note": "Skipped batch; Monika F default. Instr −25% rule noted.",
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 79,
@@ -1559,12 +1559,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Instrumental \u00d70.75 during Monika.",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) ×0.60 during Monika.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 78,
-      "user_note": "Skipped batch; Monika F default. Instr \u221225% rule noted.",
-      "monika_instrumental_duck": 0.75
+      "user_note": "Skipped batch; Monika F default. Instr −25% rule noted.",
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 80,
@@ -1579,12 +1579,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Instrumental \u00d70.75 during Monika.",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) ×0.60 during Monika.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 79,
-      "user_note": "Skipped batch; Monika F default. Instr \u221225% rule noted.",
-      "monika_instrumental_duck": 0.75
+      "user_note": "Skipped batch; Monika F default. Instr −25% rule noted.",
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 81,
@@ -1599,12 +1599,12 @@
       "girl": "monika",
       "grain": "word",
       "lead": "F",
-      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Instrumental \u00d70.75 during Monika.",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) ×0.60 during Monika.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 80,
-      "user_note": "Skipped batch; Monika F default. Instr \u221225% rule noted.",
-      "monika_instrumental_duck": 0.75
+      "user_note": "Skipped batch; Monika F default. Instr −25% rule noted.",
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 82,
@@ -1619,9 +1619,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "both",
-      "why": "How can I convey \u2014 both by non-Monika default.",
+      "why": "How can I convey — both by non-Monika default.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 81,
       "user_note": "Both indeed."
     },
@@ -1638,9 +1638,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "both",
-      "why": "Devotion phrase \u2014 both; no justified ping-pong.",
+      "why": "Devotion phrase — both; no justified ping-pong.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 82,
       "user_note": "both."
     },
@@ -1657,9 +1657,9 @@
       "girl": "yuri",
       "grain": "phrase",
       "lead": "both",
-      "why": "Urgency/dread close \u2014 both.",
+      "why": "Urgency/dread close — both.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 83,
       "user_note": "Both."
     },
@@ -1678,7 +1678,7 @@
       "lead": "M",
       "why": "Ping-pong: 'I think about it' = M (active cognition / deliberating). Pairs with 86 F on duration/obsession.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 84,
       "user_note": "Split execute: 85 M / 86 F.",
       "revised_from": "both"
@@ -1698,7 +1698,7 @@
       "lead": "F",
       "why": "Ping-pong land: 'all day everyday' = F (soft duration / never-stopping longing) after M think.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 85,
       "user_note": "Split execute: 85 M / 86 F."
     },
@@ -1715,11 +1715,11 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F + male support; instr \u00d70.75. Batch-skipped to next non-Monika (final Sayori stack).",
+      "why": "Monika default F + male support; non-vocal ×0.60. Batch-skipped to next non-Monika (final Sayori stack).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 86,
-      "monika_instrumental_duck": 0.75,
+      "monika_instrumental_duck": 0.6,
       "user_note": "Monika confirmed; skip to last non-Monika lines."
     },
     {
@@ -1735,12 +1735,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F + male support; instr \u00d70.75. Batch-skipped to next non-Monika (final Sayori stack).",
+      "why": "Monika default F + male support; non-vocal ×0.60. Batch-skipped to next non-Monika (final Sayori stack).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 87,
       "user_note": "Monika confirmed; skip to last non-Monika lines.",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 89,
@@ -1755,12 +1755,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F + male support; instr \u00d70.75. Batch-skipped to next non-Monika (final Sayori stack).",
+      "why": "Monika default F + male support; non-vocal ×0.60. Batch-skipped to next non-Monika (final Sayori stack).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 88,
       "user_note": "Monika confirmed; skip to last non-Monika lines.",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 90,
@@ -1775,12 +1775,12 @@
       "girl": "monika",
       "grain": "word",
       "lead": "F",
-      "why": "Monika default F + male support; instr \u00d70.75. Batch-skipped to next non-Monika (final Sayori stack).",
+      "why": "Monika default F + male support; non-vocal ×0.60. Batch-skipped to next non-Monika (final Sayori stack).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 89,
       "user_note": "Monika confirmed; skip to last non-Monika lines.",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 91,
@@ -1795,12 +1795,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F + male support; instr \u00d70.75. Batch-skipped to next non-Monika (final Sayori stack).",
+      "why": "Monika default F + male support; non-vocal ×0.60. Batch-skipped to next non-Monika (final Sayori stack).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 90,
       "user_note": "Monika confirmed; skip to last non-Monika lines.",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 92,
@@ -1815,12 +1815,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F + male support; instr \u00d70.75. Batch-skipped to next non-Monika (final Sayori stack).",
+      "why": "Monika default F + male support; non-vocal ×0.60. Batch-skipped to next non-Monika (final Sayori stack).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 91,
       "user_note": "Monika confirmed; skip to last non-Monika lines.",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 93,
@@ -1835,12 +1835,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F + male support; instr \u00d70.75. Batch-skipped to next non-Monika (final Sayori stack).",
+      "why": "Monika default F + male support; non-vocal ×0.60. Batch-skipped to next non-Monika (final Sayori stack).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 92,
       "user_note": "Monika confirmed; skip to last non-Monika lines.",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 94,
@@ -1855,12 +1855,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F + male support; instr \u00d70.75. Batch-skipped to next non-Monika (final Sayori stack).",
+      "why": "Monika default F + male support; non-vocal ×0.60. Batch-skipped to next non-Monika (final Sayori stack).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 93,
       "user_note": "Monika confirmed; skip to last non-Monika lines.",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 95,
@@ -1875,12 +1875,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F + male support; instr \u00d70.75. Batch-skipped to next non-Monika (final Sayori stack).",
+      "why": "Monika default F + male support; non-vocal ×0.60. Batch-skipped to next non-Monika (final Sayori stack).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 94,
       "user_note": "Monika confirmed; skip to last non-Monika lines.",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 96,
@@ -1895,12 +1895,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F + male support; instr \u00d70.75. Batch-skipped to next non-Monika (final Sayori stack).",
+      "why": "Monika default F + male support; non-vocal ×0.60. Batch-skipped to next non-Monika (final Sayori stack).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 95,
       "user_note": "Monika confirmed; skip to last non-Monika lines.",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 97,
@@ -1915,12 +1915,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika default F + male support; instr \u00d70.75. Batch-skipped to next non-Monika (final Sayori stack).",
+      "why": "Monika default F + male support; non-vocal ×0.60. Batch-skipped to next non-Monika (final Sayori stack).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 96,
       "user_note": "Monika confirmed; skip to last non-Monika lines.",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 98,
@@ -1935,9 +1935,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "both",
-      "why": "Final Sayori vow setup 'We'll be' \u2014 both.",
+      "why": "Final Sayori vow setup 'We'll be' — both.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 97,
       "user_note": "Both; then together/forever F/M split on next."
     },
@@ -1990,9 +1990,9 @@
       "girl": "sayori",
       "grain": "phrase",
       "lead": "both",
-      "why": "Never-apart setup \u2014 both. F/both tempting from other mix but unjustified here.",
+      "why": "Never-apart setup — both. F/both tempting from other mix but unjustified here.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 100,
       "user_note": "Both. Tempted F/both, can't justify."
     },
@@ -2009,9 +2009,9 @@
       "girl": "sayori",
       "grain": "word",
       "lead": "both",
-      "why": "apart! \u2014 both; neither side alone better (like 37/48).",
+      "why": "apart! — both; neither side alone better (like 37/48).",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 101,
       "user_note": "Both (paired with 101)."
     },
@@ -2028,9 +2028,9 @@
       "girl": "sayori",
       "grain": "word",
       "lead": "both",
-      "why": "Sayori final '(Forever, forever)' echo \u2014 both. Closed with 101\u2013102; no further ping-pong.",
+      "why": "Sayori final '(Forever, forever)' echo — both. Closed with 101–102; no further ping-pong.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 102,
       "user_note": "Auto-closed with final Sayori stack (user: done?)."
     },
@@ -2047,9 +2047,9 @@
       "girl": "sayori",
       "grain": "word",
       "lead": "both",
-      "why": "Sayori final '(Forever, forever)' echo \u2014 both. Closed with 101\u2013102; no further ping-pong.",
+      "why": "Sayori final '(Forever, forever)' echo — both. Closed with 101–102; no further ping-pong.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 103,
       "user_note": "Auto-closed with final Sayori stack (user: done?)."
     },
@@ -2066,12 +2066,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika closing bittersweet \u2014 F default + male support; instr \u00d70.75. Batch-closed end of map.",
+      "why": "Monika closing bittersweet — F default + male support; non-vocal ×0.60. Batch-closed end of map.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 104,
       "user_note": "Auto-closed Monika outro (user: done?).",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 106,
@@ -2086,12 +2086,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika closing bittersweet \u2014 F default + male support; instr \u00d70.75. Batch-closed end of map.",
+      "why": "Monika closing bittersweet — F default + male support; non-vocal ×0.60. Batch-closed end of map.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 105,
       "user_note": "Auto-closed Monika outro (user: done?).",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 107,
@@ -2106,12 +2106,12 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika closing bittersweet \u2014 F default + male support; instr \u00d70.75. Batch-closed end of map.",
+      "why": "Monika closing bittersweet — F default + male support; non-vocal ×0.60. Batch-closed end of map.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 106,
       "user_note": "Auto-closed Monika outro (user: done?).",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     },
     {
       "id": 108,
@@ -2126,25 +2126,25 @@
       "girl": "monika",
       "grain": "phrase",
       "lead": "F",
-      "why": "Monika closing bittersweet \u2014 F default + male support; instr \u00d70.75. Batch-closed end of map.",
+      "why": "Monika closing bittersweet — F default + male support; non-vocal ×0.60. Batch-closed end of map.",
       "status": "agreed",
-      "timing_note": "provisional: linear share within parent line \u2014 refine if ears disagree",
+      "timing_note": "provisional: linear share within parent line — refine if ears disagree",
       "prev_id": 107,
       "user_note": "Auto-closed Monika outro (user: done?).",
-      "monika_instrumental_duck": 0.75
+      "monika_instrumental_duck": 0.6
     }
   ],
   "review_notes": [
     "2026-08-02: User flags open as already F-heavy; prefer both/M more often when defensible.",
-    "User prefers justified ping-pongs on paired vow words (together/forever, me/you, choose halves) \u2014 predict F/M answers more often."
+    "User prefers justified ping-pongs on paired vow words (together/forever, me/you, choose halves) — predict F/M answers more often."
   ],
   "total_units_note": "was 104; after me/and/you split now 106",
   "character_lead_defaults": {
     "id": "character_lead_defaults",
     "set": "2026-08-03",
     "rules": [
-      "Default lead by girl theme: sayori / natsuki / yuri / transitionary \u2192 both, unless a unit-level semantic or ping-pong reason overrides.",
-      "Default lead by girl theme: monika \u2192 F (feminine lead). Male always remains as support (undertrack), never hard-muted.",
+      "Default lead by girl theme: sayori / natsuki / yuri / transitionary → both, unless a unit-level semantic or ping-pong reason overrides.",
+      "Default lead by girl theme: monika → F (feminine lead). Male always remains as support (undertrack), never hard-muted.",
       "Rationale (Monika): among the four she reads especially feminine; she already had a diegetic voice in-game, so a masculine lead on her lines is less motivated. Male support still present under F lead.",
       "Overrides still allowed: justified ping-pongs, imperatives, fate/claim words, etc. can break the default when we argue them unit-by-unit."
     ],
@@ -2157,11 +2157,21 @@
   "monika_instrumental_duck": {
     "id": "monika_instrumental_duck",
     "set": "2026-08-03",
-    "rule": "During Monika vocal leads/windows, instrumental is 25% quieter (\u00d70.75).",
-    "rationale": "Tribute: represents Monika's authority over the world the four are singing about. Preliminary \u2014 adjust later if needed.",
-    "gain": 0.75,
-    "applies_when": "girl theme == monika (vocal time under Monika window / monika units)",
-    "status": "preliminary"
+    "updated": "2026-08-03",
+    "rule": "During Monika vocal units, all non-vocal stems (instrumental + drums) are 40% quieter (×0.60).",
+    "rationale": "Tribute: Monika's authority over the world. Raised from −25% (×0.75) to −40% (×0.60) so her F lead reads clearer; drums now included (were previously unducked).",
+    "gain": 0.6,
+    "prior_gain": 0.75,
+    "applies_when": "girl theme == monika (vocal time under monika units)",
+    "applies_to": [
+      "instrumental",
+      "drums"
+    ],
+    "does_not_apply_to": [
+      "female_vocal",
+      "male_vocal"
+    ],
+    "status": "active"
   },
   "map_status": "complete",
   "completed_at": "2026-08-03"

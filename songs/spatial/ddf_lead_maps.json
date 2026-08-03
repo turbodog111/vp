@@ -5,7 +5,7 @@
     "lead": 1.05,
     "under": 0.15,
     "ramp": 0.18,
-    "monika_instrumental_duck": 0.75,
+    "monika_instrumental_duck": 0.6,
     "stats": {
       "pct_both_high": 46.0,
       "pct_female_lead": 46.3,
@@ -770,6 +770,10 @@
         "lyric": "you'll be in my heart!",
         "girl": "monika"
       }
+    ],
+    "monika_nonvocal_targets": [
+      "instrumental",
+      "drums"
     ]
   },
   "default": {
@@ -778,7 +782,7 @@
     "lead": 1.05,
     "under": 0.15,
     "ramp": 0.18,
-    "monika_instrumental_duck": 0.75,
+    "monika_instrumental_duck": 0.6,
     "stats": {
       "pct_both_high": 46.0,
       "pct_female_lead": 46.3,
@@ -1551,7 +1555,7 @@
     "lead": 1.05,
     "under": 0.15,
     "ramp": 0.18,
-    "monika_instrumental_duck": 0.75,
+    "monika_instrumental_duck": 0.6,
     "stats": {
       "pct_both_high": 46.0,
       "pct_female_lead": 46.3,
