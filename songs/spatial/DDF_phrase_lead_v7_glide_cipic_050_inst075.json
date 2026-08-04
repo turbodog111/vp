@@ -1,0 +1,924 @@
+{
+  "id": "v7_phrase_word_lead_glide_cipic_050_inst075",
+  "title": "Traveling Voices v7 Slow Glide CIPIC 050 Quiet Inst",
+  "blurb": "Slow Glide compass origins (same as KEMAR Slow Glide) + free CIPIC human subject 050 HRTF (UC Davis). Phrase/word leads + Monika treatment unchanged. Human pinna fit \u2014 pick from HRTF Clip Lab. Instrumental bed \u00d70.75 (25% quieter); vocals/drums/spatial unchanged.",
+  "variant": "slow_glide_cipic_050_inst075",
+  "both_f": 0.78,
+  "both_m": 0.78,
+  "lead": 1.05,
+  "under": 0.15,
+  "ramp": 0.18,
+  "monika_f_lead": 1.1,
+  "monika_instrumental_duck": 0.6,
+  "monika_nonvocal_targets": [
+    "instrumental",
+    "drums"
+  ],
+  "instrumental_gain": 0.75,
+  "spatial": "compass_slow_glide_cipic_050_v7c",
+  "spatial_note": "WHERE = Audio Compass (F az/el; M opposite). SLOW GLIDE map: long full-interval transitions (~6.7s). HRTF engine: free CIPIC subject 050 SOFA. Physics (head-yaw, DRR, IACC). No darkening EQ. WHO is loud = phrase lead. Headphones.",
+  "spatial_physics": {
+    "head_yaw_deg": 4.0,
+    "head_yaw_hz": 0.12,
+    "image_source_reflections": true,
+    "iacc_decorrelate_rear": true,
+    "no_darkening_eq": true,
+    "hrtf_engine": "CIPIC subject 050",
+    "refs": [
+      "Wallach (1940) head-movement / front-back disambiguation",
+      "Direct-to-reverberant ratio as distance/behind cue (room acoustics)",
+      "Interaural coherence (IACC) for externalization / diffuse fields",
+      "MIT KEMAR (Gardner & Martin 1994) and/or SADIE II (York/Zenodo)"
+    ]
+  },
+  "compass_map": "/Users/joshua/Documents/Codex/2026-05-16/hey-codex-i-was-working-with/vp/songs/spatial/DDF_travel_jumpy_slow_glide.json",
+  "compass_keyframes": 28,
+  "compass_transition_sec": 6.761,
+  "hrtf": {
+    "dataset": "CIPIC subject 050",
+    "source": "https://www.ece.ucdavis.edu/cipic/spatial-sound/hrtf-data/",
+    "project": "https://www.ece.ucdavis.edu/cipic/",
+    "cost": "free (research)",
+    "sofa": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/stems/hrtf_cipic/subject_050.sofa",
+    "citation": "Algazi, V.R., Duda, R.O., Thompson, D.M., Avendano, C. The CIPIC HRTF Database. IEEE WASPAA, 2001."
+  },
+  "stats": {
+    "pct_both_high": 46.0,
+    "pct_female_lead": 46.3,
+    "pct_male_lead": 6.3
+  },
+  "units": 108,
+  "segments": [
+    {
+      "start": 10.49,
+      "end": 11.56,
+      "lead": "F",
+      "lyric": "Doki Doki!",
+      "girl": "transitionary",
+      "why": "Introductory chant \u2014 not tied to a character. Feminine-only lead (male under) like keeping two instrumental versions with one voice in front. Girl theme is transitionary (not Monika); transition CGs later."
+    },
+    {
+      "start": 11.56,
+      "end": 12.45,
+      "lead": "F",
+      "lyric": "Hey hey!",
+      "girl": "sayori",
+      "why": "Feminine lead for continuity from intro chant. Either F or both was fine; chose F so the open stays one voice color into verse 1."
+    },
+    {
+      "start": 12.45,
+      "end": 13.78,
+      "lead": "F",
+      "lyric": "My heart's beating",
+      "girl": "sayori",
+      "why": "Feminine clause \u2014 soft romantic open. No further split needed."
+    },
+    {
+      "start": 13.78,
+      "end": 16.44,
+      "lead": "F",
+      "lyric": "when I'm hanging out with you!",
+      "girl": "sayori",
+      "why": "Completes Sayori open sentence \u2014 warm hang-out close; F for full-clause continuity."
+    },
+    {
+      "start": 16.44,
+      "end": 17.526,
+      "lead": "F",
+      "lyric": "Why does my",
+      "girl": "sayori",
+      "why": "Feminine lead, but weaker case for parking male under \u2014 soft question could sit dual. Still F for continuity into the ache couplet. Unit extended to include 'my' (more melodically sound)."
+    },
+    {
+      "start": 17.526,
+      "end": 18.25,
+      "lead": "F",
+      "lyric": "heart ache,",
+      "girl": "sayori",
+      "why": "Heart-ache image \u2014 feminine strongly defensible (more than unit 5)."
+    },
+    {
+      "start": 18.25,
+      "end": 19.339,
+      "lead": "F",
+      "lyric": "When I hear you",
+      "girl": "sayori",
+      "why": "Ache couplet \u2014 relational soft open. Feminine for clause continuity."
+    },
+    {
+      "start": 19.339,
+      "end": 20.7,
+      "lead": "F",
+      "lyric": "feel the same way too?",
+      "girl": "sayori",
+      "why": "Completes 'feel the same way too?' \u2014 reciprocal feeling; feminine."
+    },
+    {
+      "start": 20.7,
+      "end": 22.68,
+      "lead": "both",
+      "lyric": "(Eheheh)",
+      "girl": "sayori",
+      "why": "Ad-lib laugh \u2014 no claim. Dual so both stems share the breath between Sayori ache and Natsuki. Also rebalances after a long F run at the open."
+    },
+    {
+      "start": 22.68,
+      "end": 23.52,
+      "lead": "both",
+      "lyric": "Just like a",
+      "girl": "natsuki",
+      "why": "Playful simile setup \u2014 both genders covered. Unit text is 'Just like a' for melodic sense (not stopping before 'a')."
+    },
+    {
+      "start": 23.52,
+      "end": 24.34,
+      "lead": "F",
+      "lyric": "sundae,",
+      "girl": "natsuki",
+      "why": "Word-level: 'sundae' is feminine-connotated (sweet dessert image). Split from 'Just like a' (both) so only this punch goes F \u2014 first deliberate F after rebalance, justified by the word itself."
+    },
+    {
+      "start": 24.34,
+      "end": 25.962,
+      "lead": "both",
+      "lyric": "It's sweet every time",
+      "girl": "natsuki",
+      "why": "Playful Natsuki clause \u2014 both; not intimacy. Avoids stacking F after sundae."
+    },
+    {
+      "start": 25.962,
+      "end": 27.99,
+      "lead": "both",
+      "lyric": "I teach you something new!",
+      "girl": "natsuki",
+      "why": "Playful agency close \u2014 both; M was optional on 'teach you'."
+    },
+    {
+      "start": 27.99,
+      "end": 28.94,
+      "lead": "both",
+      "lyric": "Is this by chance,",
+      "girl": "natsuki",
+      "why": "Open question on 'chance' \u2014 both. (User aside: weakest lyric theologically; lead still dual.)"
+    },
+    {
+      "start": 28.94,
+      "end": 30.08,
+      "lead": "M",
+      "lyric": "Or fate?",
+      "girl": "natsuki",
+      "why": "Word punch 'fate' \u2014 M. User: even though transcendentalist/philosophical ideas can associate with female thinkers (Monika-influenced), male lead feels right for this delivery."
+    },
+    {
+      "start": 30.08,
+      "end": 31.195,
+      "lead": "both",
+      "lyric": "Whenever it's just",
+      "girl": "natsuki",
+      "why": "Clause setup into exclusive claim \u2014 both."
+    },
+    {
+      "start": 31.195,
+      "end": 31.543,
+      "lead": "F",
+      "lyric": "me",
+      "girl": "natsuki",
+      "why": "Self/intimate pole of the pair \u2014 feminine word lead."
+    },
+    {
+      "start": 31.543,
+      "end": 31.892,
+      "lead": "both",
+      "lyric": "and",
+      "girl": "natsuki",
+      "why": "Shared hinge between self and addressee \u2014 dual glue."
+    },
+    {
+      "start": 31.892,
+      "end": 32.31,
+      "lead": "M",
+      "lyric": "you?",
+      "girl": "natsuki",
+      "why": "Addressee/claim pole \u2014 masculine word lead."
+    },
+    {
+      "start": 32.31,
+      "end": 34.56,
+      "lead": "both",
+      "lyric": "(E-Eh! Don't get the wrong idea!)",
+      "girl": "natsuki",
+      "why": "Whole tsundere parent kept as one unit \u2014 never split. Dual: startled defense without a single-stem punch."
+    },
+    {
+      "start": 34.56,
+      "end": 36.789,
+      "lead": "F",
+      "lyric": "When we touch,",
+      "girl": "yuri",
+      "why": "Yuri intimacy open \u2014 tactile. F; same lead as 22 but kept as separate unit."
+    },
+    {
+      "start": 36.789,
+      "end": 39.76,
+      "lead": "F",
+      "lyric": "it'll never be enough",
+      "girl": "yuri",
+      "why": "Completes intimacy clause \u2014 'never be enough'. F with 21; not merged."
+    },
+    {
+      "start": 39.76,
+      "end": 42.01,
+      "lead": "both",
+      "lyric": "Is it way too much",
+      "girl": "sayori",
+      "why": "Opens choose-one pressure \u2014 dual plea. Semantic justification is both; user remix had word styling is it=B / way=F / too=M / much=F for motion only (no semantic case here) \u2014 not applied."
+    },
+    {
+      "start": 42.01,
+      "end": 44.26,
+      "lead": "M",
+      "lyric": "if you had to choose",
+      "girl": "sayori",
+      "why": "M as deliberate ping-pong into F on unit 25. Both voices independently (then collectively) press the choice: this clause is the male-led half; 'just one of us?' is the feminine land. Defensible as independent\u2192collective ask."
+    },
+    {
+      "start": 44.26,
+      "end": 46.06,
+      "lead": "F",
+      "lyric": "just one of us?",
+      "girl": "sayori",
+      "why": "Feminine land of choice ping-pong after M on 'if you had to choose'."
+    },
+    {
+      "start": 46.06,
+      "end": 46.964,
+      "lead": "both",
+      "lyric": "Tell me,",
+      "girl": "natsuki",
+      "why": "Opens demand stack \u2014 both. User will shake up leads soon."
+    },
+    {
+      "start": 46.964,
+      "end": 47.868,
+      "lead": "both",
+      "lyric": "tell me,",
+      "girl": "natsuki",
+      "why": "Second tell-me echo \u2014 both; shake-up not yet."
+    },
+    {
+      "start": 47.868,
+      "end": 48.32,
+      "lead": "both",
+      "lyric": "please!",
+      "girl": "natsuki",
+      "why": "Closes demand parent \u2014 both."
+    },
+    {
+      "start": 48.32,
+      "end": 49.65,
+      "lead": "F",
+      "lyric": "Is this what I think,",
+      "girl": "natsuki",
+      "why": "Shake-up: F not both. 'Is this what I think' reads as Natsuki tsundere stubbornness / self-certain push \u2014 feminine-coded trait in this framing."
+    },
+    {
+      "start": 49.65,
+      "end": 51.34,
+      "lead": "F",
+      "lyric": "Or is it just me?",
+      "girl": "natsuki",
+      "why": "Vulnerability close of self-check \u2014 F no doubt; Natsuki personal frame."
+    },
+    {
+      "start": 51.34,
+      "end": 52.779,
+      "lead": "M",
+      "lyric": "Don't wake me up from",
+      "girl": "natsuki",
+      "why": "Imperative/command \u2014 M. Includes 'from' for melodic sense. No dream image in this unit yet (that stays on the next unit). Distinct from tsundere soft."
+    },
+    {
+      "start": 52.779,
+      "end": 53.93,
+      "lead": "F",
+      "lyric": "this sweet little dream!",
+      "girl": "natsuki",
+      "why": "Dream image land after M imperative \u2014 sweet/little/dream = F."
+    },
+    {
+      "start": 53.93,
+      "end": 55.262,
+      "lead": "both",
+      "lyric": "Where we'll be",
+      "girl": "natsuki",
+      "why": "Forever-hook setup \u2014 both."
+    },
+    {
+      "start": 55.262,
+      "end": 55.706,
+      "lead": "F",
+      "lyric": "together",
+      "girl": "natsuki",
+      "why": "Ping-pong half of shared vow: 'together' = feminine (relational join). Both parties answering the call to be together \u2014 F first."
+    },
+    {
+      "start": 55.706,
+      "end": 56.15,
+      "lead": "M",
+      "lyric": "forever",
+      "girl": "natsuki",
+      "why": "Ping-pong half: 'forever' = masculine (duration/claim of permanence). Answers F 'together' as both parties responding."
+    },
+    {
+      "start": 56.15,
+      "end": 57.63,
+      "lead": "both",
+      "lyric": "We're never gonna be",
+      "girl": "natsuki",
+      "why": "Builds into apart \u2014 both while clause incomplete."
+    },
+    {
+      "start": 57.63,
+      "end": 58.0,
+      "lead": "both",
+      "lyric": "apart!",
+      "girl": "natsuki",
+      "why": "Neither side alone better \u2014 shared never-apart punch = both."
+    },
+    {
+      "start": 58.0,
+      "end": 59.9,
+      "lead": "both",
+      "lyric": "Will it be okay",
+      "girl": "sayori",
+      "why": "Setup only for 'if I express my love' \u2014 both; confession content lands later."
+    },
+    {
+      "start": 59.9,
+      "end": 60.803,
+      "lead": "F",
+      "lyric": "If I express",
+      "girl": "sayori",
+      "why": "Confession act open \u2014 'If I express' = F."
+    },
+    {
+      "start": 60.803,
+      "end": 62.008,
+      "lead": "F",
+      "lyric": "my love for you",
+      "girl": "sayori",
+      "why": "Core confession object \u2014 'my love for you' = F with 39."
+    },
+    {
+      "start": 62.008,
+      "end": 62.61,
+      "lead": "F",
+      "lyric": "this way?",
+      "girl": "sayori",
+      "why": "Closes confession question \u2014 F obviously."
+    },
+    {
+      "start": 62.61,
+      "end": 64.338,
+      "lead": "M",
+      "lyric": "No matter what you do",
+      "girl": "sayori",
+      "why": "Assertive stance half \u2014 'No matter what you do' = M (actions/grit). Split with 43 F so loyalty/soft verbal half lands feminine."
+    },
+    {
+      "start": 64.338,
+      "end": 65.72,
+      "lead": "F",
+      "lyric": "or what you say,",
+      "girl": "sayori",
+      "why": "Softer verbal half \u2014 'or what you say,' = F (words/reassurance/loyalty). Completes resolve parent after M on do."
+    },
+    {
+      "start": 65.72,
+      "end": 66.675,
+      "lead": "both",
+      "lyric": "We'll be",
+      "girl": "sayori",
+      "why": "Chorus setup 'We'll be' \u2014 both. M-to-preempt-F considered but unjustified; dual until vow words earn a lead."
+    },
+    {
+      "start": 66.675,
+      "end": 67.153,
+      "lead": "F",
+      "lyric": "together",
+      "girl": "sayori",
+      "why": "Vow ping-pong: together = F (relational join), same logic as unit 34."
+    },
+    {
+      "start": 67.153,
+      "end": 67.63,
+      "lead": "M",
+      "lyric": "forever",
+      "girl": "sayori",
+      "why": "Vow ping-pong: forever = M (duration/permanence), same logic as unit 35."
+    },
+    {
+      "start": 67.63,
+      "end": 72.006,
+      "lead": "both",
+      "lyric": "We're never gonna be",
+      "girl": "sayori",
+      "why": "Setup into apart \u2014 both. Girl theme corrected to Sayori (not Monika)."
+    },
+    {
+      "start": 72.006,
+      "end": 73.1,
+      "lead": "both",
+      "lyric": "apart!",
+      "girl": "sayori",
+      "why": "Never-apart punch \u2014 both; neither side alone better."
+    },
+    {
+      "start": 73.1,
+      "end": 77.4,
+      "lead": "F",
+      "lyric": "(We're never gonna be apart)",
+      "girl": "monika",
+      "why": "Monika harmony \u2014 F by new character default (Monika \u2192 feminine lead; male always support under, not muted). Vow echo stays soft/feminine."
+    },
+    {
+      "start": 81.28,
+      "end": 82.38,
+      "lead": "both",
+      "lyric": "Hey hey",
+      "girl": "yuri",
+      "why": "Yuri tag \u2014 both by non-Monika default."
+    },
+    {
+      "start": 82.38,
+      "end": 84.053,
+      "lead": "both",
+      "lyric": "When I'm next to you,",
+      "girl": "yuri",
+      "why": "Yuri open \u2014 both by default."
+    },
+    {
+      "start": 84.053,
+      "end": 86.06,
+      "lead": "both",
+      "lyric": "I don't know what to do",
+      "girl": "yuri",
+      "why": "Fluster could be F (and last verse too), but both \u2014 hold pure F for an upcoming feminine verse the user wants to land harder."
+    },
+    {
+      "start": 86.06,
+      "end": 87.36,
+      "lead": "both",
+      "lyric": "Why does it feel",
+      "girl": "yuri",
+      "why": "Building phrase \u2014 both."
+    },
+    {
+      "start": 87.36,
+      "end": 88.01,
+      "lead": "F",
+      "lyric": "so great,",
+      "girl": "yuri",
+      "why": "F override: begins Yuri's exemplary shyness beat \u2014 soft peak 'so great' as the turn into her unique shy register (reserved feminine stretch starts here)."
+    },
+    {
+      "start": 88.01,
+      "end": 89.075,
+      "lead": "F",
+      "lyric": "When our eyes meet",
+      "girl": "yuri",
+      "why": "Continues Yuri shy stretch after 'so great' \u2014 eyes-meet intimacy = F."
+    },
+    {
+      "start": 89.075,
+      "end": 90.14,
+      "lead": "F",
+      "lyric": "out of the blue?",
+      "girl": "yuri",
+      "why": "Completes eyes-meet shy line \u2014 F; no reason not to keep feminine."
+    },
+    {
+      "start": 90.14,
+      "end": 90.907,
+      "lead": "F",
+      "lyric": "(I-I'm sorry,",
+      "girl": "yuri",
+      "why": "Classic Yuri shy apology \u2014 F."
+    },
+    {
+      "start": 90.907,
+      "end": 92.44,
+      "lead": "F",
+      "lyric": "I said too much!)",
+      "girl": "yuri",
+      "why": "Apology close \u2014 F with shy Yuri run."
+    },
+    {
+      "start": 92.44,
+      "end": 93.46,
+      "lead": "both",
+      "lyric": "I really love\u2014",
+      "girl": "sayori",
+      "why": "Cut-off into Monika \u2014 both by Sayori default."
+    },
+    {
+      "start": 93.46,
+      "end": 95.035,
+      "lead": "F",
+      "lyric": "The way you write",
+      "girl": "monika",
+      "why": "Monika meta address 'The way you write' \u2014 F default + male support."
+    },
+    {
+      "start": 95.035,
+      "end": 97.79,
+      "lead": "F",
+      "lyric": "even when you don't have a clue!",
+      "girl": "monika",
+      "why": "Completes Monika meta \u2014 F default."
+    },
+    {
+      "start": 97.79,
+      "end": 99.462,
+      "lead": "F",
+      "lyric": "I wanna hear you",
+      "girl": "monika",
+      "why": "Monika 4th-wall demand 'I wanna hear you' \u2014 F. Stick with wall-break as feminine Monika voice; male support under."
+    },
+    {
+      "start": 99.462,
+      "end": 99.88,
+      "lead": "F",
+      "lyric": "say:",
+      "girl": "monika",
+      "why": "Hinge 'say:' \u2014 F Monika default into quote."
+    },
+    {
+      "start": 99.88,
+      "end": 101.085,
+      "lead": "F",
+      "lyric": "\"This love",
+      "girl": "monika",
+      "why": "Quoted 'This love' \u2014 F Monika 4th-wall."
+    },
+    {
+      "start": 101.085,
+      "end": 103.495,
+      "lead": "F",
+      "lyric": "that I am feeling",
+      "girl": "monika",
+      "why": "Quote interior 'that I am feeling' \u2014 F Monika."
+    },
+    {
+      "start": 103.495,
+      "end": 104.7,
+      "lead": "F",
+      "lyric": "is true!\"",
+      "girl": "monika",
+      "why": "Quote close 'is true!' \u2014 F Monika 4th-wall stack."
+    },
+    {
+      "start": 104.7,
+      "end": 106.097,
+      "lead": "both",
+      "lyric": "Tasty love,",
+      "girl": "natsuki",
+      "why": "Playful Natsuki \u2014 both. Rebalance after long Monika F run; not for lack of F-defensibility on 'tasty love'."
+    },
+    {
+      "start": 106.097,
+      "end": 109.59,
+      "lead": "both",
+      "lyric": "something I want more of!",
+      "girl": "natsuki",
+      "why": "Desire close \u2014 both."
+    },
+    {
+      "start": 109.59,
+      "end": 112.47,
+      "lead": "both",
+      "lyric": "Will it make the cut,",
+      "girl": "yuri",
+      "why": "Choice-pressure open \u2014 both."
+    },
+    {
+      "start": 112.47,
+      "end": 114.509,
+      "lead": "M",
+      "lyric": "If you had to choose",
+      "girl": "yuri",
+      "why": "Choose ping-pong (like 24): 'If you had to choose' = M assertive half. Pairs with 71 F on 'just one of us?'"
+    },
+    {
+      "start": 114.509,
+      "end": 116.14,
+      "lead": "F",
+      "lyric": "just one of us?",
+      "girl": "yuri",
+      "why": "Choose ping-pong land: 'just one of us?' = F (plea/collective ask half), mirrors unit 25."
+    },
+    {
+      "start": 116.14,
+      "end": 116.92,
+      "lead": "F",
+      "lyric": "Shall I",
+      "girl": "monika",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) \u00d70.60 during Monika."
+    },
+    {
+      "start": 116.92,
+      "end": 118.09,
+      "lead": "F",
+      "lyric": "leave you be?",
+      "girl": "monika",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) \u00d70.60 during Monika."
+    },
+    {
+      "start": 118.09,
+      "end": 119.123,
+      "lead": "F",
+      "lyric": "Is it love",
+      "girl": "monika",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) \u00d70.60 during Monika."
+    },
+    {
+      "start": 119.123,
+      "end": 121.19,
+      "lead": "F",
+      "lyric": "if I can set you free?",
+      "girl": "monika",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) \u00d70.60 during Monika."
+    },
+    {
+      "start": 121.19,
+      "end": 122.41,
+      "lead": "F",
+      "lyric": "But even if",
+      "girl": "monika",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) \u00d70.60 during Monika."
+    },
+    {
+      "start": 122.41,
+      "end": 123.63,
+      "lead": "F",
+      "lyric": "it's not reality,",
+      "girl": "monika",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) \u00d70.60 during Monika."
+    },
+    {
+      "start": 123.63,
+      "end": 124.665,
+      "lead": "F",
+      "lyric": "Let's be",
+      "girl": "monika",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) \u00d70.60 during Monika."
+    },
+    {
+      "start": 124.665,
+      "end": 125.7,
+      "lead": "F",
+      "lyric": "together forever,",
+      "girl": "monika",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) \u00d70.60 during Monika."
+    },
+    {
+      "start": 125.7,
+      "end": 127.276,
+      "lead": "F",
+      "lyric": "We're never gonna be",
+      "girl": "monika",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) \u00d70.60 during Monika."
+    },
+    {
+      "start": 127.276,
+      "end": 127.67,
+      "lead": "F",
+      "lyric": "apart!",
+      "girl": "monika",
+      "why": "Monika default F (male support under). Batch-skipped per user: stay on Monika default through this block. Non-vocal (instr+drums) \u00d70.60 during Monika."
+    },
+    {
+      "start": 127.67,
+      "end": 129.79,
+      "lead": "both",
+      "lyric": "How can I convey,",
+      "girl": "yuri",
+      "why": "How can I convey \u2014 both by non-Monika default."
+    },
+    {
+      "start": 129.79,
+      "end": 131.285,
+      "lead": "both",
+      "lyric": "My love for you",
+      "girl": "yuri",
+      "why": "Devotion phrase \u2014 both; no justified ping-pong."
+    },
+    {
+      "start": 131.285,
+      "end": 132.78,
+      "lead": "both",
+      "lyric": "before they fly away?",
+      "girl": "yuri",
+      "why": "Urgency/dread close \u2014 both."
+    },
+    {
+      "start": 132.78,
+      "end": 134.329,
+      "lead": "M",
+      "lyric": "I think about it",
+      "girl": "yuri",
+      "why": "Ping-pong: 'I think about it' = M (active cognition / deliberating). Pairs with 86 F on duration/obsession."
+    },
+    {
+      "start": 134.329,
+      "end": 135.49,
+      "lead": "F",
+      "lyric": "all day everyday",
+      "girl": "yuri",
+      "why": "Ping-pong land: 'all day everyday' = F (soft duration / never-stopping longing) after M think."
+    },
+    {
+      "start": 135.49,
+      "end": 136.415,
+      "lead": "F",
+      "lyric": "We'll be",
+      "girl": "monika",
+      "why": "Monika default F + male support; non-vocal \u00d70.60. Batch-skipped to next non-Monika (final Sayori stack)."
+    },
+    {
+      "start": 136.415,
+      "end": 137.34,
+      "lead": "F",
+      "lyric": "together forever,",
+      "girl": "monika",
+      "why": "Monika default F + male support; non-vocal \u00d70.60. Batch-skipped to next non-Monika (final Sayori stack)."
+    },
+    {
+      "start": 137.34,
+      "end": 139.068,
+      "lead": "F",
+      "lyric": "We're never gonna be",
+      "girl": "monika",
+      "why": "Monika default F + male support; non-vocal \u00d70.60. Batch-skipped to next non-Monika (final Sayori stack)."
+    },
+    {
+      "start": 139.068,
+      "end": 139.5,
+      "lead": "F",
+      "lyric": "apart!",
+      "girl": "monika",
+      "why": "Monika default F + male support; non-vocal \u00d70.60. Batch-skipped to next non-Monika (final Sayori stack)."
+    },
+    {
+      "start": 139.5,
+      "end": 141.312,
+      "lead": "F",
+      "lyric": "One by one",
+      "girl": "monika",
+      "why": "Monika default F + male support; non-vocal \u00d70.60. Batch-skipped to next non-Monika (final Sayori stack)."
+    },
+    {
+      "start": 141.312,
+      "end": 142.52,
+      "lead": "F",
+      "lyric": "they only",
+      "girl": "monika",
+      "why": "Monika default F + male support; non-vocal \u00d70.60. Batch-skipped to next non-Monika (final Sayori stack)."
+    },
+    {
+      "start": 142.52,
+      "end": 144.59,
+      "lead": "F",
+      "lyric": "Fall apart",
+      "girl": "monika",
+      "why": "Monika default F + male support; non-vocal \u00d70.60. Batch-skipped to next non-Monika (final Sayori stack)."
+    },
+    {
+      "start": 144.59,
+      "end": 147.01,
+      "lead": "F",
+      "lyric": "Can it be undone?",
+      "girl": "monika",
+      "why": "Monika default F + male support; non-vocal \u00d70.60. Batch-skipped to next non-Monika (final Sayori stack)."
+    },
+    {
+      "start": 147.01,
+      "end": 148.85,
+      "lead": "F",
+      "lyric": "Why can't I",
+      "girl": "monika",
+      "why": "Monika default F + male support; non-vocal \u00d70.60. Batch-skipped to next non-Monika (final Sayori stack)."
+    },
+    {
+      "start": 148.85,
+      "end": 151.303,
+      "lead": "F",
+      "lyric": "just be the one",
+      "girl": "monika",
+      "why": "Monika default F + male support; non-vocal \u00d70.60. Batch-skipped to next non-Monika (final Sayori stack)."
+    },
+    {
+      "start": 151.303,
+      "end": 152.53,
+      "lead": "F",
+      "lyric": "for once?",
+      "girl": "monika",
+      "why": "Monika default F + male support; non-vocal \u00d70.60. Batch-skipped to next non-Monika (final Sayori stack)."
+    },
+    {
+      "start": 158.83,
+      "end": 159.77,
+      "lead": "both",
+      "lyric": "We'll be",
+      "girl": "sayori",
+      "why": "Final Sayori vow setup 'We'll be' \u2014 both."
+    },
+    {
+      "start": 159.77,
+      "end": 160.24,
+      "lead": "F",
+      "lyric": "together",
+      "girl": "sayori",
+      "why": "Final vow ping-pong: together = F (relational), same as 34/45."
+    },
+    {
+      "start": 160.24,
+      "end": 160.71,
+      "lead": "M",
+      "lyric": "forever,",
+      "girl": "sayori",
+      "why": "Final vow ping-pong: forever = M (permanence), same as 35/46."
+    },
+    {
+      "start": 160.71,
+      "end": 164.566,
+      "lead": "both",
+      "lyric": "We're never gonna be",
+      "girl": "sayori",
+      "why": "Never-apart setup \u2014 both. F/both tempting from other mix but unjustified here."
+    },
+    {
+      "start": 164.566,
+      "end": 165.53,
+      "lead": "both",
+      "lyric": "apart!",
+      "girl": "sayori",
+      "why": "apart! \u2014 both; neither side alone better (like 37/48)."
+    },
+    {
+      "start": 165.53,
+      "end": 168.245,
+      "lead": "both",
+      "lyric": "(Forever,",
+      "girl": "sayori",
+      "why": "Sayori final '(Forever, forever)' echo \u2014 both. Closed with 101\u2013102; no further ping-pong."
+    },
+    {
+      "start": 168.245,
+      "end": 170.96,
+      "lead": "both",
+      "lyric": "forever)",
+      "girl": "sayori",
+      "why": "Sayori final '(Forever, forever)' echo \u2014 both. Closed with 101\u2013102; no further ping-pong."
+    },
+    {
+      "start": 170.96,
+      "end": 171.95,
+      "lead": "F",
+      "lyric": "Maybe we'll never",
+      "girl": "monika",
+      "why": "Monika closing bittersweet \u2014 F default + male support; non-vocal \u00d70.60. Batch-closed end of map."
+    },
+    {
+      "start": 171.95,
+      "end": 172.61,
+      "lead": "F",
+      "lyric": "be together,",
+      "girl": "monika",
+      "why": "Monika closing bittersweet \u2014 F default + male support; non-vocal \u00d70.60. Batch-closed end of map."
+    },
+    {
+      "start": 172.61,
+      "end": 173.559,
+      "lead": "F",
+      "lyric": "But forever",
+      "girl": "monika",
+      "why": "Monika closing bittersweet \u2014 F default + male support; non-vocal \u00d70.60. Batch-closed end of map."
+    },
+    {
+      "start": 173.559,
+      "end": 175.93,
+      "lead": "F",
+      "lyric": "you'll be in my heart!",
+      "girl": "monika",
+      "why": "Monika closing bittersweet \u2014 F default + male support; non-vocal \u00d70.60. Batch-closed end of map."
+    }
+  ],
+  "files": {
+    "wav": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/phrase_lead/DDF_phrase_lead_v7_glide_cipic_050_inst075.wav",
+    "m4a": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/immersion_jumpy/phrase_lead/DDF_phrase_lead_v7_glide_cipic_050_inst075.m4a"
+  },
+  "female_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/female_remastered_v3.wav",
+  "male_stem": "/Users/joshua/separator/experiments/doki-doki-forever-male-female/edit/vocal_remaster_v3/male_philsterman_timeline.wav",
+  "vp_filename": "Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide CIPIC 050 Quiet Inst).m4a"
+}

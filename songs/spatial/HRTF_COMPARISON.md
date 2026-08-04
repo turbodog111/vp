@@ -8,6 +8,7 @@
 | Slow Glide SADIE **D1** | **SADIE II D1** | High-res **dummy** set from York. |
 | Slow Glide SADIE **H3** | **SADIE II H3** | One **human** subject from the same database. |
 | Slow Glide **CIPIC 050** | **CIPIC subject 050** | Full-length bake of HRTF Clip Lab pick (UC Davis human). |
+| Slow Glide **CIPIC 050 Quiet Inst** | **CIPIC subject 050** | Same as above; instrumental bed ×0.75 (−25%). Vocals/drums/phrase/spatial unchanged. |
 
 ### Why D1 vs H3 can feel “the same”
 

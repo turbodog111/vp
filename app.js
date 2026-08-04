@@ -214,6 +214,7 @@ const SONG_EFFECT_PROFILES = Object.fromEntries([
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide SADIE D1)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide SADIE H3)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide CIPIC 050)', DDF_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide CIPIC 050 Quiet Inst)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Female Vocal Remaster v3)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Male Vocal Remaster v3)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/OR3O (Monika) feat. Rachie (Sayori), Kathy-chan (Yuri) & Chi Chi (Natsuki) - Doki Doki Forever', DDF_EFFECT_PROFILE),
@@ -2810,6 +2811,9 @@ function leadMapIdForSong(song = currentSong()) {
   // SADIE / CIPIC A/B Slow Glide variants (same phrase leads; separate ids for metadata)
   if (/sadie\s*d1/i.test(hay)) return 'v7_phrase_word_lead_glide_sadie_d1';
   if (/sadie\s*h3/i.test(hay)) return 'v7_phrase_word_lead_glide_sadie_h3';
+  if (/cipic\s*0*50/i.test(hay) && /quiet\s*inst/i.test(hay)) {
+    return 'v7_phrase_word_lead_glide_cipic_050_inst075';
+  }
   if (/cipic\s*0*50/i.test(hay)) return 'v7_phrase_word_lead_glide_cipic_050';
   // Slow Glide sister cut shares phrase leads, separate id for spatial metadata
   if (/slow\s*glide/i.test(hay) || /whoosh/i.test(hay)) {
