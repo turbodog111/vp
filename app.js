@@ -86,6 +86,8 @@ let playlistDragState = null;
 let audioCtx = null;
 let audioSource = null;
 let analyser = null;
+let eqPreampNode = null;
+let eqFilterNodes = [];
 let outputGain = null;
 let waveData = null;
 let waveTimeData = null;
@@ -121,6 +123,29 @@ let lastWatchdogDisplayTime = 0;
 let lastWatchdogPerf = performance.now();
 let audioGraphError = '';
 let audioGraphActivatedAt = 0;
+let playbackAttemptSerial = 0;
+let playbackRetryCount = 0;
+let playbackRetryTimer = 0;
+const SONG_EQ_STORAGE_KEY = 'vp_song_eq_v1';
+const EQ_BANDS = [
+  { frequency: 60, type: 'lowshelf', label: 'Sub', detail: '60 Hz' },
+  { frequency: 170, type: 'peaking', q: 0.9, label: 'Bass', detail: '170 Hz' },
+  { frequency: 350, type: 'peaking', q: 1, label: 'Low Mid', detail: '350 Hz' },
+  { frequency: 1000, type: 'peaking', q: 1, label: 'Mid', detail: '1 kHz' },
+  { frequency: 3500, type: 'peaking', q: 0.9, label: 'Presence', detail: '3.5 kHz' },
+  { frequency: 10000, type: 'highshelf', label: 'Air', detail: '10 kHz' },
+];
+const EQ_PRESETS = {
+  flat: { preamp: 0, gains: [0, 0, 0, 0, 0, 0] },
+  bass: { preamp: -2, gains: [6, 4, 1, 0, 0, 1] },
+  warm: { preamp: -1.5, gains: [3, 2.5, 1.5, 0, -1, -1.5] },
+  vocal: { preamp: -1.5, gains: [-2, -1, 0, 2.5, 4, 1.5] },
+  bright: { preamp: -2, gains: [-1, 0, 0.5, 1.5, 3.5, 5] },
+  loudness: { preamp: -3, gains: [5, 3, 0, -1, 2, 4] },
+};
+let songEqProfiles = loadSongEqProfiles();
+let temporaryGlobalEq = createEqProfile();
+let eqEditMode = 'song';
 const WAVE_BAR_COUNT = 72; // was 124 — main-thread heavy with full FFT path
 const WAVE_GAIN = 1.46;
 const WAVE_SOFT_LIMIT = 1.08;
@@ -354,6 +379,96 @@ function parseVolume(value, fallback = 1) {
   return Math.min(1, Math.max(0, parsed));
 }
 
+function clampEqDb(value, min = -12, max = 12) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? Math.min(max, Math.max(min, parsed)) : 0;
+}
+
+function createEqProfile(source = {}) {
+  return {
+    enabled: source.enabled === true,
+    preamp: clampEqDb(source.preamp),
+    gains: EQ_BANDS.map((_, index) => clampEqDb(source.gains?.[index])),
+  };
+}
+
+function loadSongEqProfiles() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(SONG_EQ_STORAGE_KEY) || '{}');
+    if (!stored || typeof stored !== 'object' || Array.isArray(stored)) return {};
+    return Object.fromEntries(Object.entries(stored).map(([key, profile]) => [key, createEqProfile(profile)]));
+  } catch {
+    return {};
+  }
+}
+
+function saveSongEqProfiles() {
+  try { localStorage.setItem(SONG_EQ_STORAGE_KEY, JSON.stringify(songEqProfiles)); }
+  catch {}
+}
+
+function songEqKey(song = currentSong()) {
+  return song ? (song.id || song.path || song.name || '') : '';
+}
+
+function savedEqForSong(song = currentSong()) {
+  const key = songEqKey(song);
+  return key && songEqProfiles[key] ? createEqProfile(songEqProfiles[key]) : createEqProfile();
+}
+
+function effectiveEqProfile(song = currentSong()) {
+  return temporaryGlobalEq.enabled ? createEqProfile(temporaryGlobalEq) : savedEqForSong(song);
+}
+
+function isEqAudiblyActive(song = currentSong()) {
+  const profile = effectiveEqProfile(song);
+  return profile.enabled && (
+    Math.abs(profile.preamp) > 0.01 || profile.gains.some(gain => Math.abs(gain) > 0.01)
+  );
+}
+
+function usesNativeAudioPath(song = currentSong()) {
+  return prefersNativeAudio(song) && !isEqAudiblyActive(song);
+}
+
+function dbToGain(db) {
+  return Math.pow(10, clampEqDb(db) / 20);
+}
+
+function editableEqProfile() {
+  return eqEditMode === 'global' ? createEqProfile(temporaryGlobalEq) : savedEqForSong();
+}
+
+function persistEditableEqProfile(profile) {
+  const normalized = createEqProfile(profile);
+  if (eqEditMode === 'global') {
+    temporaryGlobalEq = normalized;
+  } else {
+    const key = songEqKey();
+    if (!key) return;
+    songEqProfiles[key] = normalized;
+    saveSongEqProfiles();
+  }
+}
+
+function formatEqDb(value) {
+  const db = clampEqDb(value);
+  return `${db > 0 ? '+' : ''}${db.toFixed(1)} dB`;
+}
+
+function applyEqualizerToGraph(song = currentSong()) {
+  if (!audioCtx || !eqPreampNode || eqFilterNodes.length !== EQ_BANDS.length) return;
+  const profile = effectiveEqProfile(song);
+  const active = profile.enabled;
+  const now = audioCtx.currentTime;
+  eqPreampNode.gain.cancelScheduledValues(now);
+  eqPreampNode.gain.setTargetAtTime(active ? dbToGain(profile.preamp) : 1, now, 0.012);
+  eqFilterNodes.forEach((filter, index) => {
+    filter.gain.cancelScheduledValues(now);
+    filter.gain.setTargetAtTime(active ? profile.gains[index] : 0, now, 0.012);
+  });
+}
+
 function audioBaseName(filename) {
   return filename.replace(AUDIO_EXTENSION_RE, '').trim();
 }
@@ -401,13 +516,54 @@ function songRef(song) {
   return song?.id || song?.name;
 }
 
+function normalizeSongRef(ref) {
+  let value = String(ref || '').trim();
+  try { value = decodeURIComponent(value); } catch {}
+  return value
+    .normalize('NFC')
+    .replace(/^\.\//, '')
+    .replace(AUDIO_EXTENSION_RE, '')
+    .replace(/\\/g, '/')
+    .toLowerCase();
+}
+
+function normalizedMediaUrl(value) {
+  if (!value) return '';
+  try {
+    const url = new URL(value, window.location.href);
+    url.searchParams.delete('_vp_retry');
+    return `${url.origin}${url.pathname}`;
+  } catch {
+    return String(value).split('?')[0];
+  }
+}
+
+function sameMediaUrl(a, b) {
+  return !!a && !!b && normalizedMediaUrl(a) === normalizedMediaUrl(b);
+}
+
+function audioElementMatchesCurrentSong(el) {
+  const song = currentSong();
+  return el === audio && !!song && sameMediaUrl(el.currentSrc || el.src, song.url);
+}
+
 function refMatchesSong(ref, song) {
-  return ref === song.id || ref === song.name;
+  if (ref === song.id || ref === song.name) return true;
+  const normalized = normalizeSongRef(ref);
+  return normalizeSongRef(song.id) === normalized || normalizeSongRef(song.name) === normalized;
 }
 
 function findSongIndex(ref) {
   let idx = library.findIndex(song => song.id === ref);
   if (idx < 0) idx = library.findIndex(song => song.name === ref);
+  if (idx < 0) {
+    const normalized = normalizeSongRef(ref);
+    idx = library.findIndex(song => (
+      normalizeSongRef(song.id) === normalized ||
+      normalizeSongRef(song.path) === normalized ||
+      normalizeSongRef(song.name) === normalized
+    ));
+  }
   return idx;
 }
 
@@ -556,7 +712,7 @@ function resumeAudioFromCalibratedClock(song = currentSong()) {
 
   // MUST run before play(): recreating <audio> after play() drops the stream.
   // Also re-apply song URL if element was swapped for native spatial fidelity.
-  if (prefersNativeAudio(song) && (audioSource || analyser)) {
+  if (usesNativeAudioPath(song) && (audioSource || analyser)) {
     const wantSrc = song?.url ? new URL(song.url, window.location.href).href : '';
     const t = currentCalibratedTime(song);
     recreateAudioElementForNativePath();
@@ -572,19 +728,19 @@ function resumeAudioFromCalibratedClock(song = currentSong()) {
   }
 
   // Spatial track: never hang volume on Web Audio graph
-  if (prefersNativeAudio(song) && !audioSource) {
+  if (usesNativeAudioPath(song) && !audioSource) {
     audio.volume = playerVolume;
   } else {
     audio.volume = analyser && audioCtx?.state === 'running' ? 1 : playerVolume;
   }
-  const contextReady = prefersNativeAudio(song) && !audioSource
+  const contextReady = usesNativeAudioPath(song) && !audioSource
     ? Promise.resolve()
     : primeAudioContextForGesture();
   return Promise.resolve(audio.play()).then(async result => {
     await contextReady;
     await activateAudioGraphIfPossible();
     // Re-apply volume after graph decision
-    if (prefersNativeAudio(song) && !audioSource) audio.volume = playerVolume;
+    if (usesNativeAudioPath(song) && !audioSource) audio.volume = playerVolume;
     setSpatialSong(song);
     updateTimingDebug();
     return result;
@@ -886,6 +1042,8 @@ async function fetchCollection(collection) {
 }
 
 async function loadLibrary() {
+  const queuedRefs = queue.map(index => songRef(library[index])).filter(Boolean);
+  const activeRef = songRef(currentSong());
   const errBox = $('library-error');
   errBox.classList.add('hidden');
   const loaded = [];
@@ -903,6 +1061,12 @@ async function loadLibrary() {
     const collectionSort = COLLECTION_ORDER.get(a.collection) - COLLECTION_ORDER.get(b.collection);
     return collectionSort || a.displayName.localeCompare(b.displayName);
   });
+  if (queuedRefs.length) {
+    queue = queuedRefs.map(findSongIndex).filter(index => index >= 0);
+    const activeLibraryIndex = findSongIndex(activeRef);
+    const remappedQueueIndex = queue.indexOf(activeLibraryIndex);
+    queueIndex = remappedQueueIndex >= 0 ? remappedQueueIndex : Math.min(queueIndex, queue.length - 1);
+  }
   if (errors.length > 0) {
     if (errors.some(({ error }) => error.status === 403)) {
       errBox.textContent = 'GitHub API rate limit hit. Try again in a few minutes.';
@@ -1084,14 +1248,23 @@ function highlightCurrent() {
 }
 
 function playCurrent() {
-  if (queueIndex < 0 || queueIndex >= queue.length) return;
+  if (queueIndex < 0 || queueIndex >= queue.length) {
+    showToast('!', 'Queue position is no longer available.');
+    return;
+  }
   const libIdx = queue[queueIndex];
   const song = library[libIdx];
-  if (!song) return;
+  if (!song) {
+    showToast('!', 'This queued song is missing from the library.');
+    return;
+  }
+  clearTimeout(playbackRetryTimer);
+  playbackAttemptSerial++;
+  playbackRetryCount = 0;
   // Spatial HQ: if a prior song attached Web Audio, rebuild <audio> for true native stereo
   const recreatedNative = ensureNativeRoutingForSpatialSong(song);
   const targetSrc = new URL(song.url, window.location.href).href;
-  const sameSource = !recreatedNative && (audio.currentSrc === targetSrc || audio.src === targetSrc);
+  const sameSource = !recreatedNative && sameMediaUrl(audio.currentSrc || audio.src, targetSrc);
   audio.playbackRate = 1;
   audio.preservesPitch = true;
   audio.webkitPreservesPitch = true;
@@ -1116,6 +1289,7 @@ function playCurrent() {
   updateNowPlaying(song);
   switchView('now');
   updateMediaSession(song);
+  renderEqualizerUi(song);
   document.title = `${song.title || song.displayName} — vp`;
 }
 
@@ -1136,6 +1310,108 @@ function updateNowPlaying(song = currentSong()) {
   setSpatialSong(song);
   // Non-spatial DDF/remasters still need themes when spatial path is inactive
   if (!songLooksLikeTravelingVoices(song)) applySongTheme(song);
+  renderEqualizerUi(song);
+}
+
+function matchingEqPreset(profile) {
+  const entries = Object.entries(EQ_PRESETS);
+  const match = entries.find(([, preset]) => (
+    Math.abs(profile.preamp - preset.preamp) < 0.01 &&
+    profile.gains.every((gain, index) => Math.abs(gain - preset.gains[index]) < 0.01)
+  ));
+  return match?.[0] || 'custom';
+}
+
+function buildEqualizerBands() {
+  const container = $('eq-bands');
+  if (!container || container.children.length) return;
+  const controls = [{ label: 'Preamp', detail: 'Output headroom', key: 'preamp' }]
+    .concat(EQ_BANDS.map((band, index) => ({ ...band, key: String(index) })));
+  controls.forEach(control => {
+    const row = document.createElement('label');
+    row.className = 'eq-band';
+    row.innerHTML = `
+      <span class="eq-band-label"><strong></strong><small></small></span>
+      <input type="range" min="-12" max="12" step="0.5" value="0">
+      <output>0.0 dB</output>
+    `;
+    row.dataset.eqKey = control.key;
+    row.querySelector('strong').textContent = control.label;
+    row.querySelector('small').textContent = control.detail;
+    row.querySelector('input').addEventListener('input', event => {
+      updateEditableEqProfile(profile => {
+        const value = clampEqDb(event.target.value);
+        profile.enabled = true;
+        if (control.key === 'preamp') profile.preamp = value;
+        else profile.gains[Number(control.key)] = value;
+      });
+    });
+    container.appendChild(row);
+  });
+}
+
+function renderEqualizerUi(song = currentSong()) {
+  buildEqualizerBands();
+  const panel = $('equalizer-panel');
+  if (!panel) return;
+  const unavailable = eqEditMode === 'song' && !song;
+  const profile = editableEqProfile();
+  panel.classList.toggle('eq-unavailable', unavailable);
+  panel.querySelectorAll('[data-eq-mode]').forEach(button => {
+    button.classList.toggle('active', button.dataset.eqMode === eqEditMode);
+  });
+  $('equalizer-context').textContent = eqEditMode === 'global'
+    ? 'Temporary sound profile for every song'
+    : song ? (song.title || song.displayName) : 'Choose a song to create its saved sound profile.';
+  $('equalizer-notice').textContent = eqEditMode === 'global'
+    ? 'Overrides saved song profiles until vp is reloaded. It is never saved.'
+    : "This song's settings save automatically.";
+  $('eq-save-status').textContent = eqEditMode === 'global' ? 'Temporary session setting' : 'Saved automatically';
+  $('eq-enabled').checked = profile.enabled;
+  $('eq-preset').value = matchingEqPreset(profile);
+  panel.querySelectorAll('.eq-band').forEach(row => {
+    const key = row.dataset.eqKey;
+    const value = key === 'preamp' ? profile.preamp : profile.gains[Number(key)];
+    row.querySelector('input').value = value;
+    row.querySelector('output').textContent = formatEqDb(value);
+  });
+  const effective = effectiveEqProfile(song);
+  const summary = $('equalizer-summary');
+  if (summary) {
+    summary.textContent = isEqAudiblyActive(song)
+      ? (temporaryGlobalEq.enabled ? 'Temporary' : (matchingEqPreset(effective) === 'custom' ? 'Custom' : matchingEqPreset(effective)))
+      : 'Flat';
+  }
+}
+
+function refreshEqualizerRouting(previousNativePath) {
+  const song = currentSong();
+  if (!song || !audio.src) return;
+  const nextNativePath = usesNativeAudioPath(song);
+  const wasPlaying = !audio.paused;
+  if (previousNativePath !== nextNativePath && nextNativePath) {
+    recreateAudioElementForNativePath();
+    if (wasPlaying) resumeAudioFromCalibratedClock(song).catch(err => console.warn('EQ routing failed:', err));
+    return;
+  }
+  if (previousNativePath !== nextNativePath && !nextNativePath) {
+    primeAudioContextForGesture()
+      .then(() => activateAudioGraphIfPossible())
+      .then(() => applyEqualizerToGraph(song))
+      .catch(err => rememberAudioGraphError(err));
+    return;
+  }
+  applyEqualizerToGraph(song);
+}
+
+function updateEditableEqProfile(mutator) {
+  if (eqEditMode === 'song' && !currentSong()) return;
+  const previousNativePath = usesNativeAudioPath();
+  const profile = editableEqProfile();
+  mutator(profile);
+  persistEditableEqProfile(profile);
+  renderEqualizerUi();
+  refreshEqualizerRouting(previousNativePath);
 }
 
 /* ---------- Spatial guide (Traveling Voices) — low-cost ---------- */
@@ -3288,6 +3564,7 @@ function connectAudioGraph() {
   if (analyser) {
     if (audioCtx?.state === 'running') audio.volume = 1;
     if (outputGain) outputGain.gain.value = playerVolume;
+    applyEqualizerToGraph();
     return true;
   }
   const ctx = ensureAudioContext();
@@ -3307,14 +3584,30 @@ function connectAudioGraph() {
     outputGain.channelCountMode = 'explicit';
     outputGain.channelInterpretation = 'speakers';
     outputGain.gain.value = playerVolume;
+    eqPreampNode = ctx.createGain();
+    eqFilterNodes = EQ_BANDS.map(band => {
+      const filter = ctx.createBiquadFilter();
+      filter.type = band.type;
+      filter.frequency.value = band.frequency;
+      if (band.q) filter.Q.value = band.q;
+      filter.gain.value = 0;
+      return filter;
+    });
     waveData = new Float32Array(analyser.frequencyBinCount);
     waveTimeData = new Uint8Array(analyser.fftSize);
-    // Preserve stereo: source -> gain -> speakers; analyser taps in parallel
-    audioSource.connect(outputGain);
+    // Preserve stereo: source -> preamp -> filters -> volume -> speakers.
+    audioSource.connect(eqPreampNode);
+    let eqTail = eqPreampNode;
+    eqFilterNodes.forEach(filter => {
+      eqTail.connect(filter);
+      eqTail = filter;
+    });
+    eqTail.connect(outputGain);
     audioSource.connect(analyser);
     outputGain.connect(ctx.destination);
     // analyser is sink-only (no connection to destination) so it cannot color the mix
     audio.volume = 1;
+    applyEqualizerToGraph();
     audioGraphError = '';
     audioGraphActivatedAt = performance.now();
     startWaveform();
@@ -3337,10 +3630,14 @@ function recreateAudioElementForNativePath() {
   const t = Number.isFinite(old?.currentTime) ? old.currentTime : 0;
   try { old?.pause(); } catch (_) {}
   try { audioSource?.disconnect(); } catch (_) {}
+  try { eqPreampNode?.disconnect(); } catch (_) {}
+  eqFilterNodes.forEach(filter => { try { filter.disconnect(); } catch (_) {} });
   try { outputGain?.disconnect(); } catch (_) {}
   try { analyser?.disconnect(); } catch (_) {}
   audioSource = null;
   analyser = null;
+  eqPreampNode = null;
+  eqFilterNodes = [];
   outputGain = null;
   waveData = null;
   waveTimeData = null;
@@ -3371,7 +3668,7 @@ function recreateAudioElementForNativePath() {
 }
 
 function ensureNativeRoutingForSpatialSong(song = currentSong()) {
-  if (!prefersNativeAudio(song)) return false;
+  if (!usesNativeAudioPath(song)) return false;
   if (!audioSource && !analyser) return false;
   return recreateAudioElementForNativePath();
 }
@@ -3379,7 +3676,7 @@ function ensureNativeRoutingForSpatialSong(song = currentSong()) {
 async function activateAudioGraphIfPossible() {
   // Traveling Voices: stay on native <audio> path so levels/stereo match QuickTime.
   // (Web Audio MediaElementSource + sample-rate conversion was coloring the mix.)
-  if (prefersNativeAudio()) {
+  if (usesNativeAudioPath()) {
     // Recreate only if still hijacked — callers should do this before play().
     // If we must recreate here, re-bind current song URL so playback can resume.
     if (audioSource || analyser) {
@@ -3405,6 +3702,7 @@ async function activateAudioGraphIfPossible() {
       try { await ctx.resume(); } catch (err) { rememberAudioGraphError(err); }
     }
     if (outputGain) outputGain.gain.value = playerVolume;
+    applyEqualizerToGraph();
     audio.volume = 1;
     return true;
   }
@@ -4850,27 +5148,70 @@ function roundedBar(ctx, x, y, w, h, r) {
   ctx.fill();
 }
 
+function retryCurrentSongAfterError(el) {
+  if (!audioElementMatchesCurrentSong(el)) return;
+  const song = currentSong();
+  const attemptSerial = playbackAttemptSerial;
+  const queuedIndex = queueIndex;
+  const resumeAt = Number.isFinite(el.currentTime) ? el.currentTime : 0;
+  if (playbackRetryCount >= 2) {
+    pauseCalibratedClock(song);
+    showToast('!', `Could not play ${song.title || song.displayName}`);
+    return;
+  }
+  playbackRetryCount++;
+  showToast('↻', `Retrying ${song.title || song.displayName} (${playbackRetryCount}/2)`);
+  clearTimeout(playbackRetryTimer);
+  playbackRetryTimer = setTimeout(() => {
+    if (attemptSerial !== playbackAttemptSerial || queuedIndex !== queueIndex || currentSong() !== song || el !== audio) return;
+    const retryUrl = new URL(song.url, window.location.href);
+    retryUrl.searchParams.set('_vp_retry', `${Date.now()}-${playbackRetryCount}`);
+    try {
+      el.pause();
+      el.src = retryUrl.href;
+      el.load();
+      resetCalibratedClock(resumeAt, song);
+      const restoreTime = () => {
+        if (el !== audio) return;
+        try { if (resumeAt > 0.05) el.currentTime = resumeAt; } catch (_) {}
+        el.removeEventListener('loadedmetadata', restoreTime);
+      };
+      el.addEventListener('loadedmetadata', restoreTime);
+      resumeAudioFromCalibratedClock(song).catch(err => console.warn('Audio retry failed:', err));
+    } catch (err) {
+      console.warn('Audio retry setup failed:', err);
+    }
+  }, 350);
+}
+
 function bindAudioElementEvents(el) {
   if (!el || el.dataset.vpBound === '1') return;
   el.dataset.vpBound = '1';
   ['loadstart', 'loadedmetadata', 'canplay', 'play', 'playing', 'pause', 'waiting', 'seeking', 'seeked', 'stalled', 'suspend', 'ended', 'error'].forEach(eventName => {
-    el.addEventListener(eventName, () => noteMediaEvent(eventName), { capture: true });
+    el.addEventListener(eventName, () => {
+      if (el !== audio) return;
+      noteMediaEvent(eventName);
+    }, { capture: true });
   });
 
   // Progress is driven by startProgressClock() while playing — not by visualizer rAF
   // and not only by sparse timeupdate (which feels late under load).
   el.addEventListener('timeupdate', () => {
+    if (el !== audio) return;
     if (!progressTimer) updatePlaybackVisuals();
   });
   el.addEventListener('loadedmetadata', () => {
+    if (el !== audio) return;
     syncCalibratedClockToNative();
     updatePlaybackVisuals();
   });
   el.addEventListener('seeking', () => {
+    if (el !== audio) return;
     syncCalibratedClockToNative(currentSong(), { allowBackward: !!seekTransaction, keepRunning: false });
     updatePlaybackVisuals();
   });
   el.addEventListener('seeked', () => {
+    if (el !== audio) return;
     syncCalibratedClockToNative(currentSong(), { allowBackward: !!seekTransaction, consumePending: true, keepRunning: false });
     updatePlaybackVisuals();
     spatialForcePaint = true;
@@ -4878,16 +5219,25 @@ function bindAudioElementEvents(el) {
     if (seekTransaction?.finishOnSeeked) finishSeekTransaction();
   });
   el.addEventListener('ratechange', () => {
+    if (el !== audio) return;
     pauseCalibratedClock();
     if (!el.paused && !el.seeking && el.readyState >= 3) startCalibratedClock();
   });
-  el.addEventListener('waiting', () => pauseCalibratedClock());
-  el.addEventListener('playing', () => startCalibratedClock());
+  el.addEventListener('waiting', () => {
+    if (el !== audio) return;
+    pauseCalibratedClock();
+  });
+  el.addEventListener('playing', () => {
+    if (el !== audio) return;
+    startCalibratedClock();
+  });
   el.addEventListener('ended', () => {
+    if (!audioElementMatchesCurrentSong(el)) return;
     pauseCalibratedClock();
     playNext(true);
   });
   el.addEventListener('play', () => {
+    if (el !== audio) return;
     $('play').textContent = '⏸';
     $('hero-play').classList.add('playing');
     $('hero-play').querySelector('.hero-icon').textContent = '⏸';
@@ -4901,6 +5251,7 @@ function bindAudioElementEvents(el) {
     syncSpatialLoop();
   });
   el.addEventListener('pause', () => {
+    if (el !== audio) return;
     pauseCalibratedClock();
     $('play').textContent = '▶';
     $('hero-play').classList.remove('playing');
@@ -4915,8 +5266,9 @@ function bindAudioElementEvents(el) {
     syncSpatialLoop();
   });
   el.addEventListener('error', () => {
+    if (el !== audio) return;
     console.warn('Audio error for', el.src);
-    if (queueIndex + 1 < queue.length) playNext(false);
+    retryCurrentSongAfterError(el);
   });
 }
 bindAudioElementEvents(audio);
@@ -4987,7 +5339,7 @@ function resetAudioOutput() {
   if (audioSource || analyser) recreateAudioElementForNativePath();
   setPlayerVolume(1, false);
   const song = currentSong();
-  if (song && !prefersNativeAudio(song)) {
+  if (song && !usesNativeAudioPath(song)) {
     primeAudioContextForGesture()
       .then(() => audio.src ? activateAudioGraphIfPossible() : false)
       .then((graphActive) => {
@@ -5053,6 +5405,64 @@ if (timingDebugCheckbox) {
   });
 }
 if (audioResetButton) audioResetButton.addEventListener('click', resetAudioOutput);
+
+const equalizerOpenButton = $('equalizer-open');
+const equalizerBackdrop = $('equalizer-backdrop');
+const equalizerCloseButton = $('equalizer-close');
+function openEqualizer() {
+  settingsMenu?.classList.add('hidden');
+  equalizerBackdrop?.classList.remove('hidden');
+  renderEqualizerUi();
+}
+function closeEqualizer() {
+  equalizerBackdrop?.classList.add('hidden');
+}
+if (equalizerOpenButton) equalizerOpenButton.addEventListener('click', openEqualizer);
+if (equalizerCloseButton) equalizerCloseButton.addEventListener('click', closeEqualizer);
+if (equalizerBackdrop) {
+  equalizerBackdrop.addEventListener('click', event => {
+    if (event.target === equalizerBackdrop) closeEqualizer();
+  });
+}
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !equalizerBackdrop?.classList.contains('hidden')) closeEqualizer();
+});
+document.querySelectorAll('[data-eq-mode]').forEach(button => {
+  button.addEventListener('click', () => {
+    eqEditMode = button.dataset.eqMode;
+    renderEqualizerUi();
+  });
+});
+const eqEnabledCheckbox = $('eq-enabled');
+if (eqEnabledCheckbox) {
+  eqEnabledCheckbox.addEventListener('change', () => {
+    updateEditableEqProfile(profile => { profile.enabled = eqEnabledCheckbox.checked; });
+  });
+}
+const eqPresetSelect = $('eq-preset');
+if (eqPresetSelect) {
+  eqPresetSelect.addEventListener('change', () => {
+    const preset = EQ_PRESETS[eqPresetSelect.value];
+    if (!preset) return;
+    updateEditableEqProfile(profile => {
+      profile.enabled = true;
+      profile.preamp = preset.preamp;
+      profile.gains = preset.gains.slice();
+    });
+  });
+}
+const eqResetButton = $('eq-reset');
+if (eqResetButton) {
+  eqResetButton.addEventListener('click', () => {
+    updateEditableEqProfile(profile => {
+      profile.enabled = false;
+      profile.preamp = 0;
+      profile.gains = EQ_BANDS.map(() => 0);
+    });
+  });
+}
+buildEqualizerBands();
+renderEqualizerUi();
 
 // Force a full page reload with a unique query so iOS/GitHub Pages can't serve stale JS/CSS/images
 const forceReloadButton = $('force-reload');
@@ -5444,9 +5854,13 @@ function playPlaylist(name, startIdx = 0, shuffle = false) {
   const playable = songIds
     .map((id, playlistIdx) => ({ libIdx: findSongIndex(id), playlistIdx }))
     .filter(entry => entry.libIdx >= 0);
+  const missingCount = songIds.length - playable.length;
   if (playable.length === 0) {
     showToast('!', 'No playable songs in this playlist.');
     return;
+  }
+  if (missingCount > 0) {
+    showToast('!', `${missingCount} missing playlist ${missingCount === 1 ? 'song' : 'songs'} kept in place`);
   }
   queue = playable.map(entry => entry.libIdx);
   currentPlaylist = name;

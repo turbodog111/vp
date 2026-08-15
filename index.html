@@ -6,8 +6,8 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-08-03-cipic-050-qi">
-<link rel="stylesheet" href="styles.css?v=20260803-cipic-050-qi">
+<meta name="vp-build" content="2026-08-15-eq-queue">
+<link rel="stylesheet" href="styles.css?v=20260815-eq-queue">
 </head>
 <body>
 <div class="app">
@@ -34,6 +34,10 @@
         <span>Timing debug overlay</span>
       </label>
       <button id="audio-reset" class="setting-button" type="button">Reset audio</button>
+      <button id="equalizer-open" class="setting-button eq-setting-button" type="button">
+        <span>Equalizer</span>
+        <span id="equalizer-summary">Flat</span>
+      </button>
       <button id="force-reload" class="setting-button" type="button" title="Bypass cache and reload the latest app">Reload latest app</button>
       <a class="setting-button" href="songs/spatial/hrtf-lab/index.html" target="_blank" rel="noopener"
          style="display:block;text-align:center;text-decoration:none;line-height:1.2;padding:10px 12px">
@@ -259,7 +263,52 @@
   </footer>
 </div>
 
+<div id="equalizer-backdrop" class="eq-backdrop hidden">
+  <section id="equalizer-panel" class="eq-panel" role="dialog" aria-modal="true" aria-labelledby="equalizer-title">
+    <header class="eq-header">
+      <div>
+        <div class="eq-kicker">Audio shaping</div>
+        <h2 id="equalizer-title">Equalizer</h2>
+      </div>
+      <button id="equalizer-close" class="icon-btn" type="button" title="Close equalizer" aria-label="Close equalizer">×</button>
+    </header>
+
+    <div class="eq-mode" role="group" aria-label="Equalizer scope">
+      <button type="button" data-eq-mode="song" class="active">This Song</button>
+      <button type="button" data-eq-mode="global">All Songs</button>
+    </div>
+    <p id="equalizer-context" class="eq-context">Choose a song to create its saved sound profile.</p>
+    <p id="equalizer-notice" class="eq-notice">This song's settings save automatically.</p>
+
+    <div class="eq-toolbar">
+      <label class="eq-enable">
+        <input id="eq-enabled" type="checkbox">
+        <span>Enabled</span>
+      </label>
+      <label class="eq-preset-label">
+        <span>Preset</span>
+        <select id="eq-preset">
+          <option value="custom">Custom</option>
+          <option value="flat">Flat</option>
+          <option value="bass">Bass lift</option>
+          <option value="warm">Warm</option>
+          <option value="vocal">Vocal focus</option>
+          <option value="bright">Bright</option>
+          <option value="loudness">Loudness</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="eq-bands" class="eq-bands"></div>
+
+    <footer class="eq-footer">
+      <span id="eq-save-status">Saved automatically</span>
+      <button id="eq-reset" class="ghost" type="button">Reset selected scope</button>
+    </footer>
+  </section>
+</div>
+
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=20260803-cipic-050-qi"></script>
+<script src="app.js?v=20260815-eq-queue"></script>
 </body>
 </html>
