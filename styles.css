@@ -1134,6 +1134,8 @@ body.spatial-song-active .wave-panel {
 .playlist-song .remove:hover { color: var(--danger); }
 
 .player {
+  position: relative;
+  z-index: 20;
   display: grid;
   grid-template-columns: 1fr auto 1.6fr auto;
   align-items: center; gap: 24px;
@@ -1176,12 +1178,40 @@ body.spatial-song-active .wave-panel {
 #play:hover { background: var(--accent-2); }
 #shuffle.on, #loop:not([data-mode="off"]) { color: var(--accent); }
 
+body.story-theater-active .player {
+  background: #111119;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.2);
+}
+body.story-theater-active #play {
+  isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: #fff8e9;
+  color: #641f3a;
+  box-shadow: 0 0 0 4px rgba(181, 67, 91, 0.28), 0 0 18px rgba(255, 248, 233, 0.18);
+}
+body.story-theater-active #play:hover { background: #ffffff; }
+body.story-theater-active input[type="range"]::-webkit-slider-runnable-track {
+  background: #4d4d59;
+}
+body.story-theater-active input[type="range"]::-webkit-slider-thumb {
+  border: 2px solid #fff8e9;
+  background: #d8466b;
+  box-shadow: 0 0 0 3px rgba(216, 70, 107, 0.2);
+}
+body.story-theater-active input[type="range"]::-moz-range-track { background: #4d4d59; }
+body.story-theater-active input[type="range"]::-moz-range-thumb {
+  border: 2px solid #fff8e9;
+  background: #d8466b;
+}
+
 .progress { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .progress span {
   color: var(--fg-dim); font-size: 12px; font-variant-numeric: tabular-nums;
   min-width: 36px; flex-shrink: 0;
 }
 #seek { flex: 1; }
+#play,
+#seek { pointer-events: auto; }
 
 input[type="range"] {
   -webkit-appearance: none; appearance: none;
@@ -3359,13 +3389,38 @@ body.story-theater-active .now-view.active {
 }
 
 /* Profile-specific typography and physical symbols keep each stage distinct. */
-.story-theater[data-story="waiting"] { color: #5d2637; }
+.story-theater[data-story="waiting"] { color: #5d2637; pointer-events: none; }
 .story-theater[data-story="waiting"] .story-header h1,
 .story-theater[data-story="waiting"] .story-current,
 .story-theater[data-story="waiting"] .story-act b { color: #5d2637; }
+.story-theater[data-story="waiting"] .story-word {
+  color: #651d38;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  opacity: 0.88;
+}
+.story-theater[data-story="waiting"] .story-word.is-current {
+  opacity: 1;
+  text-shadow: 0 0 calc(6px + var(--story-energy) * 9px) rgba(181, 67, 91, 0.24);
+}
+.story-theater[data-story="waiting"] .story-context {
+  color: rgba(91, 31, 51, 0.68);
+}
+.story-theater[data-story="waiting"][data-phase="2"] .story-current,
+.story-theater[data-story="waiting"][data-phase="5"] .story-current,
+.story-theater[data-story="waiting"][data-phase="2"] .story-word,
+.story-theater[data-story="waiting"][data-phase="5"] .story-word {
+  color: #fffaf0;
+  -webkit-text-fill-color: #fffaf0;
+  text-shadow: 0 2px 18px rgba(74, 15, 43, 0.48);
+}
+.story-theater[data-story="waiting"][data-phase="2"] .story-context,
+.story-theater[data-story="waiting"][data-phase="5"] .story-context {
+  color: rgba(255, 250, 240, 0.72);
+}
 .story-theater[data-story="waiting"] .story-section-lockup { background: rgba(255, 250, 235, 0.55); }
 .story-theater[data-story="waiting"] .story-control-sigil span { inset: 49% 6%; transform-origin: 50% 50%; }
-.story-theater[data-story="waiting"] .story-play { background: radial-gradient(circle, rgba(255, 246, 224, 0.96) 54%, transparent 56%), conic-gradient(var(--story-primary) var(--story-progress), rgba(93, 38, 55, 0.11) 0); color: #5d2637; box-shadow: 0 0 0 6px rgba(255, 249, 232, 0.55), 0 0 calc(12px + var(--story-energy) * 28px) rgba(181, 67, 91, 0.22); }
+.story-theater[data-story="waiting"] .story-play { pointer-events: auto; background: radial-gradient(circle, rgba(255, 246, 224, 0.96) 54%, transparent 56%), conic-gradient(var(--story-primary) var(--story-progress), rgba(93, 38, 55, 0.11) 0); color: #5d2637; box-shadow: 0 0 0 6px rgba(255, 249, 232, 0.55), 0 0 calc(12px + var(--story-energy) * 28px) rgba(181, 67, 91, 0.22); }
 .story-theater[data-story="waiting"] .story-time,
 .story-theater[data-story="waiting"] .story-footer-copy { color: rgba(80, 36, 49, 0.7); }
 .story-theater[data-story="violet"] .story-sigil { border-radius: 50% 0 50% 0; transform: rotate(45deg); }

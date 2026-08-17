@@ -6506,7 +6506,8 @@ function drawStoryTheaterFx(levels, audioTime) {
     waiting: [2, 5], violet: [2, 4, 7], compass: [2, 5, 6],
     celebration: [2, 3, 6, 7, 8], psalm: [3, 5, 6, 8], dusty: [3, 6, 9]
   };
-  const peak = peakPhases[variant]?.includes(phase) ? 1 : 0.38;
+  const isPeakPhase = !!peakPhases[variant]?.includes(phase);
+  const peak = isPeakPhase ? 1 : 0.3;
   const motion = clamp(0, 1.3, energy * 0.7 + onset * 0.65 + beat.pulse * peak * 0.4);
   theater.style.setProperty('--story-primary', `rgb(${palette.primary.join(', ')})`);
   theater.style.setProperty('--story-secondary', `rgb(${palette.secondary.join(', ')})`);
@@ -6526,6 +6527,8 @@ function drawStoryTheaterFx(levels, audioTime) {
   const cy = controlRect ? (controlRect.top + controlRect.height / 2 - rect.top) * dpr : height * 0.54;
 
   if (variant === 'waiting') {
+    const chorus = isPeakPhase;
+    const chorusLift = chorus ? clamp(0, 1, 0.48 + energy * 0.34 + beat.pulse * 0.28) : 0;
     const morning = clamp(0, 1, audioTime / Math.max(1, supportedLyricsData?.duration || 162));
     const sky = ctx.createRadialGradient(width * 0.78, height * 0.16, 0, width * 0.78, height * 0.16, width * 0.7);
     sky.addColorStop(0, storyCanvasColor([255, 247, 204], 0.28 + morning * 0.3 + energy * 0.12));
@@ -6533,18 +6536,82 @@ function drawStoryTheaterFx(levels, audioTime) {
     sky.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, width, height);
+
+    // Slow cloud ribbons keep the verses alive without turning them into refrains.
+    for (let band = 0; band < 6; band++) {
+      const travel = ((audioTime * (0.012 + band * 0.0015) + seededUnit(band * 18.7)) % 1.35) - 0.18;
+      const y = height * (0.14 + band * 0.105) + Math.sin(audioTime * 0.16 + band) * height * 0.012;
+      const cloudWidth = width * (0.24 + seededUnit(band * 33.9) * 0.18);
+      const cloud = ctx.createLinearGradient(travel * width, y, travel * width + cloudWidth, y);
+      cloud.addColorStop(0, 'rgba(255,255,255,0)');
+      cloud.addColorStop(0.5, storyCanvasColor(chorus ? palette.accent : palette.secondary, 0.035 + energy * 0.045 + chorusLift * 0.085));
+      cloud.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = cloud;
+      ctx.beginPath();
+      ctx.ellipse(travel * width + cloudWidth * 0.5, y, cloudWidth * 0.5, height * (0.018 + band % 2 * 0.008), 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    if (chorus) {
+      const refrainWash = ctx.createLinearGradient(0, height, width, 0);
+      refrainWash.addColorStop(0, storyCanvasColor([102, 22, 55], 0.26 + chorusLift * 0.2));
+      refrainWash.addColorStop(0.52, storyCanvasColor(palette.primary, 0.2 + chorusLift * 0.18));
+      refrainWash.addColorStop(1, storyCanvasColor([80, 30, 67], 0.28 + chorusLift * 0.17));
+      ctx.fillStyle = refrainWash;
+      ctx.fillRect(0, 0, width, height);
+
+      // The window becomes a daybreak source: broad rays move smoothly on the beat.
+      const rayX = width * 0.785;
+      const rayY = height * 0.34;
+      const rayCount = 14;
+      for (let ray = 0; ray < rayCount; ray++) {
+        const angle = -Math.PI * 0.92 + ray * (Math.PI * 1.84 / (rayCount - 1)) + Math.sin(audioTime * 0.24) * 0.035;
+        const halfWidth = 0.018 + beat.pulse * 0.012;
+        const length = Math.hypot(width, height) * (0.52 + energy * 0.12);
+        ctx.beginPath();
+        ctx.moveTo(rayX, rayY);
+        ctx.lineTo(rayX + Math.cos(angle - halfWidth) * length, rayY + Math.sin(angle - halfWidth) * length);
+        ctx.lineTo(rayX + Math.cos(angle + halfWidth) * length, rayY + Math.sin(angle + halfWidth) * length);
+        ctx.closePath();
+        ctx.fillStyle = storyCanvasColor(ray % 3 ? palette.accent : palette.secondary, 0.018 + chorusLift * 0.032 + beat.pulse * 0.045);
+        ctx.fill();
+      }
+
+      for (let sweep = 0; sweep < 4; sweep++) {
+        const sweepX = (((audioTime * (0.055 + sweep * 0.004)) + sweep * 0.31) % 1.45 - 0.22) * width;
+        ctx.save();
+        ctx.translate(sweepX, height * 0.5);
+        ctx.rotate(-0.24 + sweep * 0.12);
+        const ribbon = ctx.createLinearGradient(-width * 0.08, 0, width * 0.08, 0);
+        ribbon.addColorStop(0, 'rgba(255,255,255,0)');
+        ribbon.addColorStop(0.5, storyCanvasColor(sweep % 2 ? palette.secondary : palette.accent, 0.035 + chorusLift * 0.075));
+        ribbon.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = ribbon;
+        ctx.fillRect(-width * 0.08, -height, width * 0.16, height * 2);
+        ctx.restore();
+      }
+    }
+
     ctx.strokeStyle = storyCanvasColor(palette.deep, 0.13);
     ctx.lineWidth = dpr * 2;
     ctx.strokeRect(width * 0.63, height * 0.08, width * 0.31, height * 0.54);
     ctx.beginPath();
     ctx.moveTo(width * 0.785, height * 0.08); ctx.lineTo(width * 0.785, height * 0.62);
     ctx.moveTo(width * 0.63, height * 0.34); ctx.lineTo(width * 0.94, height * 0.34); ctx.stroke();
-    for (let index = 0; index < 24; index++) {
+    const petalCount = chorus ? 52 : 27;
+    for (let index = 0; index < petalCount; index++) {
       const drift = (seededUnit(index * 19.2) + audioTime * (0.008 + index % 4 * 0.0017)) % 1;
       const x = (0.04 + seededUnit(index * 41.7) * 0.92 + Math.sin(audioTime * 0.22 + index) * 0.018) * width;
       const y = (0.08 + drift * 0.86) * height;
+      const trailLength = dpr * (4 + energy * 7 + chorusLift * 12);
+      ctx.beginPath();
+      ctx.moveTo(x - trailLength, y - trailLength * 0.32);
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = storyCanvasColor(index % 3 ? palette.primary : palette.secondary, 0.025 + energy * 0.045 + chorusLift * 0.07);
+      ctx.lineWidth = dpr * (0.7 + chorusLift * 0.5);
+      ctx.stroke();
       ctx.save(); ctx.translate(x, y); ctx.rotate(audioTime * 0.15 + index);
-      ctx.fillStyle = storyCanvasColor(index % 3 ? palette.primary : [232, 177, 129], 0.055 + energy * 0.11 + beat.pulse * peak * 0.05);
+      ctx.fillStyle = storyCanvasColor(index % 3 ? palette.primary : [232, 177, 129], 0.065 + energy * 0.12 + chorusLift * 0.13 + beat.pulse * peak * 0.07);
       ctx.beginPath(); ctx.ellipse(0, 0, dpr * (3 + index % 4), dpr * (1.5 + index % 2), 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
     }
     for (let hand = 0; hand < 2; hand++) {
@@ -6677,7 +6744,7 @@ function drawStoryTheaterFx(levels, audioTime) {
     }
   }
 
-  drawStoryPulseRings(ctx, cx, cy, width, height, palette, audioTime, energy, onset, peak);
+  drawStoryPulseRings(ctx, cx, cy, width, height, palette, audioTime, energy, onset, variant === 'waiting' && isPeakPhase ? 1.75 : peak);
   const vignette = ctx.createRadialGradient(width * 0.5, height * 0.48, width * 0.08, width * 0.5, height * 0.48, width * 0.72);
   vignette.addColorStop(0, 'rgba(0,0,0,0)');
   vignette.addColorStop(1, variant === 'waiting' ? 'rgba(66,35,38,0.16)' : 'rgba(0,0,0,0.48)');
@@ -7252,6 +7319,8 @@ $('refresh').addEventListener('click', loadLibrary);
 bindLibraryActionGuards();
 
 const seekEl = $('seek');
+let activeSeekPointerId = null;
+
 function handleSeekPreview() {
   const targetTime = seekTargetFromControl();
   if (targetTime === null) return;
@@ -7265,11 +7334,55 @@ function handleSeekCommit() {
   commitSeekTransaction(true);
 }
 
-seekEl.addEventListener('pointerdown', () => beginSeekTransaction(), {capture: true});
+function seekTargetFromPointer(event) {
+  const duration = effectiveDuration();
+  const rect = seekEl.getBoundingClientRect();
+  if (!duration || rect.width <= 0 || !Number.isFinite(event.clientX)) return null;
+  return clamp(0, duration, ((event.clientX - rect.left) / rect.width) * duration);
+}
+
+function previewSeekPointer(event) {
+  const targetTime = seekTargetFromPointer(event);
+  const duration = effectiveDuration();
+  if (targetTime === null || !duration) return;
+  seekEl.value = String((targetTime / duration) * 100);
+  previewSeekTarget(targetTime);
+}
+
+function beginSeekPointer(event) {
+  if (event.button !== undefined && event.button !== 0) return;
+  activeSeekPointerId = event.pointerId;
+  beginSeekTransaction();
+  previewSeekPointer(event);
+  try { seekEl.setPointerCapture(event.pointerId); } catch (_) {}
+}
+
+function moveSeekPointer(event) {
+  if (event.pointerId !== activeSeekPointerId) return;
+  previewSeekPointer(event);
+}
+
+function finishSeekPointer(event) {
+  if (event.pointerId !== activeSeekPointerId) return;
+  previewSeekPointer(event);
+  activeSeekPointerId = null;
+  try { seekEl.releasePointerCapture(event.pointerId); } catch (_) {}
+  commitSeekTransaction(true);
+}
+
+function cancelSeekPointer(event) {
+  if (event.pointerId !== activeSeekPointerId) return;
+  activeSeekPointerId = null;
+  try { seekEl.releasePointerCapture(event.pointerId); } catch (_) {}
+  commitSeekTransaction(true);
+}
+
+seekEl.addEventListener('pointerdown', beginSeekPointer);
+seekEl.addEventListener('pointermove', moveSeekPointer);
 seekEl.addEventListener('input', handleSeekPreview);
 seekEl.addEventListener('change', handleSeekCommit);
-seekEl.addEventListener('pointerup', handleSeekCommit);
-seekEl.addEventListener('pointercancel', handleSeekCommit);
+seekEl.addEventListener('pointerup', finishSeekPointer);
+seekEl.addEventListener('pointercancel', cancelSeekPointer);
 
 function updateVolumeIcon(volume = playerVolume) {
   const iconEl = document.querySelector('.volume span');
