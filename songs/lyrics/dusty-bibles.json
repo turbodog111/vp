@@ -3,10 +3,10 @@
   "artist": "Josiah Queen",
   "duration": 187.431,
   "theater": "dusty",
-  "bpm": 103.359,
-  "beatOffset": 1.858,
+  "bpm": 103.02,
+  "beatOffset": 0.44,
   "key": "D major",
-  "footer": "DUST / LIGHT / OPEN PAGES",
+  "footer": "WORD / WAY / MT. ZION",
   "sections": [
     {
       "start": 0,
@@ -441,7 +441,7 @@
     {
       "start": 38.38,
       "end": 41.06,
-      "text": "It's the problem of a nation",
+      "text": "It's the problem of our nation",
       "words": [
         {
           "word": "It's",
@@ -464,7 +464,7 @@
           "end": 40.38
         },
         {
-          "word": "a",
+          "word": "our",
           "start": 40.38,
           "end": 40.58
         },
@@ -520,10 +520,10 @@
     {
       "start": 44.52,
       "end": 46.72,
-      "text": "We can't find the time",
+      "text": "And can't find the time",
       "words": [
         {
-          "word": "We",
+          "word": "And",
           "start": 44.52,
           "end": 45.56
         },
@@ -632,7 +632,7 @@
           "end": 54.68
         },
         {
-          "word": "bibles",
+          "word": "Bibles",
           "start": 54.68,
           "end": 55.4
         }
@@ -742,21 +742,26 @@
     {
       "start": 65.46,
       "end": 67.38,
-      "text": "Blindly in blindfolds",
+      "text": "Blind leading blind folks",
       "words": [
         {
-          "word": "Blindly",
+          "word": "Blind",
           "start": 65.46,
-          "end": 66.18
+          "end": 65.96
         },
         {
-          "word": "in",
-          "start": 66.18,
-          "end": 66.26
+          "word": "leading",
+          "start": 65.96,
+          "end": 66.42
         },
         {
-          "word": "blindfolds",
-          "start": 66.26,
+          "word": "blind",
+          "start": 66.42,
+          "end": 66.76
+        },
+        {
+          "word": "folks",
+          "start": 66.76,
           "end": 67.38
         }
       ]
@@ -773,7 +778,7 @@
         },
         {
           "word": "I'm",
-          "start": 67.38,
+          "start": 67.48,
           "end": 67.8
         },
         {
@@ -867,7 +872,7 @@
     {
       "start": 84.48,
       "end": 88.94,
-      "text": "I don't wanna sit and watch her pass me by",
+      "text": "I don't want to sit and watch it pass me by",
       "words": [
         {
           "word": "I",
@@ -880,8 +885,13 @@
           "end": 86.04
         },
         {
-          "word": "wanna",
+          "word": "want",
           "start": 86.04,
+          "end": 86.22
+        },
+        {
+          "word": "to",
+          "start": 86.22,
           "end": 86.36
         },
         {
@@ -900,7 +910,7 @@
           "end": 87.48
         },
         {
-          "word": "her",
+          "word": "it",
           "start": 87.48,
           "end": 87.72
         },
@@ -955,8 +965,8 @@
     },
     {
       "start": 92.5,
-      "end": 95.6,
-      "text": "There ain't no replacement for a lie",
+      "end": 94.52,
+      "text": "There ain't no replacement",
       "words": [
         {
           "word": "There",
@@ -977,9 +987,16 @@
           "word": "replacement",
           "start": 93.8,
           "end": 94.52
-        },
+        }
+      ]
+    },
+    {
+      "start": 94.52,
+      "end": 98.32,
+      "text": "For a life in the light of Your way",
+      "words": [
         {
-          "word": "for",
+          "word": "For",
           "start": 94.52,
           "end": 95.04
         },
@@ -989,19 +1006,12 @@
           "end": 95.28
         },
         {
-          "word": "lie",
+          "word": "life",
           "start": 95.28,
           "end": 95.6
-        }
-      ]
-    },
-    {
-      "start": 95.6,
-      "end": 98.32,
-      "text": "In the light of your way",
-      "words": [
+        },
         {
-          "word": "In",
+          "word": "in",
           "start": 95.6,
           "end": 96.22
         },
@@ -1021,7 +1031,7 @@
           "end": 97.4
         },
         {
-          "word": "your",
+          "word": "Your",
           "start": 97.4,
           "end": 97.74
         },
@@ -1035,7 +1045,7 @@
     {
       "start": 98.32,
       "end": 103.06,
-      "text": "Oh, I've done had enough of my way",
+      "text": "Oh, I'm done, had enough of my way",
       "words": [
         {
           "word": "Oh,",
@@ -1043,12 +1053,12 @@
           "end": 99.82
         },
         {
-          "word": "I've",
+          "word": "I'm",
           "start": 99.82,
           "end": 99.96
         },
         {
-          "word": "done",
+          "word": "done,",
           "start": 99.96,
           "end": 100.16
         },
@@ -1082,36 +1092,31 @@
     {
       "start": 104.06,
       "end": 106.54,
-      "text": "We got dust on our Bibles",
+      "text": "With dust on our Bibles",
       "words": [
         {
-          "word": "We",
+          "word": "With",
           "start": 104.06,
-          "end": 104.367
-        },
-        {
-          "word": "got",
-          "start": 104.367,
-          "end": 104.761
+          "end": 104.5
         },
         {
           "word": "dust",
-          "start": 104.761,
-          "end": 105.233
+          "start": 104.5,
+          "end": 104.9
         },
         {
           "word": "on",
-          "start": 105.233,
-          "end": 105.539
+          "start": 104.9,
+          "end": 105.3
         },
         {
           "word": "our",
-          "start": 105.539,
-          "end": 105.934
+          "start": 105.3,
+          "end": 105.75
         },
         {
           "word": "Bibles",
-          "start": 105.934,
+          "start": 105.75,
           "end": 106.54
         }
       ]
@@ -1183,7 +1188,7 @@
     {
       "start": 112.98,
       "end": 118.36,
-      "text": "We walk with our eyes closed, blindly in blindfolds",
+      "text": "We walk with our eyes closed, blind leading blind folks",
       "words": [
         {
           "word": "We",
@@ -1216,18 +1221,23 @@
           "end": 116.214
         },
         {
-          "word": "blindly",
+          "word": "blind",
           "start": 116.214,
-          "end": 117.007
+          "end": 116.7
         },
         {
-          "word": "in",
-          "start": 117.007,
-          "end": 117.371
+          "word": "leading",
+          "start": 116.7,
+          "end": 117.24
         },
         {
-          "word": "blindfolds",
-          "start": 117.371,
+          "word": "blind",
+          "start": 117.24,
+          "end": 117.66
+        },
+        {
+          "word": "folks",
+          "start": 117.66,
           "end": 118.36
         }
       ]
@@ -1451,7 +1461,7 @@
           "end": 157.2
         },
         {
-          "word": "bibles",
+          "word": "Bibles",
           "start": 157.2,
           "end": 157.98
         }
@@ -1561,21 +1571,26 @@
     {
       "start": 167.34,
       "end": 169.98,
-      "text": "blindly in blindfolds",
+      "text": "blind leading blind folks",
       "words": [
         {
-          "word": "blindly",
+          "word": "blind",
           "start": 167.34,
-          "end": 168.315
+          "end": 167.96
         },
         {
-          "word": "in",
-          "start": 168.315,
-          "end": 168.764
+          "word": "leading",
+          "start": 167.96,
+          "end": 168.62
         },
         {
-          "word": "blindfolds",
-          "start": 168.764,
+          "word": "blind",
+          "start": 168.62,
+          "end": 169.12
+        },
+        {
+          "word": "folks",
+          "start": 169.12,
           "end": 169.98
         }
       ]
@@ -1628,7 +1643,7 @@
           "end": 174.12
         },
         {
-          "word": "bibles",
+          "word": "Bibles",
           "start": 174.12,
           "end": 175.1
         }
@@ -1640,5 +1655,5 @@
     "energyBase64": "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",
     "onsetsBase64": "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"
   },
-  "timingMethod": "Whisper large-v3 word timestamps cross-checked against isolated vocals and the original mix."
+  "timingMethod": "Whisper large-v3 word timestamps cross-checked against isolated vocals and the original mix; canonical lyric corrections checked against Shazam; 103.02 BPM / 0.44 s beat grid fitted to local waveform onsets and checked against published 103 BPM metadata."
 }
