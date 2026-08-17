@@ -10,6 +10,13 @@
   "sections": [
     {
       "start": 0,
+      "end": 13.08,
+      "name": "Hallelujah",
+      "short": "PRAISE / OPEN",
+      "phase": 3
+    },
+    {
+      "start": 13.08,
       "end": 30.76,
       "name": "Beneath the heavens",
       "short": "DESERT DAWN",
@@ -81,14 +88,202 @@
   ],
   "lines": [
     {
-      "start": 1.6,
-      "end": 2.3,
-      "text": "Hallelujah.",
+      "start": 1.86,
+      "end": 5.06,
+      "text": "Halle, Halle, Hallelujah",
       "words": [
         {
-          "word": "Hallelujah.",
-          "start": 1.6,
-          "end": 2.3
+          "word": "Halle,",
+          "start": 1.86,
+          "end": 3.02
+        },
+        {
+          "word": "Halle,",
+          "start": 3.6,
+          "end": 4.38
+        },
+        {
+          "word": "Hallelujah",
+          "start": 4.38,
+          "end": 5.06
+        }
+      ]
+    },
+    {
+      "start": 5.06,
+      "end": 9.96,
+      "text": "We're giving all our praise to You",
+      "words": [
+        {
+          "word": "We're",
+          "start": 5.06,
+          "end": 8.14
+        },
+        {
+          "word": "giving",
+          "start": 8.14,
+          "end": 8.46
+        },
+        {
+          "word": "all",
+          "start": 8.46,
+          "end": 8.9
+        },
+        {
+          "word": "our",
+          "start": 8.9,
+          "end": 9.14
+        },
+        {
+          "word": "praise",
+          "start": 9.14,
+          "end": 9.52
+        },
+        {
+          "word": "to",
+          "start": 9.52,
+          "end": 9.7
+        },
+        {
+          "word": "You",
+          "start": 9.7,
+          "end": 9.96
+        }
+      ]
+    },
+    {
+      "start": 9.96,
+      "end": 13.08,
+      "text": "Halle, Halle, Hallelujah",
+      "words": [
+        {
+          "word": "Halle,",
+          "start": 9.96,
+          "end": 10.8
+        },
+        {
+          "word": "Halle,",
+          "start": 11.64,
+          "end": 12.24
+        },
+        {
+          "word": "Hallelujah",
+          "start": 12.32,
+          "end": 13.08
+        }
+      ]
+    },
+    {
+      "start": 13.08,
+      "end": 20.34,
+      "text": "When I consider the wonders Your hands have made",
+      "words": [
+        {
+          "word": "When",
+          "start": 13.08,
+          "end": 16.3
+        },
+        {
+          "word": "I",
+          "start": 16.3,
+          "end": 16.7
+        },
+        {
+          "word": "consider",
+          "start": 16.7,
+          "end": 17.34
+        },
+        {
+          "word": "the",
+          "start": 17.34,
+          "end": 18.06
+        },
+        {
+          "word": "wonders",
+          "start": 18.06,
+          "end": 18.66
+        },
+        {
+          "word": "Your",
+          "start": 18.66,
+          "end": 19.06
+        },
+        {
+          "word": "hands",
+          "start": 19.06,
+          "end": 19.48
+        },
+        {
+          "word": "have",
+          "start": 19.48,
+          "end": 19.8
+        },
+        {
+          "word": "made",
+          "start": 19.8,
+          "end": 20.34
+        }
+      ]
+    },
+    {
+      "start": 23.3,
+      "end": 27.96,
+      "text": "The sun, moon and stars, all Your glory on full display",
+      "words": [
+        {
+          "word": "The",
+          "start": 23.3,
+          "end": 23.98
+        },
+        {
+          "word": "sun,",
+          "start": 23.98,
+          "end": 24.36
+        },
+        {
+          "word": "moon",
+          "start": 24.44,
+          "end": 24.76
+        },
+        {
+          "word": "and",
+          "start": 24.76,
+          "end": 25.02
+        },
+        {
+          "word": "stars,",
+          "start": 25.02,
+          "end": 25.34
+        },
+        {
+          "word": "all",
+          "start": 25.34,
+          "end": 25.68
+        },
+        {
+          "word": "Your",
+          "start": 25.68,
+          "end": 26.02
+        },
+        {
+          "word": "glory",
+          "start": 26.02,
+          "end": 26.64
+        },
+        {
+          "word": "on",
+          "start": 26.64,
+          "end": 27.06
+        },
+        {
+          "word": "full",
+          "start": 27.06,
+          "end": 27.34
+        },
+        {
+          "word": "display",
+          "start": 27.34,
+          "end": 27.96
         }
       ]
     },

@@ -3295,18 +3295,24 @@ body.story-theater-active .now-view.active {
   overflow-wrap: anywhere;
 }
 .story-word {
-  --word-progress: 0%;
   display: inline;
-  color: transparent;
-  background: linear-gradient(90deg,
-    var(--story-accent) 0,
-    var(--story-primary) var(--word-progress),
-    color-mix(in srgb, var(--story-secondary) 24%, #4e5260) var(--word-progress));
-  background-clip: text;
-  -webkit-background-clip: text;
+  color: color-mix(in srgb, var(--story-secondary) 46%, #6d7180);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  transition: color 90ms linear, text-shadow 90ms linear, opacity 90ms linear;
+}
+.story-word.is-pending {
+  color: color-mix(in srgb, var(--story-secondary) 48%, #626673);
+  -webkit-text-fill-color: currentColor;
+}
+.story-word.is-sung {
+  color: var(--story-primary);
+  -webkit-text-fill-color: currentColor;
 }
 .story-word.is-current {
-  text-shadow: 0 0 calc(7px + var(--story-energy) * 13px) color-mix(in srgb, var(--story-primary) 42%, transparent);
+  color: var(--story-accent);
+  -webkit-text-fill-color: currentColor;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.58), 0 0 calc(7px + var(--story-energy) * 13px) color-mix(in srgb, var(--story-primary) 58%, transparent);
 }
 .story-instrumental { color: var(--story-secondary); font-size: 19px; font-weight: 770; }
 .story-control {
@@ -3472,20 +3478,58 @@ body.story-theater-active .now-view.active {
 .story-theater[data-story="waiting"] .story-play { pointer-events: auto; background: radial-gradient(circle, rgba(255, 246, 224, 0.96) 54%, transparent 56%), conic-gradient(var(--story-primary) var(--story-progress), rgba(93, 38, 55, 0.11) 0); color: #5d2637; box-shadow: 0 0 0 6px rgba(255, 249, 232, 0.55), 0 0 calc(12px + var(--story-energy) * 28px) rgba(181, 67, 91, 0.22); }
 .story-theater[data-story="waiting"] .story-time,
 .story-theater[data-story="waiting"] .story-footer-copy { color: rgba(80, 36, 49, 0.7); }
+.story-theater:not([data-story="waiting"]) .story-context {
+  color: color-mix(in srgb, var(--story-accent) 72%, var(--story-secondary));
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.82);
+}
+.story-theater:not([data-story="waiting"]) .story-lyrics {
+  position: relative;
+  isolation: isolate;
+}
+.story-theater:not([data-story="waiting"]) .story-lyrics::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -32% -8%;
+  background: radial-gradient(ellipse, rgba(3, 5, 12, 0.5) 0, rgba(3, 5, 12, 0.24) 50%, transparent 75%);
+  pointer-events: none;
+}
+.story-theater.is-peak:not([data-story="waiting"]) .story-current {
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.78), 0 0 22px color-mix(in srgb, var(--story-primary) 26%, transparent);
+}
 .story-theater[data-story="violet"] .story-sigil { border-radius: 50% 0 50% 0; transform: rotate(45deg); }
 .story-theater[data-story="violet"] .story-control-sigil { border-radius: 48% 52% 41% 59%; transform: rotate(-8deg); }
 .story-theater[data-story="violet"][data-phase="4"] .story-current { text-transform: uppercase; }
+.story-theater[data-story="violet"] .story-word.is-pending { color: #8d85ab; }
+.story-theater[data-story="violet"] .story-word.is-sung { color: #f257ca; }
+.story-theater[data-story="violet"] .story-word.is-current { color: #f5f8ff; }
 .story-theater[data-story="compass"] .story-sigil { border-radius: 0; transform: rotate(45deg); }
 .story-theater[data-story="compass"] .story-control-sigil::before { border-radius: 0; transform: rotate(45deg); }
+.story-theater[data-story="compass"] .story-word.is-pending { color: #8ea6c5; }
+.story-theater[data-story="compass"] .story-word.is-sung { color: #f4c65a; }
+.story-theater[data-story="compass"] .story-word.is-current { color: #f8fbff; }
 .story-theater[data-story="celebration"] .story-header h1 { font-size: clamp(31px, 4.2vw, 54px); }
 .story-theater[data-story="celebration"] .story-sigil { border-radius: 3px; transform: rotate(12deg); }
 .story-theater[data-story="celebration"] .story-control-sigil { border-radius: 8px; transform: rotate(8deg); }
 .story-theater[data-story="celebration"] .story-control-sigil::before { border-radius: 8px; transform: rotate(-16deg); }
+.story-theater[data-story="celebration"] .story-word.is-pending { color: #d7b8d9; }
+.story-theater[data-story="celebration"] .story-word.is-sung { color: #ffe048; }
+.story-theater[data-story="celebration"] .story-word.is-current { color: #fffaf4; }
 .story-theater[data-story="psalm"] .story-control-sigil { border-width: 1px 0 0; border-radius: 50% 50% 0 0; }
 .story-theater[data-story="psalm"] .story-sigil { border-width: 1px 0 0; border-radius: 50% 50% 0 0; }
+.story-theater[data-story="psalm"] .story-word.is-pending { color: #9eb7cc; }
+.story-theater[data-story="psalm"] .story-word.is-sung { color: #edca89; }
+.story-theater[data-story="psalm"] .story-word.is-current { color: #fffdf2; }
+.story-theater[data-story="psalm"].is-peak .story-section-lockup {
+  border-right-color: #edca89;
+  box-shadow: 16px 0 36px rgba(238, 202, 137, 0.12);
+}
 .story-theater[data-story="dusty"] .story-sigil { height: 22px; border-radius: 50% 50% 2px 2px; }
 .story-theater[data-story="dusty"] .story-control-sigil { border-radius: 50% 50% 5px 5px; }
 .story-theater[data-story="dusty"] .story-header h1 { font-family: Georgia, serif; font-weight: 700; }
+.story-theater[data-story="dusty"] .story-word.is-pending { color: #9ba28f; }
+.story-theater[data-story="dusty"] .story-word.is-sung { color: #d7a556; }
+.story-theater[data-story="dusty"] .story-word.is-current { color: #fff4d8; }
 
 @media (max-width: 780px) {
   .story-header { padding: 11px 13px 3px; }
