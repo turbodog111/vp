@@ -718,6 +718,66 @@ function oneMoreBiteAnalysisAt(time) {
   return { energy: sample(energyValues), onset: clamp(0, 1, onset) };
 }
 
+function oneMoreBiteBeatPeaks(analysis) {
+  if (!analysis?.step) return [];
+  if (analysis._beatPeaks) return analysis._beatPeaks;
+  const values = decodedOneMoreBiteEnvelope(analysis, 'onsets');
+  if (!values.length) return [];
+  const minGap = Math.max(2, Math.round(0.28 / analysis.step));
+  const peaks = [];
+  for (let index = 2; index < values.length - 2; index++) {
+    const strength = values[index] / 100;
+    if (strength < 0.48) continue;
+    if (values[index] < values[index - 1] || values[index] < values[index + 1]) continue;
+    if (values[index] < values[index - 2] || values[index] < values[index + 2]) continue;
+    const previous = peaks[peaks.length - 1];
+    if (previous && index - previous.index < minGap) {
+      if (strength > previous.strength) peaks[peaks.length - 1] = { index, strength };
+      continue;
+    }
+    peaks.push({ index, strength });
+  }
+  const timedPeaks = peaks.map((peak, ordinal) => ({
+    ...peak,
+    ordinal,
+    time: peak.index * analysis.step
+  }));
+  Object.defineProperty(analysis, '_beatPeaks', { value: timedPeaks, enumerable: false });
+  return timedPeaks;
+}
+
+function oneMoreBiteBeatAt(time, chorus) {
+  const analysis = supportedLyricsData?.analysis;
+  const peaks = oneMoreBiteBeatPeaks(analysis);
+  const threshold = chorus ? 0.58 : 0.84;
+  const duration = chorus ? 0.82 : 0.46;
+  for (let index = peaks.length - 1; index >= 0; index--) {
+    const peak = peaks[index];
+    const age = time - peak.time;
+    if (age < -0.04) continue;
+    if (age > duration) break;
+    if (peak.strength < threshold) continue;
+    const directionIndex = Math.floor(peak.ordinal / 4) % 4;
+    const directions = [
+      { x: 1, y: 0 },
+      { x: 0, y: -1 },
+      { x: -1, y: 0 },
+      { x: 0, y: 1 }
+    ];
+    const life = clamp(0, 1, 1 - Math.max(0, age) / duration);
+    const easedLife = life * life * (3 - 2 * life);
+    return {
+      ...peak,
+      age: Math.max(0, age),
+      duration,
+      direction: directions[directionIndex],
+      life: easedLife,
+      impact: easedLife * smoothStep(threshold, 1, peak.strength)
+    };
+  }
+  return { age: 1, duration, direction: { x: 0, y: 0 }, life: 0, impact: 0, strength: 0, ordinal: 0 };
+}
+
 function renderOneMoreBiteLine(index, data) {
   const current = $('omb-lyric-current');
   const previous = $('omb-lyric-previous');
@@ -5029,15 +5089,74 @@ function drawOneMoreBiteFx(levels, time) {
     recorded.onset * (0.72 + chorus * 0.25),
     recorded.energy * (0.22 + chorus * 0.22)
   ));
+  const beat = oneMoreBiteBeatAt(time, chorus);
+  const slideDistance = beat.impact * (chorus ? 38 : 11) * (0.82 + recorded.energy * 0.32);
+  const shiftX = beat.direction.x * slideDistance;
+  const shiftY = beat.direction.y * slideDistance * 0.72;
+  const blur = beat.impact * (chorus ? 2.4 : 0.65);
   theater.style.setProperty('--omb-level', glow.toFixed(3));
   theater.style.setProperty('--omb-energy', recorded.energy.toFixed(3));
   theater.style.setProperty('--omb-onset', recorded.onset.toFixed(3));
+  theater.style.setProperty('--omb-shift-x', `${shiftX.toFixed(2)}px`);
+  theater.style.setProperty('--omb-shift-y', `${shiftY.toFixed(2)}px`);
+  theater.style.setProperty('--omb-parallax-x', `${(-shiftX * 0.42).toFixed(2)}px`);
+  theater.style.setProperty('--omb-parallax-y', `${(-shiftY * 0.42).toFixed(2)}px`);
+  theater.style.setProperty('--omb-motion-blur', `${blur.toFixed(2)}px`);
+  theater.style.setProperty('--omb-echo-x-1', `${(-shiftX * 0.28).toFixed(2)}px`);
+  theater.style.setProperty('--omb-echo-y-1', `${(-shiftY * 0.28).toFixed(2)}px`);
+  theater.style.setProperty('--omb-echo-x-2', `${(-shiftX * 0.62).toFixed(2)}px`);
+  theater.style.setProperty('--omb-echo-y-2', `${(-shiftY * 0.62).toFixed(2)}px`);
+  theater.classList.toggle('has-beat-motion', beat.impact > 0.025);
 
   const travel = time;
   const colors = ['#df2a92', '#263bb8', '#75d9ef'];
 
-  // Long icing paths move together as one graphic layer, not as rotating beams.
   ctx.save();
+
+  // Every strong attack pushes a broad palette wipe through the entire stage.
+  // Four attacks share a direction so the movement reads as phrasing, not jitter.
+  if (beat.impact > 0.015) {
+    const progress = clamp(0, 1, beat.age / beat.duration);
+    const horizontal = beat.direction.x !== 0;
+    const span = (horizontal ? width : height) * (0.24 + beat.strength * 0.16);
+    const distance = (horizontal ? width : height) + span * 2;
+    const axisPosition = beat.direction.x + beat.direction.y > 0
+      ? -span + distance * progress
+      : (horizontal ? width : height) + span - distance * progress;
+    const gradient = horizontal
+      ? ctx.createLinearGradient(axisPosition - span, 0, axisPosition + span, 0)
+      : ctx.createLinearGradient(0, axisPosition - span, 0, axisPosition + span);
+    gradient.addColorStop(0, 'rgba(190, 220, 255, 0)');
+    gradient.addColorStop(0.34, `rgba(117, 217, 239, ${beat.impact * (chorus ? 0.2 : 0.05)})`);
+    gradient.addColorStop(0.52, `rgba(255, 79, 174, ${beat.impact * (chorus ? 0.24 : 0.065)})`);
+    gradient.addColorStop(0.7, `rgba(38, 59, 184, ${beat.impact * (chorus ? 0.12 : 0.035)})`);
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    ctx.save();
+    ctx.filter = `blur(${dpr * (7 + beat.impact * 10)}px)`;
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+    ctx.restore();
+
+    const sweepCount = chorus ? 4 : 1;
+    for (let sweep = 0; sweep < sweepCount; sweep++) {
+      const separation = dpr * (sweep - (sweepCount - 1) / 2) * 22;
+      const linePosition = axisPosition + separation;
+      ctx.beginPath();
+      if (horizontal) {
+        ctx.moveTo(linePosition, -height * 0.12);
+        ctx.quadraticCurveTo(linePosition + beat.direction.x * width * 0.08, height * 0.5, linePosition, height * 1.12);
+      } else {
+        ctx.moveTo(-width * 0.12, linePosition);
+        ctx.quadraticCurveTo(width * 0.5, linePosition + beat.direction.y * height * 0.08, width * 1.12, linePosition);
+      }
+      ctx.strokeStyle = colors[(sweep + beat.ordinal) % colors.length];
+      ctx.globalAlpha = beat.impact * (0.16 + sweep * 0.025) * (chorus ? 1 : 0.32);
+      ctx.lineWidth = dpr * (3 + beat.strength * 7);
+      ctx.stroke();
+    }
+  }
+
+  // Long icing paths move together as one graphic layer, not as rotating beams.
   ctx.lineCap = 'round';
   const laneCount = chorus ? 5 : 3;
   for (let lane = 0; lane < laneCount; lane++) {
@@ -5090,25 +5209,53 @@ function drawOneMoreBiteFx(levels, time) {
     const y = height * (0.18 + lane * 0.15) + Math.sin(travel * 0.9 + index) * height * 0.018;
     const x = xRatio * width;
     const length = dpr * (5 + seededUnit(index * 18.3) * 11 + recorded.onset * 7);
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(-0.65 + Math.sin(index * 2.4 + travel * 0.35) * 0.45);
-    ctx.globalAlpha = (0.025 + recorded.energy * 0.08 + chorus * 0.22) * (0.65 + recorded.onset * 0.35);
-    ctx.strokeStyle = colors[index % colors.length];
-    ctx.lineWidth = dpr * (1.4 + (index % 3) * 0.55);
-    ctx.beginPath();
-    ctx.moveTo(-length, 0);
-    ctx.lineTo(length, 0);
-    ctx.stroke();
-    ctx.restore();
+    const rotation = -0.65 + Math.sin(index * 2.4 + travel * 0.35) * 0.45;
+    const trailCount = chorus && beat.impact > 0.08 ? 3 : 1;
+    for (let trail = trailCount - 1; trail >= 0; trail--) {
+      ctx.save();
+      const trailDistance = trail * dpr * (8 + beat.impact * 16);
+      ctx.translate(x - beat.direction.x * trailDistance, y - beat.direction.y * trailDistance);
+      ctx.rotate(rotation);
+      const baseAlpha = (0.025 + recorded.energy * 0.08 + chorus * 0.22) * (0.65 + recorded.onset * 0.35);
+      ctx.globalAlpha = baseAlpha * (trail ? beat.impact * (0.34 / trail) : 1);
+      ctx.strokeStyle = colors[(index + trail) % colors.length];
+      ctx.lineWidth = dpr * (1.4 + (index % 3) * 0.55);
+      ctx.beginPath();
+      ctx.moveTo(-length, 0);
+      ctx.lineTo(length, 0);
+      ctx.stroke();
+      ctx.restore();
+    }
   }
 
   // Spectral-flux peaks launch short sprinkle bursts from the bitten plate.
   // Looking backward in the fixed envelope makes each burst persist briefly
   // without maintaining a separate animation clock or drifting while paused.
   const playRect = $('omb-play')?.getBoundingClientRect();
+  const plateRect = theater.querySelector('.omb-plate')?.getBoundingClientRect();
   const centerX = playRect ? (playRect.left + playRect.width / 2 - rect.left) * dpr : width * 0.78;
   const centerY = playRect ? (playRect.top + playRect.height / 2 - rect.top) * dpr : height * 0.5;
+
+  // Plate and play-control outlines linger at their previous positions after a
+  // beat, giving the motion a readable snapshot trail rather than a plain blur.
+  if (beat.impact > 0.035 && plateRect) {
+    const plateRadius = plateRect.width * dpr * 0.5;
+    const playRadius = (playRect?.width || plateRect.width * 0.48) * dpr * 0.5;
+    for (let echo = 4; echo >= 1; echo--) {
+      const lag = echo / 4;
+      const echoX = centerX - beat.direction.x * slideDistance * dpr * lag;
+      const echoY = centerY - beat.direction.y * slideDistance * dpr * 0.72 * lag;
+      ctx.globalAlpha = beat.impact * (0.18 - echo * 0.026) * (chorus ? 1 : 0.34);
+      ctx.strokeStyle = colors[(beat.ordinal + echo) % colors.length];
+      ctx.lineWidth = dpr * (1.5 + (4 - echo) * 0.45);
+      ctx.beginPath();
+      ctx.arc(echoX, echoY, plateRadius, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(echoX, echoY, playRadius, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  }
   const analysis = supportedLyricsData?.analysis;
   const onsetEnvelope = decodedOneMoreBiteEnvelope(analysis, 'onsets');
   if (analysis?.step && onsetEnvelope.length) {
