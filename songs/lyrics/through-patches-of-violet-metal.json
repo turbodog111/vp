@@ -1,0 +1,1897 @@
+{
+  "song": "Through Patches of Violet",
+  "artist": "Paul Owen Music / Mili",
+  "duration": 235.496,
+  "theater": "violet",
+  "bpm": 161.499,
+  "beatOffset": 1.37,
+  "key": "C-sharp minor",
+  "footer": "MIRROR / THREAD / TWO VOICES",
+  "sections": [
+    {
+      "start": 0,
+      "end": 40.94,
+      "name": "At the gate",
+      "short": "DIVERGENCE",
+      "phase": 0
+    },
+    {
+      "start": 40.94,
+      "end": 63.94,
+      "name": "Round and round",
+      "short": "ORBIT",
+      "phase": 1
+    },
+    {
+      "start": 63.94,
+      "end": 104.12,
+      "name": "Reason why",
+      "short": "FAULT / I",
+      "phase": 2
+    },
+    {
+      "start": 104.12,
+      "end": 131.26,
+      "name": "Final chance",
+      "short": "FRACTURE",
+      "phase": 3
+    },
+    {
+      "start": 131.26,
+      "end": 153.06,
+      "name": "Deletion storm",
+      "short": "DELETE",
+      "phase": 4
+    },
+    {
+      "start": 153.06,
+      "end": 162.04,
+      "name": "White silence",
+      "short": "VOID",
+      "phase": 5
+    },
+    {
+      "start": 162.04,
+      "end": 183.94,
+      "name": "The orbit reverses",
+      "short": "INVERSION",
+      "phase": 6
+    },
+    {
+      "start": 183.94,
+      "end": 212.12,
+      "name": "A different answer",
+      "short": "FAULT / II",
+      "phase": 7
+    },
+    {
+      "start": 212.12,
+      "end": 235.496,
+      "name": "The last message",
+      "short": "VIOLET END",
+      "phase": 8
+    }
+  ],
+  "lines": [
+    {
+      "start": 0.0,
+      "end": 12.26,
+      "text": "How much I wish for another better, happier, brighter future.",
+      "words": [
+        {
+          "word": "How",
+          "start": 0.0,
+          "end": 1.98
+        },
+        {
+          "word": "much",
+          "start": 1.98,
+          "end": 3.1
+        },
+        {
+          "word": "I",
+          "start": 3.1,
+          "end": 3.76
+        },
+        {
+          "word": "wish",
+          "start": 3.76,
+          "end": 4.74
+        },
+        {
+          "word": "for",
+          "start": 4.74,
+          "end": 5.46
+        },
+        {
+          "word": "another",
+          "start": 5.46,
+          "end": 6.24
+        },
+        {
+          "word": "better,",
+          "start": 6.24,
+          "end": 7.76
+        },
+        {
+          "word": "happier,",
+          "start": 8.22,
+          "end": 9.4
+        },
+        {
+          "word": "brighter",
+          "start": 9.8,
+          "end": 10.88
+        },
+        {
+          "word": "future.",
+          "start": 10.88,
+          "end": 12.26
+        }
+      ]
+    },
+    {
+      "start": 12.8,
+      "end": 17.72,
+      "text": "Here I am at the gate I stand. Dear old times",
+      "words": [
+        {
+          "word": "Here",
+          "start": 12.8,
+          "end": 13.66
+        },
+        {
+          "word": "I",
+          "start": 13.66,
+          "end": 14.08
+        },
+        {
+          "word": "am",
+          "start": 14.08,
+          "end": 14.6
+        },
+        {
+          "word": "at",
+          "start": 14.6,
+          "end": 14.92
+        },
+        {
+          "word": "the",
+          "start": 14.92,
+          "end": 15.02
+        },
+        {
+          "word": "gate",
+          "start": 15.02,
+          "end": 15.38
+        },
+        {
+          "word": "I",
+          "start": 15.38,
+          "end": 15.66
+        },
+        {
+          "word": "stand.",
+          "start": 15.66,
+          "end": 16.0
+        },
+        {
+          "word": "Dear",
+          "start": 16.42,
+          "end": 16.9
+        },
+        {
+          "word": "old",
+          "start": 16.9,
+          "end": 17.2
+        },
+        {
+          "word": "times",
+          "start": 17.2,
+          "end": 17.72
+        }
+      ]
+    },
+    {
+      "start": 17.72,
+      "end": 20.26,
+      "text": "I've made up my mind.",
+      "words": [
+        {
+          "word": "I've",
+          "start": 17.72,
+          "end": 18.48
+        },
+        {
+          "word": "made",
+          "start": 18.48,
+          "end": 18.82
+        },
+        {
+          "word": "up",
+          "start": 18.82,
+          "end": 19.2
+        },
+        {
+          "word": "my",
+          "start": 19.2,
+          "end": 19.46
+        },
+        {
+          "word": "mind.",
+          "start": 19.46,
+          "end": 20.26
+        }
+      ]
+    },
+    {
+      "start": 20.26,
+      "end": 27.14,
+      "text": "How much you must have suffered, Lord",
+      "words": [
+        {
+          "word": "How",
+          "start": 20.26,
+          "end": 21.8
+        },
+        {
+          "word": "much",
+          "start": 21.8,
+          "end": 23.02
+        },
+        {
+          "word": "you",
+          "start": 23.02,
+          "end": 23.76
+        },
+        {
+          "word": "must",
+          "start": 23.76,
+          "end": 24.46
+        },
+        {
+          "word": "have",
+          "start": 24.46,
+          "end": 25.28
+        },
+        {
+          "word": "suffered,",
+          "start": 25.28,
+          "end": 26.36
+        },
+        {
+          "word": "Lord",
+          "start": 26.7,
+          "end": 27.14
+        }
+      ]
+    },
+    {
+      "start": 27.14,
+      "end": 32.9,
+      "text": "There were no good, or vain, or sincere, or true manners",
+      "words": [
+        {
+          "word": "There",
+          "start": 27.14,
+          "end": 27.74
+        },
+        {
+          "word": "were",
+          "start": 27.74,
+          "end": 28.08
+        },
+        {
+          "word": "no",
+          "start": 28.08,
+          "end": 28.74
+        },
+        {
+          "word": "good,",
+          "start": 28.74,
+          "end": 29.4
+        },
+        {
+          "word": "or",
+          "start": 29.4,
+          "end": 29.92
+        },
+        {
+          "word": "vain,",
+          "start": 29.92,
+          "end": 30.26
+        },
+        {
+          "word": "or",
+          "start": 30.26,
+          "end": 30.7
+        },
+        {
+          "word": "sincere,",
+          "start": 30.7,
+          "end": 31.3
+        },
+        {
+          "word": "or",
+          "start": 31.54,
+          "end": 31.9
+        },
+        {
+          "word": "true",
+          "start": 31.9,
+          "end": 32.36
+        },
+        {
+          "word": "manners",
+          "start": 32.36,
+          "end": 32.9
+        }
+      ]
+    },
+    {
+      "start": 32.9,
+      "end": 37.68,
+      "text": "We are the fated one, or true one too",
+      "words": [
+        {
+          "word": "We",
+          "start": 32.9,
+          "end": 33.88
+        },
+        {
+          "word": "are",
+          "start": 33.88,
+          "end": 34.2
+        },
+        {
+          "word": "the",
+          "start": 34.2,
+          "end": 34.72
+        },
+        {
+          "word": "fated",
+          "start": 34.72,
+          "end": 35.36
+        },
+        {
+          "word": "one,",
+          "start": 35.36,
+          "end": 35.88
+        },
+        {
+          "word": "or",
+          "start": 36.1,
+          "end": 36.44
+        },
+        {
+          "word": "true",
+          "start": 36.44,
+          "end": 36.96
+        },
+        {
+          "word": "one",
+          "start": 36.96,
+          "end": 37.34
+        },
+        {
+          "word": "too",
+          "start": 37.34,
+          "end": 37.68
+        }
+      ]
+    },
+    {
+      "start": 40.94,
+      "end": 41.98,
+      "text": "Oh,",
+      "words": [
+        {
+          "word": "Oh,",
+          "start": 40.94,
+          "end": 41.98
+        }
+      ]
+    },
+    {
+      "start": 43.42,
+      "end": 45.68,
+      "text": "from then, from we go",
+      "words": [
+        {
+          "word": "from",
+          "start": 43.42,
+          "end": 44.14
+        },
+        {
+          "word": "then,",
+          "start": 44.14,
+          "end": 44.66
+        },
+        {
+          "word": "from",
+          "start": 44.68,
+          "end": 44.92
+        },
+        {
+          "word": "we",
+          "start": 44.92,
+          "end": 45.28
+        },
+        {
+          "word": "go",
+          "start": 45.28,
+          "end": 45.68
+        }
+      ]
+    },
+    {
+      "start": 46.26,
+      "end": 48.82,
+      "text": "Holding on to pain",
+      "words": [
+        {
+          "word": "Holding",
+          "start": 46.26,
+          "end": 47.5
+        },
+        {
+          "word": "on",
+          "start": 47.5,
+          "end": 47.92
+        },
+        {
+          "word": "to",
+          "start": 47.92,
+          "end": 48.2
+        },
+        {
+          "word": "pain",
+          "start": 48.2,
+          "end": 48.82
+        }
+      ]
+    },
+    {
+      "start": 48.82,
+      "end": 51.98,
+      "text": "Driven by our egos",
+      "words": [
+        {
+          "word": "Driven",
+          "start": 48.82,
+          "end": 50.06
+        },
+        {
+          "word": "by",
+          "start": 50.06,
+          "end": 50.72
+        },
+        {
+          "word": "our",
+          "start": 50.72,
+          "end": 50.94
+        },
+        {
+          "word": "egos",
+          "start": 50.94,
+          "end": 51.98
+        }
+      ]
+    },
+    {
+      "start": 51.98,
+      "end": 55.76,
+      "text": "These feelings untold",
+      "words": [
+        {
+          "word": "These",
+          "start": 51.98,
+          "end": 52.98
+        },
+        {
+          "word": "feelings",
+          "start": 52.98,
+          "end": 53.76
+        },
+        {
+          "word": "untold",
+          "start": 53.76,
+          "end": 55.76
+        }
+      ]
+    },
+    {
+      "start": 55.76,
+      "end": 57.98,
+      "text": "Spinning our own",
+      "words": [
+        {
+          "word": "Spinning",
+          "start": 55.76,
+          "end": 56.78
+        },
+        {
+          "word": "our",
+          "start": 56.78,
+          "end": 57.2
+        },
+        {
+          "word": "own",
+          "start": 57.2,
+          "end": 57.98
+        }
+      ]
+    },
+    {
+      "start": 58.82,
+      "end": 61.12,
+      "text": "Visions of the past",
+      "words": [
+        {
+          "word": "Visions",
+          "start": 58.82,
+          "end": 59.6
+        },
+        {
+          "word": "of",
+          "start": 59.6,
+          "end": 60.14
+        },
+        {
+          "word": "the",
+          "start": 60.14,
+          "end": 60.42
+        },
+        {
+          "word": "past",
+          "start": 60.42,
+          "end": 61.12
+        }
+      ]
+    },
+    {
+      "start": 61.12,
+      "end": 63.94,
+      "text": "That you could never know",
+      "words": [
+        {
+          "word": "That",
+          "start": 61.12,
+          "end": 61.98
+        },
+        {
+          "word": "you",
+          "start": 61.98,
+          "end": 62.34
+        },
+        {
+          "word": "could",
+          "start": 62.34,
+          "end": 62.68
+        },
+        {
+          "word": "never",
+          "start": 62.68,
+          "end": 63.26
+        },
+        {
+          "word": "know",
+          "start": 63.26,
+          "end": 63.94
+        }
+      ]
+    },
+    {
+      "start": 63.94,
+      "end": 66.2,
+      "text": "Cause I know",
+      "words": [
+        {
+          "word": "Cause",
+          "start": 63.94,
+          "end": 65.08
+        },
+        {
+          "word": "I",
+          "start": 65.08,
+          "end": 65.5
+        },
+        {
+          "word": "know",
+          "start": 65.5,
+          "end": 66.2
+        }
+      ]
+    },
+    {
+      "start": 66.2,
+      "end": 70.02,
+      "text": "I must be the reason why",
+      "words": [
+        {
+          "word": "I",
+          "start": 66.2,
+          "end": 67.06
+        },
+        {
+          "word": "must",
+          "start": 67.06,
+          "end": 67.8
+        },
+        {
+          "word": "be",
+          "start": 67.8,
+          "end": 68.52
+        },
+        {
+          "word": "the",
+          "start": 68.52,
+          "end": 68.82
+        },
+        {
+          "word": "reason",
+          "start": 68.82,
+          "end": 69.44
+        },
+        {
+          "word": "why",
+          "start": 69.44,
+          "end": 70.02
+        }
+      ]
+    },
+    {
+      "start": 70.02,
+      "end": 73.0,
+      "text": "You have given up your smiles",
+      "words": [
+        {
+          "word": "You",
+          "start": 70.02,
+          "end": 70.76
+        },
+        {
+          "word": "have",
+          "start": 70.76,
+          "end": 71.14
+        },
+        {
+          "word": "given",
+          "start": 71.14,
+          "end": 71.6
+        },
+        {
+          "word": "up",
+          "start": 71.6,
+          "end": 72.4
+        },
+        {
+          "word": "your",
+          "start": 72.4,
+          "end": 72.64
+        },
+        {
+          "word": "smiles",
+          "start": 72.64,
+          "end": 73.0
+        }
+      ]
+    },
+    {
+      "start": 73.0,
+      "end": 76.26,
+      "text": "And the hope inside your eyes",
+      "words": [
+        {
+          "word": "And",
+          "start": 73.0,
+          "end": 73.8
+        },
+        {
+          "word": "the",
+          "start": 73.8,
+          "end": 74.08
+        },
+        {
+          "word": "hope",
+          "start": 74.08,
+          "end": 74.62
+        },
+        {
+          "word": "inside",
+          "start": 74.62,
+          "end": 75.16
+        },
+        {
+          "word": "your",
+          "start": 75.16,
+          "end": 75.66
+        },
+        {
+          "word": "eyes",
+          "start": 75.66,
+          "end": 76.26
+        }
+      ]
+    },
+    {
+      "start": 76.26,
+      "end": 78.04,
+      "text": "Have been stolen",
+      "words": [
+        {
+          "word": "Have",
+          "start": 76.26,
+          "end": 76.8
+        },
+        {
+          "word": "been",
+          "start": 76.8,
+          "end": 77.18
+        },
+        {
+          "word": "stolen",
+          "start": 77.18,
+          "end": 78.04
+        }
+      ]
+    },
+    {
+      "start": 78.61,
+      "end": 82.12,
+      "text": "I must be the reason why",
+      "words": [
+        {
+          "word": "I",
+          "start": 78.61,
+          "end": 79.16
+        },
+        {
+          "word": "must",
+          "start": 79.16,
+          "end": 79.88
+        },
+        {
+          "word": "be",
+          "start": 79.88,
+          "end": 80.58
+        },
+        {
+          "word": "the",
+          "start": 80.58,
+          "end": 80.94
+        },
+        {
+          "word": "reason",
+          "start": 80.94,
+          "end": 81.58
+        },
+        {
+          "word": "why",
+          "start": 81.58,
+          "end": 82.12
+        }
+      ]
+    },
+    {
+      "start": 82.12,
+      "end": 85.22,
+      "text": "You must tell me all these lies",
+      "words": [
+        {
+          "word": "You",
+          "start": 82.12,
+          "end": 82.88
+        },
+        {
+          "word": "must",
+          "start": 82.88,
+          "end": 83.3
+        },
+        {
+          "word": "tell",
+          "start": 83.3,
+          "end": 83.7
+        },
+        {
+          "word": "me",
+          "start": 83.7,
+          "end": 84.06
+        },
+        {
+          "word": "all",
+          "start": 84.06,
+          "end": 84.48
+        },
+        {
+          "word": "these",
+          "start": 84.48,
+          "end": 84.86
+        },
+        {
+          "word": "lies",
+          "start": 84.86,
+          "end": 85.22
+        }
+      ]
+    },
+    {
+      "start": 85.22,
+      "end": 88.36,
+      "text": "Wishing you a better life",
+      "words": [
+        {
+          "word": "Wishing",
+          "start": 85.22,
+          "end": 86.2
+        },
+        {
+          "word": "you",
+          "start": 86.2,
+          "end": 86.68
+        },
+        {
+          "word": "a",
+          "start": 86.68,
+          "end": 87.02
+        },
+        {
+          "word": "better",
+          "start": 87.02,
+          "end": 87.76
+        },
+        {
+          "word": "life",
+          "start": 87.76,
+          "end": 88.36
+        }
+      ]
+    },
+    {
+      "start": 88.36,
+      "end": 91.28,
+      "text": "Without me by your side",
+      "words": [
+        {
+          "word": "Without",
+          "start": 88.36,
+          "end": 88.84
+        },
+        {
+          "word": "me",
+          "start": 88.84,
+          "end": 89.4
+        },
+        {
+          "word": "by",
+          "start": 89.4,
+          "end": 89.9
+        },
+        {
+          "word": "your",
+          "start": 89.9,
+          "end": 90.44
+        },
+        {
+          "word": "side",
+          "start": 90.44,
+          "end": 91.28
+        }
+      ]
+    },
+    {
+      "start": 91.91,
+      "end": 92.92,
+      "text": "The mistake",
+      "words": [
+        {
+          "word": "The",
+          "start": 91.91,
+          "end": 92.46
+        },
+        {
+          "word": "mistake",
+          "start": 92.46,
+          "end": 92.92
+        }
+      ]
+    },
+    {
+      "start": 93.47,
+      "end": 94.62,
+      "text": "Of everything",
+      "words": [
+        {
+          "word": "Of",
+          "start": 93.47,
+          "end": 94.02
+        },
+        {
+          "word": "everything",
+          "start": 94.02,
+          "end": 94.62
+        }
+      ]
+    },
+    {
+      "start": 95.15,
+      "end": 96.34,
+      "text": "We've been saved",
+      "words": [
+        {
+          "word": "We've",
+          "start": 95.15,
+          "end": 95.7
+        },
+        {
+          "word": "been",
+          "start": 95.7,
+          "end": 95.9
+        },
+        {
+          "word": "saved",
+          "start": 95.9,
+          "end": 96.34
+        }
+      ]
+    },
+    {
+      "start": 96.34,
+      "end": 98.02,
+      "text": "Through our choice",
+      "words": [
+        {
+          "word": "Through",
+          "start": 96.34,
+          "end": 97.14
+        },
+        {
+          "word": "our",
+          "start": 97.14,
+          "end": 97.38
+        },
+        {
+          "word": "choice",
+          "start": 97.38,
+          "end": 98.02
+        }
+      ]
+    },
+    {
+      "start": 98.02,
+      "end": 99.0,
+      "text": "Of life",
+      "words": [
+        {
+          "word": "Of",
+          "start": 98.02,
+          "end": 98.66
+        },
+        {
+          "word": "life",
+          "start": 98.66,
+          "end": 99.0
+        }
+      ]
+    },
+    {
+      "start": 99.0,
+      "end": 99.68,
+      "text": "Our",
+      "words": [
+        {
+          "word": "Our",
+          "start": 99.0,
+          "end": 99.68
+        }
+      ]
+    },
+    {
+      "start": 99.68,
+      "end": 100.42,
+      "text": "Way",
+      "words": [
+        {
+          "word": "Way",
+          "start": 99.68,
+          "end": 100.42
+        }
+      ]
+    },
+    {
+      "start": 104.12,
+      "end": 110.52,
+      "text": "How much we must have diverged",
+      "words": [
+        {
+          "word": "How",
+          "start": 104.12,
+          "end": 105.32
+        },
+        {
+          "word": "much",
+          "start": 105.32,
+          "end": 106.52
+        },
+        {
+          "word": "we",
+          "start": 106.52,
+          "end": 107.18
+        },
+        {
+          "word": "must",
+          "start": 107.18,
+          "end": 107.98
+        },
+        {
+          "word": "have",
+          "start": 107.98,
+          "end": 108.84
+        },
+        {
+          "word": "diverged",
+          "start": 108.84,
+          "end": 110.52
+        }
+      ]
+    },
+    {
+      "start": 110.52,
+      "end": 112.78,
+      "text": "And goodnight, goodbye",
+      "words": [
+        {
+          "word": "And",
+          "start": 110.52,
+          "end": 110.98
+        },
+        {
+          "word": "goodnight,",
+          "start": 110.98,
+          "end": 112.32
+        },
+        {
+          "word": "goodbye",
+          "start": 112.46,
+          "end": 112.78
+        }
+      ]
+    },
+    {
+      "start": 112.78,
+      "end": 116.62,
+      "text": "Mind you, we're waiting",
+      "words": [
+        {
+          "word": "Mind",
+          "start": 112.78,
+          "end": 114.68
+        },
+        {
+          "word": "you,",
+          "start": 114.68,
+          "end": 115.12
+        },
+        {
+          "word": "we're",
+          "start": 115.3,
+          "end": 115.9
+        },
+        {
+          "word": "waiting",
+          "start": 115.9,
+          "end": 116.62
+        }
+      ]
+    },
+    {
+      "start": 116.62,
+      "end": 119.4,
+      "text": "It's our final chance",
+      "words": [
+        {
+          "word": "It's",
+          "start": 116.62,
+          "end": 118.32
+        },
+        {
+          "word": "our",
+          "start": 118.32,
+          "end": 118.36
+        },
+        {
+          "word": "final",
+          "start": 118.36,
+          "end": 118.84
+        },
+        {
+          "word": "chance",
+          "start": 118.84,
+          "end": 119.4
+        }
+      ]
+    },
+    {
+      "start": 119.4,
+      "end": 123.18,
+      "text": "With your hand, we must be there",
+      "words": [
+        {
+          "word": "With",
+          "start": 119.4,
+          "end": 120.08
+        },
+        {
+          "word": "your",
+          "start": 120.08,
+          "end": 120.46
+        },
+        {
+          "word": "hand,",
+          "start": 120.46,
+          "end": 121.06
+        },
+        {
+          "word": "we",
+          "start": 121.16,
+          "end": 121.24
+        },
+        {
+          "word": "must",
+          "start": 121.24,
+          "end": 121.64
+        },
+        {
+          "word": "be",
+          "start": 121.64,
+          "end": 122.72
+        },
+        {
+          "word": "there",
+          "start": 122.72,
+          "end": 123.18
+        }
+      ]
+    },
+    {
+      "start": 131.26,
+      "end": 136.71,
+      "text": "Delete, Delete, Delete, Delete, Delete, Delete",
+      "words": [
+        {
+          "word": "Delete,",
+          "start": 131.26,
+          "end": 132.168
+        },
+        {
+          "word": "Delete,",
+          "start": 132.168,
+          "end": 133.077
+        },
+        {
+          "word": "Delete,",
+          "start": 133.077,
+          "end": 133.985
+        },
+        {
+          "word": "Delete,",
+          "start": 133.985,
+          "end": 134.893
+        },
+        {
+          "word": "Delete,",
+          "start": 134.893,
+          "end": 135.802
+        },
+        {
+          "word": "Delete",
+          "start": 135.802,
+          "end": 136.71
+        }
+      ]
+    },
+    {
+      "start": 136.71,
+      "end": 142.16,
+      "text": "Delete, Delete, Delete, Delete, Delete, Delete",
+      "words": [
+        {
+          "word": "Delete,",
+          "start": 136.71,
+          "end": 137.618
+        },
+        {
+          "word": "Delete,",
+          "start": 137.618,
+          "end": 138.527
+        },
+        {
+          "word": "Delete,",
+          "start": 138.527,
+          "end": 139.435
+        },
+        {
+          "word": "Delete,",
+          "start": 139.435,
+          "end": 140.343
+        },
+        {
+          "word": "Delete,",
+          "start": 140.343,
+          "end": 141.252
+        },
+        {
+          "word": "Delete",
+          "start": 141.252,
+          "end": 142.16
+        }
+      ]
+    },
+    {
+      "start": 142.16,
+      "end": 147.61,
+      "text": "Delete, Delete, Delete, Delete, Delete, Delete",
+      "words": [
+        {
+          "word": "Delete,",
+          "start": 142.16,
+          "end": 143.068
+        },
+        {
+          "word": "Delete,",
+          "start": 143.068,
+          "end": 143.977
+        },
+        {
+          "word": "Delete,",
+          "start": 143.977,
+          "end": 144.885
+        },
+        {
+          "word": "Delete,",
+          "start": 144.885,
+          "end": 145.793
+        },
+        {
+          "word": "Delete,",
+          "start": 145.793,
+          "end": 146.702
+        },
+        {
+          "word": "Delete",
+          "start": 146.702,
+          "end": 147.61
+        }
+      ]
+    },
+    {
+      "start": 147.61,
+      "end": 153.06,
+      "text": "Delete, Delete, Delete, Delete, Delete, Delete",
+      "words": [
+        {
+          "word": "Delete,",
+          "start": 147.61,
+          "end": 148.518
+        },
+        {
+          "word": "Delete,",
+          "start": 148.518,
+          "end": 149.427
+        },
+        {
+          "word": "Delete,",
+          "start": 149.427,
+          "end": 150.335
+        },
+        {
+          "word": "Delete,",
+          "start": 150.335,
+          "end": 151.243
+        },
+        {
+          "word": "Delete,",
+          "start": 151.243,
+          "end": 152.152
+        },
+        {
+          "word": "Delete",
+          "start": 152.152,
+          "end": 153.06
+        }
+      ]
+    },
+    {
+      "start": 162.04,
+      "end": 165.78,
+      "text": "Oh, from the ground we go",
+      "words": [
+        {
+          "word": "Oh,",
+          "start": 162.04,
+          "end": 163.12
+        },
+        {
+          "word": "from",
+          "start": 163.12,
+          "end": 164.2
+        },
+        {
+          "word": "the",
+          "start": 164.2,
+          "end": 164.44
+        },
+        {
+          "word": "ground",
+          "start": 164.44,
+          "end": 164.86
+        },
+        {
+          "word": "we",
+          "start": 164.86,
+          "end": 165.28
+        },
+        {
+          "word": "go",
+          "start": 165.28,
+          "end": 165.78
+        }
+      ]
+    },
+    {
+      "start": 166.66,
+      "end": 168.68,
+      "text": "Holding on to pain",
+      "words": [
+        {
+          "word": "Holding",
+          "start": 166.66,
+          "end": 167.5
+        },
+        {
+          "word": "on",
+          "start": 167.5,
+          "end": 167.9
+        },
+        {
+          "word": "to",
+          "start": 167.9,
+          "end": 168.24
+        },
+        {
+          "word": "pain",
+          "start": 168.24,
+          "end": 168.68
+        }
+      ]
+    },
+    {
+      "start": 169.36,
+      "end": 171.88,
+      "text": "Driven by our egos",
+      "words": [
+        {
+          "word": "Driven",
+          "start": 169.36,
+          "end": 170.1
+        },
+        {
+          "word": "by",
+          "start": 170.1,
+          "end": 170.64
+        },
+        {
+          "word": "our",
+          "start": 170.64,
+          "end": 170.94
+        },
+        {
+          "word": "egos",
+          "start": 170.94,
+          "end": 171.88
+        }
+      ]
+    },
+    {
+      "start": 173.0,
+      "end": 174.92,
+      "text": "Feelings are told",
+      "words": [
+        {
+          "word": "Feelings",
+          "start": 173.0,
+          "end": 174.08
+        },
+        {
+          "word": "are",
+          "start": 174.08,
+          "end": 174.48
+        },
+        {
+          "word": "told",
+          "start": 174.48,
+          "end": 174.92
+        }
+      ]
+    },
+    {
+      "start": 175.48,
+      "end": 178.0,
+      "text": "Spilling our world",
+      "words": [
+        {
+          "word": "Spilling",
+          "start": 175.48,
+          "end": 176.48
+        },
+        {
+          "word": "our",
+          "start": 176.48,
+          "end": 177.16
+        },
+        {
+          "word": "world",
+          "start": 177.16,
+          "end": 178.0
+        }
+      ]
+    },
+    {
+      "start": 178.86,
+      "end": 181.06,
+      "text": "Visions of the past",
+      "words": [
+        {
+          "word": "Visions",
+          "start": 178.86,
+          "end": 179.66
+        },
+        {
+          "word": "of",
+          "start": 179.66,
+          "end": 180.2
+        },
+        {
+          "word": "the",
+          "start": 180.2,
+          "end": 180.44
+        },
+        {
+          "word": "past",
+          "start": 180.44,
+          "end": 181.06
+        }
+      ]
+    },
+    {
+      "start": 181.06,
+      "end": 183.94,
+      "text": "The truth could never know",
+      "words": [
+        {
+          "word": "The",
+          "start": 181.06,
+          "end": 181.92
+        },
+        {
+          "word": "truth",
+          "start": 181.92,
+          "end": 182.32
+        },
+        {
+          "word": "could",
+          "start": 182.32,
+          "end": 182.72
+        },
+        {
+          "word": "never",
+          "start": 182.72,
+          "end": 183.22
+        },
+        {
+          "word": "know",
+          "start": 183.22,
+          "end": 183.94
+        }
+      ]
+    },
+    {
+      "start": 183.94,
+      "end": 186.24,
+      "text": "How would I know?",
+      "words": [
+        {
+          "word": "How",
+          "start": 183.94,
+          "end": 184.6
+        },
+        {
+          "word": "would",
+          "start": 184.6,
+          "end": 184.92
+        },
+        {
+          "word": "I",
+          "start": 184.92,
+          "end": 185.46
+        },
+        {
+          "word": "know?",
+          "start": 185.46,
+          "end": 186.24
+        }
+      ]
+    },
+    {
+      "start": 186.44,
+      "end": 189.96,
+      "text": "I could be the reason why",
+      "words": [
+        {
+          "word": "I",
+          "start": 186.44,
+          "end": 187.06
+        },
+        {
+          "word": "could",
+          "start": 187.06,
+          "end": 187.66
+        },
+        {
+          "word": "be",
+          "start": 187.66,
+          "end": 188.36
+        },
+        {
+          "word": "the",
+          "start": 188.36,
+          "end": 188.78
+        },
+        {
+          "word": "reason",
+          "start": 188.78,
+          "end": 189.5
+        },
+        {
+          "word": "why",
+          "start": 189.5,
+          "end": 189.96
+        }
+      ]
+    },
+    {
+      "start": 189.96,
+      "end": 193.14,
+      "text": "You were able to be kind",
+      "words": [
+        {
+          "word": "You",
+          "start": 189.96,
+          "end": 190.64
+        },
+        {
+          "word": "were",
+          "start": 190.64,
+          "end": 191.08
+        },
+        {
+          "word": "able",
+          "start": 191.08,
+          "end": 191.6
+        },
+        {
+          "word": "to",
+          "start": 191.6,
+          "end": 192.14
+        },
+        {
+          "word": "be",
+          "start": 192.14,
+          "end": 192.54
+        },
+        {
+          "word": "kind",
+          "start": 192.54,
+          "end": 193.14
+        }
+      ]
+    },
+    {
+      "start": 193.14,
+      "end": 196.12,
+      "text": "And the hearts we had so tied",
+      "words": [
+        {
+          "word": "And",
+          "start": 193.14,
+          "end": 193.8
+        },
+        {
+          "word": "the",
+          "start": 193.8,
+          "end": 194.08
+        },
+        {
+          "word": "hearts",
+          "start": 194.08,
+          "end": 194.68
+        },
+        {
+          "word": "we",
+          "start": 194.68,
+          "end": 194.92
+        },
+        {
+          "word": "had",
+          "start": 194.92,
+          "end": 195.3
+        },
+        {
+          "word": "so",
+          "start": 195.3,
+          "end": 195.6
+        },
+        {
+          "word": "tied",
+          "start": 195.6,
+          "end": 196.12
+        }
+      ]
+    },
+    {
+      "start": 196.12,
+      "end": 198.2,
+      "text": "Won't stay broken",
+      "words": [
+        {
+          "word": "Won't",
+          "start": 196.12,
+          "end": 196.88
+        },
+        {
+          "word": "stay",
+          "start": 196.88,
+          "end": 197.1
+        },
+        {
+          "word": "broken",
+          "start": 197.1,
+          "end": 198.2
+        }
+      ]
+    },
+    {
+      "start": 198.2,
+      "end": 202.16,
+      "text": "But must be the reason why",
+      "words": [
+        {
+          "word": "But",
+          "start": 198.2,
+          "end": 199.38
+        },
+        {
+          "word": "must",
+          "start": 199.38,
+          "end": 200.0
+        },
+        {
+          "word": "be",
+          "start": 200.0,
+          "end": 200.68
+        },
+        {
+          "word": "the",
+          "start": 200.68,
+          "end": 200.98
+        },
+        {
+          "word": "reason",
+          "start": 200.98,
+          "end": 201.68
+        },
+        {
+          "word": "why",
+          "start": 201.68,
+          "end": 202.16
+        }
+      ]
+    },
+    {
+      "start": 202.16,
+      "end": 205.18,
+      "text": "I still believe in this lie",
+      "words": [
+        {
+          "word": "I",
+          "start": 202.16,
+          "end": 202.88
+        },
+        {
+          "word": "still",
+          "start": 202.88,
+          "end": 203.2
+        },
+        {
+          "word": "believe",
+          "start": 203.2,
+          "end": 203.9
+        },
+        {
+          "word": "in",
+          "start": 203.9,
+          "end": 204.42
+        },
+        {
+          "word": "this",
+          "start": 204.42,
+          "end": 204.86
+        },
+        {
+          "word": "lie",
+          "start": 204.86,
+          "end": 205.18
+        }
+      ]
+    },
+    {
+      "start": 205.18,
+      "end": 208.28,
+      "text": "That you'll live a better life",
+      "words": [
+        {
+          "word": "That",
+          "start": 205.18,
+          "end": 205.88
+        },
+        {
+          "word": "you'll",
+          "start": 205.88,
+          "end": 206.38
+        },
+        {
+          "word": "live",
+          "start": 206.38,
+          "end": 206.9
+        },
+        {
+          "word": "a",
+          "start": 206.9,
+          "end": 207.2
+        },
+        {
+          "word": "better",
+          "start": 207.2,
+          "end": 207.76
+        },
+        {
+          "word": "life",
+          "start": 207.76,
+          "end": 208.28
+        }
+      ]
+    },
+    {
+      "start": 208.28,
+      "end": 211.38,
+      "text": "Without me by your side",
+      "words": [
+        {
+          "word": "Without",
+          "start": 208.28,
+          "end": 208.84
+        },
+        {
+          "word": "me",
+          "start": 208.84,
+          "end": 209.3
+        },
+        {
+          "word": "by",
+          "start": 209.3,
+          "end": 209.7
+        },
+        {
+          "word": "your",
+          "start": 209.7,
+          "end": 210.44
+        },
+        {
+          "word": "side",
+          "start": 210.44,
+          "end": 211.38
+        }
+      ]
+    },
+    {
+      "start": 212.0,
+      "end": 216.02,
+      "text": "The last thing I thought that you'd say",
+      "words": [
+        {
+          "word": "The",
+          "start": 212.0,
+          "end": 212.58
+        },
+        {
+          "word": "last",
+          "start": 212.58,
+          "end": 212.9
+        },
+        {
+          "word": "thing",
+          "start": 212.9,
+          "end": 213.2
+        },
+        {
+          "word": "I",
+          "start": 213.2,
+          "end": 213.98
+        },
+        {
+          "word": "thought",
+          "start": 213.98,
+          "end": 214.42
+        },
+        {
+          "word": "that",
+          "start": 214.42,
+          "end": 215.08
+        },
+        {
+          "word": "you'd",
+          "start": 215.08,
+          "end": 215.66
+        },
+        {
+          "word": "say",
+          "start": 215.66,
+          "end": 216.02
+        }
+      ]
+    },
+    {
+      "start": 216.48,
+      "end": 220.58,
+      "text": "That I could avoid the fate",
+      "words": [
+        {
+          "word": "That",
+          "start": 216.48,
+          "end": 217.06
+        },
+        {
+          "word": "I",
+          "start": 217.06,
+          "end": 217.44
+        },
+        {
+          "word": "could",
+          "start": 217.44,
+          "end": 217.66
+        },
+        {
+          "word": "avoid",
+          "start": 217.66,
+          "end": 218.72
+        },
+        {
+          "word": "the",
+          "start": 218.72,
+          "end": 219.64
+        },
+        {
+          "word": "fate",
+          "start": 219.64,
+          "end": 220.58
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "step": 0.1,
+    "energyBase64": "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",
+    "onsetsBase64": "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"
+  },
+  "timingMethod": "Whisper large-v3 word timestamps cross-checked against isolated vocals and the original mix."
+}

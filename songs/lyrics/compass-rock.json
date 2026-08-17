@@ -1,0 +1,852 @@
+{
+  "song": "Compass",
+  "artist": "Paul Owen Music / Mili",
+  "duration": 226.023,
+  "theater": "compass",
+  "bpm": 178.206,
+  "beatOffset": 0.07,
+  "key": "F minor",
+  "footer": "SEA / STAR / INNER NORTH",
+  "sections": [
+    {
+      "start": 0,
+      "end": 22.46,
+      "name": "Uncharted water",
+      "short": "DEPARTURE",
+      "phase": 0
+    },
+    {
+      "start": 22.46,
+      "end": 57.32,
+      "name": "No fixed bearing",
+      "short": "DRIFT",
+      "phase": 1
+    },
+    {
+      "start": 57.32,
+      "end": 82.0,
+      "name": "Swallowed by the sea",
+      "short": "LOST COMPASS",
+      "phase": 2
+    },
+    {
+      "start": 82.0,
+      "end": 106.5,
+      "name": "Black and white",
+      "short": "VERDICT",
+      "phase": 3
+    },
+    {
+      "start": 106.5,
+      "end": 129.0,
+      "name": "The needle watches",
+      "short": "INNER NORTH",
+      "phase": 4
+    },
+    {
+      "start": 129.0,
+      "end": 159.64,
+      "name": "Storm passage",
+      "short": "INSTRUMENTAL",
+      "phase": 5
+    },
+    {
+      "start": 159.64,
+      "end": 174.2,
+      "name": "Fire on the water",
+      "short": "RECKONING",
+      "phase": 6
+    },
+    {
+      "start": 174.2,
+      "end": 226.023,
+      "name": "Follow the gold",
+      "short": "HOMEWARD",
+      "phase": 7
+    }
+  ],
+  "lines": [
+    {
+      "start": 22.46,
+      "end": 27.12,
+      "text": "Oh, my heart, not me, not so, so",
+      "words": [
+        {
+          "word": "Oh,",
+          "start": 22.46,
+          "end": 23.3
+        },
+        {
+          "word": "my",
+          "start": 23.3,
+          "end": 24.14
+        },
+        {
+          "word": "heart,",
+          "start": 24.14,
+          "end": 24.74
+        },
+        {
+          "word": "not",
+          "start": 25.0,
+          "end": 25.66
+        },
+        {
+          "word": "me,",
+          "start": 25.66,
+          "end": 26.08
+        },
+        {
+          "word": "not",
+          "start": 26.08,
+          "end": 26.42
+        },
+        {
+          "word": "so,",
+          "start": 26.42,
+          "end": 26.72
+        },
+        {
+          "word": "so",
+          "start": 26.72,
+          "end": 27.12
+        }
+      ]
+    },
+    {
+      "start": 30.84,
+      "end": 32.9,
+      "text": "Force me towards your heart",
+      "words": [
+        {
+          "word": "Force",
+          "start": 30.84,
+          "end": 31.1
+        },
+        {
+          "word": "me",
+          "start": 31.1,
+          "end": 31.38
+        },
+        {
+          "word": "towards",
+          "start": 31.38,
+          "end": 32.12
+        },
+        {
+          "word": "your",
+          "start": 32.12,
+          "end": 32.46
+        },
+        {
+          "word": "heart",
+          "start": 32.46,
+          "end": 32.9
+        }
+      ]
+    },
+    {
+      "start": 32.9,
+      "end": 38.26,
+      "text": "Force me towards your heart",
+      "words": [
+        {
+          "word": "Force",
+          "start": 32.9,
+          "end": 35.04
+        },
+        {
+          "word": "me",
+          "start": 35.04,
+          "end": 36.78
+        },
+        {
+          "word": "towards",
+          "start": 36.78,
+          "end": 37.44
+        },
+        {
+          "word": "your",
+          "start": 37.44,
+          "end": 37.92
+        },
+        {
+          "word": "heart",
+          "start": 37.92,
+          "end": 38.26
+        }
+      ]
+    },
+    {
+      "start": 40.48,
+      "end": 42.52,
+      "text": "I, I,",
+      "words": [
+        {
+          "word": "I,",
+          "start": 40.48,
+          "end": 41.5
+        },
+        {
+          "word": "I,",
+          "start": 41.5,
+          "end": 42.52
+        }
+      ]
+    },
+    {
+      "start": 43.8,
+      "end": 54.38,
+      "text": "you know I'm reclaiming myself Without, leaving behind the hope",
+      "words": [
+        {
+          "word": "you",
+          "start": 43.8,
+          "end": 45.86
+        },
+        {
+          "word": "know",
+          "start": 45.86,
+          "end": 46.42
+        },
+        {
+          "word": "I'm",
+          "start": 46.42,
+          "end": 47.46
+        },
+        {
+          "word": "reclaiming",
+          "start": 47.46,
+          "end": 48.46
+        },
+        {
+          "word": "myself",
+          "start": 48.46,
+          "end": 48.88
+        },
+        {
+          "word": "Without,",
+          "start": 48.88,
+          "end": 51.6
+        },
+        {
+          "word": "leaving",
+          "start": 52.12,
+          "end": 52.94
+        },
+        {
+          "word": "behind",
+          "start": 52.94,
+          "end": 53.58
+        },
+        {
+          "word": "the",
+          "start": 53.58,
+          "end": 54.14
+        },
+        {
+          "word": "hope",
+          "start": 54.14,
+          "end": 54.38
+        }
+      ]
+    },
+    {
+      "start": 57.32,
+      "end": 60.14,
+      "text": "We think we're only friends",
+      "words": [
+        {
+          "word": "We",
+          "start": 57.32,
+          "end": 58.28
+        },
+        {
+          "word": "think",
+          "start": 58.28,
+          "end": 58.66
+        },
+        {
+          "word": "we're",
+          "start": 58.66,
+          "end": 59.08
+        },
+        {
+          "word": "only",
+          "start": 59.08,
+          "end": 59.56
+        },
+        {
+          "word": "friends",
+          "start": 59.56,
+          "end": 60.14
+        }
+      ]
+    },
+    {
+      "start": 63.1,
+      "end": 65.74,
+      "text": "We miss that",
+      "words": [
+        {
+          "word": "We",
+          "start": 63.1,
+          "end": 64.06
+        },
+        {
+          "word": "miss",
+          "start": 64.06,
+          "end": 65.02
+        },
+        {
+          "word": "that",
+          "start": 65.02,
+          "end": 65.74
+        }
+      ]
+    },
+    {
+      "start": 66.48,
+      "end": 70.98,
+      "text": "My compass was swallowed by the sea",
+      "words": [
+        {
+          "word": "My",
+          "start": 66.48,
+          "end": 67.72
+        },
+        {
+          "word": "compass",
+          "start": 67.72,
+          "end": 68.56
+        },
+        {
+          "word": "was",
+          "start": 68.56,
+          "end": 69.24
+        },
+        {
+          "word": "swallowed",
+          "start": 69.24,
+          "end": 69.72
+        },
+        {
+          "word": "by",
+          "start": 69.72,
+          "end": 70.2
+        },
+        {
+          "word": "the",
+          "start": 70.2,
+          "end": 70.5
+        },
+        {
+          "word": "sea",
+          "start": 70.5,
+          "end": 70.98
+        }
+      ]
+    },
+    {
+      "start": 70.98,
+      "end": 76.46,
+      "text": "My compass was swallowed by the sea",
+      "words": [
+        {
+          "word": "My",
+          "start": 70.98,
+          "end": 73.08
+        },
+        {
+          "word": "compass",
+          "start": 73.08,
+          "end": 73.84
+        },
+        {
+          "word": "was",
+          "start": 73.84,
+          "end": 74.66
+        },
+        {
+          "word": "swallowed",
+          "start": 74.66,
+          "end": 75.14
+        },
+        {
+          "word": "by",
+          "start": 75.14,
+          "end": 75.68
+        },
+        {
+          "word": "the",
+          "start": 75.68,
+          "end": 75.96
+        },
+        {
+          "word": "sea",
+          "start": 75.96,
+          "end": 76.46
+        }
+      ]
+    },
+    {
+      "start": 78.16,
+      "end": 83.08,
+      "text": "I cursed this relationship between you",
+      "words": [
+        {
+          "word": "I",
+          "start": 78.16,
+          "end": 78.78
+        },
+        {
+          "word": "cursed",
+          "start": 78.78,
+          "end": 79.2
+        },
+        {
+          "word": "this",
+          "start": 79.2,
+          "end": 79.76
+        },
+        {
+          "word": "relationship",
+          "start": 79.76,
+          "end": 80.68
+        },
+        {
+          "word": "between",
+          "start": 80.68,
+          "end": 81.54
+        },
+        {
+          "word": "you",
+          "start": 81.54,
+          "end": 83.08
+        }
+      ]
+    },
+    {
+      "start": 83.08,
+      "end": 92.78,
+      "text": "I wanted black and white",
+      "words": [
+        {
+          "word": "I",
+          "start": 83.08,
+          "end": 85.84
+        },
+        {
+          "word": "wanted",
+          "start": 85.84,
+          "end": 90.06
+        },
+        {
+          "word": "black",
+          "start": 90.06,
+          "end": 91.98
+        },
+        {
+          "word": "and",
+          "start": 91.98,
+          "end": 92.3
+        },
+        {
+          "word": "white",
+          "start": 92.3,
+          "end": 92.78
+        }
+      ]
+    },
+    {
+      "start": 92.78,
+      "end": 98.0,
+      "text": "Your evil's predefined",
+      "words": [
+        {
+          "word": "Your",
+          "start": 92.78,
+          "end": 95.06
+        },
+        {
+          "word": "evil's",
+          "start": 95.06,
+          "end": 97.24
+        },
+        {
+          "word": "predefined",
+          "start": 97.24,
+          "end": 98.0
+        }
+      ]
+    },
+    {
+      "start": 100.12,
+      "end": 103.46,
+      "text": "Your evil's predefined",
+      "words": [
+        {
+          "word": "Your",
+          "start": 100.12,
+          "end": 101.52
+        },
+        {
+          "word": "evil's",
+          "start": 101.52,
+          "end": 102.62
+        },
+        {
+          "word": "predefined",
+          "start": 102.62,
+          "end": 103.46
+        }
+      ]
+    },
+    {
+      "start": 103.46,
+      "end": 103.86,
+      "text": "Fine.",
+      "words": [
+        {
+          "word": "Fine.",
+          "start": 103.46,
+          "end": 103.86
+        }
+      ]
+    },
+    {
+      "start": 106.5,
+      "end": 109.3,
+      "text": "I'm on a climb",
+      "words": [
+        {
+          "word": "I'm",
+          "start": 106.5,
+          "end": 107.78
+        },
+        {
+          "word": "on",
+          "start": 107.78,
+          "end": 107.92
+        },
+        {
+          "word": "a",
+          "start": 107.92,
+          "end": 108.48
+        },
+        {
+          "word": "climb",
+          "start": 108.48,
+          "end": 109.3
+        }
+      ]
+    },
+    {
+      "start": 110.8,
+      "end": 114.92,
+      "text": "My compass is purely watching me",
+      "words": [
+        {
+          "word": "My",
+          "start": 110.8,
+          "end": 111.44
+        },
+        {
+          "word": "compass",
+          "start": 111.44,
+          "end": 112.14
+        },
+        {
+          "word": "is",
+          "start": 112.14,
+          "end": 112.88
+        },
+        {
+          "word": "purely",
+          "start": 112.88,
+          "end": 113.28
+        },
+        {
+          "word": "watching",
+          "start": 113.28,
+          "end": 114.04
+        },
+        {
+          "word": "me",
+          "start": 114.04,
+          "end": 114.92
+        }
+      ]
+    },
+    {
+      "start": 116.2,
+      "end": 120.08,
+      "text": "My compass is purely watching me",
+      "words": [
+        {
+          "word": "My",
+          "start": 116.2,
+          "end": 116.84
+        },
+        {
+          "word": "compass",
+          "start": 116.84,
+          "end": 117.6
+        },
+        {
+          "word": "is",
+          "start": 117.6,
+          "end": 118.26
+        },
+        {
+          "word": "purely",
+          "start": 118.26,
+          "end": 118.72
+        },
+        {
+          "word": "watching",
+          "start": 118.72,
+          "end": 119.5
+        },
+        {
+          "word": "me",
+          "start": 119.5,
+          "end": 120.08
+        }
+      ]
+    },
+    {
+      "start": 121.72,
+      "end": 126.66,
+      "text": "I'm dancing through the world that's right in front of you",
+      "words": [
+        {
+          "word": "I'm",
+          "start": 121.72,
+          "end": 122.36
+        },
+        {
+          "word": "dancing",
+          "start": 122.36,
+          "end": 122.82
+        },
+        {
+          "word": "through",
+          "start": 122.82,
+          "end": 123.36
+        },
+        {
+          "word": "the",
+          "start": 123.36,
+          "end": 123.64
+        },
+        {
+          "word": "world",
+          "start": 123.64,
+          "end": 124.08
+        },
+        {
+          "word": "that's",
+          "start": 124.08,
+          "end": 124.42
+        },
+        {
+          "word": "right",
+          "start": 124.42,
+          "end": 124.68
+        },
+        {
+          "word": "in",
+          "start": 124.68,
+          "end": 125.32
+        },
+        {
+          "word": "front",
+          "start": 125.32,
+          "end": 125.48
+        },
+        {
+          "word": "of",
+          "start": 125.48,
+          "end": 125.98
+        },
+        {
+          "word": "you",
+          "start": 125.98,
+          "end": 126.66
+        }
+      ]
+    },
+    {
+      "start": 126.66,
+      "end": 128.14,
+      "text": "and me",
+      "words": [
+        {
+          "word": "and",
+          "start": 126.66,
+          "end": 127.74
+        },
+        {
+          "word": "me",
+          "start": 127.74,
+          "end": 128.14
+        }
+      ]
+    },
+    {
+      "start": 159.64,
+      "end": 163.4,
+      "text": "My heart cries, it's killing me, I feel it",
+      "words": [
+        {
+          "word": "My",
+          "start": 159.64,
+          "end": 160.44
+        },
+        {
+          "word": "heart",
+          "start": 160.44,
+          "end": 160.9
+        },
+        {
+          "word": "cries,",
+          "start": 160.9,
+          "end": 161.54
+        },
+        {
+          "word": "it's",
+          "start": 161.54,
+          "end": 161.94
+        },
+        {
+          "word": "killing",
+          "start": 161.94,
+          "end": 162.2
+        },
+        {
+          "word": "me,",
+          "start": 162.2,
+          "end": 162.62
+        },
+        {
+          "word": "I",
+          "start": 162.62,
+          "end": 162.82
+        },
+        {
+          "word": "feel",
+          "start": 162.82,
+          "end": 163.16
+        },
+        {
+          "word": "it",
+          "start": 163.16,
+          "end": 163.4
+        }
+      ]
+    },
+    {
+      "start": 164.72,
+      "end": 168.32,
+      "text": "I can't think of a best friend",
+      "words": [
+        {
+          "word": "I",
+          "start": 164.72,
+          "end": 165.84
+        },
+        {
+          "word": "can't",
+          "start": 165.84,
+          "end": 166.28
+        },
+        {
+          "word": "think",
+          "start": 166.28,
+          "end": 166.54
+        },
+        {
+          "word": "of",
+          "start": 166.54,
+          "end": 167.0
+        },
+        {
+          "word": "a",
+          "start": 167.0,
+          "end": 167.34
+        },
+        {
+          "word": "best",
+          "start": 167.34,
+          "end": 168.02
+        },
+        {
+          "word": "friend",
+          "start": 168.02,
+          "end": 168.32
+        }
+      ]
+    },
+    {
+      "start": 168.56,
+      "end": 171.88,
+      "text": "Cause you and me",
+      "words": [
+        {
+          "word": "Cause",
+          "start": 168.56,
+          "end": 169.12
+        },
+        {
+          "word": "you",
+          "start": 169.12,
+          "end": 170.38
+        },
+        {
+          "word": "and",
+          "start": 170.38,
+          "end": 171.32
+        },
+        {
+          "word": "me",
+          "start": 171.32,
+          "end": 171.88
+        }
+      ]
+    },
+    {
+      "start": 171.88,
+      "end": 173.64,
+      "text": "I know it's me",
+      "words": [
+        {
+          "word": "I",
+          "start": 171.88,
+          "end": 172.7
+        },
+        {
+          "word": "know",
+          "start": 172.7,
+          "end": 173.04
+        },
+        {
+          "word": "it's",
+          "start": 173.04,
+          "end": 173.6
+        },
+        {
+          "word": "me",
+          "start": 173.6,
+          "end": 173.64
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "step": 0.1,
+    "energyBase64": "Aj4mEhUVEA0LCgUFBwgJAwQCBQQECAUGAwAAAgoFAwUFBwUFBQQDAgINCAYGCgcECwcECAkICBALEwsCBAIDAQECAAABAgAAAAAABAEBAAMAAgwJBAkKBAEDAAAAAAAADgUBAwMCBAkGBgcBAggLBAIDAQEEAwAAAAAAAwABAQEDAAkCAgUEAwQNBQMCAwMCBwkGAwIFDQUGBwYEBAwHBwUGAQAMCQIDBAUABwICAQAAAgYBAQQEAwQBAQEDAwMMBgUDAgEACQMBAQEAAAwEAwMAAwQEAAADAAA4ZDQeLiwoPz4aESskCTw+GxImIyA8Jg8lMSAXUjcRHiooK0YdDCkmGDZQKBgvKi46QyUgLycUS0ggHiokIkolDRUfEx1CIg0gISAwPBIRLSoMNk4gEyMbGEIvDh0qIxJQMhcjKSksTCYcMSwYLlAiECopIzE2FBEkGgk8NhAUIScoQyEMISgaHFklDSMjIyk3FA0wKxY2RB0XJyUqSTcgJiwbF04uFiIpHitFGg4fIBAvShwLFhwpOTsaCCIhEElEGhUmIRk8KBAYHBYVPyMPFBsgKD8YECcgGDlMKiIlKSY7MygkJSQiTTspJSUgH0IpIi4sKTNOLCEmJSU5QSMiKSIdPkQhIy0yLkM7KCwqKiZUNCIgISInQSEcHB8fMkciICQkIUFAHyUwKSZIRyMjIiIeRS4fKCgoJFUyKC8rKDFMLiswLCw1TR4gKiQePzgoIh8jIUAqHSAmKydFJiIlISA1USYcJiUjKj4oHTAzKEhCJh0uKClMOCkpKSgqUzkgJSchKkckFx8eHjREIR0aIic4OiMjICQfRzghIR8fGj4tJSMeHilGLygjJS4qSSQlKSUkQ0ExLTUsLiUjJCIqHBkgHx4aGRwVGxIUIBoTFCETFBUUEBUXFA4mEg8VFBUOFBELFRMXEhERDD0wKyciJB8bGhoeGhMYGB0aGRQPFhcYIB0YDiMUExUUERAXFBQhHBMYGBUSFQwOFhkbGBsUEDk0LCspJSYjICEgIRgbFhkaHRseHiUaFyEgGx4lHBccFhMbGBIXHhgUGhsYFxUUEBcUERkYEBc0LiQkIiEbIR8fIxQTGBodGhQZHB8XGBQYGRsfJiUkIBoYFhgcIR4UGx4XEhEPECAoJycgGhRdYiknJ05kIBwhNi0kHx8dIx0YHB8pICc3Hx5JZCciJiEgIC0nLi0gISokIScmHiQrJiQuLCYtZC0dJCpkLB0fIi0eHx0YHSMlISosHSIrKyQlZEMiJCNkQi8qIjMmKSgoJiYyLiYvLisoKh4jZEwnKSpiWhwdGjYlIiEhISUiIB4iHRsYHhwjX1gbIB9BZC0sISgzLiUtKiYlLCcqKSUmLyUmQ2QnKSIsZCMbGRsyIx8hHB0fHBwfKx0eGx0dKWQsICIhZDIdHx0rHiU1IR4hISAcIB4eGhoSFVFWOzc3V1tJMjdiWi0zZDgxLDBkSTUvNWRDKlJUNS8nPlFJQl1JVispWj8tN2RQWUk4LlZJMTZULzExPF5DODM7YDowVEEwLzFUTT8vMU5ULC1cOzJWSExSWTwpWkRQTFFGNFE9S0M4VD0uRC9dPjQ0L2BOPi42VEczSFwwLSo8XkMtM0NkMyJWSycxKUZKSTpeSFYuKV05KEJkUF82MzNQOyFFUjQwMDpZRS84OFYpLVBDNTc3U1ZGMDFDTiAwXzcuQkZQRFArK01LWUBPRC1UQklCNj0+MzshZEgxQ0BIU0gxNltYOkhhOT5DPGRKOzA1ZFIzRVQyKiwvNkc0Nz5WKzFbNyUpL1BJPEBcLkBWS1MuMCw1WEQpKTRVLydFRSYrM11NNygmKy0pOVotJyoqUkUqKy0tLTFJTC8uKD8lQT80LTUvQ2Q0MjYxY0kxMC5iOy1HUCwtKUNWPzFSNjJNUEg+LiwsVkM5MDIuKCg9UiopMTNbPzpWUjdCVVJEKy4vR1VENDJDUS8xWT02MS9ZUj9CXGBRR19dPDZQYkxSVEI9Q05FX1lJSUREPDs0VERERD9bPC40MllHNjAzVEguLzIwLlk0K0QxV0pBUk1kRTQsKV5OREBMVkkwND5NNVZFNUdJP1JkQjxgTysnM05aRz09TVM1NjU5MlNOLzk3UVZETk1RXjk0MklZVkZbUWQ2OkNIPk9WM0REQzpkUDpPYzYzMUFkUzk6P2A+Ozs5NEZkPjpFPGRAPVBKZDcsOzJjUkBKS19HOzc/STlkNi9MPTtLZDcxZEs4NzJXWko8PU5TMzM+OzpbUTlPP0A8PUI/Y188NDlJW0QwYlVJVU9kTVZkZE1OTl1kSVxUVDwqGB0bGjlAFRkoGRs9NxsbGxYQTC8QFQ8RGGA4MzQuV0o1LS9dQStSWy0pLUJTQDNDQV1ELkdBLjAvLDU4LCpISyw6USYmKDFaQy5UQig7T0lFKS4vRU85JzBBUCYzWCsmLDBePSorKicwK0tLJiwrPVZBNDkvKyYtY0QuP0Y8OzVCLzU9QFVaLDU0M1tEMzg4YzYxUEQpKCpUTz0zWjE0V0JTMyssLFo+MSsrLCksRlEqKS4/U0A5W0M0PExXNygsLk9EOiotREspMlYwMyw0VkJGNV1YSVReUj02V1lCX0c/REdMRmROSUFEQjVAR1JLSERETRgUExITFhENDw8MDAsMDA0JDBASDQwLBgQFBQUEAgIDDAcBAAEAAAAAAAABAAQJAwAAAAAAAAADAwEABgUAAAAAAAAAAAAAAQQFAgAAAAAAAQAAAQAABQQCAAAAAAAAAAAAAAAJBwcFAQADBAQAAAAAAgMEAgAAAAAAAAAAAAAGAwAAAQAAAwMGBAICBQYCAAAAAAAAAAAAAAAECAQBAgMCAQUEAAECAQcEAQABAQAAAAAAAAAFAwQBAAAEAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8pHg4SEQoJAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "onsetsBase64": "AFgAABMAQgYRBQAkAQAFACkARgAABwBkAAAAAGQAAAYAVwARAgBQABcAAAEAMgAADwAcBAMAADcAAgQAIAAvAAAFACYAFAAAAAAsAABOAGQAAxAAAAMQAAAdACEDAAcAZAAAAQBbACwAADUAEAACAwIeAAACABoHHQAAQwA6AAEVAGQABQAALwA+AAABAD0CAxEAZAALAAACAAcAAB8ALwAKAQBGAAMEABgAMQAAGwAoAB0BAAMANwkAUwBRCAxXAA0ADAIARgAYAAAPAGQAAAYAHwADAgAxACsAABUAWAALAAAPAhgCEjMAFQULAQBIABYJAAUDMQAEDAQZAQUBAC4AKwYABAAjABIEACwACwALKgESAAATADQBACgALgkABwAiAAwsAAoANgEAFgAUHAwBAGQADh0AMABPAAEBACUABwERDQAGAAAFADwAADQALQMLAABkABgBABUAMgEBCwARAAYDAFkAFwcADwo0BBEHAA4eDwEAZAQSBwAABDUABwQAFQAAAwATACsBAAEBKQAYHAA6ADQAB1gAFQAAAAApBQAOABgAERMHLwArAAAAACkAAwEACwANAAA9ABIAAAEAZAAEAgARABwCASwABgAAAQAqAAoQBAMAIQAHIwAaFhAAAFEFBAQABAIcAAUKAEgBBwMANQAKMwASAhYCAEsADwAJAABRABQBABsAZAAAAAAUABUAAAcAHyMABgAaABcAAA8ALgAAQwAvBAALAGQAAwQASwAkAgAeAAsAAAcARAALFAAJADIAACgAEwAUBwBKAwgPAAYILwADHQAYAAAHABcAKQAABAAtAAsXADoAEQIAZAAmAgABAC0IAAQABgQSCwUSABUAABgCGQEAHAQJABUCABUAEwAACABECAgCAw0BDgcDIAAQBBMCAhYADRIAFwgjBA4OABcADQIAHQASAAALAxkBCgcALwIGBQApAAkWAA4BDgAAHw4OAAMDAB8BDgAAEwAQAwsJBiQDAAIAFwAcAAIIATcEEAgDBwAXCAcKBBgGAAsBJgAKDAAqAAASADQABywBFQMiAgQiAiIMBQYAMgAHAAAoDxAAABwACh8AAQMuAAAAABwAHQUOBQAEABcBBQ8FJQAHAQAuBAsMAAoHHgEABQARCgoAACAAGwADAAAKBQBiAAkFBwAAIgAEAgAAAA8EAgMAPgEhAABQAx0zAAsAIQAAAEACEAAAAFkAA0IACgAZAgABAAQFCQMACCAVAAApAGQAARIAFgYHAAAfAA1dAAABMgoAAAFkBxMDAFwADwQAAwEfBgAGARAFBwABUAIEAgAhABsAABEDAQABAQAUACEAABUGMAACHAAZAQoIAEACEhcAAwYoAAAHADIVBAECJgAFEQAJBQQAAAIAVAAdAABGABEDACkAYwEAAAI3AAwBABkAUAAFBwAxAA0rAAAQGgUIGgkEARIFHCIHAAEBDQUvAwAHAAECAQUBBAMNCQQKABwDBigGAQMCAABEDA0AAgUBJgAABAQAAgkABB0ABAIGBAYAAgANCgACAAECLgIEAAccBCMFARcAAgAOAgUXAQcbAAwCJwIAGQgzBQMDAjICCAUADgMZAgADAicBAgUAIAEAAwACBAQDABMMBwMACAA3BwIEABMDHQEABgECDBwAAB4AAgAAAQImAAEGBAEAAgIAIAUMAwAABywIAggGDwMkBwIKBAAECgQCGQMTBAABABEFAAoCIQQKBwQPCQ4HAAoBMAMGAwQWDA0BAAoACwEBAgMKAAsHAAABGgMGEgMHAAYAACoDCQEACgAcBwECAB8CAAMCDwQXAAAGBAoEAA0IAgAACAAlBQcDAyAACQABBAMFBAAIBgsACQsAAwENAAMfAwoDAhcLHAAAAwAcAAcDAAkADgUDBwEbAAQKAQ4ADAEAIgAYAAANAC8CBQQAIgUJAgAAAQoAAAMDCAACBAATBgADABsCAwEBBAAyAwQDAAUAIgQAAwUfBQACFB8UCgMAAQAOHhkJAQIAAgURJw4BAAEAAxkJFwUAAAAACAYHAwwAAAcBIgIDAgABBAADBR0ACAsDEgAbAAUDABgAAgAEHgYNAAcVBSAGCQcCCAITAgIXBwICBwYBLQABBQADAQYDAiEIAwIADgQTAwMfAgMECw4CJgwGBwMGABkAAQQCAQICBAIpBAsIAgQBCwEABgADAQAHBgMCBQMAAgAhCQEbBxQBDQEHEgYGDQAHBRoKBwYFGAAOBAMbCwkABAkDQAkHBAARCB0EBgoKAwAUAwAgDQcEAAUAFgAEDwIGBAYDAxQJCBgADAUUBQMFACoCBwMACgYGAgAGCw0DBAcAAAARAAdfAQoEAAoKPgAACQAPAxUDAQQAFAIABgMjAQICAwIACAUDGQUEBgQDBykDAAQCAwALAQQWBAYAAAQACwEBEwAVAggAACQFAAEABwAOBQgIAAQBAQIACwAABQQCBBMHBxwAAwUJAgU+BAEAAgADEgIAChAJAAAEBwwACAYAAQYIAAEVAgIAAAMEIgABAQcYABQAAAUBIAMHAAYGAQUDAAEEBgMFEgQAAQcHBDgFCAAACAAxCAMDAhgACgIJDAcDCAQBBQEBBAsEAAANDh8RBAAAAAMOEwgGBAAAAA0PCAUGBAALAAoTEQ4DAAEDAgMAFQYDAQQBBAgAAQMCCS4CBAEHAAEDAwEEAwICLQABAQAAAAgDAAAABgoCAgAAAAUAHgUAAgAIPAMAARMBAgEGBQIAAAQlAAIEDQADGAAEAAANVQABAAADAQAPAAMCAgBcAAYAGgIFAAMJAAEACAAACAcAEw8EBQAIAwtkAAICAwAIAAAAAAABNQ8AAAAAAAcAAAAAAQAoAAECAhQIAAIAABQEA0sAAAEEAQEGAQgAAQlSBgABAAMAAxoAAAAHBgAKAAACAAECAAAACAAUBQAREQAAAioABAAAHQASAAAAAAIAAAAAAgADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  },
+  "timingMethod": "Whisper large-v3 word timestamps cross-checked against isolated vocals and the original mix."
+}

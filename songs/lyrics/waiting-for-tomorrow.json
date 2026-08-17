@@ -1,0 +1,1950 @@
+{
+  "song": "Waiting for Tomorrow",
+  "artist": "MiliSen feat. Kasane Teto",
+  "duration": 161.936,
+  "theater": "waiting",
+  "bpm": 143.555,
+  "beatOffset": 3.994,
+  "key": "E-flat major / G minor",
+  "footer": "CLOCK / PETALS / DAYBREAK",
+  "sections": [
+    {
+      "start": 0,
+      "end": 3.84,
+      "name": "Before the alarm",
+      "short": "ROOM TONE",
+      "phase": 0
+    },
+    {
+      "start": 3.84,
+      "end": 43.76,
+      "name": "Distant sky",
+      "short": "VERSE / I",
+      "phase": 1
+    },
+    {
+      "start": 43.76,
+      "end": 67.22,
+      "name": "Tomorrow calls",
+      "short": "REFRAIN / I",
+      "phase": 2
+    },
+    {
+      "start": 67.22,
+      "end": 107.28,
+      "name": "Seasons unfold",
+      "short": "VERSE / II",
+      "phase": 3
+    },
+    {
+      "start": 107.28,
+      "end": 126.68,
+      "name": "Inside the clock",
+      "short": "TICKING BRIDGE",
+      "phase": 4
+    },
+    {
+      "start": 126.68,
+      "end": 153.24,
+      "name": "Run toward morning",
+      "short": "FINAL REFRAIN",
+      "phase": 5
+    },
+    {
+      "start": 153.24,
+      "end": 161.936,
+      "name": "Curtains open",
+      "short": "DAYBREAK",
+      "phase": 6
+    }
+  ],
+  "lines": [
+    {
+      "start": 3.84,
+      "end": 7.34,
+      "text": "Somewhere, sometime, beneath the distant sky,",
+      "words": [
+        {
+          "word": "Somewhere,",
+          "start": 3.84,
+          "end": 4.58
+        },
+        {
+          "word": "sometime,",
+          "start": 4.92,
+          "end": 5.3
+        },
+        {
+          "word": "beneath",
+          "start": 5.78,
+          "end": 6.2
+        },
+        {
+          "word": "the",
+          "start": 6.2,
+          "end": 6.76
+        },
+        {
+          "word": "distant",
+          "start": 6.76,
+          "end": 7.04
+        },
+        {
+          "word": "sky,",
+          "start": 7.04,
+          "end": 7.34
+        }
+      ]
+    },
+    {
+      "start": 7.46,
+      "end": 10.26,
+      "text": "Would I still hear your lullaby?",
+      "words": [
+        {
+          "word": "Would",
+          "start": 7.46,
+          "end": 7.7
+        },
+        {
+          "word": "I",
+          "start": 7.7,
+          "end": 8.18
+        },
+        {
+          "word": "still",
+          "start": 8.18,
+          "end": 8.5
+        },
+        {
+          "word": "hear",
+          "start": 8.5,
+          "end": 8.9
+        },
+        {
+          "word": "your",
+          "start": 8.9,
+          "end": 9.28
+        },
+        {
+          "word": "lullaby?",
+          "start": 9.28,
+          "end": 10.26
+        }
+      ]
+    },
+    {
+      "start": 10.66,
+      "end": 14.08,
+      "text": "And say, if I look far beyond the light,",
+      "words": [
+        {
+          "word": "And",
+          "start": 10.66,
+          "end": 11.024
+        },
+        {
+          "word": "say,",
+          "start": 11.024,
+          "end": 11.389
+        },
+        {
+          "word": "if",
+          "start": 11.389,
+          "end": 11.672
+        },
+        {
+          "word": "I",
+          "start": 11.672,
+          "end": 11.856
+        },
+        {
+          "word": "look",
+          "start": 11.856,
+          "end": 12.292
+        },
+        {
+          "word": "far",
+          "start": 12.292,
+          "end": 12.656
+        },
+        {
+          "word": "beyond",
+          "start": 12.656,
+          "end": 13.216
+        },
+        {
+          "word": "the",
+          "start": 13.216,
+          "end": 13.58
+        },
+        {
+          "word": "light,",
+          "start": 13.58,
+          "end": 14.08
+        }
+      ]
+    },
+    {
+      "start": 14.2,
+      "end": 16.58,
+      "text": "Would you still shine forever bright?",
+      "words": [
+        {
+          "word": "Would",
+          "start": 14.2,
+          "end": 14.4
+        },
+        {
+          "word": "you",
+          "start": 14.4,
+          "end": 14.88
+        },
+        {
+          "word": "still",
+          "start": 14.88,
+          "end": 15.3
+        },
+        {
+          "word": "shine",
+          "start": 15.3,
+          "end": 15.6
+        },
+        {
+          "word": "forever",
+          "start": 15.6,
+          "end": 16.04
+        },
+        {
+          "word": "bright?",
+          "start": 16.04,
+          "end": 16.58
+        }
+      ]
+    },
+    {
+      "start": 17.12,
+      "end": 19.56,
+      "text": "Tracing clouds outside of time,",
+      "words": [
+        {
+          "word": "Tracing",
+          "start": 17.12,
+          "end": 17.86
+        },
+        {
+          "word": "clouds",
+          "start": 17.86,
+          "end": 18.28
+        },
+        {
+          "word": "outside",
+          "start": 18.28,
+          "end": 18.84
+        },
+        {
+          "word": "of",
+          "start": 18.84,
+          "end": 19.28
+        },
+        {
+          "word": "time,",
+          "start": 19.28,
+          "end": 19.56
+        }
+      ]
+    },
+    {
+      "start": 19.92,
+      "end": 22.5,
+      "text": "As if I could also stay behind.",
+      "words": [
+        {
+          "word": "As",
+          "start": 19.92,
+          "end": 20.24
+        },
+        {
+          "word": "if",
+          "start": 20.24,
+          "end": 20.44
+        },
+        {
+          "word": "I",
+          "start": 20.44,
+          "end": 20.72
+        },
+        {
+          "word": "could",
+          "start": 20.72,
+          "end": 20.98
+        },
+        {
+          "word": "also",
+          "start": 20.98,
+          "end": 21.44
+        },
+        {
+          "word": "stay",
+          "start": 21.44,
+          "end": 21.84
+        },
+        {
+          "word": "behind.",
+          "start": 21.84,
+          "end": 22.5
+        }
+      ]
+    },
+    {
+      "start": 23.18,
+      "end": 26.36,
+      "text": "Every moment, a glimpse of soft silver eyes,",
+      "words": [
+        {
+          "word": "Every",
+          "start": 23.18,
+          "end": 23.7
+        },
+        {
+          "word": "moment,",
+          "start": 23.7,
+          "end": 24.18
+        },
+        {
+          "word": "a",
+          "start": 24.32,
+          "end": 24.58
+        },
+        {
+          "word": "glimpse",
+          "start": 24.58,
+          "end": 24.88
+        },
+        {
+          "word": "of",
+          "start": 24.88,
+          "end": 25.26
+        },
+        {
+          "word": "soft",
+          "start": 25.26,
+          "end": 25.56
+        },
+        {
+          "word": "silver",
+          "start": 25.56,
+          "end": 25.98
+        },
+        {
+          "word": "eyes,",
+          "start": 25.98,
+          "end": 26.36
+        }
+      ]
+    },
+    {
+      "start": 26.46,
+      "end": 29.64,
+      "text": "They lead me closer to dreams I've yet to find.",
+      "words": [
+        {
+          "word": "They",
+          "start": 26.46,
+          "end": 26.66
+        },
+        {
+          "word": "lead",
+          "start": 26.66,
+          "end": 26.94
+        },
+        {
+          "word": "me",
+          "start": 26.94,
+          "end": 27.1
+        },
+        {
+          "word": "closer",
+          "start": 27.1,
+          "end": 27.42
+        },
+        {
+          "word": "to",
+          "start": 27.42,
+          "end": 27.94
+        },
+        {
+          "word": "dreams",
+          "start": 27.94,
+          "end": 28.28
+        },
+        {
+          "word": "I've",
+          "start": 28.28,
+          "end": 28.68
+        },
+        {
+          "word": "yet",
+          "start": 28.68,
+          "end": 28.86
+        },
+        {
+          "word": "to",
+          "start": 28.86,
+          "end": 29.2
+        },
+        {
+          "word": "find.",
+          "start": 29.2,
+          "end": 29.64
+        }
+      ]
+    },
+    {
+      "start": 30.0,
+      "end": 33.82,
+      "text": "When the warm breeze drapes across the misty blue",
+      "words": [
+        {
+          "word": "When",
+          "start": 30.0,
+          "end": 30.72
+        },
+        {
+          "word": "the",
+          "start": 30.72,
+          "end": 30.86
+        },
+        {
+          "word": "warm",
+          "start": 30.86,
+          "end": 31.22
+        },
+        {
+          "word": "breeze",
+          "start": 31.22,
+          "end": 31.52
+        },
+        {
+          "word": "drapes",
+          "start": 31.52,
+          "end": 31.8
+        },
+        {
+          "word": "across",
+          "start": 31.8,
+          "end": 32.06
+        },
+        {
+          "word": "the",
+          "start": 32.06,
+          "end": 32.52
+        },
+        {
+          "word": "misty",
+          "start": 32.52,
+          "end": 33.48
+        },
+        {
+          "word": "blue",
+          "start": 33.48,
+          "end": 33.82
+        }
+      ]
+    },
+    {
+      "start": 33.82,
+      "end": 37.12,
+      "text": "Does the flower know where she's heading to?",
+      "words": [
+        {
+          "word": "Does",
+          "start": 33.82,
+          "end": 34.44
+        },
+        {
+          "word": "the",
+          "start": 34.44,
+          "end": 34.58
+        },
+        {
+          "word": "flower",
+          "start": 34.58,
+          "end": 34.96
+        },
+        {
+          "word": "know",
+          "start": 34.96,
+          "end": 35.22
+        },
+        {
+          "word": "where",
+          "start": 35.22,
+          "end": 35.5
+        },
+        {
+          "word": "she's",
+          "start": 35.5,
+          "end": 36.06
+        },
+        {
+          "word": "heading",
+          "start": 36.06,
+          "end": 36.66
+        },
+        {
+          "word": "to?",
+          "start": 36.66,
+          "end": 37.12
+        }
+      ]
+    },
+    {
+      "start": 37.16,
+      "end": 40.86,
+      "text": "As she brings forth all the sweet scent of June",
+      "words": [
+        {
+          "word": "As",
+          "start": 37.16,
+          "end": 37.412
+        },
+        {
+          "word": "she",
+          "start": 37.412,
+          "end": 37.737
+        },
+        {
+          "word": "brings",
+          "start": 37.737,
+          "end": 38.235
+        },
+        {
+          "word": "forth",
+          "start": 38.235,
+          "end": 38.681
+        },
+        {
+          "word": "all",
+          "start": 38.681,
+          "end": 39.005
+        },
+        {
+          "word": "the",
+          "start": 39.005,
+          "end": 39.329
+        },
+        {
+          "word": "sweet",
+          "start": 39.329,
+          "end": 39.775
+        },
+        {
+          "word": "scent",
+          "start": 39.775,
+          "end": 40.22
+        },
+        {
+          "word": "of",
+          "start": 40.22,
+          "end": 40.472
+        },
+        {
+          "word": "June",
+          "start": 40.472,
+          "end": 40.86
+        }
+      ]
+    },
+    {
+      "start": 42.08,
+      "end": 43.76,
+      "text": "Yes, I'm left to wonder",
+      "words": [
+        {
+          "word": "Yes,",
+          "start": 42.08,
+          "end": 42.8
+        },
+        {
+          "word": "I'm",
+          "start": 42.82,
+          "end": 43.04
+        },
+        {
+          "word": "left",
+          "start": 43.04,
+          "end": 43.2
+        },
+        {
+          "word": "to",
+          "start": 43.2,
+          "end": 43.4
+        },
+        {
+          "word": "wonder",
+          "start": 43.4,
+          "end": 43.76
+        }
+      ]
+    },
+    {
+      "start": 43.76,
+      "end": 47.32,
+      "text": "Somewhere, sometime, beneath the distant sky",
+      "words": [
+        {
+          "word": "Somewhere,",
+          "start": 43.76,
+          "end": 44.52
+        },
+        {
+          "word": "sometime,",
+          "start": 44.9,
+          "end": 45.3
+        },
+        {
+          "word": "beneath",
+          "start": 45.78,
+          "end": 46.18
+        },
+        {
+          "word": "the",
+          "start": 46.18,
+          "end": 46.74
+        },
+        {
+          "word": "distant",
+          "start": 46.74,
+          "end": 47.02
+        },
+        {
+          "word": "sky",
+          "start": 47.02,
+          "end": 47.32
+        }
+      ]
+    },
+    {
+      "start": 47.32,
+      "end": 50.56,
+      "text": "Would I still hear your lullaby?",
+      "words": [
+        {
+          "word": "Would",
+          "start": 47.32,
+          "end": 47.74
+        },
+        {
+          "word": "I",
+          "start": 47.74,
+          "end": 48.2
+        },
+        {
+          "word": "still",
+          "start": 48.2,
+          "end": 48.5
+        },
+        {
+          "word": "hear",
+          "start": 48.5,
+          "end": 48.92
+        },
+        {
+          "word": "your",
+          "start": 48.92,
+          "end": 49.26
+        },
+        {
+          "word": "lullaby?",
+          "start": 49.26,
+          "end": 50.56
+        }
+      ]
+    },
+    {
+      "start": 50.66,
+      "end": 54.08,
+      "text": "And say, if I look far beyond the light",
+      "words": [
+        {
+          "word": "And",
+          "start": 50.66,
+          "end": 51.0
+        },
+        {
+          "word": "say,",
+          "start": 51.0,
+          "end": 51.36
+        },
+        {
+          "word": "if",
+          "start": 51.58,
+          "end": 51.96
+        },
+        {
+          "word": "I",
+          "start": 51.96,
+          "end": 52.1
+        },
+        {
+          "word": "look",
+          "start": 52.1,
+          "end": 52.76
+        },
+        {
+          "word": "far",
+          "start": 52.76,
+          "end": 53.06
+        },
+        {
+          "word": "beyond",
+          "start": 53.06,
+          "end": 53.56
+        },
+        {
+          "word": "the",
+          "start": 53.56,
+          "end": 53.82
+        },
+        {
+          "word": "light",
+          "start": 53.82,
+          "end": 54.08
+        }
+      ]
+    },
+    {
+      "start": 54.08,
+      "end": 56.58,
+      "text": "Would you still shine forever bright?",
+      "words": [
+        {
+          "word": "Would",
+          "start": 54.08,
+          "end": 54.46
+        },
+        {
+          "word": "you",
+          "start": 54.46,
+          "end": 54.84
+        },
+        {
+          "word": "still",
+          "start": 54.84,
+          "end": 55.22
+        },
+        {
+          "word": "shine",
+          "start": 55.22,
+          "end": 55.58
+        },
+        {
+          "word": "forever",
+          "start": 55.58,
+          "end": 56.02
+        },
+        {
+          "word": "bright?",
+          "start": 56.02,
+          "end": 56.58
+        }
+      ]
+    },
+    {
+      "start": 56.58,
+      "end": 59.6,
+      "text": "Cause I'm waiting for tomorrow, tomorrow, tomorrow",
+      "words": [
+        {
+          "word": "Cause",
+          "start": 56.58,
+          "end": 57.08
+        },
+        {
+          "word": "I'm",
+          "start": 57.08,
+          "end": 57.24
+        },
+        {
+          "word": "waiting",
+          "start": 57.24,
+          "end": 57.46
+        },
+        {
+          "word": "for",
+          "start": 57.46,
+          "end": 57.7
+        },
+        {
+          "word": "tomorrow,",
+          "start": 57.7,
+          "end": 58.36
+        },
+        {
+          "word": "tomorrow,",
+          "start": 58.5,
+          "end": 58.96
+        },
+        {
+          "word": "tomorrow",
+          "start": 59.3,
+          "end": 59.6
+        }
+      ]
+    },
+    {
+      "start": 59.6,
+      "end": 63.4,
+      "text": "I'm waiting for tomorrow, tomorrow, oh oh",
+      "words": [
+        {
+          "word": "I'm",
+          "start": 59.6,
+          "end": 60.5
+        },
+        {
+          "word": "waiting",
+          "start": 60.5,
+          "end": 60.8
+        },
+        {
+          "word": "for",
+          "start": 60.8,
+          "end": 61.06
+        },
+        {
+          "word": "tomorrow,",
+          "start": 61.06,
+          "end": 61.7
+        },
+        {
+          "word": "tomorrow,",
+          "start": 61.8,
+          "end": 62.32
+        },
+        {
+          "word": "oh",
+          "start": 62.36,
+          "end": 62.96
+        },
+        {
+          "word": "oh",
+          "start": 62.96,
+          "end": 63.4
+        }
+      ]
+    },
+    {
+      "start": 63.4,
+      "end": 67.22,
+      "text": "In your steps I'll follow, I'll follow, oh oh oh",
+      "words": [
+        {
+          "word": "In",
+          "start": 63.4,
+          "end": 63.667
+        },
+        {
+          "word": "your",
+          "start": 63.667,
+          "end": 64.076
+        },
+        {
+          "word": "steps",
+          "start": 64.076,
+          "end": 64.547
+        },
+        {
+          "word": "I'll",
+          "start": 64.547,
+          "end": 64.957
+        },
+        {
+          "word": "follow,",
+          "start": 64.957,
+          "end": 65.484
+        },
+        {
+          "word": "I'll",
+          "start": 65.484,
+          "end": 65.893
+        },
+        {
+          "word": "follow,",
+          "start": 65.893,
+          "end": 66.42
+        },
+        {
+          "word": "oh",
+          "start": 66.42,
+          "end": 66.687
+        },
+        {
+          "word": "oh",
+          "start": 66.687,
+          "end": 66.953
+        },
+        {
+          "word": "oh",
+          "start": 66.953,
+          "end": 67.22
+        }
+      ]
+    },
+    {
+      "start": 67.22,
+      "end": 69.88,
+      "text": "Through where the golden petals roll",
+      "words": [
+        {
+          "word": "Through",
+          "start": 67.22,
+          "end": 67.84
+        },
+        {
+          "word": "where",
+          "start": 67.84,
+          "end": 68.22
+        },
+        {
+          "word": "the",
+          "start": 68.22,
+          "end": 68.6
+        },
+        {
+          "word": "golden",
+          "start": 68.6,
+          "end": 68.98
+        },
+        {
+          "word": "petals",
+          "start": 68.98,
+          "end": 69.58
+        },
+        {
+          "word": "roll",
+          "start": 69.58,
+          "end": 69.88
+        }
+      ]
+    },
+    {
+      "start": 70.64,
+      "end": 72.86,
+      "text": "Counting stars in silent blue",
+      "words": [
+        {
+          "word": "Counting",
+          "start": 70.64,
+          "end": 71.38
+        },
+        {
+          "word": "stars",
+          "start": 71.38,
+          "end": 71.6
+        },
+        {
+          "word": "in",
+          "start": 71.6,
+          "end": 71.94
+        },
+        {
+          "word": "silent",
+          "start": 71.94,
+          "end": 72.42
+        },
+        {
+          "word": "blue",
+          "start": 72.42,
+          "end": 72.86
+        }
+      ]
+    },
+    {
+      "start": 72.86,
+      "end": 75.92,
+      "text": "Hoping they could take me back to you",
+      "words": [
+        {
+          "word": "Hoping",
+          "start": 72.86,
+          "end": 73.82
+        },
+        {
+          "word": "they",
+          "start": 73.82,
+          "end": 73.94
+        },
+        {
+          "word": "could",
+          "start": 73.94,
+          "end": 74.28
+        },
+        {
+          "word": "take",
+          "start": 74.28,
+          "end": 74.72
+        },
+        {
+          "word": "me",
+          "start": 74.72,
+          "end": 74.98
+        },
+        {
+          "word": "back",
+          "start": 74.98,
+          "end": 75.3
+        },
+        {
+          "word": "to",
+          "start": 75.3,
+          "end": 75.5
+        },
+        {
+          "word": "you",
+          "start": 75.5,
+          "end": 75.92
+        }
+      ]
+    },
+    {
+      "start": 76.58,
+      "end": 79.68,
+      "text": "In the twilight where echoes fade out of view",
+      "words": [
+        {
+          "word": "In",
+          "start": 76.58,
+          "end": 77.0
+        },
+        {
+          "word": "the",
+          "start": 77.0,
+          "end": 77.04
+        },
+        {
+          "word": "twilight",
+          "start": 77.04,
+          "end": 77.52
+        },
+        {
+          "word": "where",
+          "start": 77.52,
+          "end": 77.94
+        },
+        {
+          "word": "echoes",
+          "start": 77.94,
+          "end": 78.52
+        },
+        {
+          "word": "fade",
+          "start": 78.52,
+          "end": 78.86
+        },
+        {
+          "word": "out",
+          "start": 78.86,
+          "end": 79.3
+        },
+        {
+          "word": "of",
+          "start": 79.3,
+          "end": 79.48
+        },
+        {
+          "word": "view",
+          "start": 79.48,
+          "end": 79.68
+        }
+      ]
+    },
+    {
+      "start": 79.68,
+      "end": 82.84,
+      "text": "Lies the reverie and ghosts in tender hue",
+      "words": [
+        {
+          "word": "Lies",
+          "start": 79.68,
+          "end": 80.32
+        },
+        {
+          "word": "the",
+          "start": 80.32,
+          "end": 80.44
+        },
+        {
+          "word": "reverie",
+          "start": 80.44,
+          "end": 80.92
+        },
+        {
+          "word": "and",
+          "start": 80.92,
+          "end": 81.32
+        },
+        {
+          "word": "ghosts",
+          "start": 81.32,
+          "end": 81.6
+        },
+        {
+          "word": "in",
+          "start": 81.6,
+          "end": 81.96
+        },
+        {
+          "word": "tender",
+          "start": 81.96,
+          "end": 82.4
+        },
+        {
+          "word": "hue",
+          "start": 82.4,
+          "end": 82.84
+        }
+      ]
+    },
+    {
+      "start": 82.84,
+      "end": 87.08,
+      "text": "Day by day seasons will change as years unfold",
+      "words": [
+        {
+          "word": "Day",
+          "start": 82.84,
+          "end": 84.06
+        },
+        {
+          "word": "by",
+          "start": 84.06,
+          "end": 84.22
+        },
+        {
+          "word": "day",
+          "start": 84.22,
+          "end": 84.44
+        },
+        {
+          "word": "seasons",
+          "start": 84.44,
+          "end": 84.94
+        },
+        {
+          "word": "will",
+          "start": 84.94,
+          "end": 85.22
+        },
+        {
+          "word": "change",
+          "start": 85.22,
+          "end": 85.5
+        },
+        {
+          "word": "as",
+          "start": 85.5,
+          "end": 86.04
+        },
+        {
+          "word": "years",
+          "start": 86.04,
+          "end": 86.42
+        },
+        {
+          "word": "unfold",
+          "start": 86.42,
+          "end": 87.08
+        }
+      ]
+    },
+    {
+      "start": 87.08,
+      "end": 90.62,
+      "text": "Till the colors remain as days grow old",
+      "words": [
+        {
+          "word": "Till",
+          "start": 87.08,
+          "end": 87.68
+        },
+        {
+          "word": "the",
+          "start": 87.68,
+          "end": 87.92
+        },
+        {
+          "word": "colors",
+          "start": 87.92,
+          "end": 88.36
+        },
+        {
+          "word": "remain",
+          "start": 88.36,
+          "end": 88.7
+        },
+        {
+          "word": "as",
+          "start": 88.7,
+          "end": 89.32
+        },
+        {
+          "word": "days",
+          "start": 89.32,
+          "end": 89.64
+        },
+        {
+          "word": "grow",
+          "start": 89.64,
+          "end": 90.02
+        },
+        {
+          "word": "old",
+          "start": 90.02,
+          "end": 90.62
+        }
+      ]
+    },
+    {
+      "start": 90.62,
+      "end": 93.84,
+      "text": "Overnight trumpets will fall in wild gold",
+      "words": [
+        {
+          "word": "Overnight",
+          "start": 90.62,
+          "end": 91.22
+        },
+        {
+          "word": "trumpets",
+          "start": 91.22,
+          "end": 91.72
+        },
+        {
+          "word": "will",
+          "start": 91.72,
+          "end": 91.92
+        },
+        {
+          "word": "fall",
+          "start": 91.92,
+          "end": 92.2
+        },
+        {
+          "word": "in",
+          "start": 92.2,
+          "end": 92.74
+        },
+        {
+          "word": "wild",
+          "start": 92.74,
+          "end": 93.0
+        },
+        {
+          "word": "gold",
+          "start": 93.0,
+          "end": 93.84
+        }
+      ]
+    },
+    {
+      "start": 93.84,
+      "end": 97.18,
+      "text": "Till they glisten against the morning glow",
+      "words": [
+        {
+          "word": "Till",
+          "start": 93.84,
+          "end": 94.42
+        },
+        {
+          "word": "they",
+          "start": 94.42,
+          "end": 94.6
+        },
+        {
+          "word": "glisten",
+          "start": 94.6,
+          "end": 94.98
+        },
+        {
+          "word": "against",
+          "start": 94.98,
+          "end": 95.42
+        },
+        {
+          "word": "the",
+          "start": 95.42,
+          "end": 95.88
+        },
+        {
+          "word": "morning",
+          "start": 95.88,
+          "end": 96.6
+        },
+        {
+          "word": "glow",
+          "start": 96.6,
+          "end": 97.18
+        }
+      ]
+    },
+    {
+      "start": 97.18,
+      "end": 100.3,
+      "text": "Even now fragments of yesterday are mine",
+      "words": [
+        {
+          "word": "Even",
+          "start": 97.18,
+          "end": 97.5
+        },
+        {
+          "word": "now",
+          "start": 97.5,
+          "end": 97.88
+        },
+        {
+          "word": "fragments",
+          "start": 97.88,
+          "end": 98.22
+        },
+        {
+          "word": "of",
+          "start": 98.22,
+          "end": 98.56
+        },
+        {
+          "word": "yesterday",
+          "start": 98.56,
+          "end": 99.14
+        },
+        {
+          "word": "are",
+          "start": 99.14,
+          "end": 100.1
+        },
+        {
+          "word": "mine",
+          "start": 100.1,
+          "end": 100.3
+        }
+      ]
+    },
+    {
+      "start": 100.3,
+      "end": 104.0,
+      "text": "Scattered all over the corners of my mind",
+      "words": [
+        {
+          "word": "Scattered",
+          "start": 100.3,
+          "end": 101.061
+        },
+        {
+          "word": "all",
+          "start": 101.061,
+          "end": 101.445
+        },
+        {
+          "word": "over",
+          "start": 101.445,
+          "end": 101.906
+        },
+        {
+          "word": "the",
+          "start": 101.906,
+          "end": 102.29
+        },
+        {
+          "word": "corners",
+          "start": 102.29,
+          "end": 102.941
+        },
+        {
+          "word": "of",
+          "start": 102.941,
+          "end": 103.241
+        },
+        {
+          "word": "my",
+          "start": 103.241,
+          "end": 103.54
+        },
+        {
+          "word": "mind",
+          "start": 103.54,
+          "end": 104.0
+        }
+      ]
+    },
+    {
+      "start": 104.0,
+      "end": 107.28,
+      "text": "When will they turn back to the familiar mind?",
+      "words": [
+        {
+          "word": "When",
+          "start": 104.0,
+          "end": 104.32
+        },
+        {
+          "word": "will",
+          "start": 104.32,
+          "end": 104.48
+        },
+        {
+          "word": "they",
+          "start": 104.48,
+          "end": 104.86
+        },
+        {
+          "word": "turn",
+          "start": 104.86,
+          "end": 105.16
+        },
+        {
+          "word": "back",
+          "start": 105.16,
+          "end": 105.56
+        },
+        {
+          "word": "to",
+          "start": 105.56,
+          "end": 105.8
+        },
+        {
+          "word": "the",
+          "start": 105.8,
+          "end": 106.0
+        },
+        {
+          "word": "familiar",
+          "start": 106.0,
+          "end": 106.62
+        },
+        {
+          "word": "mind?",
+          "start": 106.62,
+          "end": 107.28
+        }
+      ]
+    },
+    {
+      "start": 113.84,
+      "end": 119.34,
+      "text": "Hidden inside the ticking of the clock In steady steps without",
+      "words": [
+        {
+          "word": "Hidden",
+          "start": 113.84,
+          "end": 114.6
+        },
+        {
+          "word": "inside",
+          "start": 114.6,
+          "end": 115.36
+        },
+        {
+          "word": "the",
+          "start": 115.36,
+          "end": 116.1
+        },
+        {
+          "word": "ticking",
+          "start": 116.1,
+          "end": 116.42
+        },
+        {
+          "word": "of",
+          "start": 116.42,
+          "end": 116.96
+        },
+        {
+          "word": "the",
+          "start": 116.96,
+          "end": 117.08
+        },
+        {
+          "word": "clock",
+          "start": 117.08,
+          "end": 117.4
+        },
+        {
+          "word": "In",
+          "start": 117.4,
+          "end": 117.76
+        },
+        {
+          "word": "steady",
+          "start": 117.76,
+          "end": 118.18
+        },
+        {
+          "word": "steps",
+          "start": 118.18,
+          "end": 118.78
+        },
+        {
+          "word": "without",
+          "start": 118.78,
+          "end": 119.34
+        }
+      ]
+    },
+    {
+      "start": 119.34,
+      "end": 120.46,
+      "text": "a pause",
+      "words": [
+        {
+          "word": "a",
+          "start": 119.34,
+          "end": 120.04
+        },
+        {
+          "word": "pause",
+          "start": 120.04,
+          "end": 120.46
+        }
+      ]
+    },
+    {
+      "start": 120.46,
+      "end": 125.38,
+      "text": "Once more, afar, with yearning voice it calls Don't turn away,",
+      "words": [
+        {
+          "word": "Once",
+          "start": 120.46,
+          "end": 121.14
+        },
+        {
+          "word": "more,",
+          "start": 121.14,
+          "end": 121.52
+        },
+        {
+          "word": "afar,",
+          "start": 121.54,
+          "end": 121.98
+        },
+        {
+          "word": "with",
+          "start": 122.48,
+          "end": 122.7
+        },
+        {
+          "word": "yearning",
+          "start": 122.7,
+          "end": 123.36
+        },
+        {
+          "word": "voice",
+          "start": 123.36,
+          "end": 123.64
+        },
+        {
+          "word": "it",
+          "start": 123.64,
+          "end": 123.8
+        },
+        {
+          "word": "calls",
+          "start": 123.8,
+          "end": 124.06
+        },
+        {
+          "word": "Don't",
+          "start": 124.06,
+          "end": 124.68
+        },
+        {
+          "word": "turn",
+          "start": 124.68,
+          "end": 124.9
+        },
+        {
+          "word": "away,",
+          "start": 124.9,
+          "end": 125.38
+        }
+      ]
+    },
+    {
+      "start": 125.64,
+      "end": 126.68,
+      "text": "come seize it all",
+      "words": [
+        {
+          "word": "come",
+          "start": 125.64,
+          "end": 125.84
+        },
+        {
+          "word": "seize",
+          "start": 125.84,
+          "end": 126.14
+        },
+        {
+          "word": "it",
+          "start": 126.14,
+          "end": 126.3
+        },
+        {
+          "word": "all",
+          "start": 126.3,
+          "end": 126.68
+        }
+      ]
+    },
+    {
+      "start": 126.68,
+      "end": 132.6,
+      "text": "Somewhere, sometime, beneath the distant sky Would I still hear your",
+      "words": [
+        {
+          "word": "Somewhere,",
+          "start": 126.68,
+          "end": 127.92
+        },
+        {
+          "word": "sometime,",
+          "start": 128.28,
+          "end": 128.68
+        },
+        {
+          "word": "beneath",
+          "start": 129.1,
+          "end": 129.54
+        },
+        {
+          "word": "the",
+          "start": 129.54,
+          "end": 130.1
+        },
+        {
+          "word": "distant",
+          "start": 130.1,
+          "end": 130.36
+        },
+        {
+          "word": "sky",
+          "start": 130.36,
+          "end": 130.66
+        },
+        {
+          "word": "Would",
+          "start": 130.66,
+          "end": 131.1
+        },
+        {
+          "word": "I",
+          "start": 131.1,
+          "end": 131.52
+        },
+        {
+          "word": "still",
+          "start": 131.52,
+          "end": 131.86
+        },
+        {
+          "word": "hear",
+          "start": 131.86,
+          "end": 132.26
+        },
+        {
+          "word": "your",
+          "start": 132.26,
+          "end": 132.6
+        }
+      ]
+    },
+    {
+      "start": 132.6,
+      "end": 133.7,
+      "text": "lullaby?",
+      "words": [
+        {
+          "word": "lullaby?",
+          "start": 132.6,
+          "end": 133.7
+        }
+      ]
+    },
+    {
+      "start": 134.0,
+      "end": 138.16,
+      "text": "And say, if I look far beyond the light Would you",
+      "words": [
+        {
+          "word": "And",
+          "start": 134.0,
+          "end": 134.32
+        },
+        {
+          "word": "say,",
+          "start": 134.32,
+          "end": 134.66
+        },
+        {
+          "word": "if",
+          "start": 134.84,
+          "end": 135.3
+        },
+        {
+          "word": "I",
+          "start": 135.3,
+          "end": 135.44
+        },
+        {
+          "word": "look",
+          "start": 135.44,
+          "end": 136.1
+        },
+        {
+          "word": "far",
+          "start": 136.1,
+          "end": 136.4
+        },
+        {
+          "word": "beyond",
+          "start": 136.4,
+          "end": 136.92
+        },
+        {
+          "word": "the",
+          "start": 136.92,
+          "end": 137.14
+        },
+        {
+          "word": "light",
+          "start": 137.14,
+          "end": 137.42
+        },
+        {
+          "word": "Would",
+          "start": 137.42,
+          "end": 137.76
+        },
+        {
+          "word": "you",
+          "start": 137.76,
+          "end": 138.16
+        }
+      ]
+    },
+    {
+      "start": 138.16,
+      "end": 139.92,
+      "text": "still shine forever bright?",
+      "words": [
+        {
+          "word": "still",
+          "start": 138.16,
+          "end": 138.56
+        },
+        {
+          "word": "shine",
+          "start": 138.56,
+          "end": 138.88
+        },
+        {
+          "word": "forever",
+          "start": 138.88,
+          "end": 139.32
+        },
+        {
+          "word": "bright?",
+          "start": 139.32,
+          "end": 139.92
+        }
+      ]
+    },
+    {
+      "start": 139.92,
+      "end": 143.04,
+      "text": "Cause I'm waiting for tomorrow, tomorrow, tomorrow",
+      "words": [
+        {
+          "word": "Cause",
+          "start": 139.92,
+          "end": 140.44
+        },
+        {
+          "word": "I'm",
+          "start": 140.44,
+          "end": 140.64
+        },
+        {
+          "word": "waiting",
+          "start": 140.64,
+          "end": 140.78
+        },
+        {
+          "word": "for",
+          "start": 140.78,
+          "end": 141.08
+        },
+        {
+          "word": "tomorrow,",
+          "start": 141.08,
+          "end": 141.54
+        },
+        {
+          "word": "tomorrow,",
+          "start": 141.84,
+          "end": 142.28
+        },
+        {
+          "word": "tomorrow",
+          "start": 142.68,
+          "end": 143.04
+        }
+      ]
+    },
+    {
+      "start": 143.04,
+      "end": 146.76,
+      "text": "I'm waiting for tomorrow, tomorrow, oh oh",
+      "words": [
+        {
+          "word": "I'm",
+          "start": 143.04,
+          "end": 143.82
+        },
+        {
+          "word": "waiting",
+          "start": 143.82,
+          "end": 144.08
+        },
+        {
+          "word": "for",
+          "start": 144.08,
+          "end": 144.4
+        },
+        {
+          "word": "tomorrow,",
+          "start": 144.4,
+          "end": 144.82
+        },
+        {
+          "word": "tomorrow,",
+          "start": 145.18,
+          "end": 145.64
+        },
+        {
+          "word": "oh",
+          "start": 145.76,
+          "end": 146.3
+        },
+        {
+          "word": "oh",
+          "start": 146.3,
+          "end": 146.76
+        }
+      ]
+    },
+    {
+      "start": 146.76,
+      "end": 150.24,
+      "text": "You make me feel so forward, forward, oh oh oh",
+      "words": [
+        {
+          "word": "You",
+          "start": 146.76,
+          "end": 147.1
+        },
+        {
+          "word": "make",
+          "start": 147.1,
+          "end": 147.34
+        },
+        {
+          "word": "me",
+          "start": 147.34,
+          "end": 147.44
+        },
+        {
+          "word": "feel",
+          "start": 147.44,
+          "end": 147.72
+        },
+        {
+          "word": "so",
+          "start": 147.72,
+          "end": 147.92
+        },
+        {
+          "word": "forward,",
+          "start": 147.92,
+          "end": 148.44
+        },
+        {
+          "word": "forward,",
+          "start": 148.54,
+          "end": 148.98
+        },
+        {
+          "word": "oh",
+          "start": 149.08,
+          "end": 149.6
+        },
+        {
+          "word": "oh",
+          "start": 149.6,
+          "end": 150.04
+        },
+        {
+          "word": "oh",
+          "start": 150.04,
+          "end": 150.24
+        }
+      ]
+    },
+    {
+      "start": 150.24,
+      "end": 153.24,
+      "text": "To where the golden petals flow",
+      "words": [
+        {
+          "word": "To",
+          "start": 150.24,
+          "end": 150.82
+        },
+        {
+          "word": "where",
+          "start": 150.82,
+          "end": 151.58
+        },
+        {
+          "word": "the",
+          "start": 151.58,
+          "end": 151.92
+        },
+        {
+          "word": "golden",
+          "start": 151.92,
+          "end": 152.44
+        },
+        {
+          "word": "petals",
+          "start": 152.44,
+          "end": 152.84
+        },
+        {
+          "word": "flow",
+          "start": 152.84,
+          "end": 153.24
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "step": 0.1,
+    "energyBase64": "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",
+    "onsetsBase64": "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"
+  },
+  "timingMethod": "Whisper large-v3 word timestamps cross-checked against isolated vocals and the original mix."
+}

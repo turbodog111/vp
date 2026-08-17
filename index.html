@@ -6,8 +6,9 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-08-16-encore-v1">
-<link rel="stylesheet" href="styles.css?v=20260816-encore-v1">
+<meta name="vp-build" content="2026-08-17-six-theaters-v1">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css?v=20260817-six-theaters-v1">
 </head>
 <body>
 <div class="app">
@@ -246,6 +247,55 @@
         </footer>
       </div>
 
+      <div id="story-theater" class="story-theater hidden" data-story="waiting" aria-live="polite">
+        <canvas id="story-fx" class="story-fx" aria-hidden="true"></canvas>
+        <div class="story-chrome" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <header class="story-header">
+          <div class="story-title-lockup">
+            <div id="story-artist" class="story-overline">ARTIST</div>
+            <h1 id="story-title">SONG</h1>
+          </div>
+          <div class="story-section-lockup">
+            <span id="story-section">Opening</span>
+            <b id="story-status">SCENE / 01</b>
+          </div>
+        </header>
+        <div class="story-stage">
+          <aside class="story-act" aria-hidden="true">
+            <span>PASSAGE</span>
+            <b id="story-act-number">01</b>
+            <i id="story-sigil" class="story-sigil"></i>
+          </aside>
+          <section class="story-lyrics" aria-label="Timed lyrics">
+            <div id="story-previous" class="story-context"></div>
+            <div id="story-current" class="story-current">
+              <span class="story-instrumental">The room holds its breath.</span>
+            </div>
+            <div id="story-next" class="story-context"></div>
+          </section>
+          <div class="story-control">
+            <div class="story-control-sigil" aria-hidden="true"><span></span></div>
+            <button id="story-play" class="story-play" type="button" title="Play/Pause (Space)">
+              <span id="story-play-icon">&#9654;</span>
+            </button>
+            <div class="story-time">
+              <span id="story-time-current">0:00</span>
+              <span id="story-time-total">0:00</span>
+            </div>
+          </div>
+        </div>
+        <footer class="story-footer">
+          <div class="story-progress" aria-hidden="true"><span id="story-progress-fill"></span></div>
+          <div class="story-footer-copy">
+            <span id="story-footer-left">BPM / KEY</span>
+            <span>LYRICS SYNCED TO THIS RECORDING</span>
+            <span id="story-footer-right">MOTIF</span>
+          </div>
+        </footer>
+      </div>
+
       <!-- DDLC Theater: no character art — full-bleed girl-color FX canvas is the stage -->
       <div id="ddf-theater" class="ddf-theater hidden" aria-live="polite">
         <canvas id="ddf-fx" class="ddf-fx-canvas" aria-hidden="true"></canvas>
@@ -457,6 +507,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=20260816-encore-v1"></script>
+<script src="app.js?v=20260817-six-theaters-v1"></script>
 </body>
 </html>

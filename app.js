@@ -85,6 +85,36 @@ const SUPPORTED_LYRIC_TRACKS = {
     dataUrl: './songs/lyrics/encore-dance.json',
     scene: 'encore-dance',
     variant: 'en'
+  },
+  'songs/kasane teto - waiting for tomorrow': {
+    dataUrl: './songs/lyrics/waiting-for-tomorrow.json',
+    scene: 'story-theater',
+    variant: 'waiting'
+  },
+  'songs/paul owen music - through patches of violet (metal version)': {
+    dataUrl: './songs/lyrics/through-patches-of-violet-metal.json',
+    scene: 'story-theater',
+    variant: 'violet'
+  },
+  'songs/paul owen music - compass (rock version feat. mili vocals)': {
+    dataUrl: './songs/lyrics/compass-rock.json',
+    scene: 'story-theater',
+    variant: 'compass'
+  },
+  'songs/christian/forrest frank - celebration': {
+    dataUrl: './songs/lyrics/celebration.json',
+    scene: 'story-theater',
+    variant: 'celebration'
+  },
+  'songs/christian/phil wickham - psalm 8 (halle)': {
+    dataUrl: './songs/lyrics/psalm-8-halle.json',
+    scene: 'story-theater',
+    variant: 'psalm'
+  },
+  'songs/christian/josiah queen - dusty bibles': {
+    dataUrl: './songs/lyrics/dusty-bibles.json',
+    scene: 'story-theater',
+    variant: 'dusty'
   }
 };
 const SONG_METADATA_OVERRIDES = {
@@ -168,6 +198,7 @@ let supportedLyricsWordNodes = [];
 let oneMoreBiteSceneActive = false;
 let heroStorySceneActive = false;
 let encoreSceneActive = false;
+let storyTheaterSceneActive = false;
 const SONG_EQ_STORAGE_KEY = 'vp_song_eq_v1';
 const EQ_BANDS = [
   { frequency: 60, type: 'lowshelf', label: 'Sub', detail: '60 Hz' },
@@ -665,6 +696,14 @@ function encoreDanceVariant(song = currentSong()) {
   return supportedLyricTrackForSong(song)?.variant || 'jp';
 }
 
+function isStoryTheaterSong(song = currentSong()) {
+  return supportedLyricTrackForSong(song)?.scene === 'story-theater';
+}
+
+function storyTheaterVariant(song = currentSong()) {
+  return supportedLyricTrackForSong(song)?.variant || 'waiting';
+}
+
 async function loadSupportedLyrics(config) {
   if (!config) return null;
   if (supportedLyricsData && supportedLyricsSongKey === config.key) return supportedLyricsData;
@@ -686,7 +725,9 @@ async function loadSupportedLyrics(config) {
       supportedLyricsPromise = null;
       supportedLyricsLineIndex = -2;
       supportedLyricsSectionIndex = -2;
-      if (config.scene === 'encore-dance') {
+      if (config.scene === 'story-theater') {
+        updateStoryTheaterLyrics(currentCalibratedTime(), true);
+      } else if (config.scene === 'encore-dance') {
         updateEncoreDanceLyrics(currentCalibratedTime(), true);
       } else if (config.scene === 'hero-story') {
         updateHeroStoryLyrics(currentCalibratedTime(), true);
@@ -698,11 +739,13 @@ async function loadSupportedLyrics(config) {
     .catch(error => {
       supportedLyricsPromise = null;
       console.warn('Could not load supported lyrics:', error);
-      const current = config.scene === 'encore-dance'
-        ? $('encore-current')
-        : config.scene === 'hero-story'
-          ? $('hero-story-current')
-          : $('omb-lyric-current');
+      const current = config.scene === 'story-theater'
+        ? $('story-current')
+        : config.scene === 'encore-dance'
+          ? $('encore-current')
+          : config.scene === 'hero-story'
+            ? $('hero-story-current')
+            : $('omb-lyric-current');
       if (current) current.textContent = 'Lyrics could not be loaded.';
       return null;
     });
@@ -1238,6 +1281,137 @@ function setEncoreTheaterActive(active, song = currentSong()) {
   }
 }
 
+const STORY_INTERLUDES = {
+  waiting: ['The room holds its breath.', 'Clouds pass the window.', 'Tomorrow turns another tooth.', 'Petals find the current.', 'The clock keeps faith.', 'Morning reaches the desk.', 'The curtain is all light.'],
+  violet: ['Two futures share one frame.', 'The mirror remembers first.', 'Pain acquires an orbit.', 'The thread pulls taut.', 'Nothing deletes cleanly.', 'A white interval.', 'The orbit reverses.', 'Two answers remain.', 'Violet outlives the message.'],
+  compass: ['No coast on the chart.', 'The needle has not chosen.', 'The sea keeps the bearing.', 'Certainty cuts both ways.', 'North moves inward.', 'The storm redraws every line.', 'A flame survives the water.', 'Gold marks the way home.'],
+  celebration: ['The room is waking up.', 'Hands find the count.', 'Clap. Stomp. Lift.', 'The room answers back.', 'Less of me.', 'Joy takes the floor.', 'Freedom gets loud.', 'Everybody in.', 'One last celebration.'],
+  psalm: ['The heavens begin in silence.', 'Known beneath an enormous sky.', 'The horizon learns the Name.', 'Praise becomes constellation.', 'A stronghold made of voices.', 'Yahweh across the firmament.', 'The whole sky opens.', 'Majesty fills the earth.', 'Every star joins the answer.', 'The desert keeps the light.'],
+  dusty: ['Dust turns gold in the window.', 'A letter across an empty pew.', 'Busy is not the same as alive.', 'The glass goes dark.', 'The room listens.', 'One life, fully awake.', 'The pages open.', 'Only the beams are moving.', 'An old friend returns.', 'No more closed eyes.', 'Dust settles on nothing.']
+};
+
+function storyTheaterAnalysisAt(time) {
+  const analysis = supportedLyricsData?.analysis;
+  const energyValues = decodedOneMoreBiteEnvelope(analysis, 'energy');
+  const onsetValues = decodedOneMoreBiteEnvelope(analysis, 'onsets');
+  if (!analysis?.step || !energyValues.length) return { energy: 0, onset: 0 };
+  const position = clamp(0, energyValues.length - 1, time / analysis.step);
+  const lower = Math.floor(position);
+  const upper = Math.min(energyValues.length - 1, lower + 1);
+  const mix = position - lower;
+  const sample = values => ((values[lower] || 0) * (1 - mix) + (values[upper] || 0) * mix) / 100;
+  return {
+    energy: clamp(0, 1, sample(energyValues)),
+    onset: clamp(0, 1, Math.max(sample(onsetValues), (onsetValues[Math.max(0, lower - 1)] || 0) / 118))
+  };
+}
+
+function storyTheaterBeatAt(time) {
+  const bpm = supportedLyricsData?.bpm || 120;
+  const period = 60 / bpm;
+  const position = Math.max(0, (time - (supportedLyricsData?.beatOffset || 0)) / period);
+  const phase = position - Math.floor(position);
+  return { index: Math.floor(position), phase, pulse: Math.pow(1 - phase, 5.2) };
+}
+
+function storyInterludeText(time, data) {
+  const sectionIndex = data?.sections?.findIndex(section => time >= section.start && time < section.end) ?? -1;
+  const notes = STORY_INTERLUDES[storyTheaterVariant()] || STORY_INTERLUDES.waiting;
+  return notes[Math.max(0, sectionIndex)] || notes[notes.length - 1];
+}
+
+function renderStoryTheaterLine(index, data, time) {
+  const current = $('story-current');
+  const previous = $('story-previous');
+  const next = $('story-next');
+  if (!current || !previous || !next) return;
+  supportedLyricsWordNodes = [];
+  current.replaceChildren();
+  const line = index >= 0 ? data.lines[index] : null;
+  if (!line) {
+    const note = document.createElement('span');
+    note.className = 'story-instrumental';
+    note.textContent = storyInterludeText(time, data);
+    current.appendChild(note);
+    const nextIndex = data.lines.findIndex(item => item.start > time);
+    previous.textContent = '';
+    next.textContent = nextIndex >= 0 ? data.lines[nextIndex].text : '';
+    return;
+  }
+  measuredWordTimings(line).forEach((timing, wordIndex) => {
+    if (wordIndex) current.appendChild(document.createTextNode(' '));
+    const span = document.createElement('span');
+    span.className = 'story-word';
+    span.textContent = timing.word;
+    current.appendChild(span);
+    supportedLyricsWordNodes.push({ ...timing, element: span });
+  });
+  previous.textContent = data.lines[index - 1]?.text || '';
+  next.textContent = data.lines[index + 1]?.text || '';
+}
+
+function updateStoryTheaterLyrics(time = currentCalibratedTime(), force = false) {
+  if (!storyTheaterSceneActive) return;
+  const theater = $('story-theater');
+  if (!theater) return;
+  const data = supportedLyricsData;
+  const duration = effectiveDuration() || data?.duration || 180;
+  const pct = clamp(0, 1, time / duration);
+  theater.style.setProperty('--story-progress', `${(pct * 100).toFixed(3)}%`);
+  if ($('story-progress-fill')) $('story-progress-fill').style.width = `${(pct * 100).toFixed(3)}%`;
+  if ($('story-time-current')) $('story-time-current').textContent = fmtTime(time);
+  if ($('story-time-total')) $('story-time-total').textContent = fmtTime(duration);
+  if (!data) return;
+
+  const variant = storyTheaterVariant();
+  theater.dataset.story = variant;
+  if ($('story-artist')) $('story-artist').textContent = data.artist || '';
+  if ($('story-title')) $('story-title').textContent = data.song || '';
+  if ($('story-footer-left')) $('story-footer-left').textContent = `${Math.round(data.bpm || 0)} BPM / ${(data.key || '').toUpperCase()}`;
+  if ($('story-footer-right')) $('story-footer-right').textContent = data.footer || '';
+
+  const sectionIndex = data.sections.findIndex(section => time >= section.start && time < section.end);
+  const section = data.sections[sectionIndex] || data.sections[data.sections.length - 1];
+  if (force || sectionIndex !== supportedLyricsSectionIndex) {
+    supportedLyricsSectionIndex = sectionIndex;
+    if ($('story-section')) $('story-section').textContent = section?.name || data.song;
+    if ($('story-status')) $('story-status').textContent = section?.short || 'STORY';
+    if ($('story-act-number')) $('story-act-number').textContent = String(Math.max(1, sectionIndex + 1)).padStart(2, '0');
+    theater.dataset.phase = String(section?.phase ?? 0);
+  }
+
+  const lineIndex = data.lines.findIndex(line => time >= line.start && time < line.end + 0.1);
+  if (force || lineIndex !== supportedLyricsLineIndex) {
+    supportedLyricsLineIndex = lineIndex;
+    renderStoryTheaterLine(lineIndex, data, time);
+  }
+  supportedLyricsWordNodes.forEach(word => {
+    const wordProgress = clamp(0, 1, (time - word.start) / Math.max(0.03, word.end - word.start));
+    word.element.style.setProperty('--word-progress', `${(wordProgress * 100).toFixed(1)}%`);
+    word.element.classList.toggle('is-current', wordProgress > 0 && wordProgress < 1);
+  });
+}
+
+function setStoryTheaterActive(active, song = currentSong()) {
+  const nextActive = !!active && isStoryTheaterSong(song);
+  const theater = $('story-theater');
+  const config = nextActive ? supportedLyricTrackForSong(song) : null;
+  document.body.classList.toggle('story-theater-active', nextActive);
+  if (theater) theater.classList.toggle('hidden', !nextActive);
+  if (storyTheaterSceneActive === nextActive && (!nextActive || supportedLyricsSongKey === config?.key)) return;
+  storyTheaterSceneActive = nextActive;
+  supportedLyricsLineIndex = -2;
+  supportedLyricsSectionIndex = -2;
+  supportedLyricsWordNodes = [];
+  if (nextActive) {
+    theater.dataset.story = storyTheaterVariant(song);
+    loadSupportedLyrics(config);
+    updateStoryTheaterLyrics(currentCalibratedTime(), true);
+    drawStoryTheaterFx({ glow: 0, motion: 0, rise: 0 }, currentCalibratedTime());
+    scheduleNowLayoutSync();
+  }
+}
+
 function effectProfileForSong(song = currentSong()) {
   if (!song) return null;
   const direct = SONG_EFFECT_PROFILES[song.path] || SONG_EFFECT_PROFILES[song.id] || SONG_EFFECT_PROFILES[song.name];
@@ -1562,6 +1736,9 @@ function beatPulseForProfile(profile, time) {
 }
 
 function activeFxTheme(song = currentSong()) {
+  if (isStoryTheaterSong(song)) {
+    return tetoFxEnabled ? 'story-theater' : 'off';
+  }
   if (isOneMoreBiteSong(song)) {
     return tetoFxEnabled ? 'omb' : 'off';
   }
@@ -1612,6 +1789,7 @@ function setTetoFxEnabled(enabled) {
   updateOneMoreBiteLyrics(currentCalibratedTime(), true);
   updateHeroStoryLyrics(currentCalibratedTime(), true);
   updateEncoreDanceLyrics(currentCalibratedTime(), true);
+  updateStoryTheaterLyrics(currentCalibratedTime(), true);
 }
 
 function setFxTheme(theme) {
@@ -1634,6 +1812,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.classList.toggle('omb-fx-active', theme === 'omb');
   document.body.classList.toggle('hero-story-fx-active', theme === 'hero-story');
   document.body.classList.toggle('encore-fx-active', theme === 'encore-dance');
+  document.body.classList.toggle('story-theater-fx-active', theme === 'story-theater');
   document.body.style.setProperty('--fx-level', level.toFixed(3));
   document.body.style.setProperty('--teto-level', level.toFixed(3));
   document.body.style.setProperty('--disco-level', level.toFixed(3));
@@ -1642,19 +1821,29 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.style.setProperty('--omb-level', level.toFixed(3));
   document.body.style.setProperty('--hero-story-level', level.toFixed(3));
   document.body.style.setProperty('--encore-level', level.toFixed(3));
-  if (theme === 'omb') {
+  document.body.style.setProperty('--story-level', level.toFixed(3));
+  if (theme === 'story-theater') {
+    setOneMoreBiteTheaterActive(false);
+    setHeroStoryTheaterActive(false);
+    setEncoreTheaterActive(false);
+    setStoryTheaterActive(true);
+  } else if (theme === 'omb') {
+    setStoryTheaterActive(false);
     setHeroStoryTheaterActive(false);
     setEncoreTheaterActive(false);
     setOneMoreBiteTheaterActive(true);
   } else if (theme === 'hero-story') {
+    setStoryTheaterActive(false);
     setOneMoreBiteTheaterActive(false);
     setEncoreTheaterActive(false);
     setHeroStoryTheaterActive(true);
   } else if (theme === 'encore-dance') {
+    setStoryTheaterActive(false);
     setOneMoreBiteTheaterActive(false);
     setHeroStoryTheaterActive(false);
     setEncoreTheaterActive(true);
   } else {
+    setStoryTheaterActive(false);
     setOneMoreBiteTheaterActive(false);
     setHeroStoryTheaterActive(false);
     setEncoreTheaterActive(false);
@@ -4102,6 +4291,7 @@ function updatePlaybackVisuals() {
   updateOneMoreBiteLyrics(current);
   updateHeroStoryLyrics(current);
   updateEncoreDanceLyrics(current);
+  updateStoryTheaterLyrics(current);
   if (timingDebugEnabled) updateTimingDebug(current);
 }
 
@@ -6238,6 +6428,262 @@ function drawEncoreDanceFx(levels, audioTime) {
   ctx.fillRect(0, 0, width, height);
 }
 
+const STORY_PALETTES = {
+  waiting: { bg: [246, 238, 215], deep: [105, 35, 52], primary: [181, 67, 91], secondary: [139, 194, 220], accent: [255, 250, 235] },
+  violet: { bg: [10, 6, 24], deep: [3, 2, 10], primary: [144, 91, 239], secondary: [242, 87, 202], accent: [204, 224, 255] },
+  compass: { bg: [4, 20, 52], deep: [1, 7, 24], primary: [244, 151, 55], secondary: [239, 205, 102], accent: [152, 204, 246] },
+  celebration: { bg: [242, 62, 152], deep: [80, 19, 76], primary: [255, 224, 72], secondary: [69, 213, 235], accent: [255, 244, 233] },
+  psalm: { bg: [42, 79, 112], deep: [5, 14, 31], primary: [238, 202, 137], secondary: [157, 207, 224], accent: [241, 239, 217] },
+  dusty: { bg: [45, 42, 31], deep: [10, 13, 11], primary: [215, 165, 86], secondary: [116, 139, 112], accent: [238, 224, 190] }
+};
+
+function storyCanvasColor(color, alpha = 1) {
+  return `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
+}
+
+function drawStorySpark(ctx, x, y, radius, color, alpha, rotation = 0) {
+  if (alpha <= 0.001) return;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(rotation);
+  ctx.beginPath();
+  ctx.moveTo(0, -radius);
+  ctx.lineTo(radius * 0.22, -radius * 0.2);
+  ctx.lineTo(radius, 0);
+  ctx.lineTo(radius * 0.22, radius * 0.2);
+  ctx.lineTo(0, radius);
+  ctx.lineTo(-radius * 0.22, radius * 0.2);
+  ctx.lineTo(-radius, 0);
+  ctx.lineTo(-radius * 0.22, -radius * 0.2);
+  ctx.closePath();
+  ctx.fillStyle = storyCanvasColor(color, alpha);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawStoryPulseRings(ctx, centerX, centerY, width, height, palette, audioTime, energy, onset, intensity) {
+  const bpm = supportedLyricsData?.bpm || 120;
+  const period = 60 / bpm;
+  const beat = storyTheaterBeatAt(audioTime);
+  const maxRadius = Math.hypot(width, height) * 0.52;
+  for (let ageIndex = 0; ageIndex < 4; ageIndex++) {
+    const age = (beat.phase + ageIndex) * period;
+    const lifetime = 1.25;
+    const progress = age / lifetime;
+    if (progress >= 1) continue;
+    const eased = 1 - (1 - progress) ** 2.5;
+    const alpha = (1 - progress) ** 1.7 * (0.025 + energy * 0.09 + onset * 0.1) * intensity;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 34 + maxRadius * eased, 0, Math.PI * 2);
+    ctx.strokeStyle = storyCanvasColor(ageIndex % 2 ? palette.secondary : palette.primary, alpha);
+    ctx.lineWidth = 1 + onset * 3.2;
+    ctx.stroke();
+  }
+}
+
+function drawStoryTheaterFx(levels, audioTime) {
+  const canvas = $('story-fx');
+  const theater = $('story-theater');
+  if (!canvas || !theater || !storyTheaterSceneActive) return;
+  const rect = theater.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) return;
+  const dpr = Math.min(1.2, Math.max(1, window.devicePixelRatio || 1));
+  const width = Math.max(320, Math.floor(rect.width * dpr));
+  const height = Math.max(240, Math.floor(rect.height * dpr));
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const variant = storyTheaterVariant();
+  const palette = STORY_PALETTES[variant] || STORY_PALETTES.waiting;
+  const recorded = storyTheaterAnalysisAt(audioTime);
+  const energy = clamp(0, 1, Math.max(recorded.energy, (levels.glow || 0) * 0.52));
+  const onset = clamp(0, 1, Math.max(recorded.onset, (levels.rise || 0) * 0.58));
+  const beat = storyTheaterBeatAt(audioTime);
+  const phase = Number(theater.dataset.phase || 0);
+  const peakPhases = {
+    waiting: [2, 5], violet: [2, 4, 7], compass: [2, 5, 6],
+    celebration: [2, 3, 6, 7, 8], psalm: [3, 5, 6, 8], dusty: [3, 6, 9]
+  };
+  const peak = peakPhases[variant]?.includes(phase) ? 1 : 0.38;
+  const motion = clamp(0, 1.3, energy * 0.7 + onset * 0.65 + beat.pulse * peak * 0.4);
+  theater.style.setProperty('--story-primary', `rgb(${palette.primary.join(', ')})`);
+  theater.style.setProperty('--story-secondary', `rgb(${palette.secondary.join(', ')})`);
+  theater.style.setProperty('--story-accent', `rgb(${palette.accent.join(', ')})`);
+  theater.style.setProperty('--story-energy', energy.toFixed(3));
+  theater.style.setProperty('--story-onset', onset.toFixed(3));
+  theater.style.setProperty('--story-beat', beat.pulse.toFixed(3));
+
+  const base = ctx.createLinearGradient(0, 0, width, height);
+  base.addColorStop(0, storyCanvasColor(palette.bg));
+  base.addColorStop(1, storyCanvasColor(palette.deep));
+  ctx.fillStyle = base;
+  ctx.fillRect(0, 0, width, height);
+
+  const controlRect = $('story-play')?.getBoundingClientRect();
+  const cx = controlRect ? (controlRect.left + controlRect.width / 2 - rect.left) * dpr : width * 0.82;
+  const cy = controlRect ? (controlRect.top + controlRect.height / 2 - rect.top) * dpr : height * 0.54;
+
+  if (variant === 'waiting') {
+    const morning = clamp(0, 1, audioTime / Math.max(1, supportedLyricsData?.duration || 162));
+    const sky = ctx.createRadialGradient(width * 0.78, height * 0.16, 0, width * 0.78, height * 0.16, width * 0.7);
+    sky.addColorStop(0, storyCanvasColor([255, 247, 204], 0.28 + morning * 0.3 + energy * 0.12));
+    sky.addColorStop(0.45, storyCanvasColor(palette.secondary, 0.08 + morning * 0.14));
+    sky.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, width, height);
+    ctx.strokeStyle = storyCanvasColor(palette.deep, 0.13);
+    ctx.lineWidth = dpr * 2;
+    ctx.strokeRect(width * 0.63, height * 0.08, width * 0.31, height * 0.54);
+    ctx.beginPath();
+    ctx.moveTo(width * 0.785, height * 0.08); ctx.lineTo(width * 0.785, height * 0.62);
+    ctx.moveTo(width * 0.63, height * 0.34); ctx.lineTo(width * 0.94, height * 0.34); ctx.stroke();
+    for (let index = 0; index < 24; index++) {
+      const drift = (seededUnit(index * 19.2) + audioTime * (0.008 + index % 4 * 0.0017)) % 1;
+      const x = (0.04 + seededUnit(index * 41.7) * 0.92 + Math.sin(audioTime * 0.22 + index) * 0.018) * width;
+      const y = (0.08 + drift * 0.86) * height;
+      ctx.save(); ctx.translate(x, y); ctx.rotate(audioTime * 0.15 + index);
+      ctx.fillStyle = storyCanvasColor(index % 3 ? palette.primary : [232, 177, 129], 0.055 + energy * 0.11 + beat.pulse * peak * 0.05);
+      ctx.beginPath(); ctx.ellipse(0, 0, dpr * (3 + index % 4), dpr * (1.5 + index % 2), 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+    }
+    for (let hand = 0; hand < 2; hand++) {
+      const angle = audioTime * (hand ? 0.12 : 0.035) - Math.PI / 2;
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(angle) * width * (hand ? 0.07 : 0.11), cy + Math.sin(angle) * width * (hand ? 0.07 : 0.11));
+      ctx.strokeStyle = storyCanvasColor(palette.deep, 0.18 + energy * 0.16); ctx.lineWidth = dpr * (hand ? 2.2 : 1.2); ctx.stroke();
+    }
+  } else if (variant === 'violet') {
+    const vortexX = width * (phase >= 6 ? 0.7 : 0.28);
+    const vortexY = height * 0.52;
+    for (let ring = 0; ring < 9; ring++) {
+      ctx.beginPath();
+      ctx.ellipse(vortexX, vortexY, width * (0.08 + ring * 0.045), height * (0.04 + ring * 0.027), audioTime * 0.018 * (ring % 2 ? 1 : -1) + ring * 0.3, 0, Math.PI * (1.2 + ring * 0.08));
+      ctx.strokeStyle = storyCanvasColor(ring % 2 ? palette.secondary : palette.primary, 0.035 + energy * 0.075 + onset * 0.08);
+      ctx.lineWidth = dpr * (1 + (ring % 3 === 0 ? onset * 3 : 0)); ctx.stroke();
+    }
+    ctx.beginPath();
+    for (let point = 0; point <= 32; point++) {
+      const y = point / 32 * height;
+      const x = width * 0.5 + Math.sin(point * 1.7 + audioTime * 0.35) * width * (0.012 + onset * 0.03);
+      point ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    }
+    ctx.strokeStyle = storyCanvasColor(palette.secondary, 0.24 + onset * 0.42); ctx.lineWidth = dpr * (1.2 + onset * 4); ctx.stroke();
+    for (let index = 0; index < (phase === 4 ? 34 : 15); index++) {
+      const orbit = audioTime * (0.035 + index % 5 * 0.006) + seededUnit(index * 12.3) * Math.PI * 2;
+      const x = vortexX + Math.cos(orbit) * width * (0.12 + seededUnit(index * 29.8) * 0.34);
+      const y = vortexY + Math.sin(orbit) * height * (0.08 + seededUnit(index * 39.4) * 0.28);
+      ctx.save(); ctx.translate(x, y); ctx.rotate(orbit);
+      ctx.strokeStyle = storyCanvasColor(index % 3 ? palette.primary : palette.accent, 0.06 + energy * 0.13 + onset * 0.12);
+      ctx.strokeRect(-dpr * (4 + index % 5), -dpr * 2, dpr * (8 + index % 5 * 2), dpr * 4); ctx.restore();
+    }
+    if (phase === 4) {
+      ctx.fillStyle = storyCanvasColor(palette.accent, 0.035 + beat.pulse * 0.06);
+      for (let lane = 0; lane < 9; lane++) ctx.fillRect(0, height * (0.12 + lane * 0.09), width * (0.2 + beat.pulse * 0.5), dpr * (1 + lane % 3));
+    }
+  } else if (variant === 'compass') {
+    const horizon = height * 0.68;
+    for (let wave = 0; wave < 12; wave++) {
+      ctx.beginPath();
+      for (let point = 0; point <= 44; point++) {
+        const x = point / 44 * width;
+        const y = horizon + wave * dpr * 8 + Math.sin(point * 0.62 + audioTime * (0.7 + wave * 0.025)) * dpr * (3 + energy * 9);
+        point ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.strokeStyle = storyCanvasColor(wave % 3 ? palette.accent : palette.primary, 0.035 + energy * 0.075); ctx.lineWidth = dpr; ctx.stroke();
+    }
+    for (let spoke = 0; spoke < 16; spoke++) {
+      const angle = spoke * Math.PI / 8 + (phase >= 5 ? Math.sin(audioTime * 0.55) * 0.08 : 0);
+      const length = Math.min(width, height) * (spoke % 2 ? 0.16 : 0.25) * (0.8 + motion * 0.2);
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(angle) * length, cy + Math.sin(angle) * length);
+      ctx.strokeStyle = storyCanvasColor(spoke % 4 ? palette.secondary : palette.primary, 0.04 + energy * 0.08 + beat.pulse * 0.04); ctx.lineWidth = dpr * (spoke % 4 ? 0.8 : 1.8); ctx.stroke();
+    }
+    for (let star = 0; star < 34; star++) {
+      const x = seededUnit(star * 21.3) * width;
+      const y = seededUnit(star * 47.8) * horizon * 0.86;
+      drawStorySpark(ctx, x, y, dpr * (1.2 + star % 4), star % 5 ? palette.secondary : palette.primary, 0.05 + energy * 0.15 + beat.pulse * peak * 0.07, audioTime * 0.02 + star);
+    }
+    const flame = ctx.createRadialGradient(width * 0.2, height * 0.32, 0, width * 0.2, height * 0.32, width * 0.18);
+    flame.addColorStop(0, storyCanvasColor(palette.primary, 0.12 + energy * 0.24 + onset * 0.18)); flame.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = flame; ctx.fillRect(0, 0, width * 0.45, height * 0.7);
+  } else if (variant === 'celebration') {
+    const shift = (audioTime * (supportedLyricsData?.bpm || 123) / 60) % 1;
+    for (let panel = -1; panel < 9; panel++) {
+      const x = (panel + shift) * width / 7 - width * 0.12;
+      ctx.save(); ctx.translate(x, height * 0.5); ctx.rotate(panel % 2 ? -0.16 : 0.16);
+      ctx.fillStyle = storyCanvasColor(panel % 3 === 0 ? palette.secondary : panel % 3 === 1 ? palette.primary : palette.accent, 0.018 + energy * 0.045 + beat.pulse * peak * 0.04);
+      ctx.fillRect(-width * 0.035, -height, width * 0.07, height * 2); ctx.restore();
+    }
+    const burstCount = peak > 0.5 ? 48 : 18;
+    for (let index = 0; index < burstCount; index++) {
+      const travel = (seededUnit(index * 11.7) + audioTime * (0.035 + index % 6 * 0.004)) % 1;
+      const x = seededUnit(index * 27.4) * width + Math.sin(audioTime + index) * dpr * 12;
+      const y = travel * height;
+      ctx.save(); ctx.translate(x, y); ctx.rotate(audioTime * (0.4 + index % 4 * 0.12));
+      ctx.fillStyle = storyCanvasColor(index % 4 === 0 ? palette.secondary : index % 3 === 0 ? palette.primary : palette.accent, (0.035 + energy * 0.18 + onset * 0.13) * peak);
+      ctx.fillRect(-dpr * 2, -dpr * 5, dpr * 4, dpr * 10); ctx.restore();
+    }
+    for (let ring = 0; ring < 5; ring++) {
+      const radius = (ring + 1) * Math.min(width, height) * 0.08 + beat.pulse * dpr * 9;
+      ctx.beginPath(); ctx.arc(width * 0.32, height * 0.48, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = storyCanvasColor(ring % 2 ? palette.secondary : palette.primary, 0.035 + beat.pulse * peak * 0.1); ctx.lineWidth = dpr * (1 + onset * 3); ctx.stroke();
+    }
+  } else if (variant === 'psalm') {
+    const horizon = height * 0.79;
+    const skyLift = clamp(0, 1, phase / 8);
+    const glow = ctx.createRadialGradient(width * 0.52, horizon, 0, width * 0.52, horizon, width * 0.66);
+    glow.addColorStop(0, storyCanvasColor(palette.primary, 0.13 + skyLift * 0.12 + energy * 0.08)); glow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = glow; ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = storyCanvasColor([18, 20, 25], 0.7); ctx.beginPath(); ctx.moveTo(0, horizon);
+    for (let point = 0; point <= 12; point++) ctx.lineTo(point / 12 * width, horizon - seededUnit(point * 31.2) * height * 0.055);
+    ctx.lineTo(width, height); ctx.lineTo(0, height); ctx.closePath(); ctx.fill();
+    const stars = 28 + Math.round(energy * 42 + skyLift * 24);
+    for (let index = 0; index < stars; index++) {
+      const x = seededUnit(index * 18.9) * width;
+      const y = seededUnit(index * 53.2) * horizon * 0.88;
+      const twinkle = 0.5 + Math.sin(audioTime * (0.3 + index % 7 * 0.06) + index) * 0.5;
+      drawStorySpark(ctx, x, y, dpr * (1 + index % 3), index % 4 ? palette.accent : palette.primary, 0.045 + twinkle * (0.08 + energy * 0.18), index);
+    }
+    for (let arc = 0; arc < 7; arc++) {
+      ctx.beginPath(); ctx.arc(width * 0.5, horizon, Math.min(width, height) * (0.16 + arc * 0.105), Math.PI, Math.PI * 2);
+      ctx.strokeStyle = storyCanvasColor(arc % 2 ? palette.secondary : palette.primary, 0.025 + energy * 0.055 + beat.pulse * peak * 0.045); ctx.lineWidth = dpr; ctx.stroke();
+    }
+  } else {
+    const windowCount = 3;
+    for (let index = 0; index < windowCount; index++) {
+      const x = width * (0.14 + index * 0.27);
+      const top = height * (0.13 + (index % 2) * 0.04);
+      const winWidth = width * 0.12;
+      const winHeight = height * 0.43;
+      ctx.beginPath(); ctx.moveTo(x - winWidth / 2, top + winWidth / 2); ctx.arc(x, top + winWidth / 2, winWidth / 2, Math.PI, 0); ctx.lineTo(x + winWidth / 2, top + winHeight); ctx.lineTo(x - winWidth / 2, top + winHeight); ctx.closePath();
+      const light = ctx.createLinearGradient(x, top, x, top + winHeight);
+      light.addColorStop(0, storyCanvasColor(palette.accent, 0.09 + energy * 0.14)); light.addColorStop(1, storyCanvasColor(palette.primary, 0.02));
+      ctx.fillStyle = light; ctx.fill(); ctx.strokeStyle = storyCanvasColor(palette.secondary, 0.16); ctx.lineWidth = dpr * 2; ctx.stroke();
+      const ray = ctx.createLinearGradient(x, top, x + winWidth * 2.5, height);
+      ray.addColorStop(0, storyCanvasColor(palette.primary, 0.065 + energy * 0.11)); ray.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = ray; ctx.beginPath(); ctx.moveTo(x - winWidth * 0.45, top + winHeight); ctx.lineTo(x + winWidth * 0.45, top + winHeight); ctx.lineTo(x + winWidth * 2.7, height); ctx.lineTo(x + winWidth * 1.3, height); ctx.closePath(); ctx.fill();
+    }
+    for (let index = 0; index < 54; index++) {
+      const x = (seededUnit(index * 22.7) + Math.sin(audioTime * 0.08 + index) * 0.012) * width;
+      const y = (seededUnit(index * 61.2) + audioTime * (0.002 + index % 5 * 0.0004)) % 1 * height;
+      ctx.fillStyle = storyCanvasColor(index % 5 ? palette.primary : palette.accent, 0.025 + energy * 0.13 + beat.pulse * peak * 0.035);
+      ctx.beginPath(); ctx.arc(x, y, dpr * (0.8 + index % 3 * 0.55), 0, Math.PI * 2); ctx.fill();
+    }
+    if ([2, 3, 6].includes(phase)) {
+      for (let tile = 0; tile < 8; tile++) {
+        const x = width * (0.68 + (tile % 2) * 0.07);
+        const y = height * (0.14 + Math.floor(tile / 2) * 0.11);
+        ctx.strokeStyle = storyCanvasColor(palette.secondary, 0.035 + onset * 0.1); ctx.strokeRect(x, y, width * 0.055, height * 0.07);
+      }
+    }
+  }
+
+  drawStoryPulseRings(ctx, cx, cy, width, height, palette, audioTime, energy, onset, peak);
+  const vignette = ctx.createRadialGradient(width * 0.5, height * 0.48, width * 0.08, width * 0.5, height * 0.48, width * 0.72);
+  vignette.addColorStop(0, 'rgba(0,0,0,0)');
+  vignette.addColorStop(1, variant === 'waiting' ? 'rgba(66,35,38,0.16)' : 'rgba(0,0,0,0.48)');
+  ctx.fillStyle = vignette; ctx.fillRect(0, 0, width, height);
+}
+
 function drawTetoFx(level) {
   const canvas = $('teto-fx');
   const view = $('view-now');
@@ -6261,6 +6707,10 @@ function drawTetoFx(level) {
   }
   if (theme === 'encore-dance') {
     drawEncoreDanceFx(levels, currentCalibratedTime());
+    return;
+  }
+  if (theme === 'story-theater') {
+    drawStoryTheaterFx(levels, currentCalibratedTime());
     return;
   }
 
@@ -6742,6 +7192,8 @@ function bindAudioElementEvents(el) {
     if (heroStoryIcon) heroStoryIcon.textContent = '⏸';
     const encoreIcon = $('encore-play-icon');
     if (encoreIcon) encoreIcon.textContent = '⏸';
+    const storyIcon = $('story-play-icon');
+    if (storyIcon) storyIcon.textContent = '⏸';
     document.body.classList.add('is-playing');
     startProgressClock();
     startWaveform();
@@ -6763,6 +7215,8 @@ function bindAudioElementEvents(el) {
     if (heroStoryIcon) heroStoryIcon.textContent = '▶';
     const encoreIcon = $('encore-play-icon');
     if (encoreIcon) encoreIcon.textContent = '▶';
+    const storyIcon = $('story-play-icon');
+    if (storyIcon) storyIcon.textContent = '▶';
     document.body.classList.remove('is-playing');
     stopProgressClock();
     updatePlaybackVisuals();
@@ -6788,6 +7242,8 @@ const heroStoryPlayBtn = $('hero-story-play');
 if (heroStoryPlayBtn) heroStoryPlayBtn.addEventListener('click', togglePlay);
 const encorePlayBtn = $('encore-play');
 if (encorePlayBtn) encorePlayBtn.addEventListener('click', togglePlay);
+const storyPlayBtn = $('story-play');
+if (storyPlayBtn) storyPlayBtn.addEventListener('click', togglePlay);
 $('next').addEventListener('click', () => playNext(false));
 $('prev').addEventListener('click', playPrev);
 $('shuffle').addEventListener('click', toggleShuffle);

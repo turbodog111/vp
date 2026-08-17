@@ -1,0 +1,1729 @@
+{
+  "song": "CELEBRATION",
+  "artist": "Forrest Frank",
+  "duration": 161.657,
+  "theater": "celebration",
+  "bpm": 123.047,
+  "beatOffset": 0.627,
+  "key": "A-flat major",
+  "footer": "CLAP / STOMP / PRAISE",
+  "sections": [
+    {
+      "start": 0,
+      "end": 16.96,
+      "name": "Phones down",
+      "short": "CALL IN",
+      "phase": 0
+    },
+    {
+      "start": 16.96,
+      "end": 32.14,
+      "name": "Move and groove",
+      "short": "BUILD / I",
+      "phase": 1
+    },
+    {
+      "start": 32.14,
+      "end": 49.3,
+      "name": "Clap and stomp",
+      "short": "CELEBRATION / I",
+      "phase": 2
+    },
+    {
+      "start": 49.3,
+      "end": 64.02,
+      "name": "Room response",
+      "short": "HEY / BREAK",
+      "phase": 3
+    },
+    {
+      "start": 64.02,
+      "end": 79.72,
+      "name": "Less of me",
+      "short": "VERSE / II",
+      "phase": 4
+    },
+    {
+      "start": 79.72,
+      "end": 94.78,
+      "name": "Made for today",
+      "short": "BUILD / II",
+      "phase": 5
+    },
+    {
+      "start": 94.78,
+      "end": 112.3,
+      "name": "Set free",
+      "short": "CELEBRATION / II",
+      "phase": 6
+    },
+    {
+      "start": 112.3,
+      "end": 143.7,
+      "name": "Everybody in",
+      "short": "HEY / CROWD",
+      "phase": 7
+    },
+    {
+      "start": 143.7,
+      "end": 161.657,
+      "name": "One last lift",
+      "short": "FINAL CELEBRATION",
+      "phase": 8
+    }
+  ],
+  "lines": [
+    {
+      "start": 1.44,
+      "end": 6.14,
+      "text": "You, you, you, you, you know what to do. It's time",
+      "words": [
+        {
+          "word": "You,",
+          "start": 1.44,
+          "end": 2.0
+        },
+        {
+          "word": "you,",
+          "start": 2.22,
+          "end": 2.64
+        },
+        {
+          "word": "you,",
+          "start": 2.74,
+          "end": 3.12
+        },
+        {
+          "word": "you,",
+          "start": 3.36,
+          "end": 3.66
+        },
+        {
+          "word": "you",
+          "start": 3.74,
+          "end": 4.06
+        },
+        {
+          "word": "know",
+          "start": 4.06,
+          "end": 4.28
+        },
+        {
+          "word": "what",
+          "start": 4.28,
+          "end": 4.6
+        },
+        {
+          "word": "to",
+          "start": 4.6,
+          "end": 4.78
+        },
+        {
+          "word": "do.",
+          "start": 4.78,
+          "end": 5.16
+        },
+        {
+          "word": "It's",
+          "start": 5.3,
+          "end": 5.86
+        },
+        {
+          "word": "time",
+          "start": 5.86,
+          "end": 6.14
+        }
+      ]
+    },
+    {
+      "start": 6.14,
+      "end": 8.72,
+      "text": "to put your phone down and raise your attitude.",
+      "words": [
+        {
+          "word": "to",
+          "start": 6.14,
+          "end": 6.32
+        },
+        {
+          "word": "put",
+          "start": 6.32,
+          "end": 6.56
+        },
+        {
+          "word": "your",
+          "start": 6.56,
+          "end": 6.78
+        },
+        {
+          "word": "phone",
+          "start": 6.78,
+          "end": 7.1
+        },
+        {
+          "word": "down",
+          "start": 7.1,
+          "end": 7.54
+        },
+        {
+          "word": "and",
+          "start": 7.54,
+          "end": 7.76
+        },
+        {
+          "word": "raise",
+          "start": 7.76,
+          "end": 8.04
+        },
+        {
+          "word": "your",
+          "start": 8.04,
+          "end": 8.3
+        },
+        {
+          "word": "attitude.",
+          "start": 8.3,
+          "end": 8.72
+        }
+      ]
+    },
+    {
+      "start": 9.3,
+      "end": 13.0,
+      "text": "The God who made the bird, sea, sun, and the moon",
+      "words": [
+        {
+          "word": "The",
+          "start": 9.3,
+          "end": 9.64
+        },
+        {
+          "word": "God",
+          "start": 9.64,
+          "end": 10.02
+        },
+        {
+          "word": "who",
+          "start": 10.02,
+          "end": 10.22
+        },
+        {
+          "word": "made",
+          "start": 10.22,
+          "end": 10.5
+        },
+        {
+          "word": "the",
+          "start": 10.5,
+          "end": 10.66
+        },
+        {
+          "word": "bird,",
+          "start": 10.66,
+          "end": 11.1
+        },
+        {
+          "word": "sea,",
+          "start": 11.18,
+          "end": 11.4
+        },
+        {
+          "word": "sun,",
+          "start": 11.56,
+          "end": 12.12
+        },
+        {
+          "word": "and",
+          "start": 12.12,
+          "end": 12.48
+        },
+        {
+          "word": "the",
+          "start": 12.48,
+          "end": 12.6
+        },
+        {
+          "word": "moon",
+          "start": 12.6,
+          "end": 13.0
+        }
+      ]
+    },
+    {
+      "start": 13.0,
+      "end": 16.88,
+      "text": "isn't somewhere far away. He is standing in the room.",
+      "words": [
+        {
+          "word": "isn't",
+          "start": 13.0,
+          "end": 13.64
+        },
+        {
+          "word": "somewhere",
+          "start": 13.64,
+          "end": 14.04
+        },
+        {
+          "word": "far",
+          "start": 14.04,
+          "end": 14.4
+        },
+        {
+          "word": "away.",
+          "start": 14.4,
+          "end": 14.76
+        },
+        {
+          "word": "He",
+          "start": 15.02,
+          "end": 15.36
+        },
+        {
+          "word": "is",
+          "start": 15.36,
+          "end": 15.6
+        },
+        {
+          "word": "standing",
+          "start": 15.6,
+          "end": 15.96
+        },
+        {
+          "word": "in",
+          "start": 15.96,
+          "end": 16.36
+        },
+        {
+          "word": "the",
+          "start": 16.36,
+          "end": 16.52
+        },
+        {
+          "word": "room.",
+          "start": 16.52,
+          "end": 16.88
+        }
+      ]
+    },
+    {
+      "start": 16.96,
+      "end": 20.04,
+      "text": "So let it scream, let it shout, let them know what",
+      "words": [
+        {
+          "word": "So",
+          "start": 16.96,
+          "end": 17.08
+        },
+        {
+          "word": "let",
+          "start": 17.08,
+          "end": 17.48
+        },
+        {
+          "word": "it",
+          "start": 17.48,
+          "end": 17.56
+        },
+        {
+          "word": "scream,",
+          "start": 17.56,
+          "end": 17.88
+        },
+        {
+          "word": "let",
+          "start": 18.12,
+          "end": 18.32
+        },
+        {
+          "word": "it",
+          "start": 18.32,
+          "end": 18.62
+        },
+        {
+          "word": "shout,",
+          "start": 18.62,
+          "end": 18.88
+        },
+        {
+          "word": "let",
+          "start": 19.12,
+          "end": 19.32
+        },
+        {
+          "word": "them",
+          "start": 19.32,
+          "end": 19.58
+        },
+        {
+          "word": "know",
+          "start": 19.58,
+          "end": 19.8
+        },
+        {
+          "word": "what",
+          "start": 19.8,
+          "end": 20.04
+        }
+      ]
+    },
+    {
+      "start": 20.04,
+      "end": 24.32,
+      "text": "you're about. Keep it moving and grooving, don't leave a single",
+      "words": [
+        {
+          "word": "you're",
+          "start": 20.04,
+          "end": 20.4
+        },
+        {
+          "word": "about.",
+          "start": 20.4,
+          "end": 20.8
+        },
+        {
+          "word": "Keep",
+          "start": 21.04,
+          "end": 21.34
+        },
+        {
+          "word": "it",
+          "start": 21.34,
+          "end": 21.54
+        },
+        {
+          "word": "moving",
+          "start": 21.54,
+          "end": 22.16
+        },
+        {
+          "word": "and",
+          "start": 22.16,
+          "end": 22.56
+        },
+        {
+          "word": "grooving,",
+          "start": 22.56,
+          "end": 23.22
+        },
+        {
+          "word": "don't",
+          "start": 23.28,
+          "end": 23.62
+        },
+        {
+          "word": "leave",
+          "start": 23.62,
+          "end": 23.78
+        },
+        {
+          "word": "a",
+          "start": 23.78,
+          "end": 24.02
+        },
+        {
+          "word": "single",
+          "start": 24.02,
+          "end": 24.32
+        }
+      ]
+    },
+    {
+      "start": 24.32,
+      "end": 24.76,
+      "text": "doubt.",
+      "words": [
+        {
+          "word": "doubt.",
+          "start": 24.32,
+          "end": 24.76
+        }
+      ]
+    },
+    {
+      "start": 24.76,
+      "end": 28.64,
+      "text": "That today is the day that the Lord has created",
+      "words": [
+        {
+          "word": "That",
+          "start": 24.76,
+          "end": 25.22
+        },
+        {
+          "word": "today",
+          "start": 25.22,
+          "end": 25.62
+        },
+        {
+          "word": "is",
+          "start": 25.62,
+          "end": 26.28
+        },
+        {
+          "word": "the",
+          "start": 26.28,
+          "end": 26.42
+        },
+        {
+          "word": "day",
+          "start": 26.42,
+          "end": 26.78
+        },
+        {
+          "word": "that",
+          "start": 26.78,
+          "end": 27.22
+        },
+        {
+          "word": "the",
+          "start": 27.22,
+          "end": 27.38
+        },
+        {
+          "word": "Lord",
+          "start": 27.38,
+          "end": 27.8
+        },
+        {
+          "word": "has",
+          "start": 27.8,
+          "end": 28.24
+        },
+        {
+          "word": "created",
+          "start": 28.24,
+          "end": 28.64
+        }
+      ]
+    },
+    {
+      "start": 28.64,
+      "end": 32.02,
+      "text": "Why would I sit around just waiting?",
+      "words": [
+        {
+          "word": "Why",
+          "start": 28.64,
+          "end": 29.8
+        },
+        {
+          "word": "would",
+          "start": 29.8,
+          "end": 30.14
+        },
+        {
+          "word": "I",
+          "start": 30.14,
+          "end": 30.34
+        },
+        {
+          "word": "sit",
+          "start": 30.34,
+          "end": 30.66
+        },
+        {
+          "word": "around",
+          "start": 30.66,
+          "end": 31.08
+        },
+        {
+          "word": "just",
+          "start": 31.08,
+          "end": 31.38
+        },
+        {
+          "word": "waiting?",
+          "start": 31.38,
+          "end": 32.02
+        }
+      ]
+    },
+    {
+      "start": 32.14,
+      "end": 33.54,
+      "text": "Let's have a celebration",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 32.14,
+          "end": 32.42
+        },
+        {
+          "word": "have",
+          "start": 32.42,
+          "end": 32.64
+        },
+        {
+          "word": "a",
+          "start": 32.64,
+          "end": 32.8
+        },
+        {
+          "word": "celebration",
+          "start": 32.8,
+          "end": 33.54
+        }
+      ]
+    },
+    {
+      "start": 35.54,
+      "end": 39.34,
+      "text": "It's time to clap our hands and stomp our feet",
+      "words": [
+        {
+          "word": "It's",
+          "start": 35.54,
+          "end": 36.3
+        },
+        {
+          "word": "time",
+          "start": 36.3,
+          "end": 36.56
+        },
+        {
+          "word": "to",
+          "start": 36.56,
+          "end": 36.76
+        },
+        {
+          "word": "clap",
+          "start": 36.76,
+          "end": 36.98
+        },
+        {
+          "word": "our",
+          "start": 36.98,
+          "end": 37.28
+        },
+        {
+          "word": "hands",
+          "start": 37.28,
+          "end": 37.74
+        },
+        {
+          "word": "and",
+          "start": 37.74,
+          "end": 38.08
+        },
+        {
+          "word": "stomp",
+          "start": 38.08,
+          "end": 38.64
+        },
+        {
+          "word": "our",
+          "start": 38.64,
+          "end": 38.94
+        },
+        {
+          "word": "feet",
+          "start": 38.94,
+          "end": 39.34
+        }
+      ]
+    },
+    {
+      "start": 39.34,
+      "end": 41.42,
+      "text": "Let's have a celebration",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 39.34,
+          "end": 40.28
+        },
+        {
+          "word": "have",
+          "start": 40.28,
+          "end": 40.52
+        },
+        {
+          "word": "a",
+          "start": 40.52,
+          "end": 40.7
+        },
+        {
+          "word": "celebration",
+          "start": 40.7,
+          "end": 41.42
+        }
+      ]
+    },
+    {
+      "start": 43.26,
+      "end": 47.1,
+      "text": "If you believe that Jesus set you free",
+      "words": [
+        {
+          "word": "If",
+          "start": 43.26,
+          "end": 44.02
+        },
+        {
+          "word": "you",
+          "start": 44.02,
+          "end": 44.34
+        },
+        {
+          "word": "believe",
+          "start": 44.34,
+          "end": 44.84
+        },
+        {
+          "word": "that",
+          "start": 44.84,
+          "end": 45.14
+        },
+        {
+          "word": "Jesus",
+          "start": 45.14,
+          "end": 45.66
+        },
+        {
+          "word": "set",
+          "start": 45.66,
+          "end": 46.36
+        },
+        {
+          "word": "you",
+          "start": 46.36,
+          "end": 46.66
+        },
+        {
+          "word": "free",
+          "start": 46.66,
+          "end": 47.1
+        }
+      ]
+    },
+    {
+      "start": 47.1,
+      "end": 49.18,
+      "text": "It's time to celebrate",
+      "words": [
+        {
+          "word": "It's",
+          "start": 47.1,
+          "end": 48.1
+        },
+        {
+          "word": "time",
+          "start": 48.1,
+          "end": 48.38
+        },
+        {
+          "word": "to",
+          "start": 48.38,
+          "end": 48.52
+        },
+        {
+          "word": "celebrate",
+          "start": 48.52,
+          "end": 49.18
+        }
+      ]
+    },
+    {
+      "start": 55.44,
+      "end": 59.6,
+      "text": "Ayy,ayy,ayy,ayy,ayy,ayy,",
+      "words": [
+        {
+          "word": "Ayy,",
+          "start": 55.44,
+          "end": 56.0
+        },
+        {
+          "word": "ayy,",
+          "start": 56.0,
+          "end": 56.56
+        },
+        {
+          "word": "ayy,",
+          "start": 56.56,
+          "end": 56.94
+        },
+        {
+          "word": "ayy,",
+          "start": 56.94,
+          "end": 57.72
+        },
+        {
+          "word": "ayy,",
+          "start": 57.72,
+          "end": 59.36
+        },
+        {
+          "word": "ayy,",
+          "start": 59.36,
+          "end": 59.6
+        }
+      ]
+    },
+    {
+      "start": 61.0,
+      "end": 64.02,
+      "text": "Don't sit there waiting, let's have a celebration",
+      "words": [
+        {
+          "word": "Don't",
+          "start": 61.0,
+          "end": 61.42
+        },
+        {
+          "word": "sit",
+          "start": 61.42,
+          "end": 61.52
+        },
+        {
+          "word": "there",
+          "start": 61.52,
+          "end": 61.86
+        },
+        {
+          "word": "waiting,",
+          "start": 61.86,
+          "end": 62.46
+        },
+        {
+          "word": "let's",
+          "start": 62.54,
+          "end": 63.0
+        },
+        {
+          "word": "have",
+          "start": 63.0,
+          "end": 63.14
+        },
+        {
+          "word": "a",
+          "start": 63.14,
+          "end": 63.32
+        },
+        {
+          "word": "celebration",
+          "start": 63.32,
+          "end": 64.02
+        }
+      ]
+    },
+    {
+      "start": 64.02,
+      "end": 68.04,
+      "text": "Me, me, me, me, I need less of me",
+      "words": [
+        {
+          "word": "Me,",
+          "start": 64.02,
+          "end": 65.02
+        },
+        {
+          "word": "me,",
+          "start": 65.2,
+          "end": 65.6
+        },
+        {
+          "word": "me,",
+          "start": 65.7,
+          "end": 66.06
+        },
+        {
+          "word": "me,",
+          "start": 66.2,
+          "end": 66.52
+        },
+        {
+          "word": "I",
+          "start": 66.64,
+          "end": 66.92
+        },
+        {
+          "word": "need",
+          "start": 66.92,
+          "end": 67.26
+        },
+        {
+          "word": "less",
+          "start": 67.26,
+          "end": 67.56
+        },
+        {
+          "word": "of",
+          "start": 67.56,
+          "end": 67.74
+        },
+        {
+          "word": "me",
+          "start": 67.74,
+          "end": 68.04
+        }
+      ]
+    },
+    {
+      "start": 68.04,
+      "end": 71.8,
+      "text": "Father, son, and spirit, that's who I call G -O -D",
+      "words": [
+        {
+          "word": "Father,",
+          "start": 68.04,
+          "end": 69.08
+        },
+        {
+          "word": "son,",
+          "start": 69.16,
+          "end": 69.56
+        },
+        {
+          "word": "and",
+          "start": 69.56,
+          "end": 69.72
+        },
+        {
+          "word": "spirit,",
+          "start": 69.72,
+          "end": 69.98
+        },
+        {
+          "word": "that's",
+          "start": 70.22,
+          "end": 70.54
+        },
+        {
+          "word": "who",
+          "start": 70.54,
+          "end": 70.64
+        },
+        {
+          "word": "I",
+          "start": 70.64,
+          "end": 70.92
+        },
+        {
+          "word": "call",
+          "start": 70.92,
+          "end": 71.18
+        },
+        {
+          "word": "G",
+          "start": 71.18,
+          "end": 71.4
+        },
+        {
+          "word": "-O",
+          "start": 71.4,
+          "end": 71.74
+        },
+        {
+          "word": "-D",
+          "start": 71.74,
+          "end": 71.8
+        }
+      ]
+    },
+    {
+      "start": 71.8,
+      "end": 75.56,
+      "text": "I used to be a blind man until you let me",
+      "words": [
+        {
+          "word": "I",
+          "start": 71.8,
+          "end": 72.56
+        },
+        {
+          "word": "used",
+          "start": 72.56,
+          "end": 72.88
+        },
+        {
+          "word": "to",
+          "start": 72.88,
+          "end": 73.12
+        },
+        {
+          "word": "be",
+          "start": 73.12,
+          "end": 73.36
+        },
+        {
+          "word": "a",
+          "start": 73.36,
+          "end": 73.64
+        },
+        {
+          "word": "blind",
+          "start": 73.64,
+          "end": 73.96
+        },
+        {
+          "word": "man",
+          "start": 73.96,
+          "end": 74.4
+        },
+        {
+          "word": "until",
+          "start": 74.4,
+          "end": 74.74
+        },
+        {
+          "word": "you",
+          "start": 74.74,
+          "end": 75.06
+        },
+        {
+          "word": "let",
+          "start": 75.06,
+          "end": 75.36
+        },
+        {
+          "word": "me",
+          "start": 75.36,
+          "end": 75.56
+        }
+      ]
+    },
+    {
+      "start": 75.56,
+      "end": 75.88,
+      "text": "see",
+      "words": [
+        {
+          "word": "see",
+          "start": 75.56,
+          "end": 75.88
+        }
+      ]
+    },
+    {
+      "start": 75.88,
+      "end": 79.32,
+      "text": "That who the son sets free, you said it's truly free",
+      "words": [
+        {
+          "word": "That",
+          "start": 75.88,
+          "end": 76.64
+        },
+        {
+          "word": "who",
+          "start": 76.64,
+          "end": 76.84
+        },
+        {
+          "word": "the",
+          "start": 76.84,
+          "end": 77.08
+        },
+        {
+          "word": "son",
+          "start": 77.08,
+          "end": 77.32
+        },
+        {
+          "word": "sets",
+          "start": 77.32,
+          "end": 77.58
+        },
+        {
+          "word": "free,",
+          "start": 77.58,
+          "end": 77.86
+        },
+        {
+          "word": "you",
+          "start": 77.92,
+          "end": 78.04
+        },
+        {
+          "word": "said",
+          "start": 78.04,
+          "end": 78.3
+        },
+        {
+          "word": "it's",
+          "start": 78.3,
+          "end": 78.62
+        },
+        {
+          "word": "truly",
+          "start": 78.62,
+          "end": 78.9
+        },
+        {
+          "word": "free",
+          "start": 78.9,
+          "end": 79.32
+        }
+      ]
+    },
+    {
+      "start": 79.32,
+      "end": 79.72,
+      "text": "indeed",
+      "words": [
+        {
+          "word": "indeed",
+          "start": 79.32,
+          "end": 79.72
+        }
+      ]
+    },
+    {
+      "start": 79.72,
+      "end": 83.0,
+      "text": "So let it scream, let it shout, let them know what",
+      "words": [
+        {
+          "word": "So",
+          "start": 79.72,
+          "end": 80.0
+        },
+        {
+          "word": "let",
+          "start": 80.0,
+          "end": 80.32
+        },
+        {
+          "word": "it",
+          "start": 80.32,
+          "end": 80.52
+        },
+        {
+          "word": "scream,",
+          "start": 80.52,
+          "end": 80.78
+        },
+        {
+          "word": "let",
+          "start": 81.06,
+          "end": 81.26
+        },
+        {
+          "word": "it",
+          "start": 81.26,
+          "end": 81.56
+        },
+        {
+          "word": "shout,",
+          "start": 81.56,
+          "end": 81.8
+        },
+        {
+          "word": "let",
+          "start": 82.06,
+          "end": 82.26
+        },
+        {
+          "word": "them",
+          "start": 82.26,
+          "end": 82.5
+        },
+        {
+          "word": "know",
+          "start": 82.5,
+          "end": 82.74
+        },
+        {
+          "word": "what",
+          "start": 82.74,
+          "end": 83.0
+        }
+      ]
+    },
+    {
+      "start": 83.0,
+      "end": 83.74,
+      "text": "you're about",
+      "words": [
+        {
+          "word": "you're",
+          "start": 83.0,
+          "end": 83.32
+        },
+        {
+          "word": "about",
+          "start": 83.32,
+          "end": 83.74
+        }
+      ]
+    },
+    {
+      "start": 84.76,
+      "end": 87.7,
+      "text": "Moving and grooving, don't leave a single doubt",
+      "words": [
+        {
+          "word": "Moving",
+          "start": 84.76,
+          "end": 85.26
+        },
+        {
+          "word": "and",
+          "start": 85.26,
+          "end": 85.52
+        },
+        {
+          "word": "grooving,",
+          "start": 85.52,
+          "end": 86.14
+        },
+        {
+          "word": "don't",
+          "start": 86.18,
+          "end": 86.5
+        },
+        {
+          "word": "leave",
+          "start": 86.5,
+          "end": 86.72
+        },
+        {
+          "word": "a",
+          "start": 86.72,
+          "end": 86.96
+        },
+        {
+          "word": "single",
+          "start": 86.96,
+          "end": 87.26
+        },
+        {
+          "word": "doubt",
+          "start": 87.26,
+          "end": 87.7
+        }
+      ]
+    },
+    {
+      "start": 87.7,
+      "end": 91.6,
+      "text": "That today is the day that the Lord has created",
+      "words": [
+        {
+          "word": "That",
+          "start": 87.7,
+          "end": 88.14
+        },
+        {
+          "word": "today",
+          "start": 88.14,
+          "end": 88.54
+        },
+        {
+          "word": "is",
+          "start": 88.54,
+          "end": 89.2
+        },
+        {
+          "word": "the",
+          "start": 89.2,
+          "end": 89.34
+        },
+        {
+          "word": "day",
+          "start": 89.34,
+          "end": 89.74
+        },
+        {
+          "word": "that",
+          "start": 89.74,
+          "end": 90.16
+        },
+        {
+          "word": "the",
+          "start": 90.16,
+          "end": 90.3
+        },
+        {
+          "word": "Lord",
+          "start": 90.3,
+          "end": 90.72
+        },
+        {
+          "word": "has",
+          "start": 90.72,
+          "end": 91.18
+        },
+        {
+          "word": "created",
+          "start": 91.18,
+          "end": 91.6
+        }
+      ]
+    },
+    {
+      "start": 91.6,
+      "end": 94.78,
+      "text": "Why would I sit around just waiting?",
+      "words": [
+        {
+          "word": "Why",
+          "start": 91.6,
+          "end": 92.74
+        },
+        {
+          "word": "would",
+          "start": 92.74,
+          "end": 93.06
+        },
+        {
+          "word": "I",
+          "start": 93.06,
+          "end": 93.28
+        },
+        {
+          "word": "sit",
+          "start": 93.28,
+          "end": 93.58
+        },
+        {
+          "word": "around",
+          "start": 93.58,
+          "end": 94.0
+        },
+        {
+          "word": "just",
+          "start": 94.0,
+          "end": 94.3
+        },
+        {
+          "word": "waiting?",
+          "start": 94.3,
+          "end": 94.78
+        }
+      ]
+    },
+    {
+      "start": 94.78,
+      "end": 96.42,
+      "text": "Let's have a celebration",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 94.78,
+          "end": 95.34
+        },
+        {
+          "word": "have",
+          "start": 95.34,
+          "end": 95.54
+        },
+        {
+          "word": "a",
+          "start": 95.54,
+          "end": 95.74
+        },
+        {
+          "word": "celebration",
+          "start": 95.74,
+          "end": 96.42
+        }
+      ]
+    },
+    {
+      "start": 98.48,
+      "end": 102.26,
+      "text": "It's time to clap our hands and stomp our feet",
+      "words": [
+        {
+          "word": "It's",
+          "start": 98.48,
+          "end": 99.24
+        },
+        {
+          "word": "time",
+          "start": 99.24,
+          "end": 99.52
+        },
+        {
+          "word": "to",
+          "start": 99.52,
+          "end": 99.68
+        },
+        {
+          "word": "clap",
+          "start": 99.68,
+          "end": 99.96
+        },
+        {
+          "word": "our",
+          "start": 99.96,
+          "end": 100.24
+        },
+        {
+          "word": "hands",
+          "start": 100.24,
+          "end": 100.68
+        },
+        {
+          "word": "and",
+          "start": 100.68,
+          "end": 101.04
+        },
+        {
+          "word": "stomp",
+          "start": 101.04,
+          "end": 101.6
+        },
+        {
+          "word": "our",
+          "start": 101.6,
+          "end": 101.9
+        },
+        {
+          "word": "feet",
+          "start": 101.9,
+          "end": 102.26
+        }
+      ]
+    },
+    {
+      "start": 102.26,
+      "end": 104.24,
+      "text": "Let's have a celebration",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 102.26,
+          "end": 103.24
+        },
+        {
+          "word": "have",
+          "start": 103.24,
+          "end": 103.5
+        },
+        {
+          "word": "a",
+          "start": 103.5,
+          "end": 103.66
+        },
+        {
+          "word": "celebration",
+          "start": 103.66,
+          "end": 104.24
+        }
+      ]
+    },
+    {
+      "start": 106.18,
+      "end": 110.04,
+      "text": "If you believe that Jesus set you free",
+      "words": [
+        {
+          "word": "If",
+          "start": 106.18,
+          "end": 106.94
+        },
+        {
+          "word": "you",
+          "start": 106.94,
+          "end": 107.28
+        },
+        {
+          "word": "believe",
+          "start": 107.28,
+          "end": 107.8
+        },
+        {
+          "word": "that",
+          "start": 107.8,
+          "end": 108.08
+        },
+        {
+          "word": "Jesus",
+          "start": 108.08,
+          "end": 108.66
+        },
+        {
+          "word": "set",
+          "start": 108.66,
+          "end": 109.32
+        },
+        {
+          "word": "you",
+          "start": 109.32,
+          "end": 109.62
+        },
+        {
+          "word": "free",
+          "start": 109.62,
+          "end": 110.04
+        }
+      ]
+    },
+    {
+      "start": 110.04,
+      "end": 112.16,
+      "text": "It's time to celebrate",
+      "words": [
+        {
+          "word": "It's",
+          "start": 110.04,
+          "end": 111.06
+        },
+        {
+          "word": "time",
+          "start": 111.06,
+          "end": 111.32
+        },
+        {
+          "word": "to",
+          "start": 111.32,
+          "end": 111.48
+        },
+        {
+          "word": "celebrate",
+          "start": 111.48,
+          "end": 112.16
+        }
+      ]
+    },
+    {
+      "start": 114.76,
+      "end": 121.215,
+      "text": "Hey, Hey, Hey, Hey, Hey, Hey",
+      "words": [
+        {
+          "word": "Hey,",
+          "start": 114.76,
+          "end": 115.836
+        },
+        {
+          "word": "Hey,",
+          "start": 115.836,
+          "end": 116.912
+        },
+        {
+          "word": "Hey,",
+          "start": 116.912,
+          "end": 117.988
+        },
+        {
+          "word": "Hey,",
+          "start": 117.988,
+          "end": 119.063
+        },
+        {
+          "word": "Hey,",
+          "start": 119.063,
+          "end": 120.139
+        },
+        {
+          "word": "Hey",
+          "start": 120.139,
+          "end": 121.215
+        }
+      ]
+    },
+    {
+      "start": 121.215,
+      "end": 127.67,
+      "text": "Hey, Hey, Hey, Hey, Hey, Hey",
+      "words": [
+        {
+          "word": "Hey,",
+          "start": 121.215,
+          "end": 122.291
+        },
+        {
+          "word": "Hey,",
+          "start": 122.291,
+          "end": 123.367
+        },
+        {
+          "word": "Hey,",
+          "start": 123.367,
+          "end": 124.443
+        },
+        {
+          "word": "Hey,",
+          "start": 124.443,
+          "end": 125.518
+        },
+        {
+          "word": "Hey,",
+          "start": 125.518,
+          "end": 126.594
+        },
+        {
+          "word": "Hey",
+          "start": 126.594,
+          "end": 127.67
+        }
+      ]
+    },
+    {
+      "start": 127.67,
+      "end": 134.125,
+      "text": "Hey, Hey, Hey, Hey, Hey, Hey",
+      "words": [
+        {
+          "word": "Hey,",
+          "start": 127.67,
+          "end": 128.746
+        },
+        {
+          "word": "Hey,",
+          "start": 128.746,
+          "end": 129.822
+        },
+        {
+          "word": "Hey,",
+          "start": 129.822,
+          "end": 130.898
+        },
+        {
+          "word": "Hey,",
+          "start": 130.898,
+          "end": 131.973
+        },
+        {
+          "word": "Hey,",
+          "start": 131.973,
+          "end": 133.049
+        },
+        {
+          "word": "Hey",
+          "start": 133.049,
+          "end": 134.125
+        }
+      ]
+    },
+    {
+      "start": 134.125,
+      "end": 140.58,
+      "text": "Hey, Hey, Hey, Hey, Hey, Hey",
+      "words": [
+        {
+          "word": "Hey,",
+          "start": 134.125,
+          "end": 135.201
+        },
+        {
+          "word": "Hey,",
+          "start": 135.201,
+          "end": 136.277
+        },
+        {
+          "word": "Hey,",
+          "start": 136.277,
+          "end": 137.353
+        },
+        {
+          "word": "Hey,",
+          "start": 137.353,
+          "end": 138.428
+        },
+        {
+          "word": "Hey,",
+          "start": 138.428,
+          "end": 139.504
+        },
+        {
+          "word": "Hey",
+          "start": 139.504,
+          "end": 140.58
+        }
+      ]
+    },
+    {
+      "start": 140.58,
+      "end": 143.6,
+      "text": "Set you free, it's time to celebrate",
+      "words": [
+        {
+          "word": "Set",
+          "start": 140.58,
+          "end": 140.9
+        },
+        {
+          "word": "you",
+          "start": 140.9,
+          "end": 141.1
+        },
+        {
+          "word": "free,",
+          "start": 141.1,
+          "end": 141.46
+        },
+        {
+          "word": "it's",
+          "start": 141.74,
+          "end": 142.54
+        },
+        {
+          "word": "time",
+          "start": 142.54,
+          "end": 142.76
+        },
+        {
+          "word": "to",
+          "start": 142.76,
+          "end": 142.96
+        },
+        {
+          "word": "celebrate",
+          "start": 142.96,
+          "end": 143.6
+        }
+      ]
+    },
+    {
+      "start": 155.22,
+      "end": 158.36,
+      "text": "Don't sit there waiting, let's have a celebration",
+      "words": [
+        {
+          "word": "Don't",
+          "start": 155.22,
+          "end": 155.86
+        },
+        {
+          "word": "sit",
+          "start": 155.86,
+          "end": 155.94
+        },
+        {
+          "word": "there",
+          "start": 155.94,
+          "end": 156.28
+        },
+        {
+          "word": "waiting,",
+          "start": 156.28,
+          "end": 156.76
+        },
+        {
+          "word": "let's",
+          "start": 157.0,
+          "end": 157.44
+        },
+        {
+          "word": "have",
+          "start": 157.44,
+          "end": 157.58
+        },
+        {
+          "word": "a",
+          "start": 157.58,
+          "end": 157.74
+        },
+        {
+          "word": "celebration",
+          "start": 157.74,
+          "end": 158.36
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "step": 0.1,
+    "energyBase64": "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",
+    "onsetsBase64": "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"
+  },
+  "timingMethod": "Whisper large-v3 word timestamps cross-checked against isolated vocals and the original mix."
+}
