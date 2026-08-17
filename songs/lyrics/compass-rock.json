@@ -6,839 +6,827 @@
   "bpm": 178.206,
   "beatOffset": 0.07,
   "key": "F minor",
-  "footer": "SEA / STAR / INNER NORTH",
+  "footer": "GOLD CORD / MIRROR SEA / INNER NORTH",
   "sections": [
     {
       "start": 0,
-      "end": 22.46,
-      "name": "Uncharted water",
+      "end": 23.14,
+      "name": "Star before bearing",
       "short": "DEPARTURE",
       "phase": 0
     },
     {
-      "start": 22.46,
-      "end": 57.32,
-      "name": "No fixed bearing",
-      "short": "DRIFT",
+      "start": 23.14,
+      "end": 63.1,
+      "name": "The mermaid sets sail",
+      "short": "VOYAGE",
       "phase": 1
     },
     {
-      "start": 57.32,
-      "end": 82.0,
-      "name": "Swallowed by the sea",
+      "start": 63.1,
+      "end": 78.4,
+      "name": "Compass overboard",
       "short": "LOST COMPASS",
       "phase": 2
     },
     {
-      "start": 82.0,
-      "end": 106.5,
-      "name": "Black and white",
+      "start": 78.4,
+      "end": 106.36,
+      "name": "Blood and black-and-white",
       "short": "VERDICT",
       "phase": 3
     },
     {
-      "start": 106.5,
-      "end": 129.0,
-      "name": "The needle watches",
+      "start": 106.36,
+      "end": 130.92,
+      "name": "Curiosity points north",
       "short": "INNER NORTH",
       "phase": 4
     },
     {
-      "start": 129.0,
+      "start": 130.92,
       "end": 159.64,
-      "name": "Storm passage",
-      "short": "INSTRUMENTAL",
+      "name": "Cord under tension",
+      "short": "ROCK SOLO / I",
       "phase": 5
     },
     {
       "start": 159.64,
-      "end": 174.2,
-      "name": "Fire on the water",
-      "short": "RECKONING",
+      "end": 196.6,
+      "name": "Gold across the water",
+      "short": "ROCK SOLO / II",
       "phase": 6
     },
     {
-      "start": 174.2,
-      "end": 226.023,
-      "name": "Follow the gold",
-      "short": "HOMEWARD",
+      "start": 196.6,
+      "end": 218.2,
+      "name": "High tide, low tide",
+      "short": "TIDAL CODA",
       "phase": 7
+    },
+    {
+      "start": 218.2,
+      "end": 226.023,
+      "name": "One light remains",
+      "short": "LANDFALL",
+      "phase": 8
     }
   ],
   "lines": [
     {
-      "start": 22.46,
-      "end": 27.12,
-      "text": "Oh, my heart, not me, not so, so",
+      "start": 23.14,
+      "end": 24.78,
+      "text": "Bon voyage",
       "words": [
         {
-          "word": "Oh,",
-          "start": 22.46,
-          "end": 23.3
+          "word": "Bon",
+          "start": 23.14,
+          "end": 24.12
         },
         {
-          "word": "my",
-          "start": 23.3,
-          "end": 24.14
-        },
-        {
-          "word": "heart,",
-          "start": 24.14,
-          "end": 24.74
-        },
-        {
-          "word": "not",
-          "start": 25.0,
-          "end": 25.66
-        },
-        {
-          "word": "me,",
-          "start": 25.66,
-          "end": 26.08
-        },
-        {
-          "word": "not",
-          "start": 26.08,
-          "end": 26.42
-        },
-        {
-          "word": "so,",
-          "start": 26.42,
-          "end": 26.72
-        },
-        {
-          "word": "so",
-          "start": 26.72,
-          "end": 27.12
+          "word": "voyage",
+          "start": 24.12,
+          "end": 24.78
         }
       ]
     },
     {
-      "start": 30.84,
-      "end": 32.9,
-      "text": "Force me towards your heart",
+      "start": 24.98,
+      "end": 27.34,
+      "text": "Your mermaid's setting sail",
       "words": [
         {
-          "word": "Force",
-          "start": 30.84,
-          "end": 31.1
+          "word": "Your",
+          "start": 24.98,
+          "end": 25.44
         },
         {
-          "word": "me",
-          "start": 31.1,
-          "end": 31.38
+          "word": "mermaid's",
+          "start": 25.44,
+          "end": 26.58
+        },
+        {
+          "word": "setting",
+          "start": 26.58,
+          "end": 26.82
+        },
+        {
+          "word": "sail",
+          "start": 26.82,
+          "end": 27.34
+        }
+      ]
+    },
+    {
+      "start": 28.6,
+      "end": 32.9,
+      "text": "At last, full speed towards your heart",
+      "words": [
+        {
+          "word": "At",
+          "start": 28.6,
+          "end": 28.993
+        },
+        {
+          "word": "last,",
+          "start": 28.993,
+          "end": 29.579
+        },
+        {
+          "word": "full",
+          "start": 29.579,
+          "end": 30.166
+        },
+        {
+          "word": "speed",
+          "start": 30.166,
+          "end": 30.834
         },
         {
           "word": "towards",
-          "start": 31.38,
-          "end": 32.12
+          "start": 30.834,
+          "end": 31.645
         },
         {
           "word": "your",
-          "start": 32.12,
-          "end": 32.46
+          "start": 31.645,
+          "end": 32.232
         },
         {
           "word": "heart",
-          "start": 32.46,
+          "start": 32.232,
           "end": 32.9
         }
       ]
     },
     {
-      "start": 32.9,
-      "end": 38.26,
-      "text": "Force me towards your heart",
+      "start": 35.42,
+      "end": 38.38,
+      "text": "Full speed towards your heart",
       "words": [
         {
-          "word": "Force",
-          "start": 32.9,
-          "end": 35.04
+          "word": "Full",
+          "start": 35.42,
+          "end": 35.943
         },
         {
-          "word": "me",
-          "start": 35.04,
-          "end": 36.78
+          "word": "speed",
+          "start": 35.943,
+          "end": 36.538
         },
         {
           "word": "towards",
-          "start": 36.78,
-          "end": 37.44
+          "start": 36.538,
+          "end": 37.262
         },
         {
           "word": "your",
-          "start": 37.44,
-          "end": 37.92
+          "start": 37.262,
+          "end": 37.785
         },
         {
           "word": "heart",
-          "start": 37.92,
-          "end": 38.26
+          "start": 37.785,
+          "end": 38.38
         }
       ]
     },
     {
-      "start": 40.48,
-      "end": 42.52,
-      "text": "I, I,",
+      "start": 40.08,
+      "end": 42.44,
+      "text": "I've had enough",
       "words": [
         {
-          "word": "I,",
-          "start": 40.48,
-          "end": 41.5
+          "word": "I've",
+          "start": 40.08,
+          "end": 40.838
         },
         {
-          "word": "I,",
-          "start": 41.5,
-          "end": 42.52
+          "word": "had",
+          "start": 40.838,
+          "end": 41.48
+        },
+        {
+          "word": "enough",
+          "start": 41.48,
+          "end": 42.44
         }
       ]
     },
     {
-      "start": 43.8,
-      "end": 54.38,
-      "text": "you know I'm reclaiming myself Without, leaving behind the hope",
+      "start": 45.04,
+      "end": 49.2,
+      "text": "I'm reclaiming myself",
       "words": [
-        {
-          "word": "you",
-          "start": 43.8,
-          "end": 45.86
-        },
-        {
-          "word": "know",
-          "start": 45.86,
-          "end": 46.42
-        },
         {
           "word": "I'm",
-          "start": 46.42,
-          "end": 47.46
+          "start": 45.04,
+          "end": 47.5
         },
         {
           "word": "reclaiming",
-          "start": 47.46,
-          "end": 48.46
+          "start": 47.5,
+          "end": 48.52
         },
         {
           "word": "myself",
-          "start": 48.46,
-          "end": 48.88
-        },
-        {
-          "word": "Without,",
-          "start": 48.88,
-          "end": 51.6
-        },
-        {
-          "word": "leaving",
-          "start": 52.12,
-          "end": 52.94
-        },
-        {
-          "word": "behind",
-          "start": 52.94,
-          "end": 53.58
-        },
-        {
-          "word": "the",
-          "start": 53.58,
-          "end": 54.14
-        },
-        {
-          "word": "hope",
-          "start": 54.14,
-          "end": 54.38
+          "start": 48.52,
+          "end": 49.2
         }
       ]
     },
     {
-      "start": 57.32,
-      "end": 60.14,
-      "text": "We think we're only friends",
+      "start": 50.58,
+      "end": 52.16,
+      "text": "The aft",
       "words": [
         {
-          "word": "We",
-          "start": 57.32,
-          "end": 58.28
+          "word": "The",
+          "start": 50.58,
+          "end": 51.37
         },
         {
-          "word": "think",
-          "start": 58.28,
-          "end": 58.66
+          "word": "aft",
+          "start": 51.37,
+          "end": 52.16
+        }
+      ]
+    },
+    {
+      "start": 52.16,
+      "end": 54.44,
+      "text": "Leaving behind the hurt",
+      "words": [
+        {
+          "word": "Leaving",
+          "start": 52.16,
+          "end": 52.862
         },
         {
-          "word": "we're",
-          "start": 58.66,
-          "end": 59.08
+          "word": "behind",
+          "start": 52.862,
+          "end": 53.503
         },
         {
-          "word": "only",
-          "start": 59.08,
-          "end": 59.56
+          "word": "the",
+          "start": 53.503,
+          "end": 53.933
         },
         {
-          "word": "friends",
-          "start": 59.56,
-          "end": 60.14
+          "word": "hurt",
+          "start": 53.933,
+          "end": 54.44
+        }
+      ]
+    },
+    {
+      "start": 57.34,
+      "end": 60.08,
+      "text": "Leaving behind the hurt",
+      "words": [
+        {
+          "word": "Leaving",
+          "start": 57.34,
+          "end": 58.183
+        },
+        {
+          "word": "behind",
+          "start": 58.183,
+          "end": 58.955
+        },
+        {
+          "word": "the",
+          "start": 58.955,
+          "end": 59.47
+        },
+        {
+          "word": "hurt",
+          "start": 59.47,
+          "end": 60.08
         }
       ]
     },
     {
       "start": 63.1,
-      "end": 65.74,
-      "text": "We miss that",
+      "end": 65.42,
+      "text": "When it snapped",
       "words": [
         {
-          "word": "We",
+          "word": "When",
           "start": 63.1,
-          "end": 64.06
+          "end": 63.86
         },
         {
-          "word": "miss",
-          "start": 64.06,
-          "end": 65.02
+          "word": "it",
+          "start": 63.86,
+          "end": 64.369
         },
         {
-          "word": "that",
-          "start": 65.02,
-          "end": 65.74
+          "word": "snapped",
+          "start": 64.369,
+          "end": 65.42
         }
       ]
     },
     {
-      "start": 66.48,
+      "start": 67.14,
       "end": 70.98,
       "text": "My compass was swallowed by the sea",
       "words": [
         {
           "word": "My",
-          "start": 66.48,
-          "end": 67.72
+          "start": 67.14,
+          "end": 67.8
         },
         {
           "word": "compass",
-          "start": 67.72,
-          "end": 68.56
+          "start": 67.8,
+          "end": 68.6
         },
         {
           "word": "was",
-          "start": 68.56,
-          "end": 69.24
+          "start": 68.6,
+          "end": 69.26
         },
         {
           "word": "swallowed",
-          "start": 69.24,
-          "end": 69.72
+          "start": 69.26,
+          "end": 69.7
         },
         {
           "word": "by",
-          "start": 69.72,
-          "end": 70.2
+          "start": 69.7,
+          "end": 70.16
         },
         {
           "word": "the",
-          "start": 70.2,
-          "end": 70.5
+          "start": 70.16,
+          "end": 70.48
         },
         {
           "word": "sea",
-          "start": 70.5,
+          "start": 70.48,
           "end": 70.98
         }
       ]
     },
     {
-      "start": 70.98,
-      "end": 76.46,
+      "start": 72.54,
+      "end": 76.36,
       "text": "My compass was swallowed by the sea",
       "words": [
         {
           "word": "My",
-          "start": 70.98,
-          "end": 73.08
+          "start": 72.54,
+          "end": 73.2
         },
         {
           "word": "compass",
-          "start": 73.08,
-          "end": 73.84
+          "start": 73.2,
+          "end": 73.96
         },
         {
           "word": "was",
-          "start": 73.84,
+          "start": 73.96,
           "end": 74.66
         },
         {
           "word": "swallowed",
           "start": 74.66,
-          "end": 75.14
+          "end": 75.22
         },
         {
           "word": "by",
-          "start": 75.14,
+          "start": 75.22,
           "end": 75.68
         },
         {
           "word": "the",
           "start": 75.68,
-          "end": 75.96
+          "end": 75.94
         },
         {
           "word": "sea",
-          "start": 75.96,
-          "end": 76.46
+          "start": 75.94,
+          "end": 76.36
         }
       ]
     },
     {
-      "start": 78.16,
-      "end": 83.08,
-      "text": "I cursed this relationship between you",
+      "start": 78.4,
+      "end": 83.82,
+      "text": "I curse this relationship between you and me",
       "words": [
         {
           "word": "I",
-          "start": 78.16,
-          "end": 78.78
+          "start": 78.4,
+          "end": 78.695
         },
         {
-          "word": "cursed",
-          "start": 78.78,
-          "end": 79.2
+          "word": "curse",
+          "start": 78.695,
+          "end": 79.445
         },
         {
           "word": "this",
-          "start": 79.2,
-          "end": 79.76
+          "start": 79.445,
+          "end": 80.105
         },
         {
           "word": "relationship",
-          "start": 79.76,
-          "end": 80.68
+          "start": 80.105,
+          "end": 81.351
         },
         {
           "word": "between",
-          "start": 80.68,
-          "end": 81.54
+          "start": 81.351,
+          "end": 82.263
         },
         {
           "word": "you",
-          "start": 81.54,
-          "end": 83.08
+          "start": 82.263,
+          "end": 82.821
+        },
+        {
+          "word": "and",
+          "start": 82.821,
+          "end": 83.379
+        },
+        {
+          "word": "me",
+          "start": 83.379,
+          "end": 83.82
         }
       ]
     },
     {
-      "start": 83.08,
-      "end": 92.78,
+      "start": 84.12,
+      "end": 88.84,
+      "text": "I wanted blood",
+      "words": [
+        {
+          "word": "I",
+          "start": 84.12,
+          "end": 84.861
+        },
+        {
+          "word": "wanted",
+          "start": 84.861,
+          "end": 86.956
+        },
+        {
+          "word": "blood",
+          "start": 86.956,
+          "end": 88.84
+        }
+      ]
+    },
+    {
+      "start": 89.44,
+      "end": 92.76,
       "text": "I wanted black and white",
       "words": [
         {
           "word": "I",
-          "start": 83.08,
-          "end": 85.84
+          "start": 89.44,
+          "end": 90.84
         },
         {
           "word": "wanted",
-          "start": 85.84,
-          "end": 90.06
+          "start": 90.84,
+          "end": 91.42
         },
         {
           "word": "black",
-          "start": 90.06,
-          "end": 91.98
+          "start": 91.42,
+          "end": 91.96
         },
         {
           "word": "and",
-          "start": 91.98,
+          "start": 91.96,
           "end": 92.3
         },
         {
           "word": "white",
           "start": 92.3,
-          "end": 92.78
+          "end": 92.76
         }
       ]
     },
     {
-      "start": 92.78,
-      "end": 98.0,
-      "text": "Your evil's predefined",
+      "start": 92.76,
+      "end": 98,
+      "text": "Clear-cut, your evils predefined",
       "words": [
         {
-          "word": "Your",
-          "start": 92.78,
+          "word": "Clear-cut,",
+          "start": 92.76,
           "end": 95.06
         },
         {
-          "word": "evil's",
+          "word": "your",
           "start": 95.06,
-          "end": 97.24
+          "end": 95.72
+        },
+        {
+          "word": "evils",
+          "start": 95.72,
+          "end": 97.18
         },
         {
           "word": "predefined",
-          "start": 97.24,
-          "end": 98.0
+          "start": 97.18,
+          "end": 98
         }
       ]
     },
     {
-      "start": 100.12,
+      "start": 100.2,
       "end": 103.46,
-      "text": "Your evil's predefined",
+      "text": "Your evils predefined",
       "words": [
         {
           "word": "Your",
-          "start": 100.12,
-          "end": 101.52
+          "start": 100.2,
+          "end": 101.6
         },
         {
-          "word": "evil's",
-          "start": 101.52,
-          "end": 102.62
+          "word": "evils",
+          "start": 101.6,
+          "end": 102.68
         },
         {
           "word": "predefined",
-          "start": 102.62,
+          "start": 102.68,
           "end": 103.46
         }
       ]
     },
     {
-      "start": 103.46,
-      "end": 103.86,
-      "text": "Fine.",
+      "start": 106.36,
+      "end": 109.1,
+      "text": "Hold on tight",
       "words": [
         {
-          "word": "Fine.",
-          "start": 103.46,
-          "end": 103.86
-        }
-      ]
-    },
-    {
-      "start": 106.5,
-      "end": 109.3,
-      "text": "I'm on a climb",
-      "words": [
-        {
-          "word": "I'm",
-          "start": 106.5,
-          "end": 107.78
+          "word": "Hold",
+          "start": 106.36,
+          "end": 107.336
         },
         {
           "word": "on",
-          "start": 107.78,
-          "end": 107.92
+          "start": 107.336,
+          "end": 107.989
         },
         {
-          "word": "a",
-          "start": 107.92,
-          "end": 108.48
-        },
-        {
-          "word": "climb",
-          "start": 108.48,
-          "end": 109.3
+          "word": "tight",
+          "start": 107.989,
+          "end": 109.1
         }
       ]
     },
     {
-      "start": 110.8,
-      "end": 114.92,
-      "text": "My compass is purely watching me",
+      "start": 109.1,
+      "end": 114.56,
+      "text": "My compass is curiosity",
       "words": [
         {
           "word": "My",
-          "start": 110.8,
-          "end": 111.44
+          "start": 109.1,
+          "end": 111.48
         },
         {
           "word": "compass",
-          "start": 111.44,
-          "end": 112.14
+          "start": 111.48,
+          "end": 112.12
         },
         {
           "word": "is",
-          "start": 112.14,
-          "end": 112.88
+          "start": 112.12,
+          "end": 112.86
         },
         {
-          "word": "purely",
-          "start": 112.88,
-          "end": 113.28
-        },
-        {
-          "word": "watching",
-          "start": 113.28,
-          "end": 114.04
-        },
-        {
-          "word": "me",
-          "start": 114.04,
-          "end": 114.92
+          "word": "curiosity",
+          "start": 112.86,
+          "end": 114.56
         }
       ]
     },
     {
-      "start": 116.2,
-      "end": 120.08,
-      "text": "My compass is purely watching me",
+      "start": 115.82,
+      "end": 120.18,
+      "text": "My compass is curiosity",
       "words": [
         {
           "word": "My",
-          "start": 116.2,
-          "end": 116.84
+          "start": 115.82,
+          "end": 116.72
         },
         {
           "word": "compass",
-          "start": 116.84,
-          "end": 117.6
+          "start": 116.72,
+          "end": 117.54
         },
         {
           "word": "is",
-          "start": 117.6,
-          "end": 118.26
+          "start": 117.54,
+          "end": 118.2
         },
         {
-          "word": "purely",
-          "start": 118.26,
-          "end": 118.72
-        },
-        {
-          "word": "watching",
-          "start": 118.72,
-          "end": 119.5
-        },
-        {
-          "word": "me",
-          "start": 119.5,
-          "end": 120.08
+          "word": "curiosity",
+          "start": 118.2,
+          "end": 120.18
         }
       ]
     },
     {
-      "start": 121.72,
-      "end": 126.66,
-      "text": "I'm dancing through the world that's right in front of you",
+      "start": 121.68,
+      "end": 128.14,
+      "text": "I'm piercing through the rope that strangled you and me",
       "words": [
         {
           "word": "I'm",
-          "start": 121.72,
-          "end": 122.36
+          "start": 121.68,
+          "end": 122.32
         },
         {
-          "word": "dancing",
-          "start": 122.36,
-          "end": 122.82
+          "word": "piercing",
+          "start": 122.32,
+          "end": 122.92
         },
         {
           "word": "through",
-          "start": 122.82,
-          "end": 123.36
+          "start": 122.92,
+          "end": 123.5
         },
         {
           "word": "the",
-          "start": 123.36,
-          "end": 123.64
+          "start": 123.5,
+          "end": 124.06
         },
         {
-          "word": "world",
-          "start": 123.64,
-          "end": 124.08
+          "word": "rope",
+          "start": 124.06,
+          "end": 124.38
         },
         {
-          "word": "that's",
-          "start": 124.08,
-          "end": 124.42
+          "word": "that",
+          "start": 124.38,
+          "end": 124.98
         },
         {
-          "word": "right",
-          "start": 124.42,
-          "end": 124.68
-        },
-        {
-          "word": "in",
-          "start": 124.68,
-          "end": 125.32
-        },
-        {
-          "word": "front",
-          "start": 125.32,
-          "end": 125.48
-        },
-        {
-          "word": "of",
-          "start": 125.48,
-          "end": 125.98
+          "word": "strangled",
+          "start": 124.98,
+          "end": 126.1
         },
         {
           "word": "you",
-          "start": 125.98,
-          "end": 126.66
-        }
-      ]
-    },
-    {
-      "start": 126.66,
-      "end": 128.14,
-      "text": "and me",
-      "words": [
+          "start": 126.1,
+          "end": 126.74
+        },
         {
           "word": "and",
-          "start": 126.66,
-          "end": 127.74
+          "start": 126.74,
+          "end": 127.76
         },
         {
           "word": "me",
-          "start": 127.74,
+          "start": 127.76,
           "end": 128.14
         }
       ]
     },
     {
-      "start": 159.64,
-      "end": 163.4,
-      "text": "My heart cries, it's killing me, I feel it",
+      "start": 128.48,
+      "end": 130.92,
+      "text": "Let us be free",
       "words": [
         {
-          "word": "My",
-          "start": 159.64,
-          "end": 160.44
+          "word": "Let",
+          "start": 128.48,
+          "end": 129.129
         },
         {
-          "word": "heart",
-          "start": 160.44,
-          "end": 160.9
+          "word": "us",
+          "start": 129.129,
+          "end": 129.641
         },
         {
-          "word": "cries,",
-          "start": 160.9,
-          "end": 161.54
+          "word": "be",
+          "start": 129.641,
+          "end": 130.154
         },
         {
-          "word": "it's",
-          "start": 161.54,
-          "end": 161.94
-        },
-        {
-          "word": "killing",
-          "start": 161.94,
-          "end": 162.2
-        },
-        {
-          "word": "me,",
-          "start": 162.2,
-          "end": 162.62
-        },
-        {
-          "word": "I",
-          "start": 162.62,
-          "end": 162.82
-        },
-        {
-          "word": "feel",
-          "start": 162.82,
-          "end": 163.16
-        },
-        {
-          "word": "it",
-          "start": 163.16,
-          "end": 163.4
+          "word": "free",
+          "start": 130.154,
+          "end": 130.92
         }
       ]
     },
     {
-      "start": 164.72,
-      "end": 168.32,
-      "text": "I can't think of a best friend",
+      "start": 196.6,
+      "end": 200.98,
+      "text": "High tide, low tide",
       "words": [
         {
-          "word": "I",
-          "start": 164.72,
-          "end": 165.84
+          "word": "High",
+          "start": 196.6,
+          "end": 197.739
         },
         {
-          "word": "can't",
-          "start": 165.84,
-          "end": 166.28
+          "word": "tide,",
+          "start": 197.739,
+          "end": 198.878
         },
         {
-          "word": "think",
-          "start": 166.28,
-          "end": 166.54
+          "word": "low",
+          "start": 198.878,
+          "end": 199.841
         },
         {
-          "word": "of",
-          "start": 166.54,
-          "end": 167.0
-        },
-        {
-          "word": "a",
-          "start": 167.0,
-          "end": 167.34
-        },
-        {
-          "word": "best",
-          "start": 167.34,
-          "end": 168.02
-        },
-        {
-          "word": "friend",
-          "start": 168.02,
-          "end": 168.32
+          "word": "tide",
+          "start": 199.841,
+          "end": 200.98
         }
       ]
     },
     {
-      "start": 168.56,
-      "end": 171.88,
-      "text": "Cause you and me",
+      "start": 201.44,
+      "end": 206.56,
+      "text": "High tide, low tide",
       "words": [
         {
-          "word": "Cause",
-          "start": 168.56,
-          "end": 169.12
+          "word": "High",
+          "start": 201.44,
+          "end": 202.14
         },
         {
-          "word": "you",
-          "start": 169.12,
-          "end": 170.38
+          "word": "tide,",
+          "start": 202.7,
+          "end": 203.88
         },
         {
-          "word": "and",
-          "start": 170.38,
-          "end": 171.32
+          "word": "low",
+          "start": 203.88,
+          "end": 204.92
         },
         {
-          "word": "me",
-          "start": 171.32,
-          "end": 171.88
+          "word": "tide",
+          "start": 205.5,
+          "end": 206.56
         }
       ]
     },
     {
-      "start": 171.88,
-      "end": 173.64,
-      "text": "I know it's me",
+      "start": 206.56,
+      "end": 212.06,
+      "text": "High tide, low tide",
       "words": [
         {
-          "word": "I",
-          "start": 171.88,
-          "end": 172.7
+          "word": "High",
+          "start": 206.56,
+          "end": 207.72
         },
         {
-          "word": "know",
-          "start": 172.7,
-          "end": 173.04
+          "word": "tide,",
+          "start": 207.72,
+          "end": 209.32
         },
         {
-          "word": "it's",
-          "start": 173.04,
-          "end": 173.6
+          "word": "low",
+          "start": 209.32,
+          "end": 210.32
         },
         {
-          "word": "me",
-          "start": 173.6,
-          "end": 173.64
+          "word": "tide",
+          "start": 211,
+          "end": 212.06
+        }
+      ]
+    },
+    {
+      "start": 212.06,
+      "end": 217.3,
+      "text": "High tide, low tide",
+      "words": [
+        {
+          "word": "High",
+          "start": 212.06,
+          "end": 213.12
+        },
+        {
+          "word": "tide,",
+          "start": 213.7,
+          "end": 214.74
+        },
+        {
+          "word": "low",
+          "start": 214.74,
+          "end": 214.94
+        },
+        {
+          "word": "tide",
+          "start": 216.5,
+          "end": 217.3
         }
       ]
     }
@@ -848,5 +836,5 @@
     "energyBase64": "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",
     "onsetsBase64": "AFgAABMAQgYRBQAkAQAFACkARgAABwBkAAAAAGQAAAYAVwARAgBQABcAAAEAMgAADwAcBAMAADcAAgQAIAAvAAAFACYAFAAAAAAsAABOAGQAAxAAAAMQAAAdACEDAAcAZAAAAQBbACwAADUAEAACAwIeAAACABoHHQAAQwA6AAEVAGQABQAALwA+AAABAD0CAxEAZAALAAACAAcAAB8ALwAKAQBGAAMEABgAMQAAGwAoAB0BAAMANwkAUwBRCAxXAA0ADAIARgAYAAAPAGQAAAYAHwADAgAxACsAABUAWAALAAAPAhgCEjMAFQULAQBIABYJAAUDMQAEDAQZAQUBAC4AKwYABAAjABIEACwACwALKgESAAATADQBACgALgkABwAiAAwsAAoANgEAFgAUHAwBAGQADh0AMABPAAEBACUABwERDQAGAAAFADwAADQALQMLAABkABgBABUAMgEBCwARAAYDAFkAFwcADwo0BBEHAA4eDwEAZAQSBwAABDUABwQAFQAAAwATACsBAAEBKQAYHAA6ADQAB1gAFQAAAAApBQAOABgAERMHLwArAAAAACkAAwEACwANAAA9ABIAAAEAZAAEAgARABwCASwABgAAAQAqAAoQBAMAIQAHIwAaFhAAAFEFBAQABAIcAAUKAEgBBwMANQAKMwASAhYCAEsADwAJAABRABQBABsAZAAAAAAUABUAAAcAHyMABgAaABcAAA8ALgAAQwAvBAALAGQAAwQASwAkAgAeAAsAAAcARAALFAAJADIAACgAEwAUBwBKAwgPAAYILwADHQAYAAAHABcAKQAABAAtAAsXADoAEQIAZAAmAgABAC0IAAQABgQSCwUSABUAABgCGQEAHAQJABUCABUAEwAACABECAgCAw0BDgcDIAAQBBMCAhYADRIAFwgjBA4OABcADQIAHQASAAALAxkBCgcALwIGBQApAAkWAA4BDgAAHw4OAAMDAB8BDgAAEwAQAwsJBiQDAAIAFwAcAAIIATcEEAgDBwAXCAcKBBgGAAsBJgAKDAAqAAASADQABywBFQMiAgQiAiIMBQYAMgAHAAAoDxAAABwACh8AAQMuAAAAABwAHQUOBQAEABcBBQ8FJQAHAQAuBAsMAAoHHgEABQARCgoAACAAGwADAAAKBQBiAAkFBwAAIgAEAgAAAA8EAgMAPgEhAABQAx0zAAsAIQAAAEACEAAAAFkAA0IACgAZAgABAAQFCQMACCAVAAApAGQAARIAFgYHAAAfAA1dAAABMgoAAAFkBxMDAFwADwQAAwEfBgAGARAFBwABUAIEAgAhABsAABEDAQABAQAUACEAABUGMAACHAAZAQoIAEACEhcAAwYoAAAHADIVBAECJgAFEQAJBQQAAAIAVAAdAABGABEDACkAYwEAAAI3AAwBABkAUAAFBwAxAA0rAAAQGgUIGgkEARIFHCIHAAEBDQUvAwAHAAECAQUBBAMNCQQKABwDBigGAQMCAABEDA0AAgUBJgAABAQAAgkABB0ABAIGBAYAAgANCgACAAECLgIEAAccBCMFARcAAgAOAgUXAQcbAAwCJwIAGQgzBQMDAjICCAUADgMZAgADAicBAgUAIAEAAwACBAQDABMMBwMACAA3BwIEABMDHQEABgECDBwAAB4AAgAAAQImAAEGBAEAAgIAIAUMAwAABywIAggGDwMkBwIKBAAECgQCGQMTBAABABEFAAoCIQQKBwQPCQ4HAAoBMAMGAwQWDA0BAAoACwEBAgMKAAsHAAABGgMGEgMHAAYAACoDCQEACgAcBwECAB8CAAMCDwQXAAAGBAoEAA0IAgAACAAlBQcDAyAACQABBAMFBAAIBgsACQsAAwENAAMfAwoDAhcLHAAAAwAcAAcDAAkADgUDBwEbAAQKAQ4ADAEAIgAYAAANAC8CBQQAIgUJAgAAAQoAAAMDCAACBAATBgADABsCAwEBBAAyAwQDAAUAIgQAAwUfBQACFB8UCgMAAQAOHhkJAQIAAgURJw4BAAEAAxkJFwUAAAAACAYHAwwAAAcBIgIDAgABBAADBR0ACAsDEgAbAAUDABgAAgAEHgYNAAcVBSAGCQcCCAITAgIXBwICBwYBLQABBQADAQYDAiEIAwIADgQTAwMfAgMECw4CJgwGBwMGABkAAQQCAQICBAIpBAsIAgQBCwEABgADAQAHBgMCBQMAAgAhCQEbBxQBDQEHEgYGDQAHBRoKBwYFGAAOBAMbCwkABAkDQAkHBAARCB0EBgoKAwAUAwAgDQcEAAUAFgAEDwIGBAYDAxQJCBgADAUUBQMFACoCBwMACgYGAgAGCw0DBAcAAAARAAdfAQoEAAoKPgAACQAPAxUDAQQAFAIABgMjAQICAwIACAUDGQUEBgQDBykDAAQCAwALAQQWBAYAAAQACwEBEwAVAggAACQFAAEABwAOBQgIAAQBAQIACwAABQQCBBMHBxwAAwUJAgU+BAEAAgADEgIAChAJAAAEBwwACAYAAQYIAAEVAgIAAAMEIgABAQcYABQAAAUBIAMHAAYGAQUDAAEEBgMFEgQAAQcHBDgFCAAACAAxCAMDAhgACgIJDAcDCAQBBQEBBAsEAAANDh8RBAAAAAMOEwgGBAAAAA0PCAUGBAALAAoTEQ4DAAEDAgMAFQYDAQQBBAgAAQMCCS4CBAEHAAEDAwEEAwICLQABAQAAAAgDAAAABgoCAgAAAAUAHgUAAgAIPAMAARMBAgEGBQIAAAQlAAIEDQADGAAEAAANVQABAAADAQAPAAMCAgBcAAYAGgIFAAMJAAEACAAACAcAEw8EBQAIAwtkAAICAwAIAAAAAAABNQ8AAAAAAAcAAAAAAQAoAAECAhQIAAIAABQEA0sAAAEEAQEGAQgAAQlSBgABAAMAAxoAAAAHBgAKAAACAAECAAAACAAUBQAREQAAAioABAAAHQASAAAAAAIAAAAAAgADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
   },
-  "timingMethod": "Whisper large-v3 word timestamps cross-checked against isolated vocals and the original mix."
+  "timingMethod": "Canonical Mili lyrics aligned to the Paul Owen Music rock mix using htdemucs_ft vocal isolation, Whisper large-v3 phrase boundaries, and the original mix."
 }
