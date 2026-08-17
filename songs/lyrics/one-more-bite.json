@@ -5,58 +5,2012 @@
   "sourceUrl": "https://www.youtube.com/watch?v=UQ9KKH9YdJ8",
   "timingMethod": "Creator lyrics aligned to the local recording's isolated vocal waveform with word-timestamp ASR.",
   "sections": [
-    { "start": 0.0, "end": 6.92, "name": "Instrumental intro", "short": "INTRO" },
-    { "start": 6.92, "end": 21.78, "name": "First taste", "short": "VERSE 1" },
-    { "start": 21.78, "end": 45.76, "name": "Appetite rising", "short": "BUILD" },
-    { "start": 45.76, "end": 86.92, "name": "One more bite", "short": "CHORUS" },
-    { "start": 86.92, "end": 123.2, "name": "Flavor study", "short": "VERSE 2" },
-    { "start": 123.2, "end": 139.76, "name": "Piano course", "short": "PIANO BREAK" },
-    { "start": 139.76, "end": 180.9, "name": "One last bite", "short": "FINAL CHORUS" },
-    { "start": 180.9, "end": 194.049, "name": "Aftertaste", "short": "OUTRO" }
+    {
+      "start": 0.0,
+      "end": 6.92,
+      "name": "Instrumental intro",
+      "short": "INTRO"
+    },
+    {
+      "start": 6.92,
+      "end": 21.78,
+      "name": "First taste",
+      "short": "VERSE 1"
+    },
+    {
+      "start": 21.78,
+      "end": 45.76,
+      "name": "Appetite rising",
+      "short": "BUILD"
+    },
+    {
+      "start": 45.76,
+      "end": 86.92,
+      "name": "One more bite",
+      "short": "CHORUS"
+    },
+    {
+      "start": 86.92,
+      "end": 123.2,
+      "name": "Flavor study",
+      "short": "VERSE 2"
+    },
+    {
+      "start": 123.2,
+      "end": 139.76,
+      "name": "Piano course",
+      "short": "PIANO BREAK"
+    },
+    {
+      "start": 139.76,
+      "end": 180.9,
+      "name": "One last bite",
+      "short": "FINAL CHORUS"
+    },
+    {
+      "start": 180.9,
+      "end": 194.049,
+      "name": "Aftertaste",
+      "short": "OUTRO"
+    }
   ],
   "lines": [
-    { "start": 6.92, "end": 10.16, "text": "Alluring temptations calling out my name" },
-    { "start": 10.16, "end": 13.06, "text": "With sweetness that words just can't explain" },
-    { "start": 14.1, "end": 18.42, "text": "It beckons me closer, I can't help but savor" },
-    { "start": 18.42, "end": 20.94, "text": "This banquet of endless flavors" },
-    { "start": 21.78, "end": 23.96, "text": "I shall leave the doubts behind" },
-    { "start": 23.96, "end": 26.12, "text": "And lift the burdens off my mind" },
-    { "start": 26.12, "end": 30.24, "text": "Every spoonful brings a glimpse of bliss and splendor intertwined" },
-    { "start": 30.24, "end": 32.08, "text": "Have I ventured past the line?" },
-    { "start": 32.14, "end": 34.02, "text": "But why must pleasure be a crime?" },
-    { "start": 34.02, "end": 37.22, "text": "If all we have is borrowed time" },
-    { "start": 38.18, "end": 41.66, "text": "On each and every silver plate" },
-    { "start": 41.66, "end": 45.76, "text": "Lie all the colors yet to taste" },
-    { "start": 45.76, "end": 50.02, "text": "I won't waver any longer, let this craving have its way" },
-    { "start": 50.02, "end": 53.98, "text": "There's no honor in denying what my heart is tryin' to say" },
-    { "start": 53.98, "end": 59.4, "text": "Pull me under, every drop of ecstasy taking over" },
-    { "start": 59.4, "end": 61.24, "text": "Taking over", "aside": true },
-    { "start": 61.24, "end": 66.04, "text": "If only I could linger here for every moment, day and night" },
-    { "start": 66.04, "end": 69.96, "text": "Nothing ever lasts forever, so I'll treasure what's in sight" },
-    { "start": 69.96, "end": 74.02, "text": "Pure desire, let me take just one more bite" },
-    { "start": 74.02, "end": 75.96, "text": "One more bite" },
-    { "start": 77.54, "end": 79.82, "text": "One more bite" },
-    { "start": 79.82, "end": 83.1, "text": "Whoa whoa, one more bite" },
-    { "start": 83.1, "end": 86.92, "text": "Let me take just one more bite" },
-    { "start": 86.92, "end": 90.56, "text": "Sprinkles of joy, life's own reward" },
-    { "start": 90.56, "end": 94.58, "text": "What more could be worth living for?" },
-    { "start": 94.58, "end": 98.0, "text": "Even if I lose my grasp amid this hazy honeyed daze" },
-    { "start": 98.0, "end": 102.08, "text": "There is always room for wonder as I slowly find my way" },
-    { "start": 102.08, "end": 107.38, "text": "Countless layers blend together into one perfect mixture" },
-    { "start": 107.38, "end": 109.38, "text": "Perfect mixture", "aside": true },
-    { "start": 110.1, "end": 114.0, "text": "Among all the velvet textures, all the sugar, all the cream" },
-    { "start": 114.0, "end": 118.06, "text": "Plus the bitter and the sour that would balance out the scene" },
-    { "start": 118.06, "end": 123.2, "text": "Ever changing, nothing truly stays the same, or so it seems" },
-    { "start": 139.76, "end": 144.06, "text": "I won't waver any longer, let this craving have its way" },
-    { "start": 144.06, "end": 148.0, "text": "There's no honor in denying what my heart is tryin' to say" },
-    { "start": 148.0, "end": 153.36, "text": "Pull me under, every drop of ecstasy taking over" },
-    { "start": 153.94, "end": 155.26, "text": "Taking over", "aside": true },
-    { "start": 155.26, "end": 160.06, "text": "If only I could linger here for every moment, day and night" },
-    { "start": 160.06, "end": 163.94, "text": "Nothing ever lasts forever, so I'll treasure what's in sight" },
-    { "start": 163.94, "end": 168.04, "text": "Pure desire, let me take just one more bite" },
-    { "start": 168.04, "end": 170.08, "text": "One more bite" },
-    { "start": 171.42, "end": 173.76, "text": "One more bite" },
-    { "start": 174.26, "end": 177.12, "text": "Whoa whoa, one more bite" },
-    { "start": 177.12, "end": 180.9, "text": "Let me take just one more bite" }
-  ]
+    {
+      "start": 6.92,
+      "end": 10.16,
+      "text": "Alluring temptations calling out my name",
+      "words": [
+        {
+          "word": "Alluring",
+          "start": 6.92,
+          "end": 7.68
+        },
+        {
+          "word": "temptations",
+          "start": 7.68,
+          "end": 8.44
+        },
+        {
+          "word": "calling",
+          "start": 8.44,
+          "end": 8.92
+        },
+        {
+          "word": "out",
+          "start": 8.92,
+          "end": 9.64
+        },
+        {
+          "word": "my",
+          "start": 9.64,
+          "end": 9.78
+        },
+        {
+          "word": "name",
+          "start": 9.78,
+          "end": 10.16
+        }
+      ]
+    },
+    {
+      "start": 10.16,
+      "end": 13.06,
+      "text": "With sweetness that words just can't explain",
+      "words": [
+        {
+          "word": "With",
+          "start": 10.16,
+          "end": 10.82
+        },
+        {
+          "word": "sweetness",
+          "start": 10.82,
+          "end": 11.34
+        },
+        {
+          "word": "that",
+          "start": 11.34,
+          "end": 11.82
+        },
+        {
+          "word": "words",
+          "start": 11.82,
+          "end": 12.12
+        },
+        {
+          "word": "just",
+          "start": 12.12,
+          "end": 12.34
+        },
+        {
+          "word": "can't",
+          "start": 12.34,
+          "end": 12.58
+        },
+        {
+          "word": "explain",
+          "start": 12.58,
+          "end": 13.06
+        }
+      ]
+    },
+    {
+      "start": 14.1,
+      "end": 18.42,
+      "text": "It beckons me closer, I can't help but savor",
+      "words": [
+        {
+          "word": "It",
+          "start": 14.1,
+          "end": 14.86
+        },
+        {
+          "word": "beckons",
+          "start": 14.86,
+          "end": 15.58
+        },
+        {
+          "word": "me",
+          "start": 15.58,
+          "end": 15.74
+        },
+        {
+          "word": "closer,",
+          "start": 15.74,
+          "end": 16.24
+        },
+        {
+          "word": "I",
+          "start": 16.56,
+          "end": 16.82
+        },
+        {
+          "word": "can't",
+          "start": 16.82,
+          "end": 17.28
+        },
+        {
+          "word": "help",
+          "start": 17.28,
+          "end": 17.56
+        },
+        {
+          "word": "but",
+          "start": 17.56,
+          "end": 17.84
+        },
+        {
+          "word": "savor",
+          "start": 17.84,
+          "end": 18.42
+        }
+      ]
+    },
+    {
+      "start": 18.42,
+      "end": 20.94,
+      "text": "This banquet of endless flavors",
+      "words": [
+        {
+          "word": "This",
+          "start": 18.42,
+          "end": 18.84
+        },
+        {
+          "word": "banquet",
+          "start": 18.84,
+          "end": 19.32
+        },
+        {
+          "word": "of",
+          "start": 19.32,
+          "end": 19.78
+        },
+        {
+          "word": "endless",
+          "start": 19.78,
+          "end": 20.34
+        },
+        {
+          "word": "flavors",
+          "start": 20.34,
+          "end": 20.94
+        }
+      ]
+    },
+    {
+      "start": 21.78,
+      "end": 23.96,
+      "text": "I shall leave the doubts behind",
+      "words": [
+        {
+          "word": "I",
+          "start": 21.78,
+          "end": 22.54
+        },
+        {
+          "word": "shall",
+          "start": 22.54,
+          "end": 22.78
+        },
+        {
+          "word": "leave",
+          "start": 22.78,
+          "end": 23.12
+        },
+        {
+          "word": "the",
+          "start": 23.12,
+          "end": 23.3
+        },
+        {
+          "word": "doubts",
+          "start": 23.3,
+          "end": 23.6
+        },
+        {
+          "word": "behind",
+          "start": 23.6,
+          "end": 23.96
+        }
+      ]
+    },
+    {
+      "start": 23.96,
+      "end": 26.12,
+      "text": "And lift the burdens off my mind",
+      "words": [
+        {
+          "word": "And",
+          "start": 23.96,
+          "end": 24.3
+        },
+        {
+          "word": "lift",
+          "start": 24.3,
+          "end": 24.52
+        },
+        {
+          "word": "the",
+          "start": 24.52,
+          "end": 24.78
+        },
+        {
+          "word": "burdens",
+          "start": 24.78,
+          "end": 25.3
+        },
+        {
+          "word": "off",
+          "start": 25.3,
+          "end": 25.58
+        },
+        {
+          "word": "my",
+          "start": 25.58,
+          "end": 25.78
+        },
+        {
+          "word": "mind",
+          "start": 25.78,
+          "end": 26.12
+        }
+      ]
+    },
+    {
+      "start": 26.12,
+      "end": 30.24,
+      "text": "Every spoonful brings a glimpse of bliss and splendor intertwined",
+      "words": [
+        {
+          "word": "Every",
+          "start": 26.12,
+          "end": 26.7
+        },
+        {
+          "word": "spoonful",
+          "start": 26.7,
+          "end": 27.14
+        },
+        {
+          "word": "brings",
+          "start": 27.14,
+          "end": 27.56
+        },
+        {
+          "word": "a",
+          "start": 27.56,
+          "end": 27.78
+        },
+        {
+          "word": "glimpse",
+          "start": 27.78,
+          "end": 28.04
+        },
+        {
+          "word": "of",
+          "start": 28.04,
+          "end": 28.36
+        },
+        {
+          "word": "bliss",
+          "start": 28.36,
+          "end": 28.6
+        },
+        {
+          "word": "and",
+          "start": 28.6,
+          "end": 28.8
+        },
+        {
+          "word": "splendor",
+          "start": 28.8,
+          "end": 29.4
+        },
+        {
+          "word": "intertwined",
+          "start": 29.4,
+          "end": 30.24
+        }
+      ]
+    },
+    {
+      "start": 30.24,
+      "end": 32.08,
+      "text": "Have I ventured past the line?",
+      "words": [
+        {
+          "word": "Have",
+          "start": 30.24,
+          "end": 30.58
+        },
+        {
+          "word": "I",
+          "start": 30.58,
+          "end": 30.88
+        },
+        {
+          "word": "ventured",
+          "start": 30.88,
+          "end": 31.36
+        },
+        {
+          "word": "past",
+          "start": 31.36,
+          "end": 31.62
+        },
+        {
+          "word": "the",
+          "start": 31.62,
+          "end": 31.82
+        },
+        {
+          "word": "line?",
+          "start": 31.82,
+          "end": 32.08
+        }
+      ]
+    },
+    {
+      "start": 32.14,
+      "end": 34.02,
+      "text": "But why must pleasure be a crime?",
+      "words": [
+        {
+          "word": "But",
+          "start": 32.14,
+          "end": 32.28
+        },
+        {
+          "word": "why",
+          "start": 32.28,
+          "end": 32.58
+        },
+        {
+          "word": "must",
+          "start": 32.58,
+          "end": 32.86
+        },
+        {
+          "word": "pleasure",
+          "start": 32.86,
+          "end": 33.22
+        },
+        {
+          "word": "be",
+          "start": 33.22,
+          "end": 33.56
+        },
+        {
+          "word": "a",
+          "start": 33.56,
+          "end": 33.76
+        },
+        {
+          "word": "crime?",
+          "start": 33.76,
+          "end": 34.02
+        }
+      ]
+    },
+    {
+      "start": 34.02,
+      "end": 37.22,
+      "text": "If all we have is borrowed time",
+      "words": [
+        {
+          "word": "If",
+          "start": 34.02,
+          "end": 34.74
+        },
+        {
+          "word": "all",
+          "start": 34.74,
+          "end": 35.1
+        },
+        {
+          "word": "we",
+          "start": 35.1,
+          "end": 35.32
+        },
+        {
+          "word": "have",
+          "start": 35.32,
+          "end": 35.62
+        },
+        {
+          "word": "is",
+          "start": 35.62,
+          "end": 35.88
+        },
+        {
+          "word": "borrowed",
+          "start": 35.88,
+          "end": 36.32
+        },
+        {
+          "word": "time",
+          "start": 36.32,
+          "end": 37.22
+        }
+      ]
+    },
+    {
+      "start": 38.18,
+      "end": 41.66,
+      "text": "On each and every silver plate",
+      "words": [
+        {
+          "word": "On",
+          "start": 38.18,
+          "end": 38.9
+        },
+        {
+          "word": "each",
+          "start": 38.9,
+          "end": 39.24
+        },
+        {
+          "word": "and",
+          "start": 39.24,
+          "end": 39.64
+        },
+        {
+          "word": "every",
+          "start": 39.64,
+          "end": 40.22
+        },
+        {
+          "word": "silver",
+          "start": 40.22,
+          "end": 41.12
+        },
+        {
+          "word": "plate",
+          "start": 41.12,
+          "end": 41.66
+        }
+      ]
+    },
+    {
+      "start": 41.66,
+      "end": 45.76,
+      "text": "Lie all the colors yet to taste",
+      "words": [
+        {
+          "word": "Lie",
+          "start": 41.66,
+          "end": 42.78
+        },
+        {
+          "word": "all",
+          "start": 42.78,
+          "end": 43.14
+        },
+        {
+          "word": "the",
+          "start": 43.14,
+          "end": 43.54
+        },
+        {
+          "word": "colors",
+          "start": 43.54,
+          "end": 44.3
+        },
+        {
+          "word": "yet",
+          "start": 44.3,
+          "end": 44.8
+        },
+        {
+          "word": "to",
+          "start": 44.8,
+          "end": 45.26
+        },
+        {
+          "word": "taste",
+          "start": 45.26,
+          "end": 45.76
+        }
+      ]
+    },
+    {
+      "start": 45.76,
+      "end": 50.02,
+      "text": "I won't waver any longer, let this craving have its way",
+      "words": [
+        {
+          "word": "I",
+          "start": 45.76,
+          "end": 46.56
+        },
+        {
+          "word": "won't",
+          "start": 46.56,
+          "end": 46.8
+        },
+        {
+          "word": "waver",
+          "start": 46.8,
+          "end": 47.32
+        },
+        {
+          "word": "any",
+          "start": 47.32,
+          "end": 47.66
+        },
+        {
+          "word": "longer,",
+          "start": 47.66,
+          "end": 48.24
+        },
+        {
+          "word": "let",
+          "start": 48.24,
+          "end": 48.66
+        },
+        {
+          "word": "this",
+          "start": 48.24,
+          "end": 48.66
+        },
+        {
+          "word": "craving",
+          "start": 48.66,
+          "end": 49.12
+        },
+        {
+          "word": "have",
+          "start": 49.12,
+          "end": 49.54
+        },
+        {
+          "word": "its",
+          "start": 49.54,
+          "end": 49.78
+        },
+        {
+          "word": "way",
+          "start": 49.78,
+          "end": 50.02
+        }
+      ]
+    },
+    {
+      "start": 50.02,
+      "end": 53.98,
+      "text": "There's no honor in denying what my heart is tryin' to say",
+      "words": [
+        {
+          "word": "There's",
+          "start": 50.02,
+          "end": 50.6
+        },
+        {
+          "word": "no",
+          "start": 50.6,
+          "end": 50.68
+        },
+        {
+          "word": "honor",
+          "start": 50.68,
+          "end": 51.3
+        },
+        {
+          "word": "in",
+          "start": 51.3,
+          "end": 51.6
+        },
+        {
+          "word": "denying",
+          "start": 51.6,
+          "end": 51.96
+        },
+        {
+          "word": "what",
+          "start": 51.96,
+          "end": 52.52
+        },
+        {
+          "word": "my",
+          "start": 52.52,
+          "end": 52.7
+        },
+        {
+          "word": "heart",
+          "start": 52.7,
+          "end": 53.14
+        },
+        {
+          "word": "is",
+          "start": 53.14,
+          "end": 53.36
+        },
+        {
+          "word": "tryin'",
+          "start": 53.36,
+          "end": 53.62
+        },
+        {
+          "word": "to",
+          "start": 53.62,
+          "end": 53.78
+        },
+        {
+          "word": "say",
+          "start": 53.78,
+          "end": 53.98
+        }
+      ]
+    },
+    {
+      "start": 53.98,
+      "end": 59.4,
+      "text": "Pull me under, every drop of ecstasy taking over",
+      "words": [
+        {
+          "word": "Pull",
+          "start": 53.98,
+          "end": 54.64
+        },
+        {
+          "word": "me",
+          "start": 54.64,
+          "end": 54.8
+        },
+        {
+          "word": "under,",
+          "start": 54.8,
+          "end": 55.3
+        },
+        {
+          "word": "every",
+          "start": 55.3,
+          "end": 56.76
+        },
+        {
+          "word": "drop",
+          "start": 56.76,
+          "end": 57.06
+        },
+        {
+          "word": "of",
+          "start": 57.06,
+          "end": 57.38
+        },
+        {
+          "word": "ecstasy",
+          "start": 57.38,
+          "end": 57.86
+        },
+        {
+          "word": "taking",
+          "start": 57.86,
+          "end": 58.58
+        },
+        {
+          "word": "over",
+          "start": 58.58,
+          "end": 59.4
+        }
+      ]
+    },
+    {
+      "start": 59.4,
+      "end": 61.24,
+      "text": "Taking over",
+      "aside": true,
+      "words": [
+        {
+          "word": "Taking",
+          "start": 59.4,
+          "end": 60.48
+        },
+        {
+          "word": "over",
+          "start": 60.48,
+          "end": 61.24
+        }
+      ]
+    },
+    {
+      "start": 61.24,
+      "end": 66.04,
+      "text": "If only I could linger here for every moment, day and night",
+      "words": [
+        {
+          "word": "If",
+          "start": 61.24,
+          "end": 62.26
+        },
+        {
+          "word": "only",
+          "start": 62.26,
+          "end": 62.6
+        },
+        {
+          "word": "I",
+          "start": 62.6,
+          "end": 62.98
+        },
+        {
+          "word": "could",
+          "start": 62.98,
+          "end": 63.3
+        },
+        {
+          "word": "linger",
+          "start": 63.3,
+          "end": 63.7
+        },
+        {
+          "word": "here",
+          "start": 63.7,
+          "end": 63.96
+        },
+        {
+          "word": "for",
+          "start": 63.96,
+          "end": 64.3
+        },
+        {
+          "word": "every",
+          "start": 64.3,
+          "end": 64.68
+        },
+        {
+          "word": "moment,",
+          "start": 64.68,
+          "end": 65.26
+        },
+        {
+          "word": "day",
+          "start": 65.34,
+          "end": 65.54
+        },
+        {
+          "word": "and",
+          "start": 65.54,
+          "end": 65.72
+        },
+        {
+          "word": "night",
+          "start": 65.72,
+          "end": 66.04
+        }
+      ]
+    },
+    {
+      "start": 66.04,
+      "end": 69.96,
+      "text": "Nothing ever lasts forever, so I'll treasure what's in sight",
+      "words": [
+        {
+          "word": "Nothing",
+          "start": 66.04,
+          "end": 66.66
+        },
+        {
+          "word": "ever",
+          "start": 66.66,
+          "end": 67.06
+        },
+        {
+          "word": "lasts",
+          "start": 67.32,
+          "end": 67.62
+        },
+        {
+          "word": "forever,",
+          "start": 67.62,
+          "end": 68.04
+        },
+        {
+          "word": "so",
+          "start": 68.32,
+          "end": 68.5
+        },
+        {
+          "word": "I'll",
+          "start": 68.5,
+          "end": 68.74
+        },
+        {
+          "word": "treasure",
+          "start": 68.74,
+          "end": 69.2
+        },
+        {
+          "word": "what's",
+          "start": 69.2,
+          "end": 69.62
+        },
+        {
+          "word": "in",
+          "start": 69.62,
+          "end": 69.96
+        },
+        {
+          "word": "sight",
+          "start": 69.78,
+          "end": 69.96
+        }
+      ]
+    },
+    {
+      "start": 69.96,
+      "end": 74.02,
+      "text": "Pure desire, let me take just one more bite",
+      "words": [
+        {
+          "word": "Pure",
+          "start": 69.96,
+          "end": 70.5
+        },
+        {
+          "word": "desire,",
+          "start": 70.5,
+          "end": 70.92
+        },
+        {
+          "word": "let",
+          "start": 70.92,
+          "end": 72.36
+        },
+        {
+          "word": "me",
+          "start": 72.36,
+          "end": 72.8
+        },
+        {
+          "word": "take",
+          "start": 72.8,
+          "end": 73.08
+        },
+        {
+          "word": "just",
+          "start": 73.08,
+          "end": 73.34
+        },
+        {
+          "word": "one",
+          "start": 73.34,
+          "end": 73.58
+        },
+        {
+          "word": "more",
+          "start": 73.58,
+          "end": 73.82
+        },
+        {
+          "word": "bite",
+          "start": 73.82,
+          "end": 74.02
+        }
+      ]
+    },
+    {
+      "start": 74.02,
+      "end": 75.96,
+      "text": "One more bite",
+      "words": [
+        {
+          "word": "One",
+          "start": 74.02,
+          "end": 74.3
+        },
+        {
+          "word": "more",
+          "start": 74.3,
+          "end": 74.78
+        },
+        {
+          "word": "bite",
+          "start": 74.78,
+          "end": 75.96
+        }
+      ]
+    },
+    {
+      "start": 77.54,
+      "end": 79.82,
+      "text": "One more bite",
+      "words": [
+        {
+          "word": "One",
+          "start": 77.54,
+          "end": 78.34
+        },
+        {
+          "word": "more",
+          "start": 78.34,
+          "end": 78.86
+        },
+        {
+          "word": "bite",
+          "start": 78.86,
+          "end": 79.82
+        }
+      ]
+    },
+    {
+      "start": 79.82,
+      "end": 83.1,
+      "text": "Whoa whoa, one more bite",
+      "words": [
+        {
+          "word": "Whoa",
+          "start": 79.82,
+          "end": 80.22
+        },
+        {
+          "word": "whoa,",
+          "start": 80.22,
+          "end": 80.62
+        },
+        {
+          "word": "one",
+          "start": 79.82,
+          "end": 80.62
+        },
+        {
+          "word": "more",
+          "start": 80.62,
+          "end": 81.14
+        },
+        {
+          "word": "bite",
+          "start": 81.14,
+          "end": 83.1
+        }
+      ]
+    },
+    {
+      "start": 83.1,
+      "end": 86.92,
+      "text": "Let me take just one more bite",
+      "words": [
+        {
+          "word": "Let",
+          "start": 83.1,
+          "end": 84.28
+        },
+        {
+          "word": "me",
+          "start": 84.28,
+          "end": 84.7
+        },
+        {
+          "word": "take",
+          "start": 84.7,
+          "end": 85.14
+        },
+        {
+          "word": "just",
+          "start": 85.14,
+          "end": 85.58
+        },
+        {
+          "word": "one",
+          "start": 85.58,
+          "end": 85.82
+        },
+        {
+          "word": "more",
+          "start": 85.82,
+          "end": 86.4
+        },
+        {
+          "word": "bite",
+          "start": 86.4,
+          "end": 86.92
+        }
+      ]
+    },
+    {
+      "start": 86.92,
+      "end": 90.56,
+      "text": "Sprinkles of joy, life's own reward",
+      "words": [
+        {
+          "word": "Sprinkles",
+          "start": 86.92,
+          "end": 88.36
+        },
+        {
+          "word": "of",
+          "start": 88.36,
+          "end": 88.62
+        },
+        {
+          "word": "joy,",
+          "start": 88.62,
+          "end": 88.9
+        },
+        {
+          "word": "life's",
+          "start": 89.1,
+          "end": 89.64
+        },
+        {
+          "word": "own",
+          "start": 89.64,
+          "end": 89.84
+        },
+        {
+          "word": "reward",
+          "start": 89.84,
+          "end": 90.56
+        }
+      ]
+    },
+    {
+      "start": 90.56,
+      "end": 94.58,
+      "text": "What more could be worth living for?",
+      "words": [
+        {
+          "word": "What",
+          "start": 90.56,
+          "end": 92.06
+        },
+        {
+          "word": "more",
+          "start": 92.06,
+          "end": 92.3
+        },
+        {
+          "word": "could",
+          "start": 92.3,
+          "end": 92.56
+        },
+        {
+          "word": "be",
+          "start": 92.56,
+          "end": 92.84
+        },
+        {
+          "word": "worth",
+          "start": 92.84,
+          "end": 93.44
+        },
+        {
+          "word": "living",
+          "start": 93.44,
+          "end": 94.16
+        },
+        {
+          "word": "for?",
+          "start": 94.16,
+          "end": 94.58
+        }
+      ]
+    },
+    {
+      "start": 94.58,
+      "end": 98.0,
+      "text": "Even if I lose my grasp amid this hazy honeyed daze",
+      "words": [
+        {
+          "word": "Even",
+          "start": 94.58,
+          "end": 94.68
+        },
+        {
+          "word": "if",
+          "start": 94.68,
+          "end": 95.08
+        },
+        {
+          "word": "I",
+          "start": 95.08,
+          "end": 95.38
+        },
+        {
+          "word": "lose",
+          "start": 95.38,
+          "end": 95.6
+        },
+        {
+          "word": "my",
+          "start": 95.6,
+          "end": 95.76
+        },
+        {
+          "word": "grasp",
+          "start": 95.76,
+          "end": 96.12
+        },
+        {
+          "word": "amid",
+          "start": 96.12,
+          "end": 96.4
+        },
+        {
+          "word": "this",
+          "start": 96.4,
+          "end": 96.58
+        },
+        {
+          "word": "hazy",
+          "start": 96.58,
+          "end": 97.28
+        },
+        {
+          "word": "honeyed",
+          "start": 97.28,
+          "end": 97.62
+        },
+        {
+          "word": "daze",
+          "start": 97.62,
+          "end": 98.0
+        }
+      ]
+    },
+    {
+      "start": 98.0,
+      "end": 102.08,
+      "text": "There is always room for wonder as I slowly find my way",
+      "words": [
+        {
+          "word": "There",
+          "start": 98.0,
+          "end": 98.56
+        },
+        {
+          "word": "is",
+          "start": 98.56,
+          "end": 98.76
+        },
+        {
+          "word": "always",
+          "start": 98.76,
+          "end": 99.22
+        },
+        {
+          "word": "room",
+          "start": 99.22,
+          "end": 99.56
+        },
+        {
+          "word": "for",
+          "start": 99.56,
+          "end": 99.8
+        },
+        {
+          "word": "wonder",
+          "start": 99.8,
+          "end": 100.3
+        },
+        {
+          "word": "as",
+          "start": 100.3,
+          "end": 100.68
+        },
+        {
+          "word": "I",
+          "start": 100.3,
+          "end": 100.68
+        },
+        {
+          "word": "slowly",
+          "start": 100.68,
+          "end": 101.16
+        },
+        {
+          "word": "find",
+          "start": 101.16,
+          "end": 101.6
+        },
+        {
+          "word": "my",
+          "start": 101.6,
+          "end": 101.78
+        },
+        {
+          "word": "way",
+          "start": 101.78,
+          "end": 102.08
+        }
+      ]
+    },
+    {
+      "start": 102.08,
+      "end": 107.38,
+      "text": "Countless layers blend together into one perfect mixture",
+      "words": [
+        {
+          "word": "Countless",
+          "start": 102.08,
+          "end": 102.62
+        },
+        {
+          "word": "layers",
+          "start": 102.8,
+          "end": 103.26
+        },
+        {
+          "word": "blend",
+          "start": 103.84,
+          "end": 104.6
+        },
+        {
+          "word": "together",
+          "start": 104.6,
+          "end": 105.0
+        },
+        {
+          "word": "into",
+          "start": 105.0,
+          "end": 105.7
+        },
+        {
+          "word": "one",
+          "start": 105.7,
+          "end": 105.94
+        },
+        {
+          "word": "perfect",
+          "start": 105.94,
+          "end": 106.6
+        },
+        {
+          "word": "mixture",
+          "start": 106.6,
+          "end": 107.38
+        }
+      ]
+    },
+    {
+      "start": 107.38,
+      "end": 109.38,
+      "text": "Perfect mixture",
+      "aside": true,
+      "words": [
+        {
+          "word": "Perfect",
+          "start": 107.38,
+          "end": 108.5
+        },
+        {
+          "word": "mixture",
+          "start": 108.5,
+          "end": 109.38
+        }
+      ]
+    },
+    {
+      "start": 110.1,
+      "end": 114.0,
+      "text": "Among all the velvet textures, all the sugar, all the cream",
+      "words": [
+        {
+          "word": "Among",
+          "start": 110.58,
+          "end": 110.78
+        },
+        {
+          "word": "all",
+          "start": 110.78,
+          "end": 111.0
+        },
+        {
+          "word": "the",
+          "start": 111.0,
+          "end": 111.44
+        },
+        {
+          "word": "velvet",
+          "start": 111.44,
+          "end": 111.68
+        },
+        {
+          "word": "textures,",
+          "start": 111.68,
+          "end": 112.22
+        },
+        {
+          "word": "all",
+          "start": 112.32,
+          "end": 112.54
+        },
+        {
+          "word": "the",
+          "start": 112.54,
+          "end": 112.68
+        },
+        {
+          "word": "sugar,",
+          "start": 112.68,
+          "end": 113.24
+        },
+        {
+          "word": "all",
+          "start": 113.32,
+          "end": 113.56
+        },
+        {
+          "word": "the",
+          "start": 113.56,
+          "end": 113.7
+        },
+        {
+          "word": "cream",
+          "start": 113.7,
+          "end": 114.0
+        }
+      ]
+    },
+    {
+      "start": 114.0,
+      "end": 118.06,
+      "text": "Plus the bitter and the sour that would balance out the scene",
+      "words": [
+        {
+          "word": "Plus",
+          "start": 114.0,
+          "end": 114.56
+        },
+        {
+          "word": "the",
+          "start": 114.56,
+          "end": 114.68
+        },
+        {
+          "word": "bitter",
+          "start": 114.68,
+          "end": 115.24
+        },
+        {
+          "word": "and",
+          "start": 115.24,
+          "end": 115.62
+        },
+        {
+          "word": "the",
+          "start": 115.62,
+          "end": 115.76
+        },
+        {
+          "word": "sour",
+          "start": 115.76,
+          "end": 116.28
+        },
+        {
+          "word": "that",
+          "start": 116.32,
+          "end": 116.52
+        },
+        {
+          "word": "would",
+          "start": 116.52,
+          "end": 116.72
+        },
+        {
+          "word": "balance",
+          "start": 116.72,
+          "end": 117.32
+        },
+        {
+          "word": "out",
+          "start": 117.32,
+          "end": 117.56
+        },
+        {
+          "word": "the",
+          "start": 117.56,
+          "end": 117.66
+        },
+        {
+          "word": "scene",
+          "start": 117.66,
+          "end": 118.06
+        }
+      ]
+    },
+    {
+      "start": 118.06,
+      "end": 123.2,
+      "text": "Ever changing, nothing truly stays the same, or so it seems",
+      "words": [
+        {
+          "word": "Ever",
+          "start": 118.06,
+          "end": 118.68
+        },
+        {
+          "word": "changing,",
+          "start": 118.68,
+          "end": 119.2
+        },
+        {
+          "word": "nothing",
+          "start": 119.44,
+          "end": 120.64
+        },
+        {
+          "word": "truly",
+          "start": 120.64,
+          "end": 121.06
+        },
+        {
+          "word": "stays",
+          "start": 121.06,
+          "end": 121.56
+        },
+        {
+          "word": "the",
+          "start": 121.56,
+          "end": 121.8
+        },
+        {
+          "word": "same,",
+          "start": 121.8,
+          "end": 122.14
+        },
+        {
+          "word": "or",
+          "start": 122.26,
+          "end": 122.38
+        },
+        {
+          "word": "so",
+          "start": 122.38,
+          "end": 122.5
+        },
+        {
+          "word": "it",
+          "start": 122.5,
+          "end": 122.72
+        },
+        {
+          "word": "seems",
+          "start": 122.72,
+          "end": 123.2
+        }
+      ]
+    },
+    {
+      "start": 139.76,
+      "end": 144.06,
+      "text": "I won't waver any longer, let this craving have its way",
+      "words": [
+        {
+          "word": "I",
+          "start": 139.76,
+          "end": 140.52
+        },
+        {
+          "word": "won't",
+          "start": 140.52,
+          "end": 140.8
+        },
+        {
+          "word": "waver",
+          "start": 140.8,
+          "end": 141.34
+        },
+        {
+          "word": "any",
+          "start": 141.34,
+          "end": 141.66
+        },
+        {
+          "word": "longer,",
+          "start": 141.66,
+          "end": 142.26
+        },
+        {
+          "word": "let",
+          "start": 142.26,
+          "end": 142.38
+        },
+        {
+          "word": "this",
+          "start": 142.38,
+          "end": 142.68
+        },
+        {
+          "word": "craving",
+          "start": 142.68,
+          "end": 143.1
+        },
+        {
+          "word": "have",
+          "start": 143.1,
+          "end": 143.52
+        },
+        {
+          "word": "its",
+          "start": 143.52,
+          "end": 143.8
+        },
+        {
+          "word": "way",
+          "start": 143.8,
+          "end": 144.06
+        }
+      ]
+    },
+    {
+      "start": 144.06,
+      "end": 148.0,
+      "text": "There's no honor in denying what my heart is tryin' to say",
+      "words": [
+        {
+          "word": "There's",
+          "start": 144.06,
+          "end": 144.64
+        },
+        {
+          "word": "no",
+          "start": 144.64,
+          "end": 144.66
+        },
+        {
+          "word": "honor",
+          "start": 144.66,
+          "end": 145.16
+        },
+        {
+          "word": "in",
+          "start": 145.16,
+          "end": 145.6
+        },
+        {
+          "word": "denying",
+          "start": 145.6,
+          "end": 145.94
+        },
+        {
+          "word": "what",
+          "start": 145.94,
+          "end": 146.54
+        },
+        {
+          "word": "my",
+          "start": 146.54,
+          "end": 146.72
+        },
+        {
+          "word": "heart",
+          "start": 146.72,
+          "end": 147.14
+        },
+        {
+          "word": "is",
+          "start": 147.14,
+          "end": 147.36
+        },
+        {
+          "word": "tryin'",
+          "start": 147.36,
+          "end": 147.62
+        },
+        {
+          "word": "to",
+          "start": 147.62,
+          "end": 147.8
+        },
+        {
+          "word": "say",
+          "start": 147.8,
+          "end": 148.0
+        }
+      ]
+    },
+    {
+      "start": 148.0,
+      "end": 153.36,
+      "text": "Pull me under, every drop of ecstasy taking over",
+      "words": [
+        {
+          "word": "Pull",
+          "start": 148.0,
+          "end": 148.64
+        },
+        {
+          "word": "me",
+          "start": 148.64,
+          "end": 148.8
+        },
+        {
+          "word": "under,",
+          "start": 148.8,
+          "end": 149.28
+        },
+        {
+          "word": "every",
+          "start": 149.7,
+          "end": 150.68
+        },
+        {
+          "word": "drop",
+          "start": 150.68,
+          "end": 151.06
+        },
+        {
+          "word": "of",
+          "start": 151.06,
+          "end": 151.38
+        },
+        {
+          "word": "ecstasy",
+          "start": 151.38,
+          "end": 151.84
+        },
+        {
+          "word": "taking",
+          "start": 151.84,
+          "end": 152.56
+        },
+        {
+          "word": "over",
+          "start": 152.56,
+          "end": 153.36
+        }
+      ]
+    },
+    {
+      "start": 153.94,
+      "end": 155.26,
+      "text": "Taking over",
+      "aside": true,
+      "words": [
+        {
+          "word": "Taking",
+          "start": 153.94,
+          "end": 154.58
+        },
+        {
+          "word": "over",
+          "start": 154.58,
+          "end": 155.26
+        }
+      ]
+    },
+    {
+      "start": 155.26,
+      "end": 160.06,
+      "text": "If only I could linger here for every moment, day and night",
+      "words": [
+        {
+          "word": "If",
+          "start": 155.26,
+          "end": 156.28
+        },
+        {
+          "word": "only",
+          "start": 156.28,
+          "end": 156.6
+        },
+        {
+          "word": "I",
+          "start": 156.6,
+          "end": 156.96
+        },
+        {
+          "word": "could",
+          "start": 156.96,
+          "end": 157.32
+        },
+        {
+          "word": "linger",
+          "start": 157.32,
+          "end": 157.66
+        },
+        {
+          "word": "here",
+          "start": 157.66,
+          "end": 157.98
+        },
+        {
+          "word": "for",
+          "start": 157.98,
+          "end": 158.34
+        },
+        {
+          "word": "every",
+          "start": 158.34,
+          "end": 158.66
+        },
+        {
+          "word": "moment,",
+          "start": 158.66,
+          "end": 159.14
+        },
+        {
+          "word": "day",
+          "start": 159.14,
+          "end": 159.52
+        },
+        {
+          "word": "and",
+          "start": 159.52,
+          "end": 159.74
+        },
+        {
+          "word": "night",
+          "start": 159.74,
+          "end": 160.06
+        }
+      ]
+    },
+    {
+      "start": 160.06,
+      "end": 163.94,
+      "text": "Nothing ever lasts forever, so I'll treasure what's in sight",
+      "words": [
+        {
+          "word": "Nothing",
+          "start": 160.06,
+          "end": 160.64
+        },
+        {
+          "word": "ever",
+          "start": 160.64,
+          "end": 161.22
+        },
+        {
+          "word": "lasts",
+          "start": 161.22,
+          "end": 161.62
+        },
+        {
+          "word": "forever,",
+          "start": 161.62,
+          "end": 161.98
+        },
+        {
+          "word": "so",
+          "start": 162.34,
+          "end": 162.5
+        },
+        {
+          "word": "I'll",
+          "start": 162.5,
+          "end": 162.74
+        },
+        {
+          "word": "treasure",
+          "start": 162.74,
+          "end": 163.2
+        },
+        {
+          "word": "what's",
+          "start": 163.2,
+          "end": 163.6
+        },
+        {
+          "word": "in",
+          "start": 163.6,
+          "end": 163.94
+        },
+        {
+          "word": "sight",
+          "start": 163.76,
+          "end": 163.94
+        }
+      ]
+    },
+    {
+      "start": 163.94,
+      "end": 168.04,
+      "text": "Pure desire, let me take just one more bite",
+      "words": [
+        {
+          "word": "Pure",
+          "start": 163.94,
+          "end": 164.52
+        },
+        {
+          "word": "desire,",
+          "start": 164.52,
+          "end": 164.96
+        },
+        {
+          "word": "let",
+          "start": 164.96,
+          "end": 166.48
+        },
+        {
+          "word": "me",
+          "start": 166.48,
+          "end": 166.8
+        },
+        {
+          "word": "take",
+          "start": 166.8,
+          "end": 167.1
+        },
+        {
+          "word": "just",
+          "start": 167.1,
+          "end": 167.34
+        },
+        {
+          "word": "one",
+          "start": 167.34,
+          "end": 167.56
+        },
+        {
+          "word": "more",
+          "start": 167.56,
+          "end": 167.82
+        },
+        {
+          "word": "bite",
+          "start": 167.82,
+          "end": 168.04
+        }
+      ]
+    },
+    {
+      "start": 168.04,
+      "end": 170.08,
+      "text": "One more bite",
+      "words": [
+        {
+          "word": "One",
+          "start": 168.04,
+          "end": 168.32
+        },
+        {
+          "word": "more",
+          "start": 168.32,
+          "end": 168.78
+        },
+        {
+          "word": "bite",
+          "start": 168.78,
+          "end": 170.08
+        }
+      ]
+    },
+    {
+      "start": 171.42,
+      "end": 173.76,
+      "text": "One more bite",
+      "words": [
+        {
+          "word": "One",
+          "start": 171.42,
+          "end": 172.34
+        },
+        {
+          "word": "more",
+          "start": 172.34,
+          "end": 172.8
+        },
+        {
+          "word": "bite",
+          "start": 172.8,
+          "end": 173.76
+        }
+      ]
+    },
+    {
+      "start": 174.26,
+      "end": 177.12,
+      "text": "Whoa whoa, one more bite",
+      "words": [
+        {
+          "word": "Whoa",
+          "start": 174.26,
+          "end": 174.44
+        },
+        {
+          "word": "whoa,",
+          "start": 174.44,
+          "end": 174.62
+        },
+        {
+          "word": "one",
+          "start": 174.26,
+          "end": 174.6
+        },
+        {
+          "word": "more",
+          "start": 174.6,
+          "end": 176.74
+        },
+        {
+          "word": "bite",
+          "start": 176.74,
+          "end": 177.12
+        }
+      ]
+    },
+    {
+      "start": 177.12,
+      "end": 180.9,
+      "text": "Let me take just one more bite",
+      "words": [
+        {
+          "word": "Let",
+          "start": 177.12,
+          "end": 177.74
+        },
+        {
+          "word": "me",
+          "start": 177.74,
+          "end": 178.7
+        },
+        {
+          "word": "take",
+          "start": 178.7,
+          "end": 179.14
+        },
+        {
+          "word": "just",
+          "start": 179.14,
+          "end": 179.56
+        },
+        {
+          "word": "one",
+          "start": 179.56,
+          "end": 179.8
+        },
+        {
+          "word": "more",
+          "start": 179.8,
+          "end": 180.38
+        },
+        {
+          "word": "bite",
+          "start": 180.38,
+          "end": 180.9
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "step": 0.1,
+    "length": 1941,
+    "encoding": "uint8-base64",
+    "energyBase64": "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",
+    "onsetsBase64": "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",
+    "source": "RMS and positive spectral flux measured from the local 44.1 kHz recording"
+  }
 }

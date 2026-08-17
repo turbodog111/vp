@@ -666,6 +666,58 @@ function weightedWordTimings(line) {
   });
 }
 
+function measuredWordTimings(line) {
+  if (!Array.isArray(line.words) || !line.words.length) return weightedWordTimings(line);
+  return line.words
+    .filter(word => word && word.word && Number.isFinite(word.start) && Number.isFinite(word.end))
+    .map(word => ({
+      word: word.word,
+      start: clamp(line.start, line.end, word.start),
+      end: clamp(line.start, line.end, Math.max(word.start + 0.02, word.end))
+    }));
+}
+
+function decodedOneMoreBiteEnvelope(analysis, name) {
+  if (!analysis) return [];
+  const cacheKey = `_${name}Values`;
+  if (analysis[cacheKey]) return analysis[cacheKey];
+  if (Array.isArray(analysis[name])) return analysis[name];
+  const encoded = analysis[`${name}Base64`];
+  if (!encoded) return [];
+  try {
+    const binary = atob(encoded);
+    const values = Uint8Array.from(binary, char => char.charCodeAt(0));
+    Object.defineProperty(analysis, cacheKey, { value: values, enumerable: false });
+    return values;
+  } catch (error) {
+    console.warn(`Could not decode One More Bite ${name} envelope:`, error);
+    return [];
+  }
+}
+
+function oneMoreBiteAnalysisAt(time) {
+  const analysis = supportedLyricsData?.analysis;
+  const energyValues = decodedOneMoreBiteEnvelope(analysis, 'energy');
+  const onsetValues = decodedOneMoreBiteEnvelope(analysis, 'onsets');
+  if (!analysis?.step || !energyValues.length) {
+    return { energy: 0, onset: 0 };
+  }
+  const position = clamp(0, energyValues.length - 1, time / analysis.step);
+  const lower = Math.floor(position);
+  const upper = Math.min(energyValues.length - 1, lower + 1);
+  const mix = position - lower;
+  const sample = values => {
+    if (!values?.length) return 0;
+    return ((values[lower] || 0) * (1 - mix) + (values[upper] || 0) * mix) / 100;
+  };
+  const onset = Math.max(
+    sample(onsetValues),
+    (onsetValues[Math.max(0, lower - 1)] || 0) / 125,
+    (onsetValues[Math.max(0, lower - 2)] || 0) / 165
+  );
+  return { energy: sample(energyValues), onset: clamp(0, 1, onset) };
+}
+
 function renderOneMoreBiteLine(index, data) {
   const current = $('omb-lyric-current');
   const previous = $('omb-lyric-previous');
@@ -686,7 +738,7 @@ function renderOneMoreBiteLine(index, data) {
     return;
   }
   current.classList.toggle('is-aside', !!line.aside);
-  weightedWordTimings(line).forEach((timing, wordIndex) => {
+  measuredWordTimings(line).forEach((timing, wordIndex) => {
     if (wordIndex) current.appendChild(document.createTextNode(' '));
     const span = document.createElement('span');
     span.className = 'omb-word';
@@ -721,6 +773,7 @@ function updateOneMoreBiteLyrics(time = currentCalibratedTime(), force = false) 
     if ($('omb-section')) $('omb-section').textContent = section?.name || 'One More Bite';
     if ($('omb-status')) $('omb-status').textContent = section?.short || 'ONE MORE BITE';
     if ($('omb-course-number')) $('omb-course-number').textContent = String(Math.max(1, sectionIndex + 1)).padStart(2, '0');
+    theater.classList.toggle('is-chorus', !!section?.short?.includes('CHORUS'));
   }
 
   const lineIndex = data.lines.findIndex(line => time >= line.start && time < line.end + 0.12);
@@ -4964,42 +5017,53 @@ function drawOneMoreBiteFx(levels, time) {
   }
   const ctx = canvas.getContext('2d', { alpha: true });
   ctx.clearRect(0, 0, width, height);
-  const glow = clamp(0, 1, levels.glow || 0);
-  const motion = clamp(0, 1, levels.motion || 0);
-  theater.style.setProperty('--omb-level', glow.toFixed(3));
-
   const section = supportedLyricsData?.sections?.find(item => time >= item.start && time < item.end);
   const chorus = section?.short?.includes('CHORUS') ? 1 : 0;
+  const recorded = oneMoreBiteAnalysisAt(time);
+  const glow = clamp(0, 1, Math.max(
+    (levels.glow || 0) * 0.72,
+    recorded.energy * (0.58 + chorus * 0.28)
+  ));
+  const motion = clamp(0, 1, Math.max(
+    (levels.motion || 0) * 0.7,
+    recorded.onset * (0.72 + chorus * 0.25),
+    recorded.energy * (0.22 + chorus * 0.22)
+  ));
+  theater.style.setProperty('--omb-level', glow.toFixed(3));
+  theater.style.setProperty('--omb-energy', recorded.energy.toFixed(3));
+  theater.style.setProperty('--omb-onset', recorded.onset.toFixed(3));
+
   const travel = time;
   const colors = ['#df2a92', '#263bb8', '#75d9ef'];
 
   // Long icing paths move together as one graphic layer, not as rotating beams.
   ctx.save();
   ctx.lineCap = 'round';
-  for (let lane = 0; lane < 3; lane++) {
-    const baseY = height * (0.28 + lane * 0.22);
-    const phase = travel * (0.18 + lane * 0.025) + lane * 1.7;
-    const amplitude = height * (0.012 + glow * 0.018 + chorus * 0.008);
+  const laneCount = chorus ? 5 : 3;
+  for (let lane = 0; lane < laneCount; lane++) {
+    const baseY = height * (0.2 + lane * (0.6 / Math.max(1, laneCount - 1)));
+    const phase = travel * (0.18 + chorus * 0.25 + lane * 0.025) + lane * 1.7;
+    const amplitude = height * (0.01 + recorded.energy * 0.018 + chorus * 0.018 + recorded.onset * 0.012);
     ctx.beginPath();
     ctx.moveTo(-width * 0.08, baseY + Math.sin(phase) * amplitude);
-    for (let step = 1; step <= 8; step++) {
-      const x = width * (step / 7.2);
-      const y = baseY + Math.sin(phase + step * 0.82) * amplitude;
+    for (let pathStep = 1; pathStep <= 10; pathStep++) {
+      const x = width * (pathStep / 9.2);
+      const y = baseY + Math.sin(phase + pathStep * (0.74 + recorded.onset * 0.1)) * amplitude;
       ctx.lineTo(x, y);
     }
-    ctx.strokeStyle = colors[lane];
-    ctx.globalAlpha = 0.09 + glow * 0.13 + chorus * 0.04;
-    ctx.lineWidth = dpr * (2.2 + lane * 0.65 + glow * 2.2);
+    ctx.strokeStyle = colors[lane % colors.length];
+    ctx.globalAlpha = 0.06 + recorded.energy * 0.12 + chorus * 0.08 + recorded.onset * 0.05;
+    ctx.lineWidth = dpr * (1.8 + (lane % 3) * 0.55 + glow * 2.4);
     ctx.stroke();
   }
 
-  const crumbAlpha = 0.13 + motion * 0.38 + chorus * 0.08;
+  const crumbAlpha = 0.1 + motion * 0.36 + chorus * 0.16;
   ONE_MORE_BITE_CRUMBS.forEach((crumb, index) => {
-    const drift = Math.sin(travel * 0.55 + crumb.phase) * height * (0.003 + motion * 0.008);
-    const nudge = Math.cos(travel * 0.34 + crumb.phase) * width * motion * 0.003;
+    const drift = Math.sin(travel * (0.5 + chorus * 0.24) + crumb.phase) * height * (0.003 + motion * 0.014);
+    const nudge = Math.cos(travel * (0.32 + chorus * 0.16) + crumb.phase) * width * motion * 0.006;
     const x = crumb.x * width + nudge;
     const y = crumb.y * height + drift;
-    const size = crumb.size * dpr * (0.82 + glow * 0.38);
+    const size = crumb.size * dpr * (0.76 + glow * 0.42 + recorded.onset * 0.2);
     ctx.globalAlpha = crumbAlpha * (0.55 + seededUnit(index * 11.7) * 0.45);
     ctx.fillStyle = colors[crumb.color];
     if (index % 4 === 0) {
@@ -5015,10 +5079,68 @@ function drawOneMoreBiteFx(levels, time) {
     }
   });
 
+  // Flowing sprinkles cross the stage primarily during choruses. Their speed is
+  // continuous, while their visibility follows the measured recording energy.
+  const sprinkleCount = chorus ? 34 : 10;
+  for (let index = 0; index < sprinkleCount; index++) {
+    const seed = seededUnit((index + 1) * 27.17);
+    const speed = 0.035 + seededUnit((index + 1) * 44.81) * 0.035 + chorus * 0.035;
+    const xRatio = ((seed + travel * speed) % 1.18) - 0.09;
+    const lane = index % 5;
+    const y = height * (0.18 + lane * 0.15) + Math.sin(travel * 0.9 + index) * height * 0.018;
+    const x = xRatio * width;
+    const length = dpr * (5 + seededUnit(index * 18.3) * 11 + recorded.onset * 7);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(-0.65 + Math.sin(index * 2.4 + travel * 0.35) * 0.45);
+    ctx.globalAlpha = (0.025 + recorded.energy * 0.08 + chorus * 0.22) * (0.65 + recorded.onset * 0.35);
+    ctx.strokeStyle = colors[index % colors.length];
+    ctx.lineWidth = dpr * (1.4 + (index % 3) * 0.55);
+    ctx.beginPath();
+    ctx.moveTo(-length, 0);
+    ctx.lineTo(length, 0);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Spectral-flux peaks launch short sprinkle bursts from the bitten plate.
+  // Looking backward in the fixed envelope makes each burst persist briefly
+  // without maintaining a separate animation clock or drifting while paused.
+  const playRect = $('omb-play')?.getBoundingClientRect();
+  const centerX = playRect ? (playRect.left + playRect.width / 2 - rect.left) * dpr : width * 0.78;
+  const centerY = playRect ? (playRect.top + playRect.height / 2 - rect.top) * dpr : height * 0.5;
+  const analysis = supportedLyricsData?.analysis;
+  const onsetEnvelope = decodedOneMoreBiteEnvelope(analysis, 'onsets');
+  if (analysis?.step && onsetEnvelope.length) {
+    const exactIndex = time / analysis.step;
+    const envelopeIndex = Math.floor(exactIndex);
+    for (let offset = 0; offset <= 6; offset++) {
+      const strength = (onsetEnvelope[Math.max(0, envelopeIndex - offset)] || 0) / 100;
+      if (strength < (chorus ? 0.62 : 0.88)) continue;
+      const age = (exactIndex - (envelopeIndex - offset)) * analysis.step;
+      const life = clamp(0, 1, 1 - age / 0.72);
+      const rayCount = chorus ? 9 : 5;
+      for (let ray = 0; ray < rayCount; ray++) {
+        const angle = seededUnit((envelopeIndex - offset + 1) * 31.7 + ray * 8.13) * Math.PI * 2;
+        const distance = dpr * (46 + age * (170 + chorus * 110) + ray * 2.5);
+        const x = centerX + Math.cos(angle) * distance;
+        const y = centerY + Math.sin(angle) * distance;
+        const length = dpr * (5 + strength * 10);
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.globalAlpha = life * strength * (chorus ? 0.62 : 0.18);
+        ctx.fillStyle = colors[(ray + offset) % colors.length];
+        ctx.fillRect(-length / 2, -dpr, length, dpr * 2);
+        ctx.restore();
+      }
+    }
+  }
+
   // Louder passages fill the page with color without strobing or resizing controls.
   const wash = ctx.createRadialGradient(width * 0.68, height * 0.48, 0, width * 0.68, height * 0.48, width * 0.42);
-  wash.addColorStop(0, `rgba(255, 79, 174, ${0.025 + glow * 0.12})`);
-  wash.addColorStop(0.48, `rgba(190, 220, 255, ${0.02 + glow * 0.07})`);
+  wash.addColorStop(0, `rgba(255, 79, 174, ${0.025 + glow * 0.14 + chorus * recorded.energy * 0.08})`);
+  wash.addColorStop(0.48, `rgba(190, 220, 255, ${0.02 + glow * 0.08 + chorus * recorded.onset * 0.04})`);
   wash.addColorStop(1, 'rgba(255, 255, 255, 0)');
   ctx.globalAlpha = 1;
   ctx.fillStyle = wash;

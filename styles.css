@@ -1497,6 +1497,12 @@ body.omb-theater-active .now-view.active {
   transform: rotate(3deg);
   opacity: calc(0.58 + var(--omb-level) * 0.28);
 }
+.omb-theater.is-chorus .omb-ribbon {
+  opacity: calc(0.78 + var(--omb-energy, 0) * 0.18);
+  box-shadow:
+    0 0 calc(18px + var(--omb-energy, 0) * 36px) rgba(190, 220, 255, 0.48),
+    0 0 calc(12px + var(--omb-onset, 0) * 26px) rgba(255, 79, 174, 0.22);
+}
 
 .omb-header,
 .omb-stage,
@@ -1538,6 +1544,12 @@ body.omb-theater-active .now-view.active {
   letter-spacing: 0.08em;
   text-align: right;
   text-transform: uppercase;
+  transition: background 0.28s ease, color 0.28s ease, box-shadow 0.28s ease;
+}
+.omb-theater.is-chorus .omb-section {
+  background: #ff8fd8;
+  color: #050508;
+  box-shadow: 6px 6px 0 rgba(38, 59, 184, 0.82);
 }
 
 .omb-stage {
@@ -1595,6 +1607,9 @@ body.omb-theater-active .now-view.active {
   letter-spacing: 0;
   text-wrap: balance;
   overflow-wrap: anywhere;
+}
+.omb-theater.is-chorus .omb-lyric-current {
+  filter: drop-shadow(0 0 calc(8px + var(--omb-energy, 0) * 18px) rgba(255, 79, 174, 0.18));
 }
 .omb-word {
   --word-progress: 0%;
@@ -1686,6 +1701,10 @@ body.omb-theater-active .now-view.active {
   height: 100%;
   background: #df2a92;
   box-shadow: 8px 0 0 #bedcff;
+}
+.omb-theater.is-chorus .omb-progress-track span {
+  background: #ff4fae;
+  box-shadow: 10px 0 0 #bedcff, 15px 0 0 #263bb8;
 }
 .omb-footer-copy {
   display: flex;
