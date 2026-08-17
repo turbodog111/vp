@@ -36,3 +36,7 @@ Live at: https://turbodog111.github.io/vp/
 - Individual files >100 MB will be rejected by git.
 - The GitHub API allows 60 unauthenticated requests per IP per hour — plenty for normal use.
 - Playlists are per-browser since they live in `localStorage`. Export/import is not implemented yet.
+
+## Lyric timing checks
+
+Run `python3 scripts/audit_lyrics.py` after changing a supported-song timeline. The audit verifies every mapped recording, media duration, line boundary, word boundary, and displayed lyric against its timed words.

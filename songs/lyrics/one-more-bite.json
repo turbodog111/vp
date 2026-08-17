@@ -587,11 +587,11 @@
         {
           "word": "let",
           "start": 48.24,
-          "end": 48.66
+          "end": 48.5
         },
         {
           "word": "this",
-          "start": 48.24,
+          "start": 48.5,
           "end": 48.66
         },
         {
@@ -868,7 +868,7 @@
         {
           "word": "in",
           "start": 69.62,
-          "end": 69.96
+          "end": 69.78
         },
         {
           "word": "sight",
@@ -974,50 +974,50 @@
       ]
     },
     {
-      "start": 79.82,
-      "end": 83.1,
+      "start": 80.52,
+      "end": 83.44,
       "text": "Whoa whoa, one more bite",
       "words": [
         {
           "word": "Whoa",
-          "start": 79.82,
-          "end": 80.22
+          "start": 80.52,
+          "end": 81.26
         },
         {
           "word": "whoa,",
-          "start": 80.22,
-          "end": 80.62
+          "start": 81.26,
+          "end": 81.98
         },
         {
           "word": "one",
-          "start": 79.82,
-          "end": 80.62
+          "start": 81.98,
+          "end": 82.36
         },
         {
           "word": "more",
-          "start": 80.62,
-          "end": 81.14
+          "start": 82.36,
+          "end": 82.74
         },
         {
           "word": "bite",
-          "start": 81.14,
-          "end": 83.1
+          "start": 82.74,
+          "end": 83.44
         }
       ]
     },
     {
-      "start": 83.1,
+      "start": 83.44,
       "end": 86.92,
       "text": "Let me take just one more bite",
       "words": [
         {
           "word": "Let",
-          "start": 83.1,
-          "end": 84.28
+          "start": 83.44,
+          "end": 84.26
         },
         {
           "word": "me",
-          "start": 84.28,
+          "start": 84.26,
           "end": 84.7
         },
         {
@@ -1226,11 +1226,11 @@
         {
           "word": "as",
           "start": 100.3,
-          "end": 100.68
+          "end": 100.52
         },
         {
           "word": "I",
-          "start": 100.3,
+          "start": 100.52,
           "end": 100.68
         },
         {
@@ -1825,7 +1825,7 @@
         {
           "word": "in",
           "start": 163.6,
-          "end": 163.94
+          "end": 163.76
         },
         {
           "word": "sight",
@@ -1932,49 +1932,49 @@
     },
     {
       "start": 174.26,
-      "end": 177.12,
+      "end": 177.46,
       "text": "Whoa whoa, one more bite",
       "words": [
         {
           "word": "Whoa",
           "start": 174.26,
-          "end": 174.44
+          "end": 174.72
         },
         {
           "word": "whoa,",
-          "start": 174.44,
-          "end": 174.62
+          "start": 174.72,
+          "end": 176.08
         },
         {
           "word": "one",
-          "start": 174.26,
-          "end": 174.6
+          "start": 176.08,
+          "end": 176.5
         },
         {
           "word": "more",
-          "start": 174.6,
-          "end": 176.74
+          "start": 176.5,
+          "end": 176.88
         },
         {
           "word": "bite",
-          "start": 176.74,
-          "end": 177.12
+          "start": 176.88,
+          "end": 177.46
         }
       ]
     },
     {
-      "start": 177.12,
+      "start": 177.86,
       "end": 180.9,
       "text": "Let me take just one more bite",
       "words": [
         {
           "word": "Let",
-          "start": 177.12,
-          "end": 177.74
+          "start": 177.86,
+          "end": 178.26
         },
         {
           "word": "me",
-          "start": 177.74,
+          "start": 178.26,
           "end": 178.7
         },
         {
@@ -1985,21 +1985,21 @@
         {
           "word": "just",
           "start": 179.14,
-          "end": 179.56
+          "end": 179.52
         },
         {
           "word": "one",
-          "start": 179.56,
-          "end": 179.8
+          "start": 179.52,
+          "end": 180.0
         },
         {
           "word": "more",
-          "start": 179.8,
-          "end": 180.38
+          "start": 180.0,
+          "end": 180.48
         },
         {
           "word": "bite",
-          "start": 180.38,
+          "start": 180.48,
           "end": 180.9
         }
       ]

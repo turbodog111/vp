@@ -785,6 +785,20 @@ function measuredWordTimings(line) {
     }));
 }
 
+function updateTimedWordStates(words, time) {
+  let currentIndex = -1;
+  words.forEach((word, index) => {
+    if (time >= word.start && time < word.end) currentIndex = index;
+  });
+  words.forEach((word, index) => {
+    const isCurrent = index === currentIndex;
+    const isSung = !isCurrent && (time >= word.end || (currentIndex >= 0 && index < currentIndex));
+    word.element.classList.toggle('is-current', isCurrent);
+    word.element.classList.toggle('is-sung', isSung);
+    word.element.classList.toggle('is-pending', !isCurrent && !isSung);
+  });
+}
+
 function decodedOneMoreBiteEnvelope(analysis, name) {
   if (!analysis) return [];
   const cacheKey = `_${name}Values`;
@@ -953,11 +967,7 @@ function updateOneMoreBiteLyrics(time = currentCalibratedTime(), force = false) 
     supportedLyricsLineIndex = lineIndex;
     renderOneMoreBiteLine(lineIndex, data);
   }
-  supportedLyricsWordNodes.forEach(word => {
-    const wordProgress = clamp(0, 1, (time - word.start) / Math.max(0.04, word.end - word.start));
-    word.element.style.setProperty('--word-progress', `${(wordProgress * 100).toFixed(1)}%`);
-    word.element.classList.toggle('is-current', wordProgress > 0 && wordProgress < 1);
-  });
+  updateTimedWordStates(supportedLyricsWordNodes, time);
 }
 
 function setOneMoreBiteTheaterActive(active, song = currentSong()) {
@@ -1106,11 +1116,7 @@ function updateHeroStoryLyrics(audioTime = currentCalibratedTime(), force = fals
     supportedLyricsLineIndex = lineIndex;
     renderHeroStoryLine(lineIndex, data, timelineTime);
   }
-  supportedLyricsWordNodes.forEach(word => {
-    const wordProgress = clamp(0, 1, (timelineTime - word.start) / Math.max(0.04, word.end - word.start));
-    word.element.style.setProperty('--word-progress', `${(wordProgress * 100).toFixed(1)}%`);
-    word.element.classList.toggle('is-current', wordProgress > 0 && wordProgress < 1);
-  });
+  updateTimedWordStates(supportedLyricsWordNodes, timelineTime);
 }
 
 function setHeroStoryTheaterActive(active, song = currentSong()) {
@@ -1255,11 +1261,7 @@ function updateEncoreDanceLyrics(audioTime = currentCalibratedTime(), force = fa
     supportedLyricsLineIndex = lineIndex;
     renderEncoreLine(lineIndex, variantData, audioTime);
   }
-  supportedLyricsWordNodes.forEach(word => {
-    const wordProgress = clamp(0, 1, (audioTime - word.start) / Math.max(0.025, word.end - word.start));
-    word.element.style.setProperty('--word-progress', `${(wordProgress * 100).toFixed(1)}%`);
-    word.element.classList.toggle('is-current', wordProgress > 0 && wordProgress < 1);
-  });
+  updateTimedWordStates(supportedLyricsWordNodes, audioTime);
 }
 
 function setEncoreTheaterActive(active, song = currentSong()) {
@@ -1395,15 +1397,7 @@ function updateStoryTheaterLyrics(time = currentCalibratedTime(), force = false)
     supportedLyricsLineIndex = lineIndex;
     renderStoryTheaterLine(lineIndex, data, time);
   }
-  supportedLyricsWordNodes.forEach(word => {
-    const wordProgress = clamp(0, 1, (time - word.start) / Math.max(0.03, word.end - word.start));
-    word.element.style.setProperty('--word-progress', `${(wordProgress * 100).toFixed(1)}%`);
-    const isCurrent = time >= word.start && time < word.end;
-    const isSung = time >= word.end;
-    word.element.classList.toggle('is-current', isCurrent);
-    word.element.classList.toggle('is-sung', isSung);
-    word.element.classList.toggle('is-pending', !isCurrent && !isSung);
-  });
+  updateTimedWordStates(supportedLyricsWordNodes, time);
 }
 
 function setStoryTheaterActive(active, song = currentSong()) {

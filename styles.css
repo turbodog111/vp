@@ -1649,15 +1649,17 @@ body.omb-theater-active .now-view.active {
   filter: drop-shadow(0 0 calc(8px + var(--omb-energy, 0) * 18px) rgba(255, 79, 174, 0.18));
 }
 .omb-word {
-  --word-progress: 0%;
   display: inline;
-  color: transparent;
-  background: linear-gradient(90deg, #df2a92 var(--word-progress), #263bb8 var(--word-progress));
-  background-clip: text;
-  -webkit-background-clip: text;
+  color: #5967bd;
+  background: none;
+  -webkit-text-fill-color: currentColor;
   -webkit-text-stroke: 0.25px rgba(38, 59, 184, 0.28);
+  transition: color 90ms linear, text-shadow 90ms linear, opacity 90ms linear;
 }
+.omb-word.is-pending { color: #5967bd; }
+.omb-word.is-sung { color: #df2a92; }
 .omb-word.is-current {
+  color: #fff8fc;
   text-shadow: 0 0 16px rgba(255, 79, 174, calc(0.18 + var(--omb-level) * 0.3));
 }
 .omb-lyric-current.is-aside { font-style: italic; }
@@ -1974,20 +1976,17 @@ body.hero-story-active .now-view.active {
 }
 .hero-story-current.is-aside { font-style: italic; }
 .hero-story-word {
-  --word-progress: 0%;
   display: inline;
-  color: transparent;
-  background: linear-gradient(
-    90deg,
-    var(--hero-accent) 0,
-    var(--hero-primary) var(--word-progress),
-    color-mix(in srgb, var(--hero-primary) 32%, #536056) var(--word-progress)
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
+  color: color-mix(in srgb, var(--hero-primary) 32%, #536056);
+  background: none;
+  -webkit-text-fill-color: currentColor;
   -webkit-text-stroke: 0.2px rgba(230, 255, 224, 0.12);
+  transition: color 90ms linear, text-shadow 90ms linear, opacity 90ms linear;
 }
+.hero-story-word.is-pending { color: color-mix(in srgb, var(--hero-primary) 32%, #536056); }
+.hero-story-word.is-sung { color: var(--hero-primary); }
 .hero-story-word.is-current {
+  color: var(--hero-accent);
   text-shadow: 0 0 calc(7px + var(--hero-energy) * 11px) color-mix(in srgb, var(--hero-primary) 38%, transparent);
 }
 .hero-story-instrumental {
@@ -2334,20 +2333,17 @@ body.encore-theater-active .now-view.active {
 .encore-theater[data-language="ja"] .encore-current { font-size: 38px; }
 .encore-current.is-aside { font-style: italic; }
 .encore-word {
-  --word-progress: 0%;
   display: inline;
-  color: transparent;
-  background: linear-gradient(
-    90deg,
-    var(--encore-accent) 0,
-    var(--encore-secondary) var(--word-progress),
-    color-mix(in srgb, var(--encore-secondary) 27%, #5f3540) var(--word-progress)
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
+  color: color-mix(in srgb, var(--encore-secondary) 34%, #5f3540);
+  background: none;
+  -webkit-text-fill-color: currentColor;
   -webkit-text-stroke: 0.25px rgba(255, 239, 220, 0.12);
+  transition: color 90ms linear, text-shadow 90ms linear, opacity 90ms linear;
 }
+.encore-word.is-pending { color: color-mix(in srgb, var(--encore-secondary) 34%, #5f3540); }
+.encore-word.is-sung { color: var(--encore-secondary); }
 .encore-word.is-current {
+  color: var(--encore-accent);
   text-shadow: 0 0 calc(8px + var(--encore-energy) * 13px) color-mix(in srgb, var(--encore-primary) 52%, transparent);
 }
 .encore-instrumental {
