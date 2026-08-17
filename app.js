@@ -1388,7 +1388,11 @@ function updateStoryTheaterLyrics(time = currentCalibratedTime(), force = false)
   supportedLyricsWordNodes.forEach(word => {
     const wordProgress = clamp(0, 1, (time - word.start) / Math.max(0.03, word.end - word.start));
     word.element.style.setProperty('--word-progress', `${(wordProgress * 100).toFixed(1)}%`);
-    word.element.classList.toggle('is-current', wordProgress > 0 && wordProgress < 1);
+    const isCurrent = time >= word.start && time < word.end;
+    const isSung = time >= word.end;
+    word.element.classList.toggle('is-current', isCurrent);
+    word.element.classList.toggle('is-sung', isSung);
+    word.element.classList.toggle('is-pending', !isCurrent && !isSung);
   });
 }
 
@@ -6529,6 +6533,7 @@ function drawStoryTheaterFx(levels, audioTime) {
   if (variant === 'waiting') {
     const chorus = isPeakPhase;
     const chorusLift = chorus ? clamp(0, 1, 0.48 + energy * 0.34 + beat.pulse * 0.28) : 0;
+    const verseMotion = clamp(0, 1, 0.34 + energy * 0.36 + onset * 0.24 + beat.pulse * 0.18);
     const morning = clamp(0, 1, audioTime / Math.max(1, supportedLyricsData?.duration || 162));
     const sky = ctx.createRadialGradient(width * 0.78, height * 0.16, 0, width * 0.78, height * 0.16, width * 0.7);
     sky.addColorStop(0, storyCanvasColor([255, 247, 204], 0.28 + morning * 0.3 + energy * 0.12));
@@ -6537,6 +6542,93 @@ function drawStoryTheaterFx(levels, audioTime) {
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, width, height);
 
+    const windowX = width * 0.785;
+    const windowY = height * 0.34;
+
+    // Broken orbital tracks make the window read as a large clock face. Their
+    // slow counter-rotation is visible in verses without borrowing the refrain star.
+    for (let orbit = 0; orbit < 6; orbit++) {
+      const radiusX = width * (0.105 + orbit * 0.052);
+      const radiusY = height * (0.105 + orbit * 0.043);
+      const rotation = audioTime * (orbit % 2 ? -0.018 : 0.014) + orbit * 0.21;
+      const arcStart = rotation + orbit * 0.47;
+      const arcLength = Math.PI * (0.72 + (orbit % 3) * 0.18);
+      ctx.beginPath();
+      ctx.ellipse(windowX, windowY, radiusX, radiusY, rotation * 0.12, arcStart, arcStart + arcLength);
+      ctx.strokeStyle = storyCanvasColor(orbit % 2 ? palette.secondary : palette.primary, 0.07 + verseMotion * 0.065 + chorusLift * 0.045);
+      ctx.lineWidth = dpr * (orbit % 3 === 0 ? 1.8 : 1);
+      ctx.stroke();
+    }
+
+    // Two time ribbons travel toward tomorrow from opposite sides of the room.
+    // Their curves continually breathe with the measured recording energy.
+    for (let ribbonIndex = 0; ribbonIndex < 2; ribbonIndex++) {
+      const direction = ribbonIndex ? -1 : 1;
+      const baseY = height * (ribbonIndex ? 0.7 : 0.24);
+      const wave = height * (0.035 + verseMotion * 0.025 + chorusLift * 0.02);
+      ctx.beginPath();
+      for (let point = 0; point <= 40; point++) {
+        const progress = point / 40;
+        const x = direction > 0 ? progress * width : width - progress * width;
+        const y = baseY
+          + Math.sin(progress * Math.PI * 3.2 + audioTime * (0.42 + ribbonIndex * 0.08)) * wave
+          + (windowY - baseY) * progress * 0.28;
+        if (!point) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = storyCanvasColor(ribbonIndex ? palette.primary : palette.secondary, 0.1 + verseMotion * 0.1 + chorusLift * 0.08);
+      ctx.lineWidth = dpr * (1.4 + energy * 2.2 + beat.pulse * 1.2);
+      ctx.shadowColor = storyCanvasColor(ribbonIndex ? palette.primary : palette.secondary, 0.2 + verseMotion * 0.12);
+      ctx.shadowBlur = dpr * (4 + verseMotion * 8);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    // A moving clock corridor gives every section a sense of forward travel.
+    // Refrains open it into the existing daybreak star instead of replacing it.
+    for (let spoke = 0; spoke < 12; spoke++) {
+      const angle = spoke * Math.PI / 6 + Math.sin(audioTime * 0.12) * 0.025;
+      const inner = Math.min(width, height) * (0.055 + beat.pulse * 0.012);
+      const outer = Math.hypot(width, height) * (0.48 + chorusLift * 0.1);
+      ctx.beginPath();
+      ctx.moveTo(windowX + Math.cos(angle) * inner, windowY + Math.sin(angle) * inner);
+      ctx.lineTo(windowX + Math.cos(angle) * outer, windowY + Math.sin(angle) * outer);
+      ctx.strokeStyle = storyCanvasColor(spoke % 3 ? palette.secondary : palette.primary, 0.045 + verseMotion * 0.055 + chorusLift * 0.055);
+      ctx.lineWidth = dpr * (spoke % 3 === 0 ? 1.4 : 0.7);
+      ctx.stroke();
+    }
+
+    const beatPeriod = 60 / (supportedLyricsData?.bpm || 143.555);
+    for (let echo = 0; echo < 5; echo++) {
+      const age = (beat.phase + echo) * beatPeriod;
+      const progress = age / 1.65;
+      if (progress >= 1) continue;
+      const eased = 1 - (1 - progress) ** 2.2;
+      const life = Math.sin(progress * Math.PI);
+      const frameWidth = width * (0.08 + eased * 0.82);
+      const frameHeight = height * (0.08 + eased * 0.7);
+      ctx.strokeStyle = storyCanvasColor(echo % 2 ? palette.secondary : palette.primary, life * (0.055 + verseMotion * 0.085 + chorusLift * 0.075));
+      ctx.lineWidth = dpr * (0.8 + beat.pulse * 1.4 + chorusLift * 0.8);
+      ctx.strokeRect(windowX - frameWidth / 2, windowY - frameHeight / 2, frameWidth, frameHeight);
+    }
+
+    // Thin measured sweeps cross the whole room on successive beats. They stay
+    // calm in verses but make the non-chorus scene visibly alive.
+    for (let sweep = 0; sweep < 3; sweep++) {
+      const progress = (beat.phase + sweep) / 3;
+      const x = (-0.16 + progress * 1.34) * width;
+      const span = width * (0.055 + chorusLift * 0.035);
+      const sweepGradient = ctx.createLinearGradient(x - span, 0, x + span, 0);
+      sweepGradient.addColorStop(0, 'rgba(255,255,255,0)');
+      sweepGradient.addColorStop(0.5, storyCanvasColor(sweep % 2 ? palette.secondary : palette.accent, 0.025 + verseMotion * 0.045 + chorusLift * 0.075));
+      sweepGradient.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.save();
+      ctx.translate(x, height * 0.5);
+      ctx.rotate(-0.16 + sweep * 0.1);
+      ctx.fillStyle = sweepGradient;
+      ctx.fillRect(-span, -height, span * 2, height * 2);
+      ctx.restore();
+    }
+
     // Slow cloud ribbons keep the verses alive without turning them into refrains.
     for (let band = 0; band < 6; band++) {
       const travel = ((audioTime * (0.012 + band * 0.0015) + seededUnit(band * 18.7)) % 1.35) - 0.18;
@@ -6544,7 +6636,7 @@ function drawStoryTheaterFx(levels, audioTime) {
       const cloudWidth = width * (0.24 + seededUnit(band * 33.9) * 0.18);
       const cloud = ctx.createLinearGradient(travel * width, y, travel * width + cloudWidth, y);
       cloud.addColorStop(0, 'rgba(255,255,255,0)');
-      cloud.addColorStop(0.5, storyCanvasColor(chorus ? palette.accent : palette.secondary, 0.035 + energy * 0.045 + chorusLift * 0.085));
+      cloud.addColorStop(0.5, storyCanvasColor(chorus ? palette.accent : palette.secondary, 0.055 + verseMotion * 0.06 + chorusLift * 0.085));
       cloud.addColorStop(1, 'rgba(255,255,255,0)');
       ctx.fillStyle = cloud;
       ctx.beginPath();
@@ -6561,8 +6653,8 @@ function drawStoryTheaterFx(levels, audioTime) {
       ctx.fillRect(0, 0, width, height);
 
       // The window becomes a daybreak source: broad rays move smoothly on the beat.
-      const rayX = width * 0.785;
-      const rayY = height * 0.34;
+      const rayX = windowX;
+      const rayY = windowY;
       const rayCount = 14;
       for (let ray = 0; ray < rayCount; ray++) {
         const angle = -Math.PI * 0.92 + ray * (Math.PI * 1.84 / (rayCount - 1)) + Math.sin(audioTime * 0.24) * 0.035;
@@ -6598,6 +6690,25 @@ function drawStoryTheaterFx(levels, audioTime) {
     ctx.beginPath();
     ctx.moveTo(width * 0.785, height * 0.08); ctx.lineTo(width * 0.785, height * 0.62);
     ctx.moveTo(width * 0.63, height * 0.34); ctx.lineTo(width * 0.94, height * 0.34); ctx.stroke();
+
+    // Time marks orbit the window throughout the song; the active beat lights
+    // the next mark without forcing the entire scene to flash.
+    const markRadiusX = width * 0.19;
+    const markRadiusY = height * 0.25;
+    for (let mark = 0; mark < 24; mark++) {
+      const angle = mark * Math.PI / 12 - Math.PI / 2;
+      const activeDistance = (mark - beat.index % 24 + 24) % 24;
+      const active = activeDistance === 0 ? beat.pulse : 0;
+      const x = windowX + Math.cos(angle) * markRadiusX;
+      const y = windowY + Math.sin(angle) * markRadiusY;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      ctx.fillStyle = storyCanvasColor(mark % 4 ? palette.deep : palette.primary, 0.055 + verseMotion * 0.06 + active * 0.3 + chorusLift * 0.08);
+      ctx.fillRect(-dpr * (1 + active * 1.8), -dpr * (2.5 + active * 4), dpr * (2 + active * 3.6), dpr * (5 + active * 8));
+      ctx.restore();
+    }
+
     const petalCount = chorus ? 52 : 27;
     for (let index = 0; index < petalCount; index++) {
       const drift = (seededUnit(index * 19.2) + audioTime * (0.008 + index % 4 * 0.0017)) % 1;
