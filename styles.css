@@ -3601,13 +3601,83 @@ body.story-theater-active .now-view.active {
 .story-theater[data-story="compass"][data-phase="7"] .story-word.is-sung { color: #b9d7ff; -webkit-text-fill-color: #b9d7ff; }
 .story-theater[data-story="compass"][data-phase="7"] .story-word.is-current { color: #ffe154; -webkit-text-fill-color: #ffe154; }
 .story-theater[data-story="compass"][data-phase="8"] .story-context { color: rgba(222, 236, 255, 0.62); }
-.story-theater[data-story="celebration"] .story-header h1 { font-size: clamp(31px, 4.2vw, 54px); }
-.story-theater[data-story="celebration"] .story-sigil { border-radius: 3px; transform: rotate(12deg); }
-.story-theater[data-story="celebration"] .story-control-sigil { border-radius: 8px; transform: rotate(8deg); }
-.story-theater[data-story="celebration"] .story-control-sigil::before { border-radius: 8px; transform: rotate(-16deg); }
-.story-theater[data-story="celebration"] .story-word.is-pending { color: #d7b8d9; }
-.story-theater[data-story="celebration"] .story-word.is-sung { color: #ffe048; }
-.story-theater[data-story="celebration"] .story-word.is-current { color: #fffaf4; }
+.story-theater[data-story="celebration"] { color: #fff7e0; }
+.story-theater[data-story="celebration"] .story-header h1 {
+  max-width: 72%;
+  color: #fff8e6;
+  font-size: clamp(31px, 4.2vw, 54px);
+  text-shadow: 0 3px 10px rgba(54, 4, 14, 0.86), 0 0 24px rgba(255, 178, 15, 0.18);
+}
+.story-theater[data-story="celebration"] .story-overline,
+.story-theater[data-story="celebration"] .story-act,
+.story-theater[data-story="celebration"] .story-section-lockup span { color: #55dff4; }
+.story-theater[data-story="celebration"] .story-section-lockup {
+  border-right-color: #55dff4;
+  background: rgba(52, 6, 16, 0.72);
+  box-shadow: 14px 0 30px rgba(55, 207, 238, 0.1);
+}
+.story-theater[data-story="celebration"] .story-section-lockup b { color: #ffe65d; }
+.story-theater[data-story="celebration"] .story-sigil {
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 4px rgba(55, 207, 238, 0.1), 0 0 12px rgba(55, 207, 238, 0.22);
+}
+.story-theater[data-story="celebration"] .story-lyrics::before {
+  inset: -36% -10%;
+  background: radial-gradient(ellipse, rgba(49, 5, 14, 0.79) 0, rgba(49, 5, 14, 0.52) 48%, rgba(49, 5, 14, 0.08) 76%, transparent 83%);
+}
+.story-theater[data-story="celebration"] .story-context {
+  color: #8de9f7;
+  text-shadow: 0 2px 6px rgba(45, 3, 12, 0.95);
+}
+.story-theater[data-story="celebration"] .story-current {
+  color: #fff8e6;
+  text-shadow: 0 3px 7px rgba(45, 3, 12, 0.94), 0 0 calc(8px + var(--story-energy) * 14px) rgba(255, 174, 18, 0.25);
+}
+.story-theater[data-story="celebration"] .story-word { background: none; -webkit-text-fill-color: currentColor; }
+.story-theater[data-story="celebration"] .story-word.is-pending { color: #e9a88e; -webkit-text-fill-color: #e9a88e; }
+.story-theater[data-story="celebration"] .story-word.is-sung {
+  color: #55dff4;
+  -webkit-text-fill-color: #55dff4;
+  text-shadow: 0 2px 5px rgba(45, 3, 12, 0.9), 0 0 9px rgba(55, 207, 238, 0.25);
+}
+.story-theater[data-story="celebration"] .story-word.is-current {
+  color: #fff8e6;
+  -webkit-text-fill-color: #fff8e6;
+  text-shadow: 0 2px 6px rgba(45, 3, 12, 0.96), 0 0 calc(10px + var(--story-energy) * 14px) rgba(255, 230, 93, 0.45);
+}
+.story-theater[data-story="celebration"] .story-control-sigil {
+  border-color: rgba(143, 235, 249, 0.42);
+  box-shadow: 0 0 calc(16px + var(--story-energy) * 32px) rgba(55, 207, 238, 0.23);
+}
+.story-theater[data-story="celebration"] .story-control-sigil::before {
+  border-color: rgba(255, 247, 224, 0.28);
+  transform: rotate(calc(var(--story-beat) * 5deg));
+}
+.story-theater[data-story="celebration"] .story-control-sigil::after { border-color: rgba(255, 230, 93, 0.34); }
+.story-theater[data-story="celebration"] .story-control-sigil span {
+  inset: 49% 5%;
+  border-color: rgba(255, 247, 224, 0.52);
+}
+.story-theater[data-story="celebration"] .story-play {
+  border-color: #8febf9;
+  background: radial-gradient(circle at 35% 30%, rgba(219, 250, 255, 0.98) 0 8%, rgba(55, 207, 238, 0.97) 30%, rgba(6, 78, 144, 0.98) 54%, transparent 56%),
+    conic-gradient(#ffe65d var(--story-progress), rgba(255, 247, 224, 0.15) 0);
+  color: #fff8e6;
+  text-shadow: 0 2px 6px rgba(3, 23, 54, 0.92);
+  box-shadow: 0 0 0 6px rgba(52, 6, 16, 0.6), 0 0 calc(16px + var(--story-energy) * 35px) rgba(55, 207, 238, 0.3);
+}
+.story-theater[data-story="celebration"] .story-play:hover { border-color: #fff8e6; color: #ffe65d; }
+.story-theater[data-story="celebration"] .story-time,
+.story-theater[data-story="celebration"] .story-footer-copy { color: rgba(255, 247, 224, 0.8); }
+.story-theater[data-story="celebration"] .story-progress { background: rgba(255, 247, 224, 0.13); }
+.story-theater[data-story="celebration"] .story-progress span { background: linear-gradient(90deg, #ff8a10, #ffe65d, #55dff4); }
+.story-theater[data-story="celebration"][data-phase="2"] .story-section-lockup,
+.story-theater[data-story="celebration"][data-phase="6"] .story-section-lockup,
+.story-theater[data-story="celebration"][data-phase="8"] .story-section-lockup {
+  border-right-color: #fff8e6;
+  box-shadow: 16px 0 36px rgba(255, 230, 93, 0.18);
+}
+.story-theater[data-story="celebration"][data-phase="4"] .story-word.is-sung { color: #ffe65d; -webkit-text-fill-color: #ffe65d; }
 .story-theater[data-story="psalm"] .story-control-sigil { border-width: 1px 0 0; border-radius: 50% 50% 0 0; }
 .story-theater[data-story="psalm"] .story-sigil { border-width: 1px 0 0; border-radius: 50% 50% 0 0; }
 .story-theater[data-story="psalm"] .story-word.is-pending { color: #9eb7cc; }

@@ -3,10 +3,10 @@
   "artist": "Forrest Frank",
   "duration": 161.657,
   "theater": "celebration",
-  "bpm": 123.047,
-  "beatOffset": 0.627,
+  "bpm": 122.03,
+  "beatOffset": 0.138,
   "key": "A-flat major",
-  "footer": "CLAP / STOMP / PRAISE",
+  "footer": "MIRROR / STARBURST / PRAISE",
   "sections": [
     {
       "start": 0,
@@ -59,15 +59,15 @@
     },
     {
       "start": 112.3,
-      "end": 143.7,
-      "name": "Everybody in",
-      "short": "HEY / CROWD",
+      "end": 129.94,
+      "name": "Celebrate-ate",
+      "short": "CHOIR / RESPONSE",
       "phase": 7
     },
     {
-      "start": 143.7,
+      "start": 129.94,
       "end": 161.657,
-      "name": "One last lift",
+      "name": "The room opens",
       "short": "FINAL CELEBRATION",
       "phase": 8
     }
@@ -81,7 +81,7 @@
         {
           "word": "You,",
           "start": 1.44,
-          "end": 2.0
+          "end": 2
         },
         {
           "word": "you,",
@@ -189,8 +189,8 @@
     },
     {
       "start": 9.3,
-      "end": 13.0,
-      "text": "The God who made the bird, sea, sun, and the moon",
+      "end": 13,
+      "text": "The God who made the birds, sea, sun, and the moon",
       "words": [
         {
           "word": "The",
@@ -218,7 +218,7 @@
           "end": 10.66
         },
         {
-          "word": "bird,",
+          "word": "birds,",
           "start": 10.66,
           "end": 11.1
         },
@@ -245,18 +245,18 @@
         {
           "word": "moon",
           "start": 12.6,
-          "end": 13.0
+          "end": 13
         }
       ]
     },
     {
-      "start": 13.0,
+      "start": 13,
       "end": 16.88,
       "text": "isn't somewhere far away. He is standing in the room.",
       "words": [
         {
           "word": "isn't",
-          "start": 13.0,
+          "start": 13,
           "end": 13.64
         },
         {
@@ -309,7 +309,7 @@
     {
       "start": 16.96,
       "end": 20.04,
-      "text": "So let it scream, let it shout, let them know what",
+      "text": "So let it scream, let it shout, let Him know what",
       "words": [
         {
           "word": "So",
@@ -352,7 +352,7 @@
           "end": 19.32
         },
         {
-          "word": "them",
+          "word": "Him",
           "start": 19.32,
           "end": 19.58
         },
@@ -734,11 +734,11 @@
         {
           "word": "Ayy,",
           "start": 55.44,
-          "end": 56.0
+          "end": 56
         },
         {
           "word": "ayy,",
-          "start": 56.0,
+          "start": 56,
           "end": 56.56
         },
         {
@@ -764,13 +764,13 @@
       ]
     },
     {
-      "start": 61.0,
+      "start": 61,
       "end": 64.02,
       "text": "Don't sit there waiting, let's have a celebration",
       "words": [
         {
           "word": "Don't",
-          "start": 61.0,
+          "start": 61,
           "end": 61.42
         },
         {
@@ -791,11 +791,11 @@
         {
           "word": "let's",
           "start": 62.54,
-          "end": 63.0
+          "end": 63
         },
         {
           "word": "have",
-          "start": 63.0,
+          "start": 63,
           "end": 63.14
         },
         {
@@ -865,7 +865,7 @@
     {
       "start": 68.04,
       "end": 71.8,
-      "text": "Father, son, and spirit, that's who I call G -O -D",
+      "text": "Father, Son, and Spirit, that's who I call G-O-D",
       "words": [
         {
           "word": "Father,",
@@ -873,7 +873,7 @@
           "end": 69.08
         },
         {
-          "word": "son,",
+          "word": "Son,",
           "start": 69.16,
           "end": 69.56
         },
@@ -883,7 +883,7 @@
           "end": 69.72
         },
         {
-          "word": "spirit,",
+          "word": "Spirit,",
           "start": 69.72,
           "end": 69.98
         },
@@ -908,18 +908,8 @@
           "end": 71.18
         },
         {
-          "word": "G",
+          "word": "G-O-D",
           "start": 71.18,
-          "end": 71.4
-        },
-        {
-          "word": "-O",
-          "start": 71.4,
-          "end": 71.74
-        },
-        {
-          "word": "-D",
-          "start": 71.74,
           "end": 71.8
         }
       ]
@@ -927,7 +917,7 @@
     {
       "start": 71.8,
       "end": 75.56,
-      "text": "I used to be a blind man until you let me",
+      "text": "I used to be a blind man until He let me",
       "words": [
         {
           "word": "I",
@@ -970,7 +960,7 @@
           "end": 74.74
         },
         {
-          "word": "you",
+          "word": "He",
           "start": 74.74,
           "end": 75.06
         },
@@ -1001,7 +991,7 @@
     {
       "start": 75.88,
       "end": 79.32,
-      "text": "That who the son sets free, you said it's truly free",
+      "text": "That who the Son sets free, You said is truly free",
       "words": [
         {
           "word": "That",
@@ -1019,7 +1009,7 @@
           "end": 77.08
         },
         {
-          "word": "son",
+          "word": "Son",
           "start": 77.08,
           "end": 77.32
         },
@@ -1034,7 +1024,7 @@
           "end": 77.86
         },
         {
-          "word": "you",
+          "word": "You",
           "start": 77.92,
           "end": 78.04
         },
@@ -1044,7 +1034,7 @@
           "end": 78.3
         },
         {
-          "word": "it's",
+          "word": "is",
           "start": 78.3,
           "end": 78.62
         },
@@ -1074,17 +1064,17 @@
     },
     {
       "start": 79.72,
-      "end": 83.0,
-      "text": "So let it scream, let it shout, let them know what",
+      "end": 83,
+      "text": "So let it scream, let it shout, let Him know what",
       "words": [
         {
           "word": "So",
           "start": 79.72,
-          "end": 80.0
+          "end": 80
         },
         {
           "word": "let",
-          "start": 80.0,
+          "start": 80,
           "end": 80.32
         },
         {
@@ -1118,7 +1108,7 @@
           "end": 82.26
         },
         {
-          "word": "them",
+          "word": "Him",
           "start": 82.26,
           "end": 82.5
         },
@@ -1130,18 +1120,18 @@
         {
           "word": "what",
           "start": 82.74,
-          "end": 83.0
+          "end": 83
         }
       ]
     },
     {
-      "start": 83.0,
+      "start": 83,
       "end": 83.74,
       "text": "you're about",
       "words": [
         {
           "word": "you're",
-          "start": 83.0,
+          "start": 83,
           "end": 83.32
         },
         {
@@ -1152,10 +1142,20 @@
       ]
     },
     {
-      "start": 84.76,
+      "start": 83.92,
       "end": 87.7,
-      "text": "Moving and grooving, don't leave a single doubt",
+      "text": "Keep it moving and grooving, don't leave a single doubt",
       "words": [
+        {
+          "word": "Keep",
+          "start": 83.92,
+          "end": 84.22
+        },
+        {
+          "word": "it",
+          "start": 84.22,
+          "end": 84.56
+        },
         {
           "word": "Moving",
           "start": 84.76,
@@ -1283,11 +1283,11 @@
         {
           "word": "around",
           "start": 93.58,
-          "end": 94.0
+          "end": 94
         },
         {
           "word": "just",
-          "start": 94.0,
+          "start": 94,
           "end": 94.3
         },
         {
@@ -1484,191 +1484,278 @@
     },
     {
       "start": 114.76,
-      "end": 121.215,
-      "text": "Hey, Hey, Hey, Hey, Hey, Hey",
+      "end": 117.3,
+      "text": "Celebrate-ate",
       "words": [
         {
-          "word": "Hey,",
+          "word": "Celebrate-ate",
           "start": 114.76,
-          "end": 115.836
-        },
-        {
-          "word": "Hey,",
-          "start": 115.836,
-          "end": 116.912
-        },
-        {
-          "word": "Hey,",
-          "start": 116.912,
-          "end": 117.988
-        },
-        {
-          "word": "Hey,",
-          "start": 117.988,
-          "end": 119.063
-        },
-        {
-          "word": "Hey,",
-          "start": 119.063,
-          "end": 120.139
-        },
-        {
-          "word": "Hey",
-          "start": 120.139,
-          "end": 121.215
+          "end": 117.3
         }
       ]
     },
     {
-      "start": 121.215,
-      "end": 127.67,
-      "text": "Hey, Hey, Hey, Hey, Hey, Hey",
+      "start": 117.54,
+      "end": 120.18,
+      "text": "Ate-ate",
       "words": [
         {
-          "word": "Hey,",
-          "start": 121.215,
-          "end": 122.291
-        },
-        {
-          "word": "Hey,",
-          "start": 122.291,
-          "end": 123.367
-        },
-        {
-          "word": "Hey,",
-          "start": 123.367,
-          "end": 124.443
-        },
-        {
-          "word": "Hey,",
-          "start": 124.443,
-          "end": 125.518
-        },
-        {
-          "word": "Hey,",
-          "start": 125.518,
-          "end": 126.594
-        },
-        {
-          "word": "Hey",
-          "start": 126.594,
-          "end": 127.67
+          "word": "Ate-ate",
+          "start": 117.54,
+          "end": 120.18
         }
       ]
     },
     {
-      "start": 127.67,
-      "end": 134.125,
-      "text": "Hey, Hey, Hey, Hey, Hey, Hey",
+      "start": 120.44,
+      "end": 123.1,
+      "text": "Ate-ate",
       "words": [
         {
-          "word": "Hey,",
-          "start": 127.67,
-          "end": 128.746
-        },
-        {
-          "word": "Hey,",
-          "start": 128.746,
-          "end": 129.822
-        },
-        {
-          "word": "Hey,",
-          "start": 129.822,
-          "end": 130.898
-        },
-        {
-          "word": "Hey,",
-          "start": 130.898,
-          "end": 131.973
-        },
-        {
-          "word": "Hey,",
-          "start": 131.973,
-          "end": 133.049
-        },
-        {
-          "word": "Hey",
-          "start": 133.049,
-          "end": 134.125
+          "word": "Ate-ate",
+          "start": 120.44,
+          "end": 123.1
         }
       ]
     },
     {
-      "start": 134.125,
-      "end": 140.58,
-      "text": "Hey, Hey, Hey, Hey, Hey, Hey",
+      "start": 123.66,
+      "end": 128.66,
+      "text": "Don't sit there waiting, let's have a celebration",
       "words": [
         {
-          "word": "Hey,",
-          "start": 134.125,
-          "end": 135.201
+          "word": "Don't",
+          "start": 123.66,
+          "end": 124.4
         },
         {
-          "word": "Hey,",
-          "start": 135.201,
-          "end": 136.277
+          "word": "sit",
+          "start": 124.4,
+          "end": 124.56
         },
         {
-          "word": "Hey,",
-          "start": 136.277,
-          "end": 137.353
+          "word": "there",
+          "start": 124.56,
+          "end": 124.96
         },
         {
-          "word": "Hey,",
-          "start": 137.353,
-          "end": 138.428
+          "word": "waiting,",
+          "start": 124.96,
+          "end": 125.48
         },
         {
-          "word": "Hey,",
-          "start": 138.428,
-          "end": 139.504
+          "word": "let's",
+          "start": 125.48,
+          "end": 126
         },
         {
-          "word": "Hey",
-          "start": 139.504,
-          "end": 140.58
+          "word": "have",
+          "start": 126,
+          "end": 126.26
+        },
+        {
+          "word": "a",
+          "start": 126.26,
+          "end": 126.44
+        },
+        {
+          "word": "celebration",
+          "start": 126.44,
+          "end": 128.66
         }
       ]
     },
     {
-      "start": 140.58,
-      "end": 143.6,
-      "text": "Set you free, it's time to celebrate",
+      "start": 130.08,
+      "end": 133.96,
+      "text": "It's time to clap our hands and stomp our feet",
       "words": [
         {
-          "word": "Set",
-          "start": 140.58,
-          "end": 140.9
-        },
-        {
-          "word": "you",
-          "start": 140.9,
-          "end": 141.1
-        },
-        {
-          "word": "free,",
-          "start": 141.1,
-          "end": 141.46
-        },
-        {
-          "word": "it's",
-          "start": 141.74,
-          "end": 142.54
+          "word": "It's",
+          "start": 130.08,
+          "end": 130.82
         },
         {
           "word": "time",
-          "start": 142.54,
-          "end": 142.76
+          "start": 130.82,
+          "end": 131.06
         },
         {
           "word": "to",
-          "start": 142.76,
-          "end": 142.96
+          "start": 131.06,
+          "end": 131.26
+        },
+        {
+          "word": "clap",
+          "start": 131.26,
+          "end": 131.58
+        },
+        {
+          "word": "our",
+          "start": 131.58,
+          "end": 131.82
+        },
+        {
+          "word": "hands",
+          "start": 131.82,
+          "end": 132.34
+        },
+        {
+          "word": "and",
+          "start": 132.34,
+          "end": 132.64
+        },
+        {
+          "word": "stomp",
+          "start": 132.64,
+          "end": 133.18
+        },
+        {
+          "word": "our",
+          "start": 133.18,
+          "end": 133.46
+        },
+        {
+          "word": "feet",
+          "start": 133.46,
+          "end": 133.96
+        }
+      ]
+    },
+    {
+      "start": 134.44,
+      "end": 136.26,
+      "text": "Let's have a celebration",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 134.44,
+          "end": 134.82
+        },
+        {
+          "word": "have",
+          "start": 134.82,
+          "end": 135.1
+        },
+        {
+          "word": "a",
+          "start": 135.1,
+          "end": 135.26
+        },
+        {
+          "word": "celebration",
+          "start": 135.26,
+          "end": 136.26
+        }
+      ]
+    },
+    {
+      "start": 137.5,
+      "end": 141.7,
+      "text": "If you believe that Jesus set you free",
+      "words": [
+        {
+          "word": "If",
+          "start": 137.5,
+          "end": 138.7
+        },
+        {
+          "word": "you",
+          "start": 138.7,
+          "end": 138.9
+        },
+        {
+          "word": "believe",
+          "start": 138.9,
+          "end": 139.4
+        },
+        {
+          "word": "that",
+          "start": 139.4,
+          "end": 139.66
+        },
+        {
+          "word": "Jesus",
+          "start": 139.66,
+          "end": 140.26
+        },
+        {
+          "word": "set",
+          "start": 140.26,
+          "end": 140.94
+        },
+        {
+          "word": "you",
+          "start": 140.94,
+          "end": 141.22
+        },
+        {
+          "word": "free",
+          "start": 141.22,
+          "end": 141.7
+        }
+      ]
+    },
+    {
+      "start": 141.7,
+      "end": 143.84,
+      "text": "It's time to celebrate",
+      "words": [
+        {
+          "word": "It's",
+          "start": 141.7,
+          "end": 142.64
+        },
+        {
+          "word": "time",
+          "start": 142.64,
+          "end": 142.86
+        },
+        {
+          "word": "to",
+          "start": 142.86,
+          "end": 143.06
         },
         {
           "word": "celebrate",
-          "start": 142.96,
-          "end": 143.6
+          "start": 143.06,
+          "end": 143.84
+        }
+      ]
+    },
+    {
+      "start": 143.84,
+      "end": 147.18,
+      "text": "Celebrate-ate",
+      "words": [
+        {
+          "word": "Celebrate-ate",
+          "start": 143.84,
+          "end": 147.18
+        }
+      ]
+    },
+    {
+      "start": 147.56,
+      "end": 151.1,
+      "text": "Ate-ate",
+      "words": [
+        {
+          "word": "Ate-ate",
+          "start": 147.56,
+          "end": 151.1
+        }
+      ]
+    },
+    {
+      "start": 151.1,
+      "end": 155,
+      "text": "Ate-ate",
+      "words": [
+        {
+          "word": "Ate-ate",
+          "start": 151.1,
+          "end": 155
         }
       ]
     },
@@ -1699,7 +1786,7 @@
         },
         {
           "word": "let's",
-          "start": 157.0,
+          "start": 157,
           "end": 157.44
         },
         {
@@ -1725,5 +1812,5 @@
     "energyBase64": "AAAAAAUABQgBAAAAAAAAAAAAAAAAFBMDAAAJCQcEAAYNAgAACxEKAAAMEQwMDA4AAgAAFQ8IAAcKAwkBABoIAQAHCAAGAAoTDQcIExQKCwgSEwESCxMYCAACFRIJAAACAAwACiIaDQUNDwAFAAsYEgAABQkLBwALDg4MChELCwsOEA0IAgANDQcMARQLEQoAIRkFDAEZEhATBAkIDgAAEQ4QDA4QBwwNCwsBDwgNGBETABUqIhEAERgRHxEPHBgIABUZEyIYHRMSFQAQEx4gERcXBAAAKiEVGg0bFhINAw0JHx4MCw0KBwQMCCcXDAcJCwECCQgcDxIWCgAAJSYWHAggIREMDQ8IESIQGxISEw8QABsXEhQTExMREwAkGhINEyojFQ0EGQ8KCAcbDxgmHSkbFQ8VKRsgFAgvJBoSFBIQEAgWCgYfEQkBABYRDhMwZDlOS0QrDWQ8P0E7LRchAQBkNEJDOykSIwAvYi1PSj4pDzYSDxwXZEZMUEU9GVRQMEZAMiQiIABcSDxEPzIbGQwAZDpFTUY3HiobDhoSUldBTkhDIi1hLkJAOSoSIwBCVyxEQTcmDiEAT003TEdgUj9QRmRIRE9JPicgHBRkOjg+OGQ8Q0E9ZDhDRj4wFyAAJWEjNzYwIg1jQk9ROmFGR01DPCRLUi9HQTMdEB4AWks6RkM2JSElHF4+QkpGNiQrHBQtEk5XPlBIQygoYSxDQjkkDiYAO1ozRUQ8LBguHk1SOExIPywiKhEnHidkO01NRDQfW0M9Qz8uFiELB2M7QkdCMyEtHSRiLElLUWA4UEpXXDdMS0IyGC0ETVMzRUJeTjJJQV9PN0xGOyIbJxhaQS9BOjMVQ1hCUkhOYFxYTEEhGFdTT0c6Jg0dCSlbVVdKPCsYIgQ7XlhWTDshCBUAAAAVZGJZUEA0FFBUTk1FMxYcFwBcWlZOPjcaGA0eXFtYUEMuFBgACR4LWF9dWUg+Hz1XU1FHOycSIAxEW1VUSDsrHRgAUlxYVEpeXVxTRWNhW1RKOhsfCgxYTkdGQFpUVEtKWFZTSj8uEw4ODwoGCwkJFREUDwoAEWQ7T0xBNRdgQTlGQTEXIB0RZDhESEA1GSQVIGQvSEtBKg4vFA0TCWFISk9FPhxHWSpBQDYkDCMEVU43R0I1IxQbA11BQE1HNB0kIwcQAklcPVBMRSgTZC5AQzwwHiUGLF8xR0hALh4mBERYM0tMW1k7UEhgSzgAABIRBBwRGgIAEA0aDRQYAAMAFxQWFBQPChQQAR4WCQsAFRYNEwlfSUdMRUMbQlguQz81JhQeAFROMkM+Mx0QHQBbREhRRUEeLDIOKCtCXUJUTUgvF2MyQko/KC8wEClfNktIPiwOKAA/VTFTTz81GjgiJCcbZEFOTUQ5HlpGPUZCNiQcDgBkOz5DPS8aIAcJZDVOTktiP1JOTF83UlJKOyE1IENXKUI/VVg0Sz9cVTpLSTwoERwAXEUyPzYzHTpeP1ZJTFw8TktFMRxfOEFGPSkSJAAYZDZERD0uIywYPVkyTUlAMCEyFxUPCGQ/Tk5EOx9USDpEQDIaFhUAYkBBSEI2IiYdH2QzSU1GOiYxGRgPCVtPRVFLRio5XC5FRDsjDCYASVM2SUY8LB0rGVVHQU1JYE1FTkljREROSD0nJhUOZDc/QkFkMkZCRl4ySEw+MRcsFzdbIT88NikSZEBSUDsfFwcAAh8MCg0QFBEQEA8DAAAAAAAAAAAEAAAOABocBw0AHBoCGhkNERERBBcPCAcAFBQJARsYAgALCwwJBQAABAAVDgAbFQsLAxoQFBQFGA8AAA0MCQsNDA8QDxUbCxoZGCAfLiYsKSpFWysqJD9aIS8hRVgiKSgoIx86LVRTKRoQU08uHAlcTDM3NTE1LS0qZD4vLCUsLVdQGBcFEx0VERRRXF9ZMUVBOSQRKAQ+WDNERDorHSsbUU48S0g9LCIpGCwdLl86TUxDMx1gQj9CPy0VIwoBZDxERj80ISseLWI0TEtDNSY0GCMlC2RFR05HPyVKUDpFQTQeESEAWUg8R0Y4JiUmF2BARUtHZEVNTUVjPUpORzgeKxApYi4+P0tgLEhBUlczREU5Jg0PDg0HABkUEAIABgcDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
     "onsetsBase64": "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"
   },
-  "timingMethod": "Whisper large-v3 word timestamps cross-checked against isolated vocals and the original mix."
+  "timingMethod": "Canonical Forrest Frank lyrics aligned to this recording using htdemucs_ft four-model vocal isolation, Whisper large-v3 Turbo word boundaries, and recording-derived onset analysis."
 }

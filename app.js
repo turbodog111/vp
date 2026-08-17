@@ -1285,7 +1285,7 @@ const STORY_INTERLUDES = {
   waiting: ['The room holds its breath.', 'Clouds pass the window.', 'Tomorrow turns another tooth.', 'Petals find the current.', 'The clock keeps faith.', 'Morning reaches the desk.', 'The curtain is all light.'],
   violet: ['Two futures share one frame.', 'The mirror remembers first.', 'Pain acquires an orbit.', 'The thread pulls taut.', 'Nothing deletes cleanly.', 'A white interval.', 'The orbit reverses.', 'Two answers remain.', 'Violet outlives the message.'],
   compass: ['One star, no bearing.', 'A gold cord crosses the mirror sea.', 'The needle disappears below.', 'Certainty divides the water.', 'Curiosity becomes north.', 'The cord pulls against the current.', 'Gold outruns the storm.', 'The tide answers four times.', 'One light remains.'],
-  celebration: ['The room is waking up.', 'Hands find the count.', 'Clap. Stomp. Lift.', 'The room answers back.', 'Less of me.', 'Joy takes the floor.', 'Freedom gets loud.', 'Everybody in.', 'One last celebration.'],
+  celebration: ['Creation enters the room.', 'The sphere finds the count.', 'Clap. Stomp. Let the room open.', 'Every voice becomes a facet.', 'Three names orbit one light.', 'Today refuses to wait.', 'Freedom throws back the doors.', 'Every witness joins the floor.', 'One last starburst.'],
   psalm: ['Praise breaks the horizon.', 'The heavens begin in wonder.', 'Known beneath an enormous sky.', 'The horizon learns the Name.', 'Praise becomes constellation.', 'A stronghold made of voices.', 'Yahweh across the firmament.', 'The whole sky opens.', 'Majesty fills the earth.', 'Every star joins the answer.', 'The desert keeps the light.'],
   dusty: ['Dust turns gold in the window.', 'A letter across an empty pew.', 'Busy is not the same as alive.', 'The glass goes dark.', 'The room listens.', 'One life, fully awake.', 'The pages open.', 'Only the beams are moving.', 'An old friend returns.', 'No more closed eyes.', 'Dust settles on nothing.']
 };
@@ -6446,7 +6446,7 @@ const STORY_PALETTES = {
   waiting: { bg: [246, 238, 215], deep: [105, 35, 52], primary: [181, 67, 91], secondary: [139, 194, 220], accent: [255, 250, 235] },
   violet: { bg: [10, 6, 24], deep: [3, 2, 10], primary: [144, 91, 239], secondary: [242, 87, 202], accent: [204, 224, 255] },
   compass: { bg: [18, 61, 154], deep: [2, 7, 30], primary: [255, 174, 18], secondary: [255, 225, 84], accent: [222, 236, 255] },
-  celebration: { bg: [242, 62, 152], deep: [80, 19, 76], primary: [255, 224, 72], secondary: [69, 213, 235], accent: [255, 244, 233] },
+  celebration: { bg: [242, 91, 7], deep: [72, 15, 10], primary: [255, 178, 15], secondary: [55, 207, 238], accent: [255, 247, 224] },
   psalm: { bg: [42, 79, 112], deep: [5, 14, 31], primary: [238, 202, 137], secondary: [157, 207, 224], accent: [241, 239, 217] },
   dusty: { bg: [45, 42, 31], deep: [10, 13, 11], primary: [215, 165, 86], secondary: [116, 139, 112], accent: [238, 224, 190] }
 };
@@ -6747,6 +6747,170 @@ function drawCompassTheaterFx(ctx, width, height, dpr, palette, audioTime, beat,
   }
 }
 
+function drawCelebrationTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, isPeakPhase) {
+  const sphereX = width * 0.55;
+  const sphereY = height * 0.34;
+  const sphereRadius = Math.min(width, height) * (0.105 + energy * 0.012);
+  const horizon = height * 0.72;
+  const lift = [0.22, 0.42, 0.92, 0.76, 0.4, 0.56, 0.98, 0.82, 1][phase] ?? 0.35;
+  const chorus = phase === 2 || phase === 6 || phase === 8;
+
+  // The official cover's orange field becomes a physical room whose walls
+  // open wider during each refrain. Cyan is reserved for mirrored light.
+  const room = ctx.createRadialGradient(sphereX, sphereY, sphereRadius * 0.2, sphereX, sphereY, width * 0.78);
+  room.addColorStop(0, storyCanvasColor([255, 179, 31], 0.18 + energy * 0.13 + beat.pulse * lift * 0.08));
+  room.addColorStop(0.42, storyCanvasColor([235, 71, 5], 0.12 + lift * 0.08));
+  room.addColorStop(1, storyCanvasColor([64, 8, 15], 0.44));
+  ctx.fillStyle = room; ctx.fillRect(0, 0, width, height);
+
+  // Beat-locked wall panels create hyperpop lateral motion without moving text.
+  const panelCount = chorus ? 10 : 6;
+  for (let panel = 0; panel < panelCount; panel++) {
+    const lane = panel / Math.max(1, panelCount - 1);
+    const x = lane * width + Math.sin(audioTime * 0.18 + panel) * width * 0.012;
+    const panelWidth = width * (0.025 + beat.pulse * lift * 0.018);
+    const gradient = ctx.createLinearGradient(x - panelWidth, 0, x + panelWidth, 0);
+    gradient.addColorStop(0, 'rgba(255,255,255,0)');
+    gradient.addColorStop(0.5, storyCanvasColor(panel % 3 ? palette.primary : palette.secondary, 0.018 + lift * 0.035 + beat.pulse * lift * 0.05));
+    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(x - panelWidth, 0, panelWidth * 2, height);
+  }
+
+  // Perspective floor lines make the chorus feel like the room physically
+  // expands rather than merely becoming brighter.
+  ctx.fillStyle = storyCanvasColor([45, 7, 13], 0.34);
+  ctx.fillRect(0, horizon, width, height - horizon);
+  const vanishingX = sphereX;
+  for (let ray = 0; ray < (chorus ? 18 : 10); ray++) {
+    const targetX = ray / Math.max(1, (chorus ? 17 : 9)) * width;
+    ctx.beginPath(); ctx.moveTo(vanishingX, horizon); ctx.lineTo(targetX, height);
+    ctx.strokeStyle = storyCanvasColor(ray % 3 ? palette.primary : palette.secondary, 0.04 + energy * 0.055 + beat.pulse * lift * 0.05);
+    ctx.lineWidth = dpr * (0.7 + onset * 0.8); ctx.stroke();
+  }
+  for (let row = 0; row < 7; row++) {
+    const progress = row / 6;
+    const y = horizon + (height - horizon) * progress ** 1.8;
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y);
+    ctx.strokeStyle = storyCanvasColor(row % 2 ? palette.primary : palette.secondary, 0.025 + energy * 0.04 + beat.pulse * lift * 0.04);
+    ctx.lineWidth = dpr; ctx.stroke();
+  }
+
+  // The hanging chain is intentionally still; it anchors all the faster motion.
+  ctx.beginPath(); ctx.moveTo(sphereX, 0); ctx.lineTo(sphereX, sphereY - sphereRadius);
+  ctx.strokeStyle = storyCanvasColor(palette.accent, 0.28); ctx.lineWidth = dpr * 1.2; ctx.stroke();
+  for (let link = 0; link < 12; link++) {
+    const y = (sphereY - sphereRadius) * link / 12;
+    ctx.beginPath(); ctx.ellipse(sphereX, y, dpr * 2.2, dpr * 4, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = storyCanvasColor(link % 2 ? palette.accent : palette.secondary, 0.22 + energy * 0.08); ctx.lineWidth = dpr * 0.8; ctx.stroke();
+  }
+
+  const sphereGlow = ctx.createRadialGradient(sphereX, sphereY, sphereRadius * 0.18, sphereX, sphereY, sphereRadius * 2.6);
+  sphereGlow.addColorStop(0, storyCanvasColor(palette.accent, 0.2 + energy * 0.16));
+  sphereGlow.addColorStop(0.32, storyCanvasColor(palette.secondary, 0.12 + beat.pulse * lift * 0.12));
+  sphereGlow.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = sphereGlow; ctx.fillRect(sphereX - sphereRadius * 3, sphereY - sphereRadius * 3, sphereRadius * 6, sphereRadius * 6);
+
+  // Mirror-ball facets rotate inside a fixed silhouette. A white starburst
+  // lands on the beat, matching the single hard flare in the artwork.
+  ctx.save();
+  ctx.beginPath(); ctx.arc(sphereX, sphereY, sphereRadius, 0, Math.PI * 2); ctx.clip();
+  const ball = ctx.createLinearGradient(sphereX - sphereRadius, sphereY - sphereRadius, sphereX + sphereRadius, sphereY + sphereRadius);
+  ball.addColorStop(0, storyCanvasColor([212, 247, 255], 0.96));
+  ball.addColorStop(0.42, storyCanvasColor([36, 191, 229], 0.92));
+  ball.addColorStop(1, storyCanvasColor([8, 83, 151], 0.96));
+  ctx.fillStyle = ball; ctx.fillRect(sphereX - sphereRadius, sphereY - sphereRadius, sphereRadius * 2, sphereRadius * 2);
+  for (let latitude = -4; latitude <= 4; latitude++) {
+    const y = sphereY + latitude * sphereRadius / 5 + Math.sin(audioTime * 0.35 + latitude) * dpr;
+    ctx.beginPath(); ctx.ellipse(sphereX, y, sphereRadius * Math.sqrt(Math.max(0.08, 1 - (latitude / 5) ** 2)), sphereRadius * 0.11, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = storyCanvasColor(latitude % 2 ? palette.accent : palette.secondary, 0.16 + energy * 0.11); ctx.lineWidth = dpr; ctx.stroke();
+  }
+  for (let longitude = 0; longitude < 9; longitude++) {
+    const angle = longitude * Math.PI / 9 + audioTime * 0.05;
+    ctx.beginPath(); ctx.ellipse(sphereX, sphereY, sphereRadius * Math.abs(Math.cos(angle)), sphereRadius, angle * 0.08, 0, Math.PI * 2);
+    ctx.strokeStyle = storyCanvasColor(longitude % 3 ? palette.accent : palette.primary, 0.12 + onset * 0.1); ctx.lineWidth = dpr * 0.8; ctx.stroke();
+  }
+  ctx.restore();
+  ctx.beginPath(); ctx.arc(sphereX, sphereY, sphereRadius, 0, Math.PI * 2);
+  ctx.strokeStyle = storyCanvasColor(palette.accent, 0.5 + beat.pulse * 0.24); ctx.lineWidth = dpr * (1.4 + onset * 2); ctx.stroke();
+
+  const flare = 0.35 + beat.pulse * lift * 0.65 + onset * 0.25;
+  for (let arm = 0; arm < 8; arm++) {
+    const angle = arm * Math.PI / 4;
+    const length = sphereRadius * (0.45 + flare * (arm % 2 ? 0.75 : 1.45));
+    ctx.beginPath(); ctx.moveTo(sphereX + sphereRadius * 0.48, sphereY - sphereRadius * 0.42);
+    ctx.lineTo(sphereX + sphereRadius * 0.48 + Math.cos(angle) * length, sphereY - sphereRadius * 0.42 + Math.sin(angle) * length);
+    ctx.strokeStyle = storyCanvasColor(arm % 2 ? palette.secondary : palette.accent, 0.08 + flare * 0.24);
+    ctx.lineWidth = dpr * (arm % 2 ? 0.8 : 1.6); ctx.stroke();
+  }
+
+  // Complete outbound beat rings can overlap; none contract back into the ball.
+  const period = 60 / (supportedLyricsData?.bpm || 122.03);
+  for (let echo = 0; echo < 5; echo++) {
+    const age = (beat.phase + echo) * period;
+    const progress = age / 1.55;
+    if (progress >= 1) continue;
+    const eased = 1 - (1 - progress) ** 2.1;
+    const life = Math.sin(progress * Math.PI);
+    ctx.beginPath(); ctx.arc(sphereX, sphereY, sphereRadius + eased * Math.min(width, height) * (0.3 + chorus * 0.15), 0, Math.PI * 2);
+    ctx.strokeStyle = storyCanvasColor(echo % 2 ? palette.secondary : palette.primary, life * (0.05 + energy * 0.09 + lift * 0.08));
+    ctx.lineWidth = dpr * (0.9 + onset * 2.1 + beat.pulse * lift); ctx.stroke();
+  }
+
+  // Creation symbols orbit in the opening and return as Biblical texture in
+  // the finales: sun, moon, sea, bird, cross, and three unified circles.
+  const symbols = 6;
+  for (let symbol = 0; symbol < symbols; symbol++) {
+    const angle = audioTime * (0.08 + symbol * 0.006) + symbol * Math.PI * 2 / symbols;
+    const orbitX = sphereX + Math.cos(angle) * width * (0.2 + chorus * 0.06);
+    const orbitY = sphereY + Math.sin(angle) * height * (0.17 + chorus * 0.04);
+    const alpha = 0.08 + energy * 0.12 + (phase === 0 || phase >= 6 ? 0.12 : 0.02) + beat.pulse * lift * 0.08;
+    ctx.strokeStyle = storyCanvasColor(symbol % 2 ? palette.accent : palette.secondary, alpha);
+    ctx.lineWidth = dpr * (1.1 + onset * 1.2);
+    if (symbol === 0 || symbol === 1) {
+      ctx.beginPath(); ctx.arc(orbitX, orbitY, dpr * (symbol ? 5 : 7), symbol ? -Math.PI * 0.7 : 0, Math.PI * 2); ctx.stroke();
+    } else if (symbol === 2) {
+      ctx.beginPath(); ctx.moveTo(orbitX - dpr * 8, orbitY); ctx.quadraticCurveTo(orbitX - dpr * 4, orbitY - dpr * 5, orbitX, orbitY); ctx.quadraticCurveTo(orbitX + dpr * 4, orbitY + dpr * 5, orbitX + dpr * 8, orbitY); ctx.stroke();
+    } else if (symbol === 3) {
+      ctx.beginPath(); ctx.moveTo(orbitX - dpr * 7, orbitY + dpr * 2); ctx.quadraticCurveTo(orbitX - dpr * 3, orbitY - dpr * 5, orbitX, orbitY); ctx.quadraticCurveTo(orbitX + dpr * 3, orbitY - dpr * 5, orbitX + dpr * 7, orbitY + dpr * 2); ctx.stroke();
+    } else if (symbol === 4) {
+      ctx.beginPath(); ctx.moveTo(orbitX, orbitY - dpr * 9); ctx.lineTo(orbitX, orbitY + dpr * 9); ctx.moveTo(orbitX - dpr * 6, orbitY - dpr * 2); ctx.lineTo(orbitX + dpr * 6, orbitY - dpr * 2); ctx.stroke();
+    } else {
+      for (let circle = 0; circle < 3; circle++) {
+        const a = circle * Math.PI * 2 / 3 - Math.PI / 2;
+        ctx.beginPath(); ctx.arc(orbitX + Math.cos(a) * dpr * 5, orbitY + Math.sin(a) * dpr * 5, dpr * 5, 0, Math.PI * 2); ctx.stroke();
+      }
+    }
+  }
+
+  if (phase === 3 || phase === 7) {
+    const crowd = phase === 7 ? 18 : 10;
+    for (let person = 0; person < crowd; person++) {
+      const x = width * (0.04 + person / Math.max(1, crowd - 1) * 0.92);
+      const jump = Math.sin(beat.phase * Math.PI) * height * (0.012 + (person % 4) * 0.003);
+      const y = horizon - jump;
+      ctx.beginPath(); ctx.arc(x, y - dpr * 7, dpr * 3.2, 0, Math.PI * 2);
+      ctx.fillStyle = storyCanvasColor([36, 7, 18], 0.45); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x, y - dpr * 3); ctx.lineTo(x, y + dpr * 12); ctx.moveTo(x, y); ctx.lineTo(x - dpr * 7, y - dpr * (5 + beat.pulse * 5)); ctx.moveTo(x, y); ctx.lineTo(x + dpr * 7, y - dpr * (5 + beat.pulse * 5));
+      ctx.strokeStyle = storyCanvasColor(person % 3 ? palette.accent : palette.secondary, 0.11 + energy * 0.13 + beat.pulse * 0.12); ctx.lineWidth = dpr * 1.4; ctx.stroke();
+    }
+  }
+
+  if (isPeakPhase) {
+    drawStoryKineticPass(ctx, width, height, palette, audioTime, beat, energy, onset, chorus ? 1.05 : 0.68, phase % 2 ? -1 : 1);
+    const shards = chorus ? 28 : 15;
+    for (let shard = 0; shard < shards; shard++) {
+      const angle = seededUnit(shard * 13.7) * Math.PI * 2 + audioTime * (0.04 + shard % 5 * 0.004);
+      const distance = sphereRadius * 1.2 + seededUnit(shard * 41.2) * Math.min(width, height) * 0.36;
+      const x = sphereX + Math.cos(angle) * distance;
+      const y = sphereY + Math.sin(angle) * distance * 0.72;
+      ctx.save(); ctx.translate(x, y); ctx.rotate(angle + beat.pulse * 0.12);
+      ctx.fillStyle = storyCanvasColor(shard % 3 ? palette.secondary : palette.accent, 0.04 + energy * 0.12 + beat.pulse * lift * 0.1);
+      ctx.fillRect(-dpr * 3, -dpr, dpr * (6 + shard % 4 * 2), dpr * 2); ctx.restore();
+    }
+  }
+}
+
 function drawStoryTheaterFx(levels, audioTime) {
   const canvas = $('story-fx');
   const theater = $('story-theater');
@@ -7034,36 +7198,7 @@ function drawStoryTheaterFx(levels, audioTime) {
   } else if (variant === 'compass') {
     drawCompassTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, cx, cy);
   } else if (variant === 'celebration') {
-    drawStoryKineticPass(ctx, width, height, palette, audioTime, beat, energy, onset, isPeakPhase ? 1.35 : 0.52, 1);
-    const shift = (audioTime * (supportedLyricsData?.bpm || 123) / 60) % 1;
-    for (let panel = -1; panel < 9; panel++) {
-      const x = (panel + shift) * width / 7 - width * 0.12;
-      ctx.save(); ctx.translate(x, height * 0.5); ctx.rotate(panel % 2 ? -0.16 : 0.16);
-      ctx.fillStyle = storyCanvasColor(panel % 3 === 0 ? palette.secondary : panel % 3 === 1 ? palette.primary : palette.accent, 0.018 + energy * 0.045 + beat.pulse * peak * 0.04);
-      ctx.fillRect(-width * 0.035, -height, width * 0.07, height * 2); ctx.restore();
-    }
-    const burstCount = peak > 0.5 ? 68 : 24;
-    for (let index = 0; index < burstCount; index++) {
-      const travel = (seededUnit(index * 11.7) + audioTime * (0.035 + index % 6 * 0.004)) % 1;
-      const x = seededUnit(index * 27.4) * width + Math.sin(audioTime + index) * dpr * 12;
-      const y = travel * height;
-      ctx.save(); ctx.translate(x, y); ctx.rotate(audioTime * (0.4 + index % 4 * 0.12));
-      ctx.fillStyle = storyCanvasColor(index % 4 === 0 ? palette.secondary : index % 3 === 0 ? palette.primary : palette.accent, (0.035 + energy * 0.18 + onset * 0.13) * peak);
-      ctx.fillRect(-dpr * 2, -dpr * 5, dpr * 4, dpr * 10); ctx.restore();
-    }
-    for (let ring = 0; ring < 5; ring++) {
-      const radius = (ring + 1) * Math.min(width, height) * 0.08 + beat.pulse * dpr * 9;
-      ctx.beginPath(); ctx.arc(width * 0.32, height * 0.48, radius, 0, Math.PI * 2);
-      ctx.strokeStyle = storyCanvasColor(ring % 2 ? palette.secondary : palette.primary, 0.035 + beat.pulse * peak * 0.1); ctx.lineWidth = dpr * (1 + onset * 3); ctx.stroke();
-    }
-    const jump = Math.sin(beat.phase * Math.PI);
-    for (let badge = 0; badge < (isPeakPhase ? 16 : 8); badge++) {
-      const x = width * (0.08 + seededUnit(badge * 17.3) * 0.84);
-      const baseY = height * (0.18 + seededUnit(badge * 37.1) * 0.64);
-      const y = baseY - jump * height * (0.012 + seededUnit(badge * 7.4) * 0.025) * (0.4 + peak);
-      const size = dpr * (3 + badge % 5 + beat.pulse * peak * 4);
-      drawStorySpark(ctx, x, y, size, badge % 3 ? palette.accent : palette.primary, 0.08 + energy * 0.14 + beat.pulse * peak * 0.18, audioTime * 0.18 + badge);
-    }
+    drawCelebrationTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, isPeakPhase);
   } else if (variant === 'psalm') {
     const horizon = height * 0.79;
     const skyLift = clamp(0, 1, phase / 9);
