@@ -3678,15 +3678,86 @@ body.story-theater-active .now-view.active {
   box-shadow: 16px 0 36px rgba(255, 230, 93, 0.18);
 }
 .story-theater[data-story="celebration"][data-phase="4"] .story-word.is-sung { color: #ffe65d; -webkit-text-fill-color: #ffe65d; }
-.story-theater[data-story="psalm"] .story-control-sigil { border-width: 1px 0 0; border-radius: 50% 50% 0 0; }
-.story-theater[data-story="psalm"] .story-sigil { border-width: 1px 0 0; border-radius: 50% 50% 0 0; }
-.story-theater[data-story="psalm"] .story-word.is-pending { color: #9eb7cc; }
-.story-theater[data-story="psalm"] .story-word.is-sung { color: #edca89; }
-.story-theater[data-story="psalm"] .story-word.is-current { color: #fffdf2; }
-.story-theater[data-story="psalm"].is-peak .story-section-lockup {
-  border-right-color: #edca89;
-  box-shadow: 16px 0 36px rgba(238, 202, 137, 0.12);
+.story-theater[data-story="psalm"] { color: #f8f4e3; }
+.story-theater[data-story="psalm"] .story-header h1 {
+  max-width: 70%;
+  color: #f8f4e3;
+  font-size: clamp(31px, 4.2vw, 55px);
+  font-weight: 720;
+  text-shadow: 0 3px 10px rgba(18, 16, 16, 0.92), 0 0 22px rgba(139, 205, 226, 0.14);
 }
+.story-theater[data-story="psalm"] .story-overline,
+.story-theater[data-story="psalm"] .story-act,
+.story-theater[data-story="psalm"] .story-section-lockup span { color: #8bcde2; }
+.story-theater[data-story="psalm"] .story-section-lockup {
+  border-right-color: #8bcde2;
+  background: rgba(22, 22, 24, 0.74);
+  box-shadow: 14px 0 32px rgba(139, 205, 226, 0.1);
+}
+.story-theater[data-story="psalm"] .story-section-lockup b { color: #ddac63; }
+.story-theater[data-story="psalm"] .story-sigil {
+  border-width: 1px 0 0;
+  border-radius: 50% 50% 0 0;
+  box-shadow: 0 -5px 13px rgba(139, 205, 226, 0.18), inset 0 4px 0 rgba(221, 172, 99, 0.07);
+}
+.story-theater[data-story="psalm"] .story-lyrics::before {
+  inset: -38% -12%;
+  background: radial-gradient(ellipse, rgba(19, 19, 21, 0.84) 0, rgba(19, 19, 21, 0.58) 46%, rgba(19, 19, 21, 0.1) 75%, transparent 83%);
+}
+.story-theater[data-story="psalm"] .story-context {
+  color: #add7e4;
+  text-shadow: 0 2px 7px rgba(15, 15, 17, 0.98);
+}
+.story-theater[data-story="psalm"] .story-current {
+  color: #f8f4e3;
+  text-shadow: 0 3px 8px rgba(15, 15, 17, 0.98), 0 0 calc(8px + var(--story-energy) * 14px) rgba(221, 172, 99, 0.24);
+}
+.story-theater[data-story="psalm"] .story-word { background: none; -webkit-text-fill-color: currentColor; }
+.story-theater[data-story="psalm"] .story-word.is-pending {
+  color: #99acb2;
+  -webkit-text-fill-color: #99acb2;
+}
+.story-theater[data-story="psalm"] .story-word.is-sung {
+  color: #8bcde2;
+  -webkit-text-fill-color: #8bcde2;
+  text-shadow: 0 2px 6px rgba(15, 15, 17, 0.96), 0 0 9px rgba(139, 205, 226, 0.22);
+}
+.story-theater[data-story="psalm"] .story-word.is-current {
+  color: #f8f4e3;
+  -webkit-text-fill-color: #f8f4e3;
+  text-shadow: 0 2px 7px rgba(15, 15, 17, 1), 0 0 calc(10px + var(--story-energy) * 14px) rgba(221, 172, 99, 0.44);
+}
+.story-theater[data-story="psalm"] .story-control-sigil {
+  border-width: 1px 0 0;
+  border-radius: 50% 50% 0 0;
+  border-color: rgba(139, 205, 226, 0.46);
+  box-shadow: 0 -7px calc(15px + var(--story-energy) * 28px) rgba(139, 205, 226, 0.22);
+}
+.story-theater[data-story="psalm"] .story-control-sigil::before {
+  border-color: rgba(248, 244, 227, 0.24);
+  transform: rotate(calc(var(--story-beat) * 4deg));
+}
+.story-theater[data-story="psalm"] .story-control-sigil::after { border-color: rgba(221, 172, 99, 0.36); }
+.story-theater[data-story="psalm"] .story-control-sigil span { border-color: rgba(139, 205, 226, 0.56); }
+.story-theater[data-story="psalm"] .story-play {
+  border-color: #8bcde2;
+  background: radial-gradient(circle, rgba(24, 23, 24, 0.98) 53%, transparent 55%),
+    conic-gradient(#ddac63 var(--story-progress), rgba(248, 244, 227, 0.15) 0);
+  color: #f8f4e3;
+  box-shadow: 0 0 0 6px rgba(24, 23, 24, 0.66), 0 0 calc(16px + var(--story-energy) * 34px) rgba(139, 205, 226, 0.24);
+}
+.story-theater[data-story="psalm"] .story-play:hover { border-color: #f8f4e3; color: #ddac63; }
+.story-theater[data-story="psalm"] .story-time,
+.story-theater[data-story="psalm"] .story-footer-copy { color: rgba(248, 244, 227, 0.79); }
+.story-theater[data-story="psalm"] .story-progress { background: rgba(248, 244, 227, 0.13); }
+.story-theater[data-story="psalm"] .story-progress span { background: linear-gradient(90deg, #8bcde2, #f8f4e3, #ddac63); }
+.story-theater[data-story="psalm"].is-peak .story-section-lockup {
+  border-right-color: #ddac63;
+  box-shadow: 16px 0 36px rgba(221, 172, 99, 0.18);
+}
+.story-theater[data-story="psalm"].is-peak .story-word.is-sung { color: #ddac63; -webkit-text-fill-color: #ddac63; }
+.story-theater[data-story="psalm"][data-phase="8"] .story-word.is-sung { color: #f8f4e3; -webkit-text-fill-color: #f8f4e3; }
+.story-theater[data-story="psalm"][data-phase="8"] .story-word.is-current { color: #8bcde2; -webkit-text-fill-color: #8bcde2; }
 .story-theater[data-story="dusty"] .story-sigil { height: 22px; border-radius: 50% 50% 2px 2px; }
 .story-theater[data-story="dusty"] .story-control-sigil { border-radius: 50% 50% 5px 5px; }
 .story-theater[data-story="dusty"] .story-header h1 { font-family: Georgia, serif; font-weight: 700; }

@@ -1295,7 +1295,7 @@ const STORY_PEAK_PHASES = {
   violet: [2, 4, 7],
   compass: [2, 4, 5, 6],
   celebration: [2, 3, 6, 7, 8],
-  psalm: [3, 5, 6, 8],
+  psalm: [2, 3, 5, 6, 7, 8],
   dusty: [3, 6, 9]
 };
 
@@ -6447,7 +6447,7 @@ const STORY_PALETTES = {
   violet: { bg: [10, 6, 24], deep: [3, 2, 10], primary: [144, 91, 239], secondary: [242, 87, 202], accent: [204, 224, 255] },
   compass: { bg: [18, 61, 154], deep: [2, 7, 30], primary: [255, 174, 18], secondary: [255, 225, 84], accent: [222, 236, 255] },
   celebration: { bg: [242, 91, 7], deep: [72, 15, 10], primary: [255, 178, 15], secondary: [55, 207, 238], accent: [255, 247, 224] },
-  psalm: { bg: [42, 79, 112], deep: [5, 14, 31], primary: [238, 202, 137], secondary: [157, 207, 224], accent: [241, 239, 217] },
+  psalm: { bg: [164, 179, 185], deep: [30, 25, 25], primary: [221, 172, 99], secondary: [139, 205, 226], accent: [248, 244, 227] },
   dusty: { bg: [45, 42, 31], deep: [10, 13, 11], primary: [215, 165, 86], secondary: [116, 139, 112], accent: [238, 224, 190] }
 };
 
@@ -6911,6 +6911,182 @@ function drawCelebrationTheaterFx(ctx, width, height, dpr, palette, audioTime, b
   }
 }
 
+function drawPsalmTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, isPeakPhase) {
+  const horizon = height * 0.72;
+  const centerX = width * 0.52;
+  const liftByPhase = [0.25, 0.34, 0.7, 0.92, 0.48, 0.9, 1, 0.82, 1, 0.24];
+  const lift = liftByPhase[phase] ?? 0.34;
+  const praise = isPeakPhase ? 1 : 0.22;
+
+  // Keep the cover-art field steady while the firmament becomes the stage.
+  const sky = ctx.createLinearGradient(0, 0, 0, horizon);
+  sky.addColorStop(0, storyCanvasColor([181, 198, 204], 0.98));
+  sky.addColorStop(0.52, storyCanvasColor([145, 169, 180], 0.96));
+  sky.addColorStop(1, storyCanvasColor([218, 174, 116], 0.86));
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, width, horizon);
+
+  const glow = ctx.createRadialGradient(centerX, horizon * 0.9, 0, centerX, horizon * 0.9, width * 0.68);
+  glow.addColorStop(0, storyCanvasColor(palette.primary, 0.12 + energy * 0.11 + beat.pulse * lift * 0.1));
+  glow.addColorStop(0.48, storyCanvasColor(palette.secondary, 0.04 + praise * 0.045));
+  glow.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, width, height);
+
+  ctx.fillStyle = storyCanvasColor([63, 76, 77], 0.66);
+  ctx.beginPath();
+  ctx.moveTo(0, horizon * 0.89);
+  for (let ridge = 0; ridge <= 16; ridge++) {
+    ctx.lineTo(ridge / 16 * width, horizon * (0.87 + seededUnit(ridge * 31.7) * 0.08));
+  }
+  ctx.lineTo(width, horizon);
+  ctx.lineTo(0, horizon);
+  ctx.closePath();
+  ctx.fill();
+
+  const field = ctx.createLinearGradient(0, horizon, 0, height);
+  field.addColorStop(0, storyCanvasColor([109, 91, 65], 0.98));
+  field.addColorStop(1, storyCanvasColor([31, 26, 24], 1));
+  ctx.fillStyle = field;
+  ctx.fillRect(0, horizon, width, height - horizon);
+  for (let row = 0; row < 6; row++) {
+    const depth = row / 5;
+    const y = horizon + (height - horizon) * depth ** 1.65;
+    ctx.beginPath();
+    for (let blade = 0; blade <= 28; blade++) {
+      const x = blade / 28 * width + Math.sin(blade * 1.31 + audioTime * 0.12 + row) * dpr * (1 + depth * 3);
+      blade ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    }
+    ctx.strokeStyle = storyCanvasColor(row % 3 ? palette.primary : palette.secondary, 0.025 + depth * 0.045 + energy * 0.035);
+    ctx.lineWidth = dpr * (0.6 + depth * 0.8);
+    ctx.stroke();
+  }
+
+  // Each 120 BPM vault completes its outward journey; several can overlap.
+  const period = 60 / (supportedLyricsData?.bpm || 120.045);
+  for (let echo = 0; echo < 5; echo++) {
+    const progress = ((beat.phase + echo) * period) / 1.65;
+    if (progress >= 1) continue;
+    const eased = 1 - (1 - progress) ** 2.2;
+    const life = Math.sin(progress * Math.PI);
+    const radius = Math.min(width, height) * (0.1 + eased * (0.62 + praise * 0.18));
+    ctx.beginPath();
+    ctx.arc(centerX, horizon, radius, Math.PI, Math.PI * 2);
+    ctx.strokeStyle = storyCanvasColor(echo % 2 ? palette.secondary : palette.primary, life * (0.045 + energy * 0.08 + praise * 0.085));
+    ctx.lineWidth = dpr * (0.9 + onset * 2.2 + beat.pulse * praise * 0.8);
+    ctx.stroke();
+  }
+
+  // Sun, moon, and stars directly answer the creation language in the lyric.
+  const moonX = width * 0.78;
+  const moonY = height * 0.18;
+  const moonRadius = Math.min(width, height) * 0.045;
+  ctx.beginPath();
+  ctx.arc(moonX, moonY, moonRadius, -Math.PI * 0.7, Math.PI * 0.72);
+  ctx.strokeStyle = storyCanvasColor(palette.accent, 0.42 + energy * 0.22 + beat.pulse * praise * 0.16);
+  ctx.lineWidth = dpr * (1.5 + onset * 1.6);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(width * 0.2, height * 0.22, moonRadius * 0.62, 0, Math.PI * 2);
+  ctx.strokeStyle = storyCanvasColor(palette.primary, 0.18 + energy * 0.14);
+  ctx.lineWidth = dpr * 1.1;
+  ctx.stroke();
+
+  const starCount = isPeakPhase ? 58 : 31;
+  const starPoints = [];
+  for (let index = 0; index < starCount; index++) {
+    const x = seededUnit(index * 18.9) * width;
+    const y = height * (0.07 + seededUnit(index * 53.2) * 0.49);
+    const twinkle = 0.5 + Math.sin(audioTime * (0.34 + index % 6 * 0.035) + index) * 0.5;
+    starPoints.push([x, y]);
+    drawStorySpark(ctx, x, y, dpr * (1 + index % 3 + beat.pulse * praise), index % 5 ? palette.accent : palette.secondary, 0.07 + twinkle * (0.1 + energy * 0.16) + beat.pulse * praise * 0.06, index * 0.3);
+  }
+  for (let link = 0; link < (isPeakPhase ? 16 : 5); link++) {
+    const a = starPoints[(link * 3) % starPoints.length];
+    const b = starPoints[(link * 3 + 7) % starPoints.length];
+    ctx.beginPath();
+    ctx.moveTo(a[0], a[1]);
+    ctx.lineTo(b[0], b[1]);
+    ctx.strokeStyle = storyCanvasColor(link % 2 ? palette.secondary : palette.primary, 0.025 + energy * 0.05 + beat.pulse * praise * 0.055);
+    ctx.lineWidth = dpr * 0.8;
+    ctx.stroke();
+  }
+
+  // A crown of glory materializes only during praise sections.
+  if (isPeakPhase) {
+    const crownY = height * 0.24;
+    ctx.beginPath();
+    ctx.moveTo(centerX - width * 0.08, crownY + height * 0.035);
+    ctx.lineTo(centerX - width * 0.055, crownY);
+    ctx.lineTo(centerX, crownY + height * 0.025);
+    ctx.lineTo(centerX + width * 0.055, crownY);
+    ctx.lineTo(centerX + width * 0.08, crownY + height * 0.035);
+    ctx.strokeStyle = storyCanvasColor(palette.primary, 0.13 + energy * 0.19 + beat.pulse * 0.17);
+    ctx.lineWidth = dpr * (1.2 + onset * 2);
+    ctx.stroke();
+  }
+
+  // Human scale remains small like the cover. Psalm 8:2 adds two children.
+  const drawWitness = (x, y, scale, armsRaised, alpha) => {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(scale, scale);
+    ctx.strokeStyle = storyCanvasColor([17, 18, 20], alpha);
+    ctx.fillStyle = storyCanvasColor([17, 18, 20], alpha);
+    ctx.lineWidth = dpr * 2;
+    ctx.beginPath();
+    ctx.arc(0, -dpr * 24, dpr * 5.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(0, -dpr * 18); ctx.lineTo(0, dpr * 6);
+    ctx.moveTo(0, dpr * 6); ctx.lineTo(-dpr * 6, dpr * 22);
+    ctx.moveTo(0, dpr * 6); ctx.lineTo(dpr * 6, dpr * 22);
+    if (armsRaised) {
+      const rise = dpr * (12 + beat.pulse * praise * 3);
+      ctx.moveTo(0, -dpr * 12); ctx.lineTo(-dpr * 10, -rise);
+      ctx.moveTo(0, -dpr * 12); ctx.lineTo(dpr * 10, -rise);
+    } else {
+      ctx.moveTo(0, -dpr * 12); ctx.lineTo(-dpr * 7, dpr);
+      ctx.moveTo(0, -dpr * 12); ctx.lineTo(dpr * 7, dpr);
+    }
+    ctx.stroke();
+    ctx.restore();
+  };
+  drawWitness(centerX, horizon + height * 0.09, 1.05, phase >= 2, 0.92);
+  if (phase === 4) {
+    drawWitness(centerX - width * 0.045, horizon + height * 0.095, 0.66, true, 0.76);
+    drawWitness(centerX + width * 0.045, horizon + height * 0.095, 0.58, true, 0.76);
+  }
+
+  // Praise adds lateral shutters, comet trails, and a beat-bright cross.
+  if (isPeakPhase) {
+    drawStoryKineticPass(ctx, width, height, palette, audioTime, beat, energy, onset, phase === 8 ? 1.12 : 0.82, phase % 2 ? 1 : -1);
+    for (let shutter = 0; shutter < (phase === 8 ? 14 : 9); shutter++) {
+      const side = shutter % 2 ? 1 : -1;
+      const y = height * (0.1 + seededUnit(shutter * 24.2) * 0.55);
+      const length = width * (0.035 + energy * 0.045 + shutter % 3 * 0.015);
+      const x = side > 0 ? width : 0;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x - side * length * (0.7 + beat.pulse * 0.55), y + side * length * 0.08);
+      ctx.strokeStyle = storyCanvasColor(shutter % 3 ? palette.secondary : palette.primary, 0.05 + energy * 0.1 + beat.pulse * 0.08);
+      ctx.lineWidth = dpr * (0.8 + onset * 2.2);
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.moveTo(centerX, horizon - height * 0.13);
+    ctx.lineTo(centerX, horizon - height * 0.035);
+    ctx.moveTo(centerX - width * 0.025, horizon - height * 0.095);
+    ctx.lineTo(centerX + width * 0.025, horizon - height * 0.095);
+    ctx.strokeStyle = storyCanvasColor(palette.accent, 0.1 + energy * 0.16 + beat.pulse * 0.2);
+    ctx.lineWidth = dpr * (1.3 + onset * 2.8);
+    ctx.shadowColor = storyCanvasColor(palette.primary, 0.28);
+    ctx.shadowBlur = dpr * (5 + beat.pulse * 12);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  }
+}
+
 function drawStoryTheaterFx(levels, audioTime) {
   const canvas = $('story-fx');
   const theater = $('story-theater');
@@ -7200,100 +7376,7 @@ function drawStoryTheaterFx(levels, audioTime) {
   } else if (variant === 'celebration') {
     drawCelebrationTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, isPeakPhase);
   } else if (variant === 'psalm') {
-    const horizon = height * 0.79;
-    const skyLift = clamp(0, 1, phase / 9);
-    const praise = isPeakPhase ? 1 : 0.24;
-    drawStoryKineticPass(ctx, width, height, palette, audioTime, beat, energy, onset, isPeakPhase ? 1.28 : 0.38, phase % 2 ? 1 : -1);
-
-    const glow = ctx.createRadialGradient(width * 0.52, horizon, 0, width * 0.52, horizon, width * 0.72);
-    glow.addColorStop(0, storyCanvasColor(palette.primary, 0.15 + skyLift * 0.1 + energy * 0.09 + beat.pulse * praise * 0.12));
-    glow.addColorStop(0.42, storyCanvasColor(palette.secondary, 0.04 + praise * 0.055));
-    glow.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = glow; ctx.fillRect(0, 0, width, height);
-
-    // Celestial ribbons turn the sky itself into the spectrum. They drift in
-    // verses and widen into bright counter-moving bands during praise sections.
-    for (let ribbon = 0; ribbon < (isPeakPhase ? 6 : 3); ribbon++) {
-      const baseY = height * (0.12 + ribbon * 0.095);
-      const amplitude = height * (0.018 + energy * 0.026 + praise * 0.018);
-      ctx.beginPath();
-      for (let point = 0; point <= 48; point++) {
-        const progress = point / 48;
-        const x = progress * width;
-        const y = baseY + Math.sin(progress * Math.PI * (2.1 + ribbon * 0.16) + audioTime * (0.2 + ribbon * 0.025) * (ribbon % 2 ? -1 : 1)) * amplitude;
-        point ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-      }
-      ctx.strokeStyle = storyCanvasColor(ribbon % 3 === 0 ? palette.primary : ribbon % 3 === 1 ? palette.secondary : palette.accent, 0.055 + energy * 0.075 + praise * 0.075);
-      ctx.lineWidth = dpr * (1.2 + energy * 2.2 + beat.pulse * praise * 1.8);
-      ctx.shadowColor = storyCanvasColor(ribbon % 2 ? palette.secondary : palette.primary, 0.18 + praise * 0.12);
-      ctx.shadowBlur = dpr * (5 + praise * 10);
-      ctx.stroke(); ctx.shadowBlur = 0;
-    }
-
-    // The chorus opens a fan of light from the horizon; regular sections keep
-    // a smaller moving canopy so the contrast is structural, not just brighter.
-    const rayCount = isPeakPhase ? 20 : 8;
-    for (let ray = 0; ray < rayCount; ray++) {
-      const angle = -Math.PI * 0.91 + ray * (Math.PI * 0.82 / Math.max(1, rayCount - 1)) + Math.sin(audioTime * 0.16) * 0.025;
-      const length = Math.hypot(width, height) * (0.58 + energy * 0.1);
-      const spread = 0.012 + beat.pulse * praise * 0.012;
-      ctx.beginPath(); ctx.moveTo(width * 0.52, horizon);
-      ctx.lineTo(width * 0.52 + Math.cos(angle - spread) * length, horizon + Math.sin(angle - spread) * length);
-      ctx.lineTo(width * 0.52 + Math.cos(angle + spread) * length, horizon + Math.sin(angle + spread) * length);
-      ctx.closePath();
-      ctx.fillStyle = storyCanvasColor(ray % 3 ? palette.secondary : palette.primary, 0.012 + energy * 0.018 + praise * (0.026 + beat.pulse * 0.035));
-      ctx.fill();
-    }
-
-    ctx.fillStyle = storyCanvasColor([18, 20, 25], 0.7); ctx.beginPath(); ctx.moveTo(0, horizon);
-    for (let point = 0; point <= 12; point++) ctx.lineTo(point / 12 * width, horizon - seededUnit(point * 31.2) * height * 0.055);
-    ctx.lineTo(width, height); ctx.lineTo(0, height); ctx.closePath(); ctx.fill();
-    const stars = (isPeakPhase ? 66 : 38) + Math.round(energy * (isPeakPhase ? 26 : 16));
-    for (let index = 0; index < stars; index++) {
-      const x = seededUnit(index * 18.9) * width;
-      const y = seededUnit(index * 53.2) * horizon * 0.88;
-      const twinkle = 0.5 + Math.sin(audioTime * (0.45 + index % 7 * 0.07) + index) * 0.5;
-      if (isPeakPhase && index % 5 === 0) {
-        const trail = dpr * (7 + energy * 12 + beat.pulse * 10);
-        ctx.beginPath(); ctx.moveTo(x - trail, y + trail * 0.32); ctx.lineTo(x, y);
-        ctx.strokeStyle = storyCanvasColor(index % 2 ? palette.secondary : palette.primary, 0.05 + energy * 0.12 + beat.pulse * 0.1);
-        ctx.lineWidth = dpr; ctx.stroke();
-      }
-      drawStorySpark(ctx, x, y, dpr * (1.2 + index % 4 + beat.pulse * praise * 1.2), index % 4 ? palette.accent : palette.primary, 0.055 + twinkle * (0.1 + energy * 0.2) + beat.pulse * praise * 0.08, index);
-    }
-
-    // Constellation threads become legible only in the refrains, giving the
-    // chorus a second visual identity beyond particle density.
-    for (let link = 0; link < (isPeakPhase ? 22 : 7); link++) {
-      const x1 = seededUnit(link * 18.9) * width;
-      const y1 = seededUnit(link * 53.2) * horizon * 0.82;
-      const x2 = seededUnit((link + 5) * 18.9) * width;
-      const y2 = seededUnit((link + 5) * 53.2) * horizon * 0.82;
-      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
-      ctx.strokeStyle = storyCanvasColor(link % 2 ? palette.secondary : palette.primary, 0.018 + energy * 0.035 + praise * beat.pulse * 0.04);
-      ctx.lineWidth = dpr * 0.8; ctx.stroke();
-    }
-
-    const period = 60 / (supportedLyricsData?.bpm || 117.454);
-    for (let arc = 0; arc < 7; arc++) {
-      const age = (beat.phase + arc) * period;
-      const progress = age / 1.72;
-      if (progress >= 1) continue;
-      const eased = 1 - (1 - progress) ** 2.3;
-      const life = Math.sin(progress * Math.PI);
-      ctx.beginPath();
-      ctx.arc(width * 0.52, horizon, Math.min(width, height) * (0.09 + eased * 0.92), Math.PI, Math.PI * 2);
-      ctx.strokeStyle = storyCanvasColor(arc % 2 ? palette.secondary : palette.primary, life * (0.055 + energy * 0.08 + praise * 0.1));
-      ctx.lineWidth = dpr * (1 + onset * 2.8 + praise * beat.pulse * 1.4); ctx.stroke();
-    }
-
-    if (isPeakPhase) {
-      const praiseWash = ctx.createLinearGradient(0, height, width, 0);
-      praiseWash.addColorStop(0, storyCanvasColor(palette.deep, 0));
-      praiseWash.addColorStop(0.52, storyCanvasColor(palette.primary, 0.035 + beat.pulse * 0.07 + onset * 0.045));
-      praiseWash.addColorStop(1, storyCanvasColor(palette.secondary, 0.025 + energy * 0.055));
-      ctx.fillStyle = praiseWash; ctx.fillRect(0, 0, width, height);
-    }
+    drawPsalmTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, isPeakPhase);
   } else if (variant === 'dusty') {
     drawStoryKineticPass(ctx, width, height, palette, audioTime, beat, energy, onset, isPeakPhase ? 1.08 : 0.34, phase >= 7 ? -1 : 1);
     const revival = isPeakPhase ? 1 : 0.22;
