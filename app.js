@@ -75,6 +75,16 @@ const SUPPORTED_LYRIC_TRACKS = {
     dataUrl: './songs/lyrics/hero.json',
     scene: 'hero-story',
     variant: 'rie'
+  },
+  'songs/mimi - encore dance (japanese)': {
+    dataUrl: './songs/lyrics/encore-dance.json',
+    scene: 'encore-dance',
+    variant: 'jp'
+  },
+  'songs/moonlit star - encore dance (english)': {
+    dataUrl: './songs/lyrics/encore-dance.json',
+    scene: 'encore-dance',
+    variant: 'en'
   }
 };
 const SONG_METADATA_OVERRIDES = {
@@ -157,6 +167,7 @@ let supportedLyricsSectionIndex = -2;
 let supportedLyricsWordNodes = [];
 let oneMoreBiteSceneActive = false;
 let heroStorySceneActive = false;
+let encoreSceneActive = false;
 const SONG_EQ_STORAGE_KEY = 'vp_song_eq_v1';
 const EQ_BANDS = [
   { frequency: 60, type: 'lowshelf', label: 'Sub', detail: '60 Hz' },
@@ -296,6 +307,14 @@ const HERO_STORY_MOTES = Array.from({ length: 32 }, (_, i) => ({
   phase: seededUnit((i + 1) * 47.31) * Math.PI * 2,
   speed: 0.14 + seededUnit((i + 1) * 19.07) * 0.34,
   kind: i % 4
+}));
+const ENCORE_MOTES = Array.from({ length: 36 }, (_, i) => ({
+  x: 0.02 + seededUnit((i + 1) * 29.17) * 0.96,
+  y: 0.05 + seededUnit((i + 1) * 61.43) * 0.86,
+  size: 1.1 + seededUnit((i + 1) * 13.91) * 3.8,
+  phase: seededUnit((i + 1) * 71.03) * Math.PI * 2,
+  speed: 0.18 + seededUnit((i + 1) * 23.27) * 0.42,
+  lane: i % 6
 }));
 const TETO_FX_OBJECTS = Array.from({ length: 24 }, (_, i) => {
   const a = seededUnit((i + 1) * 24.271);
@@ -638,6 +657,14 @@ function heroStoryVariant(song = currentSong()) {
   return supportedLyricTrackForSong(song)?.variant || 'mili';
 }
 
+function isEncoreDanceSong(song = currentSong()) {
+  return supportedLyricTrackForSong(song)?.scene === 'encore-dance';
+}
+
+function encoreDanceVariant(song = currentSong()) {
+  return supportedLyricTrackForSong(song)?.variant || 'jp';
+}
+
 async function loadSupportedLyrics(config) {
   if (!config) return null;
   if (supportedLyricsData && supportedLyricsSongKey === config.key) return supportedLyricsData;
@@ -651,14 +678,17 @@ async function loadSupportedLyrics(config) {
     })
     .then(data => {
       if (supportedLyricsSongKey !== config.key) return null;
-      if (!Array.isArray(data.lines) || !Array.isArray(data.sections)) {
+      const hasLines = Array.isArray(data.lines) || Object.values(data.variants || {}).some(variant => Array.isArray(variant?.lines));
+      if (!hasLines || !Array.isArray(data.sections)) {
         throw new Error('lyrics file is missing lines or sections');
       }
       supportedLyricsData = data;
       supportedLyricsPromise = null;
       supportedLyricsLineIndex = -2;
       supportedLyricsSectionIndex = -2;
-      if (config.scene === 'hero-story') {
+      if (config.scene === 'encore-dance') {
+        updateEncoreDanceLyrics(currentCalibratedTime(), true);
+      } else if (config.scene === 'hero-story') {
         updateHeroStoryLyrics(currentCalibratedTime(), true);
       } else {
         updateOneMoreBiteLyrics(currentCalibratedTime(), true);
@@ -668,7 +698,11 @@ async function loadSupportedLyrics(config) {
     .catch(error => {
       supportedLyricsPromise = null;
       console.warn('Could not load supported lyrics:', error);
-      const current = config.scene === 'hero-story' ? $('hero-story-current') : $('omb-lyric-current');
+      const current = config.scene === 'encore-dance'
+        ? $('encore-current')
+        : config.scene === 'hero-story'
+          ? $('hero-story-current')
+          : $('omb-lyric-current');
       if (current) current.textContent = 'Lyrics could not be loaded.';
       return null;
     });
@@ -1055,6 +1089,155 @@ function setHeroStoryTheaterActive(active, song = currentSong()) {
   }
 }
 
+function encoreCanonicalTime(audioTime, variant = encoreDanceVariant()) {
+  const offset = variant === 'en' ? (supportedLyricsData?.timing?.enOffset ?? 0.05) : 0;
+  return Math.max(0, audioTime - offset);
+}
+
+function encoreVariantData(variant = encoreDanceVariant()) {
+  return supportedLyricsData?.variants?.[variant] || null;
+}
+
+function encoreAnalysisProfile(variant = encoreDanceVariant()) {
+  return supportedLyricsData?.analysis?.[variant] || supportedLyricsData?.analysis?.jp || null;
+}
+
+function encoreAnalysisAt(audioTime, variant = encoreDanceVariant()) {
+  const analysis = encoreAnalysisProfile(variant);
+  const energyValues = decodedOneMoreBiteEnvelope(analysis, 'energy');
+  const onsetValues = decodedOneMoreBiteEnvelope(analysis, 'onsets');
+  if (!analysis?.step || !energyValues.length) return { energy: 0, onset: 0 };
+  const position = clamp(0, energyValues.length - 1, audioTime / analysis.step);
+  const lower = Math.floor(position);
+  const upper = Math.min(energyValues.length - 1, lower + 1);
+  const mix = position - lower;
+  const sample = values => {
+    if (!values?.length) return 0;
+    return ((values[lower] || 0) * (1 - mix) + (values[upper] || 0) * mix) / 100;
+  };
+  return {
+    energy: clamp(0, 1, sample(energyValues)),
+    onset: clamp(0, 1, Math.max(sample(onsetValues), (onsetValues[Math.max(0, lower - 1)] || 0) / 126))
+  };
+}
+
+function encoreInterludeText(time, data) {
+  const section = data?.sections?.find(item => time >= item.start && time < item.end);
+  const notes = [
+    'Signal warming. Curtain still closed.',
+    'Streetlights skip in quarter notes.',
+    'The first encore tears open the night.',
+    'Moonlight holds the frame.',
+    'A quieter signal crosses the water.',
+    'Love loops until the pixels give way.',
+    'No lyrics. Just redline motion.',
+    'Run the chorus back brighter.',
+    'Keep the last words clean.',
+    'One final request from the crowd.',
+    'Only the afterimage remains.'
+  ];
+  return notes[section?.phase ?? 0] || 'Waiting for the next signal.';
+}
+
+function renderEncoreLine(index, variantData, audioTime) {
+  const current = $('encore-current');
+  const previous = $('encore-previous');
+  const next = $('encore-next');
+  if (!current || !previous || !next) return;
+  supportedLyricsWordNodes = [];
+  current.replaceChildren();
+  const lines = variantData?.lines || [];
+  const line = index >= 0 ? lines[index] : null;
+  if (!line) {
+    const note = document.createElement('span');
+    note.className = 'encore-instrumental';
+    note.textContent = encoreInterludeText(encoreCanonicalTime(audioTime), supportedLyricsData);
+    current.appendChild(note);
+    current.classList.remove('is-aside');
+    const nextIndex = lines.findIndex(item => item.start > audioTime);
+    previous.textContent = '';
+    next.textContent = nextIndex >= 0 ? lines[nextIndex].text : '';
+    return;
+  }
+  current.classList.toggle('is-aside', !!line.aside);
+  const timings = measuredWordTimings(line);
+  timings.forEach((timing, wordIndex) => {
+    if (wordIndex && variantData.language !== 'ja') current.appendChild(document.createTextNode(' '));
+    const span = document.createElement('span');
+    span.className = 'encore-word';
+    span.textContent = timing.word;
+    current.appendChild(span);
+    supportedLyricsWordNodes.push({ ...timing, element: span });
+  });
+  previous.textContent = lines[index - 1]?.text || '';
+  next.textContent = lines[index + 1]?.text || '';
+}
+
+function updateEncoreDanceLyrics(audioTime = currentCalibratedTime(), force = false) {
+  if (!encoreSceneActive) return;
+  const theater = $('encore-theater');
+  if (!theater) return;
+  const variant = encoreDanceVariant();
+  const canonicalTime = encoreCanonicalTime(audioTime, variant);
+  const duration = effectiveDuration() || supportedLyricsData?.duration || 137.23;
+  const pct = clamp(0, 1, audioTime / duration);
+  theater.style.setProperty('--encore-progress', `${(pct * 100).toFixed(3)}%`);
+  if ($('encore-progress-fill')) $('encore-progress-fill').style.width = `${(pct * 100).toFixed(3)}%`;
+  if ($('encore-time-current')) $('encore-time-current').textContent = fmtTime(audioTime);
+  if ($('encore-time-total')) $('encore-time-total').textContent = fmtTime(duration);
+  const variantData = encoreVariantData(variant);
+  if ($('encore-artist')) $('encore-artist').textContent = variantData?.label || 'MIMI / KASANE TETO SV';
+  if ($('encore-language')) $('encore-language').textContent = variant === 'en' ? 'ENGLISH SIGNAL' : 'JAPANESE SIGNAL';
+  theater.dataset.variant = variant;
+  theater.dataset.language = variantData?.language || (variant === 'en' ? 'en' : 'ja');
+  if (!supportedLyricsData || !variantData) return;
+
+  const data = supportedLyricsData;
+  const sectionIndex = data.sections.findIndex(section => canonicalTime >= section.start && canonicalTime < section.end);
+  const section = data.sections[sectionIndex] || data.sections[data.sections.length - 1];
+  if (force || sectionIndex !== supportedLyricsSectionIndex) {
+    supportedLyricsSectionIndex = sectionIndex;
+    if ($('encore-section')) $('encore-section').textContent = section?.name || 'Encore Dance';
+    if ($('encore-status')) $('encore-status').textContent = section?.short || 'ENCORE';
+    if ($('encore-scene-number')) $('encore-scene-number').textContent = String(Math.max(1, sectionIndex + 1)).padStart(2, '0');
+    theater.dataset.phase = String(section?.phase ?? 0);
+    theater.classList.toggle('is-chorus', [2, 5, 7, 9].includes(section?.phase));
+    theater.classList.toggle('is-break', section?.phase === 6);
+    theater.classList.toggle('is-afterimage', section?.phase === 10);
+  }
+
+  const lines = variantData.lines || [];
+  const lineIndex = lines.findIndex(line => audioTime >= line.start && audioTime < line.end + 0.1);
+  if (force || lineIndex !== supportedLyricsLineIndex) {
+    supportedLyricsLineIndex = lineIndex;
+    renderEncoreLine(lineIndex, variantData, audioTime);
+  }
+  supportedLyricsWordNodes.forEach(word => {
+    const wordProgress = clamp(0, 1, (audioTime - word.start) / Math.max(0.025, word.end - word.start));
+    word.element.style.setProperty('--word-progress', `${(wordProgress * 100).toFixed(1)}%`);
+    word.element.classList.toggle('is-current', wordProgress > 0 && wordProgress < 1);
+  });
+}
+
+function setEncoreTheaterActive(active, song = currentSong()) {
+  const nextActive = !!active && isEncoreDanceSong(song);
+  const theater = $('encore-theater');
+  document.body.classList.toggle('encore-theater-active', nextActive);
+  if (theater) theater.classList.toggle('hidden', !nextActive);
+  if (encoreSceneActive === nextActive) return;
+  encoreSceneActive = nextActive;
+  supportedLyricsLineIndex = -2;
+  supportedLyricsSectionIndex = -2;
+  supportedLyricsWordNodes = [];
+  if (nextActive) {
+    const config = supportedLyricTrackForSong(song);
+    loadSupportedLyrics(config);
+    updateEncoreDanceLyrics(currentCalibratedTime(), true);
+    drawEncoreDanceFx({ glow: 0, motion: 0, rise: 0 }, currentCalibratedTime());
+    scheduleNowLayoutSync();
+  }
+}
+
 function effectProfileForSong(song = currentSong()) {
   if (!song) return null;
   const direct = SONG_EFFECT_PROFILES[song.path] || SONG_EFFECT_PROFILES[song.id] || SONG_EFFECT_PROFILES[song.name];
@@ -1385,6 +1568,9 @@ function activeFxTheme(song = currentSong()) {
   if (isHeroStorySong(song)) {
     return tetoFxEnabled ? 'hero-story' : 'off';
   }
+  if (isEncoreDanceSong(song)) {
+    return tetoFxEnabled ? 'encore-dance' : 'off';
+  }
   // Traveling Voices / DDF: dedicated DDLC story FX (visual only — audio stays native)
   if (songLooksLikeTravelingVoices(song) || isDdfFamilySong(song)) {
     return tetoFxEnabled ? 'ddlc' : 'off';
@@ -1425,6 +1611,7 @@ function setTetoFxEnabled(enabled) {
   updateFxState();
   updateOneMoreBiteLyrics(currentCalibratedTime(), true);
   updateHeroStoryLyrics(currentCalibratedTime(), true);
+  updateEncoreDanceLyrics(currentCalibratedTime(), true);
 }
 
 function setFxTheme(theme) {
@@ -1446,6 +1633,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.classList.toggle('ddlc-fx-active', theme === 'ddlc');
   document.body.classList.toggle('omb-fx-active', theme === 'omb');
   document.body.classList.toggle('hero-story-fx-active', theme === 'hero-story');
+  document.body.classList.toggle('encore-fx-active', theme === 'encore-dance');
   document.body.style.setProperty('--fx-level', level.toFixed(3));
   document.body.style.setProperty('--teto-level', level.toFixed(3));
   document.body.style.setProperty('--disco-level', level.toFixed(3));
@@ -1453,15 +1641,23 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.style.setProperty('--ddlc-level', level.toFixed(3));
   document.body.style.setProperty('--omb-level', level.toFixed(3));
   document.body.style.setProperty('--hero-story-level', level.toFixed(3));
+  document.body.style.setProperty('--encore-level', level.toFixed(3));
   if (theme === 'omb') {
     setHeroStoryTheaterActive(false);
+    setEncoreTheaterActive(false);
     setOneMoreBiteTheaterActive(true);
   } else if (theme === 'hero-story') {
     setOneMoreBiteTheaterActive(false);
+    setEncoreTheaterActive(false);
     setHeroStoryTheaterActive(true);
+  } else if (theme === 'encore-dance') {
+    setOneMoreBiteTheaterActive(false);
+    setHeroStoryTheaterActive(false);
+    setEncoreTheaterActive(true);
   } else {
     setOneMoreBiteTheaterActive(false);
     setHeroStoryTheaterActive(false);
+    setEncoreTheaterActive(false);
   }
 }
 
@@ -3905,6 +4101,7 @@ function updatePlaybackVisuals() {
   }
   updateOneMoreBiteLyrics(current);
   updateHeroStoryLyrics(current);
+  updateEncoreDanceLyrics(current);
   if (timingDebugEnabled) updateTimingDebug(current);
 }
 
@@ -5747,6 +5944,300 @@ function drawHeroStoryFx(levels, audioTime) {
   ctx.fillRect(0, 0, width, height);
 }
 
+const ENCORE_PALETTES = [
+  { bg: [27, 2, 6], primary: [193, 24, 45], secondary: [246, 191, 174], accent: [255, 240, 220] },
+  { bg: [38, 2, 8], primary: [230, 38, 68], secondary: [217, 111, 116], accent: [255, 232, 211] },
+  { bg: [53, 1, 9], primary: [255, 38, 79], secondary: [255, 137, 133], accent: [255, 239, 213] },
+  { bg: [19, 2, 9], primary: [150, 24, 57], secondary: [196, 104, 126], accent: [255, 226, 211] },
+  { bg: [25, 2, 13], primary: [211, 40, 85], secondary: [176, 101, 141], accent: [250, 225, 214] },
+  { bg: [47, 1, 12], primary: [255, 41, 93], secondary: [255, 135, 153], accent: [255, 238, 213] },
+  { bg: [10, 1, 4], primary: [255, 30, 72], secondary: [230, 75, 116], accent: [255, 226, 195] },
+  { bg: [61, 1, 11], primary: [255, 44, 79], secondary: [255, 154, 135], accent: [255, 242, 218] },
+  { bg: [23, 1, 7], primary: [205, 30, 65], secondary: [219, 112, 128], accent: [255, 235, 215] },
+  { bg: [67, 1, 10], primary: [255, 48, 77], secondary: [255, 179, 141], accent: [255, 246, 221] },
+  { bg: [13, 1, 4], primary: [133, 24, 46], secondary: [160, 91, 101], accent: [218, 194, 184] }
+];
+
+function encoreBeatState(audioTime, analysis) {
+  const bpm = analysis?.bpm || 132;
+  const period = 60 / bpm;
+  const beatPosition = Math.max(0, (audioTime - (analysis?.beatOffset || 0)) / period);
+  const phase = beatPosition - Math.floor(beatPosition);
+  return {
+    index: Math.floor(beatPosition),
+    phase,
+    pulse: Math.pow(1 - phase, 5.4),
+    halfPulse: Math.pow(1 - ((phase + 0.5) % 1), 7)
+  };
+}
+
+function encoreBeatEvents(audioTime, analysis, phase) {
+  const peaks = oneMoreBiteBeatPeaks(analysis);
+  const highEnergy = [2, 5, 6, 7, 9].includes(phase);
+  const threshold = highEnergy ? 0.43 : 0.62;
+  const duration = highEnergy ? 1.05 : 0.78;
+  const events = [];
+  for (let index = peaks.length - 1; index >= 0; index--) {
+    const peak = peaks[index];
+    const age = audioTime - peak.time;
+    if (age < -0.035) continue;
+    if (age > duration) break;
+    if (peak.strength < threshold) continue;
+    const progress = clamp(0, 1, Math.max(0, age) / duration);
+    const entrance = smoothStep(0, 0.045, progress);
+    const life = entrance * (1 - smoothStep(0.6, 1, progress));
+    events.push({ ...peak, progress, life });
+  }
+  return events.reverse();
+}
+
+function drawEncoreStar(ctx, x, y, radius, color, alpha, rotation = 0) {
+  if (alpha <= 0.002 || radius <= 0) return;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(rotation);
+  ctx.beginPath();
+  for (let point = 0; point < 8; point++) {
+    const angle = point * Math.PI / 4 - Math.PI / 2;
+    const distance = point % 2 ? radius * 0.32 : radius;
+    const px = Math.cos(angle) * distance;
+    const py = Math.sin(angle) * distance;
+    if (!point) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawEncoreDanceFx(levels, audioTime) {
+  const canvas = $('encore-fx');
+  const theater = $('encore-theater');
+  if (!canvas || !theater || !encoreSceneActive) return;
+  const rect = theater.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) return;
+  const dpr = Math.min(1.2, Math.max(1, window.devicePixelRatio || 1));
+  const width = Math.max(320, Math.floor(rect.width * dpr));
+  const height = Math.max(240, Math.floor(rect.height * dpr));
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const variant = encoreDanceVariant();
+  const canonicalTime = encoreCanonicalTime(audioTime, variant);
+  const section = supportedLyricsData?.sections?.find(item => canonicalTime >= item.start && canonicalTime < item.end);
+  const phase = section?.phase ?? 0;
+  const palette = ENCORE_PALETTES[phase] || ENCORE_PALETTES[0];
+  const analysis = encoreAnalysisProfile(variant);
+  const recorded = encoreAnalysisAt(audioTime, variant);
+  const energy = clamp(0, 1, Math.max(recorded.energy, (levels.glow || 0) * 0.7));
+  const onset = clamp(0, 1, Math.max(recorded.onset, (levels.rise || 0) * 0.62));
+  const highEnergy = [2, 5, 6, 7, 9].includes(phase);
+  const intensity = highEnergy ? 1 : phase === 10 ? 0.2 : 0.5;
+  const beat = encoreBeatState(audioTime, analysis);
+  const events = encoreBeatEvents(audioTime, analysis, phase);
+  const rgba = (color, alpha) => `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
+
+  theater.style.setProperty('--encore-primary', `rgb(${palette.primary.join(', ')})`);
+  theater.style.setProperty('--encore-secondary', `rgb(${palette.secondary.join(', ')})`);
+  theater.style.setProperty('--encore-accent', `rgb(${palette.accent.join(', ')})`);
+  theater.style.setProperty('--encore-energy', energy.toFixed(3));
+  theater.style.setProperty('--encore-onset', onset.toFixed(3));
+  theater.style.setProperty('--encore-beat', beat.pulse.toFixed(3));
+
+  const base = ctx.createLinearGradient(0, 0, width, height);
+  base.addColorStop(0, `rgb(${palette.bg.join(', ')})`);
+  base.addColorStop(0.52, `rgb(${Math.min(255, palette.bg[0] + 13)}, ${palette.bg[1]}, ${Math.min(255, palette.bg[2] + 4)})`);
+  base.addColorStop(1, 'rgb(5, 0, 2)');
+  ctx.fillStyle = base;
+  ctx.fillRect(0, 0, width, height);
+
+  const spotlightX = width * (0.24 + 0.52 * (0.5 + 0.5 * Math.sin(audioTime * 0.16)));
+  const wash = ctx.createRadialGradient(spotlightX, height * 0.42, 0, spotlightX, height * 0.42, width * 0.62);
+  wash.addColorStop(0, rgba(palette.primary, 0.05 + energy * 0.18 + beat.pulse * 0.04));
+  wash.addColorStop(0.45, rgba(palette.secondary, 0.015 + energy * 0.055));
+  wash.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  ctx.fillStyle = wash;
+  ctx.fillRect(0, 0, width, height);
+
+  // A perspective checker runway gives the rhythm a physical floor without
+  // touching the lyric layer. The grid scrolls from the measured 132 BPM phase.
+  const horizon = height * (phase === 6 ? 0.48 : 0.66);
+  const rows = highEnergy ? 11 : 7;
+  const columns = highEnergy ? 18 : 12;
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, horizon, width, height - horizon);
+  ctx.clip();
+  for (let row = 0; row < rows; row++) {
+    const near = (row + ((beat.phase + 0.12) % 1)) / rows;
+    const y0 = horizon + (near ** 1.85) * (height - horizon);
+    const next = (row + 1 + ((beat.phase + 0.12) % 1)) / rows;
+    const y1 = horizon + (next ** 1.85) * (height - horizon);
+    const rowAlpha = (0.018 + energy * 0.065 + beat.pulse * 0.04) * (0.45 + near * 0.8);
+    for (let column = 0; column < columns; column++) {
+      if ((column + row + beat.index) % 2) continue;
+      const spread0 = 0.18 + near * 0.82;
+      const spread1 = 0.18 + next * 0.82;
+      const x00 = width * 0.5 + (column / columns - 0.5) * width * spread0 * 1.35;
+      const x01 = width * 0.5 + ((column + 1) / columns - 0.5) * width * spread0 * 1.35;
+      const x10 = width * 0.5 + (column / columns - 0.5) * width * spread1 * 1.35;
+      const x11 = width * 0.5 + ((column + 1) / columns - 0.5) * width * spread1 * 1.35;
+      ctx.beginPath();
+      ctx.moveTo(x00, y0);
+      ctx.lineTo(x01, y0);
+      ctx.lineTo(x11, y1);
+      ctx.lineTo(x10, y1);
+      ctx.closePath();
+      ctx.fillStyle = rgba((row + column) % 4 ? palette.primary : palette.accent, rowAlpha);
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+
+  const playRect = $('encore-play')?.getBoundingClientRect();
+  const centerX = playRect ? (playRect.left + playRect.width / 2 - rect.left) * dpr : width * 0.82;
+  const centerY = playRect ? (playRect.top + playRect.height / 2 - rect.top) * dpr : height * 0.5;
+  const startRadius = (playRect?.width || 76) * dpr * 0.58;
+  const maxRadius = Math.hypot(width, height) * 0.74;
+
+  // Measured attacks create complete echo frames and radial rings. Overlapping
+  // attacks coexist, producing the stacked snapshot effect requested elsewhere.
+  events.forEach(event => {
+    const strength = smoothStep(0.4, 1, event.strength);
+    const eased = 1 - (1 - event.progress) ** 2.5;
+    const direction = event.ordinal % 4;
+    const dirX = direction === 0 ? 1 : direction === 2 ? -1 : 0;
+    const dirY = direction === 1 ? 1 : direction === 3 ? -1 : 0;
+    const frameCount = highEnergy ? 4 : 2;
+    for (let frame = 0; frame < frameCount; frame++) {
+      const delay = frame * 0.055;
+      const progress = clamp(0, 1, (event.progress - delay) / Math.max(0.01, 1 - delay));
+      if (progress <= 0 || progress >= 1) continue;
+      const frameLife = Math.sin(progress * Math.PI) * event.life * strength;
+      const inset = dpr * (20 + frame * 17 + progress * 34);
+      const travel = Math.sin(progress * Math.PI) * dpr * (18 + strength * 42);
+      ctx.strokeStyle = rgba(frame % 2 ? palette.secondary : palette.accent, frameLife * (highEnergy ? 0.2 : 0.08));
+      ctx.lineWidth = dpr * (0.9 + strength * 2.2);
+      ctx.strokeRect(
+        inset + dirX * travel,
+        inset * 0.68 + dirY * travel,
+        width - inset * 2,
+        height - inset * 1.36
+      );
+    }
+
+    const ringCount = highEnergy ? 4 : 2;
+    for (let ring = 0; ring < ringCount; ring++) {
+      const delay = ring * 0.05;
+      const progress = clamp(0, 1, (event.progress - delay) / Math.max(0.01, 1 - delay));
+      if (progress <= 0 || progress >= 1) continue;
+      const radius = startRadius + maxRadius * (1 - (1 - progress) ** 2.2);
+      const ringLife = Math.sin(progress * Math.PI) * event.life * strength;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = rgba(ring % 2 ? palette.primary : palette.secondary, ringLife * (highEnergy ? 0.23 : 0.07));
+      ctx.lineWidth = dpr * (1.1 + strength * 3.1 - ring * 0.12);
+      ctx.stroke();
+    }
+
+    if (highEnergy) {
+      const horizontal = event.ordinal % 2 === 0;
+      const axis = event.ordinal % 4 < 2 ? event.progress : 1 - event.progress;
+      const plateCenter = (horizontal ? width : height) * axis;
+      const plateSpan = (horizontal ? width : height) * (0.1 + strength * 0.08);
+      const plate = horizontal
+        ? ctx.createLinearGradient(plateCenter - plateSpan, 0, plateCenter + plateSpan, 0)
+        : ctx.createLinearGradient(0, plateCenter - plateSpan, 0, plateCenter + plateSpan);
+      plate.addColorStop(0, 'rgba(0,0,0,0)');
+      plate.addColorStop(0.5, rgba(palette.primary, event.life * strength * 0.1));
+      plate.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = plate;
+      ctx.fillRect(0, 0, width, height);
+    }
+  });
+
+  // Fixed-width diagonal signal slices cross on half-beats during choruses.
+  const sliceCount = highEnergy ? 9 : 4;
+  for (let slice = 0; slice < sliceCount; slice++) {
+    const lane = (slice + beat.index * 0.25) % sliceCount;
+    const x = width * (lane / Math.max(1, sliceCount - 1));
+    const lean = height * (slice % 2 ? 0.16 : -0.14);
+    ctx.beginPath();
+    ctx.moveTo(x - lean, height);
+    ctx.lineTo(x + lean, 0);
+    ctx.strokeStyle = rgba(slice % 3 ? palette.primary : palette.secondary, 0.018 + energy * 0.055 + beat.halfPulse * intensity * 0.07);
+    ctx.lineWidth = dpr * (slice % 3 === 0 ? 4.2 : 1.1);
+    ctx.stroke();
+  }
+
+  if ([3, 4].includes(phase)) {
+    const moonX = width * 0.76;
+    const moonY = height * 0.34;
+    const moonRadius = Math.min(width, height) * 0.14;
+    const moon = ctx.createRadialGradient(moonX, moonY, 0, moonX, moonY, moonRadius * 1.5);
+    moon.addColorStop(0, rgba(palette.accent, 0.15 + energy * 0.16));
+    moon.addColorStop(0.48, rgba(palette.secondary, 0.05 + energy * 0.05));
+    moon.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = moon;
+    ctx.fillRect(moonX - moonRadius * 1.5, moonY - moonRadius * 1.5, moonRadius * 3, moonRadius * 3);
+    ctx.beginPath();
+    ctx.arc(moonX, moonY, moonRadius * 0.72, 0, Math.PI * 2);
+    ctx.strokeStyle = rgba(palette.accent, 0.12 + energy * 0.13);
+    ctx.lineWidth = dpr * 1.2;
+    ctx.stroke();
+  }
+
+  const moteCount = phase === 10 ? 10 : highEnergy ? 36 : 20;
+  for (let index = 0; index < moteCount; index++) {
+    const mote = ENCORE_MOTES[index];
+    const speedLift = highEnergy ? 1.75 : 0.62;
+    const x = ((mote.x + audioTime * mote.speed * 0.009 * speedLift) % 1.08 - 0.04) * width;
+    const y = (mote.y + Math.sin(audioTime * (0.22 + mote.speed) + mote.phase) * (highEnergy ? 0.035 : 0.012)) * height;
+    const twinkle = 0.5 + Math.sin(audioTime * (0.8 + mote.speed) + mote.phase) * 0.5;
+    const alpha = (0.025 + energy * 0.15 + beat.pulse * intensity * 0.1) * (0.55 + twinkle * 0.45) * (phase === 10 ? 0.4 : 1);
+    const radius = mote.size * dpr * (0.72 + energy * 0.44 + beat.pulse * 0.18);
+    const trailCount = highEnergy ? 3 : 1;
+    for (let trail = trailCount - 1; trail >= 0; trail--) {
+      const distance = trail * dpr * (7 + energy * 10);
+      drawEncoreStar(
+        ctx,
+        x - distance,
+        y + Math.sin(mote.phase) * distance * 0.22,
+        radius * (1 - trail * 0.13),
+        trail ? palette.primary : (index % 4 ? palette.accent : palette.secondary),
+        alpha * (trail ? 0.22 / trail : 1),
+        mote.phase + audioTime * 0.04
+      );
+    }
+  }
+
+  if (phase === 6) {
+    // Instrumental peak: a clean central X flashes from beat energy, keeping the
+    // lyrics-free dance break visually decisive without adding more particles.
+    const length = Math.min(width, height) * (0.25 + beat.pulse * 0.12);
+    ctx.save();
+    ctx.translate(width * 0.5, height * 0.5);
+    ctx.rotate(audioTime * 0.035);
+    ctx.strokeStyle = rgba(palette.accent, 0.08 + beat.pulse * 0.27 + onset * 0.16);
+    ctx.lineWidth = dpr * (2 + beat.pulse * 7);
+    ctx.beginPath();
+    ctx.moveTo(-length, -length);
+    ctx.lineTo(length, length);
+    ctx.moveTo(length, -length);
+    ctx.lineTo(-length, length);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  const vignette = ctx.createRadialGradient(width * 0.5, height * 0.48, width * 0.12, width * 0.5, height * 0.48, width * 0.72);
+  vignette.addColorStop(0, 'rgba(0,0,0,0)');
+  vignette.addColorStop(1, `rgba(0,0,0,${phase === 10 ? 0.72 : 0.42})`);
+  ctx.fillStyle = vignette;
+  ctx.fillRect(0, 0, width, height);
+}
+
 function drawTetoFx(level) {
   const canvas = $('teto-fx');
   const view = $('view-now');
@@ -5766,6 +6257,10 @@ function drawTetoFx(level) {
   }
   if (theme === 'hero-story') {
     drawHeroStoryFx(levels, currentCalibratedTime());
+    return;
+  }
+  if (theme === 'encore-dance') {
+    drawEncoreDanceFx(levels, currentCalibratedTime());
     return;
   }
 
@@ -6245,6 +6740,8 @@ function bindAudioElementEvents(el) {
     if (ombIcon) ombIcon.textContent = '⏸';
     const heroStoryIcon = $('hero-story-play-icon');
     if (heroStoryIcon) heroStoryIcon.textContent = '⏸';
+    const encoreIcon = $('encore-play-icon');
+    if (encoreIcon) encoreIcon.textContent = '⏸';
     document.body.classList.add('is-playing');
     startProgressClock();
     startWaveform();
@@ -6264,6 +6761,8 @@ function bindAudioElementEvents(el) {
     if (ombIcon) ombIcon.textContent = '▶';
     const heroStoryIcon = $('hero-story-play-icon');
     if (heroStoryIcon) heroStoryIcon.textContent = '▶';
+    const encoreIcon = $('encore-play-icon');
+    if (encoreIcon) encoreIcon.textContent = '▶';
     document.body.classList.remove('is-playing');
     stopProgressClock();
     updatePlaybackVisuals();
@@ -6287,6 +6786,8 @@ const ombPlayBtn = $('omb-play');
 if (ombPlayBtn) ombPlayBtn.addEventListener('click', togglePlay);
 const heroStoryPlayBtn = $('hero-story-play');
 if (heroStoryPlayBtn) heroStoryPlayBtn.addEventListener('click', togglePlay);
+const encorePlayBtn = $('encore-play');
+if (encorePlayBtn) encorePlayBtn.addEventListener('click', togglePlay);
 $('next').addEventListener('click', () => playNext(false));
 $('prev').addEventListener('click', playPrev);
 $('shuffle').addEventListener('click', toggleShuffle);

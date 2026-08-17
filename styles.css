@@ -2091,6 +2091,389 @@ body.hero-story-active .now-view.active {
 }
 
 /* ==========================================================================
+   Encore Dance theater - lacquer-red hyperpop signal stage
+   ========================================================================== */
+
+body.encore-theater-active {
+  --accent: var(--encore-primary, #f22f58);
+  --accent-2: var(--encore-secondary, #dc8a91);
+  --accent-fg: #120005;
+}
+
+body.encore-theater-active .now-stage,
+body.encore-theater-active .spatial-guide,
+body.encore-theater-active .wave-panel,
+body.encore-theater-active .teto-fx-canvas,
+body.encore-theater-active .omb-theater,
+body.encore-theater-active .hero-story-theater,
+body.encore-theater-active .ddf-theater {
+  display: none !important;
+}
+
+body.encore-theater-active #view-now.view.active,
+body.encore-theater-active .now-view.active {
+  display: block;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(255, 159, 151, 0.26);
+  border-radius: 8px;
+  background: #120005;
+  color: #fff0dc;
+}
+
+.encore-theater {
+  --encore-primary: rgb(230, 38, 68);
+  --encore-secondary: rgb(217, 111, 116);
+  --encore-accent: rgb(255, 232, 211);
+  --encore-energy: 0;
+  --encore-onset: 0;
+  --encore-beat: 0;
+  --encore-progress: 0%;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: #120005;
+  color: #fff0dc;
+}
+.encore-theater.hidden { display: none !important; }
+
+.encore-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.encore-echo-rails {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: calc(0.18 + var(--encore-energy) * 0.2);
+}
+.encore-echo-rails span {
+  position: absolute;
+  width: 1px;
+  height: 142%;
+  top: -21%;
+  background: linear-gradient(180deg, transparent 4%, var(--encore-secondary) 28%, transparent 76%);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--encore-primary) 42%, transparent);
+}
+.encore-echo-rails span:nth-child(1) { left: 12%; transform: rotate(18deg); }
+.encore-echo-rails span:nth-child(2) { left: 37%; transform: rotate(-11deg); opacity: 0.54; }
+.encore-echo-rails span:nth-child(3) { right: 31%; transform: rotate(12deg); opacity: 0.7; }
+.encore-echo-rails span:nth-child(4) { right: 9%; transform: rotate(-17deg); }
+
+.encore-header,
+.encore-stage,
+.encore-footer {
+  position: relative;
+  z-index: 3;
+}
+
+.encore-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 22px 6px;
+}
+.encore-title-lockup { min-width: 0; }
+.encore-overline {
+  color: var(--encore-secondary);
+  font-size: 9px;
+  font-weight: 850;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.encore-header h1 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 4px 0 0;
+  font-size: 36px;
+  font-weight: 950;
+  line-height: 0.9;
+  letter-spacing: 0;
+}
+.encore-header h1 span {
+  color: var(--encore-accent);
+  -webkit-text-stroke: 1px var(--encore-primary);
+  text-shadow: 3px 3px 0 rgba(111, 0, 22, 0.88);
+}
+.encore-header h1 b {
+  padding: 3px 8px 4px;
+  background: var(--encore-primary);
+  color: #170005;
+  font-size: 19px;
+  font-weight: 950;
+  transform: rotate(-2deg);
+}
+.encore-signal {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  max-width: 270px;
+  padding: 7px 10px;
+  border-right: 3px solid var(--encore-primary);
+  background: rgba(12, 0, 4, 0.56);
+  text-align: right;
+  text-transform: uppercase;
+}
+.encore-signal span {
+  color: var(--encore-accent);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+.encore-signal b {
+  color: var(--encore-secondary);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+}
+
+.encore-stage {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr) minmax(180px, 24%);
+  align-items: center;
+  min-height: 0;
+  padding: 2px 22px 8px 12px;
+  gap: 14px;
+}
+.encore-index {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border-right: 1px solid color-mix(in srgb, var(--encore-secondary) 38%, transparent);
+  color: var(--encore-secondary);
+}
+.encore-index span,
+.encore-index i {
+  font-size: 7px;
+  font-style: normal;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.encore-index b {
+  color: var(--encore-accent);
+  font-size: 27px;
+  font-weight: 930;
+  line-height: 1;
+}
+
+.encore-lyrics {
+  min-width: 0;
+  padding: 6px 0;
+  text-align: center;
+}
+.encore-context {
+  min-height: 1.35em;
+  color: color-mix(in srgb, var(--encore-secondary) 48%, transparent);
+  font-size: 14px;
+  font-weight: 680;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.encore-current {
+  min-height: 2.5em;
+  margin: 12px auto;
+  color: var(--encore-accent);
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.encore-theater[data-language="ja"] .encore-current { font-size: 38px; }
+.encore-current.is-aside { font-style: italic; }
+.encore-word {
+  --word-progress: 0%;
+  display: inline;
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    var(--encore-accent) 0,
+    var(--encore-secondary) var(--word-progress),
+    color-mix(in srgb, var(--encore-secondary) 27%, #5f3540) var(--word-progress)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 0.25px rgba(255, 239, 220, 0.12);
+}
+.encore-word.is-current {
+  text-shadow: 0 0 calc(8px + var(--encore-energy) * 13px) color-mix(in srgb, var(--encore-primary) 52%, transparent);
+}
+.encore-instrumental {
+  color: var(--encore-secondary);
+  font-size: 19px;
+  font-weight: 780;
+}
+.encore-theater.is-chorus .encore-current {
+  text-shadow: 0 0 calc(10px + var(--encore-energy) * 20px) color-mix(in srgb, var(--encore-primary) 38%, transparent);
+}
+.encore-theater.is-break .encore-instrumental {
+  color: var(--encore-accent);
+  text-transform: uppercase;
+}
+.encore-theater.is-afterimage .encore-current,
+.encore-theater.is-afterimage .encore-instrumental { opacity: 0.76; }
+
+.encore-control {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 188px);
+  aspect-ratio: 1;
+  justify-self: center;
+}
+.encore-control-frame {
+  position: absolute;
+  inset: 7%;
+  border: 1px solid color-mix(in srgb, var(--encore-secondary) 38%, transparent);
+  transform: rotate(45deg);
+  box-shadow:
+    0 0 0 12px rgba(9, 0, 3, 0.18),
+    0 0 calc(8px + var(--encore-energy) * 30px) color-mix(in srgb, var(--encore-primary) 28%, transparent);
+}
+.encore-control-frame::before,
+.encore-control-frame::after {
+  content: "";
+  position: absolute;
+  inset: 15%;
+  border: 1px solid color-mix(in srgb, var(--encore-primary) 34%, transparent);
+}
+.encore-control-frame::after {
+  inset: 31%;
+  background: rgba(255, 236, 215, calc(0.01 + var(--encore-beat) * 0.035));
+}
+.encore-play {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 82px;
+  height: 82px;
+  padding: 0;
+  border: 2px solid var(--encore-secondary);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(18, 0, 5, 0.97) 54%, transparent 56%),
+    conic-gradient(var(--encore-primary) var(--encore-progress), rgba(255, 207, 186, 0.15) 0);
+  color: var(--encore-accent);
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 900;
+  box-shadow:
+    0 0 0 6px rgba(7, 0, 3, 0.58),
+    0 0 calc(12px + var(--encore-energy) * 30px) color-mix(in srgb, var(--encore-primary) 38%, transparent);
+}
+.encore-play:hover { border-color: var(--encore-accent); color: var(--encore-secondary); }
+.encore-play:active { transform: scale(0.97); }
+.encore-time {
+  position: absolute;
+  top: calc(50% + 58px);
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  width: 142px;
+  color: color-mix(in srgb, var(--encore-accent) 62%, transparent);
+  font-size: 10px;
+  font-weight: 760;
+  font-variant-numeric: tabular-nums;
+}
+
+.encore-footer { padding: 3px 22px 14px; }
+.encore-progress {
+  height: 4px;
+  overflow: hidden;
+  background: rgba(255, 220, 200, 0.11);
+}
+.encore-progress span {
+  display: block;
+  width: var(--encore-progress);
+  height: 100%;
+  background: linear-gradient(90deg, var(--encore-primary), var(--encore-accent));
+  box-shadow: 0 0 15px color-mix(in srgb, var(--encore-primary) 48%, transparent);
+}
+.encore-footer-copy {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 7px;
+  color: color-mix(in srgb, var(--encore-accent) 48%, transparent);
+  font-size: 8px;
+  font-weight: 820;
+  letter-spacing: 0.1em;
+}
+#encore-language { color: var(--encore-secondary); }
+
+@media (max-width: 780px) {
+  .encore-header { padding: 11px 13px 3px; }
+  .encore-header h1 { font-size: 28px; }
+  .encore-header h1 b { font-size: 15px; }
+  .encore-signal { max-width: 150px; }
+  .encore-signal span { font-size: 8px; }
+  .encore-stage {
+    grid-template-columns: minmax(0, 1fr) 122px;
+    padding: 2px 11px 7px;
+    gap: 8px;
+  }
+  .encore-index { display: none; }
+  .encore-current,
+  .encore-theater[data-language="ja"] .encore-current {
+    min-height: 2.4em;
+    margin: 8px auto;
+    font-size: 25px;
+  }
+  .encore-context { font-size: 11px; }
+  .encore-control { width: 122px; }
+  .encore-play { width: 60px; height: 60px; font-size: 19px; }
+  .encore-time { top: calc(50% + 43px); width: 108px; }
+  .encore-footer { padding: 2px 13px 9px; }
+  .encore-footer-copy span:last-child { display: none; }
+}
+
+@media (max-height: 610px) {
+  .encore-header { padding-top: 7px; }
+  .encore-header h1 { font-size: 26px; }
+  .encore-header h1 b { font-size: 14px; }
+  .encore-current,
+  .encore-theater[data-language="ja"] .encore-current {
+    min-height: 2.2em;
+    margin: 5px auto;
+    font-size: 25px;
+  }
+  .encore-context { font-size: 10px; }
+  .encore-control { width: 122px; }
+  .encore-play { width: 58px; height: 58px; }
+  .encore-time { top: calc(50% + 42px); }
+  .encore-footer { padding-bottom: 7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .encore-echo-rails { display: none; }
+  .encore-play,
+  .encore-word { transition: none; }
+}
+
+/* ==========================================================================
    DDF Theater — full DDLC custom Now Playing for Traveling Voices
    ========================================================================== */
 

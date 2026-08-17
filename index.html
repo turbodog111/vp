@@ -6,8 +6,8 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-08-16-hero-v1">
-<link rel="stylesheet" href="styles.css?v=20260816-hero-v1">
+<meta name="vp-build" content="2026-08-16-encore-v1">
+<link rel="stylesheet" href="styles.css?v=20260816-encore-v1">
 </head>
 <body>
 <div class="app">
@@ -191,6 +191,57 @@
           <div class="hero-story-footer-copy">
             <span id="hero-story-status">OPENING</span>
             <span>GREEN / MEMORY / SELF</span>
+          </div>
+        </footer>
+      </div>
+
+      <div id="encore-theater" class="encore-theater hidden" aria-live="polite">
+        <canvas id="encore-fx" class="encore-fx" aria-hidden="true"></canvas>
+        <div class="encore-echo-rails" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <header class="encore-header">
+          <div class="encore-title-lockup">
+            <div id="encore-artist" class="encore-overline">MIMI / KASANE TETO SV</div>
+            <h1><span>ENCORE</span><b>DANCE</b></h1>
+          </div>
+          <div class="encore-signal">
+            <span id="encore-section">Velvet count-in</span>
+            <b id="encore-status">BOOT // 132</b>
+          </div>
+        </header>
+        <div class="encore-stage">
+          <aside class="encore-index" aria-hidden="true">
+            <span>SCENE</span>
+            <b id="encore-scene-number">01</b>
+            <i>REDLINE SIGNAL</i>
+          </aside>
+          <section class="encore-lyrics" aria-label="Timed lyrics">
+            <div id="encore-previous" class="encore-context"></div>
+            <div id="encore-current" class="encore-current">
+              <span class="encore-instrumental">Signal warming. Curtain still closed.</span>
+            </div>
+            <div id="encore-next" class="encore-context"></div>
+          </section>
+          <div class="encore-control">
+            <div class="encore-control-frame" aria-hidden="true"></div>
+            <button id="encore-play" class="encore-play" type="button" title="Play/Pause (Space)">
+              <span id="encore-play-icon">&#9654;</span>
+            </button>
+            <div class="encore-time">
+              <span id="encore-time-current">0:00</span>
+              <span id="encore-time-total">2:17</span>
+            </div>
+          </div>
+        </div>
+        <footer class="encore-footer">
+          <div class="encore-progress" aria-hidden="true">
+            <span id="encore-progress-fill"></span>
+          </div>
+          <div class="encore-footer-copy">
+            <span>132 BPM / G MINOR</span>
+            <span id="encore-language">JAPANESE SIGNAL</span>
+            <span>AGAIN / AGAIN / AGAIN</span>
           </div>
         </footer>
       </div>
@@ -406,6 +457,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=20260816-hero-v1"></script>
+<script src="app.js?v=20260816-encore-v1"></script>
 </body>
 </html>
