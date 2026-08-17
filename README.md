@@ -25,6 +25,7 @@ Live at: https://turbodog111.github.io/vp/
 - Play a playlist in order or shuffle it
 - Six-band equalizer with automatically saved per-song profiles and a reload-cleared temporary all-song override
 - Queue recovery retries a failed track in place instead of silently skipping it
+- FX-gated, recording-specific timed lyrics and custom Now Playing scenes for supported songs
 - Loop modes: off / loop all / loop one
 - Keyboard shortcuts: `Space` play-pause, `Shift+←/→` prev/next, `L` cycle loop, `S` shuffle
 - Search filter, volume control with persistence, media-key support (lock screen / headphones)

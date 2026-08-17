@@ -61,6 +61,19 @@ const DEFAULT_PLAYLISTS = {
   ],
 };
 
+const SUPPORTED_LYRIC_TRACKS = {
+  'songs/kasane teto - one more bite': {
+    dataUrl: './songs/lyrics/one-more-bite.json',
+    scene: 'one-more-bite'
+  }
+};
+const SONG_METADATA_OVERRIDES = {
+  'songs/Kasane Teto - One More Bite.m4a': {
+    artist: 'MiliSen feat. Kasane Teto',
+    title: 'One More Bite'
+  }
+};
+
 const $ = (id) => document.getElementById(id);
 // Mutable: MediaElementSource permanently hijacks an <audio> node; spatial tracks
 // recreate the element to restore true native HTMLAudio routing (QuickTime-like).
@@ -126,6 +139,13 @@ let audioGraphActivatedAt = 0;
 let playbackAttemptSerial = 0;
 let playbackRetryCount = 0;
 let playbackRetryTimer = 0;
+let supportedLyricsData = null;
+let supportedLyricsPromise = null;
+let supportedLyricsSongKey = '';
+let supportedLyricsLineIndex = -2;
+let supportedLyricsSectionIndex = -2;
+let supportedLyricsWordNodes = [];
+let oneMoreBiteSceneActive = false;
 const SONG_EQ_STORAGE_KEY = 'vp_song_eq_v1';
 const EQ_BANDS = [
   { frequency: 60, type: 'lowshelf', label: 'Sub', detail: '60 Hz' },
@@ -251,6 +271,13 @@ const seededUnit = (seed) => {
   const x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
 };
+const ONE_MORE_BITE_CRUMBS = Array.from({ length: 26 }, (_, i) => ({
+  x: 0.03 + seededUnit((i + 1) * 17.31) * 0.94,
+  y: 0.08 + seededUnit((i + 1) * 43.73) * 0.82,
+  size: 1.5 + seededUnit((i + 1) * 8.91) * 4.5,
+  phase: seededUnit((i + 1) * 67.17) * Math.PI * 2,
+  color: i % 3
+}));
 const TETO_FX_OBJECTS = Array.from({ length: 24 }, (_, i) => {
   const a = seededUnit((i + 1) * 24.271);
   const b = seededUnit((i + 1) * 61.733);
@@ -569,6 +596,162 @@ function findSongIndex(ref) {
 
 function currentSong() {
   return library[queue[queueIndex]] || null;
+}
+
+function supportedLyricTrackForSong(song = currentSong()) {
+  if (!song) return null;
+  const keys = [song.path, song.id, song.name].map(normalizeSongRef);
+  for (const key of keys) {
+    if (SUPPORTED_LYRIC_TRACKS[key]) return { key, ...SUPPORTED_LYRIC_TRACKS[key] };
+  }
+  return null;
+}
+
+function isOneMoreBiteSong(song = currentSong()) {
+  return supportedLyricTrackForSong(song)?.scene === 'one-more-bite';
+}
+
+async function loadSupportedLyrics(config) {
+  if (!config) return null;
+  if (supportedLyricsData && supportedLyricsSongKey === config.key) return supportedLyricsData;
+  if (supportedLyricsPromise && supportedLyricsSongKey === config.key) return supportedLyricsPromise;
+  supportedLyricsSongKey = config.key;
+  supportedLyricsData = null;
+  supportedLyricsPromise = fetch(config.dataUrl, { cache: 'no-store' })
+    .then(response => {
+      if (!response.ok) throw new Error(`lyrics HTTP ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      if (supportedLyricsSongKey !== config.key) return null;
+      if (!Array.isArray(data.lines) || !Array.isArray(data.sections)) {
+        throw new Error('lyrics file is missing lines or sections');
+      }
+      supportedLyricsData = data;
+      supportedLyricsPromise = null;
+      supportedLyricsLineIndex = -2;
+      supportedLyricsSectionIndex = -2;
+      updateOneMoreBiteLyrics(currentCalibratedTime(), true);
+      return data;
+    })
+    .catch(error => {
+      supportedLyricsPromise = null;
+      console.warn('Could not load supported lyrics:', error);
+      const current = $('omb-lyric-current');
+      if (current) current.textContent = 'Lyrics could not be loaded.';
+      return null;
+    });
+  return supportedLyricsPromise;
+}
+
+function oneMoreBiteInterludeText(time, data) {
+  const first = data?.lines?.[0]?.start ?? 6.92;
+  if (time < first) return 'A little room before the first bite.';
+  if (time >= 123.2 && time < 139.76) return 'Piano takes the plate.';
+  if (time >= 180.9) return 'The last taste lingers.';
+  return 'A breath between bites.';
+}
+
+function weightedWordTimings(line) {
+  const words = line.text.trim().split(/\s+/).filter(Boolean);
+  const duration = Math.max(0.1, line.end - line.start);
+  const weights = words.map(word => Math.max(1, word.replace(/[^A-Za-z0-9']/g, '').length ** 0.62));
+  const total = weights.reduce((sum, weight) => sum + weight, 0) || 1;
+  let cursor = line.start;
+  return words.map((word, index) => {
+    const end = index === words.length - 1 ? line.end : cursor + duration * weights[index] / total;
+    const timing = { word, start: cursor, end };
+    cursor = end;
+    return timing;
+  });
+}
+
+function renderOneMoreBiteLine(index, data) {
+  const current = $('omb-lyric-current');
+  const previous = $('omb-lyric-previous');
+  const next = $('omb-lyric-next');
+  if (!current || !previous || !next) return;
+  supportedLyricsWordNodes = [];
+  current.replaceChildren();
+  const line = index >= 0 ? data.lines[index] : null;
+  if (!line) {
+    const note = document.createElement('span');
+    note.className = 'omb-instrumental';
+    note.textContent = oneMoreBiteInterludeText(currentCalibratedTime(), data);
+    current.appendChild(note);
+    current.classList.remove('is-aside');
+    const nextIndex = data.lines.findIndex(item => item.start > currentCalibratedTime());
+    previous.textContent = '';
+    next.textContent = nextIndex >= 0 ? data.lines[nextIndex].text : '';
+    return;
+  }
+  current.classList.toggle('is-aside', !!line.aside);
+  weightedWordTimings(line).forEach((timing, wordIndex) => {
+    if (wordIndex) current.appendChild(document.createTextNode(' '));
+    const span = document.createElement('span');
+    span.className = 'omb-word';
+    span.textContent = timing.word;
+    current.appendChild(span);
+    supportedLyricsWordNodes.push({ ...timing, element: span });
+  });
+  previous.textContent = data.lines[index - 1]?.text || '';
+  next.textContent = data.lines[index + 1]?.text || '';
+}
+
+function updateOneMoreBiteLyrics(time = currentCalibratedTime(), force = false) {
+  if (!oneMoreBiteSceneActive) return;
+  const theater = $('omb-theater');
+  if (!theater) return;
+  const duration = supportedLyricsData?.duration || effectiveDuration() || 194.049;
+  const pct = clamp(0, 1, time / duration);
+  theater.style.setProperty('--omb-progress', `${(pct * 100).toFixed(3)}%`);
+  const progress = $('omb-progress-fill');
+  if (progress) progress.style.width = `${(pct * 100).toFixed(3)}%`;
+  const cur = $('omb-time-current');
+  const total = $('omb-time-total');
+  if (cur) cur.textContent = fmtTime(time);
+  if (total) total.textContent = fmtTime(duration);
+  if (!supportedLyricsData) return;
+
+  const data = supportedLyricsData;
+  const sectionIndex = data.sections.findIndex(section => time >= section.start && time < section.end);
+  if (force || sectionIndex !== supportedLyricsSectionIndex) {
+    supportedLyricsSectionIndex = sectionIndex;
+    const section = data.sections[sectionIndex] || data.sections[data.sections.length - 1];
+    if ($('omb-section')) $('omb-section').textContent = section?.name || 'One More Bite';
+    if ($('omb-status')) $('omb-status').textContent = section?.short || 'ONE MORE BITE';
+    if ($('omb-course-number')) $('omb-course-number').textContent = String(Math.max(1, sectionIndex + 1)).padStart(2, '0');
+  }
+
+  const lineIndex = data.lines.findIndex(line => time >= line.start && time < line.end + 0.12);
+  if (force || lineIndex !== supportedLyricsLineIndex) {
+    supportedLyricsLineIndex = lineIndex;
+    renderOneMoreBiteLine(lineIndex, data);
+  }
+  supportedLyricsWordNodes.forEach(word => {
+    const wordProgress = clamp(0, 1, (time - word.start) / Math.max(0.04, word.end - word.start));
+    word.element.style.setProperty('--word-progress', `${(wordProgress * 100).toFixed(1)}%`);
+    word.element.classList.toggle('is-current', wordProgress > 0 && wordProgress < 1);
+  });
+}
+
+function setOneMoreBiteTheaterActive(active, song = currentSong()) {
+  const nextActive = !!active && isOneMoreBiteSong(song);
+  const theater = $('omb-theater');
+  document.body.classList.toggle('omb-theater-active', nextActive);
+  if (theater) theater.classList.toggle('hidden', !nextActive);
+  if (oneMoreBiteSceneActive === nextActive) return;
+  oneMoreBiteSceneActive = nextActive;
+  supportedLyricsLineIndex = -2;
+  supportedLyricsSectionIndex = -2;
+  supportedLyricsWordNodes = [];
+  if (nextActive) {
+    const config = supportedLyricTrackForSong(song);
+    loadSupportedLyrics(config);
+    updateOneMoreBiteLyrics(currentCalibratedTime(), true);
+    drawOneMoreBiteFx({ glow: 0, motion: 0, rise: 0 }, currentCalibratedTime());
+    scheduleNowLayoutSync();
+  }
 }
 
 function effectProfileForSong(song = currentSong()) {
@@ -895,6 +1078,9 @@ function beatPulseForProfile(profile, time) {
 }
 
 function activeFxTheme(song = currentSong()) {
+  if (isOneMoreBiteSong(song)) {
+    return tetoFxEnabled ? 'omb' : 'off';
+  }
   // Traveling Voices / DDF: dedicated DDLC story FX (visual only — audio stays native)
   if (songLooksLikeTravelingVoices(song) || isDdfFamilySong(song)) {
     return tetoFxEnabled ? 'ddlc' : 'off';
@@ -933,6 +1119,7 @@ function setTetoFxEnabled(enabled) {
   const checkbox = $('teto-fx-enabled');
   if (checkbox) checkbox.checked = tetoFxEnabled;
   updateFxState();
+  updateOneMoreBiteLyrics(currentCalibratedTime(), true);
 }
 
 function setFxTheme(theme) {
@@ -952,11 +1139,14 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.classList.toggle('teto-fx-active', theme === 'teto');
   document.body.classList.toggle('teto11-fx-active', theme === 'teto11');
   document.body.classList.toggle('ddlc-fx-active', theme === 'ddlc');
+  document.body.classList.toggle('omb-fx-active', theme === 'omb');
   document.body.style.setProperty('--fx-level', level.toFixed(3));
   document.body.style.setProperty('--teto-level', level.toFixed(3));
   document.body.style.setProperty('--disco-level', level.toFixed(3));
   document.body.style.setProperty('--teto11-level', level.toFixed(3));
   document.body.style.setProperty('--ddlc-level', level.toFixed(3));
+  document.body.style.setProperty('--omb-level', level.toFixed(3));
+  setOneMoreBiteTheaterActive(theme === 'omb');
 }
 
 function switchView(view) {
@@ -991,6 +1181,7 @@ function mapCollectionItems(collection, items) {
   return preferredAudioFiles(items).map(i => {
     const path = `${collection.folder}/${i.name}`;
     const p = prettyName(i.name);
+    const metadata = SONG_METADATA_OVERRIDES[path] || p;
     return {
       id: path,
       name: i.name,
@@ -998,9 +1189,9 @@ function mapCollectionItems(collection, items) {
       url: `./${encodePath(path)}`,
       collection: collection.id,
       collectionLabel: collection.label,
-      displayName: p.display,
-      artist: p.artist,
-      title: p.title,
+      displayName: metadata.display || `${metadata.artist} — ${metadata.title}`,
+      artist: metadata.artist,
+      title: metadata.title,
       size: i.size
     };
   });
@@ -3396,6 +3587,7 @@ function updatePlaybackVisuals() {
     lastUiSeekPct = seekPct;
     $('seek').value = seekPct;
   }
+  updateOneMoreBiteLyrics(current);
   if (timingDebugEnabled) updateTimingDebug(current);
 }
 
@@ -4757,6 +4949,83 @@ function drawDdlcFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, section
   ctx.restore();
 }
 
+function drawOneMoreBiteFx(levels, time) {
+  const canvas = $('omb-fx');
+  const theater = $('omb-theater');
+  if (!canvas || !theater || !oneMoreBiteSceneActive) return;
+  const rect = theater.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) return;
+  const dpr = Math.min(1.25, Math.max(1, window.devicePixelRatio || 1));
+  const width = Math.max(320, Math.floor(rect.width * dpr));
+  const height = Math.max(240, Math.floor(rect.height * dpr));
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+  const ctx = canvas.getContext('2d', { alpha: true });
+  ctx.clearRect(0, 0, width, height);
+  const glow = clamp(0, 1, levels.glow || 0);
+  const motion = clamp(0, 1, levels.motion || 0);
+  theater.style.setProperty('--omb-level', glow.toFixed(3));
+
+  const section = supportedLyricsData?.sections?.find(item => time >= item.start && time < item.end);
+  const chorus = section?.short?.includes('CHORUS') ? 1 : 0;
+  const travel = time;
+  const colors = ['#df2a92', '#263bb8', '#75d9ef'];
+
+  // Long icing paths move together as one graphic layer, not as rotating beams.
+  ctx.save();
+  ctx.lineCap = 'round';
+  for (let lane = 0; lane < 3; lane++) {
+    const baseY = height * (0.28 + lane * 0.22);
+    const phase = travel * (0.18 + lane * 0.025) + lane * 1.7;
+    const amplitude = height * (0.012 + glow * 0.018 + chorus * 0.008);
+    ctx.beginPath();
+    ctx.moveTo(-width * 0.08, baseY + Math.sin(phase) * amplitude);
+    for (let step = 1; step <= 8; step++) {
+      const x = width * (step / 7.2);
+      const y = baseY + Math.sin(phase + step * 0.82) * amplitude;
+      ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = colors[lane];
+    ctx.globalAlpha = 0.09 + glow * 0.13 + chorus * 0.04;
+    ctx.lineWidth = dpr * (2.2 + lane * 0.65 + glow * 2.2);
+    ctx.stroke();
+  }
+
+  const crumbAlpha = 0.13 + motion * 0.38 + chorus * 0.08;
+  ONE_MORE_BITE_CRUMBS.forEach((crumb, index) => {
+    const drift = Math.sin(travel * 0.55 + crumb.phase) * height * (0.003 + motion * 0.008);
+    const nudge = Math.cos(travel * 0.34 + crumb.phase) * width * motion * 0.003;
+    const x = crumb.x * width + nudge;
+    const y = crumb.y * height + drift;
+    const size = crumb.size * dpr * (0.82 + glow * 0.38);
+    ctx.globalAlpha = crumbAlpha * (0.55 + seededUnit(index * 11.7) * 0.45);
+    ctx.fillStyle = colors[crumb.color];
+    if (index % 4 === 0) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(crumb.phase + travel * 0.08);
+      ctx.fillRect(-size * 0.7, -size * 0.7, size * 1.4, size * 1.4);
+      ctx.restore();
+    } else {
+      ctx.beginPath();
+      ctx.arc(x, y, size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  });
+
+  // Louder passages fill the page with color without strobing or resizing controls.
+  const wash = ctx.createRadialGradient(width * 0.68, height * 0.48, 0, width * 0.68, height * 0.48, width * 0.42);
+  wash.addColorStop(0, `rgba(255, 79, 174, ${0.025 + glow * 0.12})`);
+  wash.addColorStop(0.48, `rgba(190, 220, 255, ${0.02 + glow * 0.07})`);
+  wash.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = wash;
+  ctx.fillRect(0, 0, width, height);
+  ctx.restore();
+}
+
 function drawTetoFx(level) {
   const canvas = $('teto-fx');
   const view = $('view-now');
@@ -4770,6 +5039,10 @@ function drawTetoFx(level) {
   const theme = activeFxTheme();
   updateFxState(levels.glow);
   if (theme === 'off') return;
+  if (theme === 'omb') {
+    drawOneMoreBiteFx(levels, currentCalibratedTime());
+    return;
+  }
 
   const quietGate = smoothStep(0.12, 0.42, levels.motion);
   const party = smoothStep(0.22, 0.78, levels.motion);
@@ -5243,6 +5516,8 @@ function bindAudioElementEvents(el) {
     $('hero-play').querySelector('.hero-icon').textContent = '⏸';
     const ddfIcon = $('ddf-play-icon');
     if (ddfIcon) ddfIcon.textContent = '⏸';
+    const ombIcon = $('omb-play-icon');
+    if (ombIcon) ombIcon.textContent = '⏸';
     document.body.classList.add('is-playing');
     startProgressClock();
     startWaveform();
@@ -5258,6 +5533,8 @@ function bindAudioElementEvents(el) {
     $('hero-play').querySelector('.hero-icon').textContent = '▶';
     const ddfIcon = $('ddf-play-icon');
     if (ddfIcon) ddfIcon.textContent = '▶';
+    const ombIcon = $('omb-play-icon');
+    if (ombIcon) ombIcon.textContent = '▶';
     document.body.classList.remove('is-playing');
     stopProgressClock();
     updatePlaybackVisuals();
@@ -5277,6 +5554,8 @@ $('play').addEventListener('click', togglePlay);
 $('hero-play').addEventListener('click', togglePlay);
 const ddfPlayBtn = $('ddf-play');
 if (ddfPlayBtn) ddfPlayBtn.addEventListener('click', togglePlay);
+const ombPlayBtn = $('omb-play');
+if (ombPlayBtn) ombPlayBtn.addEventListener('click', togglePlay);
 $('next').addEventListener('click', () => playNext(false));
 $('prev').addEventListener('click', playPrev);
 $('shuffle').addEventListener('click', toggleShuffle);

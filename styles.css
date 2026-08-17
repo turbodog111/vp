@@ -1425,6 +1425,318 @@ input[type="range"]:focus { outline: none; }
 }
 
 /* ==========================================================================
+   One More Bite — full-stage lyric scene
+   ========================================================================== */
+
+body.omb-theater-active {
+  --accent: #df2a92;
+  --accent-2: #bedcff;
+  --accent-fg: #050508;
+}
+
+body.omb-theater-active .now-stage,
+body.omb-theater-active .spatial-guide,
+body.omb-theater-active .wave-panel,
+body.omb-theater-active .teto-fx-canvas,
+body.omb-theater-active .ddf-theater {
+  display: none !important;
+}
+
+body.omb-theater-active #view-now.view.active,
+body.omb-theater-active .now-view.active {
+  display: block;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  border: 2px solid #263bb8;
+  border-radius: 8px;
+  background: #fffdfd;
+  color: #050508;
+}
+
+.omb-theater {
+  --omb-level: 0;
+  --omb-progress: 0%;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: #fffdfd;
+  color: #050508;
+}
+.omb-theater.hidden { display: none !important; }
+
+.omb-fx-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.omb-ribbon {
+  position: absolute;
+  z-index: 1;
+  left: -8%;
+  width: 116%;
+  height: 13%;
+  background: #bedcff;
+  border-top: 2px solid rgba(38, 59, 184, 0.32);
+  border-bottom: 2px solid rgba(38, 59, 184, 0.32);
+  pointer-events: none;
+}
+.omb-ribbon-a { top: 17%; transform: rotate(-4deg); }
+.omb-ribbon-b {
+  bottom: 17%;
+  height: 9%;
+  transform: rotate(3deg);
+  opacity: calc(0.58 + var(--omb-level) * 0.28);
+}
+
+.omb-header,
+.omb-stage,
+.omb-footer {
+  position: relative;
+  z-index: 3;
+}
+
+.omb-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 24px 8px;
+}
+.omb-overline {
+  color: #df2a92;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.omb-header h1 {
+  margin: 3px 0 0;
+  color: #050508;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+.omb-section {
+  max-width: 260px;
+  padding: 7px 10px;
+  border: 2px solid #263bb8;
+  border-radius: 4px;
+  background: #fffdfd;
+  color: #263bb8;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.omb-stage {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) minmax(190px, 25%);
+  align-items: center;
+  min-height: 0;
+  padding: 4px 24px 8px 16px;
+  gap: 14px;
+}
+
+.omb-course {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-right: 2px solid #263bb8;
+  color: #263bb8;
+}
+#omb-course-number {
+  font-size: 28px;
+  font-weight: 950;
+  line-height: 1;
+}
+.omb-course-label {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.omb-lyrics {
+  min-width: 0;
+  text-align: center;
+  filter: drop-shadow(0 8px 0 rgba(190, 220, 255, calc(0.18 + var(--omb-level) * 0.22)));
+}
+.omb-lyric-context {
+  min-height: 1.3em;
+  color: rgba(38, 59, 184, 0.42);
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.25;
+  transition: opacity 0.18s ease;
+}
+.omb-lyric-current {
+  min-height: 2.6em;
+  margin: 12px auto;
+  color: #263bb8;
+  font-size: 38px;
+  font-weight: 950;
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.omb-word {
+  --word-progress: 0%;
+  display: inline;
+  color: transparent;
+  background: linear-gradient(90deg, #df2a92 var(--word-progress), #263bb8 var(--word-progress));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 0.25px rgba(38, 59, 184, 0.28);
+}
+.omb-word.is-current {
+  text-shadow: 0 0 16px rgba(255, 79, 174, calc(0.18 + var(--omb-level) * 0.3));
+}
+.omb-lyric-current.is-aside { font-style: italic; }
+.omb-instrumental {
+  color: #263bb8;
+  font-size: 21px;
+  font-weight: 850;
+}
+
+.omb-plate-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+}
+.omb-plate {
+  width: 170px;
+  height: 170px;
+  border: 5px solid #263bb8;
+  border-radius: 50%;
+  background: #fffdfd;
+  box-shadow:
+    0 0 0 10px #bedcff,
+    0 0 0 13px #df2a92,
+    15px 18px 0 rgba(38, 59, 184, 0.16),
+    0 0 calc(22px + var(--omb-level) * 34px) rgba(255, 79, 174, calc(0.08 + var(--omb-level) * 0.28));
+}
+.omb-bite-notch {
+  position: absolute;
+  display: block;
+  border: 3px solid #263bb8;
+  border-radius: 50%;
+  background: #bedcff;
+}
+.notch-a { width: 42px; height: 42px; top: -7px; right: -9px; }
+.notch-b { width: 34px; height: 34px; top: 24px; right: -19px; }
+.notch-c { width: 26px; height: 26px; top: 52px; right: -13px; }
+.omb-play {
+  position: absolute;
+  width: 82px;
+  height: 82px;
+  display: grid;
+  place-items: center;
+  border: 3px solid #050508;
+  border-radius: 50%;
+  background: #ff8fd8;
+  color: #050508;
+  cursor: pointer;
+  font-size: 28px;
+  font-weight: 950;
+  box-shadow: 7px 7px 0 #263bb8;
+}
+.omb-play:hover { background: #bedcff; }
+.omb-play:active { transform: translate(3px, 3px); box-shadow: 4px 4px 0 #263bb8; }
+.omb-time {
+  position: absolute;
+  top: calc(50% + 105px);
+  width: 178px;
+  display: flex;
+  justify-content: space-between;
+  color: #263bb8;
+  font-size: 11px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.omb-footer { padding: 4px 24px 16px; }
+.omb-progress-track {
+  height: 8px;
+  overflow: hidden;
+  border: 2px solid #263bb8;
+  background: #fffdfd;
+}
+.omb-progress-track span {
+  display: block;
+  width: var(--omb-progress);
+  height: 100%;
+  background: #df2a92;
+  box-shadow: 8px 0 0 #bedcff;
+}
+.omb-footer-copy {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 6px;
+  color: #263bb8;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+#omb-status { color: #df2a92; }
+
+@media (max-width: 780px) {
+  .omb-header { padding: 12px 14px 4px; }
+  .omb-header h1 { font-size: 26px; }
+  .omb-section { max-width: 150px; font-size: 9px; }
+  .omb-stage {
+    grid-template-columns: minmax(0, 1fr) 132px;
+    padding: 2px 12px 8px;
+    gap: 8px;
+  }
+  .omb-course { display: none; }
+  .omb-lyric-current { font-size: 27px; }
+  .omb-lyric-context { font-size: 13px; }
+  .omb-plate { width: 112px; height: 112px; border-width: 4px; box-shadow: 0 0 0 7px #bedcff, 0 0 0 9px #df2a92, 8px 10px 0 rgba(38, 59, 184, 0.16); }
+  .omb-play { width: 60px; height: 60px; font-size: 21px; box-shadow: 5px 5px 0 #263bb8; }
+  .omb-time { top: calc(50% + 72px); width: 128px; }
+  .notch-a { width: 29px; height: 29px; }
+  .notch-b { width: 23px; height: 23px; top: 17px; right: -12px; }
+  .notch-c { width: 18px; height: 18px; top: 37px; right: -8px; }
+  .omb-footer { padding: 2px 14px 10px; }
+}
+
+@media (max-height: 610px) {
+  .omb-header { padding-top: 8px; }
+  .omb-header h1 { font-size: 24px; }
+  .omb-lyric-current { min-height: 2.2em; margin: 6px auto; font-size: 27px; }
+  .omb-lyric-context { font-size: 12px; }
+  .omb-plate { width: 112px; height: 112px; }
+  .omb-play { width: 58px; height: 58px; font-size: 20px; }
+  .omb-time { top: calc(50% + 72px); width: 124px; }
+  .omb-footer { padding-bottom: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .omb-ribbon,
+  .omb-lyrics { transition: none; filter: none; }
+}
+
+/* ==========================================================================
    DDF Theater — full DDLC custom Now Playing for Traveling Voices
    ========================================================================== */
 

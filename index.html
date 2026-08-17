@@ -6,8 +6,8 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-08-15-eq-queue">
-<link rel="stylesheet" href="styles.css?v=20260815-eq-queue">
+<meta name="vp-build" content="2026-08-16-one-more-bite">
+<link rel="stylesheet" href="styles.css?v=20260816-one-more-bite">
 </head>
 <body>
 <div class="app">
@@ -97,6 +97,55 @@
     <section id="view-now" class="view now-view">
       <canvas id="teto-fx" class="teto-fx-canvas" aria-hidden="true"></canvas>
       <pre id="timing-debug" class="timing-debug hidden" aria-live="polite"></pre>
+
+      <div id="omb-theater" class="omb-theater hidden" aria-live="polite">
+        <canvas id="omb-fx" class="omb-fx-canvas" aria-hidden="true"></canvas>
+        <div class="omb-ribbon omb-ribbon-a" aria-hidden="true"></div>
+        <div class="omb-ribbon omb-ribbon-b" aria-hidden="true"></div>
+        <header class="omb-header">
+          <div>
+            <div class="omb-overline">MiliSen feat. Kasane Teto</div>
+            <h1>One More Bite</h1>
+          </div>
+          <div id="omb-section" class="omb-section">Instrumental intro</div>
+        </header>
+        <div class="omb-stage">
+          <aside class="omb-course" aria-hidden="true">
+            <span id="omb-course-number">01</span>
+            <span class="omb-course-label">CURRENT COURSE</span>
+          </aside>
+          <section class="omb-lyrics" aria-label="Timed lyrics">
+            <div id="omb-lyric-previous" class="omb-lyric-context"></div>
+            <div id="omb-lyric-current" class="omb-lyric-current">
+              <span class="omb-instrumental">A little room before the first bite.</span>
+            </div>
+            <div id="omb-lyric-next" class="omb-lyric-context"></div>
+          </section>
+          <div class="omb-plate-wrap">
+            <div class="omb-plate" aria-hidden="true">
+              <span class="omb-bite-notch notch-a"></span>
+              <span class="omb-bite-notch notch-b"></span>
+              <span class="omb-bite-notch notch-c"></span>
+            </div>
+            <button id="omb-play" class="omb-play" type="button" title="Play/Pause (Space)">
+              <span id="omb-play-icon">&#9654;</span>
+            </button>
+            <div class="omb-time">
+              <span id="omb-time-current">0:00</span>
+              <span id="omb-time-total">3:14</span>
+            </div>
+          </div>
+        </div>
+        <footer class="omb-footer">
+          <div class="omb-progress-track" aria-hidden="true">
+            <span id="omb-progress-fill"></span>
+          </div>
+          <div class="omb-footer-copy">
+            <span id="omb-status">INTRO</span>
+            <span>LYRICS SYNCED TO THIS RECORDING</span>
+          </div>
+        </footer>
+      </div>
 
       <!-- DDLC Theater: no character art — full-bleed girl-color FX canvas is the stage -->
       <div id="ddf-theater" class="ddf-theater hidden" aria-live="polite">
@@ -309,6 +358,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=20260815-eq-queue"></script>
+<script src="app.js?v=20260816-one-more-bite"></script>
 </body>
 </html>
