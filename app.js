@@ -746,11 +746,12 @@ function oneMoreBiteBeatPeaks(analysis) {
   return timedPeaks;
 }
 
-function oneMoreBiteBeatAt(time, chorus) {
+function oneMoreBiteBeatsAt(time, chorus) {
   const analysis = supportedLyricsData?.analysis;
   const peaks = oneMoreBiteBeatPeaks(analysis);
   const threshold = chorus ? 0.58 : 0.84;
-  const duration = chorus ? 0.82 : 0.46;
+  const duration = chorus ? 1.25 : 0.68;
+  const active = [];
   for (let index = peaks.length - 1; index >= 0; index--) {
     const peak = peaks[index];
     const age = time - peak.time;
@@ -764,18 +765,21 @@ function oneMoreBiteBeatAt(time, chorus) {
       { x: -1, y: 0 },
       { x: 0, y: 1 }
     ];
-    const life = clamp(0, 1, 1 - Math.max(0, age) / duration);
-    const easedLife = life * life * (3 - 2 * life);
-    return {
+    const progress = clamp(0, 1, Math.max(0, age) / duration);
+    const strengthScale = 0.42 + smoothStep(threshold, 1, peak.strength) * 0.58;
+    const entrance = smoothStep(0, 0.07, progress);
+    const exit = 1 - smoothStep(0.62, 1, progress);
+    active.push({
       ...peak,
       age: Math.max(0, age),
       duration,
       direction: directions[directionIndex],
-      life: easedLife,
-      impact: easedLife * smoothStep(threshold, 1, peak.strength)
-    };
+      progress,
+      life: entrance * exit,
+      impact: strengthScale * entrance * exit
+    });
   }
-  return { age: 1, duration, direction: { x: 0, y: 0 }, life: 0, impact: 0, strength: 0, ordinal: 0 };
+  return active.reverse();
 }
 
 function renderOneMoreBiteLine(index, data) {
@@ -5089,55 +5093,61 @@ function drawOneMoreBiteFx(levels, time) {
     recorded.onset * (0.72 + chorus * 0.25),
     recorded.energy * (0.22 + chorus * 0.22)
   ));
-  const beat = oneMoreBiteBeatAt(time, chorus);
-  const slideDistance = beat.impact * (chorus ? 38 : 11) * (0.82 + recorded.energy * 0.32);
-  const shiftX = beat.direction.x * slideDistance;
-  const shiftY = beat.direction.y * slideDistance * 0.72;
-  const blur = beat.impact * (chorus ? 2.4 : 0.65);
+  const beats = oneMoreBiteBeatsAt(time, chorus);
+  const backgroundMotion = beats.reduce((motionState, beat) => {
+    const arc = Math.sin(beat.progress * Math.PI) * beat.impact;
+    motionState.x += beat.direction.x * arc;
+    motionState.y += beat.direction.y * arc;
+    motionState.power += arc;
+    return motionState;
+  }, { x: 0, y: 0, power: 0 });
+  const motionLength = Math.hypot(backgroundMotion.x, backgroundMotion.y) || 1;
+  const trailDirection = {
+    x: backgroundMotion.x / motionLength,
+    y: backgroundMotion.y / motionLength
+  };
+  const trailPower = clamp(0, 1, backgroundMotion.power * 0.58);
   theater.style.setProperty('--omb-level', glow.toFixed(3));
   theater.style.setProperty('--omb-energy', recorded.energy.toFixed(3));
   theater.style.setProperty('--omb-onset', recorded.onset.toFixed(3));
-  theater.style.setProperty('--omb-shift-x', `${shiftX.toFixed(2)}px`);
-  theater.style.setProperty('--omb-shift-y', `${shiftY.toFixed(2)}px`);
-  theater.style.setProperty('--omb-parallax-x', `${(-shiftX * 0.42).toFixed(2)}px`);
-  theater.style.setProperty('--omb-parallax-y', `${(-shiftY * 0.42).toFixed(2)}px`);
-  theater.style.setProperty('--omb-motion-blur', `${blur.toFixed(2)}px`);
-  theater.style.setProperty('--omb-echo-x-1', `${(-shiftX * 0.28).toFixed(2)}px`);
-  theater.style.setProperty('--omb-echo-y-1', `${(-shiftY * 0.28).toFixed(2)}px`);
-  theater.style.setProperty('--omb-echo-x-2', `${(-shiftX * 0.62).toFixed(2)}px`);
-  theater.style.setProperty('--omb-echo-y-2', `${(-shiftY * 0.62).toFixed(2)}px`);
-  theater.classList.toggle('has-beat-motion', beat.impact > 0.025);
+  theater.style.setProperty('--omb-parallax-x', `${(backgroundMotion.x * (chorus ? 13 : 4)).toFixed(2)}px`);
+  theater.style.setProperty('--omb-parallax-y', `${(backgroundMotion.y * (chorus ? 9 : 3)).toFixed(2)}px`);
 
   const travel = time;
   const colors = ['#df2a92', '#263bb8', '#75d9ef'];
+  const playRect = $('omb-play')?.getBoundingClientRect();
+  const centerX = playRect ? (playRect.left + playRect.width / 2 - rect.left) * dpr : width * 0.78;
+  const centerY = playRect ? (playRect.top + playRect.height / 2 - rect.top) * dpr : height * 0.5;
 
   ctx.save();
 
-  // Every strong attack pushes a broad palette wipe through the entire stage.
-  // Four attacks share a direction so the movement reads as phrasing, not jitter.
-  if (beat.impact > 0.015) {
+  // Each onset owns its full animation lifetime. New beats add another wave
+  // instead of replacing the one already crossing the stage.
+  beats.forEach(beat => {
     const progress = clamp(0, 1, beat.age / beat.duration);
+    const waveLife = Math.sin(progress * Math.PI) * beat.impact;
     const horizontal = beat.direction.x !== 0;
     const span = (horizontal ? width : height) * (0.24 + beat.strength * 0.16);
     const distance = (horizontal ? width : height) + span * 2;
+    const easedProgress = progress * progress * (3 - 2 * progress);
     const axisPosition = beat.direction.x + beat.direction.y > 0
-      ? -span + distance * progress
-      : (horizontal ? width : height) + span - distance * progress;
+      ? -span + distance * easedProgress
+      : (horizontal ? width : height) + span - distance * easedProgress;
     const gradient = horizontal
       ? ctx.createLinearGradient(axisPosition - span, 0, axisPosition + span, 0)
       : ctx.createLinearGradient(0, axisPosition - span, 0, axisPosition + span);
     gradient.addColorStop(0, 'rgba(190, 220, 255, 0)');
-    gradient.addColorStop(0.34, `rgba(117, 217, 239, ${beat.impact * (chorus ? 0.2 : 0.05)})`);
-    gradient.addColorStop(0.52, `rgba(255, 79, 174, ${beat.impact * (chorus ? 0.24 : 0.065)})`);
-    gradient.addColorStop(0.7, `rgba(38, 59, 184, ${beat.impact * (chorus ? 0.12 : 0.035)})`);
+    gradient.addColorStop(0.34, `rgba(117, 217, 239, ${waveLife * (chorus ? 0.22 : 0.05)})`);
+    gradient.addColorStop(0.52, `rgba(255, 79, 174, ${waveLife * (chorus ? 0.27 : 0.065)})`);
+    gradient.addColorStop(0.7, `rgba(38, 59, 184, ${waveLife * (chorus ? 0.14 : 0.035)})`);
     gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
     ctx.save();
-    ctx.filter = `blur(${dpr * (7 + beat.impact * 10)}px)`;
+    ctx.filter = `blur(${dpr * (8 + waveLife * 12)}px)`;
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
     ctx.restore();
 
-    const sweepCount = chorus ? 4 : 1;
+    const sweepCount = chorus ? 5 : 1;
     for (let sweep = 0; sweep < sweepCount; sweep++) {
       const separation = dpr * (sweep - (sweepCount - 1) / 2) * 22;
       const linePosition = axisPosition + separation;
@@ -5150,11 +5160,30 @@ function drawOneMoreBiteFx(levels, time) {
         ctx.quadraticCurveTo(width * 0.5, linePosition + beat.direction.y * height * 0.08, width * 1.12, linePosition);
       }
       ctx.strokeStyle = colors[(sweep + beat.ordinal) % colors.length];
-      ctx.globalAlpha = beat.impact * (0.16 + sweep * 0.025) * (chorus ? 1 : 0.32);
+      ctx.globalAlpha = waveLife * (0.16 + sweep * 0.022) * (chorus ? 1 : 0.32);
       ctx.lineWidth = dpr * (3 + beat.strength * 7);
       ctx.stroke();
     }
-  }
+
+    // A pulse begins behind the play control and expands past the viewport.
+    // Staggered rings create depth while overlapping pulses remain independent.
+    const maxRadius = Math.hypot(width, height) * 0.72;
+    const startRadius = (playRect?.width || 82) * dpr * 0.68;
+    const ringCount = chorus ? 4 : 2;
+    for (let ring = 0; ring < ringCount; ring++) {
+      const ringDelay = ring * 0.055;
+      const ringProgress = clamp(0, 1, (progress - ringDelay) / Math.max(0.01, 1 - ringDelay));
+      if (ringProgress <= 0 || ringProgress >= 1) continue;
+      const radius = startRadius + maxRadius * (1 - (1 - ringProgress) ** 2);
+      const ringLife = Math.sin(ringProgress * Math.PI) * beat.impact;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = colors[(beat.ordinal + ring) % colors.length];
+      ctx.globalAlpha = ringLife * (chorus ? 0.31 : 0.08) * (1 - ring * 0.1);
+      ctx.lineWidth = dpr * (2.2 + beat.strength * 4.6 - ring * 0.28);
+      ctx.stroke();
+    }
+  });
 
   // Long icing paths move together as one graphic layer, not as rotating beams.
   ctx.lineCap = 'round';
@@ -5210,14 +5239,14 @@ function drawOneMoreBiteFx(levels, time) {
     const x = xRatio * width;
     const length = dpr * (5 + seededUnit(index * 18.3) * 11 + recorded.onset * 7);
     const rotation = -0.65 + Math.sin(index * 2.4 + travel * 0.35) * 0.45;
-    const trailCount = chorus && beat.impact > 0.08 ? 3 : 1;
+    const trailCount = chorus && trailPower > 0.08 ? 3 : 1;
     for (let trail = trailCount - 1; trail >= 0; trail--) {
       ctx.save();
-      const trailDistance = trail * dpr * (8 + beat.impact * 16);
-      ctx.translate(x - beat.direction.x * trailDistance, y - beat.direction.y * trailDistance);
+      const trailDistance = trail * dpr * (8 + trailPower * 16);
+      ctx.translate(x - trailDirection.x * trailDistance, y - trailDirection.y * trailDistance);
       ctx.rotate(rotation);
       const baseAlpha = (0.025 + recorded.energy * 0.08 + chorus * 0.22) * (0.65 + recorded.onset * 0.35);
-      ctx.globalAlpha = baseAlpha * (trail ? beat.impact * (0.34 / trail) : 1);
+      ctx.globalAlpha = baseAlpha * (trail ? trailPower * (0.34 / trail) : 1);
       ctx.strokeStyle = colors[(index + trail) % colors.length];
       ctx.lineWidth = dpr * (1.4 + (index % 3) * 0.55);
       ctx.beginPath();
@@ -5231,31 +5260,6 @@ function drawOneMoreBiteFx(levels, time) {
   // Spectral-flux peaks launch short sprinkle bursts from the bitten plate.
   // Looking backward in the fixed envelope makes each burst persist briefly
   // without maintaining a separate animation clock or drifting while paused.
-  const playRect = $('omb-play')?.getBoundingClientRect();
-  const plateRect = theater.querySelector('.omb-plate')?.getBoundingClientRect();
-  const centerX = playRect ? (playRect.left + playRect.width / 2 - rect.left) * dpr : width * 0.78;
-  const centerY = playRect ? (playRect.top + playRect.height / 2 - rect.top) * dpr : height * 0.5;
-
-  // Plate and play-control outlines linger at their previous positions after a
-  // beat, giving the motion a readable snapshot trail rather than a plain blur.
-  if (beat.impact > 0.035 && plateRect) {
-    const plateRadius = plateRect.width * dpr * 0.5;
-    const playRadius = (playRect?.width || plateRect.width * 0.48) * dpr * 0.5;
-    for (let echo = 4; echo >= 1; echo--) {
-      const lag = echo / 4;
-      const echoX = centerX - beat.direction.x * slideDistance * dpr * lag;
-      const echoY = centerY - beat.direction.y * slideDistance * dpr * 0.72 * lag;
-      ctx.globalAlpha = beat.impact * (0.18 - echo * 0.026) * (chorus ? 1 : 0.34);
-      ctx.strokeStyle = colors[(beat.ordinal + echo) % colors.length];
-      ctx.lineWidth = dpr * (1.5 + (4 - echo) * 0.45);
-      ctx.beginPath();
-      ctx.arc(echoX, echoY, plateRadius, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(echoX, echoY, playRadius, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-  }
   const analysis = supportedLyricsData?.analysis;
   const onsetEnvelope = decodedOneMoreBiteEnvelope(analysis, 'onsets');
   if (analysis?.step && onsetEnvelope.length) {
