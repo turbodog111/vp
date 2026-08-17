@@ -1,0 +1,2149 @@
+{
+  "song": "Hero",
+  "duration": 214.9,
+  "credits": {
+    "original": "Mili",
+    "cover": "Himemiya Rie",
+    "lyrics": "Cassie Wei",
+    "artwork": "Ao Fujimori"
+  },
+  "timing": {
+    "base": "mili",
+    "rieOffset": [
+      {
+        "at": 0,
+        "seconds": 0.2
+      },
+      {
+        "at": 130,
+        "seconds": 0.2
+      },
+      {
+        "at": 150,
+        "seconds": 0.3
+      },
+      {
+        "at": 214.9,
+        "seconds": 0.3
+      }
+    ],
+    "method": "Word timing measured from the local Himemiya Rie rendition and aligned to the Mili timeline."
+  },
+  "sections": [
+    {
+      "start": 0.0,
+      "end": 4.8,
+      "name": "The count-in",
+      "short": "OPENING",
+      "phase": 0
+    },
+    {
+      "start": 4.8,
+      "end": 33.0,
+      "name": "The green hills",
+      "short": "PASTORAL",
+      "phase": 1
+    },
+    {
+      "start": 33.0,
+      "end": 56.2,
+      "name": "Forever my hero",
+      "short": "DEVOTION",
+      "phase": 2
+    },
+    {
+      "start": 56.2,
+      "end": 79.6,
+      "name": "Rain on the facade",
+      "short": "FACADE",
+      "phase": 3
+    },
+    {
+      "start": 79.6,
+      "end": 106.0,
+      "name": "Who am I?",
+      "short": "IDENTITY VOID",
+      "phase": 4
+    },
+    {
+      "start": 106.0,
+      "end": 126.8,
+      "name": "Another lap",
+      "short": "CAROUSEL",
+      "phase": 5
+    },
+    {
+      "start": 126.8,
+      "end": 144.7,
+      "name": "Assigned a villain",
+      "short": "SYSTEM",
+      "phase": 6
+    },
+    {
+      "start": 144.7,
+      "end": 175.7,
+      "name": "Stand up",
+      "short": "SELF-AUTHORED",
+      "phase": 7
+    },
+    {
+      "start": 175.7,
+      "end": 198.7,
+      "name": "My own justice",
+      "short": "RESOLVE",
+      "phase": 8
+    },
+    {
+      "start": 198.7,
+      "end": 214.9,
+      "name": "The empty stage",
+      "short": "AFTERMATH",
+      "phase": 9
+    }
+  ],
+  "lines": [
+    {
+      "start": 0.0,
+      "end": 4.6,
+      "text": "One, two, one, two, three, four.",
+      "aside": true,
+      "words": [
+        {
+          "word": "One,",
+          "start": 0.0,
+          "end": 0.84
+        },
+        {
+          "word": "two,",
+          "start": 0.84,
+          "end": 1.72
+        },
+        {
+          "word": "one,",
+          "start": 1.96,
+          "end": 2.92
+        },
+        {
+          "word": "two,",
+          "start": 3.1,
+          "end": 3.6
+        },
+        {
+          "word": "three,",
+          "start": 3.66,
+          "end": 4.08
+        },
+        {
+          "word": "four.",
+          "start": 4.22,
+          "end": 4.6
+        }
+      ]
+    },
+    {
+      "start": 4.78,
+      "end": 16.92,
+      "text": "We're swaying on horseback, the hills are green, and the birdies sing, and roses are pink, experience I never had.",
+      "aside": false,
+      "words": [
+        {
+          "word": "We're",
+          "start": 4.78,
+          "end": 5.46
+        },
+        {
+          "word": "swaying",
+          "start": 5.46,
+          "end": 6.56
+        },
+        {
+          "word": "on",
+          "start": 6.56,
+          "end": 6.84
+        },
+        {
+          "word": "horseback,",
+          "start": 6.84,
+          "end": 7.66
+        },
+        {
+          "word": "the",
+          "start": 7.84,
+          "end": 8.1
+        },
+        {
+          "word": "hills",
+          "start": 8.1,
+          "end": 8.78
+        },
+        {
+          "word": "are",
+          "start": 8.78,
+          "end": 9.06
+        },
+        {
+          "word": "green,",
+          "start": 9.06,
+          "end": 9.46
+        },
+        {
+          "word": "and",
+          "start": 9.6,
+          "end": 9.98
+        },
+        {
+          "word": "the",
+          "start": 9.98,
+          "end": 10.46
+        },
+        {
+          "word": "birdies",
+          "start": 10.46,
+          "end": 11.42
+        },
+        {
+          "word": "sing,",
+          "start": 11.42,
+          "end": 11.74
+        },
+        {
+          "word": "and",
+          "start": 11.88,
+          "end": 12.32
+        },
+        {
+          "word": "roses",
+          "start": 12.32,
+          "end": 13.22
+        },
+        {
+          "word": "are",
+          "start": 13.22,
+          "end": 13.64
+        },
+        {
+          "word": "pink,",
+          "start": 13.64,
+          "end": 14.04
+        },
+        {
+          "word": "experience",
+          "start": 14.3,
+          "end": 15.0
+        },
+        {
+          "word": "I",
+          "start": 15.0,
+          "end": 15.96
+        },
+        {
+          "word": "never",
+          "start": 15.96,
+          "end": 16.26
+        },
+        {
+          "word": "had.",
+          "start": 16.26,
+          "end": 16.92
+        }
+      ]
+    },
+    {
+      "start": 17.04,
+      "end": 23.12,
+      "text": "I'm so happy, happy to just be part of your story.",
+      "aside": false,
+      "words": [
+        {
+          "word": "I'm",
+          "start": 17.04,
+          "end": 17.56
+        },
+        {
+          "word": "so",
+          "start": 17.56,
+          "end": 17.9
+        },
+        {
+          "word": "happy,",
+          "start": 17.9,
+          "end": 18.52
+        },
+        {
+          "word": "happy",
+          "start": 18.72,
+          "end": 19.58
+        },
+        {
+          "word": "to",
+          "start": 19.58,
+          "end": 20.28
+        },
+        {
+          "word": "just",
+          "start": 20.28,
+          "end": 20.64
+        },
+        {
+          "word": "be",
+          "start": 20.64,
+          "end": 20.94
+        },
+        {
+          "word": "part",
+          "start": 20.94,
+          "end": 21.56
+        },
+        {
+          "word": "of",
+          "start": 21.56,
+          "end": 21.96
+        },
+        {
+          "word": "your",
+          "start": 21.96,
+          "end": 22.64
+        },
+        {
+          "word": "story.",
+          "start": 22.64,
+          "end": 23.12
+        }
+      ]
+    },
+    {
+      "start": 23.12,
+      "end": 28.34,
+      "text": "After you I follow, after you I follow",
+      "aside": false,
+      "words": [
+        {
+          "word": "After",
+          "start": 23.12,
+          "end": 24.76
+        },
+        {
+          "word": "you",
+          "start": 24.76,
+          "end": 25.16
+        },
+        {
+          "word": "I",
+          "start": 25.16,
+          "end": 25.4
+        },
+        {
+          "word": "follow,",
+          "start": 25.4,
+          "end": 26.04
+        },
+        {
+          "word": "after",
+          "start": 26.38,
+          "end": 27.08
+        },
+        {
+          "word": "you",
+          "start": 27.08,
+          "end": 27.5
+        },
+        {
+          "word": "I",
+          "start": 27.5,
+          "end": 27.8
+        },
+        {
+          "word": "follow",
+          "start": 27.8,
+          "end": 28.34
+        }
+      ]
+    },
+    {
+      "start": 28.34,
+      "end": 32.14,
+      "text": "The world you show me broaden my horizon",
+      "aside": false,
+      "words": [
+        {
+          "word": "The",
+          "start": 28.34,
+          "end": 29.24
+        },
+        {
+          "word": "world",
+          "start": 29.24,
+          "end": 29.68
+        },
+        {
+          "word": "you",
+          "start": 29.68,
+          "end": 29.82
+        },
+        {
+          "word": "show",
+          "start": 29.82,
+          "end": 30.08
+        },
+        {
+          "word": "me",
+          "start": 30.08,
+          "end": 30.38
+        },
+        {
+          "word": "broaden",
+          "start": 30.38,
+          "end": 30.9
+        },
+        {
+          "word": "my",
+          "start": 30.9,
+          "end": 31.28
+        },
+        {
+          "word": "horizon",
+          "start": 31.28,
+          "end": 32.14
+        }
+      ]
+    },
+    {
+      "start": 32.14,
+      "end": 37.48,
+      "text": "Forever my hero, forever my hero",
+      "aside": false,
+      "words": [
+        {
+          "word": "Forever",
+          "start": 32.14,
+          "end": 34.06
+        },
+        {
+          "word": "my",
+          "start": 34.06,
+          "end": 34.54
+        },
+        {
+          "word": "hero,",
+          "start": 34.54,
+          "end": 35.22
+        },
+        {
+          "word": "forever",
+          "start": 35.68,
+          "end": 36.36
+        },
+        {
+          "word": "my",
+          "start": 36.36,
+          "end": 36.88
+        },
+        {
+          "word": "hero",
+          "start": 36.88,
+          "end": 37.48
+        }
+      ]
+    },
+    {
+      "start": 37.48,
+      "end": 43.0,
+      "text": "I am your biggest fan, I am your biggest fan",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 37.48,
+          "end": 38.44
+        },
+        {
+          "word": "am",
+          "start": 38.44,
+          "end": 38.76
+        },
+        {
+          "word": "your",
+          "start": 38.76,
+          "end": 39.02
+        },
+        {
+          "word": "biggest",
+          "start": 39.02,
+          "end": 39.52
+        },
+        {
+          "word": "fan,",
+          "start": 39.52,
+          "end": 40.12
+        },
+        {
+          "word": "I",
+          "start": 40.48,
+          "end": 40.74
+        },
+        {
+          "word": "am",
+          "start": 40.74,
+          "end": 41.16
+        },
+        {
+          "word": "your",
+          "start": 41.16,
+          "end": 41.36
+        },
+        {
+          "word": "biggest",
+          "start": 41.36,
+          "end": 41.86
+        },
+        {
+          "word": "fan",
+          "start": 41.86,
+          "end": 43.0
+        }
+      ]
+    },
+    {
+      "start": 46.06,
+      "end": 50.36,
+      "text": "Merry-go-round in a circle I run",
+      "aside": false,
+      "words": [
+        {
+          "word": "Merry-go-round",
+          "start": 46.06,
+          "end": 47.06
+        },
+        {
+          "word": "in",
+          "start": 48.04,
+          "end": 48.58
+        },
+        {
+          "word": "a",
+          "start": 48.58,
+          "end": 48.84
+        },
+        {
+          "word": "circle",
+          "start": 48.84,
+          "end": 49.32
+        },
+        {
+          "word": "I",
+          "start": 49.32,
+          "end": 49.82
+        },
+        {
+          "word": "run",
+          "start": 49.82,
+          "end": 50.36
+        }
+      ]
+    },
+    {
+      "start": 50.36,
+      "end": 56.14,
+      "text": "It's so much fun leaving reality behind",
+      "aside": false,
+      "words": [
+        {
+          "word": "It's",
+          "start": 50.36,
+          "end": 51.24
+        },
+        {
+          "word": "so",
+          "start": 51.24,
+          "end": 51.42
+        },
+        {
+          "word": "much",
+          "start": 51.42,
+          "end": 52.12
+        },
+        {
+          "word": "fun",
+          "start": 52.12,
+          "end": 52.7
+        },
+        {
+          "word": "leaving",
+          "start": 52.7,
+          "end": 53.36
+        },
+        {
+          "word": "reality",
+          "start": 53.36,
+          "end": 54.62
+        },
+        {
+          "word": "behind",
+          "start": 54.62,
+          "end": 56.14
+        }
+      ]
+    },
+    {
+      "start": 56.14,
+      "end": 64.88,
+      "text": "I fall down the horseback with my cripple legs",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 56.14,
+          "end": 57.36
+        },
+        {
+          "word": "fall",
+          "start": 57.36,
+          "end": 61.26
+        },
+        {
+          "word": "down",
+          "start": 61.26,
+          "end": 61.84
+        },
+        {
+          "word": "the",
+          "start": 61.84,
+          "end": 62.16
+        },
+        {
+          "word": "horseback",
+          "start": 62.16,
+          "end": 63.0
+        },
+        {
+          "word": "with",
+          "start": 63.0,
+          "end": 63.56
+        },
+        {
+          "word": "my",
+          "start": 63.56,
+          "end": 63.98
+        },
+        {
+          "word": "cripple",
+          "start": 63.98,
+          "end": 64.4
+        },
+        {
+          "word": "legs",
+          "start": 64.4,
+          "end": 64.88
+        }
+      ]
+    },
+    {
+      "start": 64.88,
+      "end": 69.42,
+      "text": "And then it starts to rain, showing me it's all fake",
+      "aside": false,
+      "words": [
+        {
+          "word": "And",
+          "start": 64.88,
+          "end": 65.38
+        },
+        {
+          "word": "then",
+          "start": 65.38,
+          "end": 65.88
+        },
+        {
+          "word": "it",
+          "start": 65.88,
+          "end": 66.22
+        },
+        {
+          "word": "starts",
+          "start": 66.22,
+          "end": 66.42
+        },
+        {
+          "word": "to",
+          "start": 66.42,
+          "end": 66.68
+        },
+        {
+          "word": "rain,",
+          "start": 66.68,
+          "end": 67.1
+        },
+        {
+          "word": "showing",
+          "start": 67.22,
+          "end": 67.74
+        },
+        {
+          "word": "me",
+          "start": 67.74,
+          "end": 68.62
+        },
+        {
+          "word": "it's",
+          "start": 68.62,
+          "end": 68.98
+        },
+        {
+          "word": "all",
+          "start": 68.98,
+          "end": 69.04
+        },
+        {
+          "word": "fake",
+          "start": 69.04,
+          "end": 69.42
+        }
+      ]
+    },
+    {
+      "start": 69.42,
+      "end": 73.84,
+      "text": "Raindrops wash down the facade, hills are painted",
+      "aside": false,
+      "words": [
+        {
+          "word": "Raindrops",
+          "start": 69.42,
+          "end": 70.62
+        },
+        {
+          "word": "wash",
+          "start": 70.62,
+          "end": 71.04
+        },
+        {
+          "word": "down",
+          "start": 71.04,
+          "end": 71.36
+        },
+        {
+          "word": "the",
+          "start": 71.36,
+          "end": 71.66
+        },
+        {
+          "word": "facade,",
+          "start": 71.66,
+          "end": 72.16
+        },
+        {
+          "word": "hills",
+          "start": 72.54,
+          "end": 72.86
+        },
+        {
+          "word": "are",
+          "start": 72.86,
+          "end": 73.16
+        },
+        {
+          "word": "painted",
+          "start": 73.16,
+          "end": 73.84
+        }
+      ]
+    },
+    {
+      "start": 73.84,
+      "end": 78.62,
+      "text": "Birdies are robotic, roses are made of clay",
+      "aside": false,
+      "words": [
+        {
+          "word": "Birdies",
+          "start": 73.84,
+          "end": 75.22
+        },
+        {
+          "word": "are",
+          "start": 75.22,
+          "end": 75.42
+        },
+        {
+          "word": "robotic,",
+          "start": 75.42,
+          "end": 75.92
+        },
+        {
+          "word": "roses",
+          "start": 76.46,
+          "end": 77.06
+        },
+        {
+          "word": "are",
+          "start": 77.06,
+          "end": 77.84
+        },
+        {
+          "word": "made",
+          "start": 77.84,
+          "end": 78.04
+        },
+        {
+          "word": "of",
+          "start": 78.04,
+          "end": 78.36
+        },
+        {
+          "word": "clay",
+          "start": 78.36,
+          "end": 78.62
+        }
+      ]
+    },
+    {
+      "start": 79.68,
+      "end": 83.92,
+      "text": "Excitement that I feel, excitement that I feel",
+      "aside": false,
+      "words": [
+        {
+          "word": "Excitement",
+          "start": 79.68,
+          "end": 80.52
+        },
+        {
+          "word": "that",
+          "start": 80.52,
+          "end": 80.7
+        },
+        {
+          "word": "I",
+          "start": 80.7,
+          "end": 81.12
+        },
+        {
+          "word": "feel,",
+          "start": 81.12,
+          "end": 81.54
+        },
+        {
+          "word": "excitement",
+          "start": 81.88,
+          "end": 82.78
+        },
+        {
+          "word": "that",
+          "start": 82.8,
+          "end": 82.98
+        },
+        {
+          "word": "I",
+          "start": 82.98,
+          "end": 83.48
+        },
+        {
+          "word": "feel",
+          "start": 83.48,
+          "end": 83.92
+        }
+      ]
+    },
+    {
+      "start": 83.92,
+      "end": 87.6,
+      "text": "Return them to the shelf, cause now I understand",
+      "aside": false,
+      "words": [
+        {
+          "word": "Return",
+          "start": 83.92,
+          "end": 84.82
+        },
+        {
+          "word": "them",
+          "start": 84.82,
+          "end": 85.18
+        },
+        {
+          "word": "to",
+          "start": 85.18,
+          "end": 85.26
+        },
+        {
+          "word": "the",
+          "start": 85.26,
+          "end": 85.68
+        },
+        {
+          "word": "shelf,",
+          "start": 85.68,
+          "end": 86.1
+        },
+        {
+          "word": "cause",
+          "start": 86.2,
+          "end": 86.34
+        },
+        {
+          "word": "now",
+          "start": 86.34,
+          "end": 86.64
+        },
+        {
+          "word": "I",
+          "start": 86.64,
+          "end": 87.0
+        },
+        {
+          "word": "understand",
+          "start": 87.0,
+          "end": 87.6
+        }
+      ]
+    },
+    {
+      "start": 88.54,
+      "end": 93.08,
+      "text": "Heroes cannot be real, heroes cannot be real",
+      "aside": false,
+      "words": [
+        {
+          "word": "Heroes",
+          "start": 88.54,
+          "end": 89.38
+        },
+        {
+          "word": "cannot",
+          "start": 89.38,
+          "end": 89.84
+        },
+        {
+          "word": "be",
+          "start": 89.84,
+          "end": 90.3
+        },
+        {
+          "word": "real,",
+          "start": 90.3,
+          "end": 90.8
+        },
+        {
+          "word": "heroes",
+          "start": 91.02,
+          "end": 91.82
+        },
+        {
+          "word": "cannot",
+          "start": 91.82,
+          "end": 92.2
+        },
+        {
+          "word": "be",
+          "start": 92.2,
+          "end": 92.62
+        },
+        {
+          "word": "real",
+          "start": 92.62,
+          "end": 93.08
+        }
+      ]
+    },
+    {
+      "start": 93.08,
+      "end": 97.9,
+      "text": "I wasn't who I am, I don't know who I am",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 93.08,
+          "end": 93.86
+        },
+        {
+          "word": "wasn't",
+          "start": 93.86,
+          "end": 94.4
+        },
+        {
+          "word": "who",
+          "start": 94.4,
+          "end": 94.54
+        },
+        {
+          "word": "I",
+          "start": 94.54,
+          "end": 94.98
+        },
+        {
+          "word": "am,",
+          "start": 94.98,
+          "end": 95.42
+        },
+        {
+          "word": "I",
+          "start": 95.66,
+          "end": 96.08
+        },
+        {
+          "word": "don't",
+          "start": 96.08,
+          "end": 96.48
+        },
+        {
+          "word": "know",
+          "start": 96.48,
+          "end": 96.72
+        },
+        {
+          "word": "who",
+          "start": 96.72,
+          "end": 96.88
+        },
+        {
+          "word": "I",
+          "start": 96.88,
+          "end": 97.38
+        },
+        {
+          "word": "am",
+          "start": 97.38,
+          "end": 97.9
+        }
+      ]
+    },
+    {
+      "start": 98.54,
+      "end": 100.06,
+      "text": "Who am I?",
+      "aside": true,
+      "words": [
+        {
+          "word": "Who",
+          "start": 98.54,
+          "end": 99.24
+        },
+        {
+          "word": "am",
+          "start": 99.24,
+          "end": 99.52
+        },
+        {
+          "word": "I?",
+          "start": 99.52,
+          "end": 100.06
+        }
+      ]
+    },
+    {
+      "start": 100.6,
+      "end": 102.32,
+      "text": "Who am I?",
+      "aside": true,
+      "words": [
+        {
+          "word": "Who",
+          "start": 100.6,
+          "end": 100.6
+        },
+        {
+          "word": "am",
+          "start": 100.6,
+          "end": 101.84
+        },
+        {
+          "word": "I?",
+          "start": 101.84,
+          "end": 102.32
+        }
+      ]
+    },
+    {
+      "start": 102.58,
+      "end": 104.6,
+      "text": "Who am I?",
+      "aside": true,
+      "words": [
+        {
+          "word": "Who",
+          "start": 102.58,
+          "end": 102.72
+        },
+        {
+          "word": "am",
+          "start": 102.72,
+          "end": 104.18
+        },
+        {
+          "word": "I?",
+          "start": 104.18,
+          "end": 104.6
+        }
+      ]
+    },
+    {
+      "start": 106.24,
+      "end": 109.58,
+      "text": "Here we go, another lap, prizes to claim",
+      "aside": false,
+      "words": [
+        {
+          "word": "Here",
+          "start": 106.24,
+          "end": 106.84
+        },
+        {
+          "word": "we",
+          "start": 106.84,
+          "end": 107.14
+        },
+        {
+          "word": "go,",
+          "start": 107.14,
+          "end": 107.58
+        },
+        {
+          "word": "another",
+          "start": 107.7,
+          "end": 107.96
+        },
+        {
+          "word": "lap,",
+          "start": 107.96,
+          "end": 108.46
+        },
+        {
+          "word": "prizes",
+          "start": 108.52,
+          "end": 109.02
+        },
+        {
+          "word": "to",
+          "start": 109.02,
+          "end": 109.26
+        },
+        {
+          "word": "claim",
+          "start": 109.26,
+          "end": 109.58
+        }
+      ]
+    },
+    {
+      "start": 109.58,
+      "end": 112.6,
+      "text": "Here's a dream for you, here's a dream for me",
+      "aside": false,
+      "words": [
+        {
+          "word": "Here's",
+          "start": 109.58,
+          "end": 110.16
+        },
+        {
+          "word": "a",
+          "start": 110.16,
+          "end": 110.2
+        },
+        {
+          "word": "dream",
+          "start": 110.2,
+          "end": 110.64
+        },
+        {
+          "word": "for",
+          "start": 110.64,
+          "end": 110.86
+        },
+        {
+          "word": "you,",
+          "start": 110.86,
+          "end": 111.1
+        },
+        {
+          "word": "here's",
+          "start": 111.2,
+          "end": 111.58
+        },
+        {
+          "word": "a",
+          "start": 111.58,
+          "end": 111.74
+        },
+        {
+          "word": "dream",
+          "start": 111.74,
+          "end": 112.18
+        },
+        {
+          "word": "for",
+          "start": 112.18,
+          "end": 112.36
+        },
+        {
+          "word": "me",
+          "start": 112.36,
+          "end": 112.6
+        }
+      ]
+    },
+    {
+      "start": 112.6,
+      "end": 115.56,
+      "text": "Golden tickets in my bag stay unchanged",
+      "aside": false,
+      "words": [
+        {
+          "word": "Golden",
+          "start": 112.6,
+          "end": 113.14
+        },
+        {
+          "word": "tickets",
+          "start": 113.14,
+          "end": 113.76
+        },
+        {
+          "word": "in",
+          "start": 113.76,
+          "end": 114.14
+        },
+        {
+          "word": "my",
+          "start": 114.14,
+          "end": 114.3
+        },
+        {
+          "word": "bag",
+          "start": 114.3,
+          "end": 114.62
+        },
+        {
+          "word": "stay",
+          "start": 114.72,
+          "end": 114.92
+        },
+        {
+          "word": "unchanged",
+          "start": 115.28,
+          "end": 115.56
+        }
+      ]
+    },
+    {
+      "start": 115.56,
+      "end": 118.78,
+      "text": "Don't you love the thrill of the chase?",
+      "aside": false,
+      "words": [
+        {
+          "word": "Don't",
+          "start": 115.56,
+          "end": 116.28
+        },
+        {
+          "word": "you",
+          "start": 116.28,
+          "end": 116.36
+        },
+        {
+          "word": "love",
+          "start": 116.36,
+          "end": 116.92
+        },
+        {
+          "word": "the",
+          "start": 116.92,
+          "end": 117.22
+        },
+        {
+          "word": "thrill",
+          "start": 117.22,
+          "end": 117.68
+        },
+        {
+          "word": "of",
+          "start": 117.68,
+          "end": 117.98
+        },
+        {
+          "word": "the",
+          "start": 117.98,
+          "end": 118.3
+        },
+        {
+          "word": "chase?",
+          "start": 118.3,
+          "end": 118.78
+        }
+      ]
+    },
+    {
+      "start": 119.06,
+      "end": 122.3,
+      "text": "Just let me be your fan, I wanna be your fan",
+      "aside": false,
+      "words": [
+        {
+          "word": "Just",
+          "start": 119.06,
+          "end": 119.66
+        },
+        {
+          "word": "let",
+          "start": 119.66,
+          "end": 119.86
+        },
+        {
+          "word": "me",
+          "start": 119.86,
+          "end": 120.08
+        },
+        {
+          "word": "be",
+          "start": 120.08,
+          "end": 120.24
+        },
+        {
+          "word": "your",
+          "start": 120.24,
+          "end": 120.44
+        },
+        {
+          "word": "fan,",
+          "start": 120.44,
+          "end": 120.74
+        },
+        {
+          "word": "I",
+          "start": 120.94,
+          "end": 121.2
+        },
+        {
+          "word": "wanna",
+          "start": 121.2,
+          "end": 121.54
+        },
+        {
+          "word": "be",
+          "start": 121.54,
+          "end": 121.78
+        },
+        {
+          "word": "your",
+          "start": 121.78,
+          "end": 122.0
+        },
+        {
+          "word": "fan",
+          "start": 122.0,
+          "end": 122.3
+        }
+      ]
+    },
+    {
+      "start": 122.3,
+      "end": 123.96,
+      "text": "I'm still your biggest fan",
+      "aside": false,
+      "words": [
+        {
+          "word": "I'm",
+          "start": 122.3,
+          "end": 122.76
+        },
+        {
+          "word": "still",
+          "start": 122.76,
+          "end": 122.96
+        },
+        {
+          "word": "your",
+          "start": 122.96,
+          "end": 123.18
+        },
+        {
+          "word": "biggest",
+          "start": 123.18,
+          "end": 123.48
+        },
+        {
+          "word": "fan",
+          "start": 123.48,
+          "end": 123.96
+        }
+      ]
+    },
+    {
+      "start": 127.46,
+      "end": 134.367,
+      "text": "Why is it that some were given the role of villain",
+      "aside": false,
+      "words": [
+        {
+          "word": "Why",
+          "start": 127.46,
+          "end": 128.06
+        },
+        {
+          "word": "is",
+          "start": 128.06,
+          "end": 128.64
+        },
+        {
+          "word": "it",
+          "start": 128.64,
+          "end": 128.8
+        },
+        {
+          "word": "that",
+          "start": 128.8,
+          "end": 128.92
+        },
+        {
+          "word": "some",
+          "start": 128.92,
+          "end": 129.4
+        },
+        {
+          "word": "were",
+          "start": 129.4,
+          "end": 129.86
+        },
+        {
+          "word": "given",
+          "start": 129.86,
+          "end": 131.358
+        },
+        {
+          "word": "the",
+          "start": 131.837,
+          "end": 132.435
+        },
+        {
+          "word": "role",
+          "start": 132.435,
+          "end": 132.953
+        },
+        {
+          "word": "of",
+          "start": 132.953,
+          "end": 133.411
+        },
+        {
+          "word": "villain",
+          "start": 133.411,
+          "end": 134.367
+        }
+      ]
+    },
+    {
+      "start": 135.341,
+      "end": 140.703,
+      "text": "The moment they were released into this system",
+      "aside": false,
+      "words": [
+        {
+          "word": "The",
+          "start": 135.341,
+          "end": 135.858
+        },
+        {
+          "word": "moment",
+          "start": 135.858,
+          "end": 136.653
+        },
+        {
+          "word": "they",
+          "start": 136.653,
+          "end": 137.943
+        },
+        {
+          "word": "were",
+          "start": 137.943,
+          "end": 137.983
+        },
+        {
+          "word": "released",
+          "start": 137.983,
+          "end": 138.42
+        },
+        {
+          "word": "into",
+          "start": 138.42,
+          "end": 138.916
+        },
+        {
+          "word": "this",
+          "start": 138.916,
+          "end": 139.73
+        },
+        {
+          "word": "system",
+          "start": 139.73,
+          "end": 140.703
+        }
+      ]
+    },
+    {
+      "start": 141.695,
+      "end": 142.351,
+      "text": "One, two",
+      "aside": true,
+      "words": [
+        {
+          "word": "One,",
+          "start": 141.695,
+          "end": 142.351
+        },
+        {
+          "word": "two",
+          "start": 142.351,
+          "end": 142.351
+        }
+      ]
+    },
+    {
+      "start": 142.808,
+      "end": 144.636,
+      "text": "One, two, three, four",
+      "aside": true,
+      "words": [
+        {
+          "word": "One,",
+          "start": 142.808,
+          "end": 142.986
+        },
+        {
+          "word": "two,",
+          "start": 143.046,
+          "end": 143.563
+        },
+        {
+          "word": "three,",
+          "start": 143.622,
+          "end": 144.099
+        },
+        {
+          "word": "four",
+          "start": 144.199,
+          "end": 144.636
+        }
+      ]
+    },
+    {
+      "start": 144.636,
+      "end": 146.865,
+      "text": "Stand up, gallop on",
+      "aside": false,
+      "words": [
+        {
+          "word": "Stand",
+          "start": 144.636,
+          "end": 145.193
+        },
+        {
+          "word": "up,",
+          "start": 145.193,
+          "end": 145.83
+        },
+        {
+          "word": "gallop",
+          "start": 145.85,
+          "end": 146.547
+        },
+        {
+          "word": "on",
+          "start": 146.547,
+          "end": 146.865
+        }
+      ]
+    },
+    {
+      "start": 146.865,
+      "end": 152.18,
+      "text": "Nothing can be done by feeling so sorry for myself",
+      "aside": false,
+      "words": [
+        {
+          "word": "Nothing",
+          "start": 146.865,
+          "end": 147.344
+        },
+        {
+          "word": "can",
+          "start": 147.344,
+          "end": 147.862
+        },
+        {
+          "word": "be",
+          "start": 147.862,
+          "end": 148.441
+        },
+        {
+          "word": "done",
+          "start": 148.441,
+          "end": 148.9
+        },
+        {
+          "word": "by",
+          "start": 148.9,
+          "end": 149.44
+        },
+        {
+          "word": "feeling",
+          "start": 149.44,
+          "end": 149.98
+        },
+        {
+          "word": "so",
+          "start": 150.22,
+          "end": 150.74
+        },
+        {
+          "word": "sorry",
+          "start": 150.74,
+          "end": 151.3
+        },
+        {
+          "word": "for",
+          "start": 151.3,
+          "end": 151.62
+        },
+        {
+          "word": "myself",
+          "start": 151.62,
+          "end": 152.18
+        }
+      ]
+    },
+    {
+      "start": 153.6,
+      "end": 156.9,
+      "text": "Hero on a plastic horse",
+      "aside": false,
+      "words": [
+        {
+          "word": "Hero",
+          "start": 153.6,
+          "end": 154.12
+        },
+        {
+          "word": "on",
+          "start": 154.12,
+          "end": 155.34
+        },
+        {
+          "word": "a",
+          "start": 155.34,
+          "end": 155.5
+        },
+        {
+          "word": "plastic",
+          "start": 155.5,
+          "end": 156.14
+        },
+        {
+          "word": "horse",
+          "start": 156.14,
+          "end": 156.9
+        }
+      ]
+    },
+    {
+      "start": 156.9,
+      "end": 158.74,
+      "text": "Fighting like it's real",
+      "aside": false,
+      "words": [
+        {
+          "word": "Fighting",
+          "start": 156.9,
+          "end": 157.6
+        },
+        {
+          "word": "like",
+          "start": 157.6,
+          "end": 158.26
+        },
+        {
+          "word": "it's",
+          "start": 158.26,
+          "end": 158.46
+        },
+        {
+          "word": "real",
+          "start": 158.46,
+          "end": 158.74
+        }
+      ]
+    },
+    {
+      "start": 158.74,
+      "end": 161.6,
+      "text": "With a cardboard sword",
+      "aside": false,
+      "words": [
+        {
+          "word": "With",
+          "start": 158.74,
+          "end": 159.44
+        },
+        {
+          "word": "a",
+          "start": 159.44,
+          "end": 159.9
+        },
+        {
+          "word": "cardboard",
+          "start": 159.9,
+          "end": 160.64
+        },
+        {
+          "word": "sword",
+          "start": 160.64,
+          "end": 161.6
+        }
+      ]
+    },
+    {
+      "start": 162.64,
+      "end": 166.12,
+      "text": "I know, successful or not",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 162.64,
+          "end": 163.2
+        },
+        {
+          "word": "know,",
+          "start": 163.2,
+          "end": 163.7
+        },
+        {
+          "word": "successful",
+          "start": 163.88,
+          "end": 164.8
+        },
+        {
+          "word": "or",
+          "start": 164.8,
+          "end": 165.56
+        },
+        {
+          "word": "not",
+          "start": 165.56,
+          "end": 166.12
+        }
+      ]
+    },
+    {
+      "start": 166.12,
+      "end": 167.98,
+      "text": "I am who I am",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 166.12,
+          "end": 166.56
+        },
+        {
+          "word": "am",
+          "start": 166.56,
+          "end": 167.16
+        },
+        {
+          "word": "who",
+          "start": 167.16,
+          "end": 167.34
+        },
+        {
+          "word": "I",
+          "start": 167.34,
+          "end": 167.58
+        },
+        {
+          "word": "am",
+          "start": 167.58,
+          "end": 167.98
+        }
+      ]
+    },
+    {
+      "start": 167.98,
+      "end": 170.74,
+      "text": "I am my biggest fan",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 167.98,
+          "end": 168.88
+        },
+        {
+          "word": "am",
+          "start": 168.88,
+          "end": 169.16
+        },
+        {
+          "word": "my",
+          "start": 169.16,
+          "end": 169.3
+        },
+        {
+          "word": "biggest",
+          "start": 169.3,
+          "end": 169.88
+        },
+        {
+          "word": "fan",
+          "start": 169.88,
+          "end": 170.74
+        }
+      ]
+    },
+    {
+      "start": 170.74,
+      "end": 172.96,
+      "text": "I am my biggest fan",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 170.74,
+          "end": 171.28
+        },
+        {
+          "word": "am",
+          "start": 171.28,
+          "end": 171.46
+        },
+        {
+          "word": "my",
+          "start": 171.46,
+          "end": 171.66
+        },
+        {
+          "word": "biggest",
+          "start": 171.66,
+          "end": 172.1
+        },
+        {
+          "word": "fan",
+          "start": 172.1,
+          "end": 172.96
+        }
+      ]
+    },
+    {
+      "start": 172.96,
+      "end": 175.68,
+      "text": "I am my enemy and my friend",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 172.96,
+          "end": 173.54
+        },
+        {
+          "word": "am",
+          "start": 173.54,
+          "end": 173.72
+        },
+        {
+          "word": "my",
+          "start": 173.72,
+          "end": 173.88
+        },
+        {
+          "word": "enemy",
+          "start": 173.88,
+          "end": 174.24
+        },
+        {
+          "word": "and",
+          "start": 174.24,
+          "end": 174.68
+        },
+        {
+          "word": "my",
+          "start": 174.68,
+          "end": 174.94
+        },
+        {
+          "word": "friend",
+          "start": 174.94,
+          "end": 175.68
+        }
+      ]
+    },
+    {
+      "start": 176.24,
+      "end": 181.46,
+      "text": "Hero, gonna prove my version of justice",
+      "aside": false,
+      "words": [
+        {
+          "word": "Hero,",
+          "start": 176.24,
+          "end": 177.36
+        },
+        {
+          "word": "gonna",
+          "start": 177.72,
+          "end": 178.52
+        },
+        {
+          "word": "prove",
+          "start": 178.52,
+          "end": 178.86
+        },
+        {
+          "word": "my",
+          "start": 178.86,
+          "end": 179.5
+        },
+        {
+          "word": "version",
+          "start": 179.5,
+          "end": 180.44
+        },
+        {
+          "word": "of",
+          "start": 180.44,
+          "end": 180.86
+        },
+        {
+          "word": "justice",
+          "start": 180.86,
+          "end": 181.46
+        }
+      ]
+    },
+    {
+      "start": 181.46,
+      "end": 184.68,
+      "text": "Is more just than yours",
+      "aside": false,
+      "words": [
+        {
+          "word": "Is",
+          "start": 181.46,
+          "end": 182.28
+        },
+        {
+          "word": "more",
+          "start": 182.28,
+          "end": 183.04
+        },
+        {
+          "word": "just",
+          "start": 183.04,
+          "end": 183.42
+        },
+        {
+          "word": "than",
+          "start": 183.42,
+          "end": 183.98
+        },
+        {
+          "word": "yours",
+          "start": 183.98,
+          "end": 184.68
+        }
+      ]
+    },
+    {
+      "start": 186.48,
+      "end": 189.24,
+      "text": "Uno remaining on this stage",
+      "aside": true,
+      "words": [
+        {
+          "word": "Uno",
+          "start": 186.48,
+          "end": 186.88
+        },
+        {
+          "word": "remaining",
+          "start": 187.12,
+          "end": 187.84
+        },
+        {
+          "word": "on",
+          "start": 187.84,
+          "end": 188.42
+        },
+        {
+          "word": "this",
+          "start": 188.42,
+          "end": 188.78
+        },
+        {
+          "word": "stage",
+          "start": 188.78,
+          "end": 189.24
+        }
+      ]
+    },
+    {
+      "start": 189.24,
+      "end": 191.0,
+      "text": "I am the only one",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 189.24,
+          "end": 189.66
+        },
+        {
+          "word": "am",
+          "start": 189.66,
+          "end": 190.14
+        },
+        {
+          "word": "the",
+          "start": 190.14,
+          "end": 190.3
+        },
+        {
+          "word": "only",
+          "start": 190.3,
+          "end": 190.54
+        },
+        {
+          "word": "one",
+          "start": 190.54,
+          "end": 191.0
+        }
+      ]
+    },
+    {
+      "start": 191.0,
+      "end": 193.82,
+      "text": "I am my biggest fan",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 191.0,
+          "end": 192.02
+        },
+        {
+          "word": "am",
+          "start": 192.02,
+          "end": 192.2
+        },
+        {
+          "word": "my",
+          "start": 192.2,
+          "end": 192.36
+        },
+        {
+          "word": "biggest",
+          "start": 192.36,
+          "end": 193.02
+        },
+        {
+          "word": "fan",
+          "start": 193.02,
+          "end": 193.82
+        }
+      ]
+    },
+    {
+      "start": 193.82,
+      "end": 196.08,
+      "text": "I am my biggest fan",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 193.82,
+          "end": 194.36
+        },
+        {
+          "word": "am",
+          "start": 194.36,
+          "end": 194.52
+        },
+        {
+          "word": "my",
+          "start": 194.52,
+          "end": 194.72
+        },
+        {
+          "word": "biggest",
+          "start": 194.72,
+          "end": 195.18
+        },
+        {
+          "word": "fan",
+          "start": 195.18,
+          "end": 196.08
+        }
+      ]
+    },
+    {
+      "start": 196.08,
+      "end": 198.58,
+      "text": "I am my enemy and my friend",
+      "aside": false,
+      "words": [
+        {
+          "word": "I",
+          "start": 196.08,
+          "end": 196.66
+        },
+        {
+          "word": "am",
+          "start": 196.66,
+          "end": 196.84
+        },
+        {
+          "word": "my",
+          "start": 196.84,
+          "end": 197.02
+        },
+        {
+          "word": "enemy",
+          "start": 197.02,
+          "end": 197.34
+        },
+        {
+          "word": "and",
+          "start": 197.34,
+          "end": 197.78
+        },
+        {
+          "word": "my",
+          "start": 197.78,
+          "end": 198.06
+        },
+        {
+          "word": "friend",
+          "start": 198.06,
+          "end": 198.58
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "mili": {
+      "step": 0.1,
+      "length": 2148,
+      "encoding": "uint8-base64",
+      "energyBase64": "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",
+      "onsetsBase64": "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"
+    },
+    "rie": {
+      "step": 0.1,
+      "length": 2149,
+      "encoding": "uint8-base64",
+      "energyBase64": "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",
+      "onsetsBase64": "AGQkNDg2MTUUDwAxAE0QADYAIk4LEC8AAEQAADoeBh0DAj8AZB0PADoXRwoOQgAASCM/YDI0GAEBFCYbZA0PBQcQCwsGGwM2EANULlYeBRUyKABkGScaHEIMABIPCS4GBz86ICEFAAYAE2QXKhYOFhcNEC4bDiALYy0eKwAABAAcSxgYERkhDQA+EgkbGhMsYxUSBQM6KR4/EAkBBggaDxUJAAASDUkwVzkIAwAYBFsZDhwnMhQBPhQaCDwAO2QyNwYAFBEbZCEYEAoWNgAAUyAAEw0nZDA7GgAADw1JGQ8EBREOAxsXAgAeCg8kCwYKAA0XADoHAAwqBRoaDRgAFxYHOiwODyEBAAAAPwkJIS82KBgVGwAYFgNYIxoRIgABHB4+AAADIBwAABUWZCIYDgAAAAQjCA4MABEhDAATAA4+JQ8SSEwBBAMBGE0AADkALyIAHAUQAA8HHAASFQALEQ8DGQMAAgAOXAkzDBQADA0NAA4VAAALFg0XBAAJAAAqAA4FAAoUFwAmCxwBABMHBSEAAAIAAAAAAA8AAAkAAAQAJQsBJQYCPA4AAAAAAAAAAAAAHwUAAAAPAwAiGAUnIgwFBgAlAiIHDwBkIAsYCiEAIy0aAC08Cw4EDjcKEwIAGzsTAC8HZDsKDhtHMjYXGgkDNRMkAgINKRMSNxo0QiQxPCYaJAoGAQAqHSFkQh0XCgAAABEhABAyBFJUHAIAAiMjLxUZCgsOCgAAPUAACD4FXRAGADIAPQAAMAAfPgoKJQAAZAAAKSsZGAUjHQBkCw0pACcpBAAdAABKGgAHAGQCBwAcAApkAwYADxgOFRIcFiAAJDlfJh4RORooHhxkOSkcNAcHCQALEA4IXCQsIAgAGBsHWxMAMyEbBCcrHBcFDgFiM2Q5BgADBw0sBiAVDhAaERcaAxsYClUfMzkNACMKZE0VWmQVCBseCzAAEB8SZFdEKQIIABQmShkEUTIfMQsgFwAPHAo6ZCgqAAcxCwBXCgNaFQUMDBskCBYOEFZkOBYABAATC1oTBxwNEgsMBhQkFSwRJVUaOQoFOBUEPAYAE2QAJxUNFA0OCwEJHxVkAAAJAAkqBQAXUgcqLxUAFxIFAAA0DVkZAAQLAkAUBRMYGTEEIhMSDhgUKBcXQygSBgADLBgSAwENMRMOLVsLHgkGWBUNUgAYFQAtEQANAAoJGhweBAYgABULAQUHCwAECzZCARgAGAMAEBMADRsUAg4VAAAADgcADCMACQwAABwECQcCKgAAEgINFwwBDQAAEAATDAATKwICFh8nAAAWAAAIDQAQAAA1AgscWAAALC4RKRsAAAAgGgsWIR4SAEsYBwQGDhIUB2BQKQABAwAMHA4kKC4uRyYABA0EChAhSBMfJQMJNjUmAAICAAAAAAAAAAAAAAAAAAAAAAAAACkABQAJAAwFHxEQEw0MMhMlFRZAGUEOKBgvJkQaGgAlAxoaZCISJ08DMw0LDSwrBR4kZCkXI2QmRw8PBRUQGgoSFSUICw4vXBJkDSgTNgsZFx0UIjQtIBJjTwhDHg0CISYcIAAjHBAPLApFACIaDDA2KjgzDyAkVhc3Vj0dFgoXC2QPDAQUEhgdLixJLScdCjM0CRESExUCIyQuNiUjEyRBOCkjFxciJzNENhopNCcTBw4EDg4KCwALHRcYHi8kFRUkIzw0QElNQicvMiEYNigRHBEKAA4KBQUMNkUmPR80HAAAAAAMHhQABChEHA4oIgAAAAAeAj4SDQ0NEQMvJxsVAwUaBgAhHwAEAAMJMBoWABoABBQGAAQABAwNAgsFBA4kARIAABECIAEAJREJAwARJDkjMx8TFAURGxkbJ00TAC1kAwALAA0vIhcbNRsjABAIMh4hCQAAAAAAAAAADAAEAAkAADMAADINDBMCBzoAZBUXPwATGggAOgAAQx9dQk5QMyIOFRQdLAgDIglRJQkODgAIEgAAExEjJAM/Fw8KEgsSADZgFwgSEwAUBwsSEik+CxkWAhYfBhg3PkMTGxgoDgwXAwEmDRcJAAIGBAMAAABTPQsSBwYYBwIMDgAUCQIAAAAADhkXBQtSGxE4Nxs7DB0bGyUJIxUACyYVKxMSGCArFR0eLC4CCQwNGR0RDgwADAMODRgLGhgVBgMLAAAAAAciJBkBGwcCAAASDAtNHhAlAy02JCQvBgAaBwECAgIIICgqIS4fDTEZGBYSKhAVAC0mGDEfQw0kDRUUPSAeBBwdKyIbGyEUKRcNCwAuFQkDExYiGAsHBQk6AFQ5MS00GA4oABsSExAGAy0WEiESATMDNB8dLwcJCw8HJhcJCRYVJA8BAAswOQAAE2QrIgoABQALBhYPFhgwPxgXCREZHAsUCQYLDQwCCwcKHDIdFhtMCAMdExYIGRsFADgLBAAIJyAdDxQVLCwdIREfIzIKFwQIPg8TCQQGDAYLDBAVPBEPCAEjFw8JCxEtKBEAAAAHBg0LAA8bFhEVGCQ1BAgGACERAAEBAAcMCRQIADIBDgcoDA4VBQcAFE4SJQcOLAkXFAcGCxMkDxgINRQXHA0YLAAKBAA0CQ0JDg0vFhcbCAZHAzk0GiMZHwEFDxgLFwgQESIACD0QIw4NKigVGxgQFhAGIhYSABgULg8JBABGFwMJEkEnIwAAAxABAAAAAxcPFwYRCAMDAAAJAAUFAwsJBwoNCAgECAAAAAACAwsDAAAGAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA4AEQ0WCxwnHjsxMjk8OzM6ODo9OTs9OTo2Oj09OTU9NmRGTj1JTUBOQEQ/Rjs/QkBKREQmSVJFQEtHRUhHTD9QREhBR0dIRkVNP15NR0VSUGE9TEtIS1JHPFJHS1NDKA=="
+    },
+    "source": "RMS and positive spectral flux measured independently from both local recordings"
+  }
+}

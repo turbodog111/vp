@@ -6,8 +6,8 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-08-16-one-more-bite-v4">
-<link rel="stylesheet" href="styles.css?v=20260816-one-more-bite-v4">
+<meta name="vp-build" content="2026-08-16-hero-v1">
+<link rel="stylesheet" href="styles.css?v=20260816-hero-v1">
 </head>
 <body>
 <div class="app">
@@ -143,6 +143,54 @@
           <div class="omb-footer-copy">
             <span id="omb-status">INTRO</span>
             <span>LYRICS SYNCED TO THIS RECORDING</span>
+          </div>
+        </footer>
+      </div>
+
+      <div id="hero-story-theater" class="hero-story-theater hidden" aria-live="polite">
+        <canvas id="hero-story-fx" class="hero-story-fx" aria-hidden="true"></canvas>
+        <div class="hero-story-horizon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <header class="hero-story-header">
+          <div>
+            <div id="hero-story-artist" class="hero-story-overline">Mili</div>
+            <h1>HERO</h1>
+          </div>
+          <div id="hero-story-section" class="hero-story-section">The count-in</div>
+        </header>
+        <div class="hero-story-stage">
+          <aside class="hero-story-act" aria-hidden="true">
+            <span>ACT</span>
+            <b id="hero-story-act-number">01</b>
+            <i>WHOSE STORY?</i>
+          </aside>
+          <section class="hero-story-lyrics" aria-label="Timed lyrics">
+            <div id="hero-story-previous" class="hero-story-context"></div>
+            <div id="hero-story-current" class="hero-story-current">
+              <span class="hero-story-instrumental">A green horizon. A borrowed story.</span>
+            </div>
+            <div id="hero-story-next" class="hero-story-context"></div>
+          </section>
+          <div class="hero-story-orbit">
+            <div class="hero-story-orbit-ring ring-outer" aria-hidden="true"></div>
+            <div class="hero-story-orbit-ring ring-inner" aria-hidden="true"></div>
+            <button id="hero-story-play" class="hero-story-play" type="button" title="Play/Pause (Space)">
+              <span id="hero-story-play-icon">&#9654;</span>
+            </button>
+            <div class="hero-story-time">
+              <span id="hero-story-time-current">0:00</span>
+              <span id="hero-story-time-total">3:35</span>
+            </div>
+          </div>
+        </div>
+        <footer class="hero-story-footer">
+          <div class="hero-story-progress" aria-hidden="true">
+            <span id="hero-story-progress-fill"></span>
+          </div>
+          <div class="hero-story-footer-copy">
+            <span id="hero-story-status">OPENING</span>
+            <span>GREEN / MEMORY / SELF</span>
           </div>
         </footer>
       </div>
@@ -358,6 +406,6 @@
 </div>
 
 <audio id="audio" preload="metadata"></audio>
-<script src="app.js?v=20260816-one-more-bite-v4"></script>
+<script src="app.js?v=20260816-hero-v1"></script>
 </body>
 </html>

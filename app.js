@@ -65,6 +65,16 @@ const SUPPORTED_LYRIC_TRACKS = {
   'songs/kasane teto - one more bite': {
     dataUrl: './songs/lyrics/one-more-bite.json',
     scene: 'one-more-bite'
+  },
+  'songs/mili - hero': {
+    dataUrl: './songs/lyrics/hero.json',
+    scene: 'hero-story',
+    variant: 'mili'
+  },
+  'songs/himemiya rie - hero (mili cover)': {
+    dataUrl: './songs/lyrics/hero.json',
+    scene: 'hero-story',
+    variant: 'rie'
   }
 };
 const SONG_METADATA_OVERRIDES = {
@@ -146,6 +156,7 @@ let supportedLyricsLineIndex = -2;
 let supportedLyricsSectionIndex = -2;
 let supportedLyricsWordNodes = [];
 let oneMoreBiteSceneActive = false;
+let heroStorySceneActive = false;
 const SONG_EQ_STORAGE_KEY = 'vp_song_eq_v1';
 const EQ_BANDS = [
   { frequency: 60, type: 'lowshelf', label: 'Sub', detail: '60 Hz' },
@@ -277,6 +288,14 @@ const ONE_MORE_BITE_CRUMBS = Array.from({ length: 26 }, (_, i) => ({
   size: 1.5 + seededUnit((i + 1) * 8.91) * 4.5,
   phase: seededUnit((i + 1) * 67.17) * Math.PI * 2,
   color: i % 3
+}));
+const HERO_STORY_MOTES = Array.from({ length: 32 }, (_, i) => ({
+  x: 0.025 + seededUnit((i + 1) * 31.41) * 0.95,
+  y: 0.06 + seededUnit((i + 1) * 73.19) * 0.84,
+  size: 0.8 + seededUnit((i + 1) * 11.73) * 2.8,
+  phase: seededUnit((i + 1) * 47.31) * Math.PI * 2,
+  speed: 0.14 + seededUnit((i + 1) * 19.07) * 0.34,
+  kind: i % 4
 }));
 const TETO_FX_OBJECTS = Array.from({ length: 24 }, (_, i) => {
   const a = seededUnit((i + 1) * 24.271);
@@ -611,6 +630,14 @@ function isOneMoreBiteSong(song = currentSong()) {
   return supportedLyricTrackForSong(song)?.scene === 'one-more-bite';
 }
 
+function isHeroStorySong(song = currentSong()) {
+  return supportedLyricTrackForSong(song)?.scene === 'hero-story';
+}
+
+function heroStoryVariant(song = currentSong()) {
+  return supportedLyricTrackForSong(song)?.variant || 'mili';
+}
+
 async function loadSupportedLyrics(config) {
   if (!config) return null;
   if (supportedLyricsData && supportedLyricsSongKey === config.key) return supportedLyricsData;
@@ -631,13 +658,17 @@ async function loadSupportedLyrics(config) {
       supportedLyricsPromise = null;
       supportedLyricsLineIndex = -2;
       supportedLyricsSectionIndex = -2;
-      updateOneMoreBiteLyrics(currentCalibratedTime(), true);
+      if (config.scene === 'hero-story') {
+        updateHeroStoryLyrics(currentCalibratedTime(), true);
+      } else {
+        updateOneMoreBiteLyrics(currentCalibratedTime(), true);
+      }
       return data;
     })
     .catch(error => {
       supportedLyricsPromise = null;
       console.warn('Could not load supported lyrics:', error);
-      const current = $('omb-lyric-current');
+      const current = config.scene === 'hero-story' ? $('hero-story-current') : $('omb-lyric-current');
       if (current) current.textContent = 'Lyrics could not be loaded.';
       return null;
     });
@@ -867,6 +898,159 @@ function setOneMoreBiteTheaterActive(active, song = currentSong()) {
     loadSupportedLyrics(config);
     updateOneMoreBiteLyrics(currentCalibratedTime(), true);
     drawOneMoreBiteFx({ glow: 0, motion: 0, rise: 0 }, currentCalibratedTime());
+    scheduleNowLayoutSync();
+  }
+}
+
+function heroStoryTimelineTime(audioTime, variant = heroStoryVariant()) {
+  if (variant !== 'rie') return Math.max(0, audioTime);
+  const points = supportedLyricsData?.timing?.rieOffset;
+  if (!Array.isArray(points) || !points.length) return Math.max(0, audioTime - 0.25);
+  let left = points[0];
+  let right = points[points.length - 1];
+  for (let index = 1; index < points.length; index++) {
+    if (audioTime <= points[index].at) {
+      right = points[index];
+      left = points[index - 1];
+      break;
+    }
+  }
+  const span = Math.max(0.001, right.at - left.at);
+  const mix = clamp(0, 1, (audioTime - left.at) / span);
+  const offset = left.seconds + (right.seconds - left.seconds) * mix;
+  return Math.max(0, audioTime - offset);
+}
+
+function heroStoryAnalysisProfile(variant = heroStoryVariant()) {
+  return supportedLyricsData?.analysis?.[variant] || supportedLyricsData?.analysis?.mili || null;
+}
+
+function heroStoryAnalysisAt(audioTime, variant = heroStoryVariant()) {
+  const analysis = heroStoryAnalysisProfile(variant);
+  const energyValues = decodedOneMoreBiteEnvelope(analysis, 'energy');
+  const onsetValues = decodedOneMoreBiteEnvelope(analysis, 'onsets');
+  if (!analysis?.step || !energyValues.length) return { energy: 0, onset: 0 };
+  const position = clamp(0, energyValues.length - 1, audioTime / analysis.step);
+  const lower = Math.floor(position);
+  const upper = Math.min(energyValues.length - 1, lower + 1);
+  const mix = position - lower;
+  const sample = values => {
+    if (!values?.length) return 0;
+    return ((values[lower] || 0) * (1 - mix) + (values[upper] || 0) * mix) / 100;
+  };
+  return {
+    energy: clamp(0, 1, sample(energyValues)),
+    onset: clamp(0, 1, Math.max(sample(onsetValues), (onsetValues[Math.max(0, lower - 1)] || 0) / 130))
+  };
+}
+
+function heroStoryInterludeText(time, data) {
+  const section = data?.sections?.find(item => time >= item.start && time < item.end);
+  const notes = [
+    'Count the steps into the story.',
+    'The hills still believe in heroes.',
+    'Devotion becomes a script.',
+    'Rain finds the painted surface.',
+    'A name echoes inside the void.',
+    'The same scene turns again.',
+    'The system assigns its parts.',
+    'Stand without the borrowed title.',
+    'Choose what justice means.',
+    'The stage remembers the choice.'
+  ];
+  return notes[section?.phase ?? 0] || 'The story waits for its next line.';
+}
+
+function renderHeroStoryLine(index, data, timelineTime) {
+  const current = $('hero-story-current');
+  const previous = $('hero-story-previous');
+  const next = $('hero-story-next');
+  if (!current || !previous || !next) return;
+  supportedLyricsWordNodes = [];
+  current.replaceChildren();
+  const line = index >= 0 ? data.lines[index] : null;
+  if (!line) {
+    const note = document.createElement('span');
+    note.className = 'hero-story-instrumental';
+    note.textContent = heroStoryInterludeText(timelineTime, data);
+    current.appendChild(note);
+    current.classList.remove('is-aside');
+    const nextIndex = data.lines.findIndex(item => item.start > timelineTime);
+    previous.textContent = '';
+    next.textContent = nextIndex >= 0 ? data.lines[nextIndex].text : '';
+    return;
+  }
+  current.classList.toggle('is-aside', !!line.aside);
+  measuredWordTimings(line).forEach((timing, wordIndex) => {
+    if (wordIndex) current.appendChild(document.createTextNode(' '));
+    const span = document.createElement('span');
+    span.className = 'hero-story-word';
+    span.textContent = timing.word;
+    current.appendChild(span);
+    supportedLyricsWordNodes.push({ ...timing, element: span });
+  });
+  previous.textContent = data.lines[index - 1]?.text || '';
+  next.textContent = data.lines[index + 1]?.text || '';
+}
+
+function updateHeroStoryLyrics(audioTime = currentCalibratedTime(), force = false) {
+  if (!heroStorySceneActive) return;
+  const theater = $('hero-story-theater');
+  if (!theater) return;
+  const variant = heroStoryVariant();
+  const timelineTime = heroStoryTimelineTime(audioTime, variant);
+  const duration = effectiveDuration() || supportedLyricsData?.duration || 214.9;
+  const pct = clamp(0, 1, audioTime / duration);
+  theater.style.setProperty('--hero-story-progress', `${(pct * 100).toFixed(3)}%`);
+  const progress = $('hero-story-progress-fill');
+  if (progress) progress.style.width = `${(pct * 100).toFixed(3)}%`;
+  if ($('hero-story-time-current')) $('hero-story-time-current').textContent = fmtTime(audioTime);
+  if ($('hero-story-time-total')) $('hero-story-time-total').textContent = fmtTime(duration);
+  if ($('hero-story-artist')) {
+    $('hero-story-artist').textContent = variant === 'rie' ? 'HIMEMIYA RIE / MILI COVER' : 'MILI / ORIGINAL';
+  }
+  if (!supportedLyricsData) return;
+
+  const data = supportedLyricsData;
+  const sectionIndex = data.sections.findIndex(section => timelineTime >= section.start && timelineTime < section.end);
+  const section = data.sections[sectionIndex] || data.sections[data.sections.length - 1];
+  if (force || sectionIndex !== supportedLyricsSectionIndex) {
+    supportedLyricsSectionIndex = sectionIndex;
+    if ($('hero-story-section')) $('hero-story-section').textContent = section?.name || 'Hero';
+    if ($('hero-story-status')) $('hero-story-status').textContent = section?.short || 'HERO';
+    if ($('hero-story-act-number')) $('hero-story-act-number').textContent = String(Math.max(1, sectionIndex + 1)).padStart(2, '0');
+    theater.dataset.phase = String(section?.phase ?? 0);
+    theater.classList.toggle('is-void', section?.phase === 4);
+    theater.classList.toggle('is-resolve', (section?.phase ?? 0) >= 7 && (section?.phase ?? 0) <= 8);
+  }
+
+  const lineIndex = data.lines.findIndex(line => timelineTime >= line.start && timelineTime < line.end + 0.1);
+  if (force || lineIndex !== supportedLyricsLineIndex) {
+    supportedLyricsLineIndex = lineIndex;
+    renderHeroStoryLine(lineIndex, data, timelineTime);
+  }
+  supportedLyricsWordNodes.forEach(word => {
+    const wordProgress = clamp(0, 1, (timelineTime - word.start) / Math.max(0.04, word.end - word.start));
+    word.element.style.setProperty('--word-progress', `${(wordProgress * 100).toFixed(1)}%`);
+    word.element.classList.toggle('is-current', wordProgress > 0 && wordProgress < 1);
+  });
+}
+
+function setHeroStoryTheaterActive(active, song = currentSong()) {
+  const nextActive = !!active && isHeroStorySong(song);
+  const theater = $('hero-story-theater');
+  document.body.classList.toggle('hero-story-active', nextActive);
+  if (theater) theater.classList.toggle('hidden', !nextActive);
+  if (heroStorySceneActive === nextActive) return;
+  heroStorySceneActive = nextActive;
+  supportedLyricsLineIndex = -2;
+  supportedLyricsSectionIndex = -2;
+  supportedLyricsWordNodes = [];
+  if (nextActive) {
+    const config = supportedLyricTrackForSong(song);
+    loadSupportedLyrics(config);
+    updateHeroStoryLyrics(currentCalibratedTime(), true);
+    drawHeroStoryFx({ glow: 0, motion: 0, rise: 0 }, currentCalibratedTime());
     scheduleNowLayoutSync();
   }
 }
@@ -1198,6 +1382,9 @@ function activeFxTheme(song = currentSong()) {
   if (isOneMoreBiteSong(song)) {
     return tetoFxEnabled ? 'omb' : 'off';
   }
+  if (isHeroStorySong(song)) {
+    return tetoFxEnabled ? 'hero-story' : 'off';
+  }
   // Traveling Voices / DDF: dedicated DDLC story FX (visual only — audio stays native)
   if (songLooksLikeTravelingVoices(song) || isDdfFamilySong(song)) {
     return tetoFxEnabled ? 'ddlc' : 'off';
@@ -1237,6 +1424,7 @@ function setTetoFxEnabled(enabled) {
   if (checkbox) checkbox.checked = tetoFxEnabled;
   updateFxState();
   updateOneMoreBiteLyrics(currentCalibratedTime(), true);
+  updateHeroStoryLyrics(currentCalibratedTime(), true);
 }
 
 function setFxTheme(theme) {
@@ -1257,13 +1445,24 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.classList.toggle('teto11-fx-active', theme === 'teto11');
   document.body.classList.toggle('ddlc-fx-active', theme === 'ddlc');
   document.body.classList.toggle('omb-fx-active', theme === 'omb');
+  document.body.classList.toggle('hero-story-fx-active', theme === 'hero-story');
   document.body.style.setProperty('--fx-level', level.toFixed(3));
   document.body.style.setProperty('--teto-level', level.toFixed(3));
   document.body.style.setProperty('--disco-level', level.toFixed(3));
   document.body.style.setProperty('--teto11-level', level.toFixed(3));
   document.body.style.setProperty('--ddlc-level', level.toFixed(3));
   document.body.style.setProperty('--omb-level', level.toFixed(3));
-  setOneMoreBiteTheaterActive(theme === 'omb');
+  document.body.style.setProperty('--hero-story-level', level.toFixed(3));
+  if (theme === 'omb') {
+    setHeroStoryTheaterActive(false);
+    setOneMoreBiteTheaterActive(true);
+  } else if (theme === 'hero-story') {
+    setOneMoreBiteTheaterActive(false);
+    setHeroStoryTheaterActive(true);
+  } else {
+    setOneMoreBiteTheaterActive(false);
+    setHeroStoryTheaterActive(false);
+  }
 }
 
 function switchView(view) {
@@ -3705,6 +3904,7 @@ function updatePlaybackVisuals() {
     $('seek').value = seekPct;
   }
   updateOneMoreBiteLyrics(current);
+  updateHeroStoryLyrics(current);
   if (timingDebugEnabled) updateTimingDebug(current);
 }
 
@@ -5299,6 +5499,254 @@ function drawOneMoreBiteFx(levels, time) {
   ctx.restore();
 }
 
+const HERO_STORY_PALETTES = [
+  { bg: [2, 10, 6], primary: [114, 232, 132], secondary: [198, 236, 119], accent: [231, 255, 226] },
+  { bg: [3, 17, 9], primary: [91, 222, 119], secondary: [186, 231, 105], accent: [237, 255, 220] },
+  { bg: [7, 20, 10], primary: [126, 215, 97], secondary: [225, 210, 103], accent: [247, 243, 200] },
+  { bg: [10, 15, 7], primary: [127, 159, 68], secondary: [193, 165, 67], accent: [222, 225, 174] },
+  { bg: [2, 5, 3], primary: [111, 178, 94], secondary: [151, 129, 55], accent: [204, 218, 183] },
+  { bg: [12, 12, 4], primary: [173, 186, 72], secondary: [208, 148, 51], accent: [239, 225, 161] },
+  { bg: [17, 7, 3], primary: [211, 154, 53], secondary: [190, 63, 36], accent: [248, 222, 154] },
+  { bg: [10, 12, 4], primary: [229, 190, 69], secondary: [229, 93, 39], accent: [255, 238, 169] },
+  { bg: [13, 10, 4], primary: [244, 199, 72], secondary: [218, 69, 34], accent: [255, 243, 194] },
+  { bg: [2, 4, 3], primary: [114, 151, 82], secondary: [150, 108, 48], accent: [189, 199, 164] }
+];
+
+function heroStoryBeatEvents(audioTime, analysis, phase) {
+  const peaks = oneMoreBiteBeatPeaks(analysis);
+  const threshold = phase >= 7 && phase <= 8 ? 0.46 : phase >= 3 && phase <= 6 ? 0.58 : 0.7;
+  const duration = phase >= 7 && phase <= 8 ? 1.55 : 1.25;
+  const events = [];
+  for (let index = peaks.length - 1; index >= 0; index--) {
+    const peak = peaks[index];
+    const age = audioTime - peak.time;
+    if (age < -0.04) continue;
+    if (age > duration) break;
+    if (peak.strength < threshold) continue;
+    const progress = clamp(0, 1, Math.max(0, age) / duration);
+    const entrance = smoothStep(0, 0.06, progress);
+    const life = entrance * (1 - smoothStep(0.58, 1, progress));
+    events.push({ ...peak, age: Math.max(0, age), duration, progress, life });
+  }
+  return events.reverse();
+}
+
+function drawHeroStoryFx(levels, audioTime) {
+  const canvas = $('hero-story-fx');
+  const theater = $('hero-story-theater');
+  if (!canvas || !theater || !heroStorySceneActive) return;
+  const rect = theater.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) return;
+  const dpr = Math.min(1.25, Math.max(1, window.devicePixelRatio || 1));
+  const width = Math.max(320, Math.floor(rect.width * dpr));
+  const height = Math.max(240, Math.floor(rect.height * dpr));
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const variant = heroStoryVariant();
+  const storyTime = heroStoryTimelineTime(audioTime, variant);
+  const section = supportedLyricsData?.sections?.find(item => storyTime >= item.start && storyTime < item.end);
+  const phase = section?.phase ?? 0;
+  const palette = HERO_STORY_PALETTES[phase] || HERO_STORY_PALETTES[0];
+  const analysis = heroStoryAnalysisProfile(variant);
+  const recorded = heroStoryAnalysisAt(audioTime, variant);
+  const energy = clamp(0, 1, Math.max(recorded.energy, (levels.glow || 0) * 0.66));
+  const onset = clamp(0, 1, Math.max(recorded.onset, (levels.rise || 0) * 0.58));
+  const drama = phase >= 7 && phase <= 8 ? 1 : phase >= 3 ? 0.72 : 0.42;
+  const events = heroStoryBeatEvents(audioTime, analysis, phase);
+  const rgb = (color, alpha) => `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
+  theater.style.setProperty('--hero-primary', `rgb(${palette.primary.join(', ')})`);
+  theater.style.setProperty('--hero-secondary', `rgb(${palette.secondary.join(', ')})`);
+  theater.style.setProperty('--hero-accent', `rgb(${palette.accent.join(', ')})`);
+  theater.style.setProperty('--hero-energy', energy.toFixed(3));
+  theater.style.setProperty('--hero-onset', onset.toFixed(3));
+
+  const background = ctx.createLinearGradient(0, 0, width, height);
+  background.addColorStop(0, `rgb(${palette.bg.join(', ')})`);
+  background.addColorStop(0.52, rgb(palette.bg.map((value, index) => value + (index === 1 ? 4 : 1)), 1));
+  background.addColorStop(1, 'rgb(1, 3, 2)');
+  ctx.fillStyle = background;
+  ctx.fillRect(0, 0, width, height);
+
+  // Slow full-stage illumination follows the recording, not a synthetic BPM.
+  const washX = width * (0.26 + 0.48 * (0.5 + 0.5 * Math.sin(audioTime * 0.075 + phase)));
+  const washY = height * (0.38 + 0.12 * Math.cos(audioTime * 0.09));
+  const wash = ctx.createRadialGradient(washX, washY, 0, washX, washY, width * 0.72);
+  wash.addColorStop(0, rgb(palette.primary, 0.035 + energy * (0.16 + drama * 0.09)));
+  wash.addColorStop(0.42, rgb(palette.secondary, 0.015 + energy * 0.06));
+  wash.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  ctx.fillStyle = wash;
+  ctx.fillRect(0, 0, width, height);
+
+  // Contour lines begin as hills and flatten into an unstable horizon.
+  const contourCount = phase <= 2 ? 6 : 4;
+  ctx.lineCap = 'round';
+  for (let line = 0; line < contourCount; line++) {
+    const baseY = height * (0.68 + line * 0.055);
+    const amplitude = height * ((phase <= 2 ? 0.035 : 0.014) + energy * 0.018);
+    ctx.beginPath();
+    for (let step = 0; step <= 18; step++) {
+      const x = width * step / 18;
+      const y = baseY
+        + Math.sin(step * 0.72 + audioTime * (0.12 + line * 0.008) + line) * amplitude
+        + Math.sin(step * 0.27 - audioTime * 0.07) * amplitude * 0.42;
+      if (!step) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = rgb(line % 2 ? palette.secondary : palette.primary, 0.045 + energy * 0.085);
+    ctx.lineWidth = dpr * (0.8 + line * 0.22);
+    ctx.stroke();
+  }
+
+  const playRect = $('hero-story-play')?.getBoundingClientRect();
+  const centerX = playRect ? (playRect.left + playRect.width / 2 - rect.left) * dpr : width * 0.82;
+  const centerY = playRect ? (playRect.top + playRect.height / 2 - rect.top) * dpr : height * 0.52;
+  const startRadius = (playRect?.width || 78) * dpr * 0.56;
+  const maxRadius = Math.hypot(width, height) * 0.78;
+
+  // Every measured attack owns a complete pulse. Close attacks overlap instead
+  // of snapping the previous wave back to its origin.
+  events.forEach(event => {
+    const strength = smoothStep(0.42, 1, event.strength);
+    const maxAlpha = (0.08 + drama * 0.16) * strength;
+    const ringCount = phase >= 7 && phase <= 8 ? 4 : 2;
+    for (let ring = 0; ring < ringCount; ring++) {
+      const delay = ring * 0.06;
+      const progress = clamp(0, 1, (event.progress - delay) / Math.max(0.01, 1 - delay));
+      if (progress <= 0 || progress >= 1) continue;
+      const eased = 1 - (1 - progress) ** 2.4;
+      const radius = startRadius + maxRadius * eased;
+      const life = Math.sin(progress * Math.PI) * event.life;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = rgb(ring % 2 ? palette.secondary : palette.primary, maxAlpha * life * (1 - ring * 0.12));
+      ctx.lineWidth = dpr * (1.1 + strength * 3.4 - ring * 0.12);
+      ctx.stroke();
+    }
+
+    if (phase >= 3) {
+      const direction = event.ordinal % 2 ? 1 : -1;
+      const sweepX = direction > 0
+        ? -width * 0.25 + width * 1.5 * event.progress
+        : width * 1.25 - width * 1.5 * event.progress;
+      const band = ctx.createLinearGradient(sweepX - width * 0.18, 0, sweepX + width * 0.18, 0);
+      band.addColorStop(0, 'rgba(0, 0, 0, 0)');
+      band.addColorStop(0.5, rgb(palette.secondary, event.life * strength * (0.025 + drama * 0.055)));
+      band.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = band;
+      ctx.fillRect(0, 0, width, height);
+    }
+  });
+
+  if (phase <= 2) {
+    // Small chevrons read as distant birds, not confetti.
+    for (let bird = 0; bird < 11; bird++) {
+      const seed = seededUnit((bird + 1) * 21.7);
+      const x = ((seed + audioTime * (0.004 + bird * 0.0003)) % 1.1 - 0.05) * width;
+      const y = height * (0.16 + seededUnit((bird + 1) * 39.2) * 0.34);
+      const size = dpr * (2.5 + (bird % 4));
+      ctx.beginPath();
+      ctx.moveTo(x - size, y);
+      ctx.lineTo(x, y - size * 0.5);
+      ctx.lineTo(x + size, y);
+      ctx.strokeStyle = rgb(palette.accent, 0.08 + energy * 0.18);
+      ctx.lineWidth = dpr;
+      ctx.stroke();
+    }
+  } else if (phase === 3) {
+    for (let rain = 0; rain < 34; rain++) {
+      const x = seededUnit((rain + 1) * 17.4) * width;
+      const fall = (seededUnit((rain + 1) * 43.8) + audioTime * (0.08 + rain % 5 * 0.006)) % 1;
+      const y = fall * height;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x - dpr * 8, y + dpr * (18 + energy * 18));
+      ctx.strokeStyle = rgb(palette.accent, 0.035 + energy * 0.095);
+      ctx.lineWidth = dpr;
+      ctx.stroke();
+    }
+  } else if (phase === 4) {
+    // Imperfect identity rings orbit an empty center without moving the copy.
+    const voidX = width * 0.32;
+    const voidY = height * 0.5;
+    for (let ring = 0; ring < 7; ring++) {
+      const radius = dpr * (28 + ring * 24 + Math.sin(audioTime * 0.18 + ring) * 4);
+      ctx.beginPath();
+      ctx.ellipse(voidX, voidY, radius * 1.45, radius, audioTime * 0.015 + ring * 0.13, ring * 0.31, Math.PI * (1.35 + ring * 0.04));
+      ctx.strokeStyle = rgb(ring % 2 ? palette.secondary : palette.primary, 0.055 + onset * 0.1);
+      ctx.lineWidth = dpr * (0.8 + ring * 0.12);
+      ctx.stroke();
+    }
+  } else if (phase === 5) {
+    const carouselX = width * 0.5;
+    const carouselY = height * 0.72;
+    for (let ring = 0; ring < 5; ring++) {
+      ctx.beginPath();
+      ctx.ellipse(carouselX, carouselY, width * (0.12 + ring * 0.075), height * (0.035 + ring * 0.018), 0, 0, Math.PI * 2);
+      ctx.strokeStyle = rgb(ring % 2 ? palette.primary : palette.secondary, 0.055 + energy * 0.08);
+      ctx.lineWidth = dpr * 1.2;
+      ctx.stroke();
+    }
+    for (let spoke = 0; spoke < 12; spoke++) {
+      const x = width * (0.1 + spoke * 0.073);
+      const lift = Math.sin(audioTime * 0.52 + spoke * 1.7) * height * 0.018;
+      ctx.fillStyle = rgb(palette.accent, 0.04 + energy * 0.1);
+      ctx.fillRect(x, height * 0.43 + lift, dpr, height * 0.28);
+    }
+  } else if (phase === 6) {
+    for (let stripe = -5; stripe < 13; stripe++) {
+      const x = ((stripe * width * 0.105 + audioTime * width * 0.015) % (width * 1.9)) - width * 0.45;
+      ctx.beginPath();
+      ctx.moveTo(x, height);
+      ctx.lineTo(x + height * 0.55, 0);
+      ctx.strokeStyle = rgb(stripe % 2 ? palette.secondary : palette.primary, 0.045 + onset * 0.08);
+      ctx.lineWidth = dpr * (stripe % 3 === 0 ? 3 : 1);
+      ctx.stroke();
+    }
+  } else if (phase >= 7 && phase <= 8) {
+    const slashCount = phase === 8 ? 9 : 6;
+    for (let slash = 0; slash < slashCount; slash++) {
+      const angle = -0.72 + slash * 0.24;
+      const length = width * (0.16 + seededUnit(slash * 9.3) * 0.24) * (0.6 + energy * 0.6);
+      const x = width * (0.14 + seededUnit((slash + 1) * 22.1) * 0.72);
+      const y = height * (0.18 + seededUnit((slash + 1) * 51.3) * 0.62);
+      ctx.beginPath();
+      ctx.moveTo(x - Math.cos(angle) * length * 0.5, y - Math.sin(angle) * length * 0.5);
+      ctx.lineTo(x + Math.cos(angle) * length * 0.5, y + Math.sin(angle) * length * 0.5);
+      ctx.strokeStyle = rgb(slash % 3 ? palette.primary : palette.secondary, 0.055 + onset * 0.2 + energy * 0.08);
+      ctx.lineWidth = dpr * (1.3 + onset * 4.2);
+      ctx.stroke();
+    }
+  }
+
+  const moteCount = phase === 9 ? 12 : phase >= 7 ? 32 : 22;
+  HERO_STORY_MOTES.slice(0, moteCount).forEach((mote, index) => {
+    const drift = (mote.y + audioTime * mote.speed * 0.006) % 0.94;
+    const x = (mote.x + Math.sin(audioTime * 0.16 + mote.phase) * 0.018) * width;
+    const y = (0.03 + drift) * height;
+    const twinkle = 0.5 + Math.sin(audioTime * (0.42 + mote.speed) + mote.phase) * 0.5;
+    const alpha = (0.018 + energy * 0.12 + onset * 0.08) * (0.45 + twinkle * 0.55) * (phase === 9 ? 0.45 : 1);
+    const size = mote.size * dpr * (0.7 + energy * 0.52);
+    ctx.fillStyle = rgb(index % 3 ? palette.primary : palette.accent, alpha);
+    if (mote.kind === 0) {
+      ctx.fillRect(x - size * 0.5, y - dpr * 0.5, size, dpr);
+      ctx.fillRect(x - dpr * 0.5, y - size * 0.5, dpr, size);
+    } else {
+      ctx.beginPath();
+      ctx.arc(x, y, size * 0.42, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  });
+
+  // A final vignette keeps the moving background from competing with lyrics.
+  const vignette = ctx.createRadialGradient(width * 0.5, height * 0.48, width * 0.12, width * 0.5, height * 0.48, width * 0.74);
+  vignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
+  vignette.addColorStop(1, `rgba(0, 0, 0, ${0.42 + (phase === 4 || phase === 9 ? 0.2 : 0)})`);
+  ctx.fillStyle = vignette;
+  ctx.fillRect(0, 0, width, height);
+}
+
 function drawTetoFx(level) {
   const canvas = $('teto-fx');
   const view = $('view-now');
@@ -5314,6 +5762,10 @@ function drawTetoFx(level) {
   if (theme === 'off') return;
   if (theme === 'omb') {
     drawOneMoreBiteFx(levels, currentCalibratedTime());
+    return;
+  }
+  if (theme === 'hero-story') {
+    drawHeroStoryFx(levels, currentCalibratedTime());
     return;
   }
 
@@ -5791,6 +6243,8 @@ function bindAudioElementEvents(el) {
     if (ddfIcon) ddfIcon.textContent = '⏸';
     const ombIcon = $('omb-play-icon');
     if (ombIcon) ombIcon.textContent = '⏸';
+    const heroStoryIcon = $('hero-story-play-icon');
+    if (heroStoryIcon) heroStoryIcon.textContent = '⏸';
     document.body.classList.add('is-playing');
     startProgressClock();
     startWaveform();
@@ -5808,6 +6262,8 @@ function bindAudioElementEvents(el) {
     if (ddfIcon) ddfIcon.textContent = '▶';
     const ombIcon = $('omb-play-icon');
     if (ombIcon) ombIcon.textContent = '▶';
+    const heroStoryIcon = $('hero-story-play-icon');
+    if (heroStoryIcon) heroStoryIcon.textContent = '▶';
     document.body.classList.remove('is-playing');
     stopProgressClock();
     updatePlaybackVisuals();
@@ -5829,6 +6285,8 @@ const ddfPlayBtn = $('ddf-play');
 if (ddfPlayBtn) ddfPlayBtn.addEventListener('click', togglePlay);
 const ombPlayBtn = $('omb-play');
 if (ombPlayBtn) ombPlayBtn.addEventListener('click', togglePlay);
+const heroStoryPlayBtn = $('hero-story-play');
+if (heroStoryPlayBtn) heroStoryPlayBtn.addEventListener('click', togglePlay);
 $('next').addEventListener('click', () => playNext(false));
 $('prev').addEventListener('click', playPrev);
 $('shuffle').addEventListener('click', toggleShuffle);
