@@ -131,6 +131,21 @@ h1 {
   text-shadow: 0 3px 24px rgba(0, 0, 0, 0.82);
 }
 
+.lyric-current.is-duet {
+  display: grid;
+  align-content: center;
+  gap: 7px;
+  min-height: 3.35em;
+  font-size: clamp(23px, 3.2vw, 48px);
+  line-height: 1.04;
+}
+
+.vocal-line {
+  display: block;
+  min-width: 0;
+  text-wrap: balance;
+}
+
 .word {
   display: inline;
   color: rgba(168, 145, 207, 0.82);
@@ -145,6 +160,13 @@ h1 {
 .word.is-current {
   color: #fff;
   text-shadow: 0 0 24px rgba(223, 203, 255, 0.64);
+}
+
+.vocal-line[data-voice="1"] .word { color: rgba(126, 112, 169, 0.84); }
+.vocal-line[data-voice="1"] .word.is-sung { color: var(--violet); }
+.vocal-line[data-voice="1"] .word.is-current {
+  color: var(--ice);
+  text-shadow: 0 0 24px rgba(156, 198, 255, 0.58);
 }
 
 .instrumental {

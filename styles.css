@@ -3290,6 +3290,19 @@ body.story-theater-active .now-view.active {
   text-wrap: balance;
   overflow-wrap: anywhere;
 }
+.story-current.is-duet {
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  min-height: 3.7em;
+  font-size: clamp(21px, 2.45vw, 33px);
+  line-height: 1.05;
+}
+.story-vocal-line {
+  display: block;
+  min-width: 0;
+  text-wrap: balance;
+}
 .story-word {
   display: inline;
   color: color-mix(in srgb, var(--story-secondary) 46%, #6d7180);
@@ -3499,6 +3512,9 @@ body.story-theater-active .now-view.active {
 .story-theater[data-story="violet"] .story-word.is-pending { color: #8d85ab; }
 .story-theater[data-story="violet"] .story-word.is-sung { color: #f257ca; }
 .story-theater[data-story="violet"] .story-word.is-current { color: #f5f8ff; }
+.story-theater[data-story="violet"] .story-vocal-line[data-voice="1"] .story-word.is-pending { color: #756ca0; }
+.story-theater[data-story="violet"] .story-vocal-line[data-voice="1"] .story-word.is-sung { color: #915bef; }
+.story-theater[data-story="violet"] .story-vocal-line[data-voice="1"] .story-word.is-current { color: #cce0ff; }
 .story-theater[data-story="compass"] {
   --compass-cobalt: #194fbd;
   --compass-gold: #ffcf39;

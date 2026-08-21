@@ -992,58 +992,65 @@
     },
     {
       "start": 92.04,
-      "end": 104.51,
-      "text": "The message has already been said through patches of violet",
+      "end": 96.34,
+      "text": "The message has already been said",
       "words": [
         {
           "word": "The",
           "start": 92.04,
-          "end": 93.026
+          "end": 92.593
         },
         {
           "word": "message",
-          "start": 93.026,
-          "end": 94.532
+          "start": 92.593,
+          "end": 93.529
         },
         {
           "word": "has",
-          "start": 94.532,
-          "end": 95.517
+          "start": 93.529,
+          "end": 94.082
         },
         {
           "word": "already",
-          "start": 95.517,
-          "end": 97.023
+          "start": 94.082,
+          "end": 95.017
         },
         {
           "word": "been",
-          "start": 97.023,
-          "end": 98.161
+          "start": 95.017,
+          "end": 95.679
         },
         {
           "word": "said",
-          "start": 98.161,
-          "end": 99.3
-        },
+          "start": 95.679,
+          "end": 96.34
+        }
+      ]
+    },
+    {
+      "start": 96.34,
+      "end": 100.42,
+      "text": "Through patches of violet",
+      "words": [
         {
-          "word": "through",
-          "start": 99.3,
-          "end": 100.805
+          "word": "Through",
+          "start": 96.34,
+          "end": 97.551
         },
         {
           "word": "patches",
-          "start": 100.805,
-          "end": 102.311
+          "start": 97.551,
+          "end": 98.762
         },
         {
           "word": "of",
-          "start": 102.311,
-          "end": 103.116
+          "start": 98.762,
+          "end": 99.319
         },
         {
           "word": "violet",
-          "start": 103.116,
-          "end": 104.51
+          "start": 99.319,
+          "end": 100.42
         }
       ]
     },
@@ -1897,57 +1904,64 @@
     },
     {
       "start": 211.98,
-      "end": 220.37,
-      "text": "The message has already been said through patches of violet",
+      "end": 216.02,
+      "text": "The message has already been said",
       "words": [
         {
           "word": "The",
           "start": 211.98,
-          "end": 212.643
+          "end": 212.5
         },
         {
           "word": "message",
-          "start": 212.643,
-          "end": 213.656
+          "start": 212.5,
+          "end": 213.379
         },
         {
           "word": "has",
-          "start": 213.656,
-          "end": 214.32
+          "start": 213.379,
+          "end": 213.899
         },
         {
           "word": "already",
-          "start": 214.32,
-          "end": 215.333
+          "start": 213.899,
+          "end": 214.777
         },
         {
           "word": "been",
-          "start": 215.333,
-          "end": 216.098
+          "start": 214.777,
+          "end": 215.399
         },
         {
           "word": "said",
-          "start": 216.098,
-          "end": 216.864
-        },
+          "start": 215.399,
+          "end": 216.02
+        }
+      ]
+    },
+    {
+      "start": 216.48,
+      "end": 220.37,
+      "text": "Through patches of violet",
+      "words": [
         {
-          "word": "through",
-          "start": 216.864,
-          "end": 217.877
+          "word": "Through",
+          "start": 216.48,
+          "end": 217.635
         },
         {
           "word": "patches",
-          "start": 217.877,
-          "end": 218.891
+          "start": 217.635,
+          "end": 218.789
         },
         {
           "word": "of",
-          "start": 218.891,
-          "end": 219.432
+          "start": 218.789,
+          "end": 219.321
         },
         {
           "word": "violet",
-          "start": 219.432,
+          "start": 219.321,
           "end": 220.37
         }
       ]
@@ -1958,7 +1972,7 @@
     "energyBase64": "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",
     "onsetsBase64": "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"
   },
-  "timingMethod": "LRCLIB synchronized line anchors, canonical duet text cross-check, and a -0.75s median lead correction measured against repeated phrases in the Paul Owen Music recording; weighted word intervals stay inside each anchor.",
+  "timingMethod": "LRCLIB synchronized line anchors with canonical duet text; the two message refrains use recording-derived phrase boundaries from the Paul Owen vocal analysis, while other lines retain the -0.75s cover lead correction.",
   "lyricSource": {
     "provider": "LRCLIB",
     "recordId": 20027796,

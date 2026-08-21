@@ -195,6 +195,7 @@ let supportedLyricsSongKey = '';
 let supportedLyricsLineIndex = -2;
 let supportedLyricsSectionIndex = -2;
 let supportedLyricsWordNodes = [];
+let storyLyricsWordLanes = [];
 let oneMoreBiteSceneActive = false;
 let heroStorySceneActive = false;
 let encoreSceneActive = false;
@@ -1337,7 +1338,9 @@ function renderStoryTheaterLine(index, data, time) {
   const next = $('story-next');
   if (!current || !previous || !next) return;
   supportedLyricsWordNodes = [];
+  storyLyricsWordLanes = [];
   current.replaceChildren();
+  current.classList.remove('is-duet');
   const line = index >= 0 ? data.lines[index] : null;
   if (!line) {
     const note = document.createElement('span');
@@ -1349,13 +1352,46 @@ function renderStoryTheaterLine(index, data, time) {
     next.textContent = nextIndex >= 0 ? data.lines[nextIndex].text : '';
     return;
   }
-  measuredWordTimings(line).forEach((timing, wordIndex) => {
-    if (wordIndex) current.appendChild(document.createTextNode(' '));
-    const span = document.createElement('span');
-    span.className = 'story-word';
-    span.textContent = timing.word;
-    current.appendChild(span);
-    supportedLyricsWordNodes.push({ ...timing, element: span });
+  const explicitVoices = Array.isArray(line.voices) ? line.voices.filter(voice => voice?.text?.trim()) : [];
+  const autoSplitVoices = storyTheaterVariant() === 'violet';
+  const slashVoices = autoSplitVoices
+    ? line.text.split(/\s+\/\s+/).map(text => text.trim()).filter(Boolean)
+    : [line.text];
+  const parenthetical = autoSplitVoices ? line.text.match(/^(.+?)\s*\(([^()]+)\)\s*$/) : null;
+  const voices = explicitVoices.length
+    ? explicitVoices
+    : slashVoices.length > 1
+      ? slashVoices.map(text => ({ text, start: line.start, end: line.end }))
+      : parenthetical
+        ? [
+            { text: parenthetical[1].trim(), start: line.start, end: line.end },
+            { text: parenthetical[2].trim(), start: line.start, end: line.end }
+          ]
+        : [{ ...line, text: line.text }];
+  current.classList.toggle('is-duet', voices.length > 1);
+  voices.forEach((voice, voiceIndex) => {
+    const vocalLine = document.createElement('span');
+    vocalLine.className = 'story-vocal-line';
+    vocalLine.dataset.voice = String(voiceIndex);
+    const voiceTiming = {
+      text: voice.text,
+      start: Number.isFinite(voice.start) ? voice.start : line.start,
+      end: Number.isFinite(voice.end) ? voice.end : line.end,
+      words: voice.words
+    };
+    const laneNodes = [];
+    measuredWordTimings(voiceTiming).forEach((timing, wordIndex) => {
+      if (wordIndex) vocalLine.appendChild(document.createTextNode(' '));
+      const span = document.createElement('span');
+      span.className = 'story-word';
+      span.textContent = timing.word;
+      vocalLine.appendChild(span);
+      const node = { ...timing, element: span };
+      laneNodes.push(node);
+      supportedLyricsWordNodes.push(node);
+    });
+    storyLyricsWordLanes.push(laneNodes);
+    current.appendChild(vocalLine);
   });
   previous.textContent = data.lines[index - 1]?.text || '';
   next.textContent = data.lines[index + 1]?.text || '';
@@ -1397,7 +1433,11 @@ function updateStoryTheaterLyrics(time = currentCalibratedTime(), force = false)
     supportedLyricsLineIndex = lineIndex;
     renderStoryTheaterLine(lineIndex, data, time);
   }
-  updateTimedWordStates(supportedLyricsWordNodes, time);
+  if (storyLyricsWordLanes.length) {
+    storyLyricsWordLanes.forEach(lane => updateTimedWordStates(lane, time));
+  } else {
+    updateTimedWordStates(supportedLyricsWordNodes, time);
+  }
 }
 
 function setStoryTheaterActive(active, song = currentSong()) {
@@ -1411,6 +1451,7 @@ function setStoryTheaterActive(active, song = currentSong()) {
   supportedLyricsLineIndex = -2;
   supportedLyricsSectionIndex = -2;
   supportedLyricsWordNodes = [];
+  storyLyricsWordLanes = [];
   if (nextActive) {
     theater.dataset.story = storyTheaterVariant(song);
     loadSupportedLyrics(config);

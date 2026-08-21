@@ -634,6 +634,7 @@
 
   function renderWords(line, time) {
     lyricCurrent.replaceChildren();
+    lyricCurrent.classList.remove('is-duet');
     if (!line) {
       const span = document.createElement('span');
       span.className = 'instrumental';
@@ -641,15 +642,31 @@
       lyricCurrent.append(span);
       return;
     }
-    const words = line.words?.length ? line.words : [{ word: line.text, start: line.start, end: line.end }];
-    words.forEach((word, index) => {
-      const span = document.createElement('span');
-      span.className = 'word';
-      if (time >= word.end) span.classList.add('is-sung');
-      else if (time >= word.start && time < word.end) span.classList.add('is-current');
-      span.textContent = word.word;
-      lyricCurrent.append(span);
-      if (index < words.length - 1) lyricCurrent.append(document.createTextNode(' '));
+    const slashVoices = line.text.split(/\s+\/\s+/).map(text => text.trim()).filter(Boolean);
+    const parenthetical = line.text.match(/^(.+?)\s*\(([^()]+)\)\s*$/);
+    const voices = slashVoices.length > 1
+      ? slashVoices
+      : parenthetical
+        ? [parenthetical[1].trim(), parenthetical[2].trim()]
+        : [line.text];
+    lyricCurrent.classList.toggle('is-duet', voices.length > 1);
+    voices.forEach((voice, voiceIndex) => {
+      const vocalLine = document.createElement('span');
+      vocalLine.className = 'vocal-line';
+      vocalLine.dataset.voice = String(voiceIndex);
+      const words = voices.length === 1 && line.words?.length
+        ? line.words
+        : distributeWordTimes(voice, line.start, line.end);
+      words.forEach((word, index) => {
+        const span = document.createElement('span');
+        span.className = 'word';
+        if (time >= word.end) span.classList.add('is-sung');
+        else if (time >= word.start && time < word.end) span.classList.add('is-current');
+        span.textContent = word.word;
+        vocalLine.append(span);
+        if (index < words.length - 1) vocalLine.append(document.createTextNode(' '));
+      });
+      lyricCurrent.append(vocalLine);
     });
   }
 
