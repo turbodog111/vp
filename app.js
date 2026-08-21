@@ -196,6 +196,7 @@ let supportedLyricsLineIndex = -2;
 let supportedLyricsSectionIndex = -2;
 let supportedLyricsWordNodes = [];
 let storyLyricsWordLanes = [];
+let lastDesktopEffectsPublishAt = 0;
 let oneMoreBiteSceneActive = false;
 let heroStorySceneActive = false;
 let encoreSceneActive = false;
@@ -1896,6 +1897,94 @@ function updateFxState(levelOverride = tetoGlowLevel) {
     setOneMoreBiteTheaterActive(false);
     setHeroStoryTheaterActive(false);
     setEncoreTheaterActive(false);
+  }
+}
+
+function desktopEffectsVariant(song = currentSong()) {
+  const config = supportedLyricTrackForSong(song);
+  if (config?.scene === 'story-theater') return config.variant || 'waiting';
+  if (config?.scene === 'hero-story') return `hero-${config.variant || 'mili'}`;
+  if (config?.scene === 'encore-dance') return `encore-${config.variant || 'jp'}`;
+  if (config?.scene === 'one-more-bite') return 'one-more-bite';
+  const theme = activeFxTheme(song);
+  if (theme === 'ddlc') {
+    const cast = ['monika', 'sayori', 'natsuki', 'yuri'].find(name =>
+      document.body.classList.contains(`theme-${name}`)
+    );
+    return cast ? `ddlc-${cast}` : 'ddlc';
+  }
+  return theme;
+}
+
+function publishDesktopEffectsState(force = false, timeOverride = null) {
+  const now = performance.now();
+  if (!force && now - lastDesktopEffectsPublishAt < 90) return;
+  lastDesktopEffectsPublishAt = now;
+
+  const song = currentSong();
+  const theme = activeFxTheme(song);
+  const active = !!song && theme !== 'off' && tetoFxEnabled;
+  const playing = !!(active && audio.src && !audio.paused && !audio.seeking && !audio.ended);
+  const time = Number.isFinite(timeOverride) ? timeOverride : currentCalibratedTime(song);
+  const config = supportedLyricTrackForSong(song);
+  const lyricsData = config && supportedLyricsSongKey === config.key ? supportedLyricsData : null;
+  const profile = effectProfileForSong(song);
+  const section = lyricsData?.sections?.find(item => time >= item.start && time < item.end)
+    || effectSectionAt(profile, time);
+  const sectionIndex = lyricsData?.sections?.indexOf(section) ?? -1;
+  const phase = Number.isFinite(section?.phase) ? section.phase : Math.max(0, sectionIndex);
+  const variant = desktopEffectsVariant(song);
+  const storyPeak = config?.scene === 'story-theater'
+    ? (STORY_PEAK_PHASES[config.variant || 'waiting'] || []).includes(phase)
+    : false;
+  const chorus = !!(
+    storyPeak
+    || section?.chorus
+    || /chorus|drop|halle|celebration|refrain|finale/i.test(`${section?.name || ''} ${section?.short || ''}`)
+  );
+  const bpm = Number(lyricsData?.bpm || profile?.bpm || 0);
+  const beatOffset = Number(lyricsData?.beatOffset || profile?.beatOffset || 0);
+  const beatPulse = bpm > 0 ? beatPulseForProfile({ bpm, beatOffset }, time) : 0;
+  const storyAnalysis = config?.scene === 'story-theater'
+    ? storyTheaterAnalysisAt(time)
+    : { energy: smoothedLevel, onset: tetoRiseEnergy };
+  const sectionPower = clamp(
+    0,
+    1,
+    Number(section?.intensity || (chorus ? 1 : section ? 0.38 : 0.24)) * Number(section?.fadeLevel ?? 1)
+  );
+  const payload = {
+    version: 1,
+    active,
+    playing,
+    theme,
+    variant,
+    scene: config?.scene || theme,
+    songId: song?.path || song?.id || '',
+    title: song?.title || song?.displayName || '',
+    artist: song?.artist || '',
+    time: Number.isFinite(time) ? time : 0,
+    duration: effectiveDuration(song) || 0,
+    bpm: Number.isFinite(bpm) ? bpm : 0,
+    beatOffset: Number.isFinite(beatOffset) ? beatOffset : 0,
+    beatPulse: clamp(0, 1, beatPulse),
+    energy: clamp(0, 1, Number(storyAnalysis.energy || smoothedLevel || 0)),
+    onset: clamp(0, 1, Number(storyAnalysis.onset || tetoRiseEnergy || 0)),
+    glow: clamp(0, 1, Number(tetoGlowLevel || storyAnalysis.energy || 0)),
+    motion: clamp(0, 1, Number(tetoFxLevel || storyAnalysis.onset || 0)),
+    sectionPower,
+    chorus,
+    phase,
+    section: section?.short || section?.name || '',
+    sentAt: now / 1000
+  };
+
+  window.__vpDesktopEffectsState = payload;
+  window.dispatchEvent(new CustomEvent('vp-desktop-effects-state', { detail: payload }));
+  try {
+    window.webkit?.messageHandlers?.vpEffects?.postMessage(payload);
+  } catch (error) {
+    console.warn('Desktop effects bridge failed:', error);
   }
 }
 
@@ -4341,6 +4430,7 @@ function updatePlaybackVisuals() {
   updateHeroStoryLyrics(current);
   updateEncoreDanceLyrics(current);
   updateStoryTheaterLyrics(current);
+  publishDesktopEffectsState(false, current);
   if (timingDebugEnabled) updateTimingDebug(current);
 }
 
@@ -8532,10 +8622,16 @@ if (settingsToggle && settingsMenu) {
   });
 }
 if (tetoFxCheckbox) {
-  tetoFxCheckbox.addEventListener('change', () => setTetoFxEnabled(tetoFxCheckbox.checked));
+  tetoFxCheckbox.addEventListener('change', () => {
+    setTetoFxEnabled(tetoFxCheckbox.checked);
+    publishDesktopEffectsState(true);
+  });
 }
 if (fxThemeSelect) {
-  fxThemeSelect.addEventListener('change', () => setFxTheme(fxThemeSelect.value));
+  fxThemeSelect.addEventListener('change', () => {
+    setFxTheme(fxThemeSelect.value);
+    publishDesktopEffectsState(true);
+  });
 }
 if (timingDebugCheckbox) {
   timingDebugCheckbox.addEventListener('change', () => {
@@ -9039,6 +9135,7 @@ window.addEventListener('resize', () => {
 // Initial measure after first paint (DOM may not have final grid sizes yet)
 scheduleNowLayoutSync();
 updateFxState();
+publishDesktopEffectsState(true);
 loadSpatialMap(); // embed into cache immediately
 preloadSpatialMaps(); // warm jumpy/traveling-voices map
 loadLibrary();
