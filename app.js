@@ -1937,17 +1937,26 @@ function publishDesktopEffectsState(force = false, timeOverride = null) {
   const storyPeak = config?.scene === 'story-theater'
     ? (STORY_PEAK_PHASES[config.variant || 'waiting'] || []).includes(phase)
     : false;
+  const encorePeak = config?.scene === 'encore-dance'
+    ? [2, 5, 6, 7, 9].includes(phase)
+    : false;
   const chorus = !!(
     storyPeak
+    || encorePeak
     || section?.chorus
     || /chorus|drop|halle|celebration|refrain|finale/i.test(`${section?.name || ''} ${section?.short || ''}`)
   );
-  const bpm = Number(lyricsData?.bpm || profile?.bpm || 0);
-  const beatOffset = Number(lyricsData?.beatOffset || profile?.beatOffset || 0);
+  const encoreProfile = config?.scene === 'encore-dance'
+    ? encoreAnalysisProfile(config.variant || encoreDanceVariant(song))
+    : null;
+  const bpm = Number(lyricsData?.bpm || encoreProfile?.bpm || profile?.bpm || 0);
+  const beatOffset = Number(lyricsData?.beatOffset || encoreProfile?.beatOffset || profile?.beatOffset || 0);
   const beatPulse = bpm > 0 ? beatPulseForProfile({ bpm, beatOffset }, time) : 0;
   const storyAnalysis = config?.scene === 'story-theater'
     ? storyTheaterAnalysisAt(time)
-    : { energy: smoothedLevel, onset: tetoRiseEnergy };
+    : config?.scene === 'encore-dance'
+      ? encoreAnalysisAt(time, config.variant || encoreDanceVariant(song))
+      : { energy: smoothedLevel, onset: tetoRiseEnergy };
   const sectionPower = clamp(
     0,
     1,
