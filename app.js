@@ -7265,6 +7265,260 @@ function drawDustyTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, e
   }
 }
 
+function drawVioletTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, isPeakPhase) {
+  const intensityBase = [0.22, 0.42, 0.96, 0.58, 1.12, 0.14, 0.54, 1.05, 0.4][phase] ?? 0.35;
+  const intensity = clamp(0, 1.35, intensityBase + energy * 0.24 + onset * 0.18 + (isPeakPhase ? beat.pulse * 0.2 : 0));
+  const ice = palette.accent;
+  const silver = [185, 191, 210];
+  const gold = [214, 173, 104];
+  const reverse = phase >= 6 ? -1 : 1;
+
+  if (phase === 5) {
+    const voidBase = ctx.createLinearGradient(0, 0, width, height);
+    voidBase.addColorStop(0, 'rgb(185,181,198)');
+    voidBase.addColorStop(0.5, 'rgb(239,235,243)');
+    voidBase.addColorStop(1, 'rgb(139,135,155)');
+    ctx.fillStyle = voidBase;
+    ctx.fillRect(0, 0, width, height);
+  } else {
+    const leftGlow = ctx.createRadialGradient(width * 0.16, height * 0.48, 0, width * 0.16, height * 0.48, width * 0.56);
+    leftGlow.addColorStop(0, storyCanvasColor(phase >= 6 ? ice : palette.primary, 0.07 + intensity * (isPeakPhase ? 0.19 : 0.11)));
+    leftGlow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = leftGlow;
+    ctx.fillRect(0, 0, width, height);
+    const rightGlow = ctx.createRadialGradient(width * 0.84, height * 0.5, 0, width * 0.84, height * 0.5, width * 0.58);
+    rightGlow.addColorStop(0, storyCanvasColor(phase >= 6 ? palette.primary : palette.secondary, 0.065 + intensity * (isPeakPhase ? 0.2 : 0.12)));
+    rightGlow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = rightGlow;
+    ctx.fillRect(0, 0, width, height);
+
+    // Opposing full-screen wave fields make the two timelines visibly diverge.
+    const lineCount = isPeakPhase ? 13 : 8;
+    for (let side = -1; side <= 1; side += 2) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(side < 0 ? 0 : width * 0.485, 0, width * 0.515, height);
+      ctx.clip();
+      for (let lane = 0; lane < lineCount; lane++) {
+        ctx.beginPath();
+        for (let point = 0; point <= 52; point++) {
+          const progress = point / 52;
+          const x = progress * width;
+          const direction = reverse * side;
+          const primary = Math.sin(progress * Math.PI * (2.1 + lane * 0.13) + audioTime * (0.46 + lane * 0.025) * direction + lane * 0.9);
+          const overtone = Math.sin(progress * Math.PI * 6.4 - audioTime * 0.23 * direction + lane) * 0.26;
+          let y = height * (0.15 + lane * 0.066) + (primary + overtone) * height * (0.025 + intensity * 0.034);
+          if (side > 0) y = height - y;
+          y += side * Math.exp(-Math.pow((progress - 0.5) / 0.16, 2)) * height * 0.052 * intensity * reverse;
+          if (!point) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        const color = (lane + (side > 0 ? 1 : 0)) % 3 === 0 ? ice : side < 0 ? palette.primary : palette.secondary;
+        ctx.strokeStyle = storyCanvasColor(color, 0.038 + intensity * (isPeakPhase ? 0.09 : 0.05) + energy * 0.075 + beat.pulse * (isPeakPhase ? 0.065 : 0.012));
+        ctx.lineWidth = dpr * (0.75 + (lane % 4 === 0 ? onset * 2.5 + beat.pulse : 0));
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // Smooth lateral weather keeps verses moving and becomes violent at peaks.
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    for (let band = 0; band < 6; band++) {
+      const bandWidth = width * (0.32 + seededUnit(band * 8.7) * 0.24);
+      const travel = width + bandWidth * 2;
+      const direction = band % 2 ? -1 : 1;
+      const x = (audioTime * (9 + band * 1.6) * direction + seededUnit(band * 12.1) * travel) % travel - bandWidth;
+      const y = height * (0.08 + band * 0.075) + Math.sin(audioTime * 0.12 + band) * height * 0.018;
+      const cloud = ctx.createRadialGradient(x, y, 0, x, y, bandWidth * 0.58);
+      cloud.addColorStop(0, storyCanvasColor(band % 3 ? palette.primary : silver, 0.018 + intensity * 0.018 + energy * 0.025));
+      cloud.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = cloud;
+      ctx.fillRect(x - bandWidth, y - height * 0.14, bandWidth * 2, height * 0.28);
+    }
+    const rainCount = isPeakPhase ? 48 : 27;
+    for (let drop = 0; drop < rainCount; drop++) {
+      const speed = 56 + seededUnit(drop * 4.3) * 88;
+      const x = ((seededUnit(drop * 11.7) * (width + 200) + audioTime * speed * 0.28) % (width + 200)) - 100;
+      const y = ((seededUnit(drop * 21.1) * (height + 160) + audioTime * speed) % (height + 160)) - 80;
+      const length = 12 + seededUnit(drop * 2.9) * (isPeakPhase ? 42 : 25);
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x - length * (0.38 + intensity * 0.23), y + length);
+      ctx.strokeStyle = storyCanvasColor(drop % 5 ? ice : palette.primary, 0.02 + intensity * 0.022 + onset * 0.07);
+      ctx.lineWidth = dpr * (drop % 9 === 0 ? 1.25 : 0.6);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    const horizon = height * (0.75 + Math.sin(audioTime * 0.08) * 0.006);
+    const moor = ctx.createLinearGradient(0, horizon - height * 0.08, 0, height);
+    moor.addColorStop(0, 'rgba(127,97,168,' + (0.08 + intensity * 0.04) + ')');
+    moor.addColorStop(0.35, 'rgba(41,50,38,0.72)');
+    moor.addColorStop(1, 'rgba(3,1,8,0.96)');
+    ctx.beginPath();
+    ctx.moveTo(0, height);
+    ctx.lineTo(0, horizon);
+    for (let point = 0; point <= 36; point++) {
+      const progress = point / 36;
+      ctx.lineTo(progress * width, horizon
+        + Math.sin(progress * Math.PI * 2.3 + audioTime * 0.055) * height * 0.024
+        + Math.sin(progress * Math.PI * 7.1 - audioTime * 0.035) * height * 0.009);
+    }
+    ctx.lineTo(width, height);
+    ctx.closePath();
+    ctx.fillStyle = moor;
+    ctx.fill();
+
+    // Mirrored windows and deliberate Catherine/Heathcliff silhouettes.
+    for (let side = -1; side <= 1; side += 2) {
+      const frameWidth = Math.min(width * 0.17, height * 0.28);
+      const frameHeight = frameWidth * 1.35;
+      const frameX = width * (side < 0 ? 0.17 : 0.83) + Math.sin(audioTime * 0.13 + side) * width * 0.012;
+      const frameY = height * (0.43 + Math.cos(audioTime * 0.095 + side) * 0.018);
+      ctx.save();
+      ctx.translate(frameX, frameY);
+      ctx.rotate(side * (0.012 + Math.sin(audioTime * 0.08) * 0.009));
+      ctx.strokeStyle = storyCanvasColor(side < 0 ? silver : gold, 0.045 + intensity * 0.045 + energy * 0.045);
+      ctx.lineWidth = dpr * (1 + (isPeakPhase ? beat.pulse * 1.5 : onset * 0.7));
+      ctx.strokeRect(-frameWidth / 2, -frameHeight / 2, frameWidth, frameHeight);
+      ctx.beginPath();
+      ctx.moveTo(0, -frameHeight / 2); ctx.lineTo(0, frameHeight / 2);
+      ctx.moveTo(-frameWidth / 2, 0); ctx.lineTo(frameWidth / 2, 0);
+      ctx.stroke();
+      ctx.restore();
+    }
+    const separation = width * (0.046 + (isPeakPhase ? (1 - beat.pulse) * 0.016 : 0.012));
+    for (let side = -1; side <= 1; side += 2) {
+      const x = width * 0.5 + side * separation + Math.sin(audioTime * 0.16 + side) * dpr * 2;
+      const figureHeight = height * (side < 0 ? 0.105 : 0.092);
+      const headY = horizon - figureHeight;
+      ctx.beginPath();
+      ctx.arc(x, headY, figureHeight * 0.115, 0, Math.PI * 2);
+      ctx.fillStyle = storyCanvasColor(side < 0 ? silver : gold, 0.075 + intensity * 0.055 + energy * 0.06);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(x, headY + figureHeight * 0.14);
+      ctx.quadraticCurveTo(x + side * figureHeight * 0.2, horizon - figureHeight * 0.48, x + side * figureHeight * 0.32, horizon);
+      ctx.lineTo(x - side * figureHeight * 0.22, horizon);
+      ctx.quadraticCurveTo(x - side * figureHeight * 0.06, horizon - figureHeight * 0.58, x, headY + figureHeight * 0.14);
+      ctx.fillStyle = storyCanvasColor(side < 0 ? palette.primary : palette.secondary, 0.06 + intensity * 0.045 + energy * 0.05);
+      ctx.fill();
+    }
+
+    const orbitX = width * (phase >= 6 ? 0.7 : 0.3);
+    const orbitY = height * 0.52;
+    const orbitCount = isPeakPhase ? 15 : 9;
+    for (let orbit = 0; orbit < orbitCount; orbit++) {
+      const radiusX = width * (0.055 + orbit * 0.033);
+      const radiusY = height * (0.03 + orbit * 0.021);
+      const direction = orbit % 2 ? -1 : 1;
+      const rotation = audioTime * 0.023 * direction + orbit * 0.31;
+      const sweep = Math.PI * (0.72 + (orbit % 4) * 0.2 + (isPeakPhase ? beat.pulse * 0.18 : 0));
+      ctx.beginPath();
+      ctx.ellipse(orbitX, orbitY, radiusX, radiusY, rotation * 0.3, rotation, rotation + sweep);
+      ctx.strokeStyle = storyCanvasColor(orbit % 2 ? palette.secondary : orbit % 3 ? palette.primary : ice, 0.042 + intensity * 0.045 + energy * 0.065 + onset * 0.075);
+      ctx.lineWidth = dpr * (0.75 + (orbit % 4 === 0 ? beat.pulse * 2.4 : 0));
+      ctx.stroke();
+    }
+  }
+
+  // Multiple full-frame radial fractures can coexist between close beats.
+  const echoCount = isPeakPhase ? 8 : 4;
+  const period = 60 / (supportedLyricsData?.bpm || 161.499);
+  for (let echo = 0; echo < echoCount; echo++) {
+    const progress = (beat.phase + echo) * period / (isPeakPhase ? 1.42 : 1.05);
+    if (progress >= 1) continue;
+    const eased = 1 - Math.pow(1 - progress, 2.3);
+    const life = Math.sin(progress * Math.PI);
+    const radiusX = width * (0.035 + eased * (isPeakPhase ? 0.56 : 0.34));
+    const radiusY = height * (0.03 + eased * (isPeakPhase ? 0.46 : 0.28));
+    ctx.save();
+    ctx.translate(width * 0.5 + (echo % 2 ? -1 : 1) * width * 0.05 * eased, height * 0.5);
+    ctx.rotate((echo % 2 ? -1 : 1) * (0.05 + progress * 0.18));
+    ctx.beginPath();
+    ctx.moveTo(0, -radiusY); ctx.lineTo(radiusX, 0); ctx.lineTo(0, radiusY); ctx.lineTo(-radiusX, 0); ctx.closePath();
+    ctx.strokeStyle = storyCanvasColor(echo % 3 ? palette.primary : palette.secondary, life * (0.035 + intensity * (isPeakPhase ? 0.105 : 0.07) + onset * 0.09));
+    ctx.lineWidth = dpr * (0.8 + onset * 2.1 + (echo === 0 ? beat.pulse * 2 : 0));
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  if (isPeakPhase) {
+    const bloom = ctx.createRadialGradient(width * 0.5, height * 0.5, 0, width * 0.5, height * 0.5, Math.max(width, height) * 0.66);
+    bloom.addColorStop(0, storyCanvasColor(phase === 4 ? [247, 245, 255] : palette.secondary, 0.12 + beat.pulse * 0.16 + onset * 0.08));
+    bloom.addColorStop(0.38, storyCanvasColor(palette.primary, 0.055 + intensity * 0.07));
+    bloom.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = bloom;
+    ctx.fillRect(0, 0, width, height);
+    for (let beam = 0; beam < 9; beam++) {
+      const angle = reverse * (-Math.PI * 0.72 + beam * Math.PI * 1.44 / 8) + Math.sin(audioTime * 0.31) * 0.035;
+      const halfWidth = 0.014 + beat.pulse * 0.01;
+      const length = Math.hypot(width, height) * (0.58 + intensity * 0.1);
+      ctx.beginPath();
+      ctx.moveTo(width * 0.5, height * 0.5);
+      ctx.lineTo(width * 0.5 + Math.cos(angle - halfWidth) * length, height * 0.5 + Math.sin(angle - halfWidth) * length);
+      ctx.lineTo(width * 0.5 + Math.cos(angle + halfWidth) * length, height * 0.5 + Math.sin(angle + halfWidth) * length);
+      ctx.closePath();
+      ctx.fillStyle = storyCanvasColor(beam % 3 ? palette.primary : ice, 0.035 + beat.pulse * 0.065 + energy * 0.028);
+      ctx.fill();
+    }
+  }
+
+  if (phase === 4) {
+    for (let lane = 0; lane < 12; lane++) {
+      const reach = width * (0.2 + beat.pulse * 0.48 + onset * 0.2);
+      ctx.fillStyle = storyCanvasColor(lane % 3 ? palette.secondary : ice, 0.025 + beat.pulse * 0.07 + onset * 0.045);
+      ctx.fillRect(lane % 2 ? 0 : width - reach, height * (0.07 + lane * 0.077), reach, dpr * (1 + (lane % 4 === 0 ? 2 : 0)));
+    }
+    ctx.save();
+    ctx.font = '700 ' + Math.max(10, width * 0.009) + 'px Avenir Next, sans-serif';
+    ctx.textAlign = 'center';
+    for (let row = 0; row < 5; row++) {
+      for (let column = 0; column < 7; column++) {
+        ctx.fillStyle = storyCanvasColor(column % 3 ? palette.primary : palette.secondary, 0.012 + onset * 0.06 + beat.pulse * 0.025);
+        ctx.fillText('DELETE', width * (0.1 + column * 0.13) + Math.sin(audioTime * 1.1 + row) * dpr * 8, height * (0.22 + row * 0.13));
+      }
+    }
+    ctx.restore();
+  }
+
+  // One thread survives every world and turns black inside the white void.
+  const split = isPeakPhase ? width * (0.012 + intensity * 0.018 + beat.pulse * 0.012) : width * 0.004;
+  for (let echo = 3; echo >= 0; echo--) {
+    ctx.beginPath();
+    for (let point = 0; point <= 48; point++) {
+      const progress = point / 48;
+      const y = progress * height;
+      const wave = Math.sin(point * 1.24 + audioTime * 0.65 - echo * 0.35) * width * (phase === 5 ? 0.002 : 0.004 + onset * 0.006);
+      const x = width * 0.5 + wave + Math.sin(progress * Math.PI) * split * (point % 2 ? 1 : -1) + reverse * echo * dpr * 2;
+      if (!point) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = phase === 5
+      ? 'rgba(26,23,32,' + (0.28 - echo * 0.045) + ')'
+      : storyCanvasColor(palette.secondary, 0.16 + intensity * 0.13 - echo * 0.025);
+    ctx.lineWidth = dpr * (0.8 + (3 - echo) * 0.6 + (isPeakPhase ? beat.pulse * 2.8 : onset * 1.5));
+    ctx.stroke();
+  }
+
+  if (phase !== 5) {
+    const radius = Math.min(width, height) * (0.055 + (isPeakPhase ? beat.pulse * 0.008 : 0));
+    ctx.save();
+    ctx.translate(width * 0.86, height * 0.17);
+    ctx.beginPath();
+    ctx.arc(0, 0, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = storyCanvasColor(silver, 0.08 + intensity * 0.055 + onset * 0.08);
+    ctx.lineWidth = dpr * (1.1 + (isPeakPhase ? beat.pulse * 1.8 : 0));
+    ctx.stroke();
+    ctx.font = '600 ' + Math.max(9, radius * 0.23) + 'px ui-monospace, SFMono-Regular, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = storyCanvasColor(silver, 0.14 + intensity * 0.07);
+    ctx.fillText('C', -radius * 0.48, 0);
+    ctx.fillText('H', radius * 0.48, 0);
+    ctx.restore();
+  }
+}
+
 function drawStoryTheaterFx(levels, audioTime) {
   const canvas = $('story-fx');
   const theater = $('story-theater');
@@ -7507,48 +7761,7 @@ function drawStoryTheaterFx(levels, audioTime) {
       ctx.strokeStyle = storyCanvasColor(palette.deep, 0.18 + energy * 0.16); ctx.lineWidth = dpr * (hand ? 2.2 : 1.2); ctx.stroke();
     }
   } else if (variant === 'violet') {
-    drawStoryKineticPass(ctx, width, height, palette, audioTime, beat, energy, onset, isPeakPhase ? 1.12 : 0.46, phase >= 6 ? -1 : 1);
-    const vortexX = width * (phase >= 6 ? 0.7 : 0.28);
-    const vortexY = height * 0.52;
-    const fracture = isPeakPhase ? 1 : 0.38;
-    const violetGlow = ctx.createRadialGradient(vortexX, vortexY, 0, vortexX, vortexY, width * 0.62);
-    violetGlow.addColorStop(0, storyCanvasColor(palette.secondary, 0.08 + energy * 0.13 + beat.pulse * fracture * 0.1));
-    violetGlow.addColorStop(0.48, storyCanvasColor(palette.primary, 0.035 + onset * 0.07));
-    violetGlow.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = violetGlow; ctx.fillRect(0, 0, width, height);
-    for (let ring = 0; ring < 12; ring++) {
-      ctx.beginPath();
-      ctx.ellipse(vortexX, vortexY, width * (0.08 + ring * 0.045), height * (0.04 + ring * 0.027), audioTime * 0.018 * (ring % 2 ? 1 : -1) + ring * 0.3, 0, Math.PI * (1.2 + ring * 0.08));
-      ctx.strokeStyle = storyCanvasColor(ring % 2 ? palette.secondary : palette.primary, 0.04 + energy * 0.09 + onset * 0.1 + beat.pulse * fracture * 0.035);
-      ctx.lineWidth = dpr * (1 + (ring % 3 === 0 ? onset * 3 : 0)); ctx.stroke();
-    }
-    ctx.beginPath();
-    for (let point = 0; point <= 32; point++) {
-      const y = point / 32 * height;
-      const x = width * 0.5 + Math.sin(point * 1.7 + audioTime * 0.35) * width * (0.012 + onset * 0.03);
-      point ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-    }
-    ctx.strokeStyle = storyCanvasColor(palette.secondary, 0.24 + onset * 0.42); ctx.lineWidth = dpr * (1.2 + onset * 4); ctx.stroke();
-    for (let index = 0; index < (isPeakPhase ? 38 : 21); index++) {
-      const orbit = audioTime * (0.035 + index % 5 * 0.006) + seededUnit(index * 12.3) * Math.PI * 2;
-      const x = vortexX + Math.cos(orbit) * width * (0.12 + seededUnit(index * 29.8) * 0.34);
-      const y = vortexY + Math.sin(orbit) * height * (0.08 + seededUnit(index * 39.4) * 0.28);
-      ctx.save(); ctx.translate(x, y); ctx.rotate(orbit);
-      ctx.strokeStyle = storyCanvasColor(index % 3 ? palette.primary : palette.accent, 0.06 + energy * 0.13 + onset * 0.12);
-      ctx.strokeRect(-dpr * (4 + index % 5), -dpr * 2, dpr * (8 + index % 5 * 2), dpr * 4); ctx.restore();
-    }
-    for (let slash = 0; slash < (isPeakPhase ? 14 : 7); slash++) {
-      const travel = ((audioTime * (0.07 + slash * 0.002) + seededUnit(slash * 8.7)) % 1.3) - 0.15;
-      const y = seededUnit(slash * 31.4) * height;
-      const length = width * (0.08 + seededUnit(slash * 19.1) * 0.16);
-      ctx.beginPath(); ctx.moveTo(travel * width - length, y + (phase >= 6 ? -1 : 1) * length * 0.18); ctx.lineTo(travel * width, y);
-      ctx.strokeStyle = storyCanvasColor(slash % 3 ? palette.primary : palette.accent, 0.035 + energy * 0.09 + fracture * beat.pulse * 0.08);
-      ctx.lineWidth = dpr * (0.8 + onset * 2.2); ctx.stroke();
-    }
-    if (phase === 4) {
-      ctx.fillStyle = storyCanvasColor(palette.accent, 0.035 + beat.pulse * 0.06);
-      for (let lane = 0; lane < 9; lane++) ctx.fillRect(0, height * (0.12 + lane * 0.09), width * (0.2 + beat.pulse * 0.5), dpr * (1 + lane % 3));
-    }
+    drawVioletTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, isPeakPhase);
   } else if (variant === 'compass') {
     drawCompassTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, cx, cy);
   } else if (variant === 'celebration') {
@@ -8134,7 +8347,7 @@ $('refresh').addEventListener('click', loadLibrary);
 bindLibraryActionGuards();
 
 const seekEl = $('seek');
-let activeSeekPointerId = null;
+let seekPointerActive = false;
 
 function handleSeekPreview() {
   const targetTime = seekTargetFromControl();
@@ -8144,60 +8357,51 @@ function handleSeekPreview() {
 
 function handleSeekCommit() {
   if (!seekTransaction) return;
+  if (seekTransaction.finishOnSeeked) return;
   const targetTime = seekTargetFromControl();
   if (targetTime !== null) previewSeekTarget(targetTime);
   commitSeekTransaction(true);
 }
 
-function seekTargetFromPointer(event) {
+function seekTargetFromInitialPointer(event) {
   const duration = effectiveDuration();
   const rect = seekEl.getBoundingClientRect();
   if (!duration || rect.width <= 0 || !Number.isFinite(event.clientX)) return null;
   return clamp(0, duration, ((event.clientX - rect.left) / rect.width) * duration);
 }
 
-function previewSeekPointer(event) {
-  const targetTime = seekTargetFromPointer(event);
+function beginSeekPointer(event) {
+  if (event.button !== undefined && event.button !== 0) return;
+  seekPointerActive = true;
+  const targetTime = seekTargetFromInitialPointer(event);
+  if (targetTime === null) {
+    beginSeekTransaction();
+    return;
+  }
   const duration = effectiveDuration();
-  if (targetTime === null || !duration) return;
   seekEl.value = String((targetTime / duration) * 100);
   previewSeekTarget(targetTime);
 }
 
-function beginSeekPointer(event) {
-  if (event.button !== undefined && event.button !== 0) return;
-  activeSeekPointerId = event.pointerId;
-  beginSeekTransaction();
-  previewSeekPointer(event);
-  try { seekEl.setPointerCapture(event.pointerId); } catch (_) {}
+function finishSeekPointer() {
+  if (!seekPointerActive && !seekTransaction) return;
+  seekPointerActive = false;
+  handleSeekCommit();
 }
 
-function moveSeekPointer(event) {
-  if (event.pointerId !== activeSeekPointerId) return;
-  previewSeekPointer(event);
-}
-
-function finishSeekPointer(event) {
-  if (event.pointerId !== activeSeekPointerId) return;
-  previewSeekPointer(event);
-  activeSeekPointerId = null;
-  try { seekEl.releasePointerCapture(event.pointerId); } catch (_) {}
-  commitSeekTransaction(true);
-}
-
-function cancelSeekPointer(event) {
-  if (event.pointerId !== activeSeekPointerId) return;
-  activeSeekPointerId = null;
-  try { seekEl.releasePointerCapture(event.pointerId); } catch (_) {}
-  commitSeekTransaction(true);
+function cancelSeekPointer() {
+  if (!seekPointerActive && !seekTransaction) return;
+  seekPointerActive = false;
+  handleSeekCommit();
 }
 
 seekEl.addEventListener('pointerdown', beginSeekPointer);
-seekEl.addEventListener('pointermove', moveSeekPointer);
 seekEl.addEventListener('input', handleSeekPreview);
 seekEl.addEventListener('change', handleSeekCommit);
 seekEl.addEventListener('pointerup', finishSeekPointer);
 seekEl.addEventListener('pointercancel', cancelSeekPointer);
+seekEl.addEventListener('blur', cancelSeekPointer);
+window.addEventListener('pointerup', finishSeekPointer, true);
 
 function updateVolumeIcon(volume = playerVolume) {
   const iconEl = document.querySelector('.volume span');

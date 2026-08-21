@@ -892,17 +892,10 @@
       if (!response.ok) throw new Error(`Theater data request failed: ${response.status}`);
       return response.json();
     })
-    .then(async payload => {
-      data = { ...payload, lines: [] };
+    .then(payload => {
+      data = payload;
       energyEnvelope = decodeEnvelope(payload.analysis?.energyBase64);
       onsetEnvelope = decodeEnvelope(payload.analysis?.onsetsBase64);
-      const provider = await loadCanonicalProviderLyrics(payload.duration);
-      data = {
-        ...payload,
-        lines: provider.lines,
-        lyricSource: provider.source,
-        timingMethod: `LRCLIB synchronized record ${LRCLIB_RECORD_ID} on the local recording's zero-origin clock; trailing duration is not treated as tempo drift.`
-      };
       durationEl.textContent = formatTime(data.duration);
       updateInterface(displayTime, currentSection(displayTime));
     })
