@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Psalm 8 (Halle) - Firmament Theater</title>
+  <link rel="stylesheet" href="./demo.css">
+</head>
+<body>
+  <main id="stage" aria-label="Psalm 8 firmament theater">
+    <canvas id="scene" aria-hidden="true"></canvas>
+
+    <header class="masthead">
+      <div class="identity">
+        <p class="eyebrow">PHIL WICKHAM / PSALM 8</p>
+        <h1>Psalm 8<br><span>(Halle)</span></h1>
+        <p class="edition">D MAJOR &middot; 120 BPM &middot; FIRMAMENT / CROWN / GREAT NAME</p>
+      </div>
+      <div class="chapter" aria-live="polite">
+        <span id="chapter-index">01</span>
+        <div>
+          <strong id="chapter-name">PRAISE / OPEN</strong>
+          <small id="chapter-detail">Hallelujah</small>
+        </div>
+      </div>
+    </header>
+
+    <aside class="verse-mark" aria-hidden="true">
+      <span>THE FIRMAMENT</span>
+      <i></i>
+      <b id="beat-value">000</b>
+    </aside>
+
+    <section class="lyric-stage" aria-live="polite" aria-atomic="true">
+      <p id="lyric-previous" class="lyric-context"></p>
+      <p id="lyric-current" class="lyric-current">The heavens are listening.</p>
+      <p id="lyric-next" class="lyric-context"></p>
+    </section>
+
+    <footer class="transport">
+      <button id="play" class="icon-button play" type="button" aria-label="Play Psalm 8" title="Play" disabled>
+        <span id="play-icon">&#9654;</span>
+      </button>
+      <span id="current-time" class="time">0:00</span>
+      <input id="seek" type="range" min="0" max="1000" value="0" aria-label="Song progress">
+      <span id="duration" class="time">3:48</span>
+      <button id="mute" class="icon-button mute" type="button" aria-label="Mute audio" title="Mute">VOL</button>
+    </footer>
+  </main>
+
+  <audio id="audio" preload="auto" data-src="../../songs/christian/Phil Wickham - Psalm 8 (Halle).m4a"></audio>
+  <script src="./demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+:root {
+  color-scheme: dark;
+  --night: #17191c;
+  --slate: #48555d;
+  --sky: #8bcde2;
+  --gold: #dda963;
+  --cream: #fff7df;
+  --ink: #281f1d;
+  --glass: rgba(20, 23, 25, 0.72);
+}
+
+* { box-sizing: border-box; }
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--night);
+  color: var(--cream);
+  font-family: "Avenir Next", Avenir, Helvetica, Arial, sans-serif;
+}
+
+button,
+input { font: inherit; }
+
+#stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  isolation: isolate;
+  overflow: hidden;
+  background: #24292d;
+}
+
+#scene {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
+.masthead {
+  position: absolute;
+  inset: clamp(24px, 4vh, 50px) clamp(28px, 5vw, 82px) auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 36px;
+  pointer-events: none;
+}
+
+.eyebrow,
+.edition {
+  margin: 0;
+  color: var(--gold);
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+h1 {
+  margin: 5px 0 4px;
+  max-width: min(680px, 58vw);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(52px, 7.2vw, 104px);
+  font-weight: 400;
+  line-height: 0.82;
+  letter-spacing: 0;
+  color: var(--cream);
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
+}
+
+h1 span {
+  color: var(--sky);
+  font-size: 0.56em;
+}
+
+.edition { color: rgba(255, 247, 223, 0.62); }
+
+.chapter {
+  display: flex;
+  align-items: center;
+  min-width: min(360px, 32vw);
+  padding-top: 7px;
+  border-top: 1px solid rgba(255, 247, 223, 0.3);
+}
+
+.chapter > span {
+  min-width: 68px;
+  color: var(--gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 44px;
+}
+
+.chapter div { display: grid; gap: 2px; }
+.chapter strong { color: var(--cream); font-size: 13px; }
+.chapter small { color: rgba(255, 247, 223, 0.62); font-size: 12px; }
+
+.verse-mark {
+  position: absolute;
+  top: 45%;
+  left: clamp(24px, 4.3vw, 70px);
+  display: grid;
+  grid-template-rows: auto 72px auto;
+  justify-items: center;
+  gap: 12px;
+  color: rgba(255, 247, 223, 0.5);
+  font-size: 10px;
+  font-weight: 800;
+  pointer-events: none;
+  writing-mode: vertical-rl;
+}
+
+.verse-mark i { width: 1px; height: 72px; background: rgba(255, 247, 223, 0.28); }
+.verse-mark b { color: var(--gold); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+.lyric-stage {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  width: min(1060px, calc(100% - 210px));
+  min-height: 210px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-rows: 38px minmax(92px, auto) 38px;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.lyric-stage::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -32% -12%;
+  background: radial-gradient(ellipse, rgba(13, 17, 19, 0.68), rgba(13, 17, 19, 0.28) 48%, transparent 74%);
+}
+
+.lyric-stage p { margin: 0; }
+
+.lyric-context {
+  color: rgba(255, 247, 223, 0.5);
+  font-size: clamp(13px, 1.35vw, 20px);
+  font-weight: 650;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.lyric-current {
+  align-self: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 4.25vw, 68px);
+  font-weight: 400;
+  line-height: 1.08;
+  text-wrap: balance;
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.48);
+}
+
+.word {
+  display: inline;
+  color: rgba(255, 247, 223, 0.62);
+  transition: color 80ms linear, text-shadow 80ms linear;
+}
+
+.word.is-sung {
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(221, 169, 99, 0.18);
+}
+
+.word.is-current {
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.64), 0 0 24px rgba(139, 205, 226, 0.78);
+}
+
+.instrumental {
+  color: rgba(255, 247, 223, 0.7);
+  font-family: "Avenir Next", Avenir, sans-serif;
+  font-size: clamp(16px, 1.8vw, 25px);
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+#stage.is-peak h1 span,
+#stage.is-peak .chapter strong { color: #fff; text-shadow: 0 0 18px rgba(139, 205, 226, 0.32); }
+#stage.is-peak .lyric-stage::before { background: radial-gradient(ellipse, rgba(24, 30, 33, 0.78), rgba(24, 30, 33, 0.34) 53%, transparent 78%); }
+#stage.is-peak .word { color: rgba(255, 247, 223, 0.7); }
+#stage.is-peak .word.is-sung { color: #8bcde2; text-shadow: 0 0 18px rgba(139, 205, 226, 0.28); }
+#stage.is-peak .word.is-current { color: #fff; text-shadow: 0 1px 5px rgba(0, 0, 0, 0.72), 0 0 28px rgba(221, 169, 99, 0.92); }
+
+.transport {
+  position: absolute;
+  right: clamp(20px, 4vw, 64px);
+  bottom: clamp(18px, 3vh, 34px);
+  left: clamp(20px, 4vw, 64px);
+  height: 66px;
+  display: grid;
+  grid-template-columns: 50px 52px minmax(120px, 1fr) 52px 46px;
+  align-items: center;
+  gap: 13px;
+  padding: 8px 15px 8px 9px;
+  border: 1px solid rgba(255, 247, 223, 0.25);
+  background: var(--glass);
+  box-shadow: 0 12px 44px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(14px);
+}
+
+.icon-button {
+  border: 1px solid rgba(221, 169, 99, 0.6);
+  color: var(--gold);
+  background: rgba(16, 19, 21, 0.84);
+  cursor: pointer;
+}
+
+.play { width: 48px; height: 48px; border-radius: 50%; font-size: 18px; }
+.mute { width: 42px; height: 30px; font-size: 10px; font-weight: 800; }
+.icon-button:hover { color: var(--ink); background: var(--gold); }
+.icon-button:disabled { cursor: wait; opacity: 0.48; }
+
+.time {
+  color: rgba(255, 247, 223, 0.72);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+#seek { width: 100%; accent-color: var(--gold); cursor: pointer; }
+
+@media (max-width: 760px), (max-height: 620px) {
+  .masthead { inset: 18px 22px auto; }
+  h1 { font-size: clamp(38px, 9vw, 68px); }
+  .chapter { min-width: 190px; }
+  .chapter > span { min-width: 42px; font-size: 30px; }
+  .lyric-stage { top: 54%; width: calc(100% - 42px); }
+  .verse-mark { display: none; }
+  .transport { right: 14px; bottom: 12px; left: 14px; }
+}
+
+@media (max-width: 540px) {
+  .chapter { display: none; }
+  .edition { max-width: 78vw; }
+  .transport { grid-template-columns: 44px 40px minmax(70px, 1fr) 40px 38px; gap: 6px; }
+  .play { width: 42px; height: 42px; }
+}

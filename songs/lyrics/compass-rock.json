@@ -31,27 +31,34 @@
     },
     {
       "start": 78.4,
-      "end": 106.36,
+      "end": 106.8,
       "name": "Blood and black-and-white",
       "short": "VERDICT",
       "phase": 3
     },
     {
-      "start": 106.36,
-      "end": 130.92,
+      "start": 106.8,
+      "end": 131.08,
       "name": "Curiosity points north",
-      "short": "INNER NORTH",
+      "short": "CHORUS / I",
       "phase": 4
     },
     {
-      "start": 130.92,
-      "end": 159.64,
+      "start": 131.08,
+      "end": 153.9,
       "name": "Cord under tension",
       "short": "ROCK SOLO / I",
       "phase": 5
     },
     {
-      "start": 159.64,
+      "start": 153.9,
+      "end": 174.38,
+      "name": "Curiosity returns",
+      "short": "CHORUS / II",
+      "phase": 6
+    },
+    {
+      "start": 174.38,
       "end": 196.6,
       "name": "Gold across the water",
       "short": "ROCK SOLO / II",
@@ -214,24 +221,24 @@
       ]
     },
     {
-      "start": 45.04,
-      "end": 49.2,
+      "start": 47.12,
+      "end": 49.3,
       "text": "I'm reclaiming myself",
       "words": [
         {
           "word": "I'm",
-          "start": 45.04,
-          "end": 47.5
+          "start": 47.12,
+          "end": 47.68
         },
         {
           "word": "reclaiming",
-          "start": 47.5,
-          "end": 48.52
+          "start": 47.68,
+          "end": 48.34
         },
         {
           "word": "myself",
-          "start": 48.52,
-          "end": 49.2
+          "start": 48.34,
+          "end": 49.3
         }
       ]
     },
@@ -563,162 +570,300 @@
       ]
     },
     {
-      "start": 106.36,
-      "end": 109.1,
+      "start": 106.8,
+      "end": 109.64,
       "text": "Hold on tight",
       "words": [
         {
           "word": "Hold",
-          "start": 106.36,
-          "end": 107.336
+          "start": 106.8,
+          "end": 107.98
         },
         {
           "word": "on",
-          "start": 107.336,
-          "end": 107.989
+          "start": 107.98,
+          "end": 108.66
         },
         {
           "word": "tight",
-          "start": 107.989,
-          "end": 109.1
+          "start": 108.66,
+          "end": 109.64
         }
       ]
     },
     {
-      "start": 109.1,
-      "end": 114.56,
+      "start": 111.38,
+      "end": 113.64,
       "text": "My compass is curiosity",
       "words": [
         {
           "word": "My",
-          "start": 109.1,
-          "end": 111.48
+          "start": 111.38,
+          "end": 111.6
         },
         {
           "word": "compass",
-          "start": 111.48,
-          "end": 112.12
+          "start": 111.6,
+          "end": 112.36
         },
         {
           "word": "is",
-          "start": 112.12,
-          "end": 112.86
+          "start": 112.36,
+          "end": 113.02
         },
         {
           "word": "curiosity",
-          "start": 112.86,
-          "end": 114.56
+          "start": 113.02,
+          "end": 113.64
         }
       ]
     },
     {
-      "start": 115.82,
-      "end": 120.18,
+      "start": 116.56,
+      "end": 120.14,
       "text": "My compass is curiosity",
       "words": [
         {
           "word": "My",
-          "start": 115.82,
-          "end": 116.72
+          "start": 116.56,
+          "end": 117.06
         },
         {
           "word": "compass",
-          "start": 116.72,
-          "end": 117.54
+          "start": 117.06,
+          "end": 117.8
         },
         {
           "word": "is",
-          "start": 117.54,
-          "end": 118.2
+          "start": 117.8,
+          "end": 118.44
         },
         {
           "word": "curiosity",
-          "start": 118.2,
-          "end": 120.18
+          "start": 118.44,
+          "end": 120.14
         }
       ]
     },
     {
-      "start": 121.68,
-      "end": 128.14,
+      "start": 122.32,
+      "end": 128.66,
       "text": "I'm piercing through the rope that strangled you and me",
       "words": [
         {
           "word": "I'm",
-          "start": 121.68,
-          "end": 122.32
+          "start": 122.32,
+          "end": 122.56
         },
         {
           "word": "piercing",
-          "start": 122.32,
-          "end": 122.92
+          "start": 122.56,
+          "end": 122.98
         },
         {
           "word": "through",
-          "start": 122.92,
-          "end": 123.5
+          "start": 122.98,
+          "end": 123.58
         },
         {
           "word": "the",
-          "start": 123.5,
-          "end": 124.06
+          "start": 123.58,
+          "end": 124.0
         },
         {
           "word": "rope",
-          "start": 124.06,
-          "end": 124.38
+          "start": 124.0,
+          "end": 124.26
         },
         {
           "word": "that",
-          "start": 124.38,
-          "end": 124.98
+          "start": 124.26,
+          "end": 124.52
         },
         {
           "word": "strangled",
-          "start": 124.98,
-          "end": 126.1
+          "start": 124.52,
+          "end": 125.34
         },
         {
           "word": "you",
-          "start": 126.1,
-          "end": 126.74
+          "start": 125.34,
+          "end": 126.9
         },
         {
           "word": "and",
-          "start": 126.74,
-          "end": 127.76
+          "start": 126.9,
+          "end": 127.92
         },
         {
           "word": "me",
-          "start": 127.76,
-          "end": 128.14
+          "start": 127.92,
+          "end": 128.66
         }
       ]
     },
     {
-      "start": 128.48,
-      "end": 130.92,
+      "start": 129.02,
+      "end": 131.08,
       "text": "Let us be free",
       "words": [
         {
           "word": "Let",
-          "start": 128.48,
-          "end": 129.129
+          "start": 129.02,
+          "end": 129.28
         },
         {
           "word": "us",
-          "start": 129.129,
-          "end": 129.641
+          "start": 129.28,
+          "end": 129.98
         },
         {
           "word": "be",
-          "start": 129.641,
-          "end": 130.154
+          "start": 129.98,
+          "end": 130.48
         },
         {
           "word": "free",
-          "start": 130.154,
-          "end": 130.92
+          "start": 130.48,
+          "end": 131.08
+        }
+      ]
+    },
+    {
+      "start": 153.9,
+      "end": 157.16,
+      "text": "My compass is curiosity",
+      "words": [
+        {
+          "word": "My",
+          "start": 153.9,
+          "end": 155.18
+        },
+        {
+          "word": "compass",
+          "start": 155.18,
+          "end": 155.98
+        },
+        {
+          "word": "is",
+          "start": 155.98,
+          "end": 156.56
+        },
+        {
+          "word": "curiosity",
+          "start": 156.56,
+          "end": 157.16
+        }
+      ]
+    },
+    {
+      "start": 159.24,
+      "end": 162.74,
+      "text": "My compass is curiosity",
+      "words": [
+        {
+          "word": "My",
+          "start": 159.24,
+          "end": 160.52
+        },
+        {
+          "word": "compass",
+          "start": 160.52,
+          "end": 161.1
+        },
+        {
+          "word": "is",
+          "start": 161.1,
+          "end": 161.94
+        },
+        {
+          "word": "curiosity",
+          "start": 161.94,
+          "end": 162.74
+        }
+      ]
+    },
+    {
+      "start": 165.58,
+      "end": 172.08,
+      "text": "I'm piercing through the rope that strangled you and me",
+      "words": [
+        {
+          "word": "I'm",
+          "start": 165.58,
+          "end": 166.02
+        },
+        {
+          "word": "piercing",
+          "start": 166.02,
+          "end": 166.46
+        },
+        {
+          "word": "through",
+          "start": 166.46,
+          "end": 167.1
+        },
+        {
+          "word": "the",
+          "start": 167.1,
+          "end": 167.16
+        },
+        {
+          "word": "rope",
+          "start": 167.16,
+          "end": 167.76
+        },
+        {
+          "word": "that",
+          "start": 167.76,
+          "end": 168.08
+        },
+        {
+          "word": "strangled",
+          "start": 168.08,
+          "end": 168.84
+        },
+        {
+          "word": "you",
+          "start": 168.84,
+          "end": 170.3
+        },
+        {
+          "word": "and",
+          "start": 170.3,
+          "end": 171.56
+        },
+        {
+          "word": "me",
+          "start": 171.56,
+          "end": 172.08
+        }
+      ]
+    },
+    {
+      "start": 172.42,
+      "end": 174.38,
+      "text": "Let us be free",
+      "words": [
+        {
+          "word": "Let",
+          "start": 172.42,
+          "end": 172.76
+        },
+        {
+          "word": "us",
+          "start": 172.76,
+          "end": 173.54
+        },
+        {
+          "word": "be",
+          "start": 173.54,
+          "end": 173.86
+        },
+        {
+          "word": "free",
+          "start": 173.86,
+          "end": 174.38
         }
       ]
     },

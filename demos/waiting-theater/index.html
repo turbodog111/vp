@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Waiting for Tomorrow - Clock Room Study</title>
+  <link rel="stylesheet" href="./demo.css">
+</head>
+<body>
+  <main id="stage" aria-label="Waiting for Tomorrow animation study">
+    <canvas id="scene" aria-hidden="true"></canvas>
+
+    <header class="masthead">
+      <div class="identity">
+        <p class="eyebrow">KASANE TETO / MILISEN</p>
+        <h1>Waiting for<br>Tomorrow</h1>
+        <p class="edition">CLOCK ROOM &middot; PETALS &middot; DAYBREAK</p>
+      </div>
+      <div class="chapter" aria-live="polite">
+        <span id="chapter-index">01</span>
+        <div>
+          <strong id="chapter-name">ROOM TONE</strong>
+          <small id="chapter-detail">Before the alarm</small>
+        </div>
+      </div>
+    </header>
+
+    <section class="lyric-stage" aria-live="polite" aria-atomic="true">
+      <p id="lyric-previous" class="lyric-context"></p>
+      <p id="lyric-current" class="lyric-current">The room holds its breath.</p>
+      <p id="lyric-next" class="lyric-context"></p>
+    </section>
+
+    <aside class="clock-readout" aria-hidden="true">
+      <span id="clock-label">TOMORROW / 01</span>
+      <i></i>
+      <span id="beat-value">000</span>
+    </aside>
+
+    <footer class="transport">
+      <button id="play" class="play" type="button" aria-label="Play Waiting for Tomorrow" disabled>
+        <span id="play-icon">&#9654;</span>
+      </button>
+      <span id="current-time" class="time">0:00</span>
+      <input id="seek" type="range" min="0" max="1000" value="0" aria-label="Song progress">
+      <span id="duration" class="time">2:41</span>
+      <button id="mute" class="mute" type="button" aria-label="Mute audio" title="Mute">VOL</button>
+    </footer>
+  </main>
+
+  <audio id="audio" preload="auto" data-src="../../songs/Kasane Teto - Waiting for Tomorrow.m4a"></audio>
+  <script src="./demo.js"></script>
+</body>
+</html>
