@@ -1182,10 +1182,10 @@ function encoreInterludeText(time, data) {
     'A quieter signal crosses the water.',
     'Love loops until the pixels give way.',
     'No lyrics. Just redline motion.',
-    'Run the chorus back brighter.',
-    'Keep the last words clean.',
-    'One final request from the crowd.',
-    'Only the afterimage remains.'
+    'Open the final chorus at full voltage.',
+    'Carry the chorus through every amends.',
+    'Send the final request through the crowd.',
+    'Let the chorus leave a bright afterimage.'
   ];
   return notes[section?.phase ?? 0] || 'Waiting for the next signal.';
 }
@@ -1252,9 +1252,8 @@ function updateEncoreDanceLyrics(audioTime = currentCalibratedTime(), force = fa
     if ($('encore-status')) $('encore-status').textContent = section?.short || 'ENCORE';
     if ($('encore-scene-number')) $('encore-scene-number').textContent = String(Math.max(1, sectionIndex + 1)).padStart(2, '0');
     theater.dataset.phase = String(section?.phase ?? 0);
-    theater.classList.toggle('is-chorus', [2, 5, 7, 9].includes(section?.phase));
+    theater.classList.toggle('is-chorus', !!section?.chorus || [2, 5, 7, 8, 9, 10].includes(section?.phase));
     theater.classList.toggle('is-break', section?.phase === 6);
-    theater.classList.toggle('is-afterimage', section?.phase === 10);
   }
 
   const lines = variantData.lines || [];
@@ -1938,7 +1937,7 @@ function publishDesktopEffectsState(force = false, timeOverride = null) {
     ? (STORY_PEAK_PHASES[config.variant || 'waiting'] || []).includes(phase)
     : false;
   const encorePeak = config?.scene === 'encore-dance'
-    ? [2, 5, 6, 7, 9].includes(phase)
+    ? (!!section?.chorus || [2, 5, 6, 7, 8, 9, 10].includes(phase))
     : false;
   const chorus = !!(
     storyPeak
@@ -6371,8 +6370,8 @@ function drawEncoreDanceFx(levels, audioTime) {
   const recorded = encoreAnalysisAt(audioTime, variant);
   const energy = clamp(0, 1, Math.max(recorded.energy, (levels.glow || 0) * 0.7));
   const onset = clamp(0, 1, Math.max(recorded.onset, (levels.rise || 0) * 0.62));
-  const highEnergy = [2, 5, 6, 7, 9].includes(phase);
-  const intensity = highEnergy ? 1 : phase === 10 ? 0.2 : 0.5;
+  const highEnergy = !!section?.chorus || [2, 5, 6, 7, 8, 9, 10].includes(phase);
+  const intensity = highEnergy ? Number(section?.intensity || 1) : 0.5;
   const beat = encoreBeatState(audioTime, analysis);
   const events = encoreBeatEvents(audioTime, analysis, phase);
   const rgba = (color, alpha) => `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
@@ -6527,14 +6526,14 @@ function drawEncoreDanceFx(levels, audioTime) {
     ctx.stroke();
   }
 
-  const moteCount = phase === 10 ? 10 : highEnergy ? 36 : 20;
+  const moteCount = highEnergy ? 36 : 20;
   for (let index = 0; index < moteCount; index++) {
     const mote = ENCORE_MOTES[index];
     const speedLift = highEnergy ? 1.75 : 0.62;
     const x = ((mote.x + audioTime * mote.speed * 0.009 * speedLift) % 1.08 - 0.04) * width;
     const y = (mote.y + Math.sin(audioTime * (0.22 + mote.speed) + mote.phase) * (highEnergy ? 0.035 : 0.012)) * height;
     const twinkle = 0.5 + Math.sin(audioTime * (0.8 + mote.speed) + mote.phase) * 0.5;
-    const alpha = (0.025 + energy * 0.15 + beat.pulse * intensity * 0.1) * (0.55 + twinkle * 0.45) * (phase === 10 ? 0.4 : 1);
+    const alpha = (0.025 + energy * 0.15 + beat.pulse * intensity * 0.1) * (0.55 + twinkle * 0.45);
     const radius = mote.size * dpr * (0.72 + energy * 0.44 + beat.pulse * 0.18);
     const trailCount = highEnergy ? 3 : 1;
     for (let trail = trailCount - 1; trail >= 0; trail--) {
@@ -6571,7 +6570,7 @@ function drawEncoreDanceFx(levels, audioTime) {
 
   const vignette = ctx.createRadialGradient(width * 0.5, height * 0.48, width * 0.12, width * 0.5, height * 0.48, width * 0.72);
   vignette.addColorStop(0, 'rgba(0,0,0,0)');
-  vignette.addColorStop(1, `rgba(0,0,0,${phase === 10 ? 0.72 : 0.42})`);
+  vignette.addColorStop(1, 'rgba(0,0,0,0.42)');
   ctx.fillStyle = vignette;
   ctx.fillRect(0, 0, width, height);
 }

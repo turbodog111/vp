@@ -2358,9 +2358,6 @@ body.encore-theater-active .now-view.active {
   color: var(--encore-accent);
   text-transform: uppercase;
 }
-.encore-theater.is-afterimage .encore-current,
-.encore-theater.is-afterimage .encore-instrumental { opacity: 0.76; }
-
 .encore-control {
   position: relative;
   display: grid;

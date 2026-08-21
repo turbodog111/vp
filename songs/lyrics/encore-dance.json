@@ -33,7 +33,9 @@
       "end": 47.5,
       "name": "First encore",
       "short": "ENCORE // 01",
-      "phase": 2
+      "phase": 2,
+      "chorus": true,
+      "intensity": 1.0
     },
     {
       "start": 47.5,
@@ -54,7 +56,9 @@
       "end": 87.45,
       "name": "Love loop",
       "short": "LOVE // LOOP",
-      "phase": 5
+      "phase": 5,
+      "chorus": true,
+      "intensity": 1.0
     },
     {
       "start": 87.45,
@@ -66,30 +70,38 @@
     {
       "start": 102.3,
       "end": 116.65,
-      "name": "Second encore",
-      "short": "ENCORE // 02",
-      "phase": 7
+      "name": "Final chorus — opening",
+      "short": "FINAL CHORUS",
+      "phase": 7,
+      "chorus": true,
+      "intensity": 1.0
     },
     {
       "start": 116.65,
       "end": 123.9,
-      "name": "Last words",
-      "short": "LAST WORDS",
-      "phase": 8
+      "name": "Final chorus — amends",
+      "short": "FINAL CHORUS",
+      "phase": 8,
+      "chorus": true,
+      "intensity": 0.96
     },
     {
       "start": 123.9,
       "end": 133.0,
-      "name": "Final encore",
-      "short": "FINAL ENCORE",
-      "phase": 9
+      "name": "Final chorus — encore",
+      "short": "FINAL CHORUS",
+      "phase": 9,
+      "chorus": true,
+      "intensity": 1.0
     },
     {
       "start": 133.0,
       "end": 137.23,
-      "name": "Afterimage",
-      "short": "SIGNAL END",
-      "phase": 10
+      "name": "Final chorus — afterimage",
+      "short": "FINAL CHORUS",
+      "phase": 10,
+      "chorus": true,
+      "intensity": 0.84
     }
   ],
   "variants": {
