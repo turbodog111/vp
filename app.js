@@ -5991,6 +5991,62 @@ function drawOneMoreBiteFx(levels, time) {
     }
   }
 
+  // Keep a recognizable candy-work stage visible between attacks. The bitten
+  // plate, utensils, and circuit-like icing rails give the theater persistent
+  // objects while the light waves remain the main source of motion.
+  const plateX = width * 0.82;
+  const plateY = height * 0.29;
+  const plateRadius = Math.min(width, height) * (0.09 + chorus * 0.012);
+  ctx.save();
+  ctx.globalAlpha = 0.08 + recorded.energy * 0.16 + chorus * 0.12;
+  ctx.strokeStyle = colors[2];
+  ctx.lineWidth = dpr * (1.2 + onset * 1.8);
+  ctx.beginPath();
+  ctx.arc(plateX, plateY, plateRadius, 0.26, Math.PI * 2 - 0.32);
+  ctx.stroke();
+  ctx.strokeStyle = colors[0];
+  for (let bite = 0; bite < 3; bite++) {
+    const angle = -0.34 + bite * 0.19;
+    const bx = plateX + Math.cos(angle) * plateRadius;
+    const by = plateY + Math.sin(angle) * plateRadius;
+    ctx.beginPath();
+    ctx.arc(bx, by, plateRadius * 0.16, angle + Math.PI * 0.58, angle + Math.PI * 1.42);
+    ctx.stroke();
+  }
+  const forkX = width * 0.12;
+  const forkTop = height * 0.17;
+  const forkBottom = height * 0.43;
+  ctx.strokeStyle = colors[1];
+  ctx.beginPath();
+  ctx.moveTo(forkX, forkTop); ctx.lineTo(forkX, forkBottom);
+  for (let tine = -2; tine <= 2; tine++) {
+    ctx.moveTo(forkX + tine * dpr * 5, forkTop);
+    ctx.lineTo(forkX + tine * dpr * 5, forkTop + dpr * 24);
+  }
+  ctx.stroke();
+  ctx.restore();
+
+  const railCount = chorus ? 12 : 7;
+  for (let rail = 0; rail < railCount; rail++) {
+    const direction = rail % 2 ? 1 : -1;
+    const railY = height * (0.1 + rail * 0.068);
+    const offset = ((travel * (10 + rail * 0.7) * direction) % (width * 0.18));
+    ctx.beginPath();
+    ctx.moveTo(-width * 0.05 + offset, railY);
+    for (let node = 1; node <= 8; node++) {
+      const x = width * node / 7.5 + offset;
+      const y = railY + (node % 2 ? -1 : 1) * height * (0.008 + onset * 0.012);
+      ctx.lineTo(x, y);
+      if (node % 2 === rail % 2) {
+        ctx.lineTo(x, y + direction * height * (0.018 + chorus * 0.012));
+      }
+    }
+    ctx.strokeStyle = colors[rail % colors.length];
+    ctx.globalAlpha = 0.025 + recorded.energy * 0.07 + chorus * 0.07 + recorded.onset * 0.035;
+    ctx.lineWidth = dpr * (0.7 + (rail % 4 === 0 ? 1.1 + onset * 1.5 : 0));
+    ctx.stroke();
+  }
+
   // Spectral-flux peaks launch short sprinkle bursts from the bitten plate.
   // Looking backward in the fixed envelope makes each burst persist briefly
   // without maintaining a separate animation clock or drifting while paused.
@@ -6080,6 +6136,7 @@ function drawHeroStoryFx(levels, audioTime) {
   }
   const ctx = canvas.getContext('2d', { alpha: false });
   const variant = heroStoryVariant();
+  const rieFocus = variant === 'rie' ? 1 : 0;
   const storyTime = heroStoryTimelineTime(audioTime, variant);
   const section = supportedLyricsData?.sections?.find(item => storyTime >= item.start && storyTime < item.end);
   const phase = section?.phase ?? 0;
@@ -6115,7 +6172,7 @@ function drawHeroStoryFx(levels, audioTime) {
   ctx.fillRect(0, 0, width, height);
 
   // Contour lines begin as hills and flatten into an unstable horizon.
-  const contourCount = phase <= 2 ? 6 : 4;
+  const contourCount = phase <= 2 ? 6 + rieFocus * 2 : 4 + rieFocus * 3;
   ctx.lineCap = 'round';
   for (let line = 0; line < contourCount; line++) {
     const baseY = height * (0.68 + line * 0.055);
@@ -6131,6 +6188,69 @@ function drawHeroStoryFx(levels, audioTime) {
     ctx.strokeStyle = rgb(line % 2 ? palette.secondary : palette.primary, 0.045 + energy * 0.085);
     ctx.lineWidth = dpr * (0.8 + line * 0.22);
     ctx.stroke();
+  }
+
+  // Rie's recording gets a complete stage identity of its own: contour ribbons
+  // cross the whole field, fractured portrait frames orbit an empty center, and
+  // a small hero crest stays legible through every phase.
+  if (rieFocus) {
+    const frameX = width * 0.78;
+    const frameY = height * 0.28;
+    const frameCount = phase >= 7 && phase <= 8 ? 9 : 6;
+    for (let frame = 0; frame < frameCount; frame++) {
+      const radiusX = width * (0.035 + frame * 0.024);
+      const radiusY = height * (0.028 + frame * 0.018);
+      const rotation = audioTime * (frame % 2 ? -0.018 : 0.014) + frame * 0.37;
+      ctx.save();
+      ctx.translate(frameX, frameY);
+      ctx.rotate(rotation);
+      ctx.strokeStyle = rgb(frame % 3 ? palette.primary : palette.secondary, 0.045 + energy * 0.08 + drama * 0.045 + onset * 0.06);
+      ctx.lineWidth = dpr * (0.7 + (frame % 3 === 0 ? onset * 2.1 : 0));
+      ctx.strokeRect(-radiusX, -radiusY, radiusX * 2, radiusY * 2);
+      ctx.restore();
+    }
+
+    const crestX = width * 0.13;
+    const crestY = height * 0.23;
+    const crestRadius = Math.min(width, height) * (0.052 + energy * 0.008);
+    ctx.save();
+    ctx.translate(crestX, crestY);
+    ctx.rotate(audioTime * 0.025);
+    ctx.beginPath();
+    ctx.moveTo(0, -crestRadius);
+    ctx.lineTo(crestRadius * 0.72, -crestRadius * 0.12);
+    ctx.lineTo(crestRadius * 0.5, crestRadius * 0.72);
+    ctx.lineTo(0, crestRadius);
+    ctx.lineTo(-crestRadius * 0.5, crestRadius * 0.72);
+    ctx.lineTo(-crestRadius * 0.72, -crestRadius * 0.12);
+    ctx.closePath();
+    ctx.strokeStyle = rgb(palette.accent, 0.12 + energy * 0.18 + onset * 0.12);
+    ctx.lineWidth = dpr * (1.1 + onset * 2.2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, -crestRadius * 0.64);
+    ctx.lineTo(0, crestRadius * 0.58);
+    ctx.moveTo(-crestRadius * 0.42, 0);
+    ctx.lineTo(crestRadius * 0.42, 0);
+    ctx.stroke();
+    ctx.restore();
+
+    const ribbonCount = phase >= 7 && phase <= 8 ? 8 : 5;
+    for (let ribbon = 0; ribbon < ribbonCount; ribbon++) {
+      const baseY = height * (0.12 + ribbon * 0.12);
+      ctx.beginPath();
+      for (let point = 0; point <= 36; point++) {
+        const progress = point / 36;
+        const x = progress * width;
+        const y = baseY
+          + Math.sin(progress * Math.PI * (2.4 + ribbon * 0.2) + audioTime * (0.42 + ribbon * 0.025)) * height * (0.012 + energy * 0.022 + drama * 0.01)
+          + Math.sin(progress * Math.PI * 7.2 - audioTime * 0.17) * height * 0.006;
+        point ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.strokeStyle = rgb(ribbon % 2 ? palette.secondary : palette.primary, 0.025 + energy * 0.075 + drama * 0.035 + onset * 0.045);
+      ctx.lineWidth = dpr * (0.75 + (ribbon % 3 === 0 ? onset * 2.3 : 0));
+      ctx.stroke();
+    }
   }
 
   const playRect = $('hero-story-play')?.getBoundingClientRect();
@@ -7095,6 +7215,58 @@ function drawPsalmTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, e
     ctx.stroke();
   }
 
+  // A celestial chart keeps the verses visually alive. These threads behave
+  // like Compass's navigational lines, but remain rooted in creation imagery:
+  // horizon-to-heaven paths, orbital measures, and flowing firmament bands.
+  const firmamentCount = isPeakPhase ? 13 : 8;
+  for (let thread = 0; thread < firmamentCount; thread++) {
+    const startX = width * ((thread + 0.5) / firmamentCount);
+    const destinationX = centerX + (thread - (firmamentCount - 1) / 2) * width * 0.018;
+    const sway = Math.sin(audioTime * (0.16 + thread * 0.007) + thread) * width * (0.012 + praise * 0.014);
+    ctx.beginPath();
+    ctx.moveTo(startX, 0);
+    ctx.bezierCurveTo(
+      startX + sway, height * 0.25,
+      destinationX - sway * 0.45, height * 0.52,
+      destinationX, horizon
+    );
+    ctx.strokeStyle = storyCanvasColor(thread % 4 ? palette.secondary : palette.primary, 0.026 + energy * 0.055 + praise * 0.06 + beat.pulse * praise * 0.045);
+    ctx.lineWidth = dpr * (0.65 + (thread % 4 === 0 ? onset * 2.2 : 0));
+    ctx.stroke();
+  }
+
+  const heavenWaveCount = isPeakPhase ? 9 : 5;
+  for (let wave = 0; wave < heavenWaveCount; wave++) {
+    const baseY = height * (0.12 + wave * 0.075);
+    ctx.beginPath();
+    for (let point = 0; point <= 44; point++) {
+      const progress = point / 44;
+      const x = progress * width;
+      const y = baseY
+        + Math.sin(progress * Math.PI * (2.2 + wave * 0.17) + audioTime * (0.5 + wave * 0.035)) * height * (0.013 + praise * 0.024 + energy * 0.012)
+        + Math.sin(progress * Math.PI * 7 - audioTime * 0.21) * height * 0.004;
+      point ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    }
+    ctx.strokeStyle = storyCanvasColor(wave % 3 ? palette.accent : palette.primary, 0.035 + energy * 0.07 + praise * 0.075 + beat.pulse * praise * 0.06);
+    ctx.lineWidth = dpr * (0.75 + (wave % 3 === 0 ? onset * 2.4 : 0));
+    ctx.stroke();
+  }
+
+  const chartX = width * 0.86;
+  const chartY = height * 0.37;
+  const chartRadius = Math.min(width, height) * (0.075 + praise * 0.012);
+  ctx.save();
+  ctx.translate(chartX, chartY);
+  ctx.rotate(audioTime * 0.018);
+  for (let orbit = 0; orbit < 4; orbit++) {
+    ctx.beginPath();
+    ctx.ellipse(0, 0, chartRadius * (0.55 + orbit * 0.3), chartRadius * (0.28 + orbit * 0.18), orbit * 0.36, 0, Math.PI * 2);
+    ctx.strokeStyle = storyCanvasColor(orbit % 2 ? palette.secondary : palette.primary, 0.055 + energy * 0.065 + praise * 0.065 + beat.pulse * praise * 0.07);
+    ctx.lineWidth = dpr * (0.7 + (orbit === 0 ? onset * 1.7 : 0));
+    ctx.stroke();
+  }
+  ctx.restore();
+
   // Each 120 BPM vault completes its outward journey; several can overlap.
   const period = 60 / (supportedLyricsData?.bpm || 120.045);
   for (let echo = 0; echo < 5; echo++) {
@@ -7432,7 +7604,7 @@ function drawVioletTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, 
     ctx.fillRect(0, 0, width, height);
 
     // Opposing full-screen wave fields make the two timelines visibly diverge.
-    const lineCount = isPeakPhase ? 13 : 8;
+    const lineCount = isPeakPhase ? 17 : 11;
     for (let side = -1; side <= 1; side += 2) {
       ctx.save();
       ctx.beginPath();
@@ -7444,7 +7616,7 @@ function drawVioletTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, 
           const progress = point / 52;
           const x = progress * width;
           const direction = reverse * side;
-          const primary = Math.sin(progress * Math.PI * (2.1 + lane * 0.13) + audioTime * (0.46 + lane * 0.025) * direction + lane * 0.9);
+          const primary = Math.sin(progress * Math.PI * (2.1 + lane * 0.13) + audioTime * (0.58 + lane * 0.03) * direction + lane * 0.9);
           const overtone = Math.sin(progress * Math.PI * 6.4 - audioTime * 0.23 * direction + lane) * 0.26;
           let y = height * (0.15 + lane * 0.066) + (primary + overtone) * height * (0.025 + intensity * 0.034);
           if (side > 0) y = height - y;
@@ -7474,7 +7646,7 @@ function drawVioletTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, 
       ctx.fillStyle = cloud;
       ctx.fillRect(x - bandWidth, y - height * 0.14, bandWidth * 2, height * 0.28);
     }
-    const rainCount = isPeakPhase ? 48 : 27;
+    const rainCount = isPeakPhase ? 58 : 34;
     for (let drop = 0; drop < rainCount; drop++) {
       const speed = 56 + seededUnit(drop * 4.3) * 88;
       const x = ((seededUnit(drop * 11.7) * (width + 200) + audioTime * speed * 0.28) % (width + 200)) - 100;
@@ -7558,6 +7730,62 @@ function drawVioletTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, 
       ctx.strokeStyle = storyCanvasColor(orbit % 2 ? palette.secondary : orbit % 3 ? palette.primary : ice, 0.042 + intensity * 0.045 + energy * 0.065 + onset * 0.075);
       ctx.lineWidth = dpr * (0.75 + (orbit % 4 === 0 ? beat.pulse * 2.4 : 0));
       ctx.stroke();
+    }
+  }
+
+  if (phase !== 5) {
+    // Fate-thread accessories make the world recognizable even outside drops.
+    // They tie mirrored anchors together, then bloom into thorned violet sigils.
+    const anchors = [];
+    const anchorCount = isPeakPhase ? 16 : 10;
+    for (let anchor = 0; anchor < anchorCount; anchor++) {
+      const side = anchor % 2 ? 1 : -1;
+      const x = width * (side < 0 ? 0.08 + seededUnit(anchor * 9.4) * 0.28 : 0.64 + seededUnit(anchor * 9.4) * 0.28);
+      const y = height * (0.1 + seededUnit(anchor * 17.2) * 0.72) + Math.sin(audioTime * 0.2 + anchor) * height * 0.012;
+      anchors.push([x, y]);
+      ctx.beginPath();
+      ctx.arc(x, y, dpr * (1.4 + onset * 2.2 + (anchor % 4 === 0 ? beat.pulse * 2.4 : 0)), 0, Math.PI * 2);
+      ctx.fillStyle = storyCanvasColor(anchor % 3 ? palette.primary : palette.secondary, 0.08 + intensity * 0.06 + onset * 0.08);
+      ctx.fill();
+    }
+    for (let link = 0; link < anchors.length; link++) {
+      const a = anchors[link];
+      const b = anchors[(link * 3 + 5) % anchors.length];
+      ctx.beginPath();
+      ctx.moveTo(a[0], a[1]);
+      ctx.quadraticCurveTo(width * 0.5 + Math.sin(audioTime * 0.15 + link) * width * 0.06, height * (0.35 + (link % 4) * 0.1), b[0], b[1]);
+      ctx.strokeStyle = storyCanvasColor(link % 3 ? ice : palette.secondary, 0.025 + intensity * 0.045 + energy * 0.045 + (isPeakPhase ? beat.pulse * 0.055 : 0));
+      ctx.lineWidth = dpr * (0.65 + (link % 5 === 0 ? onset * 1.9 : 0));
+      ctx.stroke();
+    }
+
+    for (let sigil = 0; sigil < 2; sigil++) {
+      const x = width * (sigil ? 0.9 : 0.1);
+      const y = height * (sigil ? 0.76 : 0.24);
+      const radius = Math.min(width, height) * (0.038 + intensity * 0.007 + beat.pulse * (isPeakPhase ? 0.01 : 0.002));
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate((sigil ? -1 : 1) * audioTime * 0.035);
+      for (let petal = 0; petal < 6; petal++) {
+        ctx.rotate(Math.PI / 3);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.quadraticCurveTo(radius * 0.7, -radius * 0.28, radius, 0);
+        ctx.quadraticCurveTo(radius * 0.7, radius * 0.28, 0, 0);
+        ctx.strokeStyle = storyCanvasColor(petal % 2 ? palette.primary : palette.secondary, 0.055 + intensity * 0.08 + onset * 0.07);
+        ctx.lineWidth = dpr * (0.7 + beat.pulse * (isPeakPhase ? 1.6 : 0.3));
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.moveTo(0, radius * 0.35);
+      ctx.lineTo(0, radius * 1.75);
+      for (let thorn = 0; thorn < 3; thorn++) {
+        const thornY = radius * (0.72 + thorn * 0.32);
+        ctx.moveTo(0, thornY);
+        ctx.lineTo((thorn % 2 ? -1 : 1) * radius * 0.34, thornY - radius * 0.18);
+      }
+      ctx.stroke();
+      ctx.restore();
     }
   }
 
