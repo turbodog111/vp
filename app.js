@@ -191,6 +191,8 @@ let playbackRetryCount = 0;
 let playbackRetryTimer = 0;
 let expectedMediaSongId = null;
 let expectedMediaUrl = '';
+let mediaTransitionPending = false;
+let pendingMediaStartTime = 0;
 let supportedLyricsData = null;
 let supportedLyricsPromise = null;
 let supportedLyricsSongKey = '';
@@ -647,12 +649,45 @@ function audioElementMatchesCurrentSong(el) {
   if (el !== audio || !song) return false;
   const songId = songClockId(song);
   if (expectedMediaSongId !== songId) return false;
-  return sameMediaUrl(expectedMediaUrl, song.url);
+  if (mediaTransitionPending) return false;
+  return mediaElementHasExpectedSource(el) && sameMediaUrl(expectedMediaUrl, song.url);
 }
 
-function expectMediaForSong(song, url = song?.url) {
+function mediaElementHasExpectedSource(el) {
+  if (el !== audio || !expectedMediaUrl) return false;
+  return sameMediaUrl(el.currentSrc, expectedMediaUrl) || sameMediaUrl(el.src, expectedMediaUrl);
+}
+
+function mediaEventMatchesExpectedSong(el) {
+  const song = currentSong();
+  return el === audio
+    && !!song
+    && expectedMediaSongId === songClockId(song)
+    && sameMediaUrl(expectedMediaUrl, song.url)
+    && mediaElementHasExpectedSource(el);
+}
+
+function expectMediaForSong(song, url = song?.url, options = {}) {
   expectedMediaSongId = songClockId(song);
   expectedMediaUrl = url ? new URL(url, window.location.href).href : '';
+  mediaTransitionPending = !!options.pending;
+  pendingMediaStartTime = Math.max(0, Number(options.startTime) || 0);
+}
+
+function commitExpectedMedia(el) {
+  if (!mediaTransitionPending || !mediaEventMatchesExpectedSong(el)) return false;
+  const song = currentSong();
+  const targetTime = pendingMediaStartTime;
+  mediaTransitionPending = false;
+  resetCalibratedClock(targetTime, song);
+  const nativeTarget = nativeFromCalibratedTime(targetTime, song);
+  if (Math.abs(nativePlaybackTime() - nativeTarget) > 0.001) {
+    pendingClockSeekTime = targetTime;
+    try { el.currentTime = nativeTarget; } catch (_) {}
+  } else {
+    pendingClockSeekTime = null;
+  }
+  return true;
 }
 
 function refMatchesSong(ref, song) {
@@ -1487,6 +1522,7 @@ function songClockId(song = currentSong()) {
 }
 
 function nativeAudioDuration() {
+  if (mediaTransitionPending) return 0;
   return Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;
 }
 
@@ -1495,6 +1531,7 @@ function nativePlaybackTime() {
 }
 
 function effectiveDuration(song = currentSong()) {
+  if (!audioElementMatchesCurrentSong(audio)) return 0;
   return Math.max(nativeAudioDuration(), nativePlaybackTime());
 }
 
@@ -1526,7 +1563,7 @@ function currentCalibratedTime(song = currentSong()) {
   let time;
   if (seekTransaction) {
     time = seekTransaction.targetTime;
-  } else if (audio.src) {
+  } else if (audioElementMatchesCurrentSong(audio)) {
     time = nativePlaybackTime();
     calibratedBaseTime = time;
     calibratedBasePerf = performance.now() / 1000;
@@ -1581,6 +1618,8 @@ function startCalibratedClock(song = currentSong()) {
   ensureCalibratedClock(song);
   if (pendingClockSeekTime !== null) {
     calibratedBaseTime = pendingClockSeekTime;
+  } else if (mediaTransitionPending) {
+    calibratedBaseTime = pendingMediaStartTime;
   } else if (!seekTransaction) {
     calibratedBaseTime = nativePlaybackTime();
   }
@@ -1605,7 +1644,7 @@ function primeAudioContextForGesture() {
 
 function resumeAudioFromCalibratedClock(song = currentSong()) {
   ensureCalibratedClock(song);
-  calibratedBaseTime = currentCalibratedTime(song);
+  calibratedBaseTime = mediaTransitionPending ? pendingMediaStartTime : currentCalibratedTime(song);
   calibratedBasePerf = performance.now() / 1000;
   calibratedClockRunning = false;
   audio.muted = false;
@@ -2312,18 +2351,22 @@ function playCurrent() {
   // Spatial HQ: if a prior song attached Web Audio, rebuild <audio> for true native stereo
   const recreatedNative = ensureNativeRoutingForSpatialSong(song);
   const targetSrc = new URL(song.url, window.location.href).href;
-  expectMediaForSong(song, targetSrc);
-  const sameSource = !recreatedNative && sameMediaUrl(audio.currentSrc || audio.src, targetSrc);
+  const sameSource = !recreatedNative
+    && !mediaTransitionPending
+    && (sameMediaUrl(audio.currentSrc, targetSrc) || sameMediaUrl(audio.src, targetSrc));
   audio.playbackRate = 1;
   audio.preservesPitch = true;
   audio.webkitPreservesPitch = true;
   if (!sameSource) {
+    expectMediaForSong(song, targetSrc, { pending: true, startTime: 0 });
     resetWaveEnvelope();
     pendingClockSeekTime = null;
     audio.pause();
     audio.src = song.url;
     audio.load();
     resetCalibratedClock(0, song);
+  } else {
+    expectMediaForSong(song, targetSrc);
   }
   resumeAudioFromCalibratedClock(song).catch(err => console.warn('Play failed:', err));
   $('np-title').textContent = song.title || song.displayName;
@@ -4677,8 +4720,9 @@ function connectAudioGraph() {
  * After createMediaElementSource, the browser never routes that <audio> natively again.
  * Swap in a fresh element so spatial tracks can play pure stereo (no Web Audio graph).
  */
-function recreateAudioElementForNativePath() {
+function recreateAudioElementForNativePath(options = {}) {
   if (!audioSource && !analyser) return false;
+  const preserveSource = options.preserveSource !== false;
   const old = audio;
   const src = old?.currentSrc || old?.src || '';
   const t = Number.isFinite(old?.currentTime) ? old.currentTime : 0;
@@ -4707,7 +4751,7 @@ function recreateAudioElementForNativePath() {
   if (typeof bindAudioElementEvents === 'function') bindAudioElementEvents(audio);
   audio.muted = false;
   audio.volume = playerVolume;
-  if (src) {
+  if (src && preserveSource) {
     audio.src = src;
     const onMeta = () => {
       try { if (t > 0) audio.currentTime = t; } catch (_) {}
@@ -4724,7 +4768,7 @@ function recreateAudioElementForNativePath() {
 function ensureNativeRoutingForSpatialSong(song = currentSong()) {
   if (!usesNativeAudioPath(song)) return false;
   if (!audioSource && !analyser) return false;
-  return recreateAudioElementForNativePath();
+  return recreateAudioElementForNativePath({ preserveSource: false });
 }
 
 async function activateAudioGraphIfPossible() {
@@ -5829,6 +5873,7 @@ function drawOneMoreBiteFx(levels, time) {
   const section = supportedLyricsData?.sections?.find(item => time >= item.start && time < item.end);
   const chorus = section?.short?.includes('CHORUS') ? 1 : 0;
   const recorded = oneMoreBiteAnalysisAt(time);
+  const onset = recorded.onset;
   const glow = clamp(0, 1, Math.max(
     (levels.glow || 0) * 0.72,
     recorded.energy * (0.58 + chorus * 0.28)
@@ -8565,11 +8610,13 @@ function roundedBar(ctx, x, y, w, h, r) {
 }
 
 function retryCurrentSongAfterError(el) {
-  if (!audioElementMatchesCurrentSong(el)) return;
+  if (!mediaEventMatchesExpectedSong(el)) return;
   const song = currentSong();
   const attemptSerial = playbackAttemptSerial;
   const queuedIndex = queueIndex;
-  const resumeAt = Number.isFinite(el.currentTime) ? el.currentTime : 0;
+  const resumeAt = mediaTransitionPending
+    ? pendingMediaStartTime
+    : (Number.isFinite(el.currentTime) ? el.currentTime : 0);
   if (playbackRetryCount >= 2) {
     pauseCalibratedClock(song);
     try {
@@ -8577,6 +8624,9 @@ function retryCurrentSongAfterError(el) {
       el.removeAttribute('src');
       el.load();
     } catch (_) {}
+    mediaTransitionPending = false;
+    pendingMediaStartTime = 0;
+    resetCalibratedClock(0, song);
     stopProgressClock();
     updatePlaybackVisuals();
     updateFxState();
@@ -8591,17 +8641,11 @@ function retryCurrentSongAfterError(el) {
     const retryUrl = new URL(song.url, window.location.href);
     retryUrl.searchParams.set('_vp_retry', `${Date.now()}-${playbackRetryCount}`);
     try {
-      expectMediaForSong(song, song.url);
+      expectMediaForSong(song, retryUrl.href, { pending: true, startTime: resumeAt });
       el.pause();
       el.src = retryUrl.href;
       el.load();
       resetCalibratedClock(resumeAt, song);
-      const restoreTime = () => {
-        if (el !== audio) return;
-        try { if (resumeAt > 0.05) el.currentTime = resumeAt; } catch (_) {}
-        el.removeEventListener('loadedmetadata', restoreTime);
-      };
-      el.addEventListener('loadedmetadata', restoreTime);
       resumeAudioFromCalibratedClock(song).catch(err => console.warn('Audio retry failed:', err));
     } catch (err) {
       console.warn('Audio retry setup failed:', err);
@@ -8622,21 +8666,21 @@ function bindAudioElementEvents(el) {
   // Progress is driven by startProgressClock() while playing — not by visualizer rAF
   // and not only by sparse timeupdate (which feels late under load).
   el.addEventListener('timeupdate', () => {
-    if (el !== audio) return;
+    if (!audioElementMatchesCurrentSong(el)) return;
     if (!progressTimer) updatePlaybackVisuals();
   });
   el.addEventListener('loadedmetadata', () => {
-    if (el !== audio) return;
-    syncCalibratedClockToNative();
+    if (!mediaEventMatchesExpectedSong(el)) return;
+    if (!commitExpectedMedia(el)) syncCalibratedClockToNative();
     updatePlaybackVisuals();
   });
   el.addEventListener('seeking', () => {
-    if (el !== audio) return;
+    if (!mediaEventMatchesExpectedSong(el)) return;
     syncCalibratedClockToNative(currentSong(), { allowBackward: !!seekTransaction, keepRunning: false });
     updatePlaybackVisuals();
   });
   el.addEventListener('seeked', () => {
-    if (el !== audio) return;
+    if (!mediaEventMatchesExpectedSong(el)) return;
     syncCalibratedClockToNative(currentSong(), { allowBackward: !!seekTransaction, consumePending: true, keepRunning: false });
     updatePlaybackVisuals();
     spatialForcePaint = true;
@@ -8644,16 +8688,16 @@ function bindAudioElementEvents(el) {
     if (seekTransaction?.finishOnSeeked) finishSeekTransaction();
   });
   el.addEventListener('ratechange', () => {
-    if (el !== audio) return;
+    if (!mediaEventMatchesExpectedSong(el)) return;
     pauseCalibratedClock();
     if (!el.paused && !el.seeking && el.readyState >= 3) startCalibratedClock();
   });
   el.addEventListener('waiting', () => {
-    if (el !== audio) return;
+    if (!mediaEventMatchesExpectedSong(el)) return;
     pauseCalibratedClock();
   });
   el.addEventListener('playing', () => {
-    if (el !== audio) return;
+    if (!mediaEventMatchesExpectedSong(el)) return;
     startCalibratedClock();
   });
   el.addEventListener('ended', () => {
@@ -8662,7 +8706,7 @@ function bindAudioElementEvents(el) {
     playNext(true);
   });
   el.addEventListener('play', () => {
-    if (el !== audio) return;
+    if (!mediaEventMatchesExpectedSong(el)) return;
     $('play').textContent = '⏸';
     $('hero-play').classList.add('playing');
     $('hero-play').querySelector('.hero-icon').textContent = '⏸';
@@ -8684,7 +8728,7 @@ function bindAudioElementEvents(el) {
     syncSpatialLoop();
   });
   el.addEventListener('pause', () => {
-    if (el !== audio) return;
+    if (!mediaEventMatchesExpectedSong(el)) return;
     pauseCalibratedClock();
     $('play').textContent = '▶';
     $('hero-play').classList.remove('playing');
