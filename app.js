@@ -189,6 +189,8 @@ let audioGraphActivatedAt = 0;
 let playbackAttemptSerial = 0;
 let playbackRetryCount = 0;
 let playbackRetryTimer = 0;
+let expectedMediaSongId = null;
+let expectedMediaUrl = '';
 let supportedLyricsData = null;
 let supportedLyricsPromise = null;
 let supportedLyricsSongKey = '';
@@ -642,7 +644,15 @@ function sameMediaUrl(a, b) {
 
 function audioElementMatchesCurrentSong(el) {
   const song = currentSong();
-  return el === audio && !!song && sameMediaUrl(el.currentSrc || el.src, song.url);
+  if (el !== audio || !song) return false;
+  const songId = songClockId(song);
+  if (expectedMediaSongId !== songId) return false;
+  return sameMediaUrl(expectedMediaUrl, song.url);
+}
+
+function expectMediaForSong(song, url = song?.url) {
+  expectedMediaSongId = songClockId(song);
+  expectedMediaUrl = url ? new URL(url, window.location.href).href : '';
 }
 
 function refMatchesSong(ref, song) {
@@ -2302,6 +2312,7 @@ function playCurrent() {
   // Spatial HQ: if a prior song attached Web Audio, rebuild <audio> for true native stereo
   const recreatedNative = ensureNativeRoutingForSpatialSong(song);
   const targetSrc = new URL(song.url, window.location.href).href;
+  expectMediaForSong(song, targetSrc);
   const sameSource = !recreatedNative && sameMediaUrl(audio.currentSrc || audio.src, targetSrc);
   audio.playbackRate = 1;
   audio.preservesPitch = true;
@@ -8561,6 +8572,14 @@ function retryCurrentSongAfterError(el) {
   const resumeAt = Number.isFinite(el.currentTime) ? el.currentTime : 0;
   if (playbackRetryCount >= 2) {
     pauseCalibratedClock(song);
+    try {
+      el.pause();
+      el.removeAttribute('src');
+      el.load();
+    } catch (_) {}
+    stopProgressClock();
+    updatePlaybackVisuals();
+    updateFxState();
     showToast('!', `Could not play ${song.title || song.displayName}`);
     return;
   }
@@ -8572,6 +8591,7 @@ function retryCurrentSongAfterError(el) {
     const retryUrl = new URL(song.url, window.location.href);
     retryUrl.searchParams.set('_vp_retry', `${Date.now()}-${playbackRetryCount}`);
     try {
+      expectMediaForSong(song, song.url);
       el.pause();
       el.src = retryUrl.href;
       el.load();

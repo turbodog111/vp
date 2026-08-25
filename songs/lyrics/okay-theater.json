@@ -1,0 +1,20 @@
+{
+  "song": "OKAY!",
+  "artist": "Forrest Frank",
+  "duration": 274.739,
+  "theater": "okay",
+  "bpm": 120,
+  "beatOffset": 0,
+  "sections": [
+    { "start": 0, "end": 21, "name": "The signal arrives", "short": "OPEN", "phase": 0 },
+    { "start": 21, "end": 52, "name": "Forward motion", "short": "GROOVE / I", "phase": 1 },
+    { "start": 52, "end": 82, "name": "The room lifts", "short": "LIFT / I", "phase": 2 },
+    { "start": 82, "end": 112, "name": "Everything is okay", "short": "REFRAIN / I", "phase": 3 },
+    { "start": 112, "end": 145, "name": "Take another step", "short": "TURN", "phase": 4 },
+    { "start": 145, "end": 177, "name": "The signal returns", "short": "GROOVE / II", "phase": 5 },
+    { "start": 177, "end": 210, "name": "Lift again", "short": "LIFT / II", "phase": 6 },
+    { "start": 210, "end": 244, "name": "Everything opens", "short": "FINAL REFRAIN", "phase": 7 },
+    { "start": 244, "end": 274.739, "name": "The air settles", "short": "OUTRO", "phase": 8 }
+  ],
+  "lines": []
+}

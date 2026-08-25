@@ -5,6 +5,9 @@ Thumbs.db
 *.log
 node_modules/
 
+# Lyrics fetched by the local intake tool require review before promotion.
+.lyrics-inbox/
+
 # Local source backups are intentionally kept off the published Pages site.
 songs/mp3-backup/
 songs/christian/mp3-backup/

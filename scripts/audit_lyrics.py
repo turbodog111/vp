@@ -22,6 +22,11 @@ TRACKS = (
     ("dusty-bibles.json", "base", "songs/christian/Josiah Queen - Dusty Bibles.m4a"),
 )
 
+# Metadata-only visual theaters can share the lyrics data directory so the
+# native Desktop UI bridge can read their sections and BPM. They intentionally
+# contain no lyric lines and are audited as theater configuration elsewhere.
+NON_LYRIC_THEATER_DATA = {"okay-theater.json"}
+
 
 def normalized(text):
     return "".join(character.casefold() for character in text if character.isalnum())
@@ -128,7 +133,7 @@ def main():
         total_words += word_count
 
     disk_files = {path.name for path in (ROOT / "songs" / "lyrics").glob("*.json")}
-    for unused in sorted(disk_files - lyric_files):
+    for unused in sorted(disk_files - lyric_files - NON_LYRIC_THEATER_DATA):
         errors.append(f"unmapped lyric data: songs/lyrics/{unused}")
 
     if errors:

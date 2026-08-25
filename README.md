@@ -40,3 +40,22 @@ Live at: https://turbodog111.github.io/vp/
 ## Lyric timing checks
 
 Run `python3 scripts/audit_lyrics.py` after changing a supported-song timeline. The audit verifies every mapped recording, media duration, line boundary, word boundary, and displayed lyric against its timed words.
+
+## Lyrics intake
+
+`scripts/lyrics_intake.py` searches LRCLIB and stages a selected synchronized lyric record without touching the checked-in theater data. Search results print metadata only; retrieved `.lrc` files and provenance sidecars go into the git-ignored `.lyrics-inbox/` directory for review.
+
+```sh
+# Find candidates. Duration materially improves match quality.
+python3 scripts/lyrics_intake.py search \
+  --title "Track title" --artist "Artist" --duration 180.2
+
+# Retrieve the candidate you selected from the metadata list.
+python3 scripts/lyrics_intake.py fetch --id 123456
+
+# Or allow staging only when the best synchronized match is unambiguous.
+python3 scripts/lyrics_intake.py auto \
+  --title "Track title" --artist "Artist" --duration 180.2
+```
+
+The source sidecar records the provider ID, source URL, recording metadata, retrieval time, content hash, and review status. Review the title, artist, duration, and recording alignment before promoting any staged text into `songs/lyrics/*.json`; the intake tool never overwrites those files.
