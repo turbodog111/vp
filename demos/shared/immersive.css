@@ -187,7 +187,7 @@ h1 {
   left: clamp(20px, 4vw, 64px);
   height: 66px;
   display: grid;
-  grid-template-columns: 50px 52px minmax(120px, 1fr) 52px 46px;
+  grid-template-columns: 50px 36px 52px minmax(120px, 1fr) 52px 46px;
   align-items: center;
   gap: 13px;
   padding: 8px 15px 8px 9px;
@@ -205,6 +205,7 @@ h1 {
 }
 
 .play { width: 48px; height: 48px; border-radius: 50%; font-size: 18px; }
+.stop { width: 34px; height: 34px; font-size: 13px; }
 .mute { width: 42px; height: 30px; font-size: 10px; font-weight: 800; }
 .icon-button:hover { color: var(--bg); background: var(--primary); }
 .icon-button:disabled { cursor: wait; opacity: 0.48; }

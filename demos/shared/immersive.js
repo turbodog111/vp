@@ -10,6 +10,7 @@
   const audio = document.getElementById('audio');
   const play = document.getElementById('play');
   const playIcon = document.getElementById('play-icon');
+  const stop = document.getElementById('stop');
   const seek = document.getElementById('seek');
   const mute = document.getElementById('mute');
   const currentTimeEl = document.getElementById('current-time');
@@ -580,6 +581,7 @@
     durationEl.textContent = formatTime(data.duration);
     if (previewMode) {
       play.disabled = true;
+      if (stop) stop.disabled = true;
       seek.disabled = true;
       mute.disabled = true;
     } else {
@@ -640,6 +642,7 @@
       play.title = 'Playback failed - click to retry';
     }
   });
+  if (stop) stop.addEventListener('click', stopAudio);
   audio.addEventListener('loadedmetadata', () => {
     play.disabled = false;
     durationEl.textContent = formatTime(audio.duration);
