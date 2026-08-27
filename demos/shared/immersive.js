@@ -22,7 +22,8 @@
   const lyricCurrent = document.getElementById('lyric-current');
   const lyricNext = document.getElementById('lyric-next');
   const query = new URLSearchParams(location.search);
-  const previewTime = Number(query.get('preview'));
+  const previewValue = query.get('preview');
+  const previewTime = previewValue === null ? Number.NaN : Number(previewValue);
   const previewMode = Number.isFinite(previewTime) && previewTime >= 0;
   const TAU = Math.PI * 2;
   const palette = config.palette;
@@ -41,6 +42,7 @@
   let onsetEnvelope = [];
   let smoothed = { energy: 0.08, onset: 0, bass: 0.08, highs: 0.05 };
   let lastFrame = performance.now();
+  let playbackStopped = false;
 
   document.body.dataset.variant = config.variant;
   Object.entries(palette).forEach(([name, value]) => document.documentElement.style.setProperty(`--${name}`, value));
@@ -586,18 +588,62 @@
     }
   }
 
-  play.addEventListener('click', async () => {
-    if (audio.paused) {
+  async function playAudio(options = {}) {
+    playbackStopped = false;
+    stage.classList.remove('is-stopped');
+    if (options.analyze !== false) {
       initAudioGraph();
-      if (audioContext?.state === 'suspended') await audioContext.resume();
-      await audio.play();
-    } else {
-      audio.pause();
+    }
+    if (audioContext?.state === 'suspended') await audioContext.resume();
+    await audio.play();
+    return true;
+  }
+
+  function pauseAudio() {
+    audio.pause();
+    return true;
+  }
+
+  function stopAudio() {
+    playbackStopped = true;
+    audio.pause();
+    try { audio.currentTime = 0; } catch (_) {}
+    seek.value = '0';
+    currentTimeEl.textContent = '0:00';
+    stage.classList.add('is-stopped');
+    return true;
+  }
+
+  async function toggleAudio(options = {}) {
+    if (audio.paused) return playAudio(options);
+    return pauseAudio();
+  }
+
+  // Native Desktop UI controls call this API directly. Programmatic starts
+  // deliberately skip WebAudio initialization: WKWebView may suspend a newly
+  // created AudioContext without a real gesture, which routes otherwise valid
+  // media playback into silence. The page's real button still enables the
+  // analyser because its click is a genuine user gesture.
+  window.vpTheaterPlayback = {
+    play: () => playAudio({ analyze: false }),
+    pause: pauseAudio,
+    toggle: () => toggleAudio({ analyze: false }),
+    stop: stopAudio,
+    state: () => ({ paused: audio.paused, stopped: playbackStopped, time: audio.currentTime })
+  };
+
+  play.addEventListener('click', async () => {
+    try {
+      await toggleAudio({ analyze: true });
+    } catch (error) {
+      console.error('Theater playback failed:', error);
+      play.title = 'Playback failed - click to retry';
     }
   });
   audio.addEventListener('loadedmetadata', () => {
     play.disabled = false;
     durationEl.textContent = formatTime(audio.duration);
+    window.dispatchEvent(new CustomEvent('vpTheaterReady'));
   });
   audio.addEventListener('play', () => { playIcon.textContent = '\u2016'; play.title = 'Pause'; });
   audio.addEventListener('pause', () => { playIcon.textContent = '\u25b6'; play.title = 'Play'; });
