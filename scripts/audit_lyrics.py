@@ -20,6 +20,8 @@ TRACKS = (
     ("celebration.json", "base", "songs/christian/Forrest Frank - CELEBRATION.m4a"),
     ("psalm-8-halle.json", "base", "songs/christian/Phil Wickham - Psalm 8 (Halle).m4a"),
     ("dusty-bibles.json", "base", "songs/christian/Josiah Queen - Dusty Bibles.m4a"),
+    ("window-view-jp.json", "base", "songs/Farewell225 - Window View.m4a"),
+    ("window-view-en.json", "base", "songs/Moonlit Star - Window View (English).m4a"),
 )
 
 # Metadata-only visual theaters can share the lyrics data directory so the

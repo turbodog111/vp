@@ -1,0 +1,966 @@
+{
+  "song": "Window View",
+  "artist": "farewell225 feat. Kasane Teto SV",
+  "language": "ja",
+  "duration": 145.890975,
+  "theater": "window-ja",
+  "bpm": 97,
+  "beatOffset": 0.22,
+  "key": "B-flat major",
+  "footer": "RAIL / GLASS / DISTANCE",
+  "sections": [
+    {
+      "start": 0.0,
+      "end": 20.29,
+      "name": "Leaving the platform",
+      "short": "DEPARTURE",
+      "phase": 0
+    },
+    {
+      "start": 20.29,
+      "end": 40.0,
+      "name": "Voices left behind",
+      "short": "WINDOW / I",
+      "phase": 1
+    },
+    {
+      "start": 40.0,
+      "end": 59.66,
+      "name": "Somewhere ahead",
+      "short": "OPEN TRACK",
+      "phase": 2
+    },
+    {
+      "start": 59.66,
+      "end": 79.89,
+      "name": "Something warm",
+      "short": "DINING CAR",
+      "phase": 3
+    },
+    {
+      "start": 79.89,
+      "end": 99.4,
+      "name": "The location updates",
+      "short": "WINDOW / II",
+      "phase": 4
+    },
+    {
+      "start": 99.4,
+      "end": 118.6,
+      "name": "Face forward",
+      "short": "FINAL PASSAGE",
+      "phase": 5
+    },
+    {
+      "start": 118.6,
+      "end": 137.8,
+      "name": "The city keeps moving",
+      "short": "NIGHT RUN",
+      "phase": 6
+    },
+    {
+      "start": 137.8,
+      "end": 145.890975,
+      "name": "Beyond the last signal",
+      "short": "ARRIVAL",
+      "phase": 7
+    }
+  ],
+  "lines": [
+    {
+      "start": 0.84,
+      "end": 2.02,
+      "text": "ちょっとずつ動き出す風景が",
+      "words": [
+        {
+          "word": "ちょっとずつ",
+          "start": 0.84,
+          "end": 1.335
+        },
+        {
+          "word": "動き出す",
+          "start": 1.335,
+          "end": 1.711
+        },
+        {
+          "word": "風景が",
+          "start": 1.711,
+          "end": 2.02
+        }
+      ]
+    },
+    {
+      "start": 2.1,
+      "end": 5.94,
+      "text": "現在地を教えてくれるの",
+      "words": [
+        {
+          "word": "現在地を",
+          "start": 2.1,
+          "end": 3.461
+        },
+        {
+          "word": "教えて",
+          "start": 3.461,
+          "end": 4.579
+        },
+        {
+          "word": "くれるの",
+          "start": 4.579,
+          "end": 5.94
+        }
+      ]
+    },
+    {
+      "start": 6.04,
+      "end": 7.56,
+      "text": "なら",
+      "words": [
+        {
+          "word": "なら",
+          "start": 6.04,
+          "end": 7.56
+        }
+      ]
+    },
+    {
+      "start": 7.66,
+      "end": 10.27,
+      "text": "今は寄りかかってりゃいいのかも",
+      "words": [
+        {
+          "word": "今は",
+          "start": 7.66,
+          "end": 8.141
+        },
+        {
+          "word": "寄りかかってりゃ",
+          "start": 8.141,
+          "end": 9.374
+        },
+        {
+          "word": "いいのかも",
+          "start": 9.374,
+          "end": 10.27
+        }
+      ]
+    },
+    {
+      "start": 10.37,
+      "end": 12.85,
+      "text": "なんとなく思い出す光景が",
+      "words": [
+        {
+          "word": "なんとなく",
+          "start": 10.37,
+          "end": 11.337
+        },
+        {
+          "word": "思い出す",
+          "start": 11.337,
+          "end": 12.167
+        },
+        {
+          "word": "光景が",
+          "start": 12.167,
+          "end": 12.85
+        }
+      ]
+    },
+    {
+      "start": 12.95,
+      "end": 15.9,
+      "text": "どうしても楽しくないから",
+      "words": [
+        {
+          "word": "どうしても",
+          "start": 12.95,
+          "end": 14.1
+        },
+        {
+          "word": "楽しく",
+          "start": 14.1,
+          "end": 14.912
+        },
+        {
+          "word": "ないから",
+          "start": 14.912,
+          "end": 15.9
+        }
+      ]
+    },
+    {
+      "start": 16.0,
+      "end": 18.15,
+      "text": "まだ",
+      "words": [
+        {
+          "word": "まだ",
+          "start": 16.0,
+          "end": 18.15
+        }
+      ]
+    },
+    {
+      "start": 18.25,
+      "end": 20.19,
+      "text": "忘れきったフリをするよ",
+      "words": [
+        {
+          "word": "忘れきった",
+          "start": 18.25,
+          "end": 19.054
+        },
+        {
+          "word": "フリを",
+          "start": 19.054,
+          "end": 19.622
+        },
+        {
+          "word": "するよ",
+          "start": 19.622,
+          "end": 20.19
+        }
+      ]
+    },
+    {
+      "start": 20.29,
+      "end": 20.84,
+      "text": "ねぇ",
+      "words": [
+        {
+          "word": "ねぇ",
+          "start": 20.29,
+          "end": 20.84
+        }
+      ]
+    },
+    {
+      "start": 20.94,
+      "end": 22.35,
+      "text": "頭の中で聞こえる",
+      "words": [
+        {
+          "word": "頭の中で",
+          "start": 20.94,
+          "end": 21.645
+        },
+        {
+          "word": "聞こえる",
+          "start": 21.645,
+          "end": 22.35
+        }
+      ]
+    },
+    {
+      "start": 22.45,
+      "end": 25.81,
+      "text": "いつかの罵声は置いてこうよ",
+      "words": [
+        {
+          "word": "いつかの",
+          "start": 22.45,
+          "end": 23.52
+        },
+        {
+          "word": "罵声は",
+          "start": 23.52,
+          "end": 24.4
+        },
+        {
+          "word": "置いてこうよ",
+          "start": 24.4,
+          "end": 25.81
+        }
+      ]
+    },
+    {
+      "start": 25.91,
+      "end": 27.26,
+      "text": "めちゃくちゃになった後は",
+      "words": [
+        {
+          "word": "めちゃくちゃに",
+          "start": 25.91,
+          "end": 26.589
+        },
+        {
+          "word": "なった",
+          "start": 26.589,
+          "end": 26.97
+        },
+        {
+          "word": "後は",
+          "start": 26.97,
+          "end": 27.26
+        }
+      ]
+    },
+    {
+      "start": 27.36,
+      "end": 31.26,
+      "text": "寂しくなって突っ立ってるんだから",
+      "words": [
+        {
+          "word": "寂しくなって",
+          "start": 27.36,
+          "end": 28.975
+        },
+        {
+          "word": "突っ立ってるんだから",
+          "start": 28.975,
+          "end": 31.26
+        }
+      ]
+    },
+    {
+      "start": 31.36,
+      "end": 32.23,
+      "text": "せめて今は",
+      "words": [
+        {
+          "word": "せめて",
+          "start": 31.36,
+          "end": 31.855
+        },
+        {
+          "word": "今は",
+          "start": 31.855,
+          "end": 32.23
+        }
+      ]
+    },
+    {
+      "start": 32.33,
+      "end": 39.9,
+      "text": "下手くそなりのステップを踏まなきゃ",
+      "words": [
+        {
+          "word": "下手くそなりの",
+          "start": 32.33,
+          "end": 35.252
+        },
+        {
+          "word": "ステップを",
+          "start": 35.252,
+          "end": 37.576
+        },
+        {
+          "word": "踏まなきゃ",
+          "start": 37.576,
+          "end": 39.9
+        }
+      ]
+    },
+    {
+      "start": 40.0,
+      "end": 41.73,
+      "text": "とにかく歩き続ければ",
+      "words": [
+        {
+          "word": "とにかく",
+          "start": 40.0,
+          "end": 40.747
+        },
+        {
+          "word": "歩き続ければ",
+          "start": 40.747,
+          "end": 41.73
+        }
+      ]
+    },
+    {
+      "start": 41.83,
+      "end": 44.38,
+      "text": "どこかにたどり着ける気がしてる",
+      "words": [
+        {
+          "word": "どこかに",
+          "start": 41.83,
+          "end": 42.562
+        },
+        {
+          "word": "たどり着ける",
+          "start": 42.562,
+          "end": 43.528
+        },
+        {
+          "word": "気がしてる",
+          "start": 43.528,
+          "end": 44.38
+        }
+      ]
+    },
+    {
+      "start": 44.48,
+      "end": 45.1,
+      "text": "いつか",
+      "words": [
+        {
+          "word": "いつか",
+          "start": 44.48,
+          "end": 45.1
+        }
+      ]
+    },
+    {
+      "start": 45.1,
+      "end": 45.84,
+      "text": "道間違って",
+      "words": [
+        {
+          "word": "道",
+          "start": 45.1,
+          "end": 45.307
+        },
+        {
+          "word": "間違って",
+          "start": 45.307,
+          "end": 45.84
+        }
+      ]
+    },
+    {
+      "start": 45.94,
+      "end": 47.35,
+      "text": "足が止まって",
+      "words": [
+        {
+          "word": "足が",
+          "start": 45.94,
+          "end": 46.482
+        },
+        {
+          "word": "止まって",
+          "start": 46.482,
+          "end": 47.35
+        }
+      ]
+    },
+    {
+      "start": 47.45,
+      "end": 51.34,
+      "text": "周りから人はいなくなってるかも",
+      "words": [
+        {
+          "word": "周りから",
+          "start": 47.45,
+          "end": 48.608
+        },
+        {
+          "word": "人は",
+          "start": 48.608,
+          "end": 49.33
+        },
+        {
+          "word": "いなくなってるかも",
+          "start": 49.33,
+          "end": 51.34
+        }
+      ]
+    },
+    {
+      "start": 51.44,
+      "end": 52.17,
+      "text": "なんてね",
+      "words": [
+        {
+          "word": "なんてね",
+          "start": 51.44,
+          "end": 52.17
+        }
+      ]
+    },
+    {
+      "start": 52.27,
+      "end": 54.56,
+      "text": "また暗い事言ってる",
+      "words": [
+        {
+          "word": "また",
+          "start": 52.27,
+          "end": 52.854
+        },
+        {
+          "word": "暗い事",
+          "start": 52.854,
+          "end": 53.624
+        },
+        {
+          "word": "言ってる",
+          "start": 53.624,
+          "end": 54.56
+        }
+      ]
+    },
+    {
+      "start": 54.66,
+      "end": 56.93,
+      "text": "お財布に痛くならない程度に",
+      "words": [
+        {
+          "word": "お財布に",
+          "start": 54.66,
+          "end": 55.383
+        },
+        {
+          "word": "痛くならない",
+          "start": 55.383,
+          "end": 56.335
+        },
+        {
+          "word": "程度に",
+          "start": 56.335,
+          "end": 56.93
+        }
+      ]
+    },
+    {
+      "start": 57.03,
+      "end": 59.56,
+      "text": "あったかいものを食べに行こうよ",
+      "words": [
+        {
+          "word": "あったかいものを",
+          "start": 57.03,
+          "end": 58.214
+        },
+        {
+          "word": "食べに",
+          "start": 58.214,
+          "end": 58.821
+        },
+        {
+          "word": "行こうよ",
+          "start": 58.821,
+          "end": 59.56
+        }
+      ]
+    },
+    {
+      "start": 59.66,
+      "end": 61.02,
+      "text": "まぁ",
+      "words": [
+        {
+          "word": "まぁ",
+          "start": 59.66,
+          "end": 61.02
+        }
+      ]
+    },
+    {
+      "start": 61.12,
+      "end": 63.46,
+      "text": "別に良いけどさ",
+      "words": [
+        {
+          "word": "別に",
+          "start": 61.12,
+          "end": 61.937
+        },
+        {
+          "word": "良いけどさ",
+          "start": 61.937,
+          "end": 63.46
+        }
+      ]
+    },
+    {
+      "start": 63.56,
+      "end": 65.75,
+      "text": "気にしないように",
+      "words": [
+        {
+          "word": "気にしない",
+          "start": 63.56,
+          "end": 64.843
+        },
+        {
+          "word": "ように",
+          "start": 64.843,
+          "end": 65.75
+        }
+      ]
+    },
+    {
+      "start": 65.75,
+      "end": 68.22,
+      "text": "してるだけだから",
+      "words": [
+        {
+          "word": "してる",
+          "start": 65.75,
+          "end": 66.773
+        },
+        {
+          "word": "だけだから",
+          "start": 66.773,
+          "end": 68.22
+        }
+      ]
+    },
+    {
+      "start": 68.32,
+      "end": 70.84,
+      "text": "きっと良くないの",
+      "words": [
+        {
+          "word": "きっと",
+          "start": 68.32,
+          "end": 69.363
+        },
+        {
+          "word": "良くないの",
+          "start": 69.363,
+          "end": 70.84
+        }
+      ]
+    },
+    {
+      "start": 70.94,
+      "end": 71.9,
+      "text": "いつのまにか",
+      "words": [
+        {
+          "word": "いつのまにか",
+          "start": 70.94,
+          "end": 71.9
+        }
+      ]
+    },
+    {
+      "start": 72.0,
+      "end": 74.35,
+      "text": "どっか飛んでった終末論や",
+      "words": [
+        {
+          "word": "どっか",
+          "start": 72.0,
+          "end": 72.647
+        },
+        {
+          "word": "飛んでった",
+          "start": 72.647,
+          "end": 73.563
+        },
+        {
+          "word": "終末論や",
+          "start": 73.563,
+          "end": 74.35
+        }
+      ]
+    },
+    {
+      "start": 74.45,
+      "end": 76.81,
+      "text": "書いて消すを繰り返した日々が",
+      "words": [
+        {
+          "word": "書いて",
+          "start": 74.45,
+          "end": 74.985
+        },
+        {
+          "word": "消すを",
+          "start": 74.985,
+          "end": 75.519
+        },
+        {
+          "word": "繰り返した",
+          "start": 75.519,
+          "end": 76.275
+        },
+        {
+          "word": "日々が",
+          "start": 76.275,
+          "end": 76.81
+        }
+      ]
+    },
+    {
+      "start": 76.91,
+      "end": 77.93,
+      "text": "なんか全部",
+      "words": [
+        {
+          "word": "なんか",
+          "start": 76.91,
+          "end": 77.49
+        },
+        {
+          "word": "全部",
+          "start": 77.49,
+          "end": 77.93
+        }
+      ]
+    },
+    {
+      "start": 78.03,
+      "end": 79.79,
+      "text": "意味ないように見えてさ",
+      "words": [
+        {
+          "word": "意味ないように",
+          "start": 78.03,
+          "end": 79.075
+        },
+        {
+          "word": "見えてさ",
+          "start": 79.075,
+          "end": 79.79
+        }
+      ]
+    },
+    {
+      "start": 79.89,
+      "end": 82.1,
+      "text": "どんどんと遠くなる風景が",
+      "words": [
+        {
+          "word": "どんどんと",
+          "start": 79.89,
+          "end": 80.751
+        },
+        {
+          "word": "遠くなる",
+          "start": 80.751,
+          "end": 81.491
+        },
+        {
+          "word": "風景が",
+          "start": 81.491,
+          "end": 82.1
+        }
+      ]
+    },
+    {
+      "start": 82.2,
+      "end": 85.23,
+      "text": "現在地を更新するたびに",
+      "words": [
+        {
+          "word": "現在地を",
+          "start": 82.2,
+          "end": 83.274
+        },
+        {
+          "word": "更新する",
+          "start": 83.274,
+          "end": 84.347
+        },
+        {
+          "word": "たびに",
+          "start": 84.347,
+          "end": 85.23
+        }
+      ]
+    },
+    {
+      "start": 85.33,
+      "end": 86.05,
+      "text": "また",
+      "words": [
+        {
+          "word": "また",
+          "start": 85.33,
+          "end": 86.05
+        }
+      ]
+    },
+    {
+      "start": 86.05,
+      "end": 89.45,
+      "text": "何かを忘れちゃっていくのなら",
+      "words": [
+        {
+          "word": "何かを",
+          "start": 86.05,
+          "end": 86.896
+        },
+        {
+          "word": "忘れちゃって",
+          "start": 86.896,
+          "end": 88.252
+        },
+        {
+          "word": "いくのなら",
+          "start": 88.252,
+          "end": 89.45
+        }
+      ]
+    },
+    {
+      "start": 89.55,
+      "end": 92.02,
+      "text": "なんとなく思い出す光景が",
+      "words": [
+        {
+          "word": "なんとなく",
+          "start": 89.55,
+          "end": 90.513
+        },
+        {
+          "word": "思い出す",
+          "start": 90.513,
+          "end": 91.34
+        },
+        {
+          "word": "光景が",
+          "start": 91.34,
+          "end": 92.02
+        }
+      ]
+    },
+    {
+      "start": 92.12,
+      "end": 95.13,
+      "text": "ちょっとでも苦しくないように",
+      "words": [
+        {
+          "word": "ちょっとでも",
+          "start": 92.12,
+          "end": 93.32
+        },
+        {
+          "word": "苦しく",
+          "start": 93.32,
+          "end": 94.07
+        },
+        {
+          "word": "ないように",
+          "start": 94.07,
+          "end": 95.13
+        }
+      ]
+    },
+    {
+      "start": 95.23,
+      "end": 97.22,
+      "text": "ただ",
+      "words": [
+        {
+          "word": "ただ",
+          "start": 95.23,
+          "end": 97.22
+        }
+      ]
+    },
+    {
+      "start": 97.32,
+      "end": 101.4,
+      "text": "髪を切って前を向くの",
+      "words": [
+        {
+          "word": "髪を切って",
+          "start": 97.32,
+          "end": 99.139
+        },
+        {
+          "word": "前を",
+          "start": 99.139,
+          "end": 100.115
+        },
+        {
+          "word": "向くの",
+          "start": 100.115,
+          "end": 101.4
+        }
+      ]
+    },
+    {
+      "start": 101.72,
+      "end": 105.18,
+      "text": "髪を切って前を向くの",
+      "words": [
+        {
+          "word": "髪を切って",
+          "start": 101.72,
+          "end": 103.263
+        },
+        {
+          "word": "前を",
+          "start": 103.263,
+          "end": 104.09
+        },
+        {
+          "word": "向くの",
+          "start": 104.09,
+          "end": 105.18
+        }
+      ]
+    },
+    {
+      "start": 105.78,
+      "end": 109.24,
+      "text": "髪を切って前を向くの",
+      "words": [
+        {
+          "word": "髪を切って",
+          "start": 105.78,
+          "end": 107.323
+        },
+        {
+          "word": "前を",
+          "start": 107.323,
+          "end": 108.15
+        },
+        {
+          "word": "向くの",
+          "start": 108.15,
+          "end": 109.24
+        }
+      ]
+    },
+    {
+      "start": 109.84,
+      "end": 113.3,
+      "text": "髪を切って前を向くの",
+      "words": [
+        {
+          "word": "髪を切って",
+          "start": 109.84,
+          "end": 111.383
+        },
+        {
+          "word": "前を",
+          "start": 111.383,
+          "end": 112.21
+        },
+        {
+          "word": "向くの",
+          "start": 112.21,
+          "end": 113.3
+        }
+      ]
+    },
+    {
+      "start": 113.9,
+      "end": 117.72,
+      "text": "髪を切って前を向くの",
+      "words": [
+        {
+          "word": "髪を切って",
+          "start": 113.9,
+          "end": 115.603
+        },
+        {
+          "word": "前を",
+          "start": 115.603,
+          "end": 116.517
+        },
+        {
+          "word": "向くの",
+          "start": 116.517,
+          "end": 117.72
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "step": 0.1,
+    "energyBase64": "AAAAAAAPFxcuODc/PDk3Nz5BPj0+OTk4OTg2PDw5Pj06R0VCSUhEQEFJS0VDQUBRVE1PTkdEQ0E/P0FGQz46OD9CQ0I/Ojo4ODY1NTQyMDY9P0JEREREQ0I/RENAQUBERUlJSEdMSkdCPThDQ0FFRUM/PklPVFFPSEVCRUNAQUA9QUA8RkpGQ0FEREFIREFKSEVERD9GSUVKTEpOUFNbWFFLSE9OU1ZTTEpJSEREQUA9Ojo3NDc3PkJAREhIS0pHSktKSkhHSUVHRkRTU1BQT01KR1BPTVFWVVRRUFBPS1dcXFlYXFhUU1FQTk1VU1JVXFtXVVFaWlZdWlZSUVVRTkpJSEJST01LRlRTU1NRUlJXWlhWUllWUlBNTU1NWFVQTk5XVlZSUVFQWFdVUVBaVVBNSkhFQ1NPSkdSUE5OSUtLSVZVVFNQWVZST0xMTVFXVE9LV1ZRT09TUU1YVlRSUldXVVFPTUdVUk9LRVRQTUtJTUxMVlVSTlhWUU9LSkhFVFFMSUhVUk5MS1BOU1NRTEdVUk5OSkxQUVpVT01SUFRSUFVUT1lWVFNSW1lXV1RQTUxWU05LV1JOTUxOTUpWVE9PU1ZTUU5NTE5ZVlRUUltWU1JOUlFTW1lXVl1bWVdTUlJPWVVTU1RcWlVUVlhVVVVTT01YVE5MSEZEQVJOSEZNTUdEQEhKR0ZHS0dDU1FRTUpIR01WVE5JVlJRUExPTkpXVVJOTVNSUk9OT05ZVlNOTFdVU1NTUlFRWllWVVtaVVJPU1NRWlhXVVNaWFVUVFNTW1pZVlNRTktGPzYvKSQfGxgVEhkZLDc6OTgyMS8pODs5ODY0MS8uKSclJCM1Ozk5REpLSkhHREJAPz5BPzw4NS8uLS4uLjc5Q0RFRUdERENCQD8+PTs3NzYzMjE2NTM+Rk9NS05RUE5NSkdGRUJCPjk0MTY3Nzo8PkZISEZCRkRCQ0A8PTxDSEdGQD47Ojs6RUJBR0VEREZFRUdGRkRGRkRDPj1BPUVNSVFPT1FPTU1PTlNRTk5MTFNSUU9OVFNWVlZVVFNTUlFPTUlST0tLS0pOT1lWUFFaWFVTUlJRUFlXVlVSW1lTVFJQVVhZVlRSWl9hX1lYVlFaWFRUV1pYVlRSUUtUU1JQUltXUlBMUE5NWFZTT1lYVVNTUlJOWFZSUVBaWFVTUlNSVldWU1FaVVBPTkxMTFZSUFpZXlpXUVBPUVpXVlVSW1hTVlNQVlVbWlRRWldWVVBUU09ZWFVWW15dWlZTUkxUU1ZVWF5cWFRQUlBPWVdTUFdVUU5MSklNWFZUVFRcWlhVVFdVWVhWU1JaWlxZVVNQTVhUUE5PUU1KRklLSVZVU1FRWldUUU5MSkpWVFBNWFZSUE1QUE9ZVlNRUFlWU1BOTkpTUlBNSVZTT01LUE9OWVdVUlpaVlRRUE5LV1NQTUtXVFFPT1NSU1dVUExXVFBOSklHRFNQTUtPVlBNSktMS1dWVFNQWlZTUExLSEhTUU5LV1RRT0xPT01YVlNQUVlXVFFQT0tTUlBNSVZSTkxKTk5NWFZUUVhXU1BNTUxJVlNRTk1YVVFPT1NRUVZUUExJRUE/PTw7Ojg2NDQ0MzIyLy8vLi0sMjEvLy0sMTMzMjE1NDMyMTEvMDU1NTU3OTc3NjQzMjU2OTY0MjAvLi0rKS8wNTQ0NDo5NzUzMjI1Nzg3ODY0MzQzMjE3OTk5Nzc2NDIxMC8vLy0tKysrKi0vLjAwLi4uLSwrMTAuLS0rLS4vMDAyMTAvLy4tLzMzMzM3ODY1NDIxMTM2ODY0MjAuLSwrKCwwNTU0Nzw7ODUzMjM3Ojo5OTg6OTo5ODY9Pz8+PDs6ODYyLy0qJiIeGxcUEg8NDAoJCAcGBQQEAwMDAgICAQEBAQEBAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "onsetsBase64": "AAAAAABkOABkRwA7AAAAADYXAAADAAAADQAALgAAKwAAZAAAMwAAAAQ9CwAAAABkFgARAAAAAAAAAA8kAAAAADAXDAAAAAAABgAAAAAAADE1CRcSAQAAAAAAIgAABQAgBxkAAAAoAAAAAABPBAAcAAAAAFcnKwAAAAAAFQAADQAAHwAATh0AAAARBQAxAABCAAAAAAAyFQAlDwAfDhw2AAAAADUAIRgAAAAAAAAAAAAAAAAAABUANSAAHx0AFgAAFgYAAAAADAAQAABkAAAAAAAAAEYAAB8eAAAAAAAAAFoqAAAAIQAAAAAAAAA3AAAZNgAAAABFAQAzAAAAAB0AAAAAAABkAAAAAGQAAgAAAgMjFQAAADEAAAAAAwEAUgAAAAJEAAAAAAQAOwAAAABIAAAAAAAAAGQAAABMAAABAA0AAGEAAAAAQAAAAAACBRwsAAAAWwAAAAAhAABSAAAAACsAAAAAAABkAAAAAGQAAAAAJAAAUAAAAFAAAAAAAAAAZAAAAABgAAAAACEAJAAAAABkAAAAAAkjCT0AAAApABoAACQAAEoAAAAAQAAAAAAAAABIAAAAWwAAAAAWAABfAAAAHRoAAAAAABNOAAAAAEAAAAAAGwAKPgAAADEAAAAAAAAATAAAAAQ6AAAAEgwAAQAAAABSAAAAAAAAAGQAAAA2AAAAADoTAAAGIQAAZAAAAAAAADBCAAAAYAAAAAAbAABcAAAAACsAAAAACgBPAAAAAFgAAAAAAAAARAAAADEAAAAAGgAARAAAAAA5AAAAAAAAPgAAAAAAAAAAAAAAAAAAAAAAADgAZFEXAAAAAAAAZBEAAAAAAAAAAAAAAABkKgAATTEJAAAAAAAAAAAcAAAAAAAAAAkAAkMPSgsIABEAAAAAAAAAAAAAAAAAAAAmAABSO0IAABAYAAAAAAAAAAAAAAAAACgGBBcKEj8LAAAAHwAACgAACQAzKAAAAAAAAAoATQAAKgAAAQ4ABg4AAAAOAAAAAAAYADs8ADsAABMAAAAOACcAAAAABDIAAAAALgAUBAAAAAAAAAAAAABCAAAAAAAgB0oAAAlFAAAAAAQAAEkAAAAAQgAACAAAJBoJAAAAQCESAAAAAABEAAABGBgAAAAAAABHAAAAEj8AAAAAGgAAUwAAAEoAAAAAAAAAUAAAAABHAAAAAAUAIwQAAABGAAAAAAABAkoAAEcAJwAAAAAAD0YAAAAAQQAAFQAALQAvAAAARAAAAAAkAABMAAALIBgAAAAAAAA+ABwAFCwAAAAADQAATAAAADgAAAAAAAAgUgAAAwA6AAAAABUAGAAAAABAAA0AAAAAAFQAAAAKCwAAABgJAGAAAAAARgAAAAAAAARbAAAAUAAAAAAUAABNAAAAAEAAAAAAAABJAAAAAGAAAAAAKAAATwAAAD4AAAAAAAAAXAAAAABaAAAAACQABB8AAABYAAAAAAAAAGQAAAAfMAAAAAMMAFoAAAAARwAAAAAAAAFQAAAAWAAAAAARAABUAAAACjsAAAAAAAA7AAAAAGMAAAAAIAAAUgAAADMAAAAAAAAAYQAAAABPAAAAAB8AACoAAAAAAAAAAAAAAAAAAAAGAAAAAAAEAAAALAAAAAAAKBAAAAAcAAAAAAAACyYAAAATCwAAAAAAABULDwAAAAAAAAAAACwKJQAABSkAAAAAAAAXFgMABAAAAAYAAAAqEQAAAAAAAAAAAAAEAAAAAAAAABkNAA8AAAAAAAAALQAAAAAACwoHBgAQAAAAAAAADSEAAAAfBQAAAAAAABMVEAAAAAAAAAAAAB8ZKAAAEycAAAAAAAwfEgIAAAAJAAYAAAA0FAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  },
+  "timingMethod": "Recording-specific synced LRC anchors, phrase mapping, and measured audio envelope."
+}

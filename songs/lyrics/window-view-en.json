@@ -1,0 +1,1697 @@
+{
+  "song": "Window View",
+  "artist": "Moonlit Star",
+  "language": "en",
+  "duration": 145.890975,
+  "theater": "window-en",
+  "bpm": 97,
+  "beatOffset": 0.22,
+  "key": "B-flat major",
+  "footer": "RAIL / GLASS / DISTANCE",
+  "sections": [
+    {
+      "start": 0.0,
+      "end": 20.29,
+      "name": "Leaving the platform",
+      "short": "DEPARTURE",
+      "phase": 0
+    },
+    {
+      "start": 20.29,
+      "end": 40.0,
+      "name": "Voices left behind",
+      "short": "WINDOW / I",
+      "phase": 1
+    },
+    {
+      "start": 40.0,
+      "end": 59.66,
+      "name": "Somewhere ahead",
+      "short": "OPEN TRACK",
+      "phase": 2
+    },
+    {
+      "start": 59.66,
+      "end": 79.89,
+      "name": "Something warm",
+      "short": "DINING CAR",
+      "phase": 3
+    },
+    {
+      "start": 79.89,
+      "end": 99.4,
+      "name": "The location updates",
+      "short": "WINDOW / II",
+      "phase": 4
+    },
+    {
+      "start": 99.4,
+      "end": 118.6,
+      "name": "Face forward",
+      "short": "FINAL PASSAGE",
+      "phase": 5
+    },
+    {
+      "start": 118.6,
+      "end": 137.8,
+      "name": "The city keeps moving",
+      "short": "NIGHT RUN",
+      "phase": 6
+    },
+    {
+      "start": 137.8,
+      "end": 145.890975,
+      "name": "Beyond the last signal",
+      "short": "ARRIVAL",
+      "phase": 7
+    }
+  ],
+  "lines": [
+    {
+      "start": 0.84,
+      "end": 2.0,
+      "text": "The scenery, slowly starting to move,",
+      "words": [
+        {
+          "word": "The",
+          "start": 0.84,
+          "end": 0.98
+        },
+        {
+          "word": "scenery,",
+          "start": 0.98,
+          "end": 1.228
+        },
+        {
+          "word": "slowly",
+          "start": 1.228,
+          "end": 1.452
+        },
+        {
+          "word": "starting",
+          "start": 1.452,
+          "end": 1.724
+        },
+        {
+          "word": "to",
+          "start": 1.724,
+          "end": 1.83
+        },
+        {
+          "word": "move,",
+          "start": 1.83,
+          "end": 2.0
+        }
+      ]
+    },
+    {
+      "start": 2.1,
+      "end": 5.94,
+      "text": "tells me where I am right now",
+      "words": [
+        {
+          "word": "tells",
+          "start": 2.1,
+          "end": 2.851
+        },
+        {
+          "word": "me",
+          "start": 2.851,
+          "end": 3.254
+        },
+        {
+          "word": "where",
+          "start": 3.254,
+          "end": 4.004
+        },
+        {
+          "word": "I",
+          "start": 4.004,
+          "end": 4.256
+        },
+        {
+          "word": "am",
+          "start": 4.256,
+          "end": 4.659
+        },
+        {
+          "word": "right",
+          "start": 4.659,
+          "end": 5.409
+        },
+        {
+          "word": "now",
+          "start": 5.409,
+          "end": 5.94
+        }
+      ]
+    },
+    {
+      "start": 6.04,
+      "end": 7.56,
+      "text": "So maybe",
+      "words": [
+        {
+          "word": "So",
+          "start": 6.04,
+          "end": 6.571
+        },
+        {
+          "word": "maybe",
+          "start": 6.571,
+          "end": 7.56
+        }
+      ]
+    },
+    {
+      "start": 7.66,
+      "end": 10.27,
+      "text": "It's okay to just lean on it for a while",
+      "words": [
+        {
+          "word": "It's",
+          "start": 7.66,
+          "end": 7.926
+        },
+        {
+          "word": "okay",
+          "start": 7.926,
+          "end": 8.249
+        },
+        {
+          "word": "to",
+          "start": 8.249,
+          "end": 8.451
+        },
+        {
+          "word": "just",
+          "start": 8.451,
+          "end": 8.775
+        },
+        {
+          "word": "lean",
+          "start": 8.775,
+          "end": 9.098
+        },
+        {
+          "word": "on",
+          "start": 9.098,
+          "end": 9.3
+        },
+        {
+          "word": "it",
+          "start": 9.3,
+          "end": 9.502
+        },
+        {
+          "word": "for",
+          "start": 9.502,
+          "end": 9.768
+        },
+        {
+          "word": "a",
+          "start": 9.768,
+          "end": 9.894
+        },
+        {
+          "word": "while",
+          "start": 9.894,
+          "end": 10.27
+        }
+      ]
+    },
+    {
+      "start": 10.37,
+      "end": 12.85,
+      "text": "These scenes that surface in my mind",
+      "words": [
+        {
+          "word": "These",
+          "start": 10.37,
+          "end": 10.771
+        },
+        {
+          "word": "scenes",
+          "start": 10.771,
+          "end": 11.226
+        },
+        {
+          "word": "that",
+          "start": 11.226,
+          "end": 11.57
+        },
+        {
+          "word": "surface",
+          "start": 11.57,
+          "end": 12.075
+        },
+        {
+          "word": "in",
+          "start": 12.075,
+          "end": 12.29
+        },
+        {
+          "word": "my",
+          "start": 12.29,
+          "end": 12.505
+        },
+        {
+          "word": "mind",
+          "start": 12.505,
+          "end": 12.85
+        }
+      ]
+    },
+    {
+      "start": 12.95,
+      "end": 15.9,
+      "text": "just aren't fun, no matter what",
+      "words": [
+        {
+          "word": "just",
+          "start": 12.95,
+          "end": 13.448
+        },
+        {
+          "word": "aren't",
+          "start": 13.448,
+          "end": 14.027
+        },
+        {
+          "word": "fun,",
+          "start": 14.027,
+          "end": 14.436
+        },
+        {
+          "word": "no",
+          "start": 14.436,
+          "end": 14.747
+        },
+        {
+          "word": "matter",
+          "start": 14.747,
+          "end": 15.402
+        },
+        {
+          "word": "what",
+          "start": 15.402,
+          "end": 15.9
+        }
+      ]
+    },
+    {
+      "start": 16.0,
+      "end": 18.15,
+      "text": "So for now",
+      "words": [
+        {
+          "word": "So",
+          "start": 16.0,
+          "end": 16.591
+        },
+        {
+          "word": "for",
+          "start": 16.591,
+          "end": 17.371
+        },
+        {
+          "word": "now",
+          "start": 17.371,
+          "end": 18.15
+        }
+      ]
+    },
+    {
+      "start": 18.25,
+      "end": 20.19,
+      "text": "I'll keep pretending I've forgotten",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 18.25,
+          "end": 18.505
+        },
+        {
+          "word": "keep",
+          "start": 18.505,
+          "end": 18.816
+        },
+        {
+          "word": "pretending",
+          "start": 18.816,
+          "end": 19.395
+        },
+        {
+          "word": "I've",
+          "start": 19.395,
+          "end": 19.651
+        },
+        {
+          "word": "forgotten",
+          "start": 19.651,
+          "end": 20.19
+        }
+      ]
+    },
+    {
+      "start": 20.29,
+      "end": 20.84,
+      "text": "Hey,",
+      "words": [
+        {
+          "word": "Hey,",
+          "start": 20.29,
+          "end": 20.84
+        }
+      ]
+    },
+    {
+      "start": 20.94,
+      "end": 22.35,
+      "text": "the insults echoing in my head",
+      "words": [
+        {
+          "word": "the",
+          "start": 20.94,
+          "end": 21.133
+        },
+        {
+          "word": "insults",
+          "start": 21.133,
+          "end": 21.477
+        },
+        {
+          "word": "echoing",
+          "start": 21.477,
+          "end": 21.821
+        },
+        {
+          "word": "in",
+          "start": 21.821,
+          "end": 21.968
+        },
+        {
+          "word": "my",
+          "start": 21.968,
+          "end": 22.115
+        },
+        {
+          "word": "head",
+          "start": 22.115,
+          "end": 22.35
+        }
+      ]
+    },
+    {
+      "start": 22.45,
+      "end": 25.81,
+      "text": "from some distant day, let’s leave them behind",
+      "words": [
+        {
+          "word": "from",
+          "start": 22.45,
+          "end": 22.833
+        },
+        {
+          "word": "some",
+          "start": 22.833,
+          "end": 23.217
+        },
+        {
+          "word": "distant",
+          "start": 23.217,
+          "end": 23.777
+        },
+        {
+          "word": "day,",
+          "start": 23.777,
+          "end": 24.092
+        },
+        {
+          "word": "let’s",
+          "start": 24.092,
+          "end": 24.476
+        },
+        {
+          "word": "leave",
+          "start": 24.476,
+          "end": 24.922
+        },
+        {
+          "word": "them",
+          "start": 24.922,
+          "end": 25.305
+        },
+        {
+          "word": "behind",
+          "start": 25.305,
+          "end": 25.81
+        }
+      ]
+    },
+    {
+      "start": 25.91,
+      "end": 27.26,
+      "text": "'Cause when it all falls apart",
+      "words": [
+        {
+          "word": "'Cause",
+          "start": 25.91,
+          "end": 26.175
+        },
+        {
+          "word": "when",
+          "start": 26.175,
+          "end": 26.402
+        },
+        {
+          "word": "it",
+          "start": 26.402,
+          "end": 26.544
+        },
+        {
+          "word": "all",
+          "start": 26.544,
+          "end": 26.731
+        },
+        {
+          "word": "falls",
+          "start": 26.731,
+          "end": 26.995
+        },
+        {
+          "word": "apart",
+          "start": 26.995,
+          "end": 27.26
+        }
+      ]
+    },
+    {
+      "start": 27.36,
+      "end": 31.26,
+      "text": "you're just standing there, all alone",
+      "words": [
+        {
+          "word": "you're",
+          "start": 27.36,
+          "end": 28.016
+        },
+        {
+          "word": "just",
+          "start": 28.016,
+          "end": 28.58
+        },
+        {
+          "word": "standing",
+          "start": 28.58,
+          "end": 29.484
+        },
+        {
+          "word": "there,",
+          "start": 29.484,
+          "end": 30.14
+        },
+        {
+          "word": "all",
+          "start": 30.14,
+          "end": 30.604
+        },
+        {
+          "word": "alone",
+          "start": 30.604,
+          "end": 31.26
+        }
+      ]
+    },
+    {
+      "start": 31.36,
+      "end": 32.23,
+      "text": "So at least for now",
+      "words": [
+        {
+          "word": "So",
+          "start": 31.36,
+          "end": 31.494
+        },
+        {
+          "word": "at",
+          "start": 31.494,
+          "end": 31.628
+        },
+        {
+          "word": "least",
+          "start": 31.628,
+          "end": 31.877
+        },
+        {
+          "word": "for",
+          "start": 31.877,
+          "end": 32.054
+        },
+        {
+          "word": "now",
+          "start": 32.054,
+          "end": 32.23
+        }
+      ]
+    },
+    {
+      "start": 32.33,
+      "end": 33.57,
+      "text": "I've gotta take some steps,",
+      "words": [
+        {
+          "word": "I've",
+          "start": 32.33,
+          "end": 32.528
+        },
+        {
+          "word": "gotta",
+          "start": 32.528,
+          "end": 32.808
+        },
+        {
+          "word": "take",
+          "start": 32.808,
+          "end": 33.049
+        },
+        {
+          "word": "some",
+          "start": 33.049,
+          "end": 33.29
+        },
+        {
+          "word": "steps,",
+          "start": 33.29,
+          "end": 33.57
+        }
+      ]
+    },
+    {
+      "start": 33.67,
+      "end": 39.9,
+      "text": "clumsy as they are",
+      "words": [
+        {
+          "word": "clumsy",
+          "start": 33.67,
+          "end": 35.851
+        },
+        {
+          "word": "as",
+          "start": 35.851,
+          "end": 36.884
+        },
+        {
+          "word": "they",
+          "start": 36.884,
+          "end": 38.539
+        },
+        {
+          "word": "are",
+          "start": 38.539,
+          "end": 39.9
+        }
+      ]
+    },
+    {
+      "start": 40.0,
+      "end": 41.73,
+      "text": "If I just keep on walking",
+      "words": [
+        {
+          "word": "If",
+          "start": 40.0,
+          "end": 40.212
+        },
+        {
+          "word": "I",
+          "start": 40.212,
+          "end": 40.344
+        },
+        {
+          "word": "just",
+          "start": 40.344,
+          "end": 40.683
+        },
+        {
+          "word": "keep",
+          "start": 40.683,
+          "end": 41.022
+        },
+        {
+          "word": "on",
+          "start": 41.022,
+          "end": 41.234
+        },
+        {
+          "word": "walking",
+          "start": 41.234,
+          "end": 41.73
+        }
+      ]
+    },
+    {
+      "start": 41.83,
+      "end": 44.38,
+      "text": "I have a feeling I'll end up somewhere",
+      "words": [
+        {
+          "word": "I",
+          "start": 41.83,
+          "end": 41.967
+        },
+        {
+          "word": "have",
+          "start": 41.967,
+          "end": 42.319
+        },
+        {
+          "word": "a",
+          "start": 42.319,
+          "end": 42.456
+        },
+        {
+          "word": "feeling",
+          "start": 42.456,
+          "end": 42.971
+        },
+        {
+          "word": "I'll",
+          "start": 42.971,
+          "end": 43.26
+        },
+        {
+          "word": "end",
+          "start": 43.26,
+          "end": 43.55
+        },
+        {
+          "word": "up",
+          "start": 43.55,
+          "end": 43.769
+        },
+        {
+          "word": "somewhere",
+          "start": 43.769,
+          "end": 44.38
+        }
+      ]
+    },
+    {
+      "start": 44.48,
+      "end": 45.84,
+      "text": "Maybe one day I'll take the wrong road",
+      "words": [
+        {
+          "word": "Maybe",
+          "start": 44.48,
+          "end": 44.688
+        },
+        {
+          "word": "one",
+          "start": 44.688,
+          "end": 44.835
+        },
+        {
+          "word": "day",
+          "start": 44.835,
+          "end": 44.981
+        },
+        {
+          "word": "I'll",
+          "start": 44.981,
+          "end": 45.128
+        },
+        {
+          "word": "take",
+          "start": 45.128,
+          "end": 45.307
+        },
+        {
+          "word": "the",
+          "start": 45.307,
+          "end": 45.454
+        },
+        {
+          "word": "wrong",
+          "start": 45.454,
+          "end": 45.661
+        },
+        {
+          "word": "road",
+          "start": 45.661,
+          "end": 45.84
+        }
+      ]
+    },
+    {
+      "start": 45.94,
+      "end": 47.35,
+      "text": "and my feet will stop",
+      "words": [
+        {
+          "word": "and",
+          "start": 45.94,
+          "end": 46.201
+        },
+        {
+          "word": "my",
+          "start": 46.201,
+          "end": 46.399
+        },
+        {
+          "word": "feet",
+          "start": 46.399,
+          "end": 46.716
+        },
+        {
+          "word": "will",
+          "start": 46.716,
+          "end": 47.033
+        },
+        {
+          "word": "stop",
+          "start": 47.033,
+          "end": 47.35
+        }
+      ]
+    },
+    {
+      "start": 47.45,
+      "end": 51.34,
+      "text": "and everyone around me will be gone",
+      "words": [
+        {
+          "word": "and",
+          "start": 47.45,
+          "end": 47.908
+        },
+        {
+          "word": "everyone",
+          "start": 47.908,
+          "end": 48.799
+        },
+        {
+          "word": "around",
+          "start": 48.799,
+          "end": 49.532
+        },
+        {
+          "word": "me",
+          "start": 49.532,
+          "end": 49.88
+        },
+        {
+          "word": "will",
+          "start": 49.88,
+          "end": 50.436
+        },
+        {
+          "word": "be",
+          "start": 50.436,
+          "end": 50.784
+        },
+        {
+          "word": "gone",
+          "start": 50.784,
+          "end": 51.34
+        }
+      ]
+    },
+    {
+      "start": 51.44,
+      "end": 52.17,
+      "text": "well, just kidding",
+      "words": [
+        {
+          "word": "well,",
+          "start": 51.44,
+          "end": 51.651
+        },
+        {
+          "word": "just",
+          "start": 51.651,
+          "end": 51.862
+        },
+        {
+          "word": "kidding",
+          "start": 51.862,
+          "end": 52.17
+        }
+      ]
+    },
+    {
+      "start": 52.27,
+      "end": 54.56,
+      "text": "there I go, saying dark things again",
+      "words": [
+        {
+          "word": "there",
+          "start": 52.27,
+          "end": 52.652
+        },
+        {
+          "word": "I",
+          "start": 52.652,
+          "end": 52.78
+        },
+        {
+          "word": "go,",
+          "start": 52.78,
+          "end": 52.985
+        },
+        {
+          "word": "saying",
+          "start": 52.985,
+          "end": 53.417
+        },
+        {
+          "word": "dark",
+          "start": 53.417,
+          "end": 53.746
+        },
+        {
+          "word": "things",
+          "start": 53.746,
+          "end": 54.178
+        },
+        {
+          "word": "again",
+          "start": 54.178,
+          "end": 54.56
+        }
+      ]
+    },
+    {
+      "start": 54.66,
+      "end": 56.93,
+      "text": "Let's go get something warm to eat,",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 54.66,
+          "end": 55.002
+        },
+        {
+          "word": "go",
+          "start": 55.002,
+          "end": 55.216
+        },
+        {
+          "word": "get",
+          "start": 55.216,
+          "end": 55.498
+        },
+        {
+          "word": "something",
+          "start": 55.498,
+          "end": 56.092
+        },
+        {
+          "word": "warm",
+          "start": 56.092,
+          "end": 56.435
+        },
+        {
+          "word": "to",
+          "start": 56.435,
+          "end": 56.648
+        },
+        {
+          "word": "eat,",
+          "start": 56.648,
+          "end": 56.93
+        }
+      ]
+    },
+    {
+      "start": 57.03,
+      "end": 59.56,
+      "text": "nothing too hard on the wallet",
+      "words": [
+        {
+          "word": "nothing",
+          "start": 57.03,
+          "end": 57.642
+        },
+        {
+          "word": "too",
+          "start": 57.642,
+          "end": 57.986
+        },
+        {
+          "word": "hard",
+          "start": 57.986,
+          "end": 58.404
+        },
+        {
+          "word": "on",
+          "start": 58.404,
+          "end": 58.665
+        },
+        {
+          "word": "the",
+          "start": 58.665,
+          "end": 59.009
+        },
+        {
+          "word": "wallet",
+          "start": 59.009,
+          "end": 59.56
+        }
+      ]
+    },
+    {
+      "start": 59.66,
+      "end": 61.02,
+      "text": "Well,",
+      "words": [
+        {
+          "word": "Well,",
+          "start": 59.66,
+          "end": 61.02
+        }
+      ]
+    },
+    {
+      "start": 61.12,
+      "end": 63.46,
+      "text": "I mean, it's fine",
+      "words": [
+        {
+          "word": "I",
+          "start": 61.12,
+          "end": 61.404
+        },
+        {
+          "word": "mean,",
+          "start": 61.404,
+          "end": 62.132
+        },
+        {
+          "word": "it's",
+          "start": 62.132,
+          "end": 62.731
+        },
+        {
+          "word": "fine",
+          "start": 62.731,
+          "end": 63.46
+        }
+      ]
+    },
+    {
+      "start": 63.56,
+      "end": 68.22,
+      "text": "I'm just trying not to let it get to me",
+      "words": [
+        {
+          "word": "I'm",
+          "start": 63.56,
+          "end": 63.928
+        },
+        {
+          "word": "just",
+          "start": 63.928,
+          "end": 64.517
+        },
+        {
+          "word": "trying",
+          "start": 64.517,
+          "end": 65.294
+        },
+        {
+          "word": "not",
+          "start": 65.294,
+          "end": 65.779
+        },
+        {
+          "word": "to",
+          "start": 65.779,
+          "end": 66.147
+        },
+        {
+          "word": "let",
+          "start": 66.147,
+          "end": 66.631
+        },
+        {
+          "word": "it",
+          "start": 66.631,
+          "end": 66.999
+        },
+        {
+          "word": "get",
+          "start": 66.999,
+          "end": 67.484
+        },
+        {
+          "word": "to",
+          "start": 67.484,
+          "end": 67.852
+        },
+        {
+          "word": "me",
+          "start": 67.852,
+          "end": 68.22
+        }
+      ]
+    },
+    {
+      "start": 68.32,
+      "end": 70.84,
+      "text": "but it's probably not good",
+      "words": [
+        {
+          "word": "but",
+          "start": 68.32,
+          "end": 68.729
+        },
+        {
+          "word": "it's",
+          "start": 68.729,
+          "end": 69.138
+        },
+        {
+          "word": "probably",
+          "start": 69.138,
+          "end": 69.934
+        },
+        {
+          "word": "not",
+          "start": 69.934,
+          "end": 70.343
+        },
+        {
+          "word": "good",
+          "start": 70.343,
+          "end": 70.84
+        }
+      ]
+    },
+    {
+      "start": 70.94,
+      "end": 71.9,
+      "text": "Before I knew it,",
+      "words": [
+        {
+          "word": "Before",
+          "start": 70.94,
+          "end": 71.32
+        },
+        {
+          "word": "I",
+          "start": 71.32,
+          "end": 71.432
+        },
+        {
+          "word": "knew",
+          "start": 71.432,
+          "end": 71.72
+        },
+        {
+          "word": "it,",
+          "start": 71.72,
+          "end": 71.9
+        }
+      ]
+    },
+    {
+      "start": 72.0,
+      "end": 74.35,
+      "text": "the apocalyptic thoughts just drifted off somewhere",
+      "words": [
+        {
+          "word": "the",
+          "start": 72.0,
+          "end": 72.205
+        },
+        {
+          "word": "apocalyptic",
+          "start": 72.205,
+          "end": 72.7
+        },
+        {
+          "word": "thoughts",
+          "start": 72.7,
+          "end": 73.099
+        },
+        {
+          "word": "just",
+          "start": 73.099,
+          "end": 73.348
+        },
+        {
+          "word": "drifted",
+          "start": 73.348,
+          "end": 73.713
+        },
+        {
+          "word": "off",
+          "start": 73.713,
+          "end": 73.918
+        },
+        {
+          "word": "somewhere",
+          "start": 73.918,
+          "end": 74.35
+        }
+      ]
+    },
+    {
+      "start": 74.45,
+      "end": 76.81,
+      "text": "and those days of writing and erasing, over and over,",
+      "words": [
+        {
+          "word": "and",
+          "start": 74.45,
+          "end": 74.641
+        },
+        {
+          "word": "those",
+          "start": 74.641,
+          "end": 74.91
+        },
+        {
+          "word": "days",
+          "start": 74.91,
+          "end": 75.142
+        },
+        {
+          "word": "of",
+          "start": 75.142,
+          "end": 75.287
+        },
+        {
+          "word": "writing",
+          "start": 75.287,
+          "end": 75.626
+        },
+        {
+          "word": "and",
+          "start": 75.626,
+          "end": 75.817
+        },
+        {
+          "word": "erasing,",
+          "start": 75.817,
+          "end": 76.156
+        },
+        {
+          "word": "over",
+          "start": 76.156,
+          "end": 76.388
+        },
+        {
+          "word": "and",
+          "start": 76.388,
+          "end": 76.578
+        },
+        {
+          "word": "over,",
+          "start": 76.578,
+          "end": 76.81
+        }
+      ]
+    },
+    {
+      "start": 76.91,
+      "end": 77.93,
+      "text": "somehow it all",
+      "words": [
+        {
+          "word": "somehow",
+          "start": 76.91,
+          "end": 77.423
+        },
+        {
+          "word": "it",
+          "start": 77.423,
+          "end": 77.642
+        },
+        {
+          "word": "all",
+          "start": 77.642,
+          "end": 77.93
+        }
+      ]
+    },
+    {
+      "start": 78.03,
+      "end": 79.79,
+      "text": "feels like it meant nothing",
+      "words": [
+        {
+          "word": "feels",
+          "start": 78.03,
+          "end": 78.408
+        },
+        {
+          "word": "like",
+          "start": 78.408,
+          "end": 78.733
+        },
+        {
+          "word": "it",
+          "start": 78.733,
+          "end": 78.936
+        },
+        {
+          "word": "meant",
+          "start": 78.936,
+          "end": 79.314
+        },
+        {
+          "word": "nothing",
+          "start": 79.314,
+          "end": 79.79
+        }
+      ]
+    },
+    {
+      "start": 79.89,
+      "end": 82.1,
+      "text": "The scenery, growing further and further away,",
+      "words": [
+        {
+          "word": "The",
+          "start": 79.89,
+          "end": 80.104
+        },
+        {
+          "word": "scenery,",
+          "start": 80.104,
+          "end": 80.484
+        },
+        {
+          "word": "growing",
+          "start": 80.484,
+          "end": 80.865
+        },
+        {
+          "word": "further",
+          "start": 80.865,
+          "end": 81.245
+        },
+        {
+          "word": "and",
+          "start": 81.245,
+          "end": 81.459
+        },
+        {
+          "word": "further",
+          "start": 81.459,
+          "end": 81.84
+        },
+        {
+          "word": "away,",
+          "start": 81.84,
+          "end": 82.1
+        }
+      ]
+    },
+    {
+      "start": 82.2,
+      "end": 85.23,
+      "text": "every time my location gets updated",
+      "words": [
+        {
+          "word": "every",
+          "start": 82.2,
+          "end": 82.715
+        },
+        {
+          "word": "time",
+          "start": 82.715,
+          "end": 83.157
+        },
+        {
+          "word": "my",
+          "start": 83.157,
+          "end": 83.433
+        },
+        {
+          "word": "location",
+          "start": 83.433,
+          "end": 84.141
+        },
+        {
+          "word": "gets",
+          "start": 84.141,
+          "end": 84.583
+        },
+        {
+          "word": "updated",
+          "start": 84.583,
+          "end": 85.23
+        }
+      ]
+    },
+    {
+      "start": 85.33,
+      "end": 89.45,
+      "text": "if I'm just going to keep forgetting something along the way,",
+      "words": [
+        {
+          "word": "if",
+          "start": 85.33,
+          "end": 85.555
+        },
+        {
+          "word": "I'm",
+          "start": 85.555,
+          "end": 85.779
+        },
+        {
+          "word": "just",
+          "start": 85.779,
+          "end": 86.139
+        },
+        {
+          "word": "going",
+          "start": 86.139,
+          "end": 86.558
+        },
+        {
+          "word": "to",
+          "start": 86.558,
+          "end": 86.783
+        },
+        {
+          "word": "keep",
+          "start": 86.783,
+          "end": 87.143
+        },
+        {
+          "word": "forgetting",
+          "start": 87.143,
+          "end": 87.814
+        },
+        {
+          "word": "something",
+          "start": 87.814,
+          "end": 88.439
+        },
+        {
+          "word": "along",
+          "start": 88.439,
+          "end": 88.858
+        },
+        {
+          "word": "the",
+          "start": 88.858,
+          "end": 89.154
+        },
+        {
+          "word": "way,",
+          "start": 89.154,
+          "end": 89.45
+        }
+      ]
+    },
+    {
+      "start": 89.55,
+      "end": 92.02,
+      "text": "so that the scenes I vaguely remember",
+      "words": [
+        {
+          "word": "so",
+          "start": 89.55,
+          "end": 89.764
+        },
+        {
+          "word": "that",
+          "start": 89.764,
+          "end": 90.106
+        },
+        {
+          "word": "the",
+          "start": 90.106,
+          "end": 90.387
+        },
+        {
+          "word": "scenes",
+          "start": 90.387,
+          "end": 90.838
+        },
+        {
+          "word": "I",
+          "start": 90.838,
+          "end": 90.971
+        },
+        {
+          "word": "vaguely",
+          "start": 90.971,
+          "end": 91.472
+        },
+        {
+          "word": "remember",
+          "start": 91.472,
+          "end": 92.02
+        }
+      ]
+    },
+    {
+      "start": 92.12,
+      "end": 95.13,
+      "text": "hurt just a little less,",
+      "words": [
+        {
+          "word": "hurt",
+          "start": 92.12,
+          "end": 92.759
+        },
+        {
+          "word": "just",
+          "start": 92.759,
+          "end": 93.399
+        },
+        {
+          "word": "a",
+          "start": 93.399,
+          "end": 93.648
+        },
+        {
+          "word": "little",
+          "start": 93.648,
+          "end": 94.491
+        },
+        {
+          "word": "less,",
+          "start": 94.491,
+          "end": 95.13
+        }
+      ]
+    },
+    {
+      "start": 95.23,
+      "end": 97.22,
+      "text": "I'll just",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 95.23,
+          "end": 96.128
+        },
+        {
+          "word": "just",
+          "start": 96.128,
+          "end": 97.22
+        }
+      ]
+    },
+    {
+      "start": 97.32,
+      "end": 101.3,
+      "text": "cut my hair and face forward",
+      "words": [
+        {
+          "word": "cut",
+          "start": 97.32,
+          "end": 97.891
+        },
+        {
+          "word": "my",
+          "start": 97.891,
+          "end": 98.324
+        },
+        {
+          "word": "hair",
+          "start": 98.324,
+          "end": 99.019
+        },
+        {
+          "word": "and",
+          "start": 99.019,
+          "end": 99.59
+        },
+        {
+          "word": "face",
+          "start": 99.59,
+          "end": 100.284
+        },
+        {
+          "word": "forward",
+          "start": 100.284,
+          "end": 101.3
+        }
+      ]
+    },
+    {
+      "start": 101.72,
+      "end": 105.18,
+      "text": "cut my hair and face forward",
+      "words": [
+        {
+          "word": "cut",
+          "start": 101.72,
+          "end": 102.216
+        },
+        {
+          "word": "my",
+          "start": 102.216,
+          "end": 102.593
+        },
+        {
+          "word": "hair",
+          "start": 102.593,
+          "end": 103.197
+        },
+        {
+          "word": "and",
+          "start": 103.197,
+          "end": 103.693
+        },
+        {
+          "word": "face",
+          "start": 103.693,
+          "end": 104.297
+        },
+        {
+          "word": "forward",
+          "start": 104.297,
+          "end": 105.18
+        }
+      ]
+    },
+    {
+      "start": 105.78,
+      "end": 109.24,
+      "text": "cut my hair and face forward",
+      "words": [
+        {
+          "word": "cut",
+          "start": 105.78,
+          "end": 106.276
+        },
+        {
+          "word": "my",
+          "start": 106.276,
+          "end": 106.653
+        },
+        {
+          "word": "hair",
+          "start": 106.653,
+          "end": 107.257
+        },
+        {
+          "word": "and",
+          "start": 107.257,
+          "end": 107.753
+        },
+        {
+          "word": "face",
+          "start": 107.753,
+          "end": 108.357
+        },
+        {
+          "word": "forward",
+          "start": 108.357,
+          "end": 109.24
+        }
+      ]
+    },
+    {
+      "start": 109.84,
+      "end": 113.3,
+      "text": "cut my hair and face forward",
+      "words": [
+        {
+          "word": "cut",
+          "start": 109.84,
+          "end": 110.336
+        },
+        {
+          "word": "my",
+          "start": 110.336,
+          "end": 110.713
+        },
+        {
+          "word": "hair",
+          "start": 110.713,
+          "end": 111.317
+        },
+        {
+          "word": "and",
+          "start": 111.317,
+          "end": 111.813
+        },
+        {
+          "word": "face",
+          "start": 111.813,
+          "end": 112.417
+        },
+        {
+          "word": "forward",
+          "start": 112.417,
+          "end": 113.3
+        }
+      ]
+    },
+    {
+      "start": 113.9,
+      "end": 117.72,
+      "text": "cut my hair and face forward",
+      "words": [
+        {
+          "word": "cut",
+          "start": 113.9,
+          "end": 114.448
+        },
+        {
+          "word": "my",
+          "start": 114.448,
+          "end": 114.864
+        },
+        {
+          "word": "hair",
+          "start": 114.864,
+          "end": 115.53
+        },
+        {
+          "word": "and",
+          "start": 115.53,
+          "end": 116.078
+        },
+        {
+          "word": "face",
+          "start": 116.078,
+          "end": 116.745
+        },
+        {
+          "word": "forward",
+          "start": 116.745,
+          "end": 117.72
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "step": 0.1,
+    "energyBase64": "AAAAAAABDA4jKS8vOD06OD48Ozs4PkNCQkI8RUE5ODg4PkFAQD9HREJBQDo5PTtBR0NCRUNBOUFCQkZOTklCPDtCQ0JBPjw6OTw3Ojg6NTk/QkFLUE9UU09NS0pRTkpKTEpJSU9OT09MRj8+UE1JRUQ/Ozk3PTo5ODY1PEFBSEdEQkE/Pz05ODo8OTI6PTo9Q0hISERGSUI+PENCPUtXV1BIQkVHTVNRS0hFRUVAQDw/OTg0MDAyPz9ERkNDQkNCQEVIRkVFQkVLR0ZSWlhWUlBOSFVSUE9OWVRNSkhISElSUlBOWVVUU09LSEFST01LSkxJR0ZLTUxYVlJOSFVNSEZEQj48TUxQS1dWVFNSUVFQWltdW1leWldVVVZWW1hWUlBaVVNQTVVXV11fXFhZXltYUUxIQk5KRUE/S0ZERkdGR05YWFZSW1lVUk9UVk9ZVVJRWl9cWFNTVlheXVtZUVpZVlNPS0VBTkpDPkdGQD47QD89TkxJREFQSUVDQkA+RUdDPTpNSENBQEJCP1FOSUJHTEtJR01LR1RQTk1KV1RRUVBRUE5YWFdUXFVSUkxKSklWUk9NUFhVU1JSUU1UVVJPTFdVUFFNS0pIUVBNRlJTT01MU1JRVlVVU1NbVlBTU1BOTlZVU1BaVlRQTVRTUVpaVlRWWFVRS0dEP0tHQz87TkVAPjo6Mi8zNjUuSEdHSENAPjpOS0U/P1FOTUtLTk1XVFRTTlhUUlNQTEpLVlRPS1NTUFFNTVdWXVpZVFFaV1ZWVFRRUVpbVVJbWVRRUFFTUVpZVU5LSEQ/OTErJSEcGRUUFCEfKCUgKDEtLiotLjIyNzYzMCwrKSMiIR8nJjk7OUI/PENAODg8PD0/PjgzLyopKzQ0OD9RUVBSTUxQSkZEQ0JAPTs3NDczMjE8QkJGSFFUUVVVUk5RT0xLSERDPjgxLCwwOUFFREJGR0dERUdBS0hHS0dGTEdHR0VGPz5IT1FQUE9NSEtKR05OSVNbXV1UUlBLTkpJUFNPVFlXWFVVVlpaVlNPTVBYVlZUXFpXVVVcW1hYWF5cWldVWFNQS0hEQlJQTUtGVFFOUE5NTUxUV1ZRV1VSUk9NS0hVUkxKSlRSUk5OUExSUU5KSVZRS05MS0hCUk9MS1VWUk5JSEdEUU9MR0VUUlJVVlhWVVhXUlFaVlNTUlpaWF5bWlhZXFRPT05LSFVRUE1LV1JLTEpQUFBZWFVSWVhVVVNRUEtXU01NTllUU1JRUVFXWlVTUVpXVVpYV1NMV1RRUFpfXVtVUlBNVVJQSkVTS0ZFQkBOWV5aVltfXFpYVFVVUVpYWFZWXV1dWlZSTldVUk9PWVRRT0xPT05ZV1RRWllWVFJPTUlWVFJOTFhVU1JRVVdbW1pXVFxYVFNSU1FMV1NNSE1NSEVDQ0NCUU9OS0lWUU1LSEZMT1ZTUE5XU05NTVFQTVhXU05NV1VTUlJRT1dVVFJRWldUU1BUV1VcW1dUWVlWVFFPTElWU1FNTFhVU1VTUlVZWFdUUltXVVRTU1BMWFNOSUtLRkRDQ0VDUE9NSUZUTklIRkVNUFVST0xXVFJQUFJSUFlYVFFNS0lHRkNCQkNDQkJERkRDQ0JBQkFAPz48Pj49Pz4+PTw/Pjw7Ojw8PEFCRUVERkRDQUA+PUFFRUM+OTUxLisoJiUoKywrLTA1Mi4rKSctMTVCQkA9OTk4NzU1Ozs7OTc5OTc1NjY4ODw8Oz0+PkBBQEA/Pj5BQD48Ojk3Njs5OTw7Ozk8Ozo5ODg3Nz5APj4+Pz49PDs6OT5CQkE8NzMvLSonJCMkKi0rKzA3My8sKSgvNDVKTk5NSVFRTEpLTlJQT05LSkpHSEdGQDkyLCciHhoXFBIPDQwKCQgHBgUEBAMDAwICAgEBAQEBAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "onsetsBase64": "AAAAAAAHUw1kLS8ASCIAACwAAAAAMCMAAAAAQQAAAAAAMhYAAAA9AAAAAAAAGgAyKwAAGAAAAD0MAB49AAAAAAAxCAAAAAAAABgAEAASAB8sFwBJJgAiAAAAAAAzAAAAEgAAADAACAAAAAAAZAAAAAAAAAAAKAAAAAAAOiYAMAAAAAAAAAAAAAkRAAA+GQAbKSoAAAATEAAAADUAAGRaAQAAABoLLCwAAAAAAAAAAAAXAAAAAAAPYgAmEAAAAAoAACUZAAAAABIwAABaOQAAAAAAAGQAAAAATgAAAAAABgVEAwAATwAAAAAAAABkAAAAAA8AAAAiEQBVAAAAAGQAAAAAAAAAZAAbAFgAAAAAAAAARwgPAAAoAAAAAAkAJQAAAABJAAAAAD8OAC8LAAAGIwAAAAAAAF8AAAAAVwAAFAIAAjZQAAAAPwAAAAAoEABLAAAARSUAAAAAFAstAAAAAEMAAAAAAAAAYgAAAEYAAAAAIwAAZAAAAABkAAAAAAAANQsAAABkAAAAABIAAGQAAAApKQAAAC4AAGAAAAAAXQAAAAAIAABQAAAAOQAAAAAAAABjAAAAFj4AAAABAAA3BQAAAFgAAA0AAAAAPgAAAFoIAAAANQAAKgAAAAA/AAAZAAAAAD0AAABGAAAAAC4AAEYAAAAREAAAAAAAAGEAAAAAZAAAAAAAAAAfEAAAZAABBwAAAABkAAAAAGQAAAAAFgBNAAAAAFAAAAYAAAALTwAAAEAAAAYAAE4ANAAAAABDAAAAAAAAAEUJAABCAAAAAAMQAEUAAAAAAAAAAAAAAAAAAAAAAGAAQQAAP0EACQAYBB4GIgAAAAAAAAAAAAA7AGQJAEQAADUAAAUcAAwPAAAAAAAADkgAITdkAAANAAAcAAAAAAAAAAAAABcAAABWKQAiDEgXACMAAAAXAAAAAAAAAAAAAAYZSDobAAAgBAAACgoASgAAHAAALwABAAADAABPNgkAAAAAABcAADcAAEw8DAAAAAAAEwAANRcAICsACwAAAyMAAAAAABNAAAAANwAAAAA3AAAAACsAAAAAGwAAAAAAAGQAAAAAZAAACgAAAABBEwAAKwAAAAAAAABkAAAAAEkAAAAAEQArAAAAAGAAABkAAAAAZAAAAEwDAAAAAAAAYgAAAABkAAAaCQwAABcAAABEAAAAAD4BACoAAAANFwAAAAAAAGQAAAAAXAAABwAyAABJAAAANQAAAgAAAABZAAAACU8AAAAAAAAzFAAAAEQAACAAAAAAUAAAAEgmAAAAAAAAPgAAAABkAAAAAABkUCkAACYfAAAAAAYAAEUAAAAAMQEAAAAAAEcAAAAATQAAAAAVAABOAAAARQAAAAAAAABgAAAAAFYAAAAAIA4bAAAAADkAAAAACwAAUQAAACUCAAAAAAMAZAAAAABjAAAAAAAtEjIAAABAAAAAACAAAFIAAAAATQAAAAAAADkAAAAARAAAAAAeGgA1AAAAIgAAAAAAAABjAAAAAFYAAAoAABMdAAAAAEEAAAAAAAAAVgAAAAsFAAAAABEAYAAAAABkAAAAAABCFyMAAABYAAAAABEAAEkAAAAAAAAAAAAAAA8AAAASDwAAAAAABQAAAAAADAAADQAAAAAWAAAAAA8AACYMFQAADAAAAAAAABwcAAAAAAAAAAAAAAAcGAcADhQjAAAAAAApIR5kAAAAAAAAAAAFLgAAAAAPAAAACwANAR4AAA8GABMEAAAAAAQUAAAAAAAAACQAABIAAAASAAAAAAAAADgNAAAADAAAAAAAAB8fBAAAAAAAAAAAAAAHKBYAAiYzAAAAAAAyJwhkHwAAADkAAAAEFiMAAAAAAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  },
+  "timingMethod": "Recording-specific synced LRC anchors, phrase mapping, and measured audio envelope."
+}

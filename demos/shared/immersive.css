@@ -219,6 +219,47 @@ input[type="range"] {
 
 body[data-variant="one-more-bite"] h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 540; }
 
+body[data-variant^="window-view-"] h1 {
+  color: #f7fcf4;
+  font-size: clamp(48px, 6.2vw, 96px);
+  line-height: 0.9;
+}
+body[data-variant^="window-view-"] .masthead,
+body[data-variant^="window-view-"] .sigil,
+body[data-variant^="window-view-"] .chapter {
+  text-shadow: 0 2px 14px rgba(3, 9, 18, 0.86);
+}
+body[data-variant^="window-view-"] .chapter {
+  padding: 9px 12px;
+  border-top-color: rgba(112, 214, 194, 0.48);
+  background: rgba(6, 16, 27, 0.42);
+  backdrop-filter: blur(8px);
+}
+body[data-variant^="window-view-"] .lyric-stage {
+  top: 59%;
+}
+body[data-variant^="window-view-"] .lyric-stage::before {
+  inset: -45% -13%;
+  background: radial-gradient(ellipse, rgba(4, 12, 22, 0.82), rgba(4, 12, 22, 0.52) 44%, rgba(4, 12, 22, 0.12) 69%, transparent 80%);
+}
+body[data-variant^="window-view-"] .lyric-context {
+  color: rgba(214, 240, 235, 0.66);
+}
+body[data-variant^="window-view-"] .word { color: rgba(187, 220, 225, 0.72); }
+body[data-variant^="window-view-"] .word.is-sung { color: #ee5b7e; }
+body[data-variant^="window-view-"] .word.is-current {
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(3, 9, 18, 1), 0 0 28px rgba(112, 214, 194, 0.72);
+}
+body[data-variant="window-view-jp"] .lyric-current {
+  font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+  font-size: clamp(30px, 3.8vw, 58px);
+}
+body[data-variant^="window-view-"] .transport {
+  border-color: rgba(112, 214, 194, 0.42);
+  background: rgba(6, 16, 27, 0.72);
+}
+
 @media (max-width: 820px), (max-height: 620px) {
   .masthead { inset: 18px 20px auto; }
   .chapter { min-width: 220px; }

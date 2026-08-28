@@ -115,6 +115,16 @@ const SUPPORTED_LYRIC_TRACKS = {
     dataUrl: './songs/lyrics/dusty-bibles.json',
     scene: 'story-theater',
     variant: 'dusty'
+  },
+  'songs/farewell225 - window view': {
+    dataUrl: './songs/lyrics/window-view-jp.json',
+    scene: 'story-theater',
+    variant: 'window-jp'
+  },
+  'songs/moonlit star - window view (english)': {
+    dataUrl: './songs/lyrics/window-view-en.json',
+    scene: 'story-theater',
+    variant: 'window-en'
   }
 };
 const SONG_METADATA_OVERRIDES = {
@@ -1335,7 +1345,9 @@ const STORY_INTERLUDES = {
   compass: ['One star, no bearing.', 'A gold cord crosses the mirror sea.', 'The needle disappears below.', 'Certainty divides the water.', 'Curiosity becomes north.', 'The cord pulls against the current.', 'Gold outruns the storm.', 'The tide answers four times.', 'One light remains.'],
   celebration: ['Creation enters the room.', 'The sphere finds the count.', 'Clap. Stomp. Let the room open.', 'Every voice becomes a facet.', 'Three names orbit one light.', 'Today refuses to wait.', 'Freedom throws back the doors.', 'Every witness joins the floor.', 'One last starburst.'],
   psalm: ['Praise breaks the horizon.', 'The heavens begin in wonder.', 'Known beneath an enormous sky.', 'The horizon learns the Name.', 'Praise becomes constellation.', 'A stronghold made of voices.', 'Yahweh across the firmament.', 'The whole sky opens.', 'Majesty fills the earth.', 'Every star joins the answer.', 'The desert keeps the light.'],
-  dusty: ['Orange type above the canyon.', 'A message waits between stone walls.', 'Every screen asks for another minute.', 'The canyon opens like a book.', 'Glass goes dark between the cliffs.', 'One life finds the narrow way.', 'Pages outrun the idols.', 'The mountain holds one long breath.', 'An old friend returns to the path.', 'The whole Word catches fire.', 'Dust settles behind the light.']
+  dusty: ['Orange type above the canyon.', 'A message waits between stone walls.', 'Every screen asks for another minute.', 'The canyon opens like a book.', 'Glass goes dark between the cliffs.', 'One life finds the narrow way.', 'Pages outrun the idols.', 'The mountain holds one long breath.', 'An old friend returns to the path.', 'The whole Word catches fire.', 'Dust settles behind the light.'],
+  'window-jp': ['Doors closing.', 'Old voices fall behind.', 'Somewhere is enough.', 'A warm stop between stations.', 'The glass updates the present.', 'Forward is a direction.', 'City lights become reflections.', 'The last signal passes.'],
+  'window-en': ['Doors closing.', 'Old voices fall behind.', 'Somewhere is enough.', 'A warm stop between stations.', 'The glass updates the present.', 'Forward is a direction.', 'City lights become reflections.', 'The last signal passes.']
 };
 
 const STORY_PEAK_PHASES = {
@@ -1344,7 +1356,9 @@ const STORY_PEAK_PHASES = {
   compass: [2, 4, 5, 6],
   celebration: [2, 3, 6, 7, 8],
   psalm: [2, 3, 5, 6, 7, 8],
-  dusty: [3, 6, 9]
+  dusty: [3, 6, 9],
+  'window-jp': [2, 5],
+  'window-en': [2, 5]
 };
 
 function storyTheaterAnalysisAt(time) {
@@ -1426,7 +1440,7 @@ function renderStoryTheaterLine(index, data, time) {
     };
     const laneNodes = [];
     measuredWordTimings(voiceTiming).forEach((timing, wordIndex) => {
-      if (wordIndex) vocalLine.appendChild(document.createTextNode(' '));
+      if (wordIndex && data.language !== 'ja') vocalLine.appendChild(document.createTextNode(' '));
       const span = document.createElement('span');
       span.className = 'story-word';
       span.textContent = timing.word;
@@ -6757,7 +6771,9 @@ const STORY_PALETTES = {
   compass: { bg: [18, 61, 154], deep: [2, 7, 30], primary: [255, 174, 18], secondary: [255, 225, 84], accent: [222, 236, 255] },
   celebration: { bg: [242, 91, 7], deep: [72, 15, 10], primary: [255, 178, 15], secondary: [55, 207, 238], accent: [255, 247, 224] },
   psalm: { bg: [164, 179, 185], deep: [30, 25, 25], primary: [221, 172, 99], secondary: [139, 205, 226], accent: [248, 244, 227] },
-  dusty: { bg: [157, 190, 213], deep: [36, 19, 17], primary: [242, 76, 34], secondary: [127, 202, 229], accent: [255, 239, 203] }
+  dusty: { bg: [157, 190, 213], deep: [36, 19, 17], primary: [242, 76, 34], secondary: [127, 202, 229], accent: [255, 239, 203] },
+  'window-jp': { bg: [176, 218, 231], deep: [24, 36, 54], primary: [238, 91, 126], secondary: [112, 214, 194], accent: [247, 252, 244] },
+  'window-en': { bg: [176, 218, 231], deep: [24, 36, 54], primary: [238, 91, 126], secondary: [112, 214, 194], accent: [247, 252, 244] }
 };
 
 function storyCanvasColor(color, alpha = 1) {
@@ -7942,6 +7958,192 @@ function drawVioletTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, 
   }
 }
 
+function drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, isPeakPhase) {
+  const phaseColors = [
+    [[182, 224, 236], [244, 198, 166], [50, 76, 88]],
+    [[151, 211, 198], [233, 226, 178], [37, 75, 65]],
+    [[142, 214, 235], [250, 226, 177], [54, 102, 121]],
+    [[236, 181, 146], [253, 220, 166], [95, 53, 62]],
+    [[173, 211, 223], [229, 215, 191], [62, 82, 95]],
+    [[117, 124, 178], [245, 152, 135], [39, 39, 73]],
+    [[39, 50, 91], [230, 102, 138], [13, 21, 44]],
+    [[28, 38, 61], [168, 190, 197], [8, 14, 25]]
+  ];
+  const colors = phaseColors[Math.max(0, Math.min(phaseColors.length - 1, phase))];
+  const intensity = clamp(0, 1.25, 0.32 + energy * 0.55 + onset * 0.35 + (isPeakPhase ? beat.pulse * 0.22 : 0));
+  const speed = width * (0.105 + energy * 0.035 + (isPeakPhase ? 0.018 : 0));
+  const horizon = height * (0.52 + Math.sin(audioTime * 0.055) * 0.008);
+
+  const sky = ctx.createLinearGradient(0, 0, 0, height);
+  sky.addColorStop(0, storyCanvasColor(colors[0]));
+  sky.addColorStop(0.62, storyCanvasColor(colors[1]));
+  sky.addColorStop(1, storyCanvasColor(colors[2]));
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, width, height);
+
+  const sunX = width * (0.78 - phase * 0.055);
+  const sunY = height * (0.2 + phase * 0.035);
+  const sun = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, width * 0.34);
+  sun.addColorStop(0, storyCanvasColor(phase >= 6 ? [244, 214, 225] : [255, 247, 202], 0.34 + beat.pulse * 0.07));
+  sun.addColorStop(0.18, storyCanvasColor(colors[1], 0.16));
+  sun.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = sun;
+  ctx.fillRect(0, 0, width, height);
+
+  // The far world moves slowly enough to establish distance.
+  for (let ridge = 0; ridge < 3; ridge++) {
+    ctx.beginPath();
+    ctx.moveTo(-20, height);
+    for (let x = -20; x <= width + 20; x += width / 48) {
+      const drift = audioTime * speed * (0.035 + ridge * 0.012);
+      const y = horizon - height * (0.03 + ridge * 0.035)
+        + Math.sin((x + drift) / width * Math.PI * (2.2 + ridge * 0.7) + ridge) * height * (0.025 + ridge * 0.008);
+      ctx.lineTo(x, y);
+    }
+    ctx.lineTo(width + 20, height);
+    ctx.closePath();
+    ctx.fillStyle = storyCanvasColor(ridge === 0 ? colors[2] : palette.secondary, 0.18 + ridge * 0.07);
+    ctx.fill();
+  }
+
+  if (phase === 2 || phase === 4) {
+    // Open water and almost-nothing passages give the eye somewhere to rest.
+    const water = ctx.createLinearGradient(0, horizon, 0, height);
+    water.addColorStop(0, storyCanvasColor(palette.accent, 0.16));
+    water.addColorStop(1, storyCanvasColor(colors[2], 0.72));
+    ctx.fillStyle = water;
+    ctx.fillRect(0, horizon, width, height - horizon);
+    for (let line = 0; line < 18; line++) {
+      const y = horizon + (line / 18) ** 1.45 * height * 0.45;
+      const offset = (audioTime * speed * (0.08 + line * 0.006)) % (width * 0.22);
+      ctx.beginPath();
+      for (let x = -width * 0.22 + offset; x < width + width * 0.22; x += width * 0.22) {
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + width * (0.07 + line * 0.002), y + Math.sin(audioTime * 0.7 + line) * dpr * 2);
+      }
+      ctx.strokeStyle = storyCanvasColor(line % 3 ? palette.accent : palette.primary, 0.045 + intensity * 0.045);
+      ctx.lineWidth = dpr * (0.7 + line / 18);
+      ctx.stroke();
+    }
+  } else {
+    const ground = ctx.createLinearGradient(0, horizon, 0, height);
+    ground.addColorStop(0, storyCanvasColor(colors[2], 0.56));
+    ground.addColorStop(1, storyCanvasColor([12, 21, 29], 0.94));
+    ctx.fillStyle = ground;
+    ctx.fillRect(0, horizon, width, height - horizon);
+  }
+
+  const cityPhase = phase === 0 || phase === 3 || phase >= 5;
+  if (cityPhase) {
+    const buildingCount = phase >= 6 ? 20 : 14;
+    for (let index = 0; index < buildingCount; index++) {
+      const slot = width * (0.095 + seededUnit(index * 8.31) * 0.06);
+      const x = width - ((audioTime * speed * 0.32 + index * slot) % (width + slot * 2)) + slot;
+      const buildingWidth = slot * (0.62 + seededUnit(index * 3.71) * 0.6);
+      const buildingHeight = height * (0.1 + seededUnit(index * 9.17) * (phase >= 5 ? 0.32 : 0.2));
+      const y = horizon - buildingHeight;
+      ctx.fillStyle = storyCanvasColor(phase >= 6 ? [18, 29, 55] : colors[2], 0.48 + seededUnit(index) * 0.2);
+      ctx.fillRect(x, y, buildingWidth, buildingHeight);
+      const rows = Math.max(2, Math.floor(buildingHeight / (dpr * 18)));
+      for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < 3; column++) {
+          if (seededUnit(index * 71 + row * 11 + column) < 0.48) continue;
+          ctx.fillStyle = storyCanvasColor(phase >= 5 ? [255, 210, 138] : palette.accent, 0.22 + beat.pulse * 0.08);
+          ctx.fillRect(x + buildingWidth * (0.16 + column * 0.27), y + 8 * dpr + row * 15 * dpr, buildingWidth * 0.11, 5 * dpr);
+        }
+      }
+    }
+  } else {
+    for (let index = 0; index < 18; index++) {
+      const spacing = width * 0.085;
+      const x = width - ((audioTime * speed * 0.48 + index * spacing) % (width + spacing * 2)) + spacing;
+      const trunkHeight = height * (0.16 + seededUnit(index * 2.7) * 0.17);
+      ctx.strokeStyle = storyCanvasColor([31, 60, 49], 0.55);
+      ctx.lineWidth = dpr * (2 + seededUnit(index) * 3);
+      ctx.beginPath(); ctx.moveTo(x, horizon); ctx.lineTo(x, horizon - trunkHeight); ctx.stroke();
+      ctx.fillStyle = storyCanvasColor(index % 3 ? [48, 104, 76] : palette.secondary, 0.35 + intensity * 0.12);
+      ctx.beginPath();
+      ctx.ellipse(x, horizon - trunkHeight, width * (0.025 + seededUnit(index * 4.1) * 0.025), height * 0.08, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // Rails and sleepers accelerate toward the passenger, selling train speed.
+  ctx.fillStyle = storyCanvasColor([9, 14, 21], 0.78);
+  ctx.fillRect(0, height * 0.78, width, height * 0.22);
+  for (let rail = 0; rail < 4; rail++) {
+    const y = height * (0.81 + rail * 0.052);
+    ctx.strokeStyle = storyCanvasColor(rail % 2 ? [155, 174, 177] : [72, 90, 96], 0.26 + energy * 0.11);
+    ctx.lineWidth = dpr * (1.2 + rail * 0.6);
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+  }
+  const sleeperOffset = (audioTime * speed * 1.4) % (width * 0.09);
+  for (let x = -width * 0.1 + sleeperOffset; x < width * 1.1; x += width * 0.09) {
+    ctx.strokeStyle = storyCanvasColor([174, 154, 127], 0.2);
+    ctx.lineWidth = dpr * 3;
+    ctx.beginPath(); ctx.moveTo(x, height * 0.79); ctx.lineTo(x - width * 0.035, height); ctx.stroke();
+  }
+
+  // Nearby poles cross in a fraction of a second; the smear is a full motion cue.
+  for (let index = 0; index < 7; index++) {
+    const spacing = width * 0.27;
+    const x = width - ((audioTime * speed * 1.05 + index * spacing) % (width + spacing));
+    ctx.fillStyle = storyCanvasColor([20, 29, 36], 0.72);
+    ctx.fillRect(x, 0, dpr * 5, height);
+    const streak = ctx.createLinearGradient(x - width * 0.08, 0, x + dpr * 5, 0);
+    streak.addColorStop(0, 'rgba(0,0,0,0)');
+    streak.addColorStop(1, storyCanvasColor([20, 29, 36], 0.16 + onset * 0.1));
+    ctx.fillStyle = streak;
+    ctx.fillRect(x - width * 0.08, 0, width * 0.08, height);
+  }
+
+  // Reflections belong to the glass, so they move independently of scenery.
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+  for (let reflection = 0; reflection < 5; reflection++) {
+    const x = (((audioTime * (0.018 + reflection * 0.002) + reflection * 0.23) % 1.45) - 0.22) * width;
+    ctx.save();
+    ctx.translate(x, height * 0.45);
+    ctx.rotate(-0.18);
+    const sheen = ctx.createLinearGradient(-width * 0.035, 0, width * 0.035, 0);
+    sheen.addColorStop(0, 'rgba(255,255,255,0)');
+    sheen.addColorStop(0.5, storyCanvasColor(reflection % 2 ? palette.secondary : palette.accent, 0.025 + intensity * 0.03));
+    sheen.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = sheen;
+    ctx.fillRect(-width * 0.04, -height, width * 0.08, height * 2);
+    ctx.restore();
+  }
+  ctx.restore();
+
+  // Carriage architecture stays fixed while everything beyond it moves.
+  const frameColor = storyCanvasColor([9, 15, 23], 0.86);
+  ctx.fillStyle = frameColor;
+  ctx.fillRect(0, 0, width, height * 0.045);
+  ctx.fillRect(0, height * 0.95, width, height * 0.05);
+  ctx.fillRect(width * 0.115, 0, width * 0.018, height);
+  ctx.fillRect(width * 0.865, 0, width * 0.018, height);
+  ctx.strokeStyle = storyCanvasColor([226, 239, 235], 0.16);
+  ctx.lineWidth = dpr;
+  ctx.strokeRect(width * 0.13, height * 0.045, width * 0.735, height * 0.905);
+
+  for (let strap = 0; strap < 4; strap++) {
+    const x = width * (0.28 + strap * 0.15);
+    ctx.strokeStyle = storyCanvasColor(palette.accent, 0.09 + energy * 0.03);
+    ctx.lineWidth = dpr * 2;
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height * 0.13); ctx.stroke();
+    ctx.beginPath(); ctx.roundRect(x - width * 0.018, height * 0.13, width * 0.036, height * 0.055, 8 * dpr); ctx.stroke();
+  }
+
+  if (isPeakPhase) {
+    const bloom = ctx.createLinearGradient(0, 0, width, 0);
+    bloom.addColorStop(0, 'rgba(255,255,255,0)');
+    bloom.addColorStop(0.48, storyCanvasColor(palette.primary, 0.035 + beat.pulse * 0.09 + onset * 0.08));
+    bloom.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = bloom;
+    ctx.fillRect(0, 0, width, height);
+  }
+}
+
 function drawStoryTheaterFx(levels, audioTime) {
   const canvas = $('story-fx');
   const theater = $('story-theater');
@@ -7983,7 +8185,9 @@ function drawStoryTheaterFx(levels, audioTime) {
   const cx = controlRect ? (controlRect.left + controlRect.width / 2 - rect.left) * dpr : width * 0.82;
   const cy = controlRect ? (controlRect.top + controlRect.height / 2 - rect.top) * dpr : height * 0.54;
 
-  if (variant === 'waiting') {
+  if (variant.startsWith('window-')) {
+    drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, isPeakPhase);
+  } else if (variant === 'waiting') {
     const chorus = isPeakPhase;
     const chorusLift = chorus ? clamp(0, 1, 0.48 + energy * 0.34 + beat.pulse * 0.28) : 0;
     const verseMotion = clamp(0, 1, 0.34 + energy * 0.36 + onset * 0.24 + beat.pulse * 0.18);
@@ -8195,10 +8399,12 @@ function drawStoryTheaterFx(levels, audioTime) {
     drawDustyTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, isPeakPhase);
   }
 
-  drawStoryPulseRings(ctx, cx, cy, width, height, palette, audioTime, energy, onset, isPeakPhase ? (variant === 'waiting' ? 1.75 : 1.35) : 0.36);
+  if (!variant.startsWith('window-')) {
+    drawStoryPulseRings(ctx, cx, cy, width, height, palette, audioTime, energy, onset, isPeakPhase ? (variant === 'waiting' ? 1.75 : 1.35) : 0.36);
+  }
   const vignette = ctx.createRadialGradient(width * 0.5, height * 0.48, width * 0.08, width * 0.5, height * 0.48, width * 0.72);
   vignette.addColorStop(0, 'rgba(0,0,0,0)');
-  vignette.addColorStop(1, variant === 'waiting' ? 'rgba(66,35,38,0.16)' : 'rgba(0,0,0,0.48)');
+  vignette.addColorStop(1, variant === 'waiting' ? 'rgba(66,35,38,0.16)' : variant.startsWith('window-') ? 'rgba(3,9,18,0.2)' : 'rgba(0,0,0,0.48)');
   ctx.fillStyle = vignette; ctx.fillRect(0, 0, width, height);
 }
 
