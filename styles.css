@@ -383,6 +383,206 @@ body.teto11-fx-active .now-view.active {
   background-blend-mode: screen, screen, screen, normal;
 }
 
+body.trick-heart-fx-active {
+  --accent: #ffd36b;
+  --accent-2: #ff5b8b;
+  --accent-fg: #310916;
+  --trick-cream: #fff3d8;
+  --trick-wine: #68152b;
+  --trick-red: #cf2854;
+  --trick-blue: #7f9cdf;
+}
+body.trick-heart-fx-active .now-view.active {
+  background: #68152b;
+}
+body.trick-heart-fx-active .now-view.active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: url("./songs/art/trick-heart.jpg") center 42% / cover no-repeat;
+  opacity: calc(0.035 + var(--trick-heart-level, 0) * 0.045);
+  filter: saturate(0.75) contrast(1.08);
+}
+body.trick-heart-fx-active .teto-fx-canvas {
+  mix-blend-mode: normal;
+}
+body.trick-heart-fx-active .now-stage {
+  z-index: 2;
+  align-items: start;
+  padding-top: 20px;
+  padding-bottom: clamp(150px, 29vh, 230px);
+}
+body.trick-heart-fx-active .now-meta h1 {
+  color: var(--trick-cream);
+  font-size: clamp(30px, 4.7vh, 56px);
+  text-shadow: 0 2px 0 rgba(49, 9, 22, 0.45);
+}
+body.trick-heart-fx-active .now-kicker,
+body.trick-heart-fx-active .now-subtitle,
+body.trick-heart-fx-active .queue-label,
+body.trick-heart-fx-active #queue-next,
+body.trick-heart-fx-active .hero-time {
+  color: rgba(255, 243, 216, 0.82);
+}
+body.trick-heart-fx-active .hero-play {
+  width: clamp(92px, 14vh, 132px);
+  height: clamp(92px, 14vh, 132px);
+  border-color: rgba(255, 211, 107, 0.8);
+  color: #68152b;
+  background:
+    linear-gradient(135deg, rgba(255, 211, 107, 0.46), transparent 48%),
+    #fff3d8;
+  box-shadow: 9px 10px 0 rgba(49, 9, 22, 0.38), 0 18px 42px rgba(28, 2, 10, 0.3);
+}
+body.trick-heart-fx-active .hero-play::before {
+  background: conic-gradient(#ffd36b var(--progress), rgba(104, 21, 43, 0.22) 0deg);
+}
+body.trick-heart-fx-active .hero-play::after {
+  border-color: rgba(255, 243, 216, calc(0.2 + var(--level) * 0.48));
+  box-shadow: 0 0 calc(18px + var(--level) * 34px) rgba(255, 211, 107, calc(0.08 + var(--level) * 0.18));
+}
+body.trick-heart-fx-active .hero-ring {
+  border-color: rgba(104, 21, 43, 0.18);
+}
+
+.trick-heart-overlay {
+  position: absolute;
+  z-index: 4;
+  left: clamp(18px, 4vw, 72px);
+  right: clamp(18px, 4vw, 72px);
+  bottom: clamp(18px, 4.8vh, 56px);
+  pointer-events: none;
+  color: var(--trick-cream);
+}
+.trick-heart-overlay.hidden { display: none !important; }
+.trick-heart-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 0 2px 8px;
+  color: rgba(255, 243, 216, 0.7);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  border-bottom: 1px solid rgba(255, 243, 216, 0.24);
+}
+.trick-heart-heading b {
+  color: #ffd36b;
+  font-size: inherit;
+  letter-spacing: 0.1em;
+}
+.trick-heart-lyrics {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr) minmax(0, 1fr);
+  min-height: clamp(104px, 18vh, 158px);
+  transform: translateY(0);
+  opacity: 1;
+  transition: opacity 130ms ease, transform 180ms cubic-bezier(0.2, 0.78, 0.2, 1);
+}
+.trick-heart-lyrics.is-silent {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.trick-heart-lane {
+  min-width: 0;
+  padding: 14px clamp(12px, 2vw, 30px) 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(49, 9, 22, 0.58);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+.trick-heart-lane + .trick-heart-lane {
+  border-left: 1px solid rgba(255, 243, 216, 0.18);
+}
+.trick-heart-lane.lane-en {
+  background: rgba(255, 243, 216, 0.9);
+  color: #68152b;
+}
+.trick-heart-language {
+  color: #ffd36b;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+.lane-en .trick-heart-language { color: #a02543; }
+.lane-romaji .trick-heart-language { color: #aebcf1; }
+.trick-heart-line {
+  max-width: 31ch;
+  font-size: clamp(15px, 2.05vh, 21px);
+  line-height: 1.34;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+.lane-en .trick-heart-line {
+  font-size: clamp(17px, 2.35vh, 24px);
+  font-weight: 760;
+}
+.lane-romaji .trick-heart-line {
+  color: #dfe6ff;
+  font-style: italic;
+}
+.trick-heart-word {
+  display: inline;
+  opacity: 0.34;
+  transition: color 90ms linear, opacity 90ms linear, text-shadow 90ms linear;
+}
+.trick-heart-word + .trick-heart-word::before { content: " "; }
+.lane-jp .trick-heart-word + .trick-heart-word::before { content: ""; }
+.trick-heart-word.is-sung { opacity: 0.92; color: #ffd36b; }
+.trick-heart-word.is-current {
+  opacity: 1;
+  color: #ffffff;
+  text-shadow: 0 0 16px rgba(255, 211, 107, 0.58);
+}
+.lane-en .trick-heart-word.is-sung { color: #cf2854; }
+.lane-en .trick-heart-word.is-current {
+  color: #68152b;
+  text-shadow: 0 0 13px rgba(207, 40, 84, 0.22);
+}
+.lane-romaji .trick-heart-word.is-sung { color: #aebcf1; }
+
+@media (max-width: 850px), (max-height: 650px) {
+  body.trick-heart-fx-active .now-stage {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding-bottom: clamp(166px, 36vh, 220px);
+  }
+  body.trick-heart-fx-active .now-queue { display: none; }
+  .trick-heart-overlay { bottom: 10px; }
+  .trick-heart-heading { padding-bottom: 5px; }
+  .trick-heart-lyrics {
+    grid-template-columns: 1fr;
+    min-height: 154px;
+  }
+  .trick-heart-lane {
+    min-height: 0;
+    padding: 6px 12px;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 12px;
+    background: rgba(49, 9, 22, 0.76);
+  }
+  .trick-heart-lane + .trick-heart-lane {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 243, 216, 0.16);
+  }
+  .trick-heart-lane.lane-en { background: rgba(255, 243, 216, 0.92); }
+  .trick-heart-language { flex: 0 0 58px; }
+  .trick-heart-line,
+  .lane-en .trick-heart-line {
+    max-width: none;
+    font-size: clamp(13px, 2.2vh, 17px);
+    line-height: 1.24;
+  }
+}
+
 .now-stage {
   position: relative;
   z-index: 1;

@@ -62,6 +62,10 @@ const DEFAULT_PLAYLISTS = {
 };
 
 const SUPPORTED_LYRIC_TRACKS = {
+  'songs/mimi feat. kasane teto sv - trick heart': {
+    dataUrl: './songs/lyrics/trick-heart.json',
+    scene: 'trick-heart'
+  },
   'songs/kasane teto - one more bite': {
     dataUrl: './songs/lyrics/one-more-bite.json',
     scene: 'one-more-bite'
@@ -215,6 +219,8 @@ let oneMoreBiteSceneActive = false;
 let heroStorySceneActive = false;
 let encoreSceneActive = false;
 let storyTheaterSceneActive = false;
+let trickHeartSceneActive = false;
+let trickHeartWordLanes = [];
 const SONG_EQ_STORAGE_KEY = 'vp_song_eq_v1';
 const EQ_BANDS = [
   { frequency: 60, type: 'lowshelf', label: 'Sub', detail: '60 Hz' },
@@ -737,6 +743,10 @@ function isOneMoreBiteSong(song = currentSong()) {
   return supportedLyricTrackForSong(song)?.scene === 'one-more-bite';
 }
 
+function isTrickHeartSong(song = currentSong()) {
+  return supportedLyricTrackForSong(song)?.scene === 'trick-heart';
+}
+
 function isHeroStorySong(song = currentSong()) {
   return supportedLyricTrackForSong(song)?.scene === 'hero-story';
 }
@@ -782,7 +792,9 @@ async function loadSupportedLyrics(config) {
       supportedLyricsPromise = null;
       supportedLyricsLineIndex = -2;
       supportedLyricsSectionIndex = -2;
-      if (config.scene === 'story-theater') {
+      if (config.scene === 'trick-heart') {
+        updateTrickHeartLyrics(currentCalibratedTime(), true);
+      } else if (config.scene === 'story-theater') {
         updateStoryTheaterLyrics(currentCalibratedTime(), true);
       } else if (config.scene === 'encore-dance') {
         updateEncoreDanceLyrics(currentCalibratedTime(), true);
@@ -796,8 +808,10 @@ async function loadSupportedLyrics(config) {
     .catch(error => {
       supportedLyricsPromise = null;
       console.warn('Could not load supported lyrics:', error);
-      const current = config.scene === 'story-theater'
-        ? $('story-current')
+      const current = config.scene === 'trick-heart'
+        ? $('trick-heart-en')
+        : config.scene === 'story-theater'
+          ? $('story-current')
         : config.scene === 'encore-dance'
           ? $('encore-current')
           : config.scene === 'hero-story'
@@ -854,6 +868,105 @@ function updateTimedWordStates(words, time) {
     word.element.classList.toggle('is-sung', isSung);
     word.element.classList.toggle('is-pending', !isCurrent && !isSung);
   });
+}
+
+function trickHeartLaneTokens(tokens, language) {
+  const values = Array.isArray(tokens) ? tokens.filter(Boolean) : [];
+  const separator = language === 'ja' ? '' : ' ';
+  const text = values.join(separator).trim();
+  if (!text) return [];
+  if (language === 'ja' && typeof Intl?.Segmenter === 'function') {
+    const segmenter = new Intl.Segmenter('ja', { granularity: 'word' });
+    return [...segmenter.segment(text)]
+      .filter(item => item.isWordLike || item.segment.trim())
+      .map(item => item.segment);
+  }
+  return text.split(/\s+/).filter(Boolean);
+}
+
+function trickHeartTokenTimings(tokens, line, language) {
+  const values = trickHeartLaneTokens(tokens, language);
+  const duration = Math.max(0.1, line.end - line.start);
+  const weights = values.map(value => Math.max(1, String(value).replace(/\s+/g, '').length ** 0.64));
+  const total = weights.reduce((sum, value) => sum + value, 0) || 1;
+  let cursor = line.start;
+  return values.map((word, index) => {
+    const end = index === values.length - 1 ? line.end : cursor + duration * weights[index] / total;
+    const timing = { word, start: cursor, end };
+    cursor = end;
+    return timing;
+  });
+}
+
+function renderTrickHeartLane(id, tokens, line, language) {
+  const element = $(id);
+  if (!element) return [];
+  element.replaceChildren();
+  return trickHeartTokenTimings(tokens, line, language).map(timing => {
+    const span = document.createElement('span');
+    span.className = 'trick-heart-word is-pending';
+    span.textContent = timing.word;
+    element.appendChild(span);
+    return { ...timing, element: span };
+  });
+}
+
+function renderTrickHeartLine(index, data) {
+  const lyrics = $('trick-heart-lyrics');
+  const line = index >= 0 ? data?.lines?.[index] : null;
+  trickHeartWordLanes = [];
+  if (!lyrics) return;
+  lyrics.classList.toggle('is-silent', !line);
+  if (!line) {
+    ['trick-heart-jp', 'trick-heart-en', 'trick-heart-romaji'].forEach(id => {
+      const element = $(id);
+      if (element) element.replaceChildren();
+    });
+    return;
+  }
+  trickHeartWordLanes = [
+    renderTrickHeartLane('trick-heart-jp', line.jp, line, 'ja'),
+    renderTrickHeartLane('trick-heart-en', line.en, line, 'en'),
+    renderTrickHeartLane('trick-heart-romaji', line.romaji, line, 'romaji')
+  ];
+}
+
+function updateTrickHeartLyrics(time = currentCalibratedTime(), force = false) {
+  if (!trickHeartSceneActive) return;
+  const data = supportedLyricsData;
+  if (!data) return;
+  const sectionIndex = data.sections.findIndex(section => time >= section.start && time < section.end);
+  if (force || sectionIndex !== supportedLyricsSectionIndex) {
+    supportedLyricsSectionIndex = sectionIndex;
+    const section = data.sections[sectionIndex] || data.sections[data.sections.length - 1];
+    const sectionLabel = $('trick-heart-section');
+    if (sectionLabel) sectionLabel.textContent = section?.short || 'TRICK HEART';
+  }
+  const lineIndex = data.lines.findIndex(line => time >= line.start && time < line.end);
+  if (force || lineIndex !== supportedLyricsLineIndex) {
+    supportedLyricsLineIndex = lineIndex;
+    renderTrickHeartLine(lineIndex, data);
+  }
+  trickHeartWordLanes.forEach(words => updateTimedWordStates(words, time));
+}
+
+function setTrickHeartOverlayActive(active, song = currentSong()) {
+  const nextActive = !!active && isTrickHeartSong(song);
+  const overlay = $('trick-heart-overlay');
+  if (overlay) overlay.classList.toggle('hidden', !nextActive);
+  if (trickHeartSceneActive === nextActive) return;
+  trickHeartSceneActive = nextActive;
+  supportedLyricsLineIndex = -2;
+  supportedLyricsSectionIndex = -2;
+  trickHeartWordLanes = [];
+  if (nextActive) {
+    const config = supportedLyricTrackForSong(song);
+    loadSupportedLyrics(config);
+    updateTrickHeartLyrics(currentCalibratedTime(), true);
+    scheduleNowLayoutSync();
+  } else {
+    renderTrickHeartLine(-1, null);
+  }
 }
 
 function decodedOneMoreBiteEnvelope(analysis, name) {
@@ -1848,6 +1961,9 @@ function beatPulseForProfile(profile, time) {
 }
 
 function activeFxTheme(song = currentSong()) {
+  if (isTrickHeartSong(song)) {
+    return tetoFxEnabled ? 'trick-heart' : 'off';
+  }
   if (isStoryTheaterSong(song)) {
     return tetoFxEnabled ? 'story-theater' : 'off';
   }
@@ -1902,6 +2018,7 @@ function setTetoFxEnabled(enabled) {
   updateHeroStoryLyrics(currentCalibratedTime(), true);
   updateEncoreDanceLyrics(currentCalibratedTime(), true);
   updateStoryTheaterLyrics(currentCalibratedTime(), true);
+  updateTrickHeartLyrics(currentCalibratedTime(), true);
 }
 
 function setFxTheme(theme) {
@@ -1925,6 +2042,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.classList.toggle('hero-story-fx-active', theme === 'hero-story');
   document.body.classList.toggle('encore-fx-active', theme === 'encore-dance');
   document.body.classList.toggle('story-theater-fx-active', theme === 'story-theater');
+  document.body.classList.toggle('trick-heart-fx-active', theme === 'trick-heart');
   document.body.style.setProperty('--fx-level', level.toFixed(3));
   document.body.style.setProperty('--teto-level', level.toFixed(3));
   document.body.style.setProperty('--disco-level', level.toFixed(3));
@@ -1934,27 +2052,39 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.style.setProperty('--hero-story-level', level.toFixed(3));
   document.body.style.setProperty('--encore-level', level.toFixed(3));
   document.body.style.setProperty('--story-level', level.toFixed(3));
+  document.body.style.setProperty('--trick-heart-level', level.toFixed(3));
   if (theme === 'story-theater') {
+    setTrickHeartOverlayActive(false);
     setOneMoreBiteTheaterActive(false);
     setHeroStoryTheaterActive(false);
     setEncoreTheaterActive(false);
     setStoryTheaterActive(true);
   } else if (theme === 'omb') {
+    setTrickHeartOverlayActive(false);
     setStoryTheaterActive(false);
     setHeroStoryTheaterActive(false);
     setEncoreTheaterActive(false);
     setOneMoreBiteTheaterActive(true);
   } else if (theme === 'hero-story') {
+    setTrickHeartOverlayActive(false);
     setStoryTheaterActive(false);
     setOneMoreBiteTheaterActive(false);
     setEncoreTheaterActive(false);
     setHeroStoryTheaterActive(true);
   } else if (theme === 'encore-dance') {
+    setTrickHeartOverlayActive(false);
     setStoryTheaterActive(false);
     setOneMoreBiteTheaterActive(false);
     setHeroStoryTheaterActive(false);
     setEncoreTheaterActive(true);
+  } else if (theme === 'trick-heart') {
+    setStoryTheaterActive(false);
+    setOneMoreBiteTheaterActive(false);
+    setHeroStoryTheaterActive(false);
+    setEncoreTheaterActive(false);
+    setTrickHeartOverlayActive(true);
   } else {
+    setTrickHeartOverlayActive(false);
     setStoryTheaterActive(false);
     setOneMoreBiteTheaterActive(false);
     setHeroStoryTheaterActive(false);
@@ -1964,6 +2094,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
 
 function desktopEffectsVariant(song = currentSong()) {
   const config = supportedLyricTrackForSong(song);
+  if (config?.scene === 'trick-heart') return 'trick-heart';
   if (config?.scene === 'story-theater') return config.variant || 'waiting';
   if (config?.scene === 'hero-story') return `hero-${config.variant || 'mili'}`;
   if (config?.scene === 'encore-dance') return `encore-${config.variant || 'jp'}`;
@@ -4506,6 +4637,7 @@ function updatePlaybackVisuals() {
   updateHeroStoryLyrics(current);
   updateEncoreDanceLyrics(current);
   updateStoryTheaterLyrics(current);
+  updateTrickHeartLyrics(current);
   publishDesktopEffectsState(false, current);
   if (timingDebugEnabled) updateTimingDebug(current);
 }
@@ -8408,6 +8540,239 @@ function drawStoryTheaterFx(levels, audioTime) {
   ctx.fillStyle = vignette; ctx.fillRect(0, 0, width, height);
 }
 
+function drawTrickHeartSymbol(ctx, x, y, size, color, alpha, rotation = 0) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(rotation);
+  ctx.scale(size, size);
+  ctx.beginPath();
+  ctx.moveTo(0, 0.34);
+  ctx.bezierCurveTo(-0.12, 0.18, -0.48, -0.04, -0.48, -0.3);
+  ctx.bezierCurveTo(-0.48, -0.58, -0.16, -0.7, 0, -0.44);
+  ctx.bezierCurveTo(0.16, -0.7, 0.48, -0.58, 0.48, -0.3);
+  ctx.bezierCurveTo(0.48, -0.04, 0.12, 0.18, 0, 0.34);
+  ctx.closePath();
+  ctx.fillStyle = `rgba(${color},${alpha})`;
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawTrickHeartFx(levels, audioTime) {
+  const canvas = $('teto-fx');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d', { alpha: true });
+  const width = canvas.width;
+  const height = canvas.height;
+  const section = supportedLyricsData?.sections?.find(item => audioTime >= item.start && audioTime < item.end);
+  const intensity = clamp(0.24, 1, Number(section?.intensity || 0.48));
+  const chorus = section?.chorus ? 1 : 0;
+  const beatPeriod = 60 / Number(supportedLyricsData?.bpm || 150);
+  const beatPosition = Math.max(0, (audioTime - Number(supportedLyricsData?.beatOffset || 0.19)) / beatPeriod);
+  const beatPhase = beatPosition - Math.floor(beatPosition);
+  const beat = Math.pow(1 - beatPhase, 5.4);
+  const halfPhase = (beatPosition * 2) % 1;
+  const halfBeat = Math.pow(1 - halfPhase, 7);
+  const bar = Math.floor(beatPosition / 4);
+  const energy = clamp(0, 1, levels.glow * 0.72 + levels.motion * 0.28);
+  const impact = clamp(0, 1, beat * (0.42 + intensity * 0.58) + levels.rise * 0.42);
+  const cream = '255,243,216';
+  const gold = '255,211,107';
+  const red = '207,40,84';
+  const wine = '104,21,43';
+  const ink = '36,15,34';
+  const blue = '127,156,223';
+
+  ctx.fillStyle = `rgba(${wine},${0.2 + energy * 0.08})`;
+  ctx.fillRect(0, 0, width, height);
+
+  // Full-frame club lighting: broad fields cross the entire stage on smooth
+  // beat-derived curves, so the scene moves as one composition rather than as
+  // a collection of small decorations.
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+  const sweepCycle = ((beatPosition / (chorus ? 8 : 16)) % 1.34) - 0.17;
+  const sweepX = sweepCycle * width;
+  ctx.save();
+  ctx.translate(sweepX, height * 0.5);
+  ctx.rotate(-0.34 + Math.sin(audioTime * 0.16) * 0.11);
+  const sweepWidth = width * (chorus ? 0.32 : 0.2);
+  const sweepGradient = ctx.createLinearGradient(-sweepWidth, 0, sweepWidth, 0);
+  sweepGradient.addColorStop(0, 'rgba(255,243,216,0)');
+  sweepGradient.addColorStop(0.45, `rgba(${gold},${0.045 + intensity * 0.035 + chorus * 0.08})`);
+  sweepGradient.addColorStop(0.58, `rgba(${cream},${0.055 + impact * 0.08 + chorus * 0.065})`);
+  sweepGradient.addColorStop(1, 'rgba(255,243,216,0)');
+  ctx.fillStyle = sweepGradient;
+  ctx.fillRect(-sweepWidth, -height, sweepWidth * 2, height * 2);
+  ctx.restore();
+
+  const fanCount = chorus ? 7 : 4;
+  for (let index = 0; index < fanCount; index++) {
+    const fromRight = index % 2 === 1;
+    const originX = fromRight ? width * 1.04 : -width * 0.04;
+    const originY = height * (index % 3 === 0 ? 0.92 : 0.08);
+    const baseAngle = fromRight ? Math.PI : 0;
+    const angle = baseAngle + (fromRight ? -1 : 1) * (
+      -0.55 + index * 0.19 + Math.sin(audioTime * (0.24 + index * 0.013) + index) * (0.18 + chorus * 0.08)
+    );
+    const reach = Math.hypot(width, height) * 1.25;
+    const spread = 0.06 + chorus * 0.035 + impact * 0.02;
+    ctx.beginPath();
+    ctx.moveTo(originX, originY);
+    ctx.lineTo(originX + Math.cos(angle - spread) * reach, originY + Math.sin(angle - spread) * reach);
+    ctx.lineTo(originX + Math.cos(angle + spread) * reach, originY + Math.sin(angle + spread) * reach);
+    ctx.closePath();
+    const beamColor = index % 3 === 0 ? blue : index % 3 === 1 ? red : gold;
+    ctx.fillStyle = `rgba(${beamColor},${0.035 + intensity * 0.025 + chorus * 0.07 + impact * 0.04})`;
+    ctx.fill();
+  }
+
+  const crossPhase = (beatPosition / 4) % 1;
+  const crossEase = 0.5 - 0.5 * Math.cos(crossPhase * Math.PI * 2);
+  const horizontalWash = ctx.createLinearGradient(0, 0, width, 0);
+  horizontalWash.addColorStop(0, `rgba(${blue},${(1 - crossEase) * (0.03 + chorus * 0.05)})`);
+  horizontalWash.addColorStop(0.5, 'rgba(255,255,255,0)');
+  horizontalWash.addColorStop(1, `rgba(${red},${crossEase * (0.035 + chorus * 0.065)})`);
+  ctx.fillStyle = horizontalWash;
+  ctx.fillRect(0, 0, width, height);
+  ctx.fillStyle = `rgba(${cream},${impact * (chorus ? 0.055 : 0.018)})`;
+  ctx.fillRect(0, 0, width, height);
+  ctx.restore();
+
+  // Long card-table shutters travel as a single composition. Their motion is
+  // beat-locked but continuous, which keeps the scene energetic without jitter.
+  const shutterSpeed = chorus ? 0.19 : 0.085;
+  for (let index = 0; index < 5; index++) {
+    const cycle = (audioTime * shutterSpeed + index * 0.29 + bar * 0.018) % 1.46;
+    const x = (cycle - 0.23) * width;
+    const panelWidth = width * (chorus ? 0.095 : 0.07);
+    const lean = width * (index % 2 ? 0.025 : -0.025);
+    ctx.beginPath();
+    ctx.moveTo(x + lean, 0);
+    ctx.lineTo(x + panelWidth + lean, 0);
+    ctx.lineTo(x + panelWidth - lean, height);
+    ctx.lineTo(x - lean, height);
+    ctx.closePath();
+    ctx.fillStyle = `rgba(${index % 2 ? cream : gold},${0.025 + intensity * 0.035 + chorus * 0.045 + impact * 0.035})`;
+    ctx.fill();
+  }
+
+  // Sleight-of-hand rails bend across the screen like the path of a thrown card.
+  const railCount = chorus ? 5 : 3;
+  for (let index = 0; index < railCount; index++) {
+    const lane = (index + 1) / (railCount + 1);
+    const sway = Math.sin(audioTime * (0.42 + index * 0.035) + index * 1.7) * height * (0.035 + chorus * 0.02);
+    const y = height * lane + sway;
+    ctx.beginPath();
+    ctx.moveTo(-width * 0.08, y);
+    ctx.bezierCurveTo(
+      width * 0.26, y - height * (0.12 + index * 0.01),
+      width * 0.68, y + height * (0.11 - index * 0.008),
+      width * 1.08, y - height * 0.025
+    );
+    ctx.strokeStyle = `rgba(${index % 3 === 0 ? gold : index % 3 === 1 ? blue : cream},${0.055 + intensity * 0.055 + chorus * 0.07 + impact * 0.04})`;
+    ctx.lineWidth = Math.max(1, canvas.width / 1600) * (1.2 + chorus * 0.7 + impact * 0.45);
+    ctx.stroke();
+  }
+
+  // Three large cards, never a particle cloud. They flip as coherent objects
+  // and leave one short afterimage on strong beats.
+  const cards = [
+    { x: 0.12, y: 0.25, speed: 0.055, tilt: -0.18 },
+    { x: 0.73, y: 0.18, speed: -0.045, tilt: 0.13 },
+    { x: 0.83, y: 0.68, speed: 0.04, tilt: -0.11 }
+  ];
+  cards.forEach((card, index) => {
+    const drift = Math.sin(audioTime * card.speed * Math.PI * 2 + index * 2.1);
+    const x = width * (card.x + drift * (chorus ? 0.055 : 0.026));
+    const y = height * (card.y + Math.cos(audioTime * 0.19 + index) * 0.022);
+    const cardWidth = Math.min(width, height) * (0.085 + chorus * 0.018);
+    const cardHeight = cardWidth * 1.42;
+    const flip = 0.2 + Math.abs(Math.cos(audioTime * (chorus ? 1.05 : 0.52) + index)) * 0.8;
+    const rotation = card.tilt + Math.sin(audioTime * 0.31 + index) * 0.08;
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rotation);
+    ctx.scale(flip, 1);
+    ctx.fillStyle = `rgba(${cream},${0.035 + intensity * 0.06 + chorus * 0.06})`;
+    ctx.strokeStyle = `rgba(${gold},${0.15 + chorus * 0.13 + impact * 0.08})`;
+    ctx.lineWidth = Math.max(1, canvas.width / 1700) * 1.5;
+    ctx.fillRect(-cardWidth / 2, -cardHeight / 2, cardWidth, cardHeight);
+    ctx.strokeRect(-cardWidth / 2, -cardHeight / 2, cardWidth, cardHeight);
+    drawTrickHeartSymbol(ctx, 0, 0, cardWidth * 0.36, index === 1 ? blue : red, 0.28 + chorus * 0.2, 0);
+    ctx.restore();
+    if (impact > 0.48) {
+      ctx.save();
+      ctx.translate(x - width * 0.018 * impact, y);
+      ctx.rotate(rotation);
+      ctx.strokeStyle = `rgba(${cream},${impact * 0.1})`;
+      ctx.strokeRect(-cardWidth / 2, -cardHeight / 2, cardWidth, cardHeight);
+      ctx.restore();
+    }
+  });
+
+  // A single oversized heart is the emotional anchor; it crosses the frame
+  // rather than multiplying into confetti.
+  const heartTravel = ((audioTime * (chorus ? 0.055 : 0.026)) + 0.18) % 1.36;
+  const heartX = width * (heartTravel - 0.18);
+  const heartY = height * (0.5 + Math.sin(audioTime * 0.5) * 0.12);
+  drawTrickHeartSymbol(
+    ctx,
+    heartX,
+    heartY,
+    Math.min(width, height) * (0.11 + impact * 0.026 + chorus * 0.035),
+    chorus ? cream : red,
+    0.055 + intensity * 0.045 + chorus * 0.07 + impact * 0.05,
+    -0.12 + Math.sin(audioTime * 0.2) * 0.08
+  );
+
+  // Top-hat aperture in the upper-right: a stable piece of song symbolism.
+  const hatX = width * 0.82;
+  const hatY = height * 0.24;
+  const hatWidth = Math.min(width, height) * 0.2;
+  ctx.save();
+  ctx.translate(hatX, hatY);
+  ctx.rotate(-0.06 + Math.sin(audioTime * 0.22) * 0.03);
+  ctx.fillStyle = `rgba(${ink},${0.14 + intensity * 0.08})`;
+  ctx.fillRect(-hatWidth * 0.34, -hatWidth * 0.3, hatWidth * 0.68, hatWidth * 0.45);
+  ctx.fillRect(-hatWidth * 0.52, hatWidth * 0.12, hatWidth * 1.04, hatWidth * 0.13);
+  ctx.fillStyle = `rgba(${gold},${0.12 + chorus * 0.12 + beat * 0.09})`;
+  ctx.fillRect(-hatWidth * 0.34, hatWidth * 0.02, hatWidth * 0.68, hatWidth * 0.08);
+  ctx.restore();
+
+  // Chorus accents use broad edge wipes and two wing-like folds. These occupy
+  // real visual space, but remain sparse and legible around the lyric lanes.
+  if (chorus) {
+    const wipe = width * (0.018 + beat * 0.08 + levels.rise * 0.04);
+    ctx.fillStyle = `rgba(${cream},${0.035 + impact * 0.09})`;
+    ctx.fillRect(0, 0, wipe, height);
+    ctx.fillRect(width - wipe, 0, wipe, height);
+    for (let index = 0; index < 2; index++) {
+      const direction = index ? -1 : 1;
+      const x = width * (index ? 0.88 : 0.12);
+      const y = height * (0.42 + Math.sin(audioTime * 0.7 + index * 2.4) * 0.16);
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(direction * (0.35 + Math.sin(audioTime * 0.5) * 0.14));
+      ctx.fillStyle = `rgba(${gold},${0.08 + impact * 0.1})`;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.quadraticCurveTo(direction * width * 0.055, -height * 0.06, direction * width * 0.09, 0);
+      ctx.quadraticCurveTo(direction * width * 0.05, height * 0.035, 0, 0);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  // A brief frame inversion on the strongest downbeats produces hyperpop
+  // impact while keeping every moving element large and intentional.
+  if (halfBeat > 0.72 && intensity > 0.68) {
+    const flashAlpha = (halfBeat - 0.72) * (chorus ? 0.16 : 0.07);
+    ctx.strokeStyle = `rgba(${cream},${flashAlpha})`;
+    ctx.lineWidth = Math.max(2, width * 0.004);
+    ctx.strokeRect(width * 0.018, height * 0.025, width * 0.964, height * 0.95);
+  }
+}
+
 function drawTetoFx(level) {
   const canvas = $('teto-fx');
   const view = $('view-now');
@@ -8421,6 +8786,10 @@ function drawTetoFx(level) {
   const theme = activeFxTheme();
   updateFxState(levels.glow);
   if (theme === 'off') return;
+  if (theme === 'trick-heart') {
+    drawTrickHeartFx(levels, currentCalibratedTime());
+    return;
+  }
   if (theme === 'omb') {
     drawOneMoreBiteFx(levels, currentCalibratedTime());
     return;
