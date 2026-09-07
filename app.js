@@ -8582,110 +8582,122 @@ function drawTrickHeartFx(levels, audioTime) {
   const ink = '36,15,34';
   const blue = '127,156,223';
 
-  ctx.fillStyle = `rgba(${wine},${0.2 + energy * 0.08})`;
+  // The canvas owns a real color stage instead of tinting a dark photograph.
+  // Its opposing rose and blue fields make the song's emotional sleight of hand
+  // readable even before the high-energy sections arrive.
+  const bg = ctx.createLinearGradient(0, 0, width, height);
+  bg.addColorStop(0, `rgba(39,7,34,${0.58 + energy * 0.1})`);
+  bg.addColorStop(0.48, `rgba(${wine},${0.48 + intensity * 0.18})`);
+  bg.addColorStop(1, `rgba(18,36,78,${0.52 + chorus * 0.12})`);
+  ctx.fillStyle = bg;
   ctx.fillRect(0, 0, width, height);
 
-  // Full-frame club lighting: broad fields cross the entire stage on smooth
-  // beat-derived curves, so the scene moves as one composition rather than as
-  // a collection of small decorations.
   ctx.save();
   ctx.globalCompositeOperation = 'screen';
-  const sweepCycle = ((beatPosition / (chorus ? 8 : 16)) % 1.34) - 0.17;
-  const sweepX = sweepCycle * width;
+  const roseField = ctx.createRadialGradient(
+    width * (0.18 + Math.sin(audioTime * 0.16) * 0.08),
+    height * (0.28 + Math.cos(audioTime * 0.13) * 0.1), 0,
+    width * 0.24, height * 0.32, width * 0.58
+  );
+  roseField.addColorStop(0, `rgba(${red},${0.16 + energy * 0.15 + chorus * 0.1})`);
+  roseField.addColorStop(1, `rgba(${red},0)`);
+  ctx.fillStyle = roseField;
+  ctx.fillRect(0, 0, width, height);
+  const blueField = ctx.createRadialGradient(
+    width * (0.82 + Math.cos(audioTime * 0.14) * 0.07),
+    height * (0.68 + Math.sin(audioTime * 0.11) * 0.09), 0,
+    width * 0.78, height * 0.66, width * 0.54
+  );
+  blueField.addColorStop(0, `rgba(${blue},${0.12 + energy * 0.12 + chorus * 0.11})`);
+  blueField.addColorStop(1, `rgba(${blue},0)`);
+  ctx.fillStyle = blueField;
+  ctx.fillRect(0, 0, width, height);
+  ctx.restore();
+
+  // A heartbeat occupies two musical beats: a stronger contraction followed
+  // by a smaller echo. Audio time keeps pause and seek deterministic.
+  const heartPhase = (beatPosition % 2) / 2;
+  const lobe = (phase, center, spread) => Math.exp(-Math.pow((phase - center) / spread, 2));
+  const heartbeat = lobe(heartPhase, 0.13, 0.075) + 0.62 * lobe(heartPhase, 0.36, 0.09);
+  const strength = (0.68 + energy * 0.42) * (chorus ? 1 : 0.68);
   ctx.save();
-  ctx.translate(sweepX, height * 0.5);
-  ctx.rotate(-0.34 + Math.sin(audioTime * 0.16) * 0.11);
-  const sweepWidth = width * (chorus ? 0.32 : 0.2);
-  const sweepGradient = ctx.createLinearGradient(-sweepWidth, 0, sweepWidth, 0);
-  sweepGradient.addColorStop(0, 'rgba(255,243,216,0)');
-  sweepGradient.addColorStop(0.45, `rgba(${gold},${0.045 + intensity * 0.035 + chorus * 0.08})`);
-  sweepGradient.addColorStop(0.58, `rgba(${cream},${0.055 + impact * 0.08 + chorus * 0.065})`);
-  sweepGradient.addColorStop(1, 'rgba(255,243,216,0)');
-  ctx.fillStyle = sweepGradient;
-  ctx.fillRect(-sweepWidth, -height, sweepWidth * 2, height * 2);
+  ctx.globalCompositeOperation = 'screen';
+  const light = ctx.createRadialGradient(width * 0.5, height * 0.42, 0,
+    width * 0.5, height * 0.42, Math.hypot(width, height) * 0.7);
+  light.addColorStop(0, `rgba(${cream},${heartbeat * strength * 0.4})`);
+  light.addColorStop(0.38, `rgba(${red},${heartbeat * strength * 0.32})`);
+  light.addColorStop(1, `rgba(${gold},${heartbeat * strength * 0.11})`);
+  ctx.fillStyle = light;
+  ctx.fillRect(0, 0, width, height);
+
+  // Reconstruct overlapping waves from their birth times; none retract or reset.
+  const cycle = Math.floor(beatPosition / 2);
+  for (let previous = 0; previous < 3; previous++) {
+    for (const echo of [0.13, 0.36]) {
+      const born = (cycle - previous + echo) * 2;
+      const age = beatPosition - born;
+      if (born < 0 || age < 0 || age > 3) continue;
+      const progress = age / 3;
+      const radius = Math.hypot(width, height) * (0.04 + progress * 0.72);
+      const alpha = Math.sin(Math.min(1, age / 0.18) * Math.PI / 2)
+        * Math.pow(1 - progress, 2) * strength * (echo === 0.13 ? 0.38 : 0.2);
+      ctx.beginPath();
+      ctx.ellipse(width * 0.5, height * 0.42, radius, radius * 0.68, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(${gold},${alpha})`;
+      ctx.lineWidth = Math.max(2, width * 0.008) * (1 - progress * 0.7);
+      ctx.stroke();
+    }
+  }
   ctx.restore();
 
-  const fanCount = chorus ? 7 : 4;
-  for (let index = 0; index < fanCount; index++) {
-    const fromRight = index % 2 === 1;
-    const originX = fromRight ? width * 1.04 : -width * 0.04;
-    const originY = height * (index % 3 === 0 ? 0.92 : 0.08);
-    const baseAngle = fromRight ? Math.PI : 0;
-    const angle = baseAngle + (fromRight ? -1 : 1) * (
-      -0.55 + index * 0.19 + Math.sin(audioTime * (0.24 + index * 0.013) + index) * (0.18 + chorus * 0.08)
-    );
-    const reach = Math.hypot(width, height) * 1.25;
-    const spread = 0.06 + chorus * 0.035 + impact * 0.02;
-    ctx.beginPath();
-    ctx.moveTo(originX, originY);
-    ctx.lineTo(originX + Math.cos(angle - spread) * reach, originY + Math.sin(angle - spread) * reach);
-    ctx.lineTo(originX + Math.cos(angle + spread) * reach, originY + Math.sin(angle + spread) * reach);
-    ctx.closePath();
-    const beamColor = index % 3 === 0 ? blue : index % 3 === 1 ? red : gold;
-    ctx.fillStyle = `rgba(${beamColor},${0.035 + intensity * 0.025 + chorus * 0.07 + impact * 0.04})`;
-    ctx.fill();
+  // Two five-line melody ribbons replace the indistinct rails. Notes travel
+  // along them, so the background visibly performs instead of merely glowing.
+  const staffScale = Math.max(1, canvas.width / 1500);
+  for (let staff = 0; staff < 2; staff++) {
+    const baseY = height * (staff ? 0.68 : 0.32);
+    const direction = staff ? -1 : 1;
+    const wave = Math.sin(audioTime * 0.58 + staff * 2.2) * height * 0.055;
+    for (let line = 0; line < 5; line++) {
+      const y = baseY + (line - 2) * height * 0.018 + wave;
+      ctx.beginPath();
+      ctx.moveTo(-width * 0.05, y);
+      ctx.bezierCurveTo(width * 0.27, y - direction * height * 0.12,
+        width * 0.7, y + direction * height * 0.1, width * 1.05, y - direction * height * 0.025);
+      ctx.strokeStyle = `rgba(${staff ? blue : gold},${0.14 + intensity * 0.09 + chorus * 0.12})`;
+      ctx.lineWidth = staffScale * (1.25 + chorus * 0.55);
+      ctx.stroke();
+    }
+    const notes = chorus ? 6 : 4;
+    for (let note = 0; note < notes; note++) {
+      const travel = (audioTime * (chorus ? 0.16 : 0.09) + note / notes + staff * 0.37) % 1.12;
+      const x = (travel - 0.06) * width;
+      const curveY = baseY + wave + Math.sin(travel * Math.PI * 2 + staff * Math.PI) * height * 0.075;
+      const noteSize = Math.min(width, height) * (0.012 + impact * 0.004);
+      ctx.save();
+      ctx.translate(x, curveY);
+      ctx.rotate(-0.28 * direction);
+      ctx.fillStyle = `rgba(${staff ? cream : gold},${0.3 + intensity * 0.22 + chorus * 0.2})`;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, noteSize * 1.25, noteSize * 0.82, -0.24, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillRect(noteSize * 0.88, -noteSize * 3.8, staffScale * 2.2, noteSize * 3.8);
+      ctx.restore();
+    }
   }
 
-  const crossPhase = (beatPosition / 4) % 1;
-  const crossEase = 0.5 - 0.5 * Math.cos(crossPhase * Math.PI * 2);
-  const horizontalWash = ctx.createLinearGradient(0, 0, width, 0);
-  horizontalWash.addColorStop(0, `rgba(${blue},${(1 - crossEase) * (0.03 + chorus * 0.05)})`);
-  horizontalWash.addColorStop(0.5, 'rgba(255,255,255,0)');
-  horizontalWash.addColorStop(1, `rgba(${red},${crossEase * (0.035 + chorus * 0.065)})`);
-  ctx.fillStyle = horizontalWash;
-  ctx.fillRect(0, 0, width, height);
-  ctx.fillStyle = `rgba(${cream},${impact * (chorus ? 0.055 : 0.018)})`;
-  ctx.fillRect(0, 0, width, height);
-  ctx.restore();
-
-  // Long card-table shutters travel as a single composition. Their motion is
-  // beat-locked but continuous, which keeps the scene energetic without jitter.
-  const shutterSpeed = chorus ? 0.19 : 0.085;
-  for (let index = 0; index < 5; index++) {
-    const cycle = (audioTime * shutterSpeed + index * 0.29 + bar * 0.018) % 1.46;
-    const x = (cycle - 0.23) * width;
-    const panelWidth = width * (chorus ? 0.095 : 0.07);
-    const lean = width * (index % 2 ? 0.025 : -0.025);
-    ctx.beginPath();
-    ctx.moveTo(x + lean, 0);
-    ctx.lineTo(x + panelWidth + lean, 0);
-    ctx.lineTo(x + panelWidth - lean, height);
-    ctx.lineTo(x - lean, height);
-    ctx.closePath();
-    ctx.fillStyle = `rgba(${index % 2 ? cream : gold},${0.025 + intensity * 0.035 + chorus * 0.045 + impact * 0.035})`;
-    ctx.fill();
-  }
-
-  // Sleight-of-hand rails bend across the screen like the path of a thrown card.
-  const railCount = chorus ? 5 : 3;
-  for (let index = 0; index < railCount; index++) {
-    const lane = (index + 1) / (railCount + 1);
-    const sway = Math.sin(audioTime * (0.42 + index * 0.035) + index * 1.7) * height * (0.035 + chorus * 0.02);
-    const y = height * lane + sway;
-    ctx.beginPath();
-    ctx.moveTo(-width * 0.08, y);
-    ctx.bezierCurveTo(
-      width * 0.26, y - height * (0.12 + index * 0.01),
-      width * 0.68, y + height * (0.11 - index * 0.008),
-      width * 1.08, y - height * 0.025
-    );
-    ctx.strokeStyle = `rgba(${index % 3 === 0 ? gold : index % 3 === 1 ? blue : cream},${0.055 + intensity * 0.055 + chorus * 0.07 + impact * 0.04})`;
-    ctx.lineWidth = Math.max(1, canvas.width / 1600) * (1.2 + chorus * 0.7 + impact * 0.45);
-    ctx.stroke();
-  }
-
-  // Three large cards, never a particle cloud. They flip as coherent objects
-  // and leave one short afterimage on strong beats.
+  // Four cream cards use separate flight paths and strong silhouettes. Their
+  // suits make them readable instantly instead of looking like pale rectangles.
   const cards = [
-    { x: 0.12, y: 0.25, speed: 0.055, tilt: -0.18 },
-    { x: 0.73, y: 0.18, speed: -0.045, tilt: 0.13 },
-    { x: 0.83, y: 0.68, speed: 0.04, tilt: -0.11 }
+    { x: 0.1, y: 0.22, speed: 0.062, tilt: -0.2 },
+    { x: 0.68, y: 0.18, speed: -0.052, tilt: 0.14 },
+    { x: 0.84, y: 0.7, speed: 0.048, tilt: -0.12 },
+    { x: 0.3, y: 0.76, speed: -0.043, tilt: 0.18 }
   ];
   cards.forEach((card, index) => {
     const drift = Math.sin(audioTime * card.speed * Math.PI * 2 + index * 2.1);
     const x = width * (card.x + drift * (chorus ? 0.055 : 0.026));
     const y = height * (card.y + Math.cos(audioTime * 0.19 + index) * 0.022);
-    const cardWidth = Math.min(width, height) * (0.085 + chorus * 0.018);
+    const cardWidth = Math.min(width, height) * (0.09 + chorus * 0.02);
     const cardHeight = cardWidth * 1.42;
     const flip = 0.2 + Math.abs(Math.cos(audioTime * (chorus ? 1.05 : 0.52) + index)) * 0.8;
     const rotation = card.tilt + Math.sin(audioTime * 0.31 + index) * 0.08;
@@ -8693,12 +8705,12 @@ function drawTrickHeartFx(levels, audioTime) {
     ctx.translate(x, y);
     ctx.rotate(rotation);
     ctx.scale(flip, 1);
-    ctx.fillStyle = `rgba(${cream},${0.035 + intensity * 0.06 + chorus * 0.06})`;
-    ctx.strokeStyle = `rgba(${gold},${0.15 + chorus * 0.13 + impact * 0.08})`;
-    ctx.lineWidth = Math.max(1, canvas.width / 1700) * 1.5;
+    ctx.fillStyle = `rgba(${cream},${0.16 + intensity * 0.12 + chorus * 0.12})`;
+    ctx.strokeStyle = `rgba(${index % 2 ? blue : gold},${0.44 + chorus * 0.18 + impact * 0.1})`;
+    ctx.lineWidth = Math.max(1.5, canvas.width / 1400) * 1.8;
     ctx.fillRect(-cardWidth / 2, -cardHeight / 2, cardWidth, cardHeight);
     ctx.strokeRect(-cardWidth / 2, -cardHeight / 2, cardWidth, cardHeight);
-    drawTrickHeartSymbol(ctx, 0, 0, cardWidth * 0.36, index === 1 ? blue : red, 0.28 + chorus * 0.2, 0);
+    drawTrickHeartSymbol(ctx, 0, 0, cardWidth * 0.38, index % 2 ? blue : red, 0.68 + chorus * 0.18, 0);
     ctx.restore();
     if (impact > 0.48) {
       ctx.save();
@@ -8710,20 +8722,39 @@ function drawTrickHeartFx(levels, audioTime) {
     }
   });
 
-  // A single oversized heart is the emotional anchor; it crosses the frame
-  // rather than multiplying into confetti.
-  const heartTravel = ((audioTime * (chorus ? 0.055 : 0.026)) + 0.18) % 1.36;
-  const heartX = width * (heartTravel - 0.18);
-  const heartY = height * (0.5 + Math.sin(audioTime * 0.5) * 0.12);
-  drawTrickHeartSymbol(
-    ctx,
-    heartX,
-    heartY,
-    Math.min(width, height) * (0.11 + impact * 0.026 + chorus * 0.035),
-    chorus ? cream : red,
-    0.055 + intensity * 0.045 + chorus * 0.07 + impact * 0.05,
-    -0.12 + Math.sin(audioTime * 0.2) * 0.08
-  );
+  // The formerly ambiguous middle shape is now a stable split heart. A blue
+  // half, rose half, gold seam, and orbiting card make the trick explicit.
+  const anchorX = width * 0.51;
+  const anchorY = height * 0.46;
+  const anchorSize = Math.min(width, height) * (0.17 + heartbeat * 0.018 + chorus * 0.025);
+  ctx.save();
+  ctx.beginPath(); ctx.rect(0, 0, anchorX, height); ctx.clip();
+  drawTrickHeartSymbol(ctx, anchorX, anchorY, anchorSize, red, 0.38 + intensity * 0.18 + impact * 0.16, 0);
+  ctx.restore();
+  ctx.save();
+  ctx.beginPath(); ctx.rect(anchorX, 0, width - anchorX, height); ctx.clip();
+  drawTrickHeartSymbol(ctx, anchorX, anchorY, anchorSize, blue, 0.34 + intensity * 0.17 + impact * 0.14, 0);
+  ctx.restore();
+  ctx.save();
+  ctx.translate(anchorX, anchorY);
+  ctx.scale(anchorSize, anchorSize);
+  ctx.beginPath();
+  ctx.moveTo(0, 0.34);
+  ctx.bezierCurveTo(-0.12, 0.18, -0.48, -0.04, -0.48, -0.3);
+  ctx.bezierCurveTo(-0.48, -0.58, -0.16, -0.7, 0, -0.44);
+  ctx.bezierCurveTo(0.16, -0.7, 0.48, -0.58, 0.48, -0.3);
+  ctx.bezierCurveTo(0.48, -0.04, 0.12, 0.18, 0, 0.34);
+  ctx.closePath();
+  ctx.strokeStyle = `rgba(${cream},${0.5 + impact * 0.28})`;
+  ctx.lineWidth = Math.max(0.02, width / anchorSize / 720);
+  ctx.stroke();
+  ctx.restore();
+  ctx.beginPath();
+  ctx.moveTo(anchorX, anchorY - anchorSize * 0.5);
+  ctx.lineTo(anchorX, anchorY + anchorSize * 0.32);
+  ctx.strokeStyle = `rgba(${gold},${0.46 + impact * 0.32})`;
+  ctx.lineWidth = Math.max(2, width * 0.0024);
+  ctx.stroke();
 
   // Top-hat aperture in the upper-right: a stable piece of song symbolism.
   const hatX = width * 0.82;
@@ -8732,35 +8763,34 @@ function drawTrickHeartFx(levels, audioTime) {
   ctx.save();
   ctx.translate(hatX, hatY);
   ctx.rotate(-0.06 + Math.sin(audioTime * 0.22) * 0.03);
-  ctx.fillStyle = `rgba(${ink},${0.14 + intensity * 0.08})`;
-  ctx.fillRect(-hatWidth * 0.34, -hatWidth * 0.3, hatWidth * 0.68, hatWidth * 0.45);
-  ctx.fillRect(-hatWidth * 0.52, hatWidth * 0.12, hatWidth * 1.04, hatWidth * 0.13);
-  ctx.fillStyle = `rgba(${gold},${0.12 + chorus * 0.12 + beat * 0.09})`;
+  ctx.beginPath();
+  ctx.moveTo(-hatWidth * 0.34, hatWidth * 0.12);
+  ctx.lineTo(-hatWidth * 0.29, -hatWidth * 0.32);
+  ctx.quadraticCurveTo(0, -hatWidth * 0.42, hatWidth * 0.29, -hatWidth * 0.32);
+  ctx.lineTo(hatWidth * 0.34, hatWidth * 0.12);
+  ctx.closePath();
+  ctx.fillStyle = `rgba(${ink},${0.62 + intensity * 0.14})`;
+  ctx.fill();
+  ctx.strokeStyle = `rgba(${cream},${0.42 + chorus * 0.18})`;
+  ctx.lineWidth = Math.max(1.5, width * 0.0018);
+  ctx.stroke();
+  ctx.fillStyle = `rgba(${gold},${0.32 + chorus * 0.18 + beat * 0.12})`;
   ctx.fillRect(-hatWidth * 0.34, hatWidth * 0.02, hatWidth * 0.68, hatWidth * 0.08);
+  ctx.beginPath();
+  ctx.ellipse(0, hatWidth * 0.15, hatWidth * 0.55, hatWidth * 0.13, 0, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(${ink},${0.72 + intensity * 0.12})`;
+  ctx.fill();
+  ctx.strokeStyle = `rgba(${cream},${0.48 + chorus * 0.2})`;
+  ctx.stroke();
   ctx.restore();
 
-  // Chorus accents use broad edge wipes and two wing-like folds. These occupy
-  // real visual space, but remain sparse and legible around the lyric lanes.
+  // Chorus accents brighten the entire frame without introducing abstract
+  // shapes that could be mistaken for parts of the song's iconography.
   if (chorus) {
     const wipe = width * (0.018 + beat * 0.08 + levels.rise * 0.04);
     ctx.fillStyle = `rgba(${cream},${0.035 + impact * 0.09})`;
     ctx.fillRect(0, 0, wipe, height);
     ctx.fillRect(width - wipe, 0, wipe, height);
-    for (let index = 0; index < 2; index++) {
-      const direction = index ? -1 : 1;
-      const x = width * (index ? 0.88 : 0.12);
-      const y = height * (0.42 + Math.sin(audioTime * 0.7 + index * 2.4) * 0.16);
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(direction * (0.35 + Math.sin(audioTime * 0.5) * 0.14));
-      ctx.fillStyle = `rgba(${gold},${0.08 + impact * 0.1})`;
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.quadraticCurveTo(direction * width * 0.055, -height * 0.06, direction * width * 0.09, 0);
-      ctx.quadraticCurveTo(direction * width * 0.05, height * 0.035, 0, 0);
-      ctx.fill();
-      ctx.restore();
-    }
   }
 
   // A brief frame inversion on the strongest downbeats produces hyperpop

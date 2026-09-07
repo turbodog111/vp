@@ -393,7 +393,12 @@ body.trick-heart-fx-active {
   --trick-blue: #7f9cdf;
 }
 body.trick-heart-fx-active .now-view.active {
-  background: #68152b;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(207, 40, 84, calc(0.28 + var(--trick-heart-level, 0) * 0.24)) 0%, transparent 43%),
+    radial-gradient(circle at 82% 72%, rgba(90, 122, 214, calc(0.2 + var(--trick-heart-level, 0) * 0.2)) 0%, transparent 48%),
+    radial-gradient(circle at 52% 44%, rgba(255, 211, 107, calc(0.08 + var(--trick-heart-level, 0) * 0.18)) 0%, transparent 36%),
+    linear-gradient(128deg, #250820 0%, #68152b 48%, #14264f 100%);
+  background-blend-mode: screen, screen, screen, normal;
 }
 body.trick-heart-fx-active .now-view.active::before {
   content: "";
@@ -401,9 +406,10 @@ body.trick-heart-fx-active .now-view.active::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: url("./songs/art/trick-heart.jpg") center 42% / cover no-repeat;
-  opacity: calc(0.035 + var(--trick-heart-level, 0) * 0.045);
-  filter: saturate(0.75) contrast(1.08);
+  background:
+    linear-gradient(114deg, transparent 0 17%, rgba(255, 243, 216, 0.08) 17.2% 17.7%, transparent 17.9% 61%, rgba(255, 211, 107, 0.07) 61.2% 61.7%, transparent 61.9%),
+    repeating-linear-gradient(0deg, transparent 0 52px, rgba(255, 243, 216, 0.025) 53px, transparent 54px);
+  opacity: calc(0.5 + var(--trick-heart-level, 0) * 0.42);
 }
 body.trick-heart-fx-active .teto-fx-canvas {
   mix-blend-mode: normal;
