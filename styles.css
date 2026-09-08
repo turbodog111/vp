@@ -453,6 +453,78 @@ body.trick-heart-fx-active .hero-ring {
   border-color: rgba(104, 21, 43, 0.18);
 }
 
+/* Magic Maid: an antique parlor turns into a luminous service stage. */
+body.magic-maid-fx-active {
+  --accent: #f7be5b;
+  --magic-maid-cream: #fff2da;
+  --magic-maid-rose: #e73b77;
+  --magic-maid-wine: #57122e;
+  --magic-maid-blue: #5c8fcc;
+}
+body.magic-maid-fx-active .now-view.active {
+  background:
+    radial-gradient(circle at 50% 36%, rgba(247, 190, 91, calc(0.06 + var(--magic-maid-level, 0) * 0.16)) 0%, transparent 34%),
+    linear-gradient(135deg, #171a3a 0%, #57122e 52%, #26142d 100%);
+}
+body.magic-maid-fx-active .now-view.active::before {
+  background:
+    linear-gradient(90deg, rgba(255, 242, 218, 0.035) 1px, transparent 1px),
+    linear-gradient(rgba(255, 242, 218, 0.025) 1px, transparent 1px);
+  background-size: 84px 84px;
+  opacity: calc(0.2 + var(--magic-maid-level, 0) * 0.3);
+}
+body.magic-maid-fx-active .teto-fx-canvas {
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+body.magic-maid-fx-active .now-stage {
+  border-color: rgba(247, 190, 91, 0.32);
+  background: rgba(23, 10, 28, 0.08);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 242, 218, 0.06),
+    inset 0 -90px 120px rgba(23, 10, 28, 0.2),
+    0 22px 60px rgba(13, 5, 21, 0.34);
+}
+body.magic-maid-fx-active .now-kicker {
+  color: #f7be5b;
+  text-shadow: 0 0 18px rgba(247, 190, 91, 0.34);
+}
+body.magic-maid-fx-active .now-meta h1 {
+  color: #fff2da;
+  text-shadow:
+    0 2px 0 rgba(87, 18, 46, 0.72),
+    0 0 calc(12px + var(--magic-maid-level, 0) * 24px) rgba(231, 59, 119, 0.28);
+}
+body.magic-maid-fx-active .now-subtitle,
+body.magic-maid-fx-active .queue-label,
+body.magic-maid-fx-active #queue-next,
+body.magic-maid-fx-active .hero-time {
+  color: rgba(255, 242, 218, 0.78);
+}
+body.magic-maid-fx-active .hero-play {
+  color: #57122e;
+  background:
+    radial-gradient(circle at 38% 30%, #fff9ec 0%, #fff2da 46%, #e8c49e 100%);
+  border-color: rgba(247, 190, 91, 0.76);
+  box-shadow:
+    0 0 0 7px rgba(87, 18, 46, 0.48),
+    0 0 calc(22px + var(--magic-maid-level, 0) * 42px) rgba(231, 59, 119, 0.46);
+}
+body.magic-maid-fx-active .hero-play:hover {
+  color: #e73b77;
+  border-color: #fff2da;
+}
+body.magic-maid-fx-active .hero-play::before {
+  background: conic-gradient(#f7be5b var(--progress), rgba(87, 18, 46, 0.22) 0deg);
+}
+body.magic-maid-fx-active .hero-play::after {
+  border-color: rgba(255, 242, 218, calc(0.2 + var(--level) * 0.48));
+  box-shadow: 0 0 calc(18px + var(--level) * 34px) rgba(231, 59, 119, calc(0.08 + var(--level) * 0.22));
+}
+body.magic-maid-fx-active .hero-ring {
+  border-color: rgba(247, 190, 91, 0.34);
+}
+
 .trick-heart-overlay {
   position: absolute;
   z-index: 4;

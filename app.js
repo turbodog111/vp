@@ -264,6 +264,25 @@ const PENTHOUSE_EFFECT_PROFILE = {
     {name: 'Last chorus', start: 179.5, end: 211.38, intensity: 1.08, chorus: true, fade: 0.5},
   ],
 };
+const MAGIC_MAID_EFFECT_PROFILE = {
+  bpm: 176,
+  key: 'B-flat major',
+  constantRings: true,
+  beatOffset: 0.12,
+  allowFx: true,
+  sections: [
+    {name: 'Spell overture', start: 0, end: 5.45, intensity: 0.22, chorus: false, fade: 0.35},
+    {name: 'Antique room', start: 5.45, end: 27.45, intensity: 0.38, chorus: false, fade: 0.45},
+    {name: 'Magic service I', start: 27.45, end: 49.3, intensity: 1, chorus: true, fade: 0.55},
+    {name: 'Tea interlude', start: 49.3, end: 70.35, intensity: 0.56, chorus: false, fade: 0.5},
+    {name: 'Empty room', start: 70.35, end: 78.05, intensity: 0.25, chorus: false, fade: 0.5},
+    {name: 'Magic service II', start: 78.05, end: 111.25, intensity: 0.96, chorus: true, fade: 0.55},
+    {name: 'Midnight vow', start: 111.25, end: 132.2, intensity: 0.66, chorus: false, fade: 0.45},
+    {name: 'Curtain lift', start: 132.2, end: 136.15, intensity: 0.48, chorus: false, fade: 0.3},
+    {name: 'Final magic stage', start: 136.15, end: 154.1, intensity: 1.08, chorus: true, fade: 0.55},
+    {name: 'Curtain call', start: 154.1, end: 159, intensity: 0.3, chorus: false, fade: 0.7},
+  ],
+};
 /** Doki Doki Forever — BPM from OR3O charting (165). Sections track lyric choruses. */
 const DDF_EFFECT_PROFILE = {
   bpm: 165,
@@ -322,6 +341,7 @@ function audioProfileEntries(basePath, profile) {
 }
 const SONG_EFFECT_PROFILES = Object.fromEntries([
   ...audioProfileEntries('songs/Penthouse - One, Two, Three (一二三)', PENTHOUSE_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/MIMI feat. Kasane Teto SV - Magic Maid', MAGIC_MAID_EFFECT_PROFILE),
   ...audioProfileEntries('songs/Jamie Paige - Machine Love', bpmEffectProfile(175)),
   ...audioProfileEntries('songs/Lambie - Machine Love (Drums)', bpmEffectProfile(175)),
   ...audioProfileEntries('songs/The8BitDrummer - Machine Love (Drums)', bpmEffectProfile(175)),
@@ -745,6 +765,13 @@ function isOneMoreBiteSong(song = currentSong()) {
 
 function isTrickHeartSong(song = currentSong()) {
   return supportedLyricTrackForSong(song)?.scene === 'trick-heart';
+}
+
+function isMagicMaidSong(song = currentSong()) {
+  if (!song) return false;
+  return [song.path, song.id, song.name]
+    .map(normalizeSongRef)
+    .includes('songs/mimi feat. kasane teto sv - magic maid');
 }
 
 function isHeroStorySong(song = currentSong()) {
@@ -1961,6 +1988,9 @@ function beatPulseForProfile(profile, time) {
 }
 
 function activeFxTheme(song = currentSong()) {
+  if (isMagicMaidSong(song)) {
+    return tetoFxEnabled ? 'magic-maid' : 'off';
+  }
   if (isTrickHeartSong(song)) {
     return tetoFxEnabled ? 'trick-heart' : 'off';
   }
@@ -2043,6 +2073,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.classList.toggle('encore-fx-active', theme === 'encore-dance');
   document.body.classList.toggle('story-theater-fx-active', theme === 'story-theater');
   document.body.classList.toggle('trick-heart-fx-active', theme === 'trick-heart');
+  document.body.classList.toggle('magic-maid-fx-active', theme === 'magic-maid');
   document.body.style.setProperty('--fx-level', level.toFixed(3));
   document.body.style.setProperty('--teto-level', level.toFixed(3));
   document.body.style.setProperty('--disco-level', level.toFixed(3));
@@ -2053,6 +2084,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.style.setProperty('--encore-level', level.toFixed(3));
   document.body.style.setProperty('--story-level', level.toFixed(3));
   document.body.style.setProperty('--trick-heart-level', level.toFixed(3));
+  document.body.style.setProperty('--magic-maid-level', level.toFixed(3));
   if (theme === 'story-theater') {
     setTrickHeartOverlayActive(false);
     setOneMoreBiteTheaterActive(false);
@@ -2093,6 +2125,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
 }
 
 function desktopEffectsVariant(song = currentSong()) {
+  if (isMagicMaidSong(song)) return 'magic-maid';
   const config = supportedLyricTrackForSong(song);
   if (config?.scene === 'trick-heart') return 'trick-heart';
   if (config?.scene === 'story-theater') return config.variant || 'waiting';
@@ -8803,6 +8836,318 @@ function drawTrickHeartFx(levels, audioTime) {
   }
 }
 
+function drawMagicMaidStar(ctx, x, y, outer, inner, rotation, color, alpha) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(rotation);
+  ctx.beginPath();
+  for (let i = 0; i < 8; i++) {
+    const angle = -Math.PI / 2 + i * Math.PI / 4;
+    const radius = i % 2 ? inner : outer;
+    const px = Math.cos(angle) * radius;
+    const py = Math.sin(angle) * radius;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fillStyle = `rgba(${color},${alpha})`;
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawMagicMaidCup(ctx, x, y, size, colors, alpha, tilt = 0) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(tilt);
+  ctx.strokeStyle = `rgba(${colors.cream},${alpha})`;
+  ctx.fillStyle = `rgba(${colors.wine},${alpha * 0.72})`;
+  ctx.lineWidth = Math.max(2, size * 0.035);
+  ctx.beginPath();
+  ctx.moveTo(-size * 0.44, -size * 0.18);
+  ctx.quadraticCurveTo(-size * 0.38, size * 0.34, 0, size * 0.36);
+  ctx.quadraticCurveTo(size * 0.38, size * 0.34, size * 0.44, -size * 0.18);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.ellipse(0, -size * 0.18, size * 0.44, size * 0.13, 0, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(${colors.gold},${alpha * 0.54})`;
+  ctx.fill();
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(size * 0.45, size * 0.02, size * 0.22, -Math.PI * 0.55, Math.PI * 0.55);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.ellipse(0, size * 0.43, size * 0.62, size * 0.11, 0, 0, Math.PI * 2);
+  ctx.strokeStyle = `rgba(${colors.rose},${alpha * 0.72})`;
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawMagicMaidBow(ctx, x, y, size, colors, alpha, rotation = 0) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(rotation);
+  ctx.fillStyle = `rgba(${colors.rose},${alpha})`;
+  ctx.strokeStyle = `rgba(${colors.cream},${alpha * 0.82})`;
+  ctx.lineWidth = Math.max(2, size * 0.028);
+  ctx.beginPath();
+  ctx.moveTo(-size * 0.08, 0);
+  ctx.bezierCurveTo(-size * 0.42, -size * 0.36, -size * 0.72, -size * 0.28, -size * 0.58, size * 0.12);
+  ctx.bezierCurveTo(-size * 0.48, size * 0.4, -size * 0.2, size * 0.25, -size * 0.06, size * 0.08);
+  ctx.closePath();
+  ctx.fill(); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(size * 0.08, 0);
+  ctx.bezierCurveTo(size * 0.42, -size * 0.36, size * 0.72, -size * 0.28, size * 0.58, size * 0.12);
+  ctx.bezierCurveTo(size * 0.48, size * 0.4, size * 0.2, size * 0.25, size * 0.06, size * 0.08);
+  ctx.closePath();
+  ctx.fill(); ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, size * 0.14, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(${colors.gold},${alpha})`;
+  ctx.fill(); ctx.stroke();
+  ctx.restore();
+}
+
+function drawMagicMaidFx(levels, audioTime) {
+  const canvas = $('teto-fx');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d', { alpha: true });
+  const width = canvas.width;
+  const height = canvas.height;
+  const profile = MAGIC_MAID_EFFECT_PROFILE;
+  const section = effectSectionAt(profile, audioTime);
+  const intensity = clamp(0.18, 1.08, Number(section?.intensity || 0.34) * Number(section?.fadeLevel ?? 1));
+  const chorus = section?.chorus ? 1 : 0;
+  const beats = Math.max(0, (audioTime - profile.beatOffset) * profile.bpm / 60);
+  const beatPhase = beats - Math.floor(beats);
+  const beat = Math.pow(1 - beatPhase, 5.2);
+  const halfBeat = Math.pow(1 - ((beats * 2) % 1), 7.2);
+  const barPhase = (beats % 4) / 4;
+  const barPulse = Math.pow(1 - barPhase, 4);
+  const energy = clamp(0, 1, levels.glow * 0.68 + levels.motion * 0.32);
+  const rise = clamp(0, 1, Number(tetoRiseEnergy) || 0);
+  const impact = clamp(0, 1, beat * (0.34 + intensity * 0.5) + rise * 0.62);
+  const colors = {
+    cream: '255,242,218',
+    parchment: '222,194,160',
+    wine: '87,18,46',
+    rose: '231,59,119',
+    gold: '247,190,91',
+    midnight: '23,26,58',
+    blue: '92,143,204',
+  };
+  const hero = getHeroFxAnchor(canvas);
+  const cx = hero?.cx ?? width * 0.53;
+  const cy = hero?.cy ?? height * 0.47;
+  const radius = hero?.radius ?? Math.min(width, height) * 0.12;
+
+  // The room begins as an antique parlor and turns into a midnight stage.
+  const room = ctx.createLinearGradient(0, 0, width, height);
+  room.addColorStop(0, `rgba(${colors.midnight},${0.93 - chorus * 0.08})`);
+  room.addColorStop(0.48, `rgba(${colors.wine},${0.82 + intensity * 0.08})`);
+  room.addColorStop(1, `rgba(35,20,42,${0.94 - chorus * 0.06})`);
+  ctx.fillStyle = room;
+  ctx.fillRect(0, 0, width, height);
+
+  // Tall window panes drift laterally, making the whole room visibly travel.
+  const paneShift = Math.sin(audioTime * 0.24) * width * 0.028;
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+  for (let pane = 0; pane < 5; pane++) {
+    const x = width * (0.12 + pane * 0.2) + paneShift * (pane % 2 ? -1 : 1);
+    const paneWidth = width * 0.145;
+    const paneGlow = ctx.createLinearGradient(x, height * 0.06, x, height * 0.78);
+    paneGlow.addColorStop(0, `rgba(${colors.blue},${0.035 + chorus * 0.08 + energy * 0.05})`);
+    paneGlow.addColorStop(0.55, `rgba(${colors.cream},${0.025 + intensity * 0.045})`);
+    paneGlow.addColorStop(1, 'rgba(255,242,218,0)');
+    ctx.fillStyle = paneGlow;
+    ctx.fillRect(x - paneWidth / 2, height * 0.04, paneWidth, height * 0.74);
+    ctx.strokeStyle = `rgba(${colors.parchment},${0.08 + chorus * 0.08})`;
+    ctx.lineWidth = Math.max(1, width * 0.0012);
+    ctx.strokeRect(x - paneWidth / 2, height * 0.04, paneWidth, height * 0.74);
+  }
+  ctx.restore();
+
+  // Perspective floor bends toward the play control as the room becomes a stage.
+  const horizon = height * 0.69;
+  ctx.save();
+  ctx.strokeStyle = `rgba(${colors.gold},${0.08 + intensity * 0.08 + impact * 0.06})`;
+  ctx.lineWidth = Math.max(1, width * 0.001);
+  for (let lane = -6; lane <= 6; lane++) {
+    ctx.beginPath();
+    ctx.moveTo(width * 0.5 + lane * width * 0.025, horizon);
+    ctx.lineTo(width * 0.5 + lane * width * 0.13, height);
+    ctx.stroke();
+  }
+  for (let row = 0; row < 7; row++) {
+    const p = row / 6;
+    const y = horizon + Math.pow(p, 1.75) * (height - horizon);
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+  }
+  ctx.restore();
+
+  // Velvet curtains pull wider for choruses and breathe gently between them.
+  const opening = 0.29 + chorus * 0.17 + energy * 0.025;
+  const curtainEdge = width * opening;
+  for (const side of [-1, 1]) {
+    ctx.save();
+    if (side > 0) { ctx.translate(width, 0); ctx.scale(-1, 1); }
+    const curtain = ctx.createLinearGradient(0, 0, curtainEdge, 0);
+    curtain.addColorStop(0, `rgba(42,7,25,${0.98 - chorus * 0.08})`);
+    curtain.addColorStop(0.55, `rgba(${colors.wine},${0.86 - chorus * 0.1})`);
+    curtain.addColorStop(1, `rgba(${colors.rose},${0.38 + impact * 0.16})`);
+    ctx.fillStyle = curtain;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(curtainEdge, 0);
+    ctx.bezierCurveTo(curtainEdge * (0.9 + impact * 0.03), height * 0.28,
+      curtainEdge * 0.7, height * 0.72, curtainEdge * (0.9 - chorus * 0.22), height);
+    ctx.lineTo(0, height);
+    ctx.closePath(); ctx.fill();
+    for (let fold = 1; fold < 6; fold++) {
+      const fx = curtainEdge * fold / 6;
+      ctx.beginPath();
+      ctx.moveTo(fx, 0);
+      ctx.bezierCurveTo(fx * 0.94, height * 0.38, fx * 0.72, height * 0.7, fx * 0.88, height);
+      ctx.strokeStyle = `rgba(${colors.cream},${0.075 + impact * 0.055})`;
+      ctx.lineWidth = Math.max(1, width * 0.0012); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // Broad spell ribbons sweep edge-to-edge; their paths are smooth and repeatable.
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+  for (let ribbon = 0; ribbon < (chorus ? 4 : 2); ribbon++) {
+    const phase = audioTime * (0.28 + ribbon * 0.025) + ribbon * 1.7;
+    const y = height * (0.22 + ribbon * 0.17) + Math.sin(phase) * height * (0.045 + chorus * 0.025);
+    ctx.beginPath();
+    ctx.moveTo(-width * 0.08, y);
+    ctx.bezierCurveTo(width * 0.24, y - height * (0.18 + chorus * 0.07) * Math.sin(phase * 0.7),
+      width * 0.7, y + height * (0.16 + chorus * 0.08) * Math.cos(phase * 0.6),
+      width * 1.08, y - height * 0.04);
+    const ribbonColor = ribbon % 2 ? colors.blue : colors.gold;
+    ctx.strokeStyle = `rgba(${ribbonColor},${0.2 + intensity * 0.11 + impact * 0.12})`;
+    ctx.lineWidth = Math.max(3, width * (0.003 + chorus * 0.0015));
+    ctx.lineCap = 'round'; ctx.stroke();
+  }
+  ctx.restore();
+
+  // Large tea-service silhouettes cross the room instead of tiny confetti.
+  const cupTravel = 0.08 + ((audioTime * (chorus ? 0.055 : 0.028)) % 0.84);
+  drawMagicMaidCup(ctx, width * cupTravel, height * (0.76 + Math.sin(audioTime * 0.5) * 0.018),
+    Math.min(width, height) * (0.13 + chorus * 0.025), colors, 0.42 + intensity * 0.22, -0.06);
+  const cupTravelBack = 0.92 - ((audioTime * (chorus ? 0.043 : 0.022) + 0.45) % 0.84);
+  drawMagicMaidCup(ctx, width * cupTravelBack, height * 0.2,
+    Math.min(width, height) * 0.095, colors, 0.3 + intensity * 0.15, 0.08);
+
+  // A persistent silver cloche keeps the service motif readable at every instant.
+  const clocheX = width * 0.82;
+  const clocheY = height * 0.73;
+  const clocheSize = Math.min(width, height) * (0.17 + chorus * 0.025);
+  ctx.save();
+  ctx.translate(clocheX, clocheY + Math.sin(audioTime * 0.42) * height * 0.012);
+  ctx.strokeStyle = `rgba(${colors.cream},${0.34 + intensity * 0.28})`;
+  ctx.fillStyle = `rgba(${colors.blue},${0.12 + intensity * 0.12})`;
+  ctx.lineWidth = Math.max(2, clocheSize * 0.025);
+  ctx.beginPath();
+  ctx.arc(0, 0, clocheSize * 0.5, Math.PI, Math.PI * 2);
+  ctx.lineTo(clocheSize * 0.5, clocheSize * 0.08);
+  ctx.lineTo(-clocheSize * 0.5, clocheSize * 0.08);
+  ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.beginPath();
+  ctx.ellipse(0, clocheSize * 0.12, clocheSize * 0.68, clocheSize * 0.1, 0, 0, Math.PI * 2);
+  ctx.strokeStyle = `rgba(${colors.gold},${0.42 + intensity * 0.22})`;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, -clocheSize * 0.51, clocheSize * 0.09, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(${colors.rose},${0.48 + impact * 0.24})`;
+  ctx.fill();
+  ctx.restore();
+
+  // A maid bow is the visual refrain; it opens and leaves a brief positional echo.
+  const bowSize = Math.min(width, height) * (0.16 + chorus * 0.035 + beat * 0.01);
+  const bowX = width * (0.18 + Math.sin(audioTime * 0.19) * 0.018);
+  const bowY = height * (0.68 + Math.cos(audioTime * 0.17) * 0.018);
+  if (impact > 0.42) {
+    drawMagicMaidBow(ctx, bowX - width * 0.012 * impact, bowY + height * 0.008,
+      bowSize * 1.04, colors, impact * 0.13, -0.08);
+  }
+  drawMagicMaidBow(ctx, bowX, bowY, bowSize, colors, 0.34 + intensity * 0.28, -0.08);
+
+  // The play button becomes a magic service seal with emitted, never-retracting rings.
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+  const glow = ctx.createRadialGradient(cx, cy, radius * 0.2, cx, cy, radius * (2.8 + chorus * 1.4));
+  glow.addColorStop(0, `rgba(${colors.cream},${0.1 + impact * 0.18})`);
+  glow.addColorStop(0.35, `rgba(${colors.rose},${0.08 + intensity * 0.1})`);
+  glow.addColorStop(1, 'rgba(231,59,119,0)');
+  ctx.fillStyle = glow; ctx.fillRect(0, 0, width, height);
+  for (let ago = 0; ago < (chorus ? 5 : 3); ago++) {
+    const age = beatPhase + ago;
+    const progress = age / (chorus ? 5 : 3);
+    if (progress > 1) continue;
+    const ringRadius = radius * (1.02 + progress * (chorus ? 5.2 : 3.4));
+    ctx.beginPath();
+    ctx.arc(cx, cy, ringRadius, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(${ago % 2 ? colors.gold : colors.rose},${(1 - progress) * (0.08 + intensity * 0.14)})`;
+    ctx.lineWidth = Math.max(2, width * 0.0026) * (1 - progress * 0.65);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Stage stars are sparse, large, and placed on the musical grid.
+  const starCount = chorus ? 9 : 4;
+  for (let star = 0; star < starCount; star++) {
+    const lane = (star * 0.61803398875 + Math.floor(beats / 4) * 0.073) % 1;
+    const x = width * (0.1 + lane * 0.8);
+    const yPhase = ((star * 0.37 + Math.sin(audioTime * 0.09)) % 0.72 + 0.72) % 0.72;
+    const y = height * (0.1 + yPhase);
+    const twinkle = 0.45 + 0.55 * Math.sin(audioTime * 1.2 + star * 2.1);
+    const size = Math.min(width, height) * (0.014 + (star % 3) * 0.006 + impact * 0.008);
+    drawMagicMaidStar(ctx, x, y, size, size * 0.28, audioTime * 0.16 + star,
+      star % 3 === 1 ? colors.blue : colors.gold,
+      (0.2 + intensity * 0.17 + chorus * 0.14) * twinkle);
+  }
+
+  // Choruses lift the room into a luminous proscenium on strong beats.
+  if (chorus) {
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    for (let beam = 0; beam < 3; beam++) {
+      const origin = width * (0.22 + beam * 0.28);
+      const sweep = Math.sin(audioTime * (0.36 + beam * 0.04) + beam * 1.8);
+      const beamWidth = width * (0.05 + impact * 0.04);
+      const beamGradient = ctx.createLinearGradient(origin, 0, origin + sweep * width * 0.25, height);
+      beamGradient.addColorStop(0, `rgba(${beam % 2 ? colors.blue : colors.cream},${0.06 + impact * 0.12})`);
+      beamGradient.addColorStop(1, 'rgba(255,242,218,0)');
+      ctx.fillStyle = beamGradient;
+      ctx.beginPath();
+      ctx.moveTo(origin - beamWidth, 0);
+      ctx.lineTo(origin + beamWidth, 0);
+      ctx.lineTo(origin + sweep * width * 0.25 + beamWidth * 2, height);
+      ctx.lineTo(origin + sweep * width * 0.25 - beamWidth * 2, height);
+      ctx.closePath(); ctx.fill();
+    }
+    ctx.fillStyle = `rgba(${colors.cream},${barPulse * 0.035 + halfBeat * impact * 0.018})`;
+    ctx.fillRect(0, 0, width, height);
+    ctx.restore();
+  }
+
+  // Scalloped lace frames the stage without competing with the controls.
+  ctx.save();
+  ctx.strokeStyle = `rgba(${colors.cream},${0.13 + intensity * 0.13})`;
+  ctx.lineWidth = Math.max(2, width * 0.0014);
+  const scallop = width / 18;
+  for (let i = 0; i < 18; i++) {
+    ctx.beginPath();
+    ctx.arc((i + 0.5) * scallop, 0, scallop * 0.46, 0, Math.PI);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
 function drawTetoFx(level) {
   const canvas = $('teto-fx');
   const view = $('view-now');
@@ -8818,6 +9163,10 @@ function drawTetoFx(level) {
   if (theme === 'off') return;
   if (theme === 'trick-heart') {
     drawTrickHeartFx(levels, currentCalibratedTime());
+    return;
+  }
+  if (theme === 'magic-maid') {
+    drawMagicMaidFx(levels, currentCalibratedTime());
     return;
   }
   if (theme === 'omb') {
