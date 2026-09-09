@@ -535,6 +535,12 @@ body.magic-maid-fx-active .hero-ring {
   color: var(--trick-cream);
 }
 .trick-heart-overlay.hidden { display: none !important; }
+.trick-heart-overlay[data-theme="magic-maid"] {
+  --trick-cream: #fff4df;
+}
+.trick-heart-overlay[data-theme="encore-dance"] {
+  --trick-cream: #fff0dc;
+}
 .trick-heart-heading {
   display: flex;
   justify-content: space-between;
@@ -552,6 +558,7 @@ body.magic-maid-fx-active .hero-ring {
   font-size: inherit;
   letter-spacing: 0.1em;
 }
+.trick-heart-overlay.hide-section .trick-heart-heading b { display: none; }
 .trick-heart-lyrics {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr) minmax(0, 1fr);
@@ -626,8 +633,69 @@ body.magic-maid-fx-active .hero-ring {
 }
 .lane-romaji .trick-heart-word.is-sung { color: #aebcf1; }
 
+.trick-heart-lyrics.is-single-language {
+  grid-template-columns: minmax(0, 760px);
+  justify-content: center;
+}
+.trick-heart-lyrics.is-single-language .lane-jp,
+.trick-heart-lyrics.is-single-language .lane-romaji {
+  display: none;
+}
+.trick-heart-lyrics.is-single-language .lane-en {
+  min-height: clamp(104px, 18vh, 158px);
+  border: 1px solid rgba(255, 243, 216, 0.18);
+}
+
+.trick-heart-overlay[data-theme="magic-maid"] .trick-heart-heading {
+  color: rgba(255, 244, 223, 0.78);
+  border-color: rgba(247, 190, 91, 0.38);
+}
+.trick-heart-overlay[data-theme="magic-maid"] .trick-heart-heading b,
+.trick-heart-overlay[data-theme="magic-maid"] .trick-heart-language,
+.trick-heart-overlay[data-theme="magic-maid"] .trick-heart-word.is-sung {
+  color: #f7be5b;
+}
+.trick-heart-overlay[data-theme="magic-maid"] .trick-heart-lane {
+  background: rgba(63, 13, 38, 0.74);
+}
+.trick-heart-overlay[data-theme="magic-maid"] .lane-en {
+  color: #57122e;
+  background: rgba(255, 244, 223, 0.94);
+}
+.trick-heart-overlay[data-theme="magic-maid"] .lane-en .trick-heart-word.is-sung { color: #e73b77; }
+.trick-heart-overlay[data-theme="magic-maid"] .lane-en .trick-heart-word.is-current { color: #57122e; }
+
+.trick-heart-overlay[data-theme="encore-dance"] .trick-heart-heading {
+  color: rgba(255, 232, 211, 0.74);
+  border-color: rgba(242, 47, 88, 0.36);
+}
+.trick-heart-overlay[data-theme="encore-dance"] .trick-heart-heading b,
+.trick-heart-overlay[data-theme="encore-dance"] .trick-heart-language,
+.trick-heart-overlay[data-theme="encore-dance"] .trick-heart-word.is-sung {
+  color: #ff758d;
+}
+.trick-heart-overlay[data-theme="encore-dance"] .trick-heart-lane {
+  background: rgba(28, 0, 9, 0.78);
+}
+.trick-heart-overlay[data-theme="encore-dance"] .lane-en {
+  color: #5f1024;
+  background: rgba(255, 232, 211, 0.94);
+}
+.trick-heart-overlay[data-theme="encore-dance"] .lane-en .trick-heart-word.is-sung { color: #e62644; }
+.trick-heart-overlay[data-theme="encore-dance"] .lane-en .trick-heart-word.is-current { color: #5f1024; }
+
+body.magic-maid-fx-active .now-stage,
+body.encore-fx-active .now-stage {
+  z-index: 2;
+  align-items: start;
+  padding-top: 20px;
+  padding-bottom: clamp(150px, 29vh, 230px);
+}
+
 @media (max-width: 850px), (max-height: 650px) {
-  body.trick-heart-fx-active .now-stage {
+  body.trick-heart-fx-active .now-stage,
+  body.magic-maid-fx-active .now-stage,
+  body.encore-fx-active .now-stage {
     grid-template-columns: minmax(0, 1fr) auto;
     padding-bottom: clamp(166px, 36vh, 220px);
   }
@@ -2417,6 +2485,16 @@ body.encore-theater-active .ddf-theater {
   display: none !important;
 }
 
+body.encore-theater-active .now-stage {
+  display: grid !important;
+}
+body.encore-theater-active .wave-panel {
+  display: block !important;
+}
+body.encore-theater-active .teto-fx-canvas {
+  display: block !important;
+}
+
 body.encore-theater-active #view-now.view.active,
 body.encore-theater-active .now-view.active {
   display: block;
@@ -2439,14 +2517,14 @@ body.encore-theater-active .now-view.active {
   --encore-progress: 0%;
   position: absolute;
   inset: 0;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  display: block;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
   isolation: isolate;
   background: #120005;
   color: #fff0dc;
+  pointer-events: none;
 }
 .encore-theater.hidden { display: none !important; }
 

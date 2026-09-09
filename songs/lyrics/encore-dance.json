@@ -113,6 +113,8 @@
           "start": 14.6,
           "end": 18.66,
           "text": "つまづいた夜に 眠ってる街で",
+          "romaji": ["tsumazuita yoru ni", "nemutteru machi de"],
+          "en": ["On a night when I stumbled", "in the sleeping city"],
           "aside": false,
           "words": [
             {
@@ -186,6 +188,8 @@
           "start": 18.66,
           "end": 22.22,
           "text": "おやすみさえも 言えないままで",
+          "romaji": ["oyasumi sae mo", "ienai mama de"],
+          "en": ["still unable", "even to say goodnight"],
           "aside": false,
           "words": [
             {
@@ -264,6 +268,8 @@
           "start": 22.22,
           "end": 25.16,
           "text": "夢のまま今日が 溶けだして",
+          "romaji": ["yume no mama kyou ga", "tokedashite"],
+          "en": ["Today melts away", "still inside a dream"],
           "aside": false,
           "words": [
             {
@@ -332,6 +338,8 @@
           "start": 25.16,
           "end": 26.98,
           "text": "君と駆け出して",
+          "romaji": ["kimi to", "kakedashite"],
+          "en": ["I run away", "with you"],
           "aside": false,
           "words": [
             {
@@ -375,6 +383,8 @@
           "start": 26.98,
           "end": 29.54,
           "text": "どこか遠い所へと",
+          "romaji": ["dokoka", "tooi tokoro e to"],
+          "en": ["toward somewhere", "far away"],
           "aside": false,
           "words": [
             {
@@ -423,6 +433,8 @@
           "start": 29.54,
           "end": 32.78,
           "text": "明日に落ちてくその景色",
+          "romaji": ["ashita ni ochiteku", "sono keshiki"],
+          "en": ["That scenery falls", "into tomorrow"],
           "aside": false,
           "words": [
             {
@@ -486,6 +498,8 @@
           "start": 32.78,
           "end": 36.98,
           "text": "バイバイバイ 寂しい夜が溶けて",
+          "romaji": ["bai bai bai", "sabishii yoru ga tokete"],
+          "en": ["Bye bye bye", "the lonely night dissolves"],
           "aside": false,
           "words": [
             {
@@ -564,6 +578,8 @@
           "start": 36.98,
           "end": 39.96,
           "text": "アンコール 空に歌うだけ",
+          "romaji": ["ankooru", "sora ni utau dake"],
+          "en": ["An encore", "all I do is sing to the sky"],
           "aside": false,
           "words": [
             {
@@ -627,6 +643,8 @@
           "start": 39.96,
           "end": 43.38,
           "text": "ライライライ 世界は今日だって",
+          "romaji": ["rai rai rai", "sekai wa kyou datte"],
+          "en": ["Lie lie lie", "even today the world"],
           "aside": false,
           "words": [
             {
@@ -705,6 +723,8 @@
           "start": 43.38,
           "end": 47.42,
           "text": "何も考えちゃいないの この通り",
+          "romaji": ["nani mo kangaecha inai no", "kono toori"],
+          "en": ["is not thinking of anything", "just as you see"],
           "aside": false,
           "words": [
             {
@@ -783,6 +803,8 @@
           "start": 54.98,
           "end": 58.68,
           "text": "輝く月に 歌うよ孤独を",
+          "romaji": ["kagayaku tsuki ni", "utau yo kodoku o"],
+          "en": ["To the shining moon", "I sing of loneliness"],
           "aside": false,
           "words": [
             {
@@ -841,6 +863,8 @@
           "start": 58.68,
           "end": 62.28,
           "text": "その涙だけ 海に隠したよ",
+          "romaji": ["sono namida dake", "umi ni kakushita yo"],
+          "en": ["Only those tears", "I hid in the sea"],
           "aside": false,
           "words": [
             {
@@ -904,6 +928,8 @@
           "start": 62.28,
           "end": 65.94,
           "text": "これが夢なら 何処へも行けるよ",
+          "romaji": ["kore ga yume nara", "doko e mo ikeru yo"],
+          "en": ["If this is a dream", "we can go anywhere"],
           "aside": false,
           "words": [
             {
@@ -982,6 +1008,8 @@
           "start": 65.94,
           "end": 69.58,
           "text": "揺られてどこか 遠い所へと",
+          "romaji": ["yurarete dokoka", "tooi tokoro e to"],
+          "en": ["Swaying onward", "toward somewhere far away"],
           "aside": false,
           "words": [
             {
@@ -1050,6 +1078,8 @@
           "start": 69.58,
           "end": 72.74,
           "text": "繊細なままに回ってる",
+          "romaji": ["sensai na mama ni", "mawatteru"],
+          "en": ["Still delicate", "it keeps turning"],
           "aside": false,
           "words": [
             {
@@ -1108,6 +1138,8 @@
           "start": 72.74,
           "end": 76.24,
           "text": "愛愛愛して欲しいだけだ",
+          "romaji": ["ai ai ai shite", "hoshii dake da"],
+          "en": ["Love love love me", "that is all I want"],
           "aside": false,
           "words": [
             {
@@ -1171,6 +1203,8 @@
           "start": 76.24,
           "end": 80.3,
           "text": "魔法みたいな今日に舞う 言葉ひとつ",
+          "romaji": ["mahou mitai na kyou ni mau", "kotoba hitotsu"],
+          "en": ["One word dances through", "this magical day"],
           "aside": false,
           "words": [
             {
@@ -1259,6 +1293,8 @@
           "start": 80.3,
           "end": 87.3,
           "text": "ライライライ世界はなんだって ラララ毎日に僕が居なくても",
+          "romaji": ["rai rai rai sekai wa nandatte", "rarara mainichi ni boku ga inakute mo"],
+          "en": ["Lie lie lie whatever the world may be", "even if I am absent from every la-la-la day"],
           "aside": false,
           "words": [
             {
@@ -1402,6 +1438,8 @@
           "start": 102.27,
           "end": 105.62,
           "text": "バイバイバイ 寂しい夜が",
+          "romaji": ["bai bai bai", "sabishii yoru ga"],
+          "en": ["Bye bye bye", "the lonely night"],
           "aside": false,
           "words": [
             {
@@ -1465,6 +1503,8 @@
           "start": 105.62,
           "end": 109.21,
           "text": "溶けてアンコール 空に歌うだけ",
+          "romaji": ["tokete ankooru", "sora ni utau dake"],
+          "en": ["dissolves into an encore", "all I do is sing to the sky"],
           "aside": false,
           "words": [
             {
@@ -1543,6 +1583,8 @@
           "start": 109.21,
           "end": 112.55,
           "text": "ライライ来世 無いわ 今日だって",
+          "romaji": ["rai rai raise", "nai wa kyou datte"],
+          "en": ["Lie lie, there is no next life", "not even today"],
           "aside": false,
           "words": [
             {
@@ -1621,6 +1663,8 @@
           "start": 112.55,
           "end": 116.51,
           "text": "何も考えちゃいないの この通り",
+          "romaji": ["nani mo kangaecha inai no", "kono toori"],
+          "en": ["I am not thinking of anything", "just as you see"],
           "aside": false,
           "words": [
             {
@@ -1699,6 +1743,8 @@
           "start": 117.09,
           "end": 120.35,
           "text": "そのままで くたばるよ",
+          "romaji": ["sono mama de", "kutabaru yo"],
+          "en": ["Just as I am", "I will fall away"],
           "aside": false,
           "words": [
             {
@@ -1757,6 +1803,8 @@
           "start": 120.35,
           "end": 123.57,
           "text": "でも言葉だけ綺麗で居たくて",
+          "romaji": ["demo kotoba dake", "kirei de itakute"],
+          "en": ["But I want my words", "at least, to remain beautiful"],
           "aside": false,
           "words": [
             {
@@ -1830,6 +1878,8 @@
           "start": 124.17,
           "end": 127.35,
           "text": "嗚呼バイバイバイ 寂しい夜が",
+          "romaji": ["aa bai bai bai", "sabishii yoru ga"],
+          "en": ["Ah, bye bye bye", "the lonely night"],
           "aside": false,
           "words": [
             {
@@ -1903,6 +1953,8 @@
           "start": 127.35,
           "end": 131.11,
           "text": "溶けてアンコール 空に歌うだけ",
+          "romaji": ["tokete ankooru", "sora ni utau dake"],
+          "en": ["dissolves into an encore", "all I do is sing to the sky"],
           "aside": false,
           "words": [
             {
@@ -1981,6 +2033,8 @@
           "start": 131.11,
           "end": 132.73,
           "text": "歌うだけ",
+          "romaji": ["utau dake"],
+          "en": ["I only sing"],
           "aside": false,
           "words": [
             {

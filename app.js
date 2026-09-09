@@ -64,7 +64,14 @@ const DEFAULT_PLAYLISTS = {
 const SUPPORTED_LYRIC_TRACKS = {
   'songs/mimi feat. kasane teto sv - trick heart': {
     dataUrl: './songs/lyrics/trick-heart.json',
-    scene: 'trick-heart'
+    scene: 'trick-heart',
+    lyricTitle: 'TRICK HEART'
+  },
+  'songs/mimi feat. kasane teto sv - magic maid': {
+    dataUrl: './songs/lyrics/magic-maid.json',
+    scene: 'parallel-lyrics',
+    visualTheme: 'magic-maid',
+    lyricTitle: 'MAGIC MAID'
   },
   'songs/kasane teto - one more bite': {
     dataUrl: './songs/lyrics/one-more-bite.json',
@@ -82,13 +89,20 @@ const SUPPORTED_LYRIC_TRACKS = {
   },
   'songs/mimi - encore dance (japanese)': {
     dataUrl: './songs/lyrics/encore-dance.json',
-    scene: 'encore-dance',
-    variant: 'jp'
+    scene: 'parallel-lyrics',
+    visualTheme: 'encore-dance',
+    variant: 'jp',
+    lyricTitle: 'ENCORE DANCE',
+    hideSection: true
   },
   'songs/moonlit star - encore dance (english)': {
     dataUrl: './songs/lyrics/encore-dance.json',
-    scene: 'encore-dance',
-    variant: 'en'
+    scene: 'parallel-lyrics',
+    visualTheme: 'encore-dance',
+    variant: 'en',
+    languageMode: 'en-only',
+    lyricTitle: 'ENCORE DANCE',
+    hideSection: true
   },
   'songs/kasane teto - waiting for tomorrow': {
     dataUrl: './songs/lyrics/waiting-for-tomorrow.json',
@@ -221,6 +235,7 @@ let encoreSceneActive = false;
 let storyTheaterSceneActive = false;
 let trickHeartSceneActive = false;
 let trickHeartWordLanes = [];
+let parallelLyricsActiveKey = '';
 const SONG_EQ_STORAGE_KEY = 'vp_song_eq_v1';
 const EQ_BANDS = [
   { frequency: 60, type: 'lowshelf', label: 'Sub', detail: '60 Hz' },
@@ -767,6 +782,11 @@ function isTrickHeartSong(song = currentSong()) {
   return supportedLyricTrackForSong(song)?.scene === 'trick-heart';
 }
 
+function usesParallelLyrics(song = currentSong()) {
+  const scene = supportedLyricTrackForSong(song)?.scene;
+  return scene === 'trick-heart' || scene === 'parallel-lyrics';
+}
+
 function isMagicMaidSong(song = currentSong()) {
   if (!song) return false;
   return [song.path, song.id, song.name]
@@ -783,7 +803,7 @@ function heroStoryVariant(song = currentSong()) {
 }
 
 function isEncoreDanceSong(song = currentSong()) {
-  return supportedLyricTrackForSong(song)?.scene === 'encore-dance';
+  return supportedLyricTrackForSong(song)?.visualTheme === 'encore-dance';
 }
 
 function encoreDanceVariant(song = currentSong()) {
@@ -819,7 +839,7 @@ async function loadSupportedLyrics(config) {
       supportedLyricsPromise = null;
       supportedLyricsLineIndex = -2;
       supportedLyricsSectionIndex = -2;
-      if (config.scene === 'trick-heart') {
+      if (config.scene === 'trick-heart' || config.scene === 'parallel-lyrics') {
         updateTrickHeartLyrics(currentCalibratedTime(), true);
       } else if (config.scene === 'story-theater') {
         updateStoryTheaterLyrics(currentCalibratedTime(), true);
@@ -835,7 +855,7 @@ async function loadSupportedLyrics(config) {
     .catch(error => {
       supportedLyricsPromise = null;
       console.warn('Could not load supported lyrics:', error);
-      const current = config.scene === 'trick-heart'
+      const current = config.scene === 'trick-heart' || config.scene === 'parallel-lyrics'
         ? $('trick-heart-en')
         : config.scene === 'story-theater'
           ? $('story-current')
@@ -929,7 +949,10 @@ function renderTrickHeartLane(id, tokens, line, language) {
   const element = $(id);
   if (!element) return [];
   element.replaceChildren();
-  return trickHeartTokenTimings(tokens, line, language).map(timing => {
+  const timings = language === 'ja' && Array.isArray(line?.words)
+    ? measuredWordTimings(line)
+    : trickHeartTokenTimings(tokens, line, language);
+  return timings.map(timing => {
     const span = document.createElement('span');
     span.className = 'trick-heart-word is-pending';
     span.textContent = timing.word;
@@ -940,9 +963,18 @@ function renderTrickHeartLane(id, tokens, line, language) {
 
 function renderTrickHeartLine(index, data) {
   const lyrics = $('trick-heart-lyrics');
-  const line = index >= 0 ? data?.lines?.[index] : null;
+  const config = supportedLyricTrackForSong();
+  const variantLines = config?.variant ? data?.variants?.[config.variant]?.lines : null;
+  const lines = Array.isArray(variantLines) ? variantLines : data?.lines;
+  const sourceLine = index >= 0 ? lines?.[index] : null;
+  const line = sourceLine && config?.languageMode === 'en-only'
+    ? { ...sourceLine, jp: [], romaji: [], en: [sourceLine.text] }
+    : sourceLine && config?.variant === 'jp'
+      ? { ...sourceLine, jp: sourceLine.jp || [sourceLine.text] }
+      : sourceLine;
   trickHeartWordLanes = [];
   if (!lyrics) return;
+  lyrics.classList.toggle('is-single-language', config?.languageMode === 'en-only');
   lyrics.classList.toggle('is-silent', !line);
   if (!line) {
     ['trick-heart-jp', 'trick-heart-en', 'trick-heart-romaji'].forEach(id => {
@@ -962,6 +994,8 @@ function updateTrickHeartLyrics(time = currentCalibratedTime(), force = false) {
   if (!trickHeartSceneActive) return;
   const data = supportedLyricsData;
   if (!data) return;
+  const config = supportedLyricTrackForSong();
+  const lines = config?.variant ? data?.variants?.[config.variant]?.lines : data.lines;
   const sectionIndex = data.sections.findIndex(section => time >= section.start && time < section.end);
   if (force || sectionIndex !== supportedLyricsSectionIndex) {
     supportedLyricsSectionIndex = sectionIndex;
@@ -969,7 +1003,7 @@ function updateTrickHeartLyrics(time = currentCalibratedTime(), force = false) {
     const sectionLabel = $('trick-heart-section');
     if (sectionLabel) sectionLabel.textContent = section?.short || 'TRICK HEART';
   }
-  const lineIndex = data.lines.findIndex(line => time >= line.start && time < line.end);
+  const lineIndex = (lines || []).findIndex(line => time >= line.start && time < line.end);
   if (force || lineIndex !== supportedLyricsLineIndex) {
     supportedLyricsLineIndex = lineIndex;
     renderTrickHeartLine(lineIndex, data);
@@ -978,16 +1012,24 @@ function updateTrickHeartLyrics(time = currentCalibratedTime(), force = false) {
 }
 
 function setTrickHeartOverlayActive(active, song = currentSong()) {
-  const nextActive = !!active && isTrickHeartSong(song);
+  const nextActive = !!active && usesParallelLyrics(song);
+  const config = nextActive ? supportedLyricTrackForSong(song) : null;
+  const nextKey = config?.key || '';
   const overlay = $('trick-heart-overlay');
   if (overlay) overlay.classList.toggle('hidden', !nextActive);
-  if (trickHeartSceneActive === nextActive) return;
+  if (trickHeartSceneActive === nextActive && parallelLyricsActiveKey === nextKey) return;
   trickHeartSceneActive = nextActive;
+  parallelLyricsActiveKey = nextKey;
   supportedLyricsLineIndex = -2;
   supportedLyricsSectionIndex = -2;
   trickHeartWordLanes = [];
   if (nextActive) {
-    const config = supportedLyricTrackForSong(song);
+    if ($('trick-heart-title')) $('trick-heart-title').textContent = config?.lyricTitle || 'LYRICS';
+    if (overlay) {
+      overlay.dataset.theme = config?.visualTheme || config?.scene || 'trick-heart';
+      overlay.dataset.languageMode = config?.languageMode || 'parallel';
+      overlay.classList.toggle('hide-section', !!config?.hideSection);
+    }
     loadSupportedLyrics(config);
     updateTrickHeartLyrics(currentCalibratedTime(), true);
     scheduleNowLayoutSync();
@@ -1421,6 +1463,7 @@ function renderEncoreLine(index, variantData, audioTime) {
 
 function updateEncoreDanceLyrics(audioTime = currentCalibratedTime(), force = false) {
   if (!encoreSceneActive) return;
+  if (supportedLyricTrackForSong()?.scene !== 'encore-dance') return;
   const theater = $('encore-theater');
   if (!theater) return;
   const variant = encoreDanceVariant();
@@ -1467,13 +1510,7 @@ function setEncoreTheaterActive(active, song = currentSong()) {
   if (theater) theater.classList.toggle('hidden', !nextActive);
   if (encoreSceneActive === nextActive) return;
   encoreSceneActive = nextActive;
-  supportedLyricsLineIndex = -2;
-  supportedLyricsSectionIndex = -2;
-  supportedLyricsWordNodes = [];
   if (nextActive) {
-    const config = supportedLyricTrackForSong(song);
-    loadSupportedLyrics(config);
-    updateEncoreDanceLyrics(currentCalibratedTime(), true);
     drawEncoreDanceFx({ glow: 0, motion: 0, rise: 0 }, currentCalibratedTime());
     scheduleNowLayoutSync();
   }
@@ -2122,6 +2159,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
     setHeroStoryTheaterActive(false);
     setEncoreTheaterActive(false);
   }
+  setTrickHeartOverlayActive(active && usesParallelLyrics());
 }
 
 function desktopEffectsVariant(song = currentSong()) {
@@ -2130,7 +2168,7 @@ function desktopEffectsVariant(song = currentSong()) {
   if (config?.scene === 'trick-heart') return 'trick-heart';
   if (config?.scene === 'story-theater') return config.variant || 'waiting';
   if (config?.scene === 'hero-story') return `hero-${config.variant || 'mili'}`;
-  if (config?.scene === 'encore-dance') return `encore-${config.variant || 'jp'}`;
+  if (config?.visualTheme === 'encore-dance') return `encore-${config.variant || 'jp'}`;
   if (config?.scene === 'one-more-bite') return 'one-more-bite';
   const theme = activeFxTheme(song);
   if (theme === 'ddlc') {
@@ -6788,7 +6826,7 @@ function drawEncoreDanceFx(levels, audioTime) {
   }
   ctx.restore();
 
-  const playRect = $('encore-play')?.getBoundingClientRect();
+  const playRect = $('hero-play')?.getBoundingClientRect();
   const centerX = playRect ? (playRect.left + playRect.width / 2 - rect.left) * dpr : width * 0.82;
   const centerY = playRect ? (playRect.top + playRect.height / 2 - rect.top) * dpr : height * 0.5;
   const startRadius = (playRect?.width || 76) * dpr * 0.58;
