@@ -2488,9 +2488,6 @@ body.encore-theater-active .ddf-theater {
 body.encore-theater-active .now-stage {
   display: grid !important;
 }
-body.encore-theater-active .wave-panel {
-  display: block !important;
-}
 body.encore-theater-active .teto-fx-canvas {
   display: block !important;
 }
