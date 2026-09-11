@@ -6,60 +6,16 @@ const COLLECTIONS = [
 ];
 const COLLECTION_ORDER = new Map(COLLECTIONS.map((collection, index) => [collection.id, index]));
 const DEFAULT_PLAYLISTS = {
-  'Secular 12': [
-    'songs/tripflag - Ochame Kinou (Old Teto).m4a',
-    'songs/Farewell225 - Window View.m4a',
-    'songs/Moonlit Star - Science (English).m4a',
-    'songs/hololive English - Ochame Kinou (English).m4a',
-    'songs/Lambie - Machine Love (Drums).m4a',
-    'songs/MiliSen - Ever Romantic.m4a',
-    'songs/hololive - Ochame Kinou (Japanese).m4a',
-    'songs/MIMI - Science.m4a',
-    'songs/Moonlit Star - Window View (English).m4a',
-    'songs/Jamie Paige - Machine Love.m4a',
-    'songs/Kasane Teto SV - Ochame Kinou (New Teto).m4a',
-    'songs/Penthouse - One, Two, Three (一二三).m4a',
-  ],
-  'Hybrid 12': [
-    'songs/christian/Forrest Frank - JESUS IS ALIVE.mp3',
-    'songs/hololive English - Ochame Kinou (English).m4a',
-    'songs/christian/Forrest Frank & Connor Price - UP!.m4a',
-    'songs/Jamie Paige - Machine Love.m4a',
-    'songs/christian/Forrest Frank - GOOD DAY.m4a',
-    'songs/Penthouse - One, Two, Three (一二三).m4a',
-    'songs/MIMI - Science.m4a',
-    'songs/christian/Forrest Frank - CELEBRATION.m4a',
-    'songs/Campus Village - Teto.m4a',
-    "songs/christian/Josiah Queen - Can't Steal My Joy feat. Brandon Lake.m4a",
-    'songs/christian/Forrest Frank - OKAY!.m4a',
-    'songs/hololive - Ochame Kinou (Japanese).m4a',
-  ],
-  'IN THE ROOM!': [
-    'songs/christian/Brandon Lake - INTRO - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake - KING OF HEARTS - IN THE ROOM!.m4a',
-    "songs/christian/Brandon Lake - COUNT 'EM - IN THE ROOM!.m4a",
-    "songs/christian/Brandon Lake - THAT'S WHO I PRAISE - IN THE ROOM!.m4a",
-    'songs/christian/Brandon Lake - BUT GOD - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake - PLANS - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake - RATTLE - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake - REST ON US - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake - TEAR OFF THE ROOF - IN THE ROOM!.m4a',
-    "songs/christian/Brandon Lake - DADDY'S DNA (ACOUSTIC) - IN THE ROOM!.m4a",
-    'songs/christian/Brandon Lake - AS FOR ME & MY HOME - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake - THE BLESSING - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake & Franni Cash - I KNOW A NAME - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake & Bailey Zimmerman - JUST BELIEVE - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake & Nick Jonas - THE AUTHOR - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake feat. Cody Johnson - WHEN A COWBOY PRAYS - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake - LION (ACOUSTIC) - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake & Pat Barrett - SAME GOD (ACOUSTIC) - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake & Pat Barrett - HOLY GHOST - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake - HARD FOUGHT HALLELUJAH - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake - GRATITUDE - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake, Pat Barrett & Franni Cash - PRAISE - IN THE ROOM!.m4a',
-    'songs/christian/Brandon Lake - SEVENS - IN THE ROOM!.m4a',
+  'Three Musketeers': [
+    'songs/MIMI feat. Kasane Teto SV - Trick Heart.m4a',
+    'songs/MIMI feat. Kasane Teto SV - Magic Maid.m4a',
+    'songs/MIMI - Encore Dance (Japanese).m4a',
   ],
 };
+const RETIRED_DEFAULT_PLAYLISTS = ['Secular 12', 'Hybrid 12', 'IN THE ROOM!'];
+const DEFAULT_PLAYLISTS_VERSION = 'three-musketeers-v1';
+const PLAYLIST_ORDER_STORAGE_KEY = 'vp_playlist_order_v1';
+const PLAYLIST_COLLAPSED_STORAGE_KEY = 'vp_playlist_collapsed_v1';
 
 const SUPPORTED_LYRIC_TRACKS = {
   'songs/mimi feat. kasane teto sv - trick heart': {
@@ -164,6 +120,8 @@ let loopMode = 'off';
 let shuffled = false;
 let unshuffledQueue = null;
 let playlists = loadPlaylists();
+let playlistOrder = loadPlaylistOrder(playlists);
+let collapsedPlaylists = new Set(loadCollapsedPlaylists(playlists));
 let currentPlaylist = null;
 let activeCollection = localStorage.getItem('vp_collection') || 'all';
 let tetoFxEnabled = localStorage.getItem('vp_teto_fx_enabled') !== 'false';
@@ -174,6 +132,7 @@ let pendingPlaylistSongIdx = null;
 let openPlaylistAdder = null;
 let playlistAdderQueries = {};
 let playlistDragState = null;
+let playlistCardDragState = null;
 let audioCtx = null;
 let audioSource = null;
 let analyser = null;
@@ -183,6 +142,7 @@ let outputGain = null;
 let waveData = null;
 let waveTimeData = null;
 let waveRaf = 0;
+let lastVisualFrameAt = 0;
 let progressTimer = 0;
 let waveFrame = 0;
 let waveSizeKey = '';
@@ -236,6 +196,20 @@ let storyTheaterSceneActive = false;
 let trickHeartSceneActive = false;
 let trickHeartWordLanes = [];
 let parallelLyricsActiveKey = '';
+let renderedFxTheme = '';
+let renderedFxLevel = -1;
+const FX_LEVEL_PROPERTIES = Object.freeze({
+  teto: '--teto-level',
+  disco: '--disco-level',
+  teto11: '--teto11-level',
+  ddlc: '--ddlc-level',
+  omb: '--omb-level',
+  'hero-story': '--hero-story-level',
+  'encore-dance': '--encore-level',
+  'story-theater': '--story-level',
+  'trick-heart': '--trick-heart-level',
+  'magic-maid': '--magic-maid-level',
+});
 const SONG_EQ_STORAGE_KEY = 'vp_song_eq_v1';
 const EQ_BANDS = [
   { frequency: 60, type: 'lowshelf', label: 'Sub', detail: '60 Hz' },
@@ -257,6 +231,7 @@ let songEqProfiles = loadSongEqProfiles();
 let temporaryGlobalEq = createEqProfile();
 let eqEditMode = 'song';
 const WAVE_BAR_COUNT = 72; // was 124 — main-thread heavy with full FFT path
+const VISUAL_FRAME_MS = 1000 / 30;
 const WAVE_GAIN = 1.46;
 const WAVE_SOFT_LIMIT = 1.08;
 const WAVE_LEVEL_WINDOW = 90;
@@ -505,6 +480,15 @@ function loadPlaylists() {
   try { stored = JSON.parse(localStorage.getItem('vp_playlists') || '{}') || {}; }
   catch { stored = {}; }
   let changed = false;
+  const defaultsVersion = localStorage.getItem('vp_default_playlists_version');
+  if (defaultsVersion !== DEFAULT_PLAYLISTS_VERSION) {
+    RETIRED_DEFAULT_PLAYLISTS.forEach(name => {
+      if (Object.hasOwn(stored, name)) delete stored[name];
+    });
+    stored['Three Musketeers'] = DEFAULT_PLAYLISTS['Three Musketeers'].slice();
+    localStorage.setItem('vp_default_playlists_version', DEFAULT_PLAYLISTS_VERSION);
+    changed = true;
+  }
   Object.entries(DEFAULT_PLAYLISTS).forEach(([name, songIds]) => {
     if (!Array.isArray(stored[name])) {
       stored[name] = songIds.slice();
@@ -517,8 +501,49 @@ function loadPlaylists() {
   }
   return stored;
 }
+
+function loadPlaylistOrder(source) {
+  let saved = [];
+  try { saved = JSON.parse(localStorage.getItem(PLAYLIST_ORDER_STORAGE_KEY) || '[]'); }
+  catch { saved = []; }
+  const names = Object.keys(source || {});
+  const available = new Set(names);
+  const ordered = Array.isArray(saved) ? saved.filter((name, index) =>
+    available.has(name) && saved.indexOf(name) === index
+  ) : [];
+  names.forEach(name => {
+    if (!ordered.includes(name)) ordered.push(name);
+  });
+  return ordered;
+}
+
+function loadCollapsedPlaylists(source) {
+  let saved = [];
+  try { saved = JSON.parse(localStorage.getItem(PLAYLIST_COLLAPSED_STORAGE_KEY) || '[]'); }
+  catch { saved = []; }
+  const available = new Set(Object.keys(source || {}));
+  return Array.isArray(saved) ? saved.filter(name => available.has(name)) : [];
+}
+
+function orderedPlaylistNames() {
+  const available = new Set(Object.keys(playlists));
+  playlistOrder = playlistOrder.filter(name => available.has(name));
+  Object.keys(playlists).forEach(name => {
+    if (!playlistOrder.includes(name)) playlistOrder.push(name);
+  });
+  return playlistOrder.slice();
+}
+
+function savePlaylistLayout() {
+  localStorage.setItem(PLAYLIST_ORDER_STORAGE_KEY, JSON.stringify(orderedPlaylistNames()));
+  localStorage.setItem(PLAYLIST_COLLAPSED_STORAGE_KEY, JSON.stringify(
+    [...collapsedPlaylists].filter(name => Object.hasOwn(playlists, name))
+  ));
+}
+
 function savePlaylists() {
   localStorage.setItem('vp_playlists', JSON.stringify(playlists));
+  savePlaylistLayout();
 }
 
 window.addEventListener('pagehide', savePlaylists);
@@ -2100,6 +2125,15 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   const theme = activeFxTheme();
   const active = theme !== 'off';
   const level = active && !audio.paused ? levelOverride : 0;
+  const levelValue = Math.round(level * 100) / 100;
+  const levelProperty = FX_LEVEL_PROPERTIES[theme];
+  if (levelValue !== renderedFxLevel || theme !== renderedFxTheme) {
+    document.body.style.setProperty('--fx-level', levelValue.toFixed(2));
+    if (levelProperty) document.body.style.setProperty(levelProperty, levelValue.toFixed(2));
+    renderedFxLevel = levelValue;
+  }
+  if (theme === renderedFxTheme) return;
+  renderedFxTheme = theme;
   document.body.classList.toggle('fx-active', active);
   document.body.classList.toggle('disco-fx-active', theme === 'disco');
   document.body.classList.toggle('teto-fx-active', theme === 'teto');
@@ -2111,17 +2145,6 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.classList.toggle('story-theater-fx-active', theme === 'story-theater');
   document.body.classList.toggle('trick-heart-fx-active', theme === 'trick-heart');
   document.body.classList.toggle('magic-maid-fx-active', theme === 'magic-maid');
-  document.body.style.setProperty('--fx-level', level.toFixed(3));
-  document.body.style.setProperty('--teto-level', level.toFixed(3));
-  document.body.style.setProperty('--disco-level', level.toFixed(3));
-  document.body.style.setProperty('--teto11-level', level.toFixed(3));
-  document.body.style.setProperty('--ddlc-level', level.toFixed(3));
-  document.body.style.setProperty('--omb-level', level.toFixed(3));
-  document.body.style.setProperty('--hero-story-level', level.toFixed(3));
-  document.body.style.setProperty('--encore-level', level.toFixed(3));
-  document.body.style.setProperty('--story-level', level.toFixed(3));
-  document.body.style.setProperty('--trick-heart-level', level.toFixed(3));
-  document.body.style.setProperty('--magic-maid-level', level.toFixed(3));
   if (theme === 'story-theater') {
     setTrickHeartOverlayActive(false);
     setOneMoreBiteTheaterActive(false);
@@ -5058,8 +5081,8 @@ function resizeWaveform(force = false) {
   // Hidden (DDF theater hides wave) — skip so we don't stamp 0-size buffers
   if (panel.offsetParent === null && getComputedStyle(panel).display === 'none') return;
 
-  const dpr = Math.min(1.5, Math.max(1, window.devicePixelRatio || 1));
   const rect = panel.getBoundingClientRect();
+  const dpr = adaptiveCanvasDpr(rect, 1.35);
   const cssW = Math.max(2, Math.floor(rect.width));
   const cssH = Math.max(2, Math.floor(rect.height));
   // Not laid out yet (0×0) — try again next frame instead of inventing sizes
@@ -5080,6 +5103,13 @@ function resizeWaveform(force = false) {
     canvas.width = w;
     canvas.height = h;
   }
+}
+
+function adaptiveCanvasDpr(rect, maxDpr = 1.15) {
+  const deviceDpr = Math.max(1, window.devicePixelRatio || 1);
+  const area = Math.max(1, rect.width * rect.height);
+  const areaCap = area > 1100000 ? 1 : area > 650000 ? 1.08 : maxDpr;
+  return Math.min(deviceDpr, maxDpr, areaCap);
 }
 
 /** Double-rAF: wait for CSS grid to settle, then size canvases to real boxes. */
@@ -5104,10 +5134,9 @@ function resizeFxCanvas(force = false) {
   const canvas = $('teto-fx');
   const view = $('view-now');
   if (!canvas || !view) return;
-  // FX is full-view; keep DPR low so particle/beam frames stay on budget
-  const dpr = Math.min(1.25, Math.max(1, window.devicePixelRatio || 1));
   const rect = view.getBoundingClientRect();
   if (rect.width <= 0 || rect.height <= 0) return;
+  const dpr = adaptiveCanvasDpr(rect);
   const w = Math.max(320, Math.floor(rect.width * dpr));
   const h = Math.max(320, Math.floor(rect.height * dpr));
   const key = `${w}x${h}`;
@@ -5121,16 +5150,11 @@ function resizeFxCanvas(force = false) {
 
 function startWaveform() {
   if (waveRaf) return;
-  const draw = () => {
+  const draw = (now) => {
     waveRaf = requestAnimationFrame(draw);
-    // Visualizer only needs to run on Now Playing. Progress clock handles timing elsewhere.
-    if (!isNowViewActive()) return;
-    if (audio.paused) {
-      // Idle settle frame occasionally, not 60fps
-      if (waveFrame % 30 === 0) drawWaveform(true);
-      waveFrame++;
-      return;
-    }
+    if (!isNowViewActive() || document.hidden || audio.paused) return;
+    if (now - lastVisualFrameAt < VISUAL_FRAME_MS) return;
+    lastVisualFrameAt = now;
     drawWaveform(false);
   };
   waveRaf = requestAnimationFrame(draw);
@@ -5692,6 +5716,72 @@ function drawDiscoFx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectio
   ctx.restore();
 }
 
+function drawGenericKineticBackdrop(ctx, w, h, levels, t, palette, beatPulse, chorusBoost) {
+  const energy = clamp(0, 1, 0.18 + levels.glow * 0.62 + beatPulse * 0.34);
+  const bandEnergy = (start, end) => {
+    if (!waveBars.length) return energy * 0.3;
+    const first = Math.floor(waveBars.length * start);
+    const last = Math.max(first + 1, Math.floor(waveBars.length * end));
+    let sum = 0;
+    for (let index = first; index < last; index++) sum += waveBars[index] || 0;
+    return clamp(0, 1, (sum / Math.max(1, last - first)) * WAVE_GAIN * 6.5);
+  };
+  const bands = [bandEnergy(0, 0.2), bandEnergy(0.2, 0.58), bandEnergy(0.58, 1)];
+  const laneColors = [palette[0], palette[2], palette[4]];
+
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
+
+  // Broad translucent shutters give the generic stage a physical sense of depth.
+  for (let pane = 0; pane < 4; pane++) {
+    const travel = ((t * (0.018 + pane * 0.003) + pane * 0.31) % 1.35) - 0.18;
+    const x = travel * w;
+    const width = w * (0.09 + pane * 0.016);
+    const lean = w * (0.045 + bands[pane % 3] * 0.06);
+    const color = palette[(pane * 2 + 1) % palette.length];
+    ctx.fillStyle = rgbaColor(color, 0.018 + energy * 0.026 + chorusBoost * 0.018);
+    ctx.beginPath();
+    ctx.moveTo(x - lean, 0);
+    ctx.lineTo(x + width - lean, 0);
+    ctx.lineTo(x + width + lean, h);
+    ctx.lineTo(x + lean, h);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Three long spectrum ribbons respond independently to low, mid and high energy.
+  for (let lane = 0; lane < 3; lane++) {
+    const band = bands[lane];
+    const y = h * (0.26 + lane * 0.22);
+    const amplitude = h * (0.025 + band * 0.09 + chorusBoost * 0.025);
+    const phase = t * (0.22 + lane * 0.035) + lane * 1.7;
+    ctx.strokeStyle = rgbaColor(laneColors[lane], 0.11 + energy * 0.1 + band * 0.12);
+    ctx.lineWidth = Math.max(1.2, Math.min(w, h) * (0.002 + band * 0.0018));
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(-w * 0.04, y + Math.sin(phase) * amplitude);
+    ctx.bezierCurveTo(
+      w * 0.24, y - Math.cos(phase * 0.83) * amplitude,
+      w * 0.68, y + Math.sin(phase * 0.71 + 1.2) * amplitude,
+      w * 1.04, y - Math.cos(phase + 0.8) * amplitude
+    );
+    ctx.stroke();
+  }
+
+  // Sparse perspective lines provide motion and structure without particle cost.
+  const horizonY = h * (0.79 - bands[0] * 0.035);
+  ctx.strokeStyle = rgbaColor(palette[6], 0.035 + energy * 0.05);
+  ctx.lineWidth = Math.max(1, Math.min(w, h) * 0.0013);
+  for (let ray = 0; ray < 6; ray++) {
+    const foot = (ray / 5) * w;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.5, horizonY);
+    ctx.lineTo(foot, h);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
 function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, sectionPower, chorusPower, beatPulse, protectedPoint = () => false, baseRadius = null) {
   const quietGate = smoothStep(0.08, 0.34, levels.motion);
   const party = smoothStep(0.16, 0.72, levels.motion);
@@ -5745,6 +5835,8 @@ function drawTeto11Fx(ctx, w, h, cx, cy, levels, profile, fxTime, section, secti
   coreGlow.addColorStop(1, 'rgba(70, 218, 255, 0)');
   ctx.fillStyle = coreGlow;
   ctx.fillRect(0, 0, w, h);
+
+  drawGenericKineticBackdrop(ctx, w, h, levels, t, palette, beatPulse, chorusBoost);
 
   const beamDensity = 0.32 + chorusBoost * 0.46;
   const beamPower = quietGate * (0.08 + party * 0.28 + chorusLift * 0.78) * (0.56 + beatPulse * 0.46);
@@ -6078,7 +6170,7 @@ function drawOneMoreBiteFx(levels, time) {
   if (!canvas || !theater || !oneMoreBiteSceneActive) return;
   const rect = theater.getBoundingClientRect();
   if (rect.width <= 0 || rect.height <= 0) return;
-  const dpr = Math.min(1.25, Math.max(1, window.devicePixelRatio || 1));
+  const dpr = adaptiveCanvasDpr(rect);
   const width = Math.max(320, Math.floor(rect.width * dpr));
   const height = Math.max(240, Math.floor(rect.height * dpr));
   if (canvas.width !== width || canvas.height !== height) {
@@ -6400,7 +6492,7 @@ function drawHeroStoryFx(levels, audioTime) {
   if (!canvas || !theater || !heroStorySceneActive) return;
   const rect = theater.getBoundingClientRect();
   if (rect.width <= 0 || rect.height <= 0) return;
-  const dpr = Math.min(1.25, Math.max(1, window.devicePixelRatio || 1));
+  const dpr = adaptiveCanvasDpr(rect);
   const width = Math.max(320, Math.floor(rect.width * dpr));
   const height = Math.max(240, Math.floor(rect.height * dpr));
   if (canvas.width !== width || canvas.height !== height) {
@@ -6746,7 +6838,7 @@ function drawEncoreDanceFx(levels, audioTime) {
   if (!canvas || !theater || !encoreSceneActive) return;
   const rect = theater.getBoundingClientRect();
   if (rect.width <= 0 || rect.height <= 0) return;
-  const dpr = Math.min(1.2, Math.max(1, window.devicePixelRatio || 1));
+  const dpr = adaptiveCanvasDpr(rect);
   const width = Math.max(320, Math.floor(rect.width * dpr));
   const height = Math.max(240, Math.floor(rect.height * dpr));
   if (canvas.width !== width || canvas.height !== height) {
@@ -8353,7 +8445,7 @@ function drawStoryTheaterFx(levels, audioTime) {
   if (!canvas || !theater || !storyTheaterSceneActive) return;
   const rect = theater.getBoundingClientRect();
   if (rect.width <= 0 || rect.height <= 0) return;
-  const dpr = Math.min(1.2, Math.max(1, window.devicePixelRatio || 1));
+  const dpr = adaptiveCanvasDpr(rect);
   const width = Math.max(320, Math.floor(rect.width * dpr));
   const height = Math.max(240, Math.floor(rect.height * dpr));
   if (canvas.width !== width || canvas.height !== height) {
@@ -9407,35 +9499,39 @@ function drawTetoFx(level) {
 function drawWaveform(idle = false) {
   const canvas = $('waveform');
   if (!canvas) return;
-  // Never resize every frame — layout thrash was a major lag source
-  if (!waveSizeKey) resizeWaveform(true);
+  const panel = canvas.closest('.wave-panel') || canvas.parentElement;
+  const waveformVisible = !!panel && getComputedStyle(panel).display !== 'none' && panel.offsetParent !== null;
+  // Hidden theater waveforms still feed the analyser, but skip all bar painting.
+  if (waveformVisible && !waveSizeKey) resizeWaveform(true);
   const ctx = canvas.getContext('2d', { alpha: true });
-  const w = canvas.width;
-  const h = canvas.height;
+  const w = canvas.width || 720;
+  const h = canvas.height || 120;
   if (!w || !h) return;
-  ctx.clearRect(0, 0, w, h);
+  if (waveformVisible) ctx.clearRect(0, 0, w, h);
 
   waveFrame++;
-  // Skip alternate analysis frames when playing to keep UI clock smooth
-  const analyseThisFrame = !idle && !audio.paused && (waveFrame % 2 === 0);
+  const analyseThisFrame = !idle && !audio.paused;
 
-  const gradient = ctx.createLinearGradient(0, 0, w, 0);
-  if (isDiscoFxActive()) {
-    gradient.addColorStop(0, 'rgba(255, 55, 155, 0.42)');
-    gradient.addColorStop(0.5, 'rgba(70, 218, 255, 0.95)');
-    gradient.addColorStop(1, 'rgba(246, 78, 255, 0.58)');
-  } else if (isTeto11FxActive()) {
-    gradient.addColorStop(0, 'rgba(255, 91, 54, 0.44)');
-    gradient.addColorStop(0.5, 'rgba(70, 218, 255, 0.98)');
-    gradient.addColorStop(1, 'rgba(236, 242, 255, 0.58)');
-  } else if (isTetoFxActive()) {
-    gradient.addColorStop(0, 'rgba(132, 42, 28, 0.32)');
-    gradient.addColorStop(0.55, 'rgba(255, 150, 45, 0.98)');
-    gradient.addColorStop(1, 'rgba(172, 111, 48, 0.72)');
-  } else {
-    gradient.addColorStop(0, 'rgba(94, 234, 212, 0.25)');
-    gradient.addColorStop(0.5, 'rgba(94, 234, 212, 0.95)');
-    gradient.addColorStop(1, 'rgba(253, 230, 138, 0.62)');
+  let gradient = null;
+  if (waveformVisible) {
+    gradient = ctx.createLinearGradient(0, 0, w, 0);
+    if (isDiscoFxActive()) {
+      gradient.addColorStop(0, 'rgba(255, 55, 155, 0.42)');
+      gradient.addColorStop(0.5, 'rgba(70, 218, 255, 0.95)');
+      gradient.addColorStop(1, 'rgba(246, 78, 255, 0.58)');
+    } else if (isTeto11FxActive()) {
+      gradient.addColorStop(0, 'rgba(255, 91, 54, 0.44)');
+      gradient.addColorStop(0.5, 'rgba(70, 218, 255, 0.98)');
+      gradient.addColorStop(1, 'rgba(236, 242, 255, 0.58)');
+    } else if (isTetoFxActive()) {
+      gradient.addColorStop(0, 'rgba(132, 42, 28, 0.32)');
+      gradient.addColorStop(0.55, 'rgba(255, 150, 45, 0.98)');
+      gradient.addColorStop(1, 'rgba(172, 111, 48, 0.72)');
+    } else {
+      gradient.addColorStop(0, 'rgba(94, 234, 212, 0.25)');
+      gradient.addColorStop(0.5, 'rgba(94, 234, 212, 0.95)');
+      gradient.addColorStop(1, 'rgba(253, 230, 138, 0.62)');
+    }
   }
 
   const bins = Math.min(WAVE_BAR_COUNT, Math.max(48, Math.floor(w / 10)));
@@ -9510,15 +9606,17 @@ function drawWaveform(idle = false) {
     tetoRiseEnergy *= 0.86;
   }
 
-  ctx.save();
-  ctx.globalAlpha = (!audio.paused && (analyser || nativeSpatialViz)) ? 0.34 + smoothedLevel * 0.22 : 0.18;
-  ctx.fillStyle = isTeto11FxActive()
-    ? 'rgba(236, 242, 255, 0.42)'
-    : isTetoFxActive()
-      ? 'rgba(255, 204, 168, 0.36)'
-      : 'rgba(235, 235, 240, 0.24)';
-  ctx.fillRect(Math.round(w * 0.015), baseline, Math.round(w * 0.97), Math.max(1, Math.round(h * 0.008)));
-  ctx.restore();
+  if (waveformVisible) {
+    ctx.save();
+    ctx.globalAlpha = (!audio.paused && (analyser || nativeSpatialViz)) ? 0.34 + smoothedLevel * 0.22 : 0.18;
+    ctx.fillStyle = isTeto11FxActive()
+      ? 'rgba(236, 242, 255, 0.42)'
+      : isTetoFxActive()
+        ? 'rgba(255, 204, 168, 0.36)'
+        : 'rgba(235, 235, 240, 0.24)';
+    ctx.fillRect(Math.round(w * 0.015), baseline, Math.round(w * 0.97), Math.max(1, Math.round(h * 0.008)));
+    ctx.restore();
+  }
 
   const drawAnalysis = isAudible || nativeSpatialViz;
   for (let i = 0; i < bins; i++) {
@@ -9542,6 +9640,7 @@ function drawWaveform(idle = false) {
     } else if (!audio.src) {
       waveBars[i] = waveBars[i] * 0.99 + waveBaseShape(i, bins) * 0.0008;
     }
+    if (!waveformVisible) continue;
     const amp = Math.max(0.004, softLimit(Math.max(0, waveBars[i] * WAVE_GAIN), WAVE_SOFT_LIMIT));
     const x = i * (w / bins);
     // Scale bars to baseline (usable height), not full canvas — keeps proportions
@@ -9557,12 +9656,10 @@ function drawWaveform(idle = false) {
   const hero = $('hero-play');
   if (hero) hero.style.setProperty('--level', smoothedLevel.toFixed(3));
 
-  // FX every other frame on Now view. Skip teto overlay when DDF theater owns the stage
-  // (theater has its own optimized canvas loop — drawing both is pure lag).
+  // Effects share the throttled visual loop. DDF owns a separate optimized canvas.
   if (
     isNowViewActive()
     && isAnyFxActive()
-    && waveFrame % 2 === 0
     && !document.body.classList.contains('ddf-theater-active')
   ) {
     drawTetoFx(smoothedLevel);
@@ -10023,11 +10120,22 @@ $('new-playlist').addEventListener('click', () => createPlaylistFromInput($('new
 $('new-playlist-name').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') createPlaylistFromInput(e.currentTarget);
 });
+$('toggle-playlists-collapse').addEventListener('click', () => {
+  const names = orderedPlaylistNames();
+  const shouldCollapse = names.some(name => !collapsedPlaylists.has(name));
+  collapsedPlaylists = shouldCollapse ? new Set(names) : new Set();
+  if (shouldCollapse) openPlaylistAdder = null;
+  savePlaylistLayout();
+  renderPlaylists();
+});
 
 function createPlaylistFromInput(input, songToAdd = null) {
   const name = (input?.value || '').trim();
   if (!name) return null;
-  if (!playlists[name]) playlists[name] = [];
+  if (!playlists[name]) {
+    playlists[name] = [];
+    playlistOrder.push(name);
+  }
   if (songToAdd && !playlists[name].some(id => refMatchesSong(id, songToAdd))) {
     playlists[name].push(songRef(songToAdd));
   }
@@ -10044,7 +10152,10 @@ function playlistHasSong(name, song) {
 
 function addSongToPlaylist(name, song) {
   if (!song) return false;
-  if (!playlists[name]) playlists[name] = [];
+  if (!playlists[name]) {
+    playlists[name] = [];
+    playlistOrder.push(name);
+  }
   if (playlistHasSong(name, song)) return false;
   playlists[name].push(songRef(song));
   savePlaylists();
@@ -10074,6 +10185,27 @@ function movePlaylistSong(name, fromIdx, direction) {
   }
 }
 
+function reorderPlaylistCard(name, targetIdx) {
+  const names = orderedPlaylistNames();
+  const fromIdx = names.indexOf(name);
+  if (fromIdx < 0 || targetIdx === fromIdx || targetIdx === fromIdx + 1) return false;
+  let insertAt = Math.max(0, Math.min(targetIdx, names.length));
+  const [moved] = names.splice(fromIdx, 1);
+  if (fromIdx < insertAt) insertAt -= 1;
+  names.splice(insertAt, 0, moved);
+  playlistOrder = names;
+  savePlaylistLayout();
+  renderPlaylists();
+  return true;
+}
+
+function movePlaylistCard(name, direction) {
+  const names = orderedPlaylistNames();
+  const fromIdx = names.indexOf(name);
+  const targetIdx = direction < 0 ? fromIdx - 1 : fromIdx + 2;
+  if (reorderPlaylistCard(name, targetIdx)) showToast('↕', 'Playlist order saved');
+}
+
 function startAddToPlaylistFlow(libIdx) {
   pendingPlaylistSongIdx = libIdx;
   switchView('playlists');
@@ -10093,7 +10225,7 @@ function renderPlaylistActionPanel() {
   $('playlist-action-title').textContent = song.displayName;
   const options = $('playlist-action-options');
   options.innerHTML = '';
-  const names = Object.keys(playlists).sort((a, b) => a.localeCompare(b));
+  const names = orderedPlaylistNames();
   if (names.length === 0) {
     const note = document.createElement('div');
     note.className = 'empty';
@@ -10142,7 +10274,12 @@ function renderPlaylists() {
   renderPlaylistActionPanel();
   const container = $('playlists-container');
   container.innerHTML = '';
-  const names = Object.keys(playlists).sort((a, b) => a.localeCompare(b));
+  const names = orderedPlaylistNames();
+  const collapseAllButton = $('toggle-playlists-collapse');
+  if (collapseAllButton) {
+    const allCollapsed = names.length > 0 && names.every(name => collapsedPlaylists.has(name));
+    collapseAllButton.textContent = allCollapsed ? 'Expand all' : 'Collapse all';
+  }
   if (names.length === 0) {
     const empty = document.createElement('div');
     empty.className = 'empty';
@@ -10150,24 +10287,34 @@ function renderPlaylists() {
     container.appendChild(empty);
     return;
   }
-  names.forEach(name => {
+  names.forEach((name, playlistIndex) => {
     const songs = playlists[name];
     const card = document.createElement('div');
-    card.className = 'playlist-card';
+    const isCollapsed = collapsedPlaylists.has(name);
+    card.className = `playlist-card${isCollapsed ? ' collapsed' : ''}`;
+    card.dataset.playlistName = name;
     card.innerHTML = `
       <div class="playlist-header">
+        <button class="playlist-card-handle" draggable="true" title="Drag playlist" aria-label="Drag ${name}">☰</button>
+        <button class="playlist-collapse" title="${isCollapsed ? 'Expand' : 'Collapse'} playlist" aria-expanded="${isCollapsed ? 'false' : 'true'}">${isCollapsed ? '▸' : '▾'}</button>
         <span class="playlist-name"></span>
         <span class="playlist-count"></span>
+        <span class="playlist-card-move">
+          <button class="playlist-up" title="Move playlist up" ${playlistIndex === 0 ? 'disabled' : ''}>↑</button>
+          <button class="playlist-down" title="Move playlist down" ${playlistIndex === names.length - 1 ? 'disabled' : ''}>↓</button>
+        </span>
         <button class="playlist-add">+ Add songs</button>
         <button class="playlist-play">▶ Play</button>
         <button class="playlist-shuffle">🔀 Shuffle</button>
         <button class="playlist-delete">Delete</button>
       </div>
-      <div class="playlist-adder hidden">
-        <input class="playlist-adder-search" type="text" placeholder="Search library">
-        <div class="playlist-adder-results"></div>
+      <div class="playlist-body${isCollapsed ? ' hidden' : ''}">
+        <div class="playlist-adder hidden">
+          <input class="playlist-adder-search" type="text" placeholder="Search library">
+          <div class="playlist-adder-results"></div>
+        </div>
+        <ul class="playlist-songs"></ul>
       </div>
-      <ul class="playlist-songs"></ul>
     `;
     card.querySelector('.playlist-name').textContent = name;
     card.querySelector('.playlist-count').textContent =
@@ -10176,16 +10323,76 @@ function renderPlaylists() {
     const shuffleButton = card.querySelector('.playlist-shuffle');
     const deleteButton = card.querySelector('.playlist-delete');
     const addButton = card.querySelector('.playlist-add');
-    [addButton, playButton, shuffleButton, deleteButton].forEach(button => {
+    const collapseButton = card.querySelector('.playlist-collapse');
+    const cardHandle = card.querySelector('.playlist-card-handle');
+    const moveUpButton = card.querySelector('.playlist-up');
+    const moveDownButton = card.querySelector('.playlist-down');
+    [addButton, playButton, shuffleButton, deleteButton, collapseButton, moveUpButton, moveDownButton].forEach(button => {
       button.addEventListener('pointerdown', (e) => {
         e.preventDefault();
         e.stopPropagation();
       });
     });
+    collapseButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (collapsedPlaylists.has(name)) collapsedPlaylists.delete(name);
+      else collapsedPlaylists.add(name);
+      if (collapsedPlaylists.has(name) && openPlaylistAdder === name) openPlaylistAdder = null;
+      savePlaylistLayout();
+      renderPlaylists();
+    });
+    moveUpButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      movePlaylistCard(name, -1);
+    });
+    moveDownButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      movePlaylistCard(name, 1);
+    });
+    cardHandle.addEventListener('dragstart', (e) => {
+      playlistCardDragState = {name, index: playlistIndex};
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', name);
+      requestAnimationFrame(() => card.classList.add('dragging'));
+    });
+    cardHandle.addEventListener('dragend', () => {
+      card.classList.remove('dragging');
+      document.querySelectorAll('.playlist-card.drag-over-before, .playlist-card.drag-over-after').forEach(item => {
+        item.classList.remove('drag-over-before', 'drag-over-after');
+      });
+      playlistCardDragState = null;
+    });
+    card.addEventListener('dragover', (e) => {
+      if (!playlistCardDragState || playlistCardDragState.name === name) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      const after = e.clientY > card.getBoundingClientRect().top + card.offsetHeight / 2;
+      card.classList.toggle('drag-over-before', !after);
+      card.classList.toggle('drag-over-after', after);
+    });
+    card.addEventListener('dragleave', (e) => {
+      if (card.contains(e.relatedTarget)) return;
+      card.classList.remove('drag-over-before', 'drag-over-after');
+    });
+    card.addEventListener('drop', (e) => {
+      if (!playlistCardDragState || playlistCardDragState.name === name) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const after = e.clientY > card.getBoundingClientRect().top + card.offsetHeight / 2;
+      const targetIdx = after ? playlistIndex + 1 : playlistIndex;
+      const movedName = playlistCardDragState.name;
+      playlistCardDragState = null;
+      if (reorderPlaylistCard(movedName, targetIdx)) showToast('↕', 'Playlist order saved');
+    });
     addButton.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
+      collapsedPlaylists.delete(name);
       openPlaylistAdder = openPlaylistAdder === name ? null : name;
+      savePlaylistLayout();
       renderPlaylists();
     });
     playButton.addEventListener('click', (e) => {
@@ -10202,6 +10409,8 @@ function renderPlaylists() {
       e.preventDefault();
       e.stopPropagation();
       delete playlists[name];
+      playlistOrder = playlistOrder.filter(item => item !== name);
+      collapsedPlaylists.delete(name);
       savePlaylists();
       renderPlaylists();
       renderPlaylistActionPanel();
