@@ -338,19 +338,10 @@ const SONG_EFFECT_PROFILES = Object.fromEntries([
   ...audioProfileEntries('songs/christian/Forrest Frank - OKAY!', bpmEffectProfile(120, {allowFx: true})),
   ...audioProfileEntries('songs/MIMI - Science', bpmEffectProfile(188)),
   ...audioProfileEntries('songs/Moonlit Star - Science (English)', bpmEffectProfile(188)),
-  // All Traveling Voices / DDF remasters share the DDLC story FX profile
-  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Phrase-Word Lead)', DDF_EFFECT_PROFILE),
-  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide)', DDF_EFFECT_PROFILE),
-  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide SADIE D1)', DDF_EFFECT_PROFILE),
-  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide SADIE H3)', DDF_EFFECT_PROFILE),
-  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide CIPIC 050)', DDF_EFFECT_PROFILE),
-  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Traveling Voices v7 Slow Glide CIPIC 050 Quiet Inst)', DDF_EFFECT_PROFILE),
-  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Female Vocal Remaster v3)', DDF_EFFECT_PROFILE),
-  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Male Vocal Remaster v3)', DDF_EFFECT_PROFILE),
   ...audioProfileEntries('songs/OR3O (Monika) feat. Rachie (Sayori), Kathy-chan (Yuri) & Chi Chi (Natsuki) - Doki Doki Forever', DDF_EFFECT_PROFILE),
+  ...audioProfileEntries('songs/Joshua Glass & Grok 4.6 - Doki Doki Forever Spatial Remastered', DDF_EFFECT_PROFILE),
   // Lofi cut — stretched timeline + chill intensity (do NOT share full-speed DDF profile)
   ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Lofi)', DDF_LOFI_EFFECT_PROFILE),
-  ...audioProfileEntries('songs/Joshua Glass & Grok 4.5 - Doki Doki Forever (Female-Dominant Rectangle)', DDF_EFFECT_PROFILE),
 ]);
 const seededUnit = (seed) => {
   const x = Math.sin(seed) * 10000;
@@ -3212,8 +3203,16 @@ let spatialLastUi = { f: '', m: '', sec: '', cue: '', next: '', az: 999, el: 999
 let spatialEls = null;
 let spatialCtx = null;
 
+function isDdfSpatialRemaster(song) {
+  if (!song) return false;
+  const hay = `${song.name || ''} ${song.title || ''} ${song.displayName || ''} ${song.path || ''}`.toLowerCase();
+  return hay.includes('doki doki forever') && hay.includes('spatial remastered');
+}
+
 function songLooksLikeTravelingVoices(song) {
   if (!song) return false;
+  // Published remaster is secular, not a Spatial-tagged library cut
+  if (isDdfSpatialRemaster(song)) return false;
   const name = song.name || '';
   const title = song.title || '';
   const path = song.path || '';
