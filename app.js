@@ -102,6 +102,18 @@ const SUPPORTED_LYRIC_TRACKS = {
   }
 };
 const SONG_METADATA_OVERRIDES = {
+  'songs/Joshua Glass & GPT-5.6 Sol - Encore Dance (Piano Hyperpop).m4a': {
+    artist: 'Joshua Glass & GPT-5.6 Sol',
+    title: 'Encore Dance: Piano Hyperpop'
+  },
+  'songs/Joshua Glass & GPT-5.6 Sol - Encore Dance (Piano, Strings & Harp).m4a': {
+    artist: 'Joshua Glass & GPT-5.6 Sol',
+    title: 'Encore Dance: Piano, Strings & Harp'
+  },
+  'songs/Joshua Glass & GPT-5.6 Sol - Trick Heart (Piano & Bright Keys).m4a': {
+    artist: 'Joshua Glass & GPT-5.6 Sol',
+    title: 'Trick Heart: Piano & Bright Keys'
+  },
   'songs/Kasane Teto - One More Bite.m4a': {
     artist: 'MiliSen feat. Kasane Teto',
     title: 'One More Bite'
