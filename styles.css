@@ -685,17 +685,60 @@ body.magic-maid-fx-active .hero-ring {
 .trick-heart-overlay[data-theme="encore-dance"] .lane-en .trick-heart-word.is-current { color: #5f1024; }
 
 body.magic-maid-fx-active .now-stage,
-body.encore-fx-active .now-stage {
+body.encore-fx-active .now-stage,
+body.encore-harp-fx-active .now-stage {
   z-index: 2;
   align-items: start;
   padding-top: 20px;
   padding-bottom: clamp(150px, 29vh, 230px);
 }
 
+body.encore-harp-fx-active {
+  --accent: #f22f58;
+  --accent-2: #dc8a91;
+  --accent-fg: #fff0dc;
+}
+body.encore-harp-fx-active .now-view.active {
+  background: #120005;
+  border: 1px solid rgba(255, 159, 151, 0.26);
+  color: #fff0dc;
+}
+body.encore-harp-fx-active .teto-fx-canvas {
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+body.encore-harp-fx-active .now-kicker {
+  color: var(--encore-secondary, #dc8a91);
+}
+body.encore-harp-fx-active .now-meta h1 {
+  color: #fff0dc;
+  text-shadow: 0 2px 0 rgba(49, 9, 22, 0.45);
+}
+body.encore-harp-fx-active .now-subtitle,
+body.encore-harp-fx-active .queue-label,
+body.encore-harp-fx-active #queue-next,
+body.encore-harp-fx-active .hero-time {
+  color: rgba(255, 232, 211, 0.82);
+}
+body.encore-harp-fx-active .hero-play {
+  color: #fff0dc;
+  border-color: rgba(255, 159, 151, 0.45);
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 236, 215, 0.14), transparent 58%),
+    #1a050a;
+}
+body.encore-harp-fx-active .hero-play::before {
+  background: conic-gradient(var(--encore-primary, #e62644) var(--progress), rgba(136, 24, 48, 0.22) 0deg);
+}
+body.encore-harp-fx-active .hero-play::after {
+  border-color: rgba(255, 232, 211, calc(0.18 + var(--level) * 0.45));
+}
+
 @media (max-width: 850px), (max-height: 650px) {
   body.trick-heart-fx-active .now-stage,
   body.magic-maid-fx-active .now-stage,
-  body.encore-fx-active .now-stage {
+  body.encore-fx-active .now-stage,
+  body.encore-harp-fx-active .now-stage {
     grid-template-columns: minmax(0, 1fr) auto;
     padding-bottom: clamp(166px, 36vh, 220px);
   }

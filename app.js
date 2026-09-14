@@ -60,6 +60,11 @@ const SUPPORTED_LYRIC_TRACKS = {
     lyricTitle: 'ENCORE DANCE',
     hideSection: true
   },
+  'songs/joshua glass & gpt-5.6 sol - encore dance (piano, strings & harp)': {
+    dataUrl: './songs/lyrics/encore-dance.json',
+    scene: 'encore-harp',
+    visualTheme: 'encore-harp'
+  },
   'songs/kasane teto - waiting for tomorrow': {
     dataUrl: './songs/lyrics/waiting-for-tomorrow.json',
     scene: 'story-theater',
@@ -218,6 +223,7 @@ const FX_LEVEL_PROPERTIES = Object.freeze({
   omb: '--omb-level',
   'hero-story': '--hero-story-level',
   'encore-dance': '--encore-level',
+  'encore-harp': '--encore-level',
   'story-theater': '--story-level',
   'trick-heart': '--trick-heart-level',
   'magic-maid': '--magic-maid-level',
@@ -834,6 +840,10 @@ function isEncoreDanceSong(song = currentSong()) {
   return supportedLyricTrackForSong(song)?.visualTheme === 'encore-dance';
 }
 
+function isEncoreHarpSong(song = currentSong()) {
+  return supportedLyricTrackForSong(song)?.visualTheme === 'encore-harp';
+}
+
 function encoreDanceVariant(song = currentSong()) {
   return supportedLyricTrackForSong(song)?.variant || 'jp';
 }
@@ -875,6 +885,8 @@ async function loadSupportedLyrics(config) {
         updateEncoreDanceLyrics(currentCalibratedTime(), true);
       } else if (config.scene === 'hero-story') {
         updateHeroStoryLyrics(currentCalibratedTime(), true);
+      } else if (config.scene === 'encore-harp') {
+        // Instrumental harp theater reads sections from supportedLyricsData.
       } else {
         updateOneMoreBiteLyrics(currentCalibratedTime(), true);
       }
@@ -891,6 +903,8 @@ async function loadSupportedLyrics(config) {
           ? $('encore-current')
           : config.scene === 'hero-story'
             ? $('hero-story-current')
+            : config.scene === 'encore-harp'
+              ? null
             : $('omb-lyric-current');
       if (current) current.textContent = 'Lyrics could not be loaded.';
       return null;
@@ -2068,6 +2082,9 @@ function activeFxTheme(song = currentSong()) {
   if (isHeroStorySong(song)) {
     return tetoFxEnabled ? 'hero-story' : 'off';
   }
+  if (isEncoreHarpSong(song)) {
+    return tetoFxEnabled ? 'encore-harp' : 'off';
+  }
   if (isEncoreDanceSong(song)) {
     return tetoFxEnabled ? 'encore-dance' : 'off';
   }
@@ -2144,7 +2161,8 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.classList.toggle('ddlc-fx-active', theme === 'ddlc');
   document.body.classList.toggle('omb-fx-active', theme === 'omb');
   document.body.classList.toggle('hero-story-fx-active', theme === 'hero-story');
-  document.body.classList.toggle('encore-fx-active', theme === 'encore-dance');
+  document.body.classList.toggle('encore-fx-active', theme === 'encore-dance' || theme === 'encore-harp');
+  document.body.classList.toggle('encore-harp-fx-active', theme === 'encore-harp');
   document.body.classList.toggle('story-theater-fx-active', theme === 'story-theater');
   document.body.classList.toggle('trick-heart-fx-active', theme === 'trick-heart');
   document.body.classList.toggle('magic-maid-fx-active', theme === 'magic-maid');
@@ -2172,6 +2190,14 @@ function updateFxState(levelOverride = tetoGlowLevel) {
     setOneMoreBiteTheaterActive(false);
     setHeroStoryTheaterActive(false);
     setEncoreTheaterActive(true);
+  } else if (theme === 'encore-harp') {
+    setTrickHeartOverlayActive(false);
+    setStoryTheaterActive(false);
+    setOneMoreBiteTheaterActive(false);
+    setHeroStoryTheaterActive(false);
+    setEncoreTheaterActive(false);
+    window.EncoreHarpFx?.reset();
+    loadSupportedLyrics(supportedLyricTrackForSong());
   } else if (theme === 'trick-heart') {
     setStoryTheaterActive(false);
     setOneMoreBiteTheaterActive(false);
@@ -2195,6 +2221,7 @@ function desktopEffectsVariant(song = currentSong()) {
   if (config?.scene === 'story-theater') return config.variant || 'waiting';
   if (config?.scene === 'hero-story') return `hero-${config.variant || 'mili'}`;
   if (config?.visualTheme === 'encore-dance') return `encore-${config.variant || 'jp'}`;
+  if (config?.visualTheme === 'encore-harp') return 'encore-harp';
   if (config?.scene === 'one-more-bite') return 'one-more-bite';
   const theme = activeFxTheme(song);
   if (theme === 'ddlc') {
@@ -9320,6 +9347,20 @@ function drawTetoFx(level) {
   }
   if (theme === 'encore-dance') {
     drawEncoreDanceFx(levels, currentCalibratedTime());
+    return;
+  }
+  if (theme === 'encore-harp') {
+    window.EncoreHarpFx?.draw(ctx, w, h, {
+      time: currentCalibratedTime(),
+      duration: effectiveDuration() || 144.149,
+      ended: !!audio.ended,
+      paused: !!audio.paused,
+      energy: levels.glow,
+      bass: levels.motion,
+      highs: levels.rise,
+      onset: levels.rise,
+      sections: supportedLyricsData?.sections || []
+    });
     return;
   }
   if (theme === 'story-theater') {
