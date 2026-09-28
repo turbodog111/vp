@@ -16,6 +16,8 @@ const RETIRED_DEFAULT_PLAYLISTS = ['Secular 12', 'Hybrid 12', 'IN THE ROOM!'];
 const DEFAULT_PLAYLISTS_VERSION = 'three-musketeers-v1';
 const PLAYLIST_ORDER_STORAGE_KEY = 'vp_playlist_order_v1';
 const PLAYLIST_COLLAPSED_STORAGE_KEY = 'vp_playlist_collapsed_v1';
+const PDOOM_AUDIO_PATH = 'songs/Pleometric - Im Upping My Pdoom.m4a';
+const PDOOM_VIDEO_URL = './songs/videos/Pleometric%20-%20Im%20Upping%20My%20Pdoom.mp4';
 
 const SUPPORTED_LYRIC_TRACKS = {
   'songs/mimi feat. kasane teto sv - trick heart': {
@@ -122,6 +124,10 @@ const SONG_METADATA_OVERRIDES = {
   'songs/Kasane Teto - One More Bite.m4a': {
     artist: 'MiliSen feat. Kasane Teto',
     title: 'One More Bite'
+  },
+  [PDOOM_AUDIO_PATH]: {
+    artist: 'Pleometric video',
+    title: "I'm Upping My P(doom)"
   }
 };
 
@@ -129,6 +135,10 @@ const $ = (id) => document.getElementById(id);
 // Mutable: MediaElementSource permanently hijacks an <audio> node; spatial tracks
 // recreate the element to restore true native HTMLAudio routing (QuickTime-like).
 let audio = $('audio');
+const referenceVideo = $('reference-video');
+let referenceVideoFailed = false;
+let lastReferenceVideoCorrectionAt = 0;
+let referenceVideoPlayPending = false;
 
 let library = [];
 let queue = [];
@@ -2066,7 +2076,71 @@ function beatPulseForProfile(profile, time) {
   return Math.pow(1 - phase, 4.2);
 }
 
+function isPdoomSong(song = currentSong()) {
+  return song?.path === PDOOM_AUDIO_PATH;
+}
+
+function syncReferenceVideo(forceSeek = false) {
+  if (!referenceVideo) return;
+  const shouldLoad = tetoFxEnabled && isPdoomSong();
+  const shouldShow = shouldLoad && isNowViewActive();
+  if (!shouldLoad) {
+    referenceVideo.pause();
+    if (referenceVideo.hasAttribute('src')) {
+      referenceVideo.removeAttribute('src');
+      referenceVideo.load();
+    }
+    referenceVideoFailed = false;
+    document.body.classList.remove('reference-video-active');
+    return;
+  }
+  if (!referenceVideo.hasAttribute('src')) {
+    referenceVideo.src = PDOOM_VIDEO_URL;
+    referenceVideo.load();
+    forceSeek = true;
+  }
+  document.body.classList.toggle('reference-video-active', shouldShow && !referenceVideoFailed);
+  if (!shouldShow || referenceVideoFailed) {
+    referenceVideo.pause();
+    return;
+  }
+  if (referenceVideo.readyState < 1) return;
+  const target = Number.isFinite(audio.currentTime) ? audio.currentTime : 0;
+  const drift = Math.abs(referenceVideo.currentTime - target);
+  const now = performance.now();
+  if (!referenceVideo.seeking && (forceSeek || (drift > 0.35 && now - lastReferenceVideoCorrectionAt > 1000))) {
+    try {
+      referenceVideo.currentTime = Math.min(target, referenceVideo.duration || target);
+      lastReferenceVideoCorrectionAt = now;
+    } catch (error) {
+      console.warn('Reference video seek failed:', error);
+    }
+  }
+  if (referenceVideo.playbackRate !== audio.playbackRate) referenceVideo.playbackRate = audio.playbackRate;
+  if (audio.paused || audio.seeking || audio.readyState < 3 || document.hidden) {
+    referenceVideo.pause();
+  } else if (referenceVideo.paused && !referenceVideoPlayPending) {
+    referenceVideoPlayPending = true;
+    referenceVideo.play()
+      .catch(error => console.warn('Reference video play failed:', error))
+      .finally(() => { referenceVideoPlayPending = false; });
+  }
+}
+
+referenceVideo?.addEventListener('loadedmetadata', () => syncReferenceVideo(true));
+referenceVideo?.addEventListener('seeked', () => syncReferenceVideo());
+referenceVideo?.addEventListener('error', () => {
+  if (!referenceVideo.hasAttribute('src')) return;
+  referenceVideoFailed = true;
+  referenceVideo.pause();
+  document.body.classList.remove('reference-video-active');
+  showToast('!', 'Video unavailable; audio still works');
+});
+referenceVideo?.addEventListener('click', () => togglePlay());
+document.addEventListener('visibilitychange', () => syncReferenceVideo(true));
+
 function activeFxTheme(song = currentSong()) {
+  if (isPdoomSong(song)) return tetoFxEnabled ? 'reference-video' : 'off';
   if (isMagicMaidSong(song)) {
     return tetoFxEnabled ? 'magic-maid' : 'off';
   }
@@ -2152,6 +2226,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
     if (levelProperty) document.body.style.setProperty(levelProperty, levelValue.toFixed(2));
     renderedFxLevel = levelValue;
   }
+  syncReferenceVideo();
   if (theme === renderedFxTheme) return;
   renderedFxTheme = theme;
   document.body.classList.toggle('fx-active', active);
@@ -2327,6 +2402,7 @@ function switchView(view) {
   } else {
     stopSpatialLoop();
   }
+  syncReferenceVideo(true);
 }
 
 function filteredLibraryEntries(filter = '') {
@@ -4725,6 +4801,7 @@ let lastDdfThemeTick = -1;
 function updatePlaybackVisuals() {
   // Uses native-backed calibrated time; kept off the visualizer rAF path
   const current = repairTimingState(currentCalibratedTime());
+  if (isPdoomSong()) syncReferenceVideo();
   const duration = effectiveDuration();
   const pct = duration ? clamp(0, 1, current / duration) : 0;
   const deg = `${(pct * 360).toFixed(2)}deg`;
@@ -9549,6 +9626,7 @@ function drawTetoFx(level) {
 }
 
 function drawWaveform(idle = false) {
+  if (activeFxTheme() === 'reference-video') return;
   const canvas = $('waveform');
   if (!canvas) return;
   const panel = canvas.closest('.wave-panel') || canvas.parentElement;
@@ -9712,6 +9790,7 @@ function drawWaveform(idle = false) {
   if (
     isNowViewActive()
     && isAnyFxActive()
+    && activeFxTheme() !== 'reference-video'
     && !document.body.classList.contains('ddf-theater-active')
   ) {
     drawTetoFx(smoothedLevel);
@@ -9818,11 +9897,13 @@ function bindAudioElementEvents(el) {
   el.addEventListener('seeking', () => {
     if (!mediaEventMatchesExpectedSong(el)) return;
     syncCalibratedClockToNative(currentSong(), { allowBackward: !!seekTransaction, keepRunning: false });
+    syncReferenceVideo(true);
     updatePlaybackVisuals();
   });
   el.addEventListener('seeked', () => {
     if (!mediaEventMatchesExpectedSong(el)) return;
     syncCalibratedClockToNative(currentSong(), { allowBackward: !!seekTransaction, consumePending: true, keepRunning: false });
+    syncReferenceVideo(true);
     updatePlaybackVisuals();
     spatialForcePaint = true;
     if (spatialActive) paintSpatialGuide(currentCalibratedTime(), true);
@@ -9836,10 +9917,12 @@ function bindAudioElementEvents(el) {
   el.addEventListener('waiting', () => {
     if (!mediaEventMatchesExpectedSong(el)) return;
     pauseCalibratedClock();
+    syncReferenceVideo();
   });
   el.addEventListener('playing', () => {
     if (!mediaEventMatchesExpectedSong(el)) return;
     startCalibratedClock();
+    syncReferenceVideo(true);
   });
   el.addEventListener('ended', () => {
     if (!audioElementMatchesCurrentSong(el)) return;
@@ -9930,8 +10013,6 @@ function handleSeekPreview() {
 function handleSeekCommit() {
   if (!seekTransaction) return;
   if (seekTransaction.finishOnSeeked) return;
-  const targetTime = seekTargetFromControl();
-  if (targetTime !== null) previewSeekTarget(targetTime);
   commitSeekTransaction(true);
 }
 

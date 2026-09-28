@@ -4430,3 +4430,24 @@ body.story-theater-active .now-view.active {
   .story-play,
   .story-word { transition: none; }
 }
+
+.reference-video {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  object-fit: contain;
+  cursor: pointer;
+}
+body.reference-video-active #view-now.view.active {
+  grid-template-rows: minmax(0, 1fr);
+  background: #000;
+}
+body.reference-video-active .reference-video { display: block; }
+body.reference-video-active #view-now .now-stage,
+body.reference-video-active #view-now .wave-panel,
+body.reference-video-active #view-now .spatial-guide,
+body.reference-video-active #view-now .teto-fx-canvas { display: none; }
