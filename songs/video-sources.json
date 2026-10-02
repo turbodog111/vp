@@ -1,0 +1,23 @@
+{
+  "songs/PuppyPriestess - Upping My Pbloom (Extended Edition).m4a": {
+    "title": "Upping My P(bloom) (Extended Edition)",
+    "postedBy": "PuppyPriestess",
+    "creditsAsPosted": "Video by Opus 5.5 and Suno 6",
+    "sourceUrl": "https://x.com/PuppyPriestess/status/2105116325794488736",
+    "video": "songs/videos/PuppyPriestess - Upping My Pbloom (Extended Edition).mp4",
+    "sourceResolution": [1280, 720],
+    "audioEncoding": "Original AAC, copied without re-encoding",
+    "videoEncoding": "Original H.264, copied without re-encoding"
+  },
+  "songs/A Flock of Altruists - Hit The Breaks Except For Me.m4a": {
+    "title": "Hit The Breaks Except For Me",
+    "artistAsPosted": "A Flock of Altruists",
+    "postedBy": "jbro_1776",
+    "originalPostUrl": "https://x.com/jbro_1776/status/2103383875263119373",
+    "requestedPostUrl": "https://x.com/MisterLeeHODL/status/2103584948020244665",
+    "video": "songs/videos/A Flock of Altruists - Hit The Breaks Except For Me.mp4",
+    "sourceResolution": [2560, 1440],
+    "audioEncoding": "Original AAC, copied without re-encoding",
+    "videoEncoding": "H.264 at original resolution, compressed for GitHub file-size limit"
+  }
+}

@@ -17,7 +17,22 @@ const DEFAULT_PLAYLISTS_VERSION = 'three-musketeers-v1';
 const PLAYLIST_ORDER_STORAGE_KEY = 'vp_playlist_order_v1';
 const PLAYLIST_COLLAPSED_STORAGE_KEY = 'vp_playlist_collapsed_v1';
 const PDOOM_AUDIO_PATH = 'songs/Pleometric - Im Upping My Pdoom.m4a';
-const PDOOM_VIDEO_URL = './songs/videos/Pleometric%20-%20Im%20Upping%20My%20Pdoom.mp4';
+const PBLOOM_AUDIO_PATH = 'songs/PuppyPriestess - Upping My Pbloom (Extended Edition).m4a';
+const HIT_BREAKS_AUDIO_PATH = 'songs/A Flock of Altruists - Hit The Breaks Except For Me.m4a';
+const REFERENCE_VIDEO_TRACKS = {
+  [PDOOM_AUDIO_PATH]: {
+    url: './songs/videos/Pleometric%20-%20Im%20Upping%20My%20Pdoom.mp4',
+    title: "I'm Upping My P(doom)"
+  },
+  [PBLOOM_AUDIO_PATH]: {
+    url: './songs/videos/PuppyPriestess%20-%20Upping%20My%20Pbloom%20(Extended%20Edition).mp4',
+    title: 'Upping My P(bloom) (Extended Edition)'
+  },
+  [HIT_BREAKS_AUDIO_PATH]: {
+    url: './songs/videos/A%20Flock%20of%20Altruists%20-%20Hit%20The%20Breaks%20Except%20For%20Me.mp4',
+    title: 'Hit The Breaks Except For Me'
+  }
+};
 
 const SUPPORTED_LYRIC_TRACKS = {
   'songs/mimi feat. kasane teto sv - trick heart': {
@@ -128,6 +143,14 @@ const SONG_METADATA_OVERRIDES = {
   [PDOOM_AUDIO_PATH]: {
     artist: 'Pleometric video',
     title: "I'm Upping My P(doom)"
+  },
+  [PBLOOM_AUDIO_PATH]: {
+    artist: 'PuppyPriestess (Opus 5.5 & Suno 6)',
+    title: 'Upping My P(bloom) (Extended Edition)'
+  },
+  [HIT_BREAKS_AUDIO_PATH]: {
+    artist: 'A Flock of Altruists',
+    title: 'Hit The Breaks Except For Me'
   }
 };
 
@@ -139,6 +162,7 @@ const referenceVideo = $('reference-video');
 let referenceVideoFailed = false;
 let lastReferenceVideoCorrectionAt = 0;
 let referenceVideoPlayPending = false;
+let referenceVideoGeneration = 0;
 
 let library = [];
 let queue = [];
@@ -2076,26 +2100,38 @@ function beatPulseForProfile(profile, time) {
   return Math.pow(1 - phase, 4.2);
 }
 
-function isPdoomSong(song = currentSong()) {
-  return song?.path === PDOOM_AUDIO_PATH;
+function referenceVideoTrack(song = currentSong()) {
+  return REFERENCE_VIDEO_TRACKS[song?.path] || null;
 }
 
 function syncReferenceVideo(forceSeek = false) {
   if (!referenceVideo) return;
-  const shouldLoad = tetoFxEnabled && isPdoomSong();
-  const shouldShow = shouldLoad && isNowViewActive();
+  const song = currentSong();
+  const track = referenceVideoTrack(song);
+  const shouldLoad = tetoFxEnabled && !!track;
+  const shouldShow = shouldLoad && isNowViewActive() && audioElementMatchesCurrentSong(audio);
   if (!shouldLoad) {
     referenceVideo.pause();
     if (referenceVideo.hasAttribute('src')) {
       referenceVideo.removeAttribute('src');
+      delete referenceVideo.dataset.songPath;
+      referenceVideoGeneration++;
+      referenceVideoPlayPending = false;
       referenceVideo.load();
     }
     referenceVideoFailed = false;
     document.body.classList.remove('reference-video-active');
     return;
   }
-  if (!referenceVideo.hasAttribute('src')) {
-    referenceVideo.src = PDOOM_VIDEO_URL;
+  if (!referenceVideo.hasAttribute('src') || referenceVideo.dataset.songPath !== song.path) {
+    referenceVideo.pause();
+    referenceVideoGeneration++;
+    referenceVideoFailed = false;
+    referenceVideoPlayPending = false;
+    lastReferenceVideoCorrectionAt = 0;
+    referenceVideo.dataset.songPath = song.path;
+    referenceVideo.setAttribute('aria-label', `${track.title} music video`);
+    referenceVideo.src = track.url;
     referenceVideo.load();
     forceSeek = true;
   }
@@ -2121,16 +2157,23 @@ function syncReferenceVideo(forceSeek = false) {
     referenceVideo.pause();
   } else if (referenceVideo.paused && !referenceVideoPlayPending) {
     referenceVideoPlayPending = true;
+    const generation = referenceVideoGeneration;
     referenceVideo.play()
-      .catch(error => console.warn('Reference video play failed:', error))
-      .finally(() => { referenceVideoPlayPending = false; });
+      .catch(error => {
+        if (generation === referenceVideoGeneration && error.name !== 'AbortError') {
+          console.warn('Reference video play failed:', error);
+        }
+      })
+      .finally(() => {
+        if (generation === referenceVideoGeneration) referenceVideoPlayPending = false;
+      });
   }
 }
 
 referenceVideo?.addEventListener('loadedmetadata', () => syncReferenceVideo(true));
 referenceVideo?.addEventListener('seeked', () => syncReferenceVideo());
 referenceVideo?.addEventListener('error', () => {
-  if (!referenceVideo.hasAttribute('src')) return;
+  if (!referenceVideo.hasAttribute('src') || !referenceVideo.error) return;
   referenceVideoFailed = true;
   referenceVideo.pause();
   document.body.classList.remove('reference-video-active');
@@ -2140,7 +2183,7 @@ referenceVideo?.addEventListener('click', () => togglePlay());
 document.addEventListener('visibilitychange', () => syncReferenceVideo(true));
 
 function activeFxTheme(song = currentSong()) {
-  if (isPdoomSong(song)) return tetoFxEnabled ? 'reference-video' : 'off';
+  if (referenceVideoTrack(song)) return tetoFxEnabled ? 'reference-video' : 'off';
   if (isMagicMaidSong(song)) {
     return tetoFxEnabled ? 'magic-maid' : 'off';
   }
@@ -4801,7 +4844,7 @@ let lastDdfThemeTick = -1;
 function updatePlaybackVisuals() {
   // Uses native-backed calibrated time; kept off the visualizer rAF path
   const current = repairTimingState(currentCalibratedTime());
-  if (isPdoomSong()) syncReferenceVideo();
+  if (referenceVideoTrack()) syncReferenceVideo();
   const duration = effectiveDuration();
   const pct = duration ? clamp(0, 1, current / duration) : 0;
   const deg = `${(pct * 360).toFixed(2)}deg`;
