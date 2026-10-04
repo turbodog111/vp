@@ -44,6 +44,11 @@
   let smoothed = { energy: 0.08, onset: 0, bass: 0.08, highs: 0.05 };
   let lastFrame = performance.now();
   let playbackStopped = false;
+  let playbackIntent = 0;
+  let wantsPlayback = false;
+  let renderedLine = null;
+  let renderedWords = [];
+  let lyricsError = '';
 
   document.body.dataset.variant = config.variant;
   Object.entries(palette).forEach(([name, value]) => document.documentElement.style.setProperty(`--${name}`, value));
@@ -78,10 +83,11 @@
     return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, '0')}`;
   }
 
-  function decodeEnvelope(value) {
+  function decodeEnvelope(value, scale = 100) {
     if (!value) return [];
+    if (!Number.isFinite(scale) || scale <= 0) return [];
     try {
-      return Array.from(atob(value), char => char.charCodeAt(0) / 255);
+      return Array.from(atob(value), char => clamp(0, 1, char.charCodeAt(0) / scale));
     } catch (_) {
       return [];
     }
@@ -169,36 +175,65 @@
       const section = sectionAt(time);
       const index = Math.max(0, data?.sections?.indexOf(section) || 0);
       lyricCurrent.className = 'lyric-current instrumental';
-      lyricCurrent.textContent = config.interludes[index % config.interludes.length] || config.interludes[0];
+      const text = lyricsError || config.interludes[index % config.interludes.length] || config.interludes[0];
+      if (lyricCurrent.textContent !== text) lyricCurrent.textContent = text;
+      renderedLine = null;
+      renderedWords = [];
       lyricPrevious.textContent = '';
       lyricNext.textContent = '';
       return;
     }
-    const index = data.lines.findIndex(line => time >= line.start && time < line.end + 0.12);
+    const index = activeLyricLineIndex(data.lines, time);
     if (index < 0) {
       const next = data.lines.findIndex(line => line.start > time);
       lyricCurrent.className = 'lyric-current instrumental';
+      renderedLine = null;
+      renderedWords = [];
       const section = sectionAt(time);
       const sectionIndex = Math.max(0, data.sections.indexOf(section));
-      lyricCurrent.textContent = config.interludes[sectionIndex % config.interludes.length] || config.interludes[0];
+      const text = config.interludes[sectionIndex % config.interludes.length] || config.interludes[0];
+      if (lyricCurrent.textContent !== text) lyricCurrent.textContent = text;
       lyricPrevious.textContent = next > 0 ? data.lines[next - 1].text : '';
       lyricNext.textContent = next >= 0 ? data.lines[next].text : '';
       return;
     }
     const line = data.lines[index];
+    if (line === renderedLine) {
+      updateWordStates(time);
+      return;
+    }
+    renderedLine = line;
+    renderedWords = [];
     lyricCurrent.className = 'lyric-current';
     lyricCurrent.replaceChildren();
     (line.words || [{ word: line.text, start: line.start, end: line.end }]).forEach((word, wordIndex) => {
       if (wordIndex && data.language !== 'ja') lyricCurrent.append(document.createTextNode(' '));
       const span = document.createElement('span');
       span.className = 'word';
-      if (time >= word.end) span.classList.add('is-sung');
-      else if (time >= word.start) span.classList.add('is-current');
       span.textContent = word.word;
       lyricCurrent.append(span);
+      renderedWords.push({ ...word, element: span, state: null });
     });
     lyricPrevious.textContent = data.lines[index - 1]?.text || '';
     lyricNext.textContent = data.lines[index + 1]?.text || '';
+    updateWordStates(time);
+  }
+
+  function activeLyricLineIndex(lines, time) {
+    for (let index = lines.length - 1; index >= 0; index--) {
+      if (time >= lines[index].start && time < lines[index].end) return index;
+    }
+    return -1;
+  }
+
+  function updateWordStates(time) {
+    renderedWords.forEach(word => {
+      const state = time >= word.end ? 'sung' : time >= word.start ? 'current' : 'upcoming';
+      if (word.state === state) return;
+      word.state = state;
+      word.element.classList.toggle('is-sung', state === 'sung');
+      word.element.classList.toggle('is-current', state === 'current');
+    });
   }
 
   function beatState(time) {
@@ -984,7 +1019,6 @@
   }
 
   function frame(now) {
-    requestAnimationFrame(frame);
     if (!data) return;
     const dt = clamp(0.001, 0.08, (now - lastFrame) / 1000 || 0.016);
     lastFrame = now;
@@ -1004,17 +1038,25 @@
     updateInterface(time, section, beat);
   }
 
-  async function load() {
-    const response = await fetch(config.lyricsUrl, { cache: 'no-store' });
-    if (!response.ok) throw new Error(`Lyrics request failed: ${response.status}`);
-    data = await response.json();
-    if (config.lyricVariant && data.variants?.[config.lyricVariant]) {
-      data.lines = data.variants[config.lyricVariant].lines || [];
+  async function fetchLyricData(url) {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      try {
+        const response = await fetch(url, { cache: 'no-store', signal: controller.signal });
+        if (!response.ok) throw new Error(`Lyrics request failed: ${response.status}`);
+        return await response.json();
+      } catch (error) {
+        if (attempt === 1) throw error;
+      } finally {
+        clearTimeout(timeout);
+      }
+      await new Promise(resolve => setTimeout(resolve, 500));
     }
-    const profile = config.analysisKey ? data.analysis?.[config.analysisKey] : data.analysis;
-    energyEnvelope = decodeEnvelope(profile?.energyBase64 || profile?.energy);
-    onsetEnvelope = decodeEnvelope(profile?.onsetsBase64 || profile?.onsets);
-    durationEl.textContent = formatTime(data.duration);
+  }
+
+  async function load() {
+    data = { lines: [], sections: [], duration: 0 };
     if (previewMode) {
       play.disabled = true;
       if (stop) stop.disabled = true;
@@ -1024,27 +1066,46 @@
       audio.src = config.audioUrl;
       audio.load();
     }
+    data = await fetchLyricData(config.lyricsUrl);
+    if (config.lyricVariant && data.variants?.[config.lyricVariant]) {
+      data.lines = data.variants[config.lyricVariant].lines || [];
+    }
+    const profile = config.analysisKey ? data.analysis?.[config.analysisKey] : data.analysis;
+    energyEnvelope = decodeEnvelope(profile?.energyBase64 || profile?.energy, profile?.envelopeScale ?? 100);
+    onsetEnvelope = decodeEnvelope(profile?.onsetsBase64 || profile?.onsets, profile?.envelopeScale ?? 100);
+    durationEl.textContent = formatTime(data.duration);
+    renderLoop.invalidate();
   }
 
   async function playAudio(options = {}) {
+    const intent = ++playbackIntent;
+    wantsPlayback = true;
     playbackStopped = false;
     stage.classList.remove('is-stopped');
-    if (options.analyze !== false) {
-      initAudioGraph();
+    try {
+      if (options.analyze !== false) initAudioGraph();
+      if (audioContext?.state === 'suspended') await audioContext.resume();
+      if (intent !== playbackIntent || !wantsPlayback) return false;
+      await audio.play();
+      return intent === playbackIntent && wantsPlayback;
+    } catch (error) {
+      if (intent !== playbackIntent) return false;
+      wantsPlayback = false;
+      throw error;
     }
-    if (audioContext?.state === 'suspended') await audioContext.resume();
-    await audio.play();
-    return true;
   }
 
   function pauseAudio() {
+    playbackIntent++;
+    wantsPlayback = false;
     audio.pause();
+    renderLoop.invalidate();
     return true;
   }
 
   function stopAudio() {
     playbackStopped = true;
-    audio.pause();
+    pauseAudio();
     try { audio.currentTime = 0; } catch (_) {}
     seek.value = '0';
     currentTimeEl.textContent = '0:00';
@@ -1053,7 +1114,7 @@
   }
 
   async function toggleAudio(options = {}) {
-    if (audio.paused) return playAudio(options);
+    if (!wantsPlayback && audio.paused) return playAudio(options);
     return pauseAudio();
   }
 
@@ -1086,6 +1147,7 @@
   });
   audio.addEventListener('play', () => { playIcon.textContent = '\u2016'; play.title = 'Pause'; });
   audio.addEventListener('pause', () => { playIcon.textContent = '\u25b6'; play.title = 'Play'; });
+  audio.addEventListener('ended', () => { wantsPlayback = false; });
   seek.addEventListener('pointerdown', () => { seeking = true; });
   seek.addEventListener('input', () => {
     const duration = audio.duration || data?.duration || 0;
@@ -1101,9 +1163,11 @@
   });
   window.addEventListener('resize', resize);
   resize();
+  const renderLoop = window.VPFrameLoop.create(audio, frame);
   load().catch(error => {
-    lyricCurrent.className = 'lyric-current instrumental';
-    lyricCurrent.textContent = `Unable to load theater: ${error.message}`;
+    lyricsError = 'Lyrics unavailable. Audio playback is still available.';
+    console.warn('Theater data failed:', error);
+    data = { lines: [], sections: [], duration: audio.duration || 0 };
+    renderLoop.invalidate();
   });
-  requestAnimationFrame(frame);
 })();

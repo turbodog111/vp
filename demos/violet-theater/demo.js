@@ -24,7 +24,7 @@
   const LRCLIB_CLIENT = 'vp-violet-demo/1.0 (https://github.com/turbodog111/vp)';
   const LRCLIB_CACHE_KEY = `vp-lyrics-provider:lrclib:${LRCLIB_RECORD_ID}`;
   const previewTime = Number(query.get('preview'));
-  const previewMode = Number.isFinite(previewTime) && previewTime >= 0;
+  const previewMode = query.has('preview') && Number.isFinite(previewTime) && previewTime >= 0;
 
   const palette = {
     black: '#030108',
@@ -606,7 +606,7 @@
   function drawFrame(now) {
     const dt = Math.min(0.05, (now - lastFrame) / 1000);
     lastFrame = now;
-    if (!audio.paused && Number.isFinite(audio.currentTime)) displayTime = audio.currentTime;
+    if (Number.isFinite(audio.currentTime)) displayTime = audio.currentTime;
     if (previewMode && audio.paused) displayTime = previewTime;
 
     const section = currentSection(displayTime);
@@ -629,10 +629,20 @@
     updateInterface(displayTime, section);
 
     void dt;
-    requestAnimationFrame(drawFrame);
   }
 
+  let renderedWordLine = null;
+  let renderedWordNodes = [];
   function renderWords(line, time) {
+    if (line && line === renderedWordLine) {
+      renderedWordNodes.forEach(({ span, word }) => {
+        span.classList.toggle('is-sung', time >= word.end);
+        span.classList.toggle('is-current', time >= word.start && time < word.end);
+      });
+      return;
+    }
+    renderedWordLine = line;
+    renderedWordNodes = [];
     lyricCurrent.replaceChildren();
     lyricCurrent.classList.remove('is-duet');
     if (!line) {
@@ -663,6 +673,7 @@
         if (time >= word.end) span.classList.add('is-sung');
         else if (time >= word.start && time < word.end) span.classList.add('is-current');
         span.textContent = word.word;
+        renderedWordNodes.push({ span, word });
         vocalLine.append(span);
         if (index < words.length - 1) vocalLine.append(document.createTextNode(' '));
       });
@@ -776,9 +787,10 @@
 
   function lineIndexAt(time) {
     if (!data?.lines?.length) return -1;
-    const direct = data.lines.findIndex(line => time >= line.start && time < line.end);
-    if (direct >= 0) return direct;
-    return data.lines.findIndex(line => time >= line.start - 0.06 && time < line.end + 0.06);
+    for (let index = data.lines.length - 1; index >= 0; index--) {
+      if (time >= data.lines[index].start && time < data.lines[index].end) return index;
+    }
+    return -1;
   }
 
   function updateLyrics(time) {
@@ -902,6 +914,7 @@
 
   window.addEventListener('resize', resize);
   resize();
+  const renderLoop = window.VPFrameLoop.create(audio, drawFrame);
   loadLocalAudio();
 
   fetch('../../songs/lyrics/through-patches-of-violet-metal.json', { cache: 'no-store' })
@@ -911,6 +924,7 @@
     })
     .then(payload => {
       data = payload;
+      renderLoop.invalidate();
       energyEnvelope = decodeEnvelope(payload.analysis?.energyBase64);
       onsetEnvelope = decodeEnvelope(payload.analysis?.onsetsBase64);
       durationEl.textContent = formatTime(data.duration);
@@ -925,5 +939,4 @@
       chapterDetail.textContent = 'Provider lyrics unavailable';
     });
 
-  requestAnimationFrame(drawFrame);
 })();

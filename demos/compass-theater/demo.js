@@ -19,7 +19,7 @@
   const lyricNext = document.getElementById('lyric-next');
   const query = new URLSearchParams(location.search);
   const previewTime = Number(query.get('preview'));
-  const previewMode = Number.isFinite(previewTime) && previewTime >= 0;
+  const previewMode = query.has('preview') && Number.isFinite(previewTime) && previewTime >= 0;
 
   const palette = {
     night: '#010714',
@@ -745,7 +745,7 @@
     const dt = Math.min(0.05, (now - lastFrame) / 1000 || 0.016);
     lastFrame = now;
     if (previewMode && audio.paused) displayTime = previewTime;
-    else if (!audio.paused && Number.isFinite(audio.currentTime)) displayTime = audio.currentTime;
+    else if (Number.isFinite(audio.currentTime)) displayTime = audio.currentTime;
     const section = currentSection(displayTime);
     const beat = beatAt(displayTime);
     analyze(dt, displayTime, section.phase);
@@ -758,10 +758,20 @@
     drawFigures(displayTime, section, horizon, energy);
 
     updateInterface(displayTime, section);
-    requestAnimationFrame(drawFrame);
   }
 
+  let renderedWordLine = null;
+  let renderedWordNodes = [];
   function renderWords(line, time) {
+    if (line && line === renderedWordLine) {
+      renderedWordNodes.forEach(({ span, word }) => {
+        span.classList.toggle('is-sung', time >= word.end);
+        span.classList.toggle('is-current', time >= word.start && time < word.end);
+      });
+      return;
+    }
+    renderedWordLine = line;
+    renderedWordNodes = [];
     lyricCurrent.textContent = '';
     if (!line) {
       lyricCurrent.textContent = currentSection(time).name;
@@ -780,6 +790,7 @@
       if (time >= word.end) span.classList.add('is-sung');
       else if (time >= word.start && time < word.end) span.classList.add('is-current');
       span.textContent = word.word;
+      renderedWordNodes.push({ span, word });
       lyricCurrent.append(span);
       if (index < words.length - 1) lyricCurrent.append(document.createTextNode(' '));
     });
@@ -787,9 +798,10 @@
 
   function lineIndexAt(time) {
     if (!data?.lines?.length) return -1;
-    const direct = data.lines.findIndex(line => time >= line.start - 0.12 && time <= line.end + 0.22);
-    if (direct >= 0) return direct;
-    return data.lines.findIndex(line => line.start > time && line.start - time < 1.15);
+    for (let index = data.lines.length - 1; index >= 0; index--) {
+      if (time >= data.lines[index].start && time < data.lines[index].end) return index;
+    }
+    return -1;
   }
 
   function updateLyrics(time) {
@@ -892,6 +904,7 @@
 
   window.addEventListener('resize', resize);
   resize();
+  const renderLoop = window.VPFrameLoop.create(audio, drawFrame);
 
   fetch('../../songs/lyrics/compass-rock.json', { cache: 'no-store' })
     .then(response => {
@@ -900,6 +913,7 @@
     })
     .then(payload => {
       data = payload;
+      renderLoop.invalidate();
       durationEl.textContent = formatTime(payload.duration);
       updateInterface(displayTime, currentSection(displayTime));
     })
@@ -908,5 +922,4 @@
       chapterDetail.textContent = 'Lyrics data unavailable';
     });
 
-  requestAnimationFrame(drawFrame);
 })();

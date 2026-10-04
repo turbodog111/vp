@@ -21,7 +21,7 @@
   const lyricNext = document.getElementById('lyric-next');
   const query = new URLSearchParams(location.search);
   const previewTime = Number(query.get('preview'));
-  const previewMode = Number.isFinite(previewTime) && previewTime >= 0;
+  const previewMode = query.has('preview') && Number.isFinite(previewTime) && previewTime >= 0;
 
   const palette = {
     cream: '#fff7e2',
@@ -512,7 +512,7 @@
 
   function drawFrame() {
     if (previewMode && audio.paused) displayTime = previewTime;
-    else if (!audio.paused && Number.isFinite(audio.currentTime)) displayTime = audio.currentTime;
+    else if (Number.isFinite(audio.currentTime)) displayTime = audio.currentTime;
 
     const section = currentSection(displayTime);
     const recorded = recordedAt(displayTime);
@@ -531,10 +531,20 @@
     drawFinalVignette(section, motion);
     updateInterface(displayTime, section, beat);
 
-    requestAnimationFrame(drawFrame);
   }
 
+  let renderedWordLine = null;
+  let renderedWordNodes = [];
   function renderWords(line, time) {
+    if (line && line === renderedWordLine) {
+      renderedWordNodes.forEach(({ span, word }) => {
+        span.classList.toggle('is-sung', time >= word.end);
+        span.classList.toggle('is-current', time >= word.start && time < word.end);
+      });
+      return;
+    }
+    renderedWordLine = line;
+    renderedWordNodes = [];
     lyricCurrent.replaceChildren();
     if (!line) {
       const span = document.createElement('span');
@@ -552,6 +562,7 @@
       if (time >= word.end) span.classList.add('is-sung');
       else if (time >= word.start && time < word.end) span.classList.add('is-current');
       span.textContent = word.word;
+      renderedWordNodes.push({ span, word });
       lyricCurrent.append(span);
       if (index < words.length - 1) lyricCurrent.append(document.createTextNode(' '));
     });
@@ -673,6 +684,7 @@
 
   window.addEventListener('resize', resize);
   resize();
+  const renderLoop = window.VPFrameLoop.create(audio, drawFrame);
   loadLocalAudio();
 
   fetch('../../songs/lyrics/waiting-for-tomorrow.json', { cache: 'no-store' })
@@ -682,6 +694,7 @@
     })
     .then(payload => {
       data = payload;
+      renderLoop.invalidate();
       energyEnvelope = decodeEnvelope(payload.analysis?.energyBase64);
       onsetEnvelope = decodeEnvelope(payload.analysis?.onsetsBase64);
       durationEl.textContent = formatTime(payload.duration);
@@ -693,5 +706,4 @@
       chapterDetail.textContent = 'Data unavailable';
     });
 
-  requestAnimationFrame(drawFrame);
 })();

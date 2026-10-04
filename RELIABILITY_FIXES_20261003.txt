@@ -1,0 +1,125 @@
+VP RELIABILITY FIXES - 2026-10-03
+
+Scope: fixes F1-F21 from the October 3 review, on top of
+4e2397a4c029b2e5053c109bff06fec87a5883a2. Improvements I1-I14 remain pending.
+Release includes the fixes and their regression tests. No app restart or media edits.
+
+IMPLEMENTED FIXES
+
+1. Waveform sizing: one coalesced layout request; hidden/tiny boxes never
+   self-schedule retries. ResizeObserver invalidates actual size changes.
+2. Theater identity: activation includes song identity, not just theme.
+   Same-family Hero, Encore, and story switches refresh their lyric state.
+3. Seeking: transactions belong to an element, recording generation, and
+   playback intent. Pause/source changes cancel them; unsettled seeks fail
+   closed instead of resuming a stale target after a timer.
+4. Async playback: ownership is checked after play/context/graph waits.
+   Cancelled operations cannot reapply old spatial state. Expected aborts are
+   handled. Recreated-element metadata cannot seek a different recording.
+5. Error recovery: retry timers respect later Pause and selection changes.
+   Exhausted retries keep the selected queue item available for explicit Play.
+6. Audio reset: preserve volume, mute, recording position, and playback intent;
+   restore only the current request and report restoration failures.
+7. Shuffle refresh: remap both queue orders using stable recording references.
+8. Library refresh: retain last-good collections on failure; reject obsolete
+   refresh completions and remap against the user's selection at commit time.
+9. Frame cadence: retain scheduling remainder for a stable 30 fps budget on
+   60/90/120 Hz refresh timelines.
+10. Lyric rendering: retain word nodes while a line is unchanged. Shared and
+    dedicated demos update word state without rebuilding the line each frame.
+11. Envelope decoding: legacy energy/onset bytes use the documented 0-100
+    scale, giving full-strength samples 1.0 rather than 0.392. Shared/Psalm
+    readers also accept an explicit analysis.envelopeScale. No data retiming.
+12. Render lifecycle: standalone demos paint one still frame after state/seek
+    changes, sleep while paused/hidden/stopped, and wake for visible playback.
+    Legacy DDF rendering is also pause/view/visibility gated. Explicit static
+    preview URLs remain supported; absent preview no longer means time zero.
+13. Lyric requests: generation guards cover both success and failure; obsolete
+    requests are aborted without clearing a newer request's state.
+14. Lyric handoffs: half-open intervals remove artificial late tails, including
+    the legacy DDF selector. Silence stays silent instead of holding old lines.
+15. Standalone loading: audio loads independently of lyrics. Shared demos make
+    at most two lyric attempts, each capped at ten seconds, then show an error
+    without disabling audio. Psalm media initialization is also independent.
+16. Playlist names: null-prototype storage, own-key checks, and DOM attribute
+    assignment safely support inherited-property names and quotes/markup.
+17. Playlist validation: retain valid entries, preserve the original malformed
+    data before replacing it, and block replacement if the backup cannot save.
+18. Persistence: failed edits remain in memory with a visible unsaved state,
+    retry, and recovery download. Unread data cannot be overwritten. Migration
+    version writes cannot precede a failed playlist write; retries save backups
+    before replacement data.
+19. Default deletion: persisted tombstones prevent deleted defaults returning;
+    explicitly recreating the same name clears its tombstone.
+20. Lyrics intake: Unicode normalization retains Japanese and mixed-script
+    titles; empty candidate titles cannot earn partial-match credit.
+21. Lyric audit: Magic Maid and Trick Heart are covered, parallel-language
+    tokens are checked, and invalid/nonfinite intervals fail. A separate
+    registry check evaluates the player's existing registry and compares all
+    lyric-bearing recordings/variants against the audit. The instrumental
+    Encore harp configuration is explicitly excluded from sung-lyric checks.
+
+VERIFICATION
+
+Run from this repository:
+  node --test scripts/test_player.cjs
+  python3 -B -m unittest discover -s scripts -p 'test_*.py'
+  node scripts/check_lyric_registry.cjs
+  python3 -B scripts/audit_lyrics.py
+  git diff --check
+
+The registry command uses PYTHON if set, otherwise python3. The recording audit
+requires ffprobe and the media files, not just a sparse source checkout.
+
+Completed locally:
+- 54 JavaScript regression tests passed. They execute production functions
+  with deterministic media, timer, network, storage, and DOM dependencies.
+- 12 Python tests passed. Registry coverage check passed: 15 lyric-bearing
+  recordings and one explicitly instrumental configuration.
+- Catalog audit: all 115 manifest entries map to tracked media. All 15 lyric
+  recordings passed duration and structural checks using audio verified by
+  Git blob hash; no unmapped lyric JSON remained. Missing sparse-checkout
+  media was read from a hash-matching local checkout, without modifying it.
+- Syntax checked across JavaScript files and the inline HRTF script.
+- Silent browser checks: Waiting -> Compass, Mili Hero -> Rie Hero, Encore
+  Japanese -> English; correct media/lyric identity, no captured JS errors.
+- Pause/resume media-event responses of about 34/17 ms were observed in the
+  instrumented browser. These are NOT audible-output latency measurements.
+- Reset restored playback at 58.382 seconds and preserved zero test volume.
+- Resize work stayed at five calls after roughly six minutes versus the
+  review's accumulating retries. No long tasks were captured in that run.
+  Instrumentation overhead and differing runs prohibit treating this as an
+  exact production CPU benchmark.
+- Shared demo paused frame count stopped; seeking invalidated one new frame.
+  Stop reset time to zero and stopped continuous rendering. With lyric JSON
+  forced to fail, muted audio still reached playing and advanced normally.
+- Dedicated Compass pause/seek retained native time, with no captured errors.
+
+BOUNDARIES
+
+This work fixes identified mechanisms and provides reproducible regressions;
+it is not a promise that no future defect can occur. Tests were muted and do
+not certify speaker/Bluetooth latency or every word's acoustic alignment.
+Desktop UI's native WKWebView output path still needs the I1 measurement pass.
+No AudioContext latencyHint/sample-rate policy, graphics choreography, song
+content, or existing timing data was changed. The native app wrapper was not rebuilt.
+
+NEXT: IMPROVEMENTS ONLY AFTER THE FIXES ARE REVIEWED
+
+1. Low-latency audio/output measurements in Desktop UI, wired and Bluetooth.
+2. Consolidated playback state controller (beyond the targeted race guards).
+3. Change-driven UI updates independent of animation.
+4. Cached geometry and batched layout reads.
+5. Drawing/blur/path caching without reducing choreography.
+6. Shared measured frame-budget and quality policy.
+7. Broader loading/caching and bounded next-track preload.
+8. Unified theater registry and shared renderer contracts.
+9. CI integration of playback/performance tests; native output checks.
+10. Expanded user-facing latency and performance diagnostics.
+11. Accessibility and canvas-aware reduced-motion behavior.
+12. General playlist/EQ undo and import/export workflow.
+13. Acoustic lyric-alignment review with timing provenance.
+14. Unified deployment identity and post-deployment media checks.
+
+The immediate priorities after approval are I1, then I2/I3. Measure actual
+audible onset/cessation before attributing any remaining delay to rendering.

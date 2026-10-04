@@ -40,8 +40,8 @@ class IntakeError(RuntimeError):
 
 
 def normalize(value: str) -> str:
-    value = unicodedata.normalize("NFKD", value or "").casefold()
-    return " ".join(re.findall(r"[a-z0-9]+", value))
+    value = unicodedata.normalize("NFKC", value or "").casefold()
+    return " ".join(re.findall(r"[^\W_]+", value, flags=re.UNICODE))
 
 
 def slugify(value: str) -> str:
@@ -75,7 +75,7 @@ def candidate_score(candidate: dict, title: str, artist: str, duration: float | 
 
     if wanted_title and wanted_title == actual_title:
         score += 55
-    elif wanted_title and (wanted_title in actual_title or actual_title in wanted_title):
+    elif wanted_title and actual_title and (wanted_title in actual_title or actual_title in wanted_title):
         score += 32
     else:
         score += 25 * token_similarity(title, candidate_title)

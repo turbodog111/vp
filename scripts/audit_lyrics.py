@@ -2,6 +2,7 @@
 """Validate every recording-specific lyric timeline used by vp."""
 
 import json
+import math
 import subprocess
 import sys
 from pathlib import Path
@@ -9,6 +10,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACKS = (
+    ("trick-heart.json", "base", "songs/MIMI feat. Kasane Teto SV - Trick Heart.m4a"),
+    ("magic-maid.json", "base", "songs/MIMI feat. Kasane Teto SV - Magic Maid.m4a"),
     ("one-more-bite.json", "base", "songs/Kasane Teto - One More Bite.m4a"),
     ("hero.json", "base", "songs/Mili - Hero.m4a"),
     ("hero.json", "base", "songs/Himemiya Rie - Hero (Mili Cover).m4a"),
@@ -58,6 +61,26 @@ def timeline_lines(data, variant):
         return data.get("lines", ())
     return data.get("variants", {}).get(variant, {}).get("lines", ())
 
+def finite_number(value):
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+
+
+def audit_parallel_lanes(label, line, line_index):
+    errors = []
+    lane_count = 0
+    for language in ("jp", "romaji", "en"):
+        if language not in line:
+            continue
+        lane_count += 1
+        tokens = line[language]
+        if not isinstance(tokens, list) or not tokens or any(
+            not isinstance(token, str) or not token.strip() for token in tokens
+        ):
+            errors.append(f"{label} line {line_index}: invalid {language} token lane")
+    if "jp" in line and any(language not in line for language in ("romaji", "en")):
+        errors.append(f"{label} line {line_index}: incomplete parallel language lanes")
+    return errors, lane_count
+
 
 def audit_timeline(label, lines, duration):
     errors = []
@@ -67,7 +90,7 @@ def audit_timeline(label, lines, duration):
         start = line.get("start")
         end = line.get("end")
         words = line.get("words")
-        if not isinstance(start, (int, float)) or not isinstance(end, (int, float)) or end <= start:
+        if not finite_number(start) or not finite_number(end) or start < 0 or end <= start:
             errors.append(f"{label} line {line_index}: invalid line interval")
             continue
         if start < previous_line_end - 0.001:
@@ -75,6 +98,12 @@ def audit_timeline(label, lines, duration):
         if end > duration + 0.25:
             errors.append(f"{label} line {line_index}: ends after the recording")
         previous_line_end = end
+        lane_errors, lane_count = audit_parallel_lanes(label, line, line_index)
+        errors.extend(lane_errors)
+        # Parallel-language string tokens are aligned within their parent line
+        # by the renderer, not measured word timestamps. Do not certify them as such.
+        if "jp" in line and lane_count and words is None:
+            continue
         if not isinstance(words, list) or not words:
             errors.append(f"{label} line {line_index}: missing measured words")
             continue
@@ -84,8 +113,8 @@ def audit_timeline(label, lines, duration):
             word_start = word.get("start")
             word_end = word.get("end")
             if (
-                not isinstance(word_start, (int, float))
-                or not isinstance(word_end, (int, float))
+                not finite_number(word_start)
+                or not finite_number(word_end)
                 or word_end <= word_start
             ):
                 errors.append(f"{label} line {line_index}, word {word_index}: invalid interval")
@@ -125,7 +154,7 @@ def main():
             continue
         duration = audio_duration(audio_path)
         declared_duration = data.get("duration")
-        if not isinstance(declared_duration, (int, float)) or abs(duration - declared_duration) > 0.25:
+        if not finite_number(declared_duration) or abs(duration - declared_duration) > 0.25:
             errors.append(
                 f"{label}: declared duration {declared_duration!r} differs from audio duration {duration:.3f}"
             )
@@ -145,7 +174,8 @@ def main():
         return 1
     print(
         f"Lyric audit passed: {len(TRACKS)} recordings, {len(lyric_files)} lyric files, "
-        f"{total_lines} lines, {total_words} timed words."
+        f"{total_lines} lines, {total_words} explicit timed words. "
+        "Parallel token lanes are validated at line level, not acoustically certified."
     )
     return 0
 

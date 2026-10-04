@@ -6,9 +6,9 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-10-01-bloom-video-v2">
+<meta name="vp-build" content="2026-10-03-reliability-fixes">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="styles.css?v=20261001-bloom-video">
+<link rel="stylesheet" href="styles.css?v=20261003-reliability">
 </head>
 <body>
 <div class="app">
@@ -55,6 +55,12 @@
     <button class="tab" data-view="playlists">Playlists</button>
     <button class="tab" data-view="now">Now Playing</button>
   </nav>
+
+  <div id="storage-status" role="status" hidden>
+    <span id="storage-message"></span>
+    <button id="storage-retry" type="button">Retry save</button>
+    <button id="storage-download" type="button">Download recovery</button>
+  </div>
 
   <main class="main">
     <section id="view-library" class="view active">
@@ -488,6 +494,6 @@
 
 <audio id="audio" preload="metadata"></audio>
 <script src="encore-harp-fx.js?v=20260913-harp-theater"></script>
-<script src="app.js?v=20261001-bloom-video"></script>
+<script src="app.js?v=20261003-reliability"></script>
 </body>
 </html>

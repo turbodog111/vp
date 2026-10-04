@@ -16,6 +16,7 @@ const RETIRED_DEFAULT_PLAYLISTS = ['Secular 12', 'Hybrid 12', 'IN THE ROOM!'];
 const DEFAULT_PLAYLISTS_VERSION = 'three-musketeers-v1';
 const PLAYLIST_ORDER_STORAGE_KEY = 'vp_playlist_order_v1';
 const PLAYLIST_COLLAPSED_STORAGE_KEY = 'vp_playlist_collapsed_v1';
+const DELETED_DEFAULTS_STORAGE_KEY = 'vp_deleted_default_playlists_v1';
 const PDOOM_AUDIO_PATH = 'songs/Pleometric - Im Upping My Pdoom.m4a';
 const PBLOOM_AUDIO_PATH = 'songs/PuppyPriestess - Upping My Pbloom (Extended Edition).m4a';
 const HIT_BREAKS_AUDIO_PATH = 'songs/A Flock of Altruists - Hit The Breaks Except For Me.m4a';
@@ -163,8 +164,15 @@ let referenceVideoFailed = false;
 let lastReferenceVideoCorrectionAt = 0;
 let referenceVideoPlayPending = false;
 let referenceVideoGeneration = 0;
+const pendingStorageWrites = new Map();
+const storageReadFailures = new Set();
+let playlistRecoveryRaw = null;
+let playlistRecoveryBackupKey = null;
+let deletedDefaultPlaylists = loadDeletedDefaults();
 
 let library = [];
+let libraryLoadSerial = 0;
+const collectionSnapshots = new Map();
 let queue = [];
 let queueIndex = -1;
 let loopMode = 'off';
@@ -174,14 +182,14 @@ let playlists = loadPlaylists();
 let playlistOrder = loadPlaylistOrder(playlists);
 let collapsedPlaylists = new Set(loadCollapsedPlaylists(playlists));
 let currentPlaylist = null;
-let activeCollection = localStorage.getItem('vp_collection') || 'all';
-let tetoFxEnabled = localStorage.getItem('vp_teto_fx_enabled') !== 'false';
-let fxTheme = ['teto', 'disco', 'teto11'].includes(localStorage.getItem('vp_fx_theme')) ? localStorage.getItem('vp_fx_theme') : 'teto11';
-let timingDebugEnabled = localStorage.getItem('vp_timing_debug_enabled') === 'true';
+let activeCollection = readSetting('vp_collection') || 'all';
+let tetoFxEnabled = readSetting('vp_teto_fx_enabled') !== 'false';
+let fxTheme = ['teto', 'disco', 'teto11'].includes(readSetting('vp_fx_theme')) ? readSetting('vp_fx_theme') : 'teto11';
+let timingDebugEnabled = readSetting('vp_timing_debug_enabled') === 'true';
 let addToActionOpenedAt = 0;
 let pendingPlaylistSongIdx = null;
 let openPlaylistAdder = null;
-let playlistAdderQueries = {};
+let playlistAdderQueries = Object.create(null);
 let playlistDragState = null;
 let playlistCardDragState = null;
 let audioCtx = null;
@@ -197,6 +205,7 @@ let lastVisualFrameAt = 0;
 let progressTimer = 0;
 let waveFrame = 0;
 let waveSizeKey = '';
+let nowLayoutRaf = 0;
 let fxSizeKey = '';
 let waveBars = [];
 let wavePitchFocus = 0.5;
@@ -208,7 +217,7 @@ let tetoGlowLevel = 0;
 let tetoRiseEnergy = 0;
 let lastTetoAmplitude = 0;
 let waveLevelWindow = [];
-let playerVolume = parseVolume(localStorage.getItem('vp_volume'), 1);
+let playerVolume = parseVolume(readSetting('vp_volume'), 1);
 let calibratedClockSongId = null;
 let calibratedBaseTime = 0;
 let calibratedBasePerf = 0;
@@ -226,6 +235,9 @@ let lastWatchdogPerf = performance.now();
 let audioGraphError = '';
 let audioGraphActivatedAt = 0;
 let playbackAttemptSerial = 0;
+let playbackIntentSerial = 0;
+let playbackWantsToPlay = false;
+let playbackFailed = false;
 let playbackRetryCount = 0;
 let playbackRetryTimer = 0;
 let expectedMediaSongId = null;
@@ -234,6 +246,8 @@ let mediaTransitionPending = false;
 let pendingMediaStartTime = 0;
 let supportedLyricsData = null;
 let supportedLyricsPromise = null;
+let supportedLyricsRequestSerial = 0;
+let supportedLyricsAbort = null;
 let supportedLyricsSongKey = '';
 let supportedLyricsLineIndex = -2;
 let supportedLyricsSectionIndex = -2;
@@ -248,6 +262,7 @@ let trickHeartSceneActive = false;
 let trickHeartWordLanes = [];
 let parallelLyricsActiveKey = '';
 let renderedFxTheme = '';
+let renderedFxSongId = null;
 let renderedFxLevel = -1;
 const FX_LEVEL_PROPERTIES = Object.freeze({
   teto: '--teto-level',
@@ -518,36 +533,123 @@ function showToast(icon, text) {
   }, 1400);
 }
 
+function readSetting(key) {
+  try { return localStorage.getItem(key); }
+  catch {
+    storageReadFailures.add(key);
+    return null;
+  }
+}
+
+function writeSetting(key, value) {
+  try {
+    if (storageReadFailures.has(key)) throw new Error('Reload before replacing unread saved data');
+    if (key === 'vp_playlists' && playlistRecoveryBackupKey && pendingStorageWrites.has(playlistRecoveryBackupKey)) {
+      throw new Error('Recovery backup must be saved first');
+    }
+    if (key === 'vp_default_playlists_version' && pendingStorageWrites.has('vp_playlists')) {
+      throw new Error('Playlist migration must be saved first');
+    }
+    localStorage.setItem(key, value);
+    pendingStorageWrites.delete(key);
+    renderStorageStatus();
+    return true;
+  } catch {
+    pendingStorageWrites.set(key, value);
+    renderStorageStatus();
+    return false;
+  }
+}
+
+function renderStorageStatus() {
+  const status = $('storage-status');
+  if (!status) return;
+  status.hidden = !pendingStorageWrites.size && !storageReadFailures.size && !playlistRecoveryRaw;
+  $('storage-message').textContent = storageReadFailures.size
+    ? 'Saved settings could not be read. Download recovery, then reload when storage is available.'
+    : pendingStorageWrites.size
+      ? 'Changes are not saved to this browser. Retry saving or download recovery before closing.'
+      : 'Damaged playlist data was recovered. An unchanged backup is available in the recovery download.';
+  $('storage-retry').disabled = storageReadFailures.size > 0;
+}
+
+function retryPendingStorageWrites() {
+  // Backups precede replacement writes, including on a retry after quota failure.
+  if (playlistRecoveryBackupKey && pendingStorageWrites.has(playlistRecoveryBackupKey)) {
+    writeSetting(playlistRecoveryBackupKey, playlistRecoveryRaw);
+  }
+  for (const [key, value] of [...pendingStorageWrites]) writeSetting(key, value);
+  renderEqualizerUi();
+  renderStorageStatus();
+}
+
+function downloadStorageRecovery() {
+  const payload = { playlists, playlistOrder, collapsed: [...collapsedPlaylists],
+    deletedDefaults: [...deletedDefaultPlaylists], songEqProfiles,
+    originalPlaylistData: playlistRecoveryRaw, pendingWrites: Object.fromEntries(pendingStorageWrites) };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'vp-settings-recovery.json';
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function loadDeletedDefaults() {
+  try {
+    const saved = JSON.parse(readSetting(DELETED_DEFAULTS_STORAGE_KEY) || '[]');
+    return new Set(Array.isArray(saved) ? saved.filter(name => typeof name === 'string') : []);
+  } catch { return new Set(); }
+}
+
+function validatePlaylists(source) {
+  const result = Object.create(null);
+  let invalid = !source || typeof source !== 'object' || Array.isArray(source);
+  if (!invalid) Object.entries(source).forEach(([name, refs]) => {
+    if (!name.trim() || !Array.isArray(refs)) { invalid = true; return; }
+    result[name] = [...new Set(refs.filter(ref => typeof ref === 'string' && ref.trim()))];
+    if (result[name].length !== refs.length) invalid = true;
+  });
+  return { playlists: result, invalid };
+}
+
 function loadPlaylists() {
-  let stored = {};
-  try { stored = JSON.parse(localStorage.getItem('vp_playlists') || '{}') || {}; }
-  catch { stored = {}; }
-  let changed = false;
-  const defaultsVersion = localStorage.getItem('vp_default_playlists_version');
+  const raw = readSetting('vp_playlists');
+  let parsed;
+  try { parsed = JSON.parse(raw || '{}'); } catch { parsed = null; }
+  const validated = validatePlaylists(parsed);
+  const stored = validated.playlists;
+  let changed = validated.invalid;
+  if (validated.invalid && raw !== null) {
+    playlistRecoveryRaw = raw;
+    playlistRecoveryBackupKey = 'vp_playlist_recovery_' + Date.now();
+    writeSetting(playlistRecoveryBackupKey, raw);
+  }
+  const defaultsVersion = readSetting('vp_default_playlists_version');
   if (defaultsVersion !== DEFAULT_PLAYLISTS_VERSION) {
     RETIRED_DEFAULT_PLAYLISTS.forEach(name => {
       if (Object.hasOwn(stored, name)) delete stored[name];
     });
-    stored['Three Musketeers'] = DEFAULT_PLAYLISTS['Three Musketeers'].slice();
-    localStorage.setItem('vp_default_playlists_version', DEFAULT_PLAYLISTS_VERSION);
     changed = true;
   }
   Object.entries(DEFAULT_PLAYLISTS).forEach(([name, songIds]) => {
-    if (!Array.isArray(stored[name])) {
+    if (deletedDefaultPlaylists.has(name)) {
+      if (Object.hasOwn(stored, name)) { delete stored[name]; changed = true; }
+    } else if (!Object.hasOwn(stored, name)) {
       stored[name] = songIds.slice();
       changed = true;
     }
   });
   if (changed) {
-    try { localStorage.setItem('vp_playlists', JSON.stringify(stored)); }
-    catch {}
+    writeSetting('vp_playlists', JSON.stringify(stored));
+    writeSetting('vp_default_playlists_version', DEFAULT_PLAYLISTS_VERSION);
   }
   return stored;
 }
 
 function loadPlaylistOrder(source) {
   let saved = [];
-  try { saved = JSON.parse(localStorage.getItem(PLAYLIST_ORDER_STORAGE_KEY) || '[]'); }
+  try { saved = JSON.parse(readSetting(PLAYLIST_ORDER_STORAGE_KEY) || '[]'); }
   catch { saved = []; }
   const names = Object.keys(source || {});
   const available = new Set(names);
@@ -562,7 +664,7 @@ function loadPlaylistOrder(source) {
 
 function loadCollapsedPlaylists(source) {
   let saved = [];
-  try { saved = JSON.parse(localStorage.getItem(PLAYLIST_COLLAPSED_STORAGE_KEY) || '[]'); }
+  try { saved = JSON.parse(readSetting(PLAYLIST_COLLAPSED_STORAGE_KEY) || '[]'); }
   catch { saved = []; }
   const available = new Set(Object.keys(source || {}));
   return Array.isArray(saved) ? saved.filter(name => available.has(name)) : [];
@@ -578,15 +680,18 @@ function orderedPlaylistNames() {
 }
 
 function savePlaylistLayout() {
-  localStorage.setItem(PLAYLIST_ORDER_STORAGE_KEY, JSON.stringify(orderedPlaylistNames()));
-  localStorage.setItem(PLAYLIST_COLLAPSED_STORAGE_KEY, JSON.stringify(
+  const orderSaved = writeSetting(PLAYLIST_ORDER_STORAGE_KEY, JSON.stringify(orderedPlaylistNames()));
+  const collapsedSaved = writeSetting(PLAYLIST_COLLAPSED_STORAGE_KEY, JSON.stringify(
     [...collapsedPlaylists].filter(name => Object.hasOwn(playlists, name))
   ));
+  return orderSaved && collapsedSaved;
 }
 
 function savePlaylists() {
-  localStorage.setItem('vp_playlists', JSON.stringify(playlists));
-  savePlaylistLayout();
+  const deletedSaved = writeSetting(DELETED_DEFAULTS_STORAGE_KEY, JSON.stringify([...deletedDefaultPlaylists]));
+  const songsSaved = writeSetting('vp_playlists', JSON.stringify(playlists));
+  const layoutSaved = savePlaylistLayout();
+  return deletedSaved && songsSaved && layoutSaved;
 }
 
 window.addEventListener('pagehide', savePlaylists);
@@ -606,6 +711,7 @@ function clampEqDb(value, min = -12, max = 12) {
 }
 
 function createEqProfile(source = {}) {
+  if (!source || typeof source !== 'object') source = {};
   return {
     enabled: source.enabled === true,
     preamp: clampEqDb(source.preamp),
@@ -615,7 +721,7 @@ function createEqProfile(source = {}) {
 
 function loadSongEqProfiles() {
   try {
-    const stored = JSON.parse(localStorage.getItem(SONG_EQ_STORAGE_KEY) || '{}');
+    const stored = JSON.parse(readSetting(SONG_EQ_STORAGE_KEY) || '{}');
     if (!stored || typeof stored !== 'object' || Array.isArray(stored)) return {};
     return Object.fromEntries(Object.entries(stored).map(([key, profile]) => [key, createEqProfile(profile)]));
   } catch {
@@ -624,8 +730,7 @@ function loadSongEqProfiles() {
 }
 
 function saveSongEqProfiles() {
-  try { localStorage.setItem(SONG_EQ_STORAGE_KEY, JSON.stringify(songEqProfiles)); }
-  catch {}
+  return writeSetting(SONG_EQ_STORAGE_KEY, JSON.stringify(songEqProfiles));
 }
 
 function songEqKey(song = currentSong()) {
@@ -894,15 +999,18 @@ async function loadSupportedLyrics(config) {
   if (!config) return null;
   if (supportedLyricsData && supportedLyricsSongKey === config.key) return supportedLyricsData;
   if (supportedLyricsPromise && supportedLyricsSongKey === config.key) return supportedLyricsPromise;
+  const requestSerial = ++supportedLyricsRequestSerial;
+  supportedLyricsAbort?.abort();
+  supportedLyricsAbort = new AbortController();
   supportedLyricsSongKey = config.key;
   supportedLyricsData = null;
-  supportedLyricsPromise = fetch(config.dataUrl, { cache: 'no-store' })
+  supportedLyricsPromise = fetch(config.dataUrl, { cache: 'no-store', signal: supportedLyricsAbort.signal })
     .then(response => {
       if (!response.ok) throw new Error(`lyrics HTTP ${response.status}`);
       return response.json();
     })
     .then(data => {
-      if (supportedLyricsSongKey !== config.key) return null;
+      if (requestSerial !== supportedLyricsRequestSerial || supportedLyricsSongKey !== config.key) return null;
       const hasLines = Array.isArray(data.lines) || Object.values(data.variants || {}).some(variant => Array.isArray(variant?.lines));
       if (!hasLines || !Array.isArray(data.sections)) {
         throw new Error('lyrics file is missing lines or sections');
@@ -927,7 +1035,9 @@ async function loadSupportedLyrics(config) {
       return data;
     })
     .catch(error => {
+      if (requestSerial !== supportedLyricsRequestSerial || supportedLyricsSongKey !== config.key) return null;
       supportedLyricsPromise = null;
+      if (error.name === 'AbortError') return null;
       console.warn('Could not load supported lyrics:', error);
       const current = config.scene === 'trick-heart' || config.scene === 'parallel-lyrics'
         ? $('trick-heart-en')
@@ -1277,7 +1387,7 @@ function updateOneMoreBiteLyrics(time = currentCalibratedTime(), force = false) 
     theater.classList.toggle('is-chorus', !!section?.short?.includes('CHORUS'));
   }
 
-  const lineIndex = data.lines.findIndex(line => time >= line.start && time < line.end + 0.12);
+  const lineIndex = activeLyricLineIndex(data.lines, time);
   if (force || lineIndex !== supportedLyricsLineIndex) {
     supportedLyricsLineIndex = lineIndex;
     renderOneMoreBiteLine(lineIndex, data);
@@ -1426,7 +1536,7 @@ function updateHeroStoryLyrics(audioTime = currentCalibratedTime(), force = fals
     theater.classList.toggle('is-resolve', (section?.phase ?? 0) >= 7 && (section?.phase ?? 0) <= 8);
   }
 
-  const lineIndex = data.lines.findIndex(line => timelineTime >= line.start && timelineTime < line.end + 0.1);
+  const lineIndex = activeLyricLineIndex(data.lines, timelineTime);
   if (force || lineIndex !== supportedLyricsLineIndex) {
     supportedLyricsLineIndex = lineIndex;
     renderHeroStoryLine(lineIndex, data, timelineTime);
@@ -1436,16 +1546,16 @@ function updateHeroStoryLyrics(audioTime = currentCalibratedTime(), force = fals
 
 function setHeroStoryTheaterActive(active, song = currentSong()) {
   const nextActive = !!active && isHeroStorySong(song);
+  const config = nextActive ? supportedLyricTrackForSong(song) : null;
   const theater = $('hero-story-theater');
   document.body.classList.toggle('hero-story-active', nextActive);
   if (theater) theater.classList.toggle('hidden', !nextActive);
-  if (heroStorySceneActive === nextActive) return;
+  if (heroStorySceneActive === nextActive && (!nextActive || supportedLyricsSongKey === config?.key)) return;
   heroStorySceneActive = nextActive;
   supportedLyricsLineIndex = -2;
   supportedLyricsSectionIndex = -2;
   supportedLyricsWordNodes = [];
   if (nextActive) {
-    const config = supportedLyricTrackForSong(song);
     loadSupportedLyrics(config);
     updateHeroStoryLyrics(currentCalibratedTime(), true);
     drawHeroStoryFx({ glow: 0, motion: 0, rise: 0 }, currentCalibratedTime());
@@ -1571,7 +1681,7 @@ function updateEncoreDanceLyrics(audioTime = currentCalibratedTime(), force = fa
   }
 
   const lines = variantData.lines || [];
-  const lineIndex = lines.findIndex(line => audioTime >= line.start && audioTime < line.end + 0.1);
+  const lineIndex = activeLyricLineIndex(lines, audioTime);
   if (force || lineIndex !== supportedLyricsLineIndex) {
     supportedLyricsLineIndex = lineIndex;
     renderEncoreLine(lineIndex, variantData, audioTime);
@@ -1581,12 +1691,17 @@ function updateEncoreDanceLyrics(audioTime = currentCalibratedTime(), force = fa
 
 function setEncoreTheaterActive(active, song = currentSong()) {
   const nextActive = !!active && isEncoreDanceSong(song);
+  const config = nextActive ? supportedLyricTrackForSong(song) : null;
   const theater = $('encore-theater');
   document.body.classList.toggle('encore-theater-active', nextActive);
   if (theater) theater.classList.toggle('hidden', !nextActive);
-  if (encoreSceneActive === nextActive) return;
+  if (encoreSceneActive === nextActive && (!nextActive || supportedLyricsSongKey === config?.key)) return;
   encoreSceneActive = nextActive;
   if (nextActive) {
+    loadSupportedLyrics(config);
+    supportedLyricsLineIndex = -2;
+    supportedLyricsSectionIndex = -2;
+    supportedLyricsWordNodes = [];
     drawEncoreDanceFx({ glow: 0, motion: 0, rise: 0 }, currentCalibratedTime());
     scheduleNowLayoutSync();
   }
@@ -1709,6 +1824,14 @@ function renderStoryTheaterLine(index, data, time) {
   next.textContent = data.lines[index + 1]?.text || '';
 }
 
+function activeLyricLineIndex(lines, time) {
+  // Prefer the newest started line; fades must not extend its timing interval.
+  for (let index = lines.length - 1; index >= 0; index--) {
+    if (time >= lines[index].start && time < lines[index].end) return index;
+  }
+  return -1;
+}
+
 function updateStoryTheaterLyrics(time = currentCalibratedTime(), force = false) {
   if (!storyTheaterSceneActive) return;
   const theater = $('story-theater');
@@ -1740,7 +1863,7 @@ function updateStoryTheaterLyrics(time = currentCalibratedTime(), force = false)
     theater.classList.toggle('is-peak', !!STORY_PEAK_PHASES[variant]?.includes(section?.phase ?? 0));
   }
 
-  const lineIndex = data.lines.findIndex(line => time >= line.start && time < line.end + 0.1);
+  const lineIndex = activeLyricLineIndex(data.lines, time);
   if (force || lineIndex !== supportedLyricsLineIndex) {
     supportedLyricsLineIndex = lineIndex;
     renderStoryTheaterLine(lineIndex, data, time);
@@ -1827,6 +1950,7 @@ function ensureCalibratedClock(song = currentSong()) {
 
 function currentCalibratedTime(song = currentSong()) {
   ensureCalibratedClock(song);
+  if (seekTransaction && !playbackOperationIsCurrent(seekTransaction)) cancelSeekTransaction();
   let time;
   if (seekTransaction) {
     time = seekTransaction.targetTime;
@@ -1909,28 +2033,56 @@ function primeAudioContextForGesture() {
   });
 }
 
-function resumeAudioFromCalibratedClock(song = currentSong()) {
+function cancelSeekTransaction(resetPointer = true) {
+  clearSeekSettleTimer();
+  seekTransaction = null;
+  if (resetPointer) seekPointerActive = false;
+  pendingClockSeekTime = null;
+}
+
+function setPlaybackIntent(playing) {
+  playbackIntentSerial++;
+  playbackWantsToPlay = playing;
+  clearTimeout(playbackRetryTimer);
+  playbackRetryTimer = 0;
+  cancelSeekTransaction();
+}
+
+function pausePlayback() {
+  setPlaybackIntent(false);
+  audio.pause();
+  pauseCalibratedClock();
+  updatePlaybackVisuals();
+}
+
+function playbackOperationIsCurrent(operation) {
+  return operation.element === audio
+    && operation.attempt === playbackAttemptSerial
+    && operation.intent === playbackIntentSerial
+    && operation.songId === songClockId();
+}
+
+function capturePlaybackOperation() {
+  return { element: audio, attempt: playbackAttemptSerial, intent: playbackIntentSerial, songId: songClockId() };
+}
+
+function resumeAudioFromCalibratedClock(song = currentSong(), { preserveIntent = false } = {}) {
+  if (!song || songClockId(song) !== songClockId()) return Promise.resolve(false);
+  if (playbackFailed) {
+    playCurrent();
+    return Promise.resolve(false);
+  }
+  if (!preserveIntent) setPlaybackIntent(true);
+  if (!playbackWantsToPlay) return Promise.resolve(false);
   ensureCalibratedClock(song);
   calibratedBaseTime = mediaTransitionPending ? pendingMediaStartTime : currentCalibratedTime(song);
   calibratedBasePerf = performance.now() / 1000;
   calibratedClockRunning = false;
-  audio.muted = false;
 
   // MUST run before play(): recreating <audio> after play() drops the stream.
   // Also re-apply song URL if element was swapped for native spatial fidelity.
   if (usesNativeAudioPath(song) && (audioSource || analyser)) {
-    const wantSrc = song?.url ? new URL(song.url, window.location.href).href : '';
-    const t = currentCalibratedTime(song);
     recreateAudioElementForNativePath();
-    if (wantSrc) {
-      audio.src = song.url;
-      audio.load();
-      const seekOnce = () => {
-        try { if (t > 0.05) audio.currentTime = t; } catch (_) {}
-        audio.removeEventListener('loadedmetadata', seekOnce);
-      };
-      audio.addEventListener('loadedmetadata', seekOnce);
-    }
   }
 
   // Spatial track: never hang volume on Web Audio graph
@@ -1942,17 +2094,31 @@ function resumeAudioFromCalibratedClock(song = currentSong()) {
   const contextReady = usesNativeAudioPath(song) && !audioSource
     ? Promise.resolve()
     : primeAudioContextForGesture();
-  return Promise.resolve(audio.play()).then(async result => {
+  const operation = capturePlaybackOperation();
+  const stillCurrent = () => playbackOperationIsCurrent(operation) && playbackWantsToPlay;
+  return Promise.resolve(operation.element.play()).then(async result => {
+    if (!stillCurrent()) return false;
     await contextReady;
-    await activateAudioGraphIfPossible();
+    if (!stillCurrent()) return false;
+    await activateAudioGraphIfPossible(stillCurrent);
+    if (!stillCurrent()) return false;
     // Re-apply volume after graph decision
     if (usesNativeAudioPath(song) && !audioSource) audio.volume = playerVolume;
     setSpatialSong(song);
     updateTimingDebug();
     return result;
   }).catch(err => {
+    if (!stillCurrent()) return false;
+    if (err?.name === 'AbortError') {
+      playbackWantsToPlay = false;
+      updatePlaybackVisuals();
+      return false;
+    }
+    if (!operation.element.error || playbackRetryCount >= 2) playbackWantsToPlay = false;
     updateTimingDebug();
-    throw err;
+    console.warn('Playback failed:', err);
+    showToast('!', 'Playback failed. Press Play to retry.');
+    return false;
   });
 }
 
@@ -1971,9 +2137,14 @@ function timingDebugValue(value, digits = 3) {
 }
 
 function beginSeekTransaction() {
-  if (seekTransaction) return seekTransaction;
-  const resumeAfterSeek = !!(audio.src && !audio.paused);
+  if (seekTransaction && playbackOperationIsCurrent(seekTransaction)) return seekTransaction;
+  cancelSeekTransaction(false);
+  const resumeAfterSeek = !!(audio.src && (playbackWantsToPlay || !audio.paused));
+  playbackIntentSerial++;
+  playbackWantsToPlay = resumeAfterSeek;
+  clearTimeout(playbackRetryTimer);
   seekTransaction = {
+    ...capturePlaybackOperation(),
     resumeAfterSeek,
     targetTime: currentCalibratedTime(),
     finishOnSeeked: false,
@@ -2002,6 +2173,7 @@ function previewSeekTarget(time) {
 function commitSeekTransaction(finishOnSeeked = true) {
   if (!seekTransaction) return;
   const tx = seekTransaction;
+  if (!playbackOperationIsCurrent(tx)) { cancelSeekTransaction(); return; }
   tx.finishOnSeeked = tx.finishOnSeeked || finishOnSeeked;
   clearSeekSettleTimer();
   resetCalibratedClock(tx.targetTime);
@@ -2011,21 +2183,27 @@ function commitSeekTransaction(finishOnSeeked = true) {
     audio.currentTime = nativeTarget;
   }
   if (tx.finishOnSeeked) {
-    seekSettleTimer = setTimeout(() => finishSeekTransaction(), needsSeek ? 1200 : 0);
+    seekSettleTimer = setTimeout(() => {
+      if (seekTransaction !== tx || !playbackOperationIsCurrent(tx)) return;
+      if (audio.seeking || Math.abs(nativePlaybackTime() - tx.targetTime) > 0.25) {
+        pausePlayback();
+        showToast('!', 'Seek did not finish. Try seeking again.');
+        return;
+      }
+      finishSeekTransaction(tx);
+    }, needsSeek ? 1200 : 0);
   }
   updatePlaybackVisuals();
 }
 
-function finishSeekTransaction() {
-  if (!seekTransaction) return;
-  const tx = seekTransaction;
-  clearSeekSettleTimer();
-  seekTransaction = null;
-  pendingClockSeekTime = null;
+function finishSeekTransaction(tx = seekTransaction) {
+  if (!tx || tx !== seekTransaction) return;
+  if (!playbackOperationIsCurrent(tx)) { cancelSeekTransaction(); return; }
+  cancelSeekTransaction();
   resetCalibratedClock(tx.targetTime);
   updatePlaybackVisuals();
-  if (tx.resumeAfterSeek && audio.src) {
-    resumeAudioFromCalibratedClock(currentSong()).catch(err => console.warn('Play failed:', err));
+  if (tx.resumeAfterSeek && playbackWantsToPlay && audio.src) {
+    resumeAudioFromCalibratedClock(currentSong(), { preserveIntent: true });
   }
 }
 
@@ -2239,7 +2417,7 @@ function isDdlcFxActive(song = currentSong()) {
 
 function setTetoFxEnabled(enabled) {
   tetoFxEnabled = !!enabled;
-  localStorage.setItem('vp_teto_fx_enabled', tetoFxEnabled ? 'true' : 'false');
+  writeSetting('vp_teto_fx_enabled', tetoFxEnabled ? 'true' : 'false');
   const checkbox = $('teto-fx-enabled');
   if (checkbox) checkbox.checked = tetoFxEnabled;
   updateFxState();
@@ -2252,7 +2430,7 @@ function setTetoFxEnabled(enabled) {
 
 function setFxTheme(theme) {
   fxTheme = ['teto', 'disco', 'teto11'].includes(theme) ? theme : 'teto11';
-  localStorage.setItem('vp_fx_theme', fxTheme);
+  writeSetting('vp_fx_theme', fxTheme);
   const select = $('fx-theme');
   if (select) select.value = fxTheme;
   updateFxState();
@@ -2260,6 +2438,7 @@ function setFxTheme(theme) {
 
 function updateFxState(levelOverride = tetoGlowLevel) {
   const theme = activeFxTheme();
+  const songId = songClockId();
   const active = theme !== 'off';
   const level = active && !audio.paused ? levelOverride : 0;
   const levelValue = Math.round(level * 100) / 100;
@@ -2270,8 +2449,9 @@ function updateFxState(levelOverride = tetoGlowLevel) {
     renderedFxLevel = levelValue;
   }
   syncReferenceVideo();
-  if (theme === renderedFxTheme) return;
+  if (theme === renderedFxTheme && songId === renderedFxSongId) return;
   renderedFxTheme = theme;
+  renderedFxSongId = songId;
   document.body.classList.toggle('fx-active', active);
   document.body.classList.toggle('disco-fx-active', theme === 'disco');
   document.body.classList.toggle('teto-fx-active', theme === 'teto');
@@ -2442,8 +2622,10 @@ function switchView(view) {
     spatialForcePaint = true;
     syncSpatialLoop();
     if (!audio.paused) startWaveform();
+    startDdfFxLoop();
   } else {
     stopSpatialLoop();
+    stopDdfFxLoop();
   }
   syncReferenceVideo(true);
 }
@@ -2517,21 +2699,35 @@ async function fetchCollection(collection) {
 }
 
 async function loadLibrary() {
-  const queuedRefs = queue.map(index => songRef(library[index])).filter(Boolean);
-  const activeRef = songRef(currentSong());
+  const serial = ++libraryLoadSerial;
   const errBox = $('library-error');
   errBox.classList.add('hidden');
   const loaded = [];
   const errors = [];
+  const snapshots = new Map(collectionSnapshots);
   for (const collection of COLLECTIONS) {
     try {
-      loaded.push(...await fetchCollection(collection));
+      const songs = await fetchCollection(collection);
+      if (serial !== libraryLoadSerial) return;
+      snapshots.set(collection.id, songs);
+      loaded.push(...songs);
     } catch (error) {
+      if (serial !== libraryLoadSerial) return;
+      loaded.push(...(snapshots.get(collection.id) || library.filter(song => song.collection === collection.id)));
       if (error.status !== 404 || collection.id === 'secular') {
         errors.push({ collection, error });
       }
     }
   }
+  if (serial !== libraryLoadSerial) return;
+  const queuedRefs = queue.map(index => songRef(library[index])).filter(Boolean);
+  const unshuffledRefs = unshuffledQueue?.map(index => songRef(library[index])).filter(Boolean);
+  const activeSong = currentSong();
+  const activeRef = songRef(activeSong);
+  // Preserve an in-flight recording's identity even if it was removed remotely.
+  // It disappears on a later refresh after selection moves to another song.
+  if (activeSong && !loaded.some(song => songRef(song) === activeRef)) loaded.push(activeSong);
+  snapshots.forEach((songs, id) => collectionSnapshots.set(id, songs));
   library = loaded.sort((a, b) => {
     const collectionSort = COLLECTION_ORDER.get(a.collection) - COLLECTION_ORDER.get(b.collection);
     return collectionSort || a.displayName.localeCompare(b.displayName);
@@ -2542,6 +2738,7 @@ async function loadLibrary() {
     const remappedQueueIndex = queue.indexOf(activeLibraryIndex);
     queueIndex = remappedQueueIndex >= 0 ? remappedQueueIndex : Math.min(queueIndex, queue.length - 1);
   }
+  if (unshuffledRefs) unshuffledQueue = unshuffledRefs.map(findSongIndex).filter(index => index >= 0);
   if (errors.length > 0) {
     if (errors.some(({ error }) => error.status === 403)) {
       errBox.textContent = 'GitHub API rate limit hit. Try again in a few minutes.';
@@ -2580,7 +2777,7 @@ function renderCollectionFilters() {
 
 function setActiveCollection(collection) {
   activeCollection = collection;
-  localStorage.setItem('vp_collection', activeCollection);
+  writeSetting('vp_collection', activeCollection);
   renderCollectionFilters();
   renderLibrary($('search').value);
 }
@@ -2733,9 +2930,10 @@ function playCurrent() {
     showToast('!', 'This queued song is missing from the library.');
     return;
   }
-  clearTimeout(playbackRetryTimer);
+  setPlaybackIntent(true);
   playbackAttemptSerial++;
   playbackRetryCount = 0;
+  playbackFailed = false;
   // Spatial HQ: if a prior song attached Web Audio, rebuild <audio> for true native stereo
   const recreatedNative = ensureNativeRoutingForSpatialSong(song);
   const targetSrc = new URL(song.url, window.location.href).href;
@@ -2756,7 +2954,7 @@ function playCurrent() {
   } else {
     expectMediaForSong(song, targetSrc);
   }
-  resumeAudioFromCalibratedClock(song).catch(err => console.warn('Play failed:', err));
+  resumeAudioFromCalibratedClock(song, { preserveIntent: true });
   $('np-title').textContent = song.title || song.displayName;
   const parts = [];
   if (song.artist) parts.push(song.artist);
@@ -2846,7 +3044,9 @@ function renderEqualizerUi(song = currentSong()) {
   $('equalizer-notice').textContent = eqEditMode === 'global'
     ? 'Overrides saved song profiles until vp is reloaded. It is never saved.'
     : "This song's settings save automatically.";
-  $('eq-save-status').textContent = eqEditMode === 'global' ? 'Temporary session setting' : 'Saved automatically';
+  $('eq-save-status').textContent = eqEditMode === 'global' ? 'Temporary session setting'
+    : pendingStorageWrites.has(SONG_EQ_STORAGE_KEY) || storageReadFailures.has(SONG_EQ_STORAGE_KEY)
+      ? 'Not saved - storage unavailable' : 'Saved automatically';
   $('eq-enabled').checked = profile.enabled;
   $('eq-preset').value = matchingEqPreset(profile);
   panel.querySelectorAll('.eq-band').forEach(row => {
@@ -4259,14 +4459,16 @@ function resizeDdfFxCanvas(force = false) {
 }
 
 function startDdfFxLoop() {
-  if (ddfFxRaf) return;
+  if (ddfFxRaf || audio.paused || document.hidden || !isNowViewActive()
+    || !document.body.classList.contains('ddf-theater-active')) return;
   const tick = (now) => {
-    ddfFxRaf = requestAnimationFrame(tick);
-    if (!document.body.classList.contains('ddf-theater-active')) {
+    ddfFxRaf = 0;
+    if (audio.paused || document.hidden || !isNowViewActive()
+      || !document.body.classList.contains('ddf-theater-active')) {
       stopDdfFxLoop();
       return;
     }
-    if (!isNowViewActive()) return;
+    ddfFxRaf = requestAnimationFrame(tick);
     if (now - ddfFxLastPaint < DDF_FX_MIN_MS) return;
     paintDdfTheaterFx(currentCalibratedTime());
   };
@@ -4617,20 +4819,12 @@ function leadAtTime(t, song = currentSong()) {
 function lyricIndexAtTime(t) {
   const lines = ddfLyricsCache?.lines;
   if (!lines?.length) return -1;
-  let idx = -1;
-  for (let i = 0; i < lines.length; i++) {
+  for (let i = lines.length - 1; i >= 0; i--) {
     const start = Number(lines[i].t);
     const end = lines[i].end != null ? Number(lines[i].end) : (lines[i + 1] ? Number(lines[i + 1].t) : start + 4);
-    if (t + 0.04 >= start && t < end + 0.05) idx = i;
-    else if (t + 0.04 >= start) idx = i; // keep last started
+    if (t >= start && t < end) return i;
   }
-  // Prefer last line whose start has passed
-  idx = -1;
-  for (let i = 0; i < lines.length; i++) {
-    if (t + 0.05 >= Number(lines[i].t)) idx = i;
-    else break;
-  }
-  return idx;
+  return -1;
 }
 
 function fmtLyricTime(sec) {
@@ -4902,12 +5096,21 @@ function updateMediaSession(song) {
     album: currentPlaylist || 'vp'
   });
   navigator.mediaSession.setActionHandler('play', () => resumeAudioFromCalibratedClock());
-  navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+  navigator.mediaSession.setActionHandler('pause', pausePlayback);
   navigator.mediaSession.setActionHandler('previoustrack', playPrev);
   navigator.mediaSession.setActionHandler('nexttrack', () => playNext(false));
 }
 
 function togglePlay() {
+  if (playbackWantsToPlay) {
+    pausePlayback();
+    showToast('⏸', 'Paused');
+    return;
+  }
+  if (playbackFailed && currentSong()) {
+    playCurrent();
+    return;
+  }
   if (!audio.src) {
     const visible = filteredLibraryEntries($('search').value);
     if (visible.length === 0) return;
@@ -4925,7 +5128,7 @@ function togglePlay() {
     showToast('▶', song?.title || song?.displayName || 'Playing');
     switchView('now');
   } else {
-    audio.pause();
+    pausePlayback();
     showToast('⏸', 'Paused');
   }
 }
@@ -4953,7 +5156,7 @@ function playNext(auto = false) {
       showToast('⏭', song?.title || song?.displayName || 'Next');
     }
   } else {
-    audio.pause();
+    pausePlayback();
     audio.currentTime = 0;
     resetCalibratedClock(0);
     updatePlaybackVisuals();
@@ -4963,6 +5166,7 @@ function playNext(auto = false) {
 function playPrev() {
   if (queue.length === 0) return;
   if (currentCalibratedTime() > 3) {
+    cancelSeekTransaction();
     audio.currentTime = 0;
     resetCalibratedClock(0);
     if (!audio.paused) startCalibratedClock();
@@ -5124,6 +5328,8 @@ function recreateAudioElementForNativePath(options = {}) {
   const old = audio;
   const src = old?.currentSrc || old?.src || '';
   const t = Number.isFinite(old?.currentTime) ? old.currentTime : 0;
+  const wasMuted = old.muted;
+  const attempt = playbackAttemptSerial;
   try { old?.pause(); } catch (_) {}
   try { audioSource?.disconnect(); } catch (_) {}
   try { eqPreampNode?.disconnect(); } catch (_) {}
@@ -5147,13 +5353,15 @@ function recreateAudioElementForNativePath(options = {}) {
   else document.body.appendChild(next);
   audio = next;
   if (typeof bindAudioElementEvents === 'function') bindAudioElementEvents(audio);
-  audio.muted = false;
+  audio.muted = wasMuted;
   audio.volume = playerVolume;
   if (src && preserveSource) {
     audio.src = src;
     const onMeta = () => {
-      try { if (t > 0) audio.currentTime = t; } catch (_) {}
-      audio.removeEventListener('loadedmetadata', onMeta);
+      if (audio === next && attempt === playbackAttemptSerial && sameMediaUrl(next.src, src)) {
+        try { if (t > 0) next.currentTime = t; } catch (_) {}
+      }
+      next.removeEventListener('loadedmetadata', onMeta);
     };
     audio.addEventListener('loadedmetadata', onMeta);
     try { audio.load(); } catch (_) {}
@@ -5169,23 +5377,19 @@ function ensureNativeRoutingForSpatialSong(song = currentSong()) {
   return recreateAudioElementForNativePath({ preserveSource: false });
 }
 
-async function activateAudioGraphIfPossible() {
+async function activateAudioGraphIfPossible(isCurrent = (() => {
+  const operation = capturePlaybackOperation();
+  return () => playbackOperationIsCurrent(operation);
+})()) {
+  if (!isCurrent()) return false;
   // Traveling Voices: stay on native <audio> path so levels/stereo match QuickTime.
   // (Web Audio MediaElementSource + sample-rate conversion was coloring the mix.)
   if (usesNativeAudioPath()) {
     // Recreate only if still hijacked — callers should do this before play().
     // If we must recreate here, re-bind current song URL so playback can resume.
     if (audioSource || analyser) {
-      const song = currentSong();
-      const want = song?.url || '';
-      const t = currentCalibratedTime(song);
       recreateAudioElementForNativePath();
-      if (want) {
-        audio.src = want;
-        audio.load();
-        try { if (t > 0.05) audio.currentTime = t; } catch (_) {}
-        try { await audio.play(); } catch (_) {}
-      }
+      if (playbackWantsToPlay) resumeAudioFromCalibratedClock(currentSong(), { preserveIntent: true });
     }
     audio.volume = playerVolume;
     audioGraphError = 'native-html-audio (spatial fidelity)';
@@ -5197,6 +5401,7 @@ async function activateAudioGraphIfPossible() {
     if (ctx?.state === 'suspended') {
       try { await ctx.resume(); } catch (err) { rememberAudioGraphError(err); }
     }
+    if (!isCurrent()) return false;
     if (outputGain) outputGain.gain.value = playerVolume;
     applyEqualizerToGraph();
     audio.volume = 1;
@@ -5210,10 +5415,12 @@ async function activateAudioGraphIfPossible() {
   try {
     if (ctx.state === 'suspended') await ctx.resume();
   } catch (err) {
+    if (!isCurrent()) return false;
     rememberAudioGraphError(err);
     audio.volume = playerVolume;
     return false;
   }
+  if (!isCurrent()) return false;
   if (ctx.state !== 'running') {
     audioGraphError = `AudioContext ${ctx.state}`;
     audio.volume = playerVolume;
@@ -5237,19 +5444,14 @@ function resizeWaveform(force = false) {
   const panel = canvas?.closest?.('.wave-panel') || canvas?.parentElement;
   if (!canvas || !panel) return;
   // Hidden (DDF theater hides wave) — skip so we don't stamp 0-size buffers
-  if (panel.offsetParent === null && getComputedStyle(panel).display === 'none') return;
+  if (panel.offsetParent === null || getComputedStyle(panel).display === 'none') return;
 
   const rect = panel.getBoundingClientRect();
   const dpr = adaptiveCanvasDpr(rect, 1.35);
   const cssW = Math.max(2, Math.floor(rect.width));
   const cssH = Math.max(2, Math.floor(rect.height));
-  // Not laid out yet (0×0) — try again next frame instead of inventing sizes
-  if (cssW < 8 || cssH < 8) {
-    if (force) {
-      requestAnimationFrame(() => resizeWaveform(true));
-    }
-    return;
-  }
+  // Visibility/size observers request the next measurement; never poll a zero box.
+  if (cssW < 8 || cssH < 8) return;
 
   const w = Math.max(2, Math.floor(cssW * dpr));
   const h = Math.max(2, Math.floor(cssH * dpr));
@@ -5272,8 +5474,10 @@ function adaptiveCanvasDpr(rect, maxDpr = 1.15) {
 
 /** Double-rAF: wait for CSS grid to settle, then size canvases to real boxes. */
 function scheduleNowLayoutSync() {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
+  if (nowLayoutRaf) return;
+  nowLayoutRaf = requestAnimationFrame(() => {
+    nowLayoutRaf = requestAnimationFrame(() => {
+      nowLayoutRaf = 0;
       waveSizeKey = '';
       fxSizeKey = '';
       resizeWaveform(true);
@@ -5306,13 +5510,19 @@ function resizeFxCanvas(force = false) {
   }
 }
 
+function visualFrameDue(now) {
+  const frames = Math.floor((now - lastVisualFrameAt + 0.01) / VISUAL_FRAME_MS);
+  if (frames < 1) return false;
+  lastVisualFrameAt += frames * VISUAL_FRAME_MS;
+  return true;
+}
+
 function startWaveform() {
   if (waveRaf) return;
   const draw = (now) => {
     waveRaf = requestAnimationFrame(draw);
     if (!isNowViewActive() || document.hidden || audio.paused) return;
-    if (now - lastVisualFrameAt < VISUAL_FRAME_MS) return;
-    lastVisualFrameAt = now;
+    if (!visualFrameDue(now)) return;
     drawWaveform(false);
   };
   waveRaf = requestAnimationFrame(draw);
@@ -9876,11 +10086,14 @@ function retryCurrentSongAfterError(el) {
   if (!mediaEventMatchesExpectedSong(el)) return;
   const song = currentSong();
   const attemptSerial = playbackAttemptSerial;
+  const intentSerial = playbackIntentSerial;
   const queuedIndex = queueIndex;
   const resumeAt = mediaTransitionPending
     ? pendingMediaStartTime
     : (Number.isFinite(el.currentTime) ? el.currentTime : 0);
   if (playbackRetryCount >= 2) {
+    setPlaybackIntent(false);
+    playbackFailed = true;
     pauseCalibratedClock(song);
     try {
       el.pause();
@@ -9896,11 +10109,13 @@ function retryCurrentSongAfterError(el) {
     showToast('!', `Could not play ${song.title || song.displayName}`);
     return;
   }
+  if (!playbackWantsToPlay) return;
   playbackRetryCount++;
   showToast('↻', `Retrying ${song.title || song.displayName} (${playbackRetryCount}/2)`);
   clearTimeout(playbackRetryTimer);
   playbackRetryTimer = setTimeout(() => {
-    if (attemptSerial !== playbackAttemptSerial || queuedIndex !== queueIndex || currentSong() !== song || el !== audio) return;
+    if (attemptSerial !== playbackAttemptSerial || intentSerial !== playbackIntentSerial || !playbackWantsToPlay
+      || queuedIndex !== queueIndex || songClockId() !== songClockId(song) || el !== audio) return;
     const retryUrl = new URL(song.url, window.location.href);
     retryUrl.searchParams.set('_vp_retry', `${Date.now()}-${playbackRetryCount}`);
     try {
@@ -9909,7 +10124,7 @@ function retryCurrentSongAfterError(el) {
       el.src = retryUrl.href;
       el.load();
       resetCalibratedClock(resumeAt, song);
-      resumeAudioFromCalibratedClock(song).catch(err => console.warn('Audio retry failed:', err));
+      resumeAudioFromCalibratedClock(currentSong(), { preserveIntent: true });
     } catch (err) {
       console.warn('Audio retry setup failed:', err);
     }
@@ -9950,7 +10165,7 @@ function bindAudioElementEvents(el) {
     updatePlaybackVisuals();
     spatialForcePaint = true;
     if (spatialActive) paintSpatialGuide(currentCalibratedTime(), true);
-    if (seekTransaction?.finishOnSeeked) finishSeekTransaction();
+    if (seekTransaction?.finishOnSeeked && Math.abs(nativePlaybackTime() - seekTransaction.targetTime) < 0.1) finishSeekTransaction();
   });
   el.addEventListener('ratechange', () => {
     if (!mediaEventMatchesExpectedSong(el)) return;
@@ -9993,6 +10208,7 @@ function bindAudioElementEvents(el) {
     updatePlaybackVisuals();
     updateFxState();
     syncSpatialLoop();
+    startDdfFxLoop();
   });
   el.addEventListener('pause', () => {
     if (!mediaEventMatchesExpectedSong(el)) return;
@@ -10016,6 +10232,7 @@ function bindAudioElementEvents(el) {
     updateFxState();
     drawWaveform(true);
     syncSpatialLoop();
+    stopDdfFxLoop();
   });
   el.addEventListener('error', () => {
     if (el !== audio) return;
@@ -10108,7 +10325,7 @@ function updateVolumeIcon(volume = playerVolume) {
 
 function setPlayerVolume(value, notify = false) {
   playerVolume = parseVolume(value, playerVolume);
-  localStorage.setItem('vp_volume', playerVolume.toString());
+  writeSetting('vp_volume', playerVolume.toString());
   const volumeEl = $('volume');
   if (volumeEl) volumeEl.value = playerVolume.toString();
   if (outputGain && audioCtx?.state === 'running') {
@@ -10127,31 +10344,37 @@ function setPlayerVolume(value, notify = false) {
   }
 }
 
-function resetAudioOutput() {
-  audio.muted = false;
+async function resetAudioOutput() {
+  const song = currentSong();
+  const wasPlaying = playbackWantsToPlay || !audio.paused;
+  const wasMuted = audio.muted;
+  const volume = playerVolume;
+  setPlaybackIntent(wasPlaying);
   audioGraphError = '';
   // Full native restore if graph was attached (also helps spatial HQ path)
   if (audioSource || analyser) recreateAudioElementForNativePath();
-  setPlayerVolume(1, false);
-  const song = currentSong();
-  if (song && !usesNativeAudioPath(song)) {
-    primeAudioContextForGesture()
-      .then(() => audio.src ? activateAudioGraphIfPossible() : false)
-      .then((graphActive) => {
-        updateTimingDebug();
-        showToast('🔊', graphActive ? 'Audio reset' : 'Native audio reset');
-      })
-      .catch(err => {
-        rememberAudioGraphError(err);
-        audio.volume = playerVolume;
-        updateTimingDebug();
-        showToast('🔊', 'Native audio reset');
-      });
-    return;
+  audio.muted = wasMuted;
+  setPlayerVolume(volume, false);
+  const operation = capturePlaybackOperation();
+  const isCurrent = () => playbackOperationIsCurrent(operation);
+  try {
+    if (song && wasPlaying) {
+      const resumed = await resumeAudioFromCalibratedClock(song, { preserveIntent: true });
+      if (resumed === false && isCurrent()) throw new Error('Playback could not be restored');
+    } else if (song && !usesNativeAudioPath(song)) {
+      await primeAudioContextForGesture();
+      if (!isCurrent()) return;
+      await activateAudioGraphIfPossible(isCurrent);
+    }
+    if (!isCurrent()) return;
+    updateTimingDebug();
+    showToast('🔊', audioGraphError && !audioGraphError.startsWith('native-')
+      ? 'Audio reset needs attention. See audio diagnostics.' : 'Audio reset');
+  } catch (err) {
+    if (!isCurrent()) return;
+    rememberAudioGraphError(err);
+    showToast('!', 'Audio reset failed. Your volume setting was preserved.');
   }
-  audio.volume = playerVolume;
-  updateTimingDebug();
-  showToast('🔊', 'Native audio reset');
 }
 
 const volumeEl = $('volume');
@@ -10201,7 +10424,7 @@ if (fxThemeSelect) {
 if (timingDebugCheckbox) {
   timingDebugCheckbox.addEventListener('change', () => {
     timingDebugEnabled = timingDebugCheckbox.checked;
-    localStorage.setItem('vp_timing_debug_enabled', timingDebugEnabled ? 'true' : 'false');
+    writeSetting('vp_timing_debug_enabled', timingDebugEnabled ? 'true' : 'false');
     updateTimingDebug();
   });
 }
@@ -10308,7 +10531,8 @@ $('toggle-playlists-collapse').addEventListener('click', () => {
 function createPlaylistFromInput(input, songToAdd = null) {
   const name = (input?.value || '').trim();
   if (!name) return null;
-  if (!playlists[name]) {
+  deletedDefaultPlaylists.delete(name);
+  if (!Object.hasOwn(playlists, name)) {
     playlists[name] = [];
     playlistOrder.push(name);
   }
@@ -10357,7 +10581,7 @@ function reorderPlaylistSong(name, fromIdx, targetIdx) {
 function movePlaylistSong(name, fromIdx, direction) {
   const targetIdx = direction < 0 ? fromIdx - 1 : fromIdx + 2;
   if (reorderPlaylistSong(name, fromIdx, targetIdx)) {
-    showToast('↕', 'Playlist order saved');
+    showToast('↕', pendingStorageWrites.size ? 'Playlist order changed - not saved' : 'Playlist order saved');
   }
 }
 
@@ -10379,7 +10603,7 @@ function movePlaylistCard(name, direction) {
   const names = orderedPlaylistNames();
   const fromIdx = names.indexOf(name);
   const targetIdx = direction < 0 ? fromIdx - 1 : fromIdx + 2;
-  if (reorderPlaylistCard(name, targetIdx)) showToast('↕', 'Playlist order saved');
+  if (reorderPlaylistCard(name, targetIdx)) showToast('↕', pendingStorageWrites.size ? 'Playlist order changed - not saved' : 'Playlist order saved');
 }
 
 function startAddToPlaylistFlow(libIdx) {
@@ -10471,7 +10695,7 @@ function renderPlaylists() {
     card.dataset.playlistName = name;
     card.innerHTML = `
       <div class="playlist-header">
-        <button class="playlist-card-handle" draggable="true" title="Drag playlist" aria-label="Drag ${name}">☰</button>
+        <button class="playlist-card-handle" draggable="true" title="Drag playlist">☰</button>
         <button class="playlist-collapse" title="${isCollapsed ? 'Expand' : 'Collapse'} playlist" aria-expanded="${isCollapsed ? 'false' : 'true'}">${isCollapsed ? '▸' : '▾'}</button>
         <span class="playlist-name"></span>
         <span class="playlist-count"></span>
@@ -10493,6 +10717,7 @@ function renderPlaylists() {
       </div>
     `;
     card.querySelector('.playlist-name').textContent = name;
+    card.querySelector('.playlist-card-handle').setAttribute('aria-label', 'Drag ' + name);
     card.querySelector('.playlist-count').textContent =
       `${songs.length} song${songs.length === 1 ? '' : 's'}`;
     const playButton = card.querySelector('.playlist-play');
@@ -10561,7 +10786,7 @@ function renderPlaylists() {
       const targetIdx = after ? playlistIndex + 1 : playlistIndex;
       const movedName = playlistCardDragState.name;
       playlistCardDragState = null;
-      if (reorderPlaylistCard(movedName, targetIdx)) showToast('↕', 'Playlist order saved');
+      if (reorderPlaylistCard(movedName, targetIdx)) showToast('↕', pendingStorageWrites.size ? 'Playlist order changed - not saved' : 'Playlist order saved');
     });
     addButton.addEventListener('click', (e) => {
       e.preventDefault();
@@ -10585,6 +10810,7 @@ function renderPlaylists() {
       e.preventDefault();
       e.stopPropagation();
       delete playlists[name];
+      if (Object.hasOwn(DEFAULT_PLAYLISTS, name)) deletedDefaultPlaylists.add(name);
       playlistOrder = playlistOrder.filter(item => item !== name);
       collapsedPlaylists.delete(name);
       savePlaylists();
@@ -10604,7 +10830,7 @@ function renderPlaylists() {
       if (e.target.closest('.playlist-song')) return;
       e.preventDefault();
       if (reorderPlaylistSong(name, playlistDragState.index, songs.length)) {
-        showToast('↕', 'Playlist order saved');
+        showToast('↕', pendingStorageWrites.size ? 'Playlist order changed - not saved' : 'Playlist order saved');
       }
     });
     if (songs.length === 0) {
@@ -10668,7 +10894,7 @@ function renderPlaylists() {
           const after = e.clientY > rect.top + rect.height / 2;
           const targetIdx = after ? i + 1 : i;
           if (reorderPlaylistSong(name, playlistDragState.index, targetIdx)) {
-            showToast('↕', 'Playlist order saved');
+            showToast('↕', pendingStorageWrites.size ? 'Playlist order changed - not saved' : 'Playlist order saved');
           }
         });
         li.querySelectorAll('button').forEach(button => {
@@ -10809,7 +11035,18 @@ document.addEventListener('keydown', (e) => {
 window.addEventListener('resize', () => {
   scheduleNowLayoutSync();
 });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopDdfFxLoop();
+  else startDdfFxLoop();
+});
+if (typeof ResizeObserver !== 'undefined') {
+  const wavePanel = $('waveform')?.closest('.wave-panel');
+  if (wavePanel) new ResizeObserver(() => scheduleNowLayoutSync()).observe(wavePanel);
+}
 // Initial measure after first paint (DOM may not have final grid sizes yet)
+$('storage-retry').addEventListener('click', retryPendingStorageWrites);
+$('storage-download').addEventListener('click', downloadStorageRecovery);
+renderStorageStatus();
 scheduleNowLayoutSync();
 updateFxState();
 publishDesktopEffectsState(true);

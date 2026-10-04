@@ -93,7 +93,7 @@
   function decodeEnvelope(encoded) {
     if (!encoded) return [];
     const raw = atob(encoded);
-    return Array.from(raw, character => character.charCodeAt(0) / 255);
+    return Array.from(raw, character => clamp(0, 1, character.charCodeAt(0) / (data?.analysis?.envelopeScale || 100)));
   }
 
   function envelopeAt(values, time) {
@@ -414,7 +414,18 @@
     ctx.restore();
   }
 
+  let renderedWordLine = null;
+  let renderedWordNodes = [];
   function renderWords(line, time) {
+    if (line && line === renderedWordLine) {
+      renderedWordNodes.forEach(({ span, word }) => {
+        span.classList.toggle('is-sung', time >= word.end);
+        span.classList.toggle('is-current', time >= word.start && time < word.end);
+      });
+      return;
+    }
+    renderedWordLine = line;
+    renderedWordNodes = [];
     lyricCurrent.className = 'lyric-current';
     lyricCurrent.replaceChildren();
     line.words.forEach((word, index) => {
@@ -423,6 +434,7 @@
       if (time >= word.end) span.classList.add('is-sung');
       else if (time >= word.start) span.classList.add('is-current');
       span.textContent = `${index ? ' ' : ''}${word.word}`;
+      renderedWordNodes.push({ span, word });
       lyricCurrent.append(span);
     });
   }
@@ -438,6 +450,8 @@
       lyricNext.textContent = lineIndex + 1 < data.lines.length ? data.lines[lineIndex + 1].text : '';
     } else {
       const section = currentSection(time);
+      renderedWordLine = null;
+      renderedWordNodes = [];
       lyricCurrent.className = 'lyric-current instrumental';
       lyricCurrent.textContent = interludes[section.phase % interludes.length];
       lyricPrevious.textContent = nextIndex > 0 ? data.lines[nextIndex - 1].text : '';
@@ -461,7 +475,6 @@
 
   function drawFrame() {
     if (!data) {
-      requestAnimationFrame(drawFrame);
       return;
     }
     const time = previewMode ? previewTime : audio.currentTime;
@@ -481,17 +494,9 @@
     drawCrownAndComets(time, section, recorded, beat, intensity);
     drawHorizon(time, section, recorded, beat, intensity);
     updateInterface(time, section, beat);
-    requestAnimationFrame(drawFrame);
   }
 
   async function load() {
-    const response = await fetch('../../songs/lyrics/psalm-8-halle.json');
-    if (!response.ok) throw new Error(`Lyrics request failed: ${response.status}`);
-    data = await response.json();
-    energyEnvelope = decodeEnvelope(data.analysis?.energy);
-    onsetEnvelope = decodeEnvelope(data.analysis?.onsets);
-    durationEl.textContent = formatTime(data.duration);
-
     if (!previewMode) {
       audio.src = audio.dataset.src;
       audio.muted = silentMode;
@@ -501,6 +506,14 @@
       seek.disabled = true;
       mute.disabled = true;
     }
+    const response = await fetch('../../songs/lyrics/psalm-8-halle.json');
+    if (!response.ok) throw new Error(`Lyrics request failed: ${response.status}`);
+    data = await response.json();
+    energyEnvelope = decodeEnvelope(data.analysis?.energyBase64 || data.analysis?.energy);
+    onsetEnvelope = decodeEnvelope(data.analysis?.onsetsBase64 || data.analysis?.onsets);
+    durationEl.textContent = formatTime(data.duration);
+
+    renderLoop.invalidate();
   }
 
   play.addEventListener('click', async () => {
@@ -553,9 +566,9 @@
 
   window.addEventListener('resize', resize);
   resize();
+  const renderLoop = window.VPFrameLoop.create(audio, drawFrame);
   load().catch(error => {
     lyricCurrent.className = 'lyric-current instrumental';
     lyricCurrent.textContent = `Unable to load theater: ${error.message}`;
   });
-  requestAnimationFrame(drawFrame);
 })();

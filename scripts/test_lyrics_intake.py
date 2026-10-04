@@ -12,6 +12,21 @@ import lyrics_intake as intake
 
 
 class LyricsIntakeTests(unittest.TestCase):
+    def test_japanese_and_mixed_script_titles_match_without_losing_letters(self):
+        for title in ("\u30a2\u30f3\u30b3\u30fc\u30eb\u30c0\u30f3\u30b9", "MIMI \u30a2\u30f3\u30b3\u30fc\u30eb"):
+            record = {"trackName": title, "artistName": "MIMI", "duration": 180,
+                      "syncedLyrics": "[00:01.00]Example"}
+            self.assertTrue(intake.normalize(title))
+            self.assertGreaterEqual(intake.candidate_score(record, title, "MIMI", 180), 100)
+            self.assertNotEqual(intake.slugify(title), "lyrics")
+
+    def test_empty_candidate_title_does_not_receive_partial_match_credit(self):
+        record = {"trackName": "!!!", "artistName": "MIMI", "duration": 180}
+        self.assertLess(intake.candidate_score(record, "Example", "MIMI", 180), 60)
+
+    def test_unicode_normalization_preserves_equivalent_voiced_kana(self):
+        self.assertEqual(intake.normalize("\u30ac"), intake.normalize("\u30ab\u3099"))
+
     def test_exact_synced_duration_match_scores_highest(self):
         exact = {
             "id": 1,

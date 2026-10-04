@@ -12,6 +12,20 @@
   --danger: #ef4444;
 }
 
+#storage-status:not([hidden]) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding: 10px 20px;
+  color: #fff1cc;
+  background: #463b20;
+  border-bottom: 1px solid #8d7438;
+  font-size: 13px;
+}
+#storage-message { flex: 1 1 320px; }
+#storage-status button { flex: 0 0 auto; }
+
 * { box-sizing: border-box; }
 html, body {
   margin: 0; padding: 0; height: 100%;
