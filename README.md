@@ -38,15 +38,26 @@ Live at: https://turbodog111.github.io/vp/
 - The GitHub API allows 60 unauthenticated requests per IP per hour — plenty for normal use.
 - Playlists are per-browser since they live in `localStorage`. Export/import is not implemented yet.
 
-## MIMI scene data
+## Recording-specific scene data
 
-The new MIMI scenes live in `mimi-song-fx.js`; their audio/artwork provenance
+Petal Lament, Marshmary, Dynamite, and Butter live in `song-motion-fx.js`; their audio/artwork provenance
 and measured timing are in `songs/motion/SOURCES.txt`. They do not register
 desktop wallpaper theaters. Rebuild their motion JSON with
-`python3 scripts/build_mimi_motion.py <audio.m4a> <motion.json>` using
-NumPy, SciPy, and FFmpeg. Run `node --test scripts/test_mimi_fx.cjs` after edits.
+`python3 scripts/build_song_motion.py <audio.m4a> <motion.json> --bpm <tempo-family>` using
+NumPy, SciPy, and FFmpeg. Run `node --test scripts/test_song_motion_fx.cjs` after edits.
+The optional BPM hint resolves half/double-time ambiguity; exact tempo and phase
+are fitted to the selected recording. Visuals use the native playback clock,
+bounded canvas drawing, the existing frame limiter, and reduced-motion settings.
+These are energy-driven scenes, not guessed lyric/chorus timelines.
 
 ## Lyric timing checks
+
+`node scripts/audit_lyric_coverage.cjs` lists Vocaloid-related and BTS recordings
+with missing language coverage. `--check` deliberately fails until those gaps
+are supplied; this is separate from validating existing timelines. English
+recordings do not require invented romaji. Japanese Window View has romaji and
+English companions translated from its existing Japanese text, displayed for
+the original line interval without inventing translated-word timestamps.
 
 Run `python3 scripts/audit_lyrics.py` after changing a supported-song timeline. The audit verifies every mapped recording, media duration, line boundary, word boundary, and displayed lyric against its timed words.
 

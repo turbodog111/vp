@@ -1,4 +1,4 @@
-window.MimiSongFx = (() => {
+window.SongMotionFx = (() => {
   'use strict';
 
   const tracks = Object.freeze({
@@ -13,6 +13,18 @@ window.MimiSongFx = (() => {
       title: 'Marshmary', art: './songs/art/marshmary.webp',
       data: './songs/motion/marshmary.json',
       source: 'https://www.youtube.com/watch?v=qtuX4cHk-vE'
+    }),
+    'songs/bts - dynamite': Object.freeze({
+      key: 'dynamite', theme: 'bts-dynamite', bpm: 114, beatOffset: 0.14,
+      title: 'Dynamite', art: './songs/art/dynamite.webp',
+      data: './songs/motion/dynamite.json',
+      source: 'https://www.youtube.com/watch?v=OiMWFojB9Ok'
+    }),
+    'songs/bts - butter': Object.freeze({
+      key: 'butter', theme: 'bts-butter', bpm: 110, beatOffset: 0.435,
+      title: 'Butter', art: './songs/art/butter.webp',
+      data: './songs/motion/butter.json',
+      source: 'https://www.youtube.com/watch?v=mAv9olaNzr8'
     })
   });
   const cache = new Map();
@@ -62,7 +74,7 @@ window.MimiSongFx = (() => {
       cache.set(config.key, data);
       onReady?.();
     } catch (error) {
-      if (serial === generation && error.name !== 'AbortError') console.warn('MIMI motion data:', error);
+      if (serial === generation && error.name !== 'AbortError') console.warn('Song motion data:', error);
       // Playback and live-analyser fallback remain independent of data loading.
     } finally {
       clearTimeout(timeout);
@@ -346,6 +358,199 @@ window.MimiSongFx = (() => {
     }
   }
 
+  function polygon(ctx, points, rgb, alpha) {
+    ctx.beginPath();
+    points.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
+    ctx.closePath(); ctx.fillStyle = color(rgb, alpha); ctx.fill();
+  }
+
+  function stageFloor(ctx, w, h, beat, palette, strength) {
+    const horizon = h * 0.7, center = w * 0.65;
+    // Perspective rows flow toward the viewer; cells wrap only at the horizon.
+    for (let row = 0; row < 7; row++) {
+      const z0 = ((row + (beat * 0.12) % 1) / 7) ** 2;
+      const z1 = ((row + 1 + (beat * 0.12) % 1) / 7) ** 2;
+      const y0 = horizon + z0 * h * 0.35, y1 = horizon + z1 * h * 0.35;
+      for (let col = -5; col < 6; col++) {
+        const a = w * (0.025 + z0 * 0.17), b = w * (0.025 + z1 * 0.17);
+        polygon(ctx, [[center + col * a, y0], [center + (col + 1) * a, y0],
+          [center + (col + 1) * b, y1], [center + col * b, y1]],
+        palette[((col + row) % palette.length + palette.length) % palette.length],
+        (0.12 + strength * 0.26) * Math.min(1, z0 * 12));
+      }
+    }
+    ctx.beginPath(); ctx.moveTo(0, horizon); ctx.lineTo(w, horizon);
+    stroke(ctx, palette[0], 0.42, 2);
+  }
+
+  function spotlights(ctx, w, h, beat, m, palette, reduced) {
+    const t = reduced ? 0 : beat;
+    // Broad, low-opacity cones move continuously; there are no full-white flashes.
+    for (let i = 0; i < 4; i++) {
+      const source = w * (0.12 + i * 0.26);
+      const target = w * (0.5 + Math.sin(t * Math.PI / 16 + i * 1.7) * 0.55);
+      const spread = w * (0.1 + m.lift * 0.08);
+      const fade = ctx.createLinearGradient(source, 0, target, h);
+      fade.addColorStop(0, color(palette[i % palette.length], 0.02));
+      fade.addColorStop(0.65, color(palette[i % palette.length], 0.09 + m.lift * 0.13 + m.pulse * 0.035));
+      fade.addColorStop(1, color(palette[i % palette.length], 0));
+      ctx.beginPath(); ctx.moveTo(source, -10); ctx.lineTo(target - spread, h);
+      ctx.lineTo(target + spread, h); ctx.closePath(); ctx.fillStyle = fade; ctx.fill();
+    }
+  }
+
+  function mirrorball(ctx, x, y, r, beat, m) {
+    ctx.save(); ctx.translate(x, y);
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, TAU); ctx.fillStyle = '#243b55'; ctx.fill();
+    ctx.save(); ctx.clip();
+    // A fixed sphere mesh, not a particle system. Rotation is projected in longitude.
+    for (let row = 0; row < 10; row++) {
+      const lat0 = -Math.PI / 2 + (row + 0.08) * Math.PI / 10;
+      const lat1 = -Math.PI / 2 + (row + 0.92) * Math.PI / 10;
+      const lat = (lat0 + lat1) / 2;
+      for (let col = 0; col < 20; col++) {
+        const angle = Math.atan2(Math.sin(col * TAU / 20 + beat * 0.09), Math.cos(col * TAU / 20 + beat * 0.09));
+        if (Math.cos(angle) < 0) continue;
+        const a0 = Math.max(-Math.PI / 2, angle - 0.14), a1 = Math.min(Math.PI / 2, angle + 0.14);
+        const shine = Math.max(0, Math.cos(angle + 0.5) * Math.cos(lat + 0.3)) ** 6;
+        const base = row % 3 ? [57, 151, 166] : [155, 125, 173];
+        polygon(ctx, [[Math.sin(a0) * Math.cos(lat0) * r, Math.sin(lat0) * r],
+          [Math.sin(a1) * Math.cos(lat0) * r, Math.sin(lat0) * r],
+          [Math.sin(a1) * Math.cos(lat1) * r, Math.sin(lat1) * r],
+          [Math.sin(a0) * Math.cos(lat1) * r, Math.sin(lat1) * r]],
+        blend(base, [255, 250, 223], shine), 0.95);
+      }
+    }
+    ctx.restore();
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, TAU); stroke(ctx, [255, 246, 225], 0.95, 3);
+    for (let i = 0; i < 3; i++) {
+      const a = i * TAU / 3 + beat * 0.045;
+      const sx = Math.cos(a) * r * 0.62, sy = Math.sin(a) * r * 0.58;
+      const length = r * (0.11 + m.pulse * 0.1);
+      ctx.beginPath(); ctx.moveTo(sx - length, sy); ctx.lineTo(sx + length, sy);
+      ctx.moveTo(sx, sy - length); ctx.lineTo(sx, sy + length);
+      stroke(ctx, [255, 255, 246], 0.7, 2);
+    }
+    ctx.restore();
+  }
+
+  function microphone(ctx, x, y, size, angle) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(angle);
+    ctx.beginPath(); ctx.roundRect(-size * 0.13, 0, size * 0.26, size * 0.75, size * 0.08);
+    ctx.fillStyle = '#243b55'; ctx.fill();
+    ctx.beginPath(); ctx.roundRect(-size * 0.27, -size * 0.55, size * 0.54, size * 0.65, size * 0.23);
+    ctx.fillStyle = '#f7f2e4'; ctx.fill(); stroke(ctx, [36, 59, 85], 0.9, 2);
+    for (let i = 0; i < 6; i++) {
+      const yy = -size * 0.43 + i * size * 0.075;
+      ctx.beginPath(); ctx.moveTo(-size * 0.19, yy); ctx.lineTo(size * 0.19, yy);
+      stroke(ctx, [36, 59, 85], 0.55, size * 0.018);
+    }
+    ctx.beginPath(); ctx.moveTo(0, size * 0.75);
+    ctx.bezierCurveTo(size * 0.8, size * 1.2, -size * 0.5, size * 1.3, size * 0.7, size * 1.6);
+    stroke(ctx, [36, 59, 85], 0.8, size * 0.025); ctx.restore();
+  }
+
+  function drawDynamite(ctx, w, h, time, m, config, reduced) {
+    const s = Math.min(w, h), t = reduced ? 0 : time, beat = reduced ? 0 : m.beats;
+    const cx = w * 0.68, cy = h * 0.38;
+    const palette = [[232, 95, 144], [57, 159, 172], [246, 191, 87], [116, 102, 170]];
+    ctx.fillStyle = '#e5f1ec'; ctx.fillRect(0, 0, w, h);
+    // Oversized scalloped bands form a retro proscenium, with a gentle musical sway.
+    for (let i = 6; i >= 0; i--) {
+      const radius = s * (0.27 + i * 0.084);
+      ctx.beginPath();
+      ctx.ellipse(cx + Math.sin(t * 0.4 + i * 0.15) * s * 0.018, cy, radius * 1.12, radius, -0.12, 0, TAU);
+      stroke(ctx, palette[i % palette.length], 0.74 + m.lift * 0.2, s * 0.055);
+    }
+    spotlights(ctx, w, h, beat, m, [[255, 255, 235], [86, 210, 207], [255, 158, 196]], reduced);
+    stageFloor(ctx, w, h, beat, palette, m.lift);
+    wavefronts(ctx, w, h, config, time, m, cx, cy, [255, 248, 225], reduced);
+    // The suspended mirrorball is the anchor. Reflections travel across the room.
+    ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, cy - s * 0.19);
+    stroke(ctx, [36, 59, 85], 0.65, 2);
+    mirrorball(ctx, cx, cy, s * 0.19, beat, m);
+    microphone(ctx, w * 0.42, h * 0.53 + Math.sin(beat * Math.PI / 2) * s * 0.012,
+      s * 0.14, -0.28 + Math.sin(beat * Math.PI / 4) * 0.06);
+    if (!reduced) {
+      for (let i = 0; i < 6; i++) {
+        const a = beat * 0.12 + i * TAU / 6;
+        const x = cx + Math.cos(a) * s * 0.38, y = cy + Math.sin(a) * s * 0.27;
+        ctx.save(); ctx.translate(x, y); ctx.rotate(a);
+        ctx.fillStyle = color([255, 248, 224], (0.12 + m.lift * 0.45) * m.quiet);
+        ctx.fillRect(-s * 0.025, -s * 0.007, s * 0.05, s * 0.014); ctx.restore();
+      }
+      musicalSweep(ctx, w, h, m, [255, 255, 246], false);
+    }
+    // A quiet, stable left margin keeps metadata readable as the stage moves.
+    const margin = ctx.createLinearGradient(0, 0, w * 0.48, 0);
+    margin.addColorStop(0, '#e5f1ec'); margin.addColorStop(1, 'rgba(229,241,236,0)');
+    ctx.fillStyle = margin; ctx.fillRect(0, 0, w * 0.48, h * 0.55);
+  }
+
+  function liquidHeart(ctx, x, y, r, time, m) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(-0.12 + Math.sin(time * 0.43) * 0.035);
+    // A recognizable heart silhouette, with three slow liquid drips below it.
+    ctx.beginPath(); ctx.moveTo(0, -r * 0.45);
+    ctx.bezierCurveTo(-r * 0.75, -r * 1.35, -r * 1.4, -r * 0.2, -r * 0.65, r * 0.4);
+    ctx.bezierCurveTo(-r * 0.36, r * 0.68, -r * 0.16, r * 0.9, 0, r);
+    ctx.bezierCurveTo(r * 0.18, r * 0.87, r * 0.38, r * 0.65, r * 0.67, r * 0.38);
+    ctx.bezierCurveTo(r * 1.4, -r * 0.25, r * 0.72, -r * 1.35, 0, -r * 0.45);
+    ctx.closePath(); ctx.fillStyle = '#ffdc38'; ctx.fill();
+    stroke(ctx, [255, 245, 178], 0.9, r * 0.025);
+    for (let i = 0; i < 3; i++) {
+      const xx = (i - 1) * r * 0.36;
+      const length = r * (0.24 + (Math.sin(time * 0.65 + i * 1.7) + 1) * 0.12);
+      ctx.beginPath(); ctx.roundRect(xx - r * 0.065, r * (0.85 - Math.abs(i - 1) * 0.37),
+        r * 0.13, length, r * 0.065); ctx.fill();
+    }
+    ctx.beginPath(); ctx.moveTo(-r * 0.65, -r * 0.25);
+    ctx.bezierCurveTo(-r * 0.7, -r * 0.65, -r * 0.3, -r * 0.78, -r * 0.12, -r * 0.5);
+    stroke(ctx, [255, 255, 225], 0.65 + m.pulse * 0.2, r * 0.065);
+    ctx.restore();
+  }
+
+  function drawButter(ctx, w, h, time, m, config, reduced) {
+    const s = Math.min(w, h), t = reduced ? 0 : time, beat = reduced ? 0 : m.beats;
+    const cx = w * 0.69, cy = h * 0.4;
+    ctx.fillStyle = '#181a20'; ctx.fillRect(0, 0, w, h);
+    // Sliding architectural panels create a set rather than a floating glow.
+    const drift = Math.sin(beat * Math.PI / 16) * w * 0.045;
+    polygon(ctx, [[w * 0.46 + drift, 0], [w * 0.85 + drift, 0], [w * 0.66 + drift, h], [w * 0.27 + drift, h]],
+      [244, 203, 43], 0.9);
+    polygon(ctx, [[w * 0.84 + drift, 0], [w, 0], [w, h], [w * 0.65 + drift, h]], [234, 237, 224], 0.95);
+    for (let i = 0; i < 7; i++) {
+      const xx = w * (0.45 + i * 0.085) + drift;
+      ctx.beginPath(); ctx.moveTo(xx, 0); ctx.lineTo(xx - w * 0.19, h);
+      stroke(ctx, [25, 28, 31], 0.15, 1.5);
+    }
+    // A lacquered oval keeps the melting emblem crisp against the gold set.
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(-0.16);
+    ctx.beginPath(); ctx.ellipse(0, 0, s * 0.29, s * 0.31, 0, 0, TAU);
+    ctx.fillStyle = '#20242b'; ctx.fill(); stroke(ctx, [255, 237, 142], 0.85, 3);
+    for (let i = 0; i < 3; i++) {
+      ctx.beginPath(); ctx.ellipse(0, 0, s * (0.31 + i * 0.018), s * (0.33 + i * 0.018), 0, -1, 2.2);
+      stroke(ctx, [255, 246, 213], 0.35 - i * 0.08, 1.5);
+    }
+    ctx.restore();
+    spotlights(ctx, w, h, beat, m, [[255, 240, 164], [216, 241, 236]], reduced);
+    wavefronts(ctx, w, h, config, time, m, cx, cy, [255, 230, 102], reduced);
+    liquidHeart(ctx, cx, cy, s * 0.19, t, m);
+    // Satin folds cross the whole lower frame, leaving both controls uncovered.
+    for (let ribbon = 0; ribbon < 4; ribbon++) {
+      const y = h * (0.74 + ribbon * 0.065);
+      const sway = Math.sin(beat * Math.PI / 8 + ribbon * 0.42) * h * (0.04 + m.lift * 0.035);
+      ctx.beginPath(); ctx.moveTo(-w * 0.1, y);
+      ctx.bezierCurveTo(w * 0.32, y - h * 0.28 - sway, w * 0.7, y + h * 0.23 + sway, w * 1.1, y - h * 0.1);
+      stroke(ctx, ribbon % 2 ? [239, 240, 222] : [247, 205, 46], 0.5 + m.lift * 0.24, s * 0.022);
+      stroke(ctx, [255, 249, 210], 0.4, 1.2);
+    }
+    musicalSweep(ctx, w, h, m, [255, 234, 123], reduced);
+    const margin = ctx.createLinearGradient(0, 0, w * 0.48, 0);
+    margin.addColorStop(0, '#181a20'); margin.addColorStop(0.5, 'rgba(24,26,32,0.94)');
+    margin.addColorStop(1, 'rgba(24,26,32,0)');
+    ctx.fillStyle = margin; ctx.fillRect(0, 0, w * 0.48, h * 0.57);
+  }
+
   function draw(ctx, w, h, state) {
     if (!active || w <= 0 || h <= 0) return;
     const time = Math.max(0, Number(state.time) || 0);
@@ -355,7 +560,9 @@ window.MimiSongFx = (() => {
     ctx.save(); ctx.globalCompositeOperation = 'source-over';
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     if (active.key === 'petal-lament') drawPetal(ctx, w, h, time, m, active, reduced);
-    else drawMarshmary(ctx, w, h, time, m, active, reduced);
+    else if (active.key === 'marshmary') drawMarshmary(ctx, w, h, time, m, active, reduced);
+    else if (active.key === 'dynamite') drawDynamite(ctx, w, h, time, m, active, reduced);
+    else if (active.key === 'butter') drawButter(ctx, w, h, time, m, active, reduced);
     ctx.restore();
   }
 

@@ -358,32 +358,32 @@ body.theme-monika .now-view.active {
 }
 body.fx-active .teto-fx-canvas { opacity: 1; }
 
-/* Recording-specific in-app MIMI scenes; transport stays on its own clear layer. */
-.mimi-song-art { display: none; }
-body.mimi-song-fx-active {
+/* Recording-specific in-app scenes; transport stays on its own clear layer. */
+.song-motion-art { display: none; }
+body.song-motion-fx-active {
   --accent: #ef9cba;
   --accent-2: #84d5d0;
   --accent-fg: #2c1724;
-  --mimi-ink: #4d213d;
-  --mimi-muted: #6f3a58;
+  --motion-ink: #4d213d;
+  --motion-muted: #6f3a58;
 }
 body.mimi-marshmary-active {
   --accent: #b8e4db;
   --accent-2: #f2d57f;
   --accent-fg: #183a45;
-  --mimi-ink: #193c48;
-  --mimi-muted: #275361;
+  --motion-ink: #193c48;
+  --motion-muted: #275361;
 }
-body.mimi-song-fx-active #view-now.active {
+body.song-motion-fx-active #view-now.active {
   grid-template-rows: minmax(0, 1fr);
   background: #f7d9e4;
   isolation: isolate;
 }
 body.mimi-marshmary-active #view-now.active { background: #a6cfce; }
-body.mimi-song-fx-active #view-now::before { display: none; }
-body.mimi-song-fx-active .teto-fx-canvas { mix-blend-mode: normal; }
-body.mimi-song-fx-active .wave-panel { display: none; }
-body.mimi-song-fx-active .now-stage {
+body.song-motion-fx-active #view-now::before { display: none; }
+body.song-motion-fx-active .teto-fx-canvas { mix-blend-mode: normal; }
+body.song-motion-fx-active .wave-panel { display: none; }
+body.song-motion-fx-active .now-stage {
   grid-template-columns: minmax(0, 1fr) 180px;
   grid-template-rows: auto minmax(40px, 1fr) auto;
   padding: 28px;
@@ -392,26 +392,26 @@ body.mimi-song-fx-active .now-stage {
   min-height: 0;
   pointer-events: none;
 }
-body.mimi-song-fx-active .now-meta {
+body.song-motion-fx-active .now-meta {
   grid-area: 1 / 1;
   align-self: start;
   max-width: 380px;
   text-align: left;
 }
-body.mimi-song-fx-active .now-meta h1 {
-  color: var(--mimi-ink);
+body.song-motion-fx-active .now-meta h1 {
+  color: var(--motion-ink);
   font-size: 44px;
   line-height: 1.08;
   -webkit-line-clamp: unset;
   text-shadow: 0 1px 12px rgba(255, 255, 255, 0.24);
 }
-body.mimi-song-fx-active .now-kicker,
-body.mimi-song-fx-active .now-subtitle {
-  color: var(--mimi-muted);
+body.song-motion-fx-active .now-kicker,
+body.song-motion-fx-active .now-subtitle {
+  color: var(--motion-muted);
   letter-spacing: 0;
 }
-body.mimi-song-fx-active .now-subtitle { white-space: normal; }
-body.mimi-song-fx-active .mimi-song-art:not([hidden]) {
+body.song-motion-fx-active .now-subtitle { white-space: normal; }
+body.song-motion-fx-active .song-motion-art:not([hidden]) {
   display: block;
   grid-area: 3 / 1;
   width: 168px;
@@ -423,54 +423,74 @@ body.mimi-song-fx-active .mimi-song-art:not([hidden]) {
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(27, 48, 59, 0.2);
 }
-.mimi-song-art img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
-body.mimi-song-fx-active .hero-control {
+.song-motion-art img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+body.song-motion-fx-active .hero-control {
   grid-area: 3 / 2;
   padding: 8px;
   align-self: end;
   pointer-events: auto;
 }
-body.mimi-song-fx-active .hero-play {
+body.song-motion-fx-active .hero-play {
   width: 88px;
   height: 88px;
   background: #fff5f5;
-  color: var(--mimi-ink);
-  border: 2px solid var(--mimi-ink);
+  color: var(--motion-ink);
+  border: 2px solid var(--motion-ink);
   box-shadow: 0 4px 16px rgba(35, 51, 64, 0.14);
   transform: none;
 }
-body.mimi-song-fx-active .hero-play::before {
-  background: conic-gradient(var(--mimi-ink) calc(var(--progress, 0) * 360deg), rgba(255, 255, 255, 0.65) 0);
+body.song-motion-fx-active .hero-play::before {
+  background: conic-gradient(var(--motion-ink) calc(var(--progress, 0) * 360deg), rgba(255, 255, 255, 0.65) 0);
 }
-body.mimi-song-fx-active .hero-play::after,
-body.mimi-song-fx-active .hero-ring { display: none; }
-body.mimi-song-fx-active .hero-time {
+body.song-motion-fx-active .hero-play::after,
+body.song-motion-fx-active .hero-ring { display: none; }
+body.song-motion-fx-active .hero-time {
   color: #fff;
   font-weight: 700;
   text-shadow: 0 1px 4px rgba(18, 40, 48, 0.9);
 }
-body.mimi-song-fx-active .now-queue { display: none; }
-body.mimi-song-fx-active .player { --accent: #f4bfd1; --accent-fg: #271a24; }
+body.song-motion-fx-active .now-queue { display: none; }
+body.song-motion-fx-active .player { --accent: #f4bfd1; --accent-fg: #271a24; }
 body.mimi-marshmary-active .player { --accent: #b8e4db; --accent-fg: #183a45; }
+body.bts-dynamite-active {
+  --accent: #ef9aa8;
+  --accent-2: #65c9ca;
+  --accent-fg: #242636;
+  --motion-ink: #293549;
+  --motion-muted: #374a60;
+}
+body.bts-butter-active {
+  --accent: #ffdc38;
+  --accent-2: #b9dfd5;
+  --accent-fg: #1d2026;
+  --motion-ink: #fff6d9;
+  --motion-muted: #f3e3b4;
+}
+body.bts-dynamite-active #view-now.active { background: #e5f1ec; }
+body.bts-butter-active #view-now.active { background: #181a20; }
+body.bts-butter-active .now-meta h1 { text-shadow: 0 2px 12px #181a20; }
+body.bts-butter-active .hero-play { background: #1d2026; border-color: #fff6d9; }
+body.bts-dynamite-active .player { --accent: #f2a5b5; --accent-fg: #202b3e; }
+body.bts-butter-active .player { --accent: #ffdc38; --accent-fg: #1d2026; }
 @media (max-width: 650px) {
-  body.mimi-song-fx-active .now-stage {
+  body.song-motion-fx-active .now-stage {
     grid-template-columns: minmax(0, 1fr) 108px;
     padding: 18px;
     gap: 12px;
   }
-  body.mimi-song-fx-active .now-meta { max-width: 210px; }
-  body.mimi-song-fx-active .now-meta h1 { font-size: 30px; }
-  body.mimi-song-fx-active .mimi-song-art:not([hidden]) { width: 128px; }
-  body.mimi-song-fx-active .hero-play { width: 72px; height: 72px; }
+  body.song-motion-fx-active .now-meta { max-width: 210px; }
+  body.song-motion-fx-active .now-meta h1 { font-size: 30px; }
+  body.song-motion-fx-active .song-motion-art:not([hidden]) { width: 128px; }
+  body.song-motion-fx-active .hero-play { width: 72px; height: 72px; }
 }
 @media (max-height: 540px) {
-  body.mimi-song-fx-active .now-stage { padding: 12px; grid-template-rows: minmax(0, 1fr); }
-  body.mimi-song-fx-active .now-meta h1 { font-size: 24px; }
-  body.mimi-song-fx-active .now-subtitle { font-size: 12px; }
-  body.mimi-song-fx-active .now-kicker { display: none; }
-  body.mimi-song-fx-active .mimi-song-art:not([hidden]) { display: none; }
-  body.mimi-song-fx-active .hero-control { grid-row: 1; padding: 0; gap: 6px; }
-  body.mimi-song-fx-active .hero-play { width: 64px; height: 64px; }
+  body.song-motion-fx-active .now-stage { padding: 12px; grid-template-rows: minmax(0, 1fr); }
+  body.song-motion-fx-active .now-meta h1 { font-size: 24px; }
+  body.song-motion-fx-active .now-subtitle { font-size: 12px; }
+  body.song-motion-fx-active .now-kicker { display: none; }
+  body.song-motion-fx-active .song-motion-art:not([hidden]) { display: none; }
+  body.song-motion-fx-active .hero-control { grid-row: 1; padding: 0; gap: 6px; }
+  body.song-motion-fx-active .hero-play { width: 64px; height: 64px; }
 }
 
 body.teto-fx-active {
@@ -4481,7 +4501,30 @@ body.story-theater-active .now-view.active {
 }
 .story-theater[data-story="window-jp"] .story-current {
   font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
-  font-size: clamp(25px, 3.1vw, 43px);
+  font-size: 32px;
+}
+.story-current.is-multilingual {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  max-width: 800px;
+}
+.story-translation {
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  text-shadow: 0 2px 8px #030912;
+}
+.story-translation-romaji { color: #a9eee1; font-size: 20px; }
+.story-translation-en { color: #fff8f2; font-size: 24px; }
+@media (max-width: 780px), (max-height: 600px) {
+  .story-theater[data-story="window-jp"] .story-current.is-multilingual { font-size: 22px; gap: 8px; }
+  .story-translation-romaji { font-size: 16px; }
+  .story-translation-en { font-size: 18px; }
 }
 .story-theater[data-story^="window-"] .story-word { background: none; -webkit-text-fill-color: currentColor; }
 .story-theater[data-story^="window-"] .story-word.is-pending { color: rgba(187, 220, 225, 0.7); }

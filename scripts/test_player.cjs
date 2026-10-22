@@ -18,7 +18,7 @@ function extract(source, name) {
 }
 function context(names, values = {}, source = APP) {
   const c = vm.createContext({ console: { warn: noop, error: noop }, performance: { now: () => 100 },
-    setTimeout, clearTimeout, URL, AbortController, setMimiFxActive: noop, ...values });
+    setTimeout, clearTimeout, URL, AbortController, setSongMotionFxActive: noop, ...values });
   vm.runInContext(names.map(name => extract(source, name)).join('\n'), c);
   return c;
 }
@@ -96,7 +96,7 @@ test('MIMI: resizing a paused scene repaints once after canvas resizing', () => 
     resizeWaveform: () => operations.push('wave-size'), resizeFxCanvas: () => operations.push('fx-size'),
     drawWaveform: idle => operations.push(idle ? 'paused-frame' : 'playing-frame'),
     waveSizeKey: '', fxSizeKey: '',
-    document: { body: { classList: { contains: name => name === 'mimi-song-fx-active' } } }
+    document: { body: { classList: { contains: name => name === 'song-motion-fx-active' } } }
   });
   c.scheduleNowLayoutSync(); callback(); callback();
   assert.deepEqual(operations, ['wave-size', 'fx-size', 'paused-frame']);
@@ -126,6 +126,28 @@ test('MIMI: the desktop bridge stays inactive for in-app-only scenes', () => {
   assert.equal(c.window.__vpDesktopEffectsState.active, false);
   assert.equal(c.window.__vpDesktopEffectsState.playing, false);
   assert.equal(c.window.__vpDesktopEffectsState.variant, 'off');
+});
+test('Japanese story companions render without changing source word timing and clear during gaps', () => {
+  const controls = Object.fromEntries(['story-current', 'story-previous', 'story-next'].map(id => [id, element()]));
+  const c = context(['renderStoryTheaterLine'], {
+    $: id => controls[id], supportedLyricsWordNodes: [], storyLyricsWordLanes: [],
+    document: { createElement: element, createTextNode: text => ({ textContent: text }) },
+    storyTheaterVariant: () => 'window-jp', storyInterludeText: () => '',
+    measuredWordTimings: line => line.words || [],
+  });
+  const data = { language: 'ja', lines: [{ text: 'source', start: 1, end: 2,
+    words: [{ word: 'source', start: 1.1, end: 1.8 }] }], translations: [{ romaji: 'romaji sample', en: 'English sample' }] };
+  c.renderStoryTheaterLine(0, data, 1.5);
+  assert.equal(controls['story-current'].children.length, 3);
+  assert.equal(controls['story-current'].children[1].lang, 'ja-Latn');
+  assert.equal(controls['story-current'].children[2].textContent, 'English sample');
+  assert.equal(c.supportedLyricsWordNodes[0].start, 1.1);
+  assert.equal(c.supportedLyricsWordNodes[0].end, 1.8);
+  assert.equal(controls['story-next'].hidden, true);
+  c.renderStoryTheaterLine(-1, data, 2.5);
+  assert.equal(controls['story-current'].children.length, 1);
+  assert.equal(controls['story-current'].classList.contains('is-multilingual'), false);
+  assert.equal(controls['story-next'].hidden, false);
 });
 test('F2: every ordered pair in each shared lyric theater family invalidates song identity',()=>{
   const declaration='const SUPPORTED_LYRIC_TRACKS = ';

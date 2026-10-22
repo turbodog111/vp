@@ -1769,6 +1769,11 @@ function renderStoryTheaterLine(index, data, time) {
   current.replaceChildren();
   current.classList.remove('is-duet');
   const line = index >= 0 ? data.lines[index] : null;
+  const translation = line && data.language === 'ja' ? data.translations?.[index] : null;
+  const multilingual = !!(translation?.romaji && translation?.en);
+  current.classList.toggle('is-multilingual', multilingual);
+  previous.hidden = multilingual;
+  next.hidden = multilingual;
   if (!line) {
     const note = document.createElement('span');
     note.className = 'story-instrumental';
@@ -1820,6 +1825,16 @@ function renderStoryTheaterLine(index, data, time) {
     storyLyricsWordLanes.push(laneNodes);
     current.appendChild(vocalLine);
   });
+  if (multilingual) {
+    // Companion translations share the source line's interval, not fabricated word timings.
+    for (const [language, text] of [['romaji', translation.romaji], ['en', translation.en]]) {
+      const companion = document.createElement('span');
+      companion.className = `story-translation story-translation-${language}`;
+      companion.lang = language === 'romaji' ? 'ja-Latn' : 'en';
+      companion.textContent = text;
+      current.appendChild(companion);
+    }
+  }
   previous.textContent = data.lines[index - 1]?.text || '';
   next.textContent = data.lines[index + 1]?.text || '';
 }
@@ -2361,8 +2376,8 @@ referenceVideo?.addEventListener('click', () => togglePlay());
 document.addEventListener('visibilitychange', () => syncReferenceVideo(true));
 
 function activeFxTheme(song = currentSong()) {
-  const mimiTrack = window.MimiSongFx?.track(song);
-  if (mimiTrack) return tetoFxEnabled ? mimiTrack.theme : 'off';
+  const motionTrack = window.SongMotionFx?.track(song);
+  if (motionTrack) return tetoFxEnabled ? motionTrack.theme : 'off';
   if (referenceVideoTrack(song)) return tetoFxEnabled ? 'reference-video' : 'off';
   if (isMagicMaidSong(song)) {
     return tetoFxEnabled ? 'magic-maid' : 'off';
@@ -2438,23 +2453,25 @@ function setFxTheme(theme) {
   updateFxState();
 }
 
-function setMimiFxActive(enabled) {
-  const config = enabled ? window.MimiSongFx?.track(currentSong()) : null;
-  document.body.classList.toggle('mimi-song-fx-active', !!config);
+function setSongMotionFxActive(enabled) {
+  const config = enabled ? window.SongMotionFx?.track(currentSong()) : null;
+  document.body.classList.toggle('song-motion-fx-active', !!config);
   document.body.classList.toggle('mimi-petal-active', config?.key === 'petal-lament');
   document.body.classList.toggle('mimi-marshmary-active', config?.key === 'marshmary');
-  const artwork = $('mimi-song-art');
+  document.body.classList.toggle('bts-dynamite-active', config?.key === 'dynamite');
+  document.body.classList.toggle('bts-butter-active', config?.key === 'butter');
+  const artwork = $('song-motion-art');
   if (artwork) {
     artwork.hidden = !config;
     if (config) {
       artwork.href = config.source;
-      artwork.title = `${config.title} - original music video`;
+      artwork.title = `${config.title} - source video`;
       const image = artwork.querySelector('img');
       image.src = config.art;
-      image.alt = `${config.title} original cover artwork`;
+      image.alt = `${config.title} source video artwork`;
     }
   }
-  window.MimiSongFx?.activate(config, () => {
+  window.SongMotionFx?.activate(config, () => {
     if (isNowViewActive()) drawWaveform(audio.paused);
   });
   if (config) scheduleNowLayoutSync();
@@ -2476,7 +2493,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   if (theme === renderedFxTheme && songId === renderedFxSongId) return;
   renderedFxTheme = theme;
   renderedFxSongId = songId;
-  setMimiFxActive(theme === 'mimi-petal' || theme === 'mimi-marshmary');
+  setSongMotionFxActive(['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter'].includes(theme));
   document.body.classList.toggle('fx-active', active);
   document.body.classList.toggle('disco-fx-active', theme === 'disco');
   document.body.classList.toggle('teto-fx-active', theme === 'teto');
@@ -2539,7 +2556,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
 
 function desktopEffectsVariant(song = currentSong()) {
   // These scenes are currently scoped to VP's in-app canvas.
-  if (window.MimiSongFx?.track(song)) return 'off';
+  if (window.SongMotionFx?.track(song)) return 'off';
   if (isMagicMaidSong(song)) return 'magic-maid';
   const config = supportedLyricTrackForSong(song);
   if (config?.scene === 'trick-heart') return 'trick-heart';
@@ -5509,7 +5526,7 @@ function scheduleNowLayoutSync() {
       fxSizeKey = '';
       resizeWaveform(true);
       resizeFxCanvas(true);
-      if (document.body.classList.contains('mimi-song-fx-active') && audio.paused) drawWaveform(true);
+      if (document.body.classList.contains('song-motion-fx-active') && audio.paused) drawWaveform(true);
       if (document.body.classList.contains('ddf-theater-active')) {
         ddfFxSizeKey = '';
         ddfFxCtx = null;
@@ -5527,7 +5544,7 @@ function resizeFxCanvas(force = false) {
   const rect = view.getBoundingClientRect();
   if (rect.width <= 0 || rect.height <= 0) return;
   const dpr = adaptiveCanvasDpr(rect);
-  const minimum = document.body.classList.contains('mimi-song-fx-active') ? 2 : 320;
+  const minimum = document.body.classList.contains('song-motion-fx-active') ? 2 : 320;
   const w = Math.max(minimum, Math.floor(rect.width * dpr));
   const h = Math.max(minimum, Math.floor(rect.height * dpr));
   const key = `${w}x${h}`;
@@ -9688,8 +9705,8 @@ function drawTetoFx(level) {
   const theme = activeFxTheme();
   updateFxState(levels.glow);
   if (theme === 'off') return;
-  if (theme === 'mimi-petal' || theme === 'mimi-marshmary') {
-    window.MimiSongFx?.draw(ctx, w, h, { time: currentCalibratedTime(), energy: levels.glow });
+  if (['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter'].includes(theme)) {
+    window.SongMotionFx?.draw(ctx, w, h, { time: currentCalibratedTime(), energy: levels.glow });
     return;
   }
   if (theme === 'trick-heart') {
@@ -10199,7 +10216,7 @@ function bindAudioElementEvents(el) {
     spatialForcePaint = true;
     if (spatialActive) paintSpatialGuide(currentCalibratedTime(), true);
     if (seekTransaction?.finishOnSeeked && Math.abs(nativePlaybackTime() - seekTransaction.targetTime) < 0.1) finishSeekTransaction();
-    if (el.paused && isNowViewActive() && window.MimiSongFx?.track(currentSong())) drawWaveform(true);
+    if (el.paused && isNowViewActive() && window.SongMotionFx?.track(currentSong())) drawWaveform(true);
   });
   el.addEventListener('ratechange', () => {
     if (!mediaEventMatchesExpectedSong(el)) return;

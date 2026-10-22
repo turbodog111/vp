@@ -9,7 +9,7 @@ import numpy as np
 from scipy import signal
 
 
-def analyze(path):
+def analyze(path, tempo_hint=None):
     rate, hop, size = 16000, 320, 1024
     pcm = subprocess.check_output([
         'ffmpeg', '-v', 'error', '-i', str(path), '-f', 'f32le',
@@ -42,9 +42,7 @@ def analyze(path):
     # Autocorrelation locates tempo families; a whole-recording comb fit refines
     # the tempo and phase together, avoiding accumulated rounding drift.
     fits = []
-    for candidate in tempi:
-        if candidate['bpm'] < 145:
-            continue
+    for candidate in ([{'bpm': tempo_hint}] if tempo_hint else tempi):
         for bpm_try in np.arange(candidate['bpm'] - 1.8, candidate['bpm'] + 1.8, 0.01):
             period = 60 / bpm_try
             offsets = np.arange(64) * period / 64
@@ -85,8 +83,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('audio', type=Path)
     parser.add_argument('output', type=Path)
+    parser.add_argument('--bpm', type=float, help='Optional tempo-family hint; phase and exact tempo are still measured.')
     args = parser.parse_args()
-    result = analyze(args.audio)
+    if args.bpm is not None and not 40 <= args.bpm <= 240:
+        parser.error('--bpm must be between 40 and 240')
+    result = analyze(args.audio, args.bpm)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, separators=(',', ':')) + '\n')
     print(json.dumps({key: result[key] for key in ('duration', 'bpm', 'beatOffset', 'tempoCandidates')}))
