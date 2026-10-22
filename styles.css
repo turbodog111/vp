@@ -358,6 +358,121 @@ body.theme-monika .now-view.active {
 }
 body.fx-active .teto-fx-canvas { opacity: 1; }
 
+/* Recording-specific in-app MIMI scenes; transport stays on its own clear layer. */
+.mimi-song-art { display: none; }
+body.mimi-song-fx-active {
+  --accent: #ef9cba;
+  --accent-2: #84d5d0;
+  --accent-fg: #2c1724;
+  --mimi-ink: #4d213d;
+  --mimi-muted: #6f3a58;
+}
+body.mimi-marshmary-active {
+  --accent: #b8e4db;
+  --accent-2: #f2d57f;
+  --accent-fg: #183a45;
+  --mimi-ink: #193c48;
+  --mimi-muted: #275361;
+}
+body.mimi-song-fx-active #view-now.active {
+  grid-template-rows: minmax(0, 1fr);
+  background: #f7d9e4;
+  isolation: isolate;
+}
+body.mimi-marshmary-active #view-now.active { background: #a6cfce; }
+body.mimi-song-fx-active #view-now::before { display: none; }
+body.mimi-song-fx-active .teto-fx-canvas { mix-blend-mode: normal; }
+body.mimi-song-fx-active .wave-panel { display: none; }
+body.mimi-song-fx-active .now-stage {
+  grid-template-columns: minmax(0, 1fr) 180px;
+  grid-template-rows: auto minmax(40px, 1fr) auto;
+  padding: 28px;
+  gap: 16px;
+  height: 100%;
+  min-height: 0;
+  pointer-events: none;
+}
+body.mimi-song-fx-active .now-meta {
+  grid-area: 1 / 1;
+  align-self: start;
+  max-width: 380px;
+  text-align: left;
+}
+body.mimi-song-fx-active .now-meta h1 {
+  color: var(--mimi-ink);
+  font-size: 44px;
+  line-height: 1.08;
+  -webkit-line-clamp: unset;
+  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.24);
+}
+body.mimi-song-fx-active .now-kicker,
+body.mimi-song-fx-active .now-subtitle {
+  color: var(--mimi-muted);
+  letter-spacing: 0;
+}
+body.mimi-song-fx-active .now-subtitle { white-space: normal; }
+body.mimi-song-fx-active .mimi-song-art:not([hidden]) {
+  display: block;
+  grid-area: 3 / 1;
+  width: 168px;
+  max-width: 100%;
+  align-self: end;
+  pointer-events: auto;
+  line-height: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(27, 48, 59, 0.2);
+}
+.mimi-song-art img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+body.mimi-song-fx-active .hero-control {
+  grid-area: 3 / 2;
+  padding: 8px;
+  align-self: end;
+  pointer-events: auto;
+}
+body.mimi-song-fx-active .hero-play {
+  width: 88px;
+  height: 88px;
+  background: #fff5f5;
+  color: var(--mimi-ink);
+  border: 2px solid var(--mimi-ink);
+  box-shadow: 0 4px 16px rgba(35, 51, 64, 0.14);
+  transform: none;
+}
+body.mimi-song-fx-active .hero-play::before {
+  background: conic-gradient(var(--mimi-ink) calc(var(--progress, 0) * 360deg), rgba(255, 255, 255, 0.65) 0);
+}
+body.mimi-song-fx-active .hero-play::after,
+body.mimi-song-fx-active .hero-ring { display: none; }
+body.mimi-song-fx-active .hero-time {
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(18, 40, 48, 0.9);
+}
+body.mimi-song-fx-active .now-queue { display: none; }
+body.mimi-song-fx-active .player { --accent: #f4bfd1; --accent-fg: #271a24; }
+body.mimi-marshmary-active .player { --accent: #b8e4db; --accent-fg: #183a45; }
+@media (max-width: 650px) {
+  body.mimi-song-fx-active .now-stage {
+    grid-template-columns: minmax(0, 1fr) 108px;
+    padding: 18px;
+    gap: 12px;
+  }
+  body.mimi-song-fx-active .now-meta { max-width: 210px; }
+  body.mimi-song-fx-active .now-meta h1 { font-size: 30px; }
+  body.mimi-song-fx-active .mimi-song-art:not([hidden]) { width: 128px; }
+  body.mimi-song-fx-active .hero-play { width: 72px; height: 72px; }
+}
+@media (max-height: 540px) {
+  body.mimi-song-fx-active .now-stage { padding: 12px; grid-template-rows: minmax(0, 1fr); }
+  body.mimi-song-fx-active .now-meta h1 { font-size: 24px; }
+  body.mimi-song-fx-active .now-subtitle { font-size: 12px; }
+  body.mimi-song-fx-active .now-kicker { display: none; }
+  body.mimi-song-fx-active .mimi-song-art:not([hidden]) { display: none; }
+  body.mimi-song-fx-active .hero-control { grid-row: 1; padding: 0; gap: 6px; }
+  body.mimi-song-fx-active .hero-play { width: 64px; height: 64px; }
+}
+
 body.teto-fx-active {
   --accent: #ff6a3d;
   --accent-2: #e34835;

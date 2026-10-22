@@ -6,9 +6,9 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-10-03-reliability-fixes">
+<meta name="vp-build" content="2026-10-22-mimi-scenes">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="styles.css?v=20261003-reliability">
+<link rel="stylesheet" href="styles.css?v=20261022-mimi-scenes">
 </head>
 <body>
 <div class="app">
@@ -365,6 +365,10 @@
           <div id="now-subtitle" class="now-subtitle">Pick a song from the library.</div>
         </div>
 
+        <a id="mimi-song-art" class="mimi-song-art" hidden target="_blank" rel="noopener noreferrer">
+          <img alt="" width="1280" height="720" decoding="async">
+        </a>
+
         <div class="hero-control">
           <button id="hero-play" class="hero-play" title="Play/Pause (Space)">
             <span class="hero-ring"></span>
@@ -494,6 +498,7 @@
 
 <audio id="audio" preload="metadata"></audio>
 <script src="encore-harp-fx.js?v=20260913-harp-theater"></script>
-<script src="app.js?v=20261003-reliability"></script>
+<script src="mimi-song-fx.js?v=20261022-mimi-scenes"></script>
+<script src="app.js?v=20261022-mimi-scenes"></script>
 </body>
 </html>

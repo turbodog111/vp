@@ -26,6 +26,7 @@ Live at: https://turbodog111.github.io/vp/
 - Six-band equalizer with automatically saved per-song profiles and a reload-cleared temporary all-song override
 - Queue recovery retries a failed track in place instead of silently skipping it
 - FX-gated, recording-specific timed lyrics and custom Now Playing scenes for supported songs
+- Petal Lament and Marshmary have distinct in-app scenes under the FX toggle, driven by precomputed recording-specific audio envelopes and the native playback clock
 - Loop modes: off / loop all / loop one
 - Keyboard shortcuts: `Space` play-pause, `Shift+←/→` prev/next, `L` cycle loop, `S` shuffle
 - Search filter, volume control with persistence, media-key support (lock screen / headphones)
@@ -36,6 +37,14 @@ Live at: https://turbodog111.github.io/vp/
 - Individual files >100 MB will be rejected by git.
 - The GitHub API allows 60 unauthenticated requests per IP per hour — plenty for normal use.
 - Playlists are per-browser since they live in `localStorage`. Export/import is not implemented yet.
+
+## MIMI scene data
+
+The new MIMI scenes live in `mimi-song-fx.js`; their audio/artwork provenance
+and measured timing are in `songs/motion/SOURCES.txt`. They do not register
+desktop wallpaper theaters. Rebuild their motion JSON with
+`python3 scripts/build_mimi_motion.py <audio.m4a> <motion.json>` using
+NumPy, SciPy, and FFmpeg. Run `node --test scripts/test_mimi_fx.cjs` after edits.
 
 ## Lyric timing checks
 

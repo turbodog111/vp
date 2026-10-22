@@ -2361,6 +2361,8 @@ referenceVideo?.addEventListener('click', () => togglePlay());
 document.addEventListener('visibilitychange', () => syncReferenceVideo(true));
 
 function activeFxTheme(song = currentSong()) {
+  const mimiTrack = window.MimiSongFx?.track(song);
+  if (mimiTrack) return tetoFxEnabled ? mimiTrack.theme : 'off';
   if (referenceVideoTrack(song)) return tetoFxEnabled ? 'reference-video' : 'off';
   if (isMagicMaidSong(song)) {
     return tetoFxEnabled ? 'magic-maid' : 'off';
@@ -2436,6 +2438,28 @@ function setFxTheme(theme) {
   updateFxState();
 }
 
+function setMimiFxActive(enabled) {
+  const config = enabled ? window.MimiSongFx?.track(currentSong()) : null;
+  document.body.classList.toggle('mimi-song-fx-active', !!config);
+  document.body.classList.toggle('mimi-petal-active', config?.key === 'petal-lament');
+  document.body.classList.toggle('mimi-marshmary-active', config?.key === 'marshmary');
+  const artwork = $('mimi-song-art');
+  if (artwork) {
+    artwork.hidden = !config;
+    if (config) {
+      artwork.href = config.source;
+      artwork.title = `${config.title} - original music video`;
+      const image = artwork.querySelector('img');
+      image.src = config.art;
+      image.alt = `${config.title} original cover artwork`;
+    }
+  }
+  window.MimiSongFx?.activate(config, () => {
+    if (isNowViewActive()) drawWaveform(audio.paused);
+  });
+  if (config) scheduleNowLayoutSync();
+}
+
 function updateFxState(levelOverride = tetoGlowLevel) {
   const theme = activeFxTheme();
   const songId = songClockId();
@@ -2452,6 +2476,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   if (theme === renderedFxTheme && songId === renderedFxSongId) return;
   renderedFxTheme = theme;
   renderedFxSongId = songId;
+  setMimiFxActive(theme === 'mimi-petal' || theme === 'mimi-marshmary');
   document.body.classList.toggle('fx-active', active);
   document.body.classList.toggle('disco-fx-active', theme === 'disco');
   document.body.classList.toggle('teto-fx-active', theme === 'teto');
@@ -2513,6 +2538,8 @@ function updateFxState(levelOverride = tetoGlowLevel) {
 }
 
 function desktopEffectsVariant(song = currentSong()) {
+  // These scenes are currently scoped to VP's in-app canvas.
+  if (window.MimiSongFx?.track(song)) return 'off';
   if (isMagicMaidSong(song)) return 'magic-maid';
   const config = supportedLyricTrackForSong(song);
   if (config?.scene === 'trick-heart') return 'trick-heart';
@@ -2538,7 +2565,8 @@ function publishDesktopEffectsState(force = false, timeOverride = null) {
 
   const song = currentSong();
   const theme = activeFxTheme(song);
-  const active = !!song && theme !== 'off' && tetoFxEnabled;
+  const variant = desktopEffectsVariant(song);
+  const active = !!song && theme !== 'off' && variant !== 'off' && tetoFxEnabled;
   const playing = !!(active && audio.src && !audio.paused && !audio.seeking && !audio.ended);
   const time = Number.isFinite(timeOverride) ? timeOverride : currentCalibratedTime(song);
   const config = supportedLyricTrackForSong(song);
@@ -2548,7 +2576,6 @@ function publishDesktopEffectsState(force = false, timeOverride = null) {
     || effectSectionAt(profile, time);
   const sectionIndex = lyricsData?.sections?.indexOf(section) ?? -1;
   const phase = Number.isFinite(section?.phase) ? section.phase : Math.max(0, sectionIndex);
-  const variant = desktopEffectsVariant(song);
   const storyPeak = config?.scene === 'story-theater'
     ? (STORY_PEAK_PHASES[config.variant || 'waiting'] || []).includes(phase)
     : false;
@@ -5482,6 +5509,7 @@ function scheduleNowLayoutSync() {
       fxSizeKey = '';
       resizeWaveform(true);
       resizeFxCanvas(true);
+      if (document.body.classList.contains('mimi-song-fx-active') && audio.paused) drawWaveform(true);
       if (document.body.classList.contains('ddf-theater-active')) {
         ddfFxSizeKey = '';
         ddfFxCtx = null;
@@ -5499,8 +5527,9 @@ function resizeFxCanvas(force = false) {
   const rect = view.getBoundingClientRect();
   if (rect.width <= 0 || rect.height <= 0) return;
   const dpr = adaptiveCanvasDpr(rect);
-  const w = Math.max(320, Math.floor(rect.width * dpr));
-  const h = Math.max(320, Math.floor(rect.height * dpr));
+  const minimum = document.body.classList.contains('mimi-song-fx-active') ? 2 : 320;
+  const w = Math.max(minimum, Math.floor(rect.width * dpr));
+  const h = Math.max(minimum, Math.floor(rect.height * dpr));
   const key = `${w}x${h}`;
   if (!force && key === fxSizeKey) return;
   fxSizeKey = key;
@@ -9659,6 +9688,10 @@ function drawTetoFx(level) {
   const theme = activeFxTheme();
   updateFxState(levels.glow);
   if (theme === 'off') return;
+  if (theme === 'mimi-petal' || theme === 'mimi-marshmary') {
+    window.MimiSongFx?.draw(ctx, w, h, { time: currentCalibratedTime(), energy: levels.glow });
+    return;
+  }
   if (theme === 'trick-heart') {
     drawTrickHeartFx(levels, currentCalibratedTime());
     return;
@@ -10166,6 +10199,7 @@ function bindAudioElementEvents(el) {
     spatialForcePaint = true;
     if (spatialActive) paintSpatialGuide(currentCalibratedTime(), true);
     if (seekTransaction?.finishOnSeeked && Math.abs(nativePlaybackTime() - seekTransaction.targetTime) < 0.1) finishSeekTransaction();
+    if (el.paused && isNowViewActive() && window.MimiSongFx?.track(currentSong())) drawWaveform(true);
   });
   el.addEventListener('ratechange', () => {
     if (!mediaEventMatchesExpectedSong(el)) return;

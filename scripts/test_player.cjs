@@ -18,7 +18,7 @@ function extract(source, name) {
 }
 function context(names, values = {}, source = APP) {
   const c = vm.createContext({ console: { warn: noop, error: noop }, performance: { now: () => 100 },
-    setTimeout, clearTimeout, URL, AbortController, ...values });
+    setTimeout, clearTimeout, URL, AbortController, setMimiFxActive: noop, ...values });
   vm.runInContext(names.map(name => extract(source, name)).join('\n'), c);
   return c;
 }
@@ -87,6 +87,45 @@ test('F2: same-theme song switches still activate the next theater', () => {
     setHeroStoryTheaterActive:noop, setEncoreTheaterActive:noop, usesParallelLyrics:()=>false });
   c.updateFxState(); assert.equal(activations,1);
   c.updateFxState(); assert.equal(activations,1);
+});
+test('MIMI: resizing a paused scene repaints once after canvas resizing', () => {
+  let callback;
+  const operations = [];
+  const c = context(['scheduleNowLayoutSync'], { nowLayoutRaf: 0,
+    requestAnimationFrame(fn) { callback = fn; return 1; }, audio: { paused: true },
+    resizeWaveform: () => operations.push('wave-size'), resizeFxCanvas: () => operations.push('fx-size'),
+    drawWaveform: idle => operations.push(idle ? 'paused-frame' : 'playing-frame'),
+    waveSizeKey: '', fxSizeKey: '',
+    document: { body: { classList: { contains: name => name === 'mimi-song-fx-active' } } }
+  });
+  c.scheduleNowLayoutSync(); callback(); callback();
+  assert.deepEqual(operations, ['wave-size', 'fx-size', 'paused-frame']);
+});
+test('MIMI: compact canvas dimensions preserve the view aspect ratio', () => {
+  const canvas = { width: 0, height: 0 };
+  const view = { getBoundingClientRect: () => ({ width: 300, height: 114 }) };
+  const c = context(['resizeFxCanvas'], { $: id => id === 'teto-fx' ? canvas : view,
+    adaptiveCanvasDpr: () => 1, fxSizeKey: '',
+    document: { body: { classList: { contains: () => true } } }
+  });
+  c.resizeFxCanvas(true);
+  assert.equal(canvas.width, 300); assert.equal(canvas.height, 114);
+});
+test('MIMI: the desktop bridge stays inactive for in-app-only scenes', () => {
+  const c = context(['publishDesktopEffectsState'], {
+    lastDesktopEffectsPublishAt: 0, currentSong: () => ({ path: 'songs/petal.m4a' }),
+    activeFxTheme: () => 'mimi-petal', desktopEffectsVariant: () => 'off', tetoFxEnabled: true,
+    audio: { src: 'petal.m4a', paused: false }, currentCalibratedTime: () => 15,
+    supportedLyricTrackForSong: () => null, effectProfileForSong: () => null, effectSectionAt: () => null,
+    smoothedLevel: 0.6, tetoRiseEnergy: 0.1, tetoGlowLevel: 0.6, tetoFxLevel: 0.6,
+    clamp: (a, b, x) => Math.max(a, Math.min(b, x)), effectiveDuration: () => 179,
+    CustomEvent: class { constructor(name, data) { this.detail = data.detail; } },
+    window: { dispatchEvent: noop }
+  });
+  c.publishDesktopEffectsState(true);
+  assert.equal(c.window.__vpDesktopEffectsState.active, false);
+  assert.equal(c.window.__vpDesktopEffectsState.playing, false);
+  assert.equal(c.window.__vpDesktopEffectsState.variant, 'off');
 });
 test('F2: every ordered pair in each shared lyric theater family invalidates song identity',()=>{
   const declaration='const SUPPORTED_LYRIC_TRACKS = ';
