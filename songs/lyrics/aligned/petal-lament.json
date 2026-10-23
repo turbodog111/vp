@@ -1,0 +1,1151 @@
+{
+  "schemaVersion": 1,
+  "recording": "songs/MIMI feat. Kasane Teto SV - Petal Lament.m4a",
+  "language": "ja",
+  "duration": 179.025875,
+  "preview": false,
+  "source": "Joshua's supplied text; recording-specific MLX Whisper large-v3-turbo / stable-ts acoustic alignment. Approved by Joshua for publication on 2026-10-23. Companion translations are provisional meaning translations.",
+  "rows": [
+    {
+      "id": "line-1",
+      "start": 24.78,
+      "end": 29.74,
+      "words": {
+        "romaji": [
+          {
+            "text": "Futo",
+            "start": 24.78,
+            "end": 25.52
+          },
+          {
+            "text": "shita",
+            "start": 25.52,
+            "end": 26.26
+          },
+          {
+            "text": "kotoba",
+            "start": 26.26,
+            "end": 27.4
+          },
+          {
+            "text": "ga",
+            "start": 27.4,
+            "end": 27.74
+          },
+          {
+            "text": "mune",
+            "start": 27.88,
+            "end": 28.36
+          },
+          {
+            "text": "wo",
+            "start": 28.36,
+            "end": 28.92
+          },
+          {
+            "text": "kogasu",
+            "start": 28.92,
+            "end": 29.74
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Futo shita kotoba ga mune wo kogasu",
+      "en": "A passing word sets my heart burning",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-2",
+      "start": 30.715,
+      "end": 35.395,
+      "words": {
+        "romaji": [
+          {
+            "text": "Boku",
+            "start": 30.715,
+            "end": 31.195
+          },
+          {
+            "text": "ga",
+            "start": 31.195,
+            "end": 31.695
+          },
+          {
+            "text": "sa",
+            "start": 31.695,
+            "end": 31.875
+          },
+          {
+            "text": "maeru",
+            "start": 31.875,
+            "end": 33.075
+          },
+          {
+            "text": "riyuu",
+            "start": 33.235,
+            "end": 33.675
+          },
+          {
+            "text": "wa",
+            "start": 33.735,
+            "end": 33.815
+          },
+          {
+            "text": "sa",
+            "start": 33.815,
+            "end": 34.075
+          },
+          {
+            "text": "nakute",
+            "start": 34.075,
+            "end": 35.395
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Boku ga sa maeru riyuu wa sa nakute",
+      "en": "I have no reason to dance",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-3",
+      "start": 35.93,
+      "end": 40.99,
+      "words": {
+        "romaji": [
+          {
+            "text": "Tsubomi",
+            "start": 35.93,
+            "end": 37.35
+          },
+          {
+            "text": "no",
+            "start": 37.35,
+            "end": 37.59
+          },
+          {
+            "text": "setsuna",
+            "start": 37.59,
+            "end": 38.77
+          },
+          {
+            "text": "ni",
+            "start": 38.77,
+            "end": 39.01
+          },
+          {
+            "text": "memai",
+            "start": 39.39,
+            "end": 40.17
+          },
+          {
+            "text": "ga",
+            "start": 40.17,
+            "end": 40.37
+          },
+          {
+            "text": "shite",
+            "start": 40.37,
+            "end": 40.99
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Tsubomi no setsuna ni memai ga shite",
+      "en": "In the fleeting moment of a bud, I grow dizzy",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-4",
+      "start": 41.22,
+      "end": 44.98,
+      "words": {
+        "romaji": [
+          {
+            "text": "Jitto",
+            "start": 41.22,
+            "end": 42.48
+          },
+          {
+            "text": "jitto",
+            "start": 42.48,
+            "end": 43.2
+          },
+          {
+            "text": "tojikomoru",
+            "start": 43.2,
+            "end": 44.98
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Jitto jitto tojikomoru",
+      "en": "Staying still, still, shut away",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-5",
+      "start": 47.43,
+      "end": 50.77,
+      "words": {
+        "romaji": [
+          {
+            "text": "Onegai",
+            "start": 47.43,
+            "end": 48.95
+          },
+          {
+            "text": "kaze",
+            "start": 48.95,
+            "end": 49.53
+          },
+          {
+            "text": "ga",
+            "start": 49.53,
+            "end": 50.07
+          },
+          {
+            "text": "fuitara",
+            "start": 50.07,
+            "end": 50.77
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Onegai kaze ga fuitara",
+      "en": "Please, when the wind blows",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-6",
+      "start": 50.87,
+      "end": 52.37,
+      "words": {
+        "romaji": [
+          {
+            "text": "Mitsukete",
+            "start": 50.87,
+            "end": 51.91
+          },
+          {
+            "text": "ne",
+            "start": 51.91,
+            "end": 52.37
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Mitsukete ne",
+      "en": "Find me",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-7",
+      "start": 52.865,
+      "end": 58.045,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kimi",
+            "start": 52.865,
+            "end": 53.205
+          },
+          {
+            "text": "to",
+            "start": 53.205,
+            "end": 53.405
+          },
+          {
+            "text": "hira",
+            "start": 53.405,
+            "end": 53.805
+          },
+          {
+            "text": "hira",
+            "start": 53.805,
+            "end": 54.525
+          },
+          {
+            "text": "hira",
+            "start": 54.525,
+            "end": 55.285
+          },
+          {
+            "text": "hira",
+            "start": 55.285,
+            "end": 55.905
+          },
+          {
+            "text": "mada",
+            "start": 55.905,
+            "end": 56.385
+          },
+          {
+            "text": "kowai",
+            "start": 56.385,
+            "end": 57.345
+          },
+          {
+            "text": "kedo",
+            "start": 57.345,
+            "end": 58.045
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kimi to hira hira hira hira mada kowai kedo",
+      "en": "Fluttering, fluttering with you, though I'm still afraid",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-8",
+      "start": 58.515,
+      "end": 63.595,
+      "words": {
+        "romaji": [
+          {
+            "text": "Sabishikunai",
+            "start": 58.515,
+            "end": 59.615
+          },
+          {
+            "text": "kurai",
+            "start": 59.615,
+            "end": 60.335
+          },
+          {
+            "text": "harewataru",
+            "start": 60.335,
+            "end": 61.695
+          },
+          {
+            "text": "mebuki",
+            "start": 61.795,
+            "end": 62.595
+          },
+          {
+            "text": "deshita",
+            "start": 62.595,
+            "end": 63.595
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Sabishikunai kurai harewataru mebuki deshita",
+      "en": "New shoots emerged beneath a sky so clear I wasn't lonely",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-9",
+      "start": 64.085,
+      "end": 68.845,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kimi",
+            "start": 64.085,
+            "end": 64.525
+          },
+          {
+            "text": "ga",
+            "start": 64.525,
+            "end": 64.725
+          },
+          {
+            "text": "utau",
+            "start": 64.725,
+            "end": 65.465
+          },
+          {
+            "text": "utau",
+            "start": 65.465,
+            "end": 66.085
+          },
+          {
+            "text": "utau",
+            "start": 66.085,
+            "end": 66.785
+          },
+          {
+            "text": "kara",
+            "start": 66.785,
+            "end": 67.245
+          },
+          {
+            "text": "tsurarete",
+            "start": 67.245,
+            "end": 68.265
+          },
+          {
+            "text": "matta",
+            "start": 68.265,
+            "end": 68.845
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kimi ga utau utau utau kara tsurarete matta",
+      "en": "You sing and sing and sing, and I am drawn into dancing",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-10",
+      "start": 69.74,
+      "end": 74.82,
+      "words": {
+        "romaji": [
+          {
+            "text": "Itsuka",
+            "start": 69.74,
+            "end": 70.82
+          },
+          {
+            "text": "mata",
+            "start": 70.82,
+            "end": 71.56
+          },
+          {
+            "text": "deaeru",
+            "start": 71.56,
+            "end": 72.46
+          },
+          {
+            "text": "made",
+            "start": 72.46,
+            "end": 72.92
+          },
+          {
+            "text": "waratte",
+            "start": 73.1,
+            "end": 74.28
+          },
+          {
+            "text": "ite",
+            "start": 74.28,
+            "end": 74.82
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Itsuka mata deaeru made waratte ite",
+      "en": "Keep smiling until we can meet again someday",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-11",
+      "start": 97.66,
+      "end": 103.17,
+      "words": {
+        "romaji": [
+          {
+            "text": "Omoeba",
+            "start": 97.66,
+            "end": 99.61
+          },
+          {
+            "text": "kisetsu",
+            "start": 99.61,
+            "end": 100.83
+          },
+          {
+            "text": "ga",
+            "start": 100.83,
+            "end": 101.15
+          },
+          {
+            "text": "aseraseteta",
+            "start": 101.15,
+            "end": 103.17
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Omoeba kisetsu ga aseraseteta",
+      "en": "Looking back, the seasons were making me rush",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-12",
+      "start": 103.98,
+      "end": 108.86,
+      "words": {
+        "romaji": [
+          {
+            "text": "Boku",
+            "start": 103.98,
+            "end": 104.66
+          },
+          {
+            "text": "ga",
+            "start": 104.66,
+            "end": 105.1
+          },
+          {
+            "text": "sa",
+            "start": 105.1,
+            "end": 105.32
+          },
+          {
+            "text": "maeru",
+            "start": 105.32,
+            "end": 106.46
+          },
+          {
+            "text": "hazu",
+            "start": 106.46,
+            "end": 106.86
+          },
+          {
+            "text": "nante",
+            "start": 106.86,
+            "end": 107.52
+          },
+          {
+            "text": "nakute",
+            "start": 107.52,
+            "end": 108.86
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Boku ga sa maeru hazu nante nakute",
+      "en": "There was no way I could dance",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-13",
+      "start": 109.625,
+      "end": 114.625,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kimi",
+            "start": 109.625,
+            "end": 110.225
+          },
+          {
+            "text": "no",
+            "start": 110.225,
+            "end": 110.745
+          },
+          {
+            "text": "sa",
+            "start": 110.745,
+            "end": 110.965
+          },
+          {
+            "text": "ryoute",
+            "start": 111.385,
+            "end": 112.165
+          },
+          {
+            "text": "no",
+            "start": 112.165,
+            "end": 112.425
+          },
+          {
+            "text": "nukumori",
+            "start": 112.425,
+            "end": 113.805
+          },
+          {
+            "text": "dake",
+            "start": 113.805,
+            "end": 114.285
+          },
+          {
+            "text": "ga",
+            "start": 114.285,
+            "end": 114.625
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kimi no sa ryoute no nukumori dake ga",
+      "en": "Only the warmth of your two hands",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-14",
+      "start": 115.01,
+      "end": 120.05,
+      "words": {
+        "romaji": [
+          {
+            "text": "Naite",
+            "start": 115.01,
+            "end": 115.53
+          },
+          {
+            "text": "inai",
+            "start": 115.53,
+            "end": 116.07
+          },
+          {
+            "text": "kara",
+            "start": 116.07,
+            "end": 116.69
+          },
+          {
+            "text": "kara",
+            "start": 116.69,
+            "end": 117.47
+          },
+          {
+            "text": "karappo",
+            "start": 117.47,
+            "end": 118.43
+          },
+          {
+            "text": "na",
+            "start": 118.43,
+            "end": 118.51
+          },
+          {
+            "text": "kokoro",
+            "start": 118.51,
+            "end": 119.39
+          },
+          {
+            "text": "dake",
+            "start": 119.39,
+            "end": 120.05
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Naite inai kara kara karappo na kokoro dake",
+      "en": "I'm not crying; just this empty, empty heart",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-15",
+      "start": 120.31,
+      "end": 125.8,
+      "words": {
+        "romaji": [
+          {
+            "text": "Sore",
+            "start": 120.31,
+            "end": 120.96
+          },
+          {
+            "text": "mo",
+            "start": 120.96,
+            "end": 121.18
+          },
+          {
+            "text": "hana",
+            "start": 121.18,
+            "end": 121.54
+          },
+          {
+            "text": "hiraku",
+            "start": 121.54,
+            "end": 122.78
+          },
+          {
+            "text": "asatsuyu",
+            "start": 122.78,
+            "end": 123.46
+          },
+          {
+            "text": "ga",
+            "start": 123.46,
+            "end": 123.7
+          },
+          {
+            "text": "hoho",
+            "start": 123.7,
+            "end": 124.32
+          },
+          {
+            "text": "wo",
+            "start": 124.32,
+            "end": 124.78
+          },
+          {
+            "text": "nurasu",
+            "start": 124.78,
+            "end": 125.8
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Sore mo hana hiraku asatsuyu ga hoho wo nurasu",
+      "en": "Even that blossoms, as morning dew wets my cheeks",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-16",
+      "start": 126.515,
+      "end": 131.305,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kimi",
+            "start": 126.515,
+            "end": 126.715
+          },
+          {
+            "text": "ga",
+            "start": 126.715,
+            "end": 126.855
+          },
+          {
+            "text": "yasashiku",
+            "start": 126.855,
+            "end": 127.875
+          },
+          {
+            "text": "warau",
+            "start": 128.095,
+            "end": 128.935
+          },
+          {
+            "text": "kara",
+            "start": 128.935,
+            "end": 129.355
+          },
+          {
+            "text": "tsurarete",
+            "start": 129.355,
+            "end": 130.335
+          },
+          {
+            "text": "matta",
+            "start": 130.335,
+            "end": 131.305
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kimi ga yasashiku warau kara tsurarete matta",
+      "en": "Your gentle smile draws me into dancing",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-17",
+      "start": 131.74,
+      "end": 136.92,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ryuuhyou",
+            "start": 131.74,
+            "end": 133.06
+          },
+          {
+            "text": "no",
+            "start": 133.06,
+            "end": 133.34
+          },
+          {
+            "text": "tsubomi",
+            "start": 133.34,
+            "end": 133.88
+          },
+          {
+            "text": "wa",
+            "start": 133.9,
+            "end": 134.04
+          },
+          {
+            "text": "tokasarete",
+            "start": 134.04,
+            "end": 134.96
+          },
+          {
+            "text": "dakishimerareru",
+            "start": 134.96,
+            "end": 136.92
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ryuuhyou no tsubomi wa tokasarete dakishimerareru",
+      "en": "The bud of drifting ice is melted and held close",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-18",
+      "start": 138.49,
+      "end": 141.31,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ashita",
+            "start": 138.49,
+            "end": 139.19
+          },
+          {
+            "text": "mo",
+            "start": 139.19,
+            "end": 139.59
+          },
+          {
+            "text": "matteru",
+            "start": 139.59,
+            "end": 140.53
+          },
+          {
+            "text": "kara",
+            "start": 140.53,
+            "end": 141.31
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ashita mo matteru kara",
+      "en": "I'll be waiting tomorrow too",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-19",
+      "start": 142.795,
+      "end": 148.255,
+      "words": {
+        "romaji": [
+          {
+            "text": "Datte",
+            "start": 142.795,
+            "end": 143.795
+          },
+          {
+            "text": "bokura",
+            "start": 143.795,
+            "end": 144.835
+          },
+          {
+            "text": "wa",
+            "start": 145.135,
+            "end": 145.215
+          },
+          {
+            "text": "tooku",
+            "start": 145.215,
+            "end": 146.035
+          },
+          {
+            "text": "temo",
+            "start": 146.035,
+            "end": 146.395
+          },
+          {
+            "text": "hitotsu",
+            "start": 146.395,
+            "end": 147.295
+          },
+          {
+            "text": "dakara",
+            "start": 147.295,
+            "end": 148.255
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Datte bokura wa tooku temo hitotsu dakara",
+      "en": "Because even far apart, we are one",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-20",
+      "start": 148.685,
+      "end": 154.045,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kimi",
+            "start": 148.685,
+            "end": 149.205
+          },
+          {
+            "text": "to",
+            "start": 149.205,
+            "end": 149.385
+          },
+          {
+            "text": "hira",
+            "start": 149.385,
+            "end": 149.825
+          },
+          {
+            "text": "hira",
+            "start": 149.825,
+            "end": 150.545
+          },
+          {
+            "text": "hira",
+            "start": 150.545,
+            "end": 151.305
+          },
+          {
+            "text": "hira",
+            "start": 151.305,
+            "end": 151.925
+          },
+          {
+            "text": "mada",
+            "start": 151.925,
+            "end": 152.385
+          },
+          {
+            "text": "kowai",
+            "start": 152.385,
+            "end": 153.325
+          },
+          {
+            "text": "kedo",
+            "start": 153.325,
+            "end": 154.045
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kimi to hira hira hira hira mada kowai kedo",
+      "en": "Fluttering, fluttering with you, though I'm still afraid",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-21",
+      "start": 154.505,
+      "end": 159.605,
+      "words": {
+        "romaji": [
+          {
+            "text": "Sabishikunai",
+            "start": 154.505,
+            "end": 155.605
+          },
+          {
+            "text": "kurai",
+            "start": 155.605,
+            "end": 156.325
+          },
+          {
+            "text": "harewataru",
+            "start": 156.325,
+            "end": 157.625
+          },
+          {
+            "text": "mebuki",
+            "start": 157.805,
+            "end": 158.625
+          },
+          {
+            "text": "deshita",
+            "start": 158.625,
+            "end": 159.605
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Sabishikunai kurai harewataru mebuki deshita",
+      "en": "New shoots emerged beneath a sky so clear I wasn't lonely",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-22",
+      "start": 160.075,
+      "end": 165.175,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kimi",
+            "start": 160.075,
+            "end": 160.515
+          },
+          {
+            "text": "ga",
+            "start": 160.515,
+            "end": 160.775
+          },
+          {
+            "text": "utau",
+            "start": 160.775,
+            "end": 161.415
+          },
+          {
+            "text": "utau",
+            "start": 161.415,
+            "end": 162.015
+          },
+          {
+            "text": "utau",
+            "start": 162.015,
+            "end": 162.815
+          },
+          {
+            "text": "kara",
+            "start": 162.815,
+            "end": 163.195
+          },
+          {
+            "text": "tsurarete",
+            "start": 163.195,
+            "end": 164.235
+          },
+          {
+            "text": "matta",
+            "start": 164.235,
+            "end": 165.175
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kimi ga utau utau utau kara tsurarete matta",
+      "en": "You sing and sing and sing, and I am drawn into dancing",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-23",
+      "start": 165.42,
+      "end": 170.82,
+      "words": {
+        "romaji": [
+          {
+            "text": "Itsuka",
+            "start": 165.42,
+            "end": 166.84
+          },
+          {
+            "text": "mata",
+            "start": 166.84,
+            "end": 167.6
+          },
+          {
+            "text": "deaeru",
+            "start": 167.6,
+            "end": 168.46
+          },
+          {
+            "text": "made",
+            "start": 168.46,
+            "end": 168.92
+          },
+          {
+            "text": "waratte",
+            "start": 169.1,
+            "end": 170.28
+          },
+          {
+            "text": "ite",
+            "start": 170.62,
+            "end": 170.82
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Itsuka mata deaeru made waratte ite",
+      "en": "Keep smiling until we can meet again someday",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-24",
+      "start": 172.0,
+      "end": 174.44,
+      "words": {
+        "romaji": [
+          {
+            "text": "Soshite",
+            "start": 172.0,
+            "end": 172.44
+          },
+          {
+            "text": "mata",
+            "start": 172.44,
+            "end": 173.22
+          },
+          {
+            "text": "deaeta",
+            "start": 173.22,
+            "end": 174.1
+          },
+          {
+            "text": "nara",
+            "start": 174.1,
+            "end": 174.44
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Soshite mata deaeta nara",
+      "en": "And if we can meet again",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-25",
+      "start": 174.46,
+      "end": 176.48,
+      "words": {
+        "romaji": [
+          {
+            "text": "Waraikakete",
+            "start": 174.46,
+            "end": 176.48
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Waraikakete",
+      "en": "Smile at me",
+      "zh": "",
+      "pinyin": ""
+    }
+  ],
+  "alignment": {
+    "recording": "songs/MIMI feat. Kasane Teto SV - Petal Lament.m4a",
+    "audioSha256": "45f75c079e33c408fa3e31680dc8ae0c89625a86667210e5a2b2bf4460b9aa5b",
+    "duration": 179.025875,
+    "model": "mlx-community/whisper-large-v3-turbo",
+    "stableTs": "2.19.1",
+    "method": "ASR-anchored phrase-constrained forced alignment",
+    "seconds": 15.33,
+    "reviewed": false,
+    "status": "approved",
+    "approved": true,
+    "approvedBy": "Joshua Glass",
+    "approvalDate": "2026-10-23",
+    "sourceText": "../drafts/petal-lament.json",
+    "reviewNotes": [
+      {
+        "line": 1,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 2,
+        "issue": "Provisional translation depends on uncertain source spelling; review before publishing"
+      },
+      {
+        "line": 12,
+        "issue": "Provisional translation depends on uncertain source spelling; review before publishing"
+      }
+    ],
+    "repairs": {}
+  }
+}

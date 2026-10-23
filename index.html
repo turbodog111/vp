@@ -6,9 +6,10 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-10-22-bts-scenes">
+<meta name="vp-build" content="2026-10-23-synced-lyrics">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="styles.css?v=20261022-bts-scenes">
+<link rel="stylesheet" href="styles.css?v=20261023-synced-lyrics">
+<link rel="stylesheet" href="lyric-workbench.css?v=20261023-synced-lyrics">
 </head>
 <body>
 <div class="app">
@@ -35,6 +36,7 @@
         <span>Timing debug overlay</span>
       </label>
       <button id="audio-reset" class="setting-button" type="button">Reset audio</button>
+      <button id="lyrics-open" class="setting-button" type="button" title="Edit this recording's local lyric draft">Lyric studio</button>
       <button id="equalizer-open" class="setting-button eq-setting-button" type="button">
         <span>Equalizer</span>
         <span id="equalizer-summary">Flat</span>
@@ -54,6 +56,7 @@
     <button class="tab active" data-view="library">Library</button>
     <button class="tab" data-view="playlists">Playlists</button>
     <button class="tab" data-view="now">Now Playing</button>
+    <button class="tab" data-view="lyrics">Lyrics</button>
   </nav>
 
   <div id="storage-status" role="status" hidden>
@@ -102,7 +105,39 @@
       <div id="playlists-container"></div>
     </section>
 
+    <section id="view-lyrics" class="view lyric-studio">
+      <header class="lyric-studio-heading">
+        <div><h1>Lyric studio</h1><div id="lyric-recording">Choose a song from the library</div></div>
+        <output id="lyric-clock">0.00 s</output>
+      </header>
+      <fieldset disabled>
+        <div class="lyric-tools">
+          <label>Sung language <select id="lyric-language"><option value="und">Unconfirmed</option><option value="en">English</option><option value="ja">Japanese</option><option value="zh-en">Chinese / English</option></select></label>
+          <button id="lyric-prepared" type="button" title="Load prepared text only into an empty draft; timing remains unassigned">Load prepared text</button>
+          <label><input id="lyric-preview" type="checkbox" title="Use this local draft in Now Playing when FX for supported songs is enabled">Preview local draft</label>
+          <button id="lyric-show-preview" type="button" title="Return to the song's graphics">Now Playing</button>
+          <button id="lyric-export" type="button" title="Download text, timing, and source metadata as a JSON backup">Export draft</button>
+          <label class="lyric-import-label">Import draft<input id="lyric-import" type="file" accept=".json,application/json" title="Replace this recording's local draft from a JSON file"></label>
+          <button id="lyric-retry" type="button" title="Retry saving this draft if browser storage was unavailable">Retry save</button>
+        </div>
+        <label class="lyric-source-label">Source / rendition notes<input id="lyric-source" type="text" maxlength="4000" placeholder="Source and any differences in this rendition"></label>
+        <details class="lyric-paste" open>
+          <summary>Paste lyric text</summary>
+          <div class="lyric-paste-grid">
+            <label><span id="lyric-paste-label-source">Japanese</span><textarea id="lyric-paste-ja" rows="5" placeholder="One sung phrase per line" title="Original script is optional; plain text or one LRC timestamp per line"></textarea></label>
+            <label><span id="lyric-paste-label-roman">Romaji</span><textarea id="lyric-paste-romaji" rows="5" placeholder="One matching phrase per line" title="Romanized lines must correspond to the English and original-script lines"></textarea></label>
+            <label>English<textarea id="lyric-paste-en" rows="5" placeholder="One matching phrase per line" title="For English songs, only this column is required"></textarea></label>
+          </div>
+          <button id="lyric-apply-text" type="button" title="Apply nonempty columns; existing drafts require the same line count and retain timing">Apply text</button>
+        </details>
+        <div class="lyric-status"><span id="lyric-line-count">0 lines</span><span id="lyric-save-state" role="status">Local draft</span></div>
+        <div id="lyric-validation" role="status"></div>
+        <div id="lyric-rows"></div>
+      </fieldset>
+    </section>
+
     <section id="view-now" class="view now-view">
+      <section id="local-lyric-overlay" hidden aria-label="Local timed lyrics"></section>
       <video id="reference-video" class="reference-video" muted playsinline preload="none"
              aria-label="Song music video" title="Play or pause"></video>
       <canvas id="teto-fx" class="teto-fx-canvas" aria-hidden="true"></canvas>
@@ -499,6 +534,7 @@
 <audio id="audio" preload="metadata"></audio>
 <script src="encore-harp-fx.js?v=20260913-harp-theater"></script>
 <script src="song-motion-fx.js?v=20261022-bts-scenes"></script>
-<script src="app.js?v=20261022-bts-scenes"></script>
+<script src="lyric-workbench.js?v=20261023-synced-lyrics"></script>
+<script src="app.js?v=20261023-synced-lyrics"></script>
 </body>
 </html>

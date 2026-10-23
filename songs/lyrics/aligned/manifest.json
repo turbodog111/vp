@@ -1,0 +1,51 @@
+[
+  {
+    "recording": "songs/BTS - Butter.m4a",
+    "file": "butter.json",
+    "lines": 52,
+    "status": "approved",
+    "audioSha256": "fcedd6a0650d77bc1a430e617091b4c6657dbb53ab311dc713bd321e2139f531"
+  },
+  {
+    "recording": "songs/BTS - Dynamite.m4a",
+    "file": "dynamite.json",
+    "lines": 58,
+    "status": "approved",
+    "audioSha256": "4d40eb15e3c4b70693c1007d17bb8e9a5f8f6f69fdbe7d2a620de025e2288df2"
+  },
+  {
+    "recording": "songs/MiliSen - Ever Romantic.m4a",
+    "file": "ever-romantic.json",
+    "lines": 31,
+    "status": "approved",
+    "audioSha256": "e1fdb5e884763336589f62202cbd1aba2dd222c5dcd45f0d891d6cb852f8038b"
+  },
+  {
+    "recording": "songs/MIMI - Science.m4a",
+    "file": "science-jp.json",
+    "lines": 64,
+    "status": "approved",
+    "audioSha256": "5731c745fe08754449cf4cd7ead8aa01e972301debe43157d4d9f47815073576"
+  },
+  {
+    "recording": "songs/MIMI feat. Kasane Teto SV - Petal Lament.m4a",
+    "file": "petal-lament.json",
+    "lines": 25,
+    "status": "approved",
+    "audioSha256": "45f75c079e33c408fa3e31680dc8ae0c89625a86667210e5a2b2bf4460b9aa5b"
+  },
+  {
+    "recording": "songs/MIMI feat. Hatsune Miku - Marshmary.m4a",
+    "file": "marshmary.json",
+    "lines": 48,
+    "status": "approved",
+    "audioSha256": "9195c596b14469578e795c25c180da97dbf85e0225b6c2f6a9732a6ac5770859"
+  },
+  {
+    "recording": "songs/Kasane Teto - Freefall.m4a",
+    "file": "freefall.json",
+    "lines": 61,
+    "status": "approved",
+    "audioSha256": "d77719074cd1223f89628a1607312ec29b7500f6fb333b232571dc0120e8c0b1"
+  }
+]

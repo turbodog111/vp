@@ -63,6 +63,37 @@ Run `python3 scripts/audit_lyrics.py` after changing a supported-song timeline. 
 
 ## Lyrics intake
 
+### Local lyric studio
+
+The Lyrics tab edits a per-recording local draft using VP's existing player.
+Seven user-supplied text packets are available through **Load prepared text**.
+They have no assigned timestamps and do not replace published lyrics.
+Separate acoustic timelines for those seven exact recordings now load
+automatically under **FX for supported songs**. Joshua approved these timelines
+and both Window View renditions for publication on 2026-10-23.
+They use measured source-language word groups;
+meaning translations remain phrase companions. Unmeasurable individual tokens
+are kept in neighboring acoustic groups rather than given invented timestamps.
+Drafts save in this browser, support JSON import/export, and can preview over
+the current graphics only with **Preview local draft** and **FX for supported
+songs** enabled. Invalid or untimed drafts never render as synchronized lyrics.
+Japanese uses romaji/English with optional Japanese text; mixed Chinese/English
+uses pinyin. See `LYRIC_IMPLEMENTATION.txt` for pending sources, review flags,
+the recording-specific alignment checklist, and the draft schema.
+
+The aligned timelines live in `songs/lyrics/aligned/`. Their audio SHA-256,
+timing method, corrections and unresolved review notes are embedded in each file.
+Rebuild them from the local evidence with `python3 scripts/materialize_aligned_lyrics.py
+../lyric-alignment-20261022`. The evidence directory contains independent ASR,
+whole-song and phrase-constrained alignment passes, plus short excerpt checks.
+The local preview uses the existing VP server at `http://127.0.0.1:4187/`.
+Rebuilding creates fresh unapproved candidates; review and obtain approval again
+before replacing the accepted timelines. The originals and evidence stay local.
+
+Regenerate the prepared packets with `node scripts/prepare_lyric_drafts.cjs`
+after editing their user-supplied source table. Test with
+`node --test scripts/test_lyric_workbench.cjs scripts/test_lyric_coverage.cjs`.
+
 `scripts/lyrics_intake.py` searches LRCLIB and stages a selected synchronized lyric record without touching the checked-in theater data. Search results print metadata only; retrieved `.lrc` files and provenance sidecars go into the git-ignored `.lyrics-inbox/` directory for review.
 
 ```sh

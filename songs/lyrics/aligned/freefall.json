@@ -1,0 +1,5370 @@
+{
+  "schemaVersion": 1,
+  "recording": "songs/Kasane Teto - Freefall.m4a",
+  "language": "zh-en",
+  "duration": 170.852,
+  "preview": false,
+  "source": "Joshua's supplied text; recording-specific MLX Whisper large-v3-turbo / stable-ts acoustic alignment. Approved by Joshua for publication on 2026-10-23. Companion translations are provisional meaning translations.",
+  "rows": [
+    {
+      "id": "line-1",
+      "start": 3.53,
+      "end": 4.97,
+      "words": {
+        "zh": [
+          {
+            "text": "We",
+            "start": 3.53,
+            "end": 3.97
+          },
+          {
+            "text": "goin'",
+            "start": 3.97,
+            "end": 4.23
+          },
+          {
+            "text": "up",
+            "start": 4.47,
+            "end": 4.49
+          },
+          {
+            "text": "so",
+            "start": 4.49,
+            "end": 4.65
+          },
+          {
+            "text": "high",
+            "start": 4.65,
+            "end": 4.97
+          }
+        ],
+        "en": [
+          {
+            "text": "We",
+            "start": 3.53,
+            "end": 3.97
+          },
+          {
+            "text": "goin'",
+            "start": 3.97,
+            "end": 4.23
+          },
+          {
+            "text": "up",
+            "start": 4.47,
+            "end": 4.49
+          },
+          {
+            "text": "so",
+            "start": 4.49,
+            "end": 4.65
+          },
+          {
+            "text": "high",
+            "start": 4.65,
+            "end": 4.97
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "We",
+            "start": 3.53,
+            "end": 3.97
+          },
+          {
+            "text": "goin'",
+            "start": 3.97,
+            "end": 4.23
+          },
+          {
+            "text": "up",
+            "start": 4.47,
+            "end": 4.49
+          },
+          {
+            "text": "so",
+            "start": 4.49,
+            "end": 4.65
+          },
+          {
+            "text": "high",
+            "start": 4.65,
+            "end": 4.97
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "We goin' up so high",
+      "zh": "We goin' up so high",
+      "pinyin": "We goin' up so high"
+    },
+    {
+      "id": "line-2",
+      "start": 5.22,
+      "end": 5.82,
+      "words": {
+        "zh": [
+          {
+            "text": "Freefall",
+            "start": 5.22,
+            "end": 5.82
+          }
+        ],
+        "en": [
+          {
+            "text": "Freefall",
+            "start": 5.22,
+            "end": 5.82
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Freefall",
+            "start": 5.22,
+            "end": 5.82
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Freefall",
+      "zh": "Freefall",
+      "pinyin": "Freefall"
+    },
+    {
+      "id": "line-3",
+      "start": 5.96,
+      "end": 7.02,
+      "words": {
+        "zh": [
+          {
+            "text": "Got",
+            "start": 5.96,
+            "end": 6.2
+          },
+          {
+            "text": "me",
+            "start": 6.2,
+            "end": 6.34
+          },
+          {
+            "text": "feelin'",
+            "start": 6.34,
+            "end": 6.76
+          },
+          {
+            "text": "alive",
+            "start": 6.92,
+            "end": 7.02
+          }
+        ],
+        "en": [
+          {
+            "text": "Got",
+            "start": 5.96,
+            "end": 6.2
+          },
+          {
+            "text": "me",
+            "start": 6.2,
+            "end": 6.34
+          },
+          {
+            "text": "feelin'",
+            "start": 6.34,
+            "end": 6.76
+          },
+          {
+            "text": "alive",
+            "start": 6.92,
+            "end": 7.02
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Got",
+            "start": 5.96,
+            "end": 6.2
+          },
+          {
+            "text": "me",
+            "start": 6.2,
+            "end": 6.34
+          },
+          {
+            "text": "feelin'",
+            "start": 6.34,
+            "end": 6.76
+          },
+          {
+            "text": "alive",
+            "start": 6.92,
+            "end": 7.02
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Got me feelin' alive",
+      "zh": "Got me feelin' alive",
+      "pinyin": "Got me feelin' alive"
+    },
+    {
+      "id": "line-4",
+      "start": 8.425,
+      "end": 10.385,
+      "words": {
+        "zh": [
+          {
+            "text": "No",
+            "start": 8.425,
+            "end": 8.825
+          },
+          {
+            "text": "more",
+            "start": 8.825,
+            "end": 9.025
+          },
+          {
+            "text": "ties,",
+            "start": 9.025,
+            "end": 9.225
+          },
+          {
+            "text": "no",
+            "start": 9.325,
+            "end": 9.485
+          },
+          {
+            "text": "more",
+            "start": 9.485,
+            "end": 9.705
+          },
+          {
+            "text": "rules",
+            "start": 9.705,
+            "end": 9.865
+          },
+          {
+            "text": "that",
+            "start": 9.865,
+            "end": 10.045
+          },
+          {
+            "text": "apply",
+            "start": 10.045,
+            "end": 10.385
+          }
+        ],
+        "en": [
+          {
+            "text": "No",
+            "start": 8.425,
+            "end": 8.825
+          },
+          {
+            "text": "more",
+            "start": 8.825,
+            "end": 9.025
+          },
+          {
+            "text": "ties,",
+            "start": 9.025,
+            "end": 9.225
+          },
+          {
+            "text": "no",
+            "start": 9.325,
+            "end": 9.485
+          },
+          {
+            "text": "more",
+            "start": 9.485,
+            "end": 9.705
+          },
+          {
+            "text": "rules",
+            "start": 9.705,
+            "end": 9.865
+          },
+          {
+            "text": "that",
+            "start": 9.865,
+            "end": 10.045
+          },
+          {
+            "text": "apply",
+            "start": 10.045,
+            "end": 10.385
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "No",
+            "start": 8.425,
+            "end": 8.825
+          },
+          {
+            "text": "more",
+            "start": 8.825,
+            "end": 9.025
+          },
+          {
+            "text": "ties,",
+            "start": 9.025,
+            "end": 9.225
+          },
+          {
+            "text": "no",
+            "start": 9.325,
+            "end": 9.485
+          },
+          {
+            "text": "more",
+            "start": 9.485,
+            "end": 9.705
+          },
+          {
+            "text": "rules",
+            "start": 9.705,
+            "end": 9.865
+          },
+          {
+            "text": "that",
+            "start": 9.865,
+            "end": 10.045
+          },
+          {
+            "text": "apply",
+            "start": 10.045,
+            "end": 10.385
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "No more ties, no more rules that apply",
+      "zh": "No more ties, no more rules that apply",
+      "pinyin": "No more ties, no more rules that apply"
+    },
+    {
+      "id": "line-5",
+      "start": 10.995,
+      "end": 12.205,
+      "words": {
+        "zh": [
+          {
+            "text": "Cast",
+            "start": 10.995,
+            "end": 11.525
+          },
+          {
+            "text": "the",
+            "start": 11.525,
+            "end": 11.645
+          },
+          {
+            "text": "limits",
+            "start": 11.645,
+            "end": 12.025
+          },
+          {
+            "text": "aside",
+            "start": 12.025,
+            "end": 12.205
+          }
+        ],
+        "en": [
+          {
+            "text": "Cast",
+            "start": 10.995,
+            "end": 11.525
+          },
+          {
+            "text": "the",
+            "start": 11.525,
+            "end": 11.645
+          },
+          {
+            "text": "limits",
+            "start": 11.645,
+            "end": 12.025
+          },
+          {
+            "text": "aside",
+            "start": 12.025,
+            "end": 12.205
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Cast",
+            "start": 10.995,
+            "end": 11.525
+          },
+          {
+            "text": "the",
+            "start": 11.525,
+            "end": 11.645
+          },
+          {
+            "text": "limits",
+            "start": 11.645,
+            "end": 12.025
+          },
+          {
+            "text": "aside",
+            "start": 12.025,
+            "end": 12.205
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Cast the limits aside",
+      "zh": "Cast the limits aside",
+      "pinyin": "Cast the limits aside"
+    },
+    {
+      "id": "line-6",
+      "start": 12.62,
+      "end": 14.26,
+      "words": {
+        "zh": [
+          {
+            "text": "Freefall",
+            "start": 12.62,
+            "end": 13.34
+          },
+          {
+            "text": "Freefall",
+            "start": 13.34,
+            "end": 14.26
+          }
+        ],
+        "en": [
+          {
+            "text": "Freefall",
+            "start": 12.62,
+            "end": 13.34
+          },
+          {
+            "text": "Freefall",
+            "start": 13.34,
+            "end": 14.26
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Freefall",
+            "start": 12.62,
+            "end": 13.34
+          },
+          {
+            "text": "Freefall",
+            "start": 13.34,
+            "end": 14.26
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Freefall Freefall",
+      "zh": "Freefall Freefall",
+      "pinyin": "Freefall Freefall"
+    },
+    {
+      "id": "line-7",
+      "start": 16.76,
+      "end": 19.92,
+      "words": {
+        "zh": [
+          {
+            "text": "Givin'",
+            "start": 16.76,
+            "end": 17.38
+          },
+          {
+            "text": "me",
+            "start": 17.56,
+            "end": 17.74
+          },
+          {
+            "text": "that",
+            "start": 17.74,
+            "end": 17.98
+          },
+          {
+            "text": "look,",
+            "start": 17.98,
+            "end": 18.54
+          },
+          {
+            "text": "明知道",
+            "start": 18.9,
+            "end": 19.24
+          },
+          {
+            "text": "I'm",
+            "start": 19.24,
+            "end": 19.6
+          },
+          {
+            "text": "trouble",
+            "start": 19.6,
+            "end": 19.92
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Givin' me that look, knowing full well I'm trouble",
+      "zh": "Givin' me that look, 明知道 I'm trouble",
+      "pinyin": "Givin' me that look, ming zhi dao I'm trouble"
+    },
+    {
+      "id": "line-8",
+      "start": 21.99,
+      "end": 25.33,
+      "words": {
+        "zh": [
+          {
+            "text": "Play",
+            "start": 21.99,
+            "end": 22.55
+          },
+          {
+            "text": "it",
+            "start": 22.55,
+            "end": 22.79
+          },
+          {
+            "text": "by",
+            "start": 22.79,
+            "end": 23.11
+          },
+          {
+            "text": "the",
+            "start": 23.11,
+            "end": 23.31
+          },
+          {
+            "text": "book,",
+            "start": 23.31,
+            "end": 23.85
+          },
+          {
+            "text": "但不要太",
+            "start": 24.37,
+            "end": 24.99
+          },
+          {
+            "text": "subtle",
+            "start": 24.99,
+            "end": 25.33
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Play it by the book, but don't be too subtle",
+      "zh": "Play it by the book, 但不要太 subtle",
+      "pinyin": "Play it by the book, dan bu yao tai subtle"
+    },
+    {
+      "id": "line-9",
+      "start": 27.255,
+      "end": 31.715,
+      "words": {
+        "zh": [
+          {
+            "text": "我就偏要开口",
+            "start": 27.255,
+            "end": 29.495
+          },
+          {
+            "text": "even",
+            "start": 29.495,
+            "end": 30.275
+          },
+          {
+            "text": "if",
+            "start": 30.275,
+            "end": 30.615
+          },
+          {
+            "text": "it",
+            "start": 30.615,
+            "end": 30.835
+          },
+          {
+            "text": "makes",
+            "start": 30.835,
+            "end": 31.115
+          },
+          {
+            "text": "them",
+            "start": 31.115,
+            "end": 31.395
+          },
+          {
+            "text": "stumble",
+            "start": 31.395,
+            "end": 31.715
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "I'm going to speak up anyway, even if it makes them stumble",
+      "zh": "我就偏要开口 even if it makes them stumble",
+      "pinyin": "Wo jiu pian yao kai kou even if it makes them stumble"
+    },
+    {
+      "id": "line-10",
+      "start": 32.71,
+      "end": 37.01,
+      "words": {
+        "zh": [
+          {
+            "text": "我从不装",
+            "start": 32.71,
+            "end": 34.19
+          },
+          {
+            "text": "humble,",
+            "start": 34.19,
+            "end": 34.97
+          },
+          {
+            "text": "and",
+            "start": 35.05,
+            "end": 35.31
+          },
+          {
+            "text": "soon",
+            "start": 35.31,
+            "end": 35.57
+          },
+          {
+            "text": "they'll",
+            "start": 35.57,
+            "end": 35.91
+          },
+          {
+            "text": "be",
+            "start": 35.91,
+            "end": 36.11
+          },
+          {
+            "text": "seeing",
+            "start": 36.11,
+            "end": 36.67
+          },
+          {
+            "text": "double",
+            "start": 36.67,
+            "end": 37.01
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "I never pretend to be humble, and soon they'll be seeing double",
+      "zh": "我从不装 humble, and soon they'll be seeing double",
+      "pinyin": "Wo cong bu zhuang humble, and soon they'll be seeing double"
+    },
+    {
+      "id": "line-11",
+      "start": 37.38,
+      "end": 39.92,
+      "words": {
+        "zh": [
+          {
+            "text": "There's",
+            "start": 37.38,
+            "end": 37.76
+          },
+          {
+            "text": "no",
+            "start": 37.76,
+            "end": 37.9
+          },
+          {
+            "text": "time",
+            "start": 37.9,
+            "end": 38.1
+          },
+          {
+            "text": "to",
+            "start": 38.1,
+            "end": 38.28
+          },
+          {
+            "text": "waste,",
+            "start": 38.28,
+            "end": 38.68
+          },
+          {
+            "text": "so",
+            "start": 38.84,
+            "end": 39.06
+          },
+          {
+            "text": "don't",
+            "start": 39.06,
+            "end": 39.24
+          },
+          {
+            "text": "hit",
+            "start": 39.24,
+            "end": 39.48
+          },
+          {
+            "text": "the",
+            "start": 39.48,
+            "end": 39.66
+          },
+          {
+            "text": "brakes",
+            "start": 39.66,
+            "end": 39.92
+          }
+        ],
+        "en": [
+          {
+            "text": "There's",
+            "start": 37.38,
+            "end": 37.76
+          },
+          {
+            "text": "no",
+            "start": 37.76,
+            "end": 37.9
+          },
+          {
+            "text": "time",
+            "start": 37.9,
+            "end": 38.1
+          },
+          {
+            "text": "to",
+            "start": 38.1,
+            "end": 38.28
+          },
+          {
+            "text": "waste,",
+            "start": 38.28,
+            "end": 38.68
+          },
+          {
+            "text": "so",
+            "start": 38.84,
+            "end": 39.06
+          },
+          {
+            "text": "don't",
+            "start": 39.06,
+            "end": 39.24
+          },
+          {
+            "text": "hit",
+            "start": 39.24,
+            "end": 39.48
+          },
+          {
+            "text": "the",
+            "start": 39.48,
+            "end": 39.66
+          },
+          {
+            "text": "brakes",
+            "start": 39.66,
+            "end": 39.92
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "There's",
+            "start": 37.38,
+            "end": 37.76
+          },
+          {
+            "text": "no",
+            "start": 37.76,
+            "end": 37.9
+          },
+          {
+            "text": "time",
+            "start": 37.9,
+            "end": 38.1
+          },
+          {
+            "text": "to",
+            "start": 38.1,
+            "end": 38.28
+          },
+          {
+            "text": "waste,",
+            "start": 38.28,
+            "end": 38.68
+          },
+          {
+            "text": "so",
+            "start": 38.84,
+            "end": 39.06
+          },
+          {
+            "text": "don't",
+            "start": 39.06,
+            "end": 39.24
+          },
+          {
+            "text": "hit",
+            "start": 39.24,
+            "end": 39.48
+          },
+          {
+            "text": "the",
+            "start": 39.48,
+            "end": 39.66
+          },
+          {
+            "text": "brakes",
+            "start": 39.66,
+            "end": 39.92
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "There's no time to waste, so don't hit the brakes",
+      "zh": "There's no time to waste, so don't hit the brakes",
+      "pinyin": "There's no time to waste, so don't hit the brakes"
+    },
+    {
+      "id": "line-12",
+      "start": 40.13,
+      "end": 42.45,
+      "words": {
+        "zh": [
+          {
+            "text": "No",
+            "start": 40.13,
+            "end": 40.51
+          },
+          {
+            "text": "hesitations,",
+            "start": 40.51,
+            "end": 41.55
+          },
+          {
+            "text": "don't",
+            "start": 41.63,
+            "end": 41.93
+          },
+          {
+            "text": "be",
+            "start": 41.93,
+            "end": 42.09
+          },
+          {
+            "text": "afraid",
+            "start": 42.09,
+            "end": 42.45
+          }
+        ],
+        "en": [
+          {
+            "text": "No",
+            "start": 40.13,
+            "end": 40.51
+          },
+          {
+            "text": "hesitations,",
+            "start": 40.51,
+            "end": 41.55
+          },
+          {
+            "text": "don't",
+            "start": 41.63,
+            "end": 41.93
+          },
+          {
+            "text": "be",
+            "start": 41.93,
+            "end": 42.09
+          },
+          {
+            "text": "afraid",
+            "start": 42.09,
+            "end": 42.45
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "No",
+            "start": 40.13,
+            "end": 40.51
+          },
+          {
+            "text": "hesitations,",
+            "start": 40.51,
+            "end": 41.55
+          },
+          {
+            "text": "don't",
+            "start": 41.63,
+            "end": 41.93
+          },
+          {
+            "text": "be",
+            "start": 41.93,
+            "end": 42.09
+          },
+          {
+            "text": "afraid",
+            "start": 42.09,
+            "end": 42.45
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "No hesitations, don't be afraid",
+      "zh": "No hesitations, don't be afraid",
+      "pinyin": "No hesitations, don't be afraid"
+    },
+    {
+      "id": "line-13",
+      "start": 42.74,
+      "end": 45.44,
+      "words": {
+        "zh": [
+          {
+            "text": "就算不完美，也从不后悔",
+            "start": 42.74,
+            "end": 45.44
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Even if it isn't perfect, I never regret it",
+      "zh": "就算不完美，也从不后悔",
+      "pinyin": "Jiu suan bu wan mei, ye cong bu hou hui"
+    },
+    {
+      "id": "line-14",
+      "start": 45.5,
+      "end": 47.94,
+      "words": {
+        "zh": [
+          {
+            "text": "I'll",
+            "start": 45.5,
+            "end": 45.88
+          },
+          {
+            "text": "show",
+            "start": 45.88,
+            "end": 46.04
+          },
+          {
+            "text": "you",
+            "start": 46.04,
+            "end": 46.28
+          },
+          {
+            "text": "how",
+            "start": 46.28,
+            "end": 46.66
+          },
+          {
+            "text": "it's",
+            "start": 46.66,
+            "end": 47.0
+          },
+          {
+            "text": "meant",
+            "start": 47.0,
+            "end": 47.22
+          },
+          {
+            "text": "to",
+            "start": 47.22,
+            "end": 47.38
+          },
+          {
+            "text": "be",
+            "start": 47.38,
+            "end": 47.62
+          },
+          {
+            "text": "played",
+            "start": 47.62,
+            "end": 47.94
+          }
+        ],
+        "en": [
+          {
+            "text": "I'll",
+            "start": 45.5,
+            "end": 45.88
+          },
+          {
+            "text": "show",
+            "start": 45.88,
+            "end": 46.04
+          },
+          {
+            "text": "you",
+            "start": 46.04,
+            "end": 46.28
+          },
+          {
+            "text": "how",
+            "start": 46.28,
+            "end": 46.66
+          },
+          {
+            "text": "it's",
+            "start": 46.66,
+            "end": 47.0
+          },
+          {
+            "text": "meant",
+            "start": 47.0,
+            "end": 47.22
+          },
+          {
+            "text": "to",
+            "start": 47.22,
+            "end": 47.38
+          },
+          {
+            "text": "be",
+            "start": 47.38,
+            "end": 47.62
+          },
+          {
+            "text": "played",
+            "start": 47.62,
+            "end": 47.94
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "I'll",
+            "start": 45.5,
+            "end": 45.88
+          },
+          {
+            "text": "show",
+            "start": 45.88,
+            "end": 46.04
+          },
+          {
+            "text": "you",
+            "start": 46.04,
+            "end": 46.28
+          },
+          {
+            "text": "how",
+            "start": 46.28,
+            "end": 46.66
+          },
+          {
+            "text": "it's",
+            "start": 46.66,
+            "end": 47.0
+          },
+          {
+            "text": "meant",
+            "start": 47.0,
+            "end": 47.22
+          },
+          {
+            "text": "to",
+            "start": 47.22,
+            "end": 47.38
+          },
+          {
+            "text": "be",
+            "start": 47.38,
+            "end": 47.62
+          },
+          {
+            "text": "played",
+            "start": 47.62,
+            "end": 47.94
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "I'll show you how it's meant to be played",
+      "zh": "I'll show you how it's meant to be played",
+      "pinyin": "I'll show you how it's meant to be played"
+    },
+    {
+      "id": "line-15",
+      "start": 48.04,
+      "end": 49.24,
+      "words": {
+        "zh": [
+          {
+            "text": "Now",
+            "start": 48.04,
+            "end": 48.36
+          },
+          {
+            "text": "you're",
+            "start": 48.36,
+            "end": 48.66
+          },
+          {
+            "text": "in",
+            "start": 48.66,
+            "end": 48.86
+          },
+          {
+            "text": "the",
+            "start": 48.86,
+            "end": 48.98
+          },
+          {
+            "text": "mood",
+            "start": 48.98,
+            "end": 49.24
+          }
+        ],
+        "en": [
+          {
+            "text": "Now",
+            "start": 48.04,
+            "end": 48.36
+          },
+          {
+            "text": "you're",
+            "start": 48.36,
+            "end": 48.66
+          },
+          {
+            "text": "in",
+            "start": 48.66,
+            "end": 48.86
+          },
+          {
+            "text": "the",
+            "start": 48.86,
+            "end": 48.98
+          },
+          {
+            "text": "mood",
+            "start": 48.98,
+            "end": 49.24
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Now",
+            "start": 48.04,
+            "end": 48.36
+          },
+          {
+            "text": "you're",
+            "start": 48.36,
+            "end": 48.66
+          },
+          {
+            "text": "in",
+            "start": 48.66,
+            "end": 48.86
+          },
+          {
+            "text": "the",
+            "start": 48.86,
+            "end": 48.98
+          },
+          {
+            "text": "mood",
+            "start": 48.98,
+            "end": 49.24
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Now you're in the mood",
+      "zh": "Now you're in the mood",
+      "pinyin": "Now you're in the mood"
+    },
+    {
+      "id": "line-16",
+      "start": 49.4,
+      "end": 50.54,
+      "words": {
+        "zh": [
+          {
+            "text": "当心跳加速",
+            "start": 49.4,
+            "end": 50.54
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "When your heartbeat quickens",
+      "zh": "当心跳加速",
+      "pinyin": "Dang xin tiao jia su"
+    },
+    {
+      "id": "line-17",
+      "start": 50.76,
+      "end": 53.22,
+      "words": {
+        "zh": [
+          {
+            "text": "Don't",
+            "start": 50.76,
+            "end": 51.46
+          },
+          {
+            "text": "lose",
+            "start": 51.46,
+            "end": 51.48
+          },
+          {
+            "text": "your",
+            "start": 51.48,
+            "end": 51.68
+          },
+          {
+            "text": "cool,",
+            "start": 51.68,
+            "end": 52.02
+          },
+          {
+            "text": "just",
+            "start": 52.4,
+            "end": 52.54
+          },
+          {
+            "text": "keep",
+            "start": 52.54,
+            "end": 52.82
+          },
+          {
+            "text": "it",
+            "start": 52.82,
+            "end": 52.98
+          },
+          {
+            "text": "smooth",
+            "start": 52.98,
+            "end": 53.22
+          }
+        ],
+        "en": [
+          {
+            "text": "Don't",
+            "start": 50.76,
+            "end": 51.46
+          },
+          {
+            "text": "lose",
+            "start": 51.46,
+            "end": 51.48
+          },
+          {
+            "text": "your",
+            "start": 51.48,
+            "end": 51.68
+          },
+          {
+            "text": "cool,",
+            "start": 51.68,
+            "end": 52.02
+          },
+          {
+            "text": "just",
+            "start": 52.4,
+            "end": 52.54
+          },
+          {
+            "text": "keep",
+            "start": 52.54,
+            "end": 52.82
+          },
+          {
+            "text": "it",
+            "start": 52.82,
+            "end": 52.98
+          },
+          {
+            "text": "smooth",
+            "start": 52.98,
+            "end": 53.22
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Don't",
+            "start": 50.76,
+            "end": 51.46
+          },
+          {
+            "text": "lose",
+            "start": 51.46,
+            "end": 51.48
+          },
+          {
+            "text": "your",
+            "start": 51.48,
+            "end": 51.68
+          },
+          {
+            "text": "cool,",
+            "start": 51.68,
+            "end": 52.02
+          },
+          {
+            "text": "just",
+            "start": 52.4,
+            "end": 52.54
+          },
+          {
+            "text": "keep",
+            "start": 52.54,
+            "end": 52.82
+          },
+          {
+            "text": "it",
+            "start": 52.82,
+            "end": 52.98
+          },
+          {
+            "text": "smooth",
+            "start": 52.98,
+            "end": 53.22
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Don't lose your cool, just keep it smooth",
+      "zh": "Don't lose your cool, just keep it smooth",
+      "pinyin": "Don't lose your cool, just keep it smooth"
+    },
+    {
+      "id": "line-18",
+      "start": 53.55,
+      "end": 56.03,
+      "words": {
+        "zh": [
+          {
+            "text": "优雅不是让步，",
+            "start": 53.55,
+            "end": 54.69
+          },
+          {
+            "text": "温柔不是服输",
+            "start": 55.17,
+            "end": 56.03
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Elegance isn't giving way; gentleness isn't admitting defeat",
+      "zh": "优雅不是让步， 温柔不是服输",
+      "pinyin": "You ya bu shi rang bu, wen rou bu shi fu shu"
+    },
+    {
+      "id": "line-19",
+      "start": 56.465,
+      "end": 59.085,
+      "words": {
+        "zh": [
+          {
+            "text": "保持你的风度,",
+            "start": 56.465,
+            "end": 57.925
+          },
+          {
+            "text": "you've",
+            "start": 58.045,
+            "end": 58.405
+          },
+          {
+            "text": "got",
+            "start": 58.405,
+            "end": 58.545
+          },
+          {
+            "text": "nothing",
+            "start": 58.545,
+            "end": 58.745
+          },
+          {
+            "text": "to",
+            "start": 58.745,
+            "end": 58.965
+          },
+          {
+            "text": "prove",
+            "start": 58.965,
+            "end": 59.085
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Keep your composure, you've got nothing to prove",
+      "zh": "保持你的风度, you've got nothing to prove",
+      "pinyin": "Bao chi ni de feng du, you've got nothing to prove"
+    },
+    {
+      "id": "line-20",
+      "start": 59.15,
+      "end": 61.95,
+      "words": {
+        "zh": [
+          {
+            "text": "So",
+            "start": 59.15,
+            "end": 59.55
+          },
+          {
+            "text": "babygirl~",
+            "start": 59.55,
+            "end": 60.25
+          },
+          {
+            "text": "Show",
+            "start": 60.37,
+            "end": 60.65
+          },
+          {
+            "text": "me",
+            "start": 60.65,
+            "end": 60.83
+          },
+          {
+            "text": "that",
+            "start": 60.83,
+            "end": 61.01
+          },
+          {
+            "text": "million",
+            "start": 61.01,
+            "end": 61.29
+          },
+          {
+            "text": "dollar",
+            "start": 61.29,
+            "end": 61.55
+          },
+          {
+            "text": "attitude",
+            "start": 61.55,
+            "end": 61.95
+          }
+        ],
+        "en": [
+          {
+            "text": "So",
+            "start": 59.15,
+            "end": 59.55
+          },
+          {
+            "text": "babygirl~",
+            "start": 59.55,
+            "end": 60.25
+          },
+          {
+            "text": "Show",
+            "start": 60.37,
+            "end": 60.65
+          },
+          {
+            "text": "me",
+            "start": 60.65,
+            "end": 60.83
+          },
+          {
+            "text": "that",
+            "start": 60.83,
+            "end": 61.01
+          },
+          {
+            "text": "million",
+            "start": 61.01,
+            "end": 61.29
+          },
+          {
+            "text": "dollar",
+            "start": 61.29,
+            "end": 61.55
+          },
+          {
+            "text": "attitude",
+            "start": 61.55,
+            "end": 61.95
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "So",
+            "start": 59.15,
+            "end": 59.55
+          },
+          {
+            "text": "babygirl~",
+            "start": 59.55,
+            "end": 60.25
+          },
+          {
+            "text": "Show",
+            "start": 60.37,
+            "end": 60.65
+          },
+          {
+            "text": "me",
+            "start": 60.65,
+            "end": 60.83
+          },
+          {
+            "text": "that",
+            "start": 60.83,
+            "end": 61.01
+          },
+          {
+            "text": "million",
+            "start": 61.01,
+            "end": 61.29
+          },
+          {
+            "text": "dollar",
+            "start": 61.29,
+            "end": 61.55
+          },
+          {
+            "text": "attitude",
+            "start": 61.55,
+            "end": 61.95
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So babygirl~ Show me that million dollar attitude",
+      "zh": "So babygirl~ Show me that million dollar attitude",
+      "pinyin": "So babygirl~ Show me that million dollar attitude"
+    },
+    {
+      "id": "line-21",
+      "start": 62.22,
+      "end": 63.72,
+      "words": {
+        "zh": [
+          {
+            "text": "We",
+            "start": 62.22,
+            "end": 62.66
+          },
+          {
+            "text": "goin'",
+            "start": 62.66,
+            "end": 62.88
+          },
+          {
+            "text": "up",
+            "start": 63.14,
+            "end": 63.16
+          },
+          {
+            "text": "so",
+            "start": 63.16,
+            "end": 63.32
+          },
+          {
+            "text": "high",
+            "start": 63.32,
+            "end": 63.72
+          }
+        ],
+        "en": [
+          {
+            "text": "We",
+            "start": 62.22,
+            "end": 62.66
+          },
+          {
+            "text": "goin'",
+            "start": 62.66,
+            "end": 62.88
+          },
+          {
+            "text": "up",
+            "start": 63.14,
+            "end": 63.16
+          },
+          {
+            "text": "so",
+            "start": 63.16,
+            "end": 63.32
+          },
+          {
+            "text": "high",
+            "start": 63.32,
+            "end": 63.72
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "We",
+            "start": 62.22,
+            "end": 62.66
+          },
+          {
+            "text": "goin'",
+            "start": 62.66,
+            "end": 62.88
+          },
+          {
+            "text": "up",
+            "start": 63.14,
+            "end": 63.16
+          },
+          {
+            "text": "so",
+            "start": 63.16,
+            "end": 63.32
+          },
+          {
+            "text": "high",
+            "start": 63.32,
+            "end": 63.72
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "We goin' up so high",
+      "zh": "We goin' up so high",
+      "pinyin": "We goin' up so high"
+    },
+    {
+      "id": "line-22",
+      "start": 64.02,
+      "end": 64.84,
+      "words": {
+        "zh": [
+          {
+            "text": "Freefall",
+            "start": 64.02,
+            "end": 64.84
+          }
+        ],
+        "en": [
+          {
+            "text": "Freefall",
+            "start": 64.02,
+            "end": 64.84
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Freefall",
+            "start": 64.02,
+            "end": 64.84
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Freefall",
+      "zh": "Freefall",
+      "pinyin": "Freefall"
+    },
+    {
+      "id": "line-23",
+      "start": 64.84,
+      "end": 65.7,
+      "words": {
+        "zh": [
+          {
+            "text": "Got me",
+            "start": 64.84,
+            "end": 65.04
+          },
+          {
+            "text": "feelin'",
+            "start": 65.04,
+            "end": 65.4
+          },
+          {
+            "text": "alive",
+            "start": 65.48,
+            "end": 65.7
+          }
+        ],
+        "en": [
+          {
+            "text": "Got me",
+            "start": 64.84,
+            "end": 65.03999999999999
+          },
+          {
+            "text": "feelin'",
+            "start": 65.03999999999999,
+            "end": 65.39999999999999
+          },
+          {
+            "text": "alive",
+            "start": 65.48,
+            "end": 65.7
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Got me",
+            "start": 64.84,
+            "end": 65.03999999999999
+          },
+          {
+            "text": "feelin'",
+            "start": 65.03999999999999,
+            "end": 65.39999999999999
+          },
+          {
+            "text": "alive",
+            "start": 65.48,
+            "end": 65.7
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Got me feelin' alive",
+      "zh": "Got me feelin' alive",
+      "pinyin": "Got me feelin' alive"
+    },
+    {
+      "id": "line-24",
+      "start": 67.085,
+      "end": 69.025,
+      "words": {
+        "zh": [
+          {
+            "text": "No",
+            "start": 67.085,
+            "end": 67.485
+          },
+          {
+            "text": "more",
+            "start": 67.485,
+            "end": 67.685
+          },
+          {
+            "text": "ties,",
+            "start": 67.685,
+            "end": 67.925
+          },
+          {
+            "text": "no",
+            "start": 68.065,
+            "end": 68.205
+          },
+          {
+            "text": "more",
+            "start": 68.205,
+            "end": 68.405
+          },
+          {
+            "text": "rules",
+            "start": 68.405,
+            "end": 68.565
+          },
+          {
+            "text": "that",
+            "start": 68.565,
+            "end": 68.705
+          },
+          {
+            "text": "apply",
+            "start": 68.705,
+            "end": 69.025
+          }
+        ],
+        "en": [
+          {
+            "text": "No",
+            "start": 67.085,
+            "end": 67.485
+          },
+          {
+            "text": "more",
+            "start": 67.485,
+            "end": 67.685
+          },
+          {
+            "text": "ties,",
+            "start": 67.685,
+            "end": 67.925
+          },
+          {
+            "text": "no",
+            "start": 68.065,
+            "end": 68.205
+          },
+          {
+            "text": "more",
+            "start": 68.205,
+            "end": 68.405
+          },
+          {
+            "text": "rules",
+            "start": 68.405,
+            "end": 68.565
+          },
+          {
+            "text": "that",
+            "start": 68.565,
+            "end": 68.705
+          },
+          {
+            "text": "apply",
+            "start": 68.705,
+            "end": 69.025
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "No",
+            "start": 67.085,
+            "end": 67.485
+          },
+          {
+            "text": "more",
+            "start": 67.485,
+            "end": 67.685
+          },
+          {
+            "text": "ties,",
+            "start": 67.685,
+            "end": 67.925
+          },
+          {
+            "text": "no",
+            "start": 68.065,
+            "end": 68.205
+          },
+          {
+            "text": "more",
+            "start": 68.205,
+            "end": 68.405
+          },
+          {
+            "text": "rules",
+            "start": 68.405,
+            "end": 68.565
+          },
+          {
+            "text": "that",
+            "start": 68.565,
+            "end": 68.705
+          },
+          {
+            "text": "apply",
+            "start": 68.705,
+            "end": 69.025
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "No more ties, no more rules that apply",
+      "zh": "No more ties, no more rules that apply",
+      "pinyin": "No more ties, no more rules that apply"
+    },
+    {
+      "id": "line-25",
+      "start": 69.655,
+      "end": 70.865,
+      "words": {
+        "zh": [
+          {
+            "text": "Cast",
+            "start": 69.655,
+            "end": 70.225
+          },
+          {
+            "text": "the",
+            "start": 70.225,
+            "end": 70.345
+          },
+          {
+            "text": "limits",
+            "start": 70.345,
+            "end": 70.685
+          },
+          {
+            "text": "aside",
+            "start": 70.685,
+            "end": 70.865
+          }
+        ],
+        "en": [
+          {
+            "text": "Cast",
+            "start": 69.655,
+            "end": 70.225
+          },
+          {
+            "text": "the",
+            "start": 70.225,
+            "end": 70.345
+          },
+          {
+            "text": "limits",
+            "start": 70.345,
+            "end": 70.685
+          },
+          {
+            "text": "aside",
+            "start": 70.685,
+            "end": 70.865
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Cast",
+            "start": 69.655,
+            "end": 70.225
+          },
+          {
+            "text": "the",
+            "start": 70.225,
+            "end": 70.345
+          },
+          {
+            "text": "limits",
+            "start": 70.345,
+            "end": 70.685
+          },
+          {
+            "text": "aside",
+            "start": 70.685,
+            "end": 70.865
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Cast the limits aside",
+      "zh": "Cast the limits aside",
+      "pinyin": "Cast the limits aside"
+    },
+    {
+      "id": "line-26",
+      "start": 71.28,
+      "end": 72.7,
+      "words": {
+        "zh": [
+          {
+            "text": "Freefall",
+            "start": 71.28,
+            "end": 72.0
+          },
+          {
+            "text": "Freefall",
+            "start": 72.0,
+            "end": 72.7
+          }
+        ],
+        "en": [
+          {
+            "text": "Freefall",
+            "start": 71.28,
+            "end": 72.0
+          },
+          {
+            "text": "Freefall",
+            "start": 72.0,
+            "end": 72.7
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Freefall",
+            "start": 71.28,
+            "end": 72.0
+          },
+          {
+            "text": "Freefall",
+            "start": 72.0,
+            "end": 72.7
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Freefall Freefall",
+      "zh": "Freefall Freefall",
+      "pinyin": "Freefall Freefall"
+    },
+    {
+      "id": "line-27",
+      "start": 72.73,
+      "end": 74.47,
+      "words": {
+        "zh": [
+          {
+            "text": "All",
+            "start": 72.73,
+            "end": 72.87
+          },
+          {
+            "text": "the",
+            "start": 72.87,
+            "end": 73.09
+          },
+          {
+            "text": "doubts",
+            "start": 73.09,
+            "end": 73.25
+          },
+          {
+            "text": "disappear",
+            "start": 73.25,
+            "end": 73.77
+          },
+          {
+            "text": "in",
+            "start": 73.77,
+            "end": 74.03
+          },
+          {
+            "text": "the",
+            "start": 74.03,
+            "end": 74.13
+          },
+          {
+            "text": "clouds",
+            "start": 74.13,
+            "end": 74.47
+          }
+        ],
+        "en": [
+          {
+            "text": "All",
+            "start": 72.73,
+            "end": 72.87
+          },
+          {
+            "text": "the",
+            "start": 72.87,
+            "end": 73.09
+          },
+          {
+            "text": "doubts",
+            "start": 73.09,
+            "end": 73.25
+          },
+          {
+            "text": "disappear",
+            "start": 73.25,
+            "end": 73.77
+          },
+          {
+            "text": "in",
+            "start": 73.77,
+            "end": 74.03
+          },
+          {
+            "text": "the",
+            "start": 74.03,
+            "end": 74.13
+          },
+          {
+            "text": "clouds",
+            "start": 74.13,
+            "end": 74.47
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "All",
+            "start": 72.73,
+            "end": 72.87
+          },
+          {
+            "text": "the",
+            "start": 72.87,
+            "end": 73.09
+          },
+          {
+            "text": "doubts",
+            "start": 73.09,
+            "end": 73.25
+          },
+          {
+            "text": "disappear",
+            "start": 73.25,
+            "end": 73.77
+          },
+          {
+            "text": "in",
+            "start": 73.77,
+            "end": 74.03
+          },
+          {
+            "text": "the",
+            "start": 74.03,
+            "end": 74.13
+          },
+          {
+            "text": "clouds",
+            "start": 74.13,
+            "end": 74.47
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "All the doubts disappear in the clouds",
+      "zh": "All the doubts disappear in the clouds",
+      "pinyin": "All the doubts disappear in the clouds"
+    },
+    {
+      "id": "line-28",
+      "start": 75.05,
+      "end": 77.33,
+      "words": {
+        "zh": [
+          {
+            "text": "All",
+            "start": 75.05,
+            "end": 75.55
+          },
+          {
+            "text": "the",
+            "start": 75.55,
+            "end": 75.67
+          },
+          {
+            "text": "fears",
+            "start": 75.67,
+            "end": 75.91
+          },
+          {
+            "text": "scatter",
+            "start": 75.91,
+            "end": 76.27
+          },
+          {
+            "text": "into",
+            "start": 76.27,
+            "end": 76.61
+          },
+          {
+            "text": "the",
+            "start": 76.61,
+            "end": 76.83
+          },
+          {
+            "text": "air",
+            "start": 76.83,
+            "end": 77.33
+          }
+        ],
+        "en": [
+          {
+            "text": "All",
+            "start": 75.05,
+            "end": 75.55
+          },
+          {
+            "text": "the",
+            "start": 75.55,
+            "end": 75.67
+          },
+          {
+            "text": "fears",
+            "start": 75.67,
+            "end": 75.91
+          },
+          {
+            "text": "scatter",
+            "start": 75.91,
+            "end": 76.27
+          },
+          {
+            "text": "into",
+            "start": 76.27,
+            "end": 76.61
+          },
+          {
+            "text": "the",
+            "start": 76.61,
+            "end": 76.83
+          },
+          {
+            "text": "air",
+            "start": 76.83,
+            "end": 77.33
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "All",
+            "start": 75.05,
+            "end": 75.55
+          },
+          {
+            "text": "the",
+            "start": 75.55,
+            "end": 75.67
+          },
+          {
+            "text": "fears",
+            "start": 75.67,
+            "end": 75.91
+          },
+          {
+            "text": "scatter",
+            "start": 75.91,
+            "end": 76.27
+          },
+          {
+            "text": "into",
+            "start": 76.27,
+            "end": 76.61
+          },
+          {
+            "text": "the",
+            "start": 76.61,
+            "end": 76.83
+          },
+          {
+            "text": "air",
+            "start": 76.83,
+            "end": 77.33
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "All the fears scatter into the air",
+      "zh": "All the fears scatter into the air",
+      "pinyin": "All the fears scatter into the air"
+    },
+    {
+      "id": "line-29",
+      "start": 77.43,
+      "end": 79.79,
+      "words": {
+        "zh": [
+          {
+            "text": "Open",
+            "start": 77.43,
+            "end": 78.01
+          },
+          {
+            "text": "your",
+            "start": 78.01,
+            "end": 78.21
+          },
+          {
+            "text": "eyes,",
+            "start": 78.21,
+            "end": 78.51
+          },
+          {
+            "text": "see",
+            "start": 78.59,
+            "end": 78.67
+          },
+          {
+            "text": "where",
+            "start": 78.67,
+            "end": 78.89
+          },
+          {
+            "text": "the",
+            "start": 78.89,
+            "end": 78.99
+          },
+          {
+            "text": "horizon",
+            "start": 78.99,
+            "end": 79.39
+          },
+          {
+            "text": "lies",
+            "start": 79.39,
+            "end": 79.79
+          }
+        ],
+        "en": [
+          {
+            "text": "Open",
+            "start": 77.43,
+            "end": 78.01
+          },
+          {
+            "text": "your",
+            "start": 78.01,
+            "end": 78.21
+          },
+          {
+            "text": "eyes,",
+            "start": 78.21,
+            "end": 78.51
+          },
+          {
+            "text": "see",
+            "start": 78.59,
+            "end": 78.67
+          },
+          {
+            "text": "where",
+            "start": 78.67,
+            "end": 78.89
+          },
+          {
+            "text": "the",
+            "start": 78.89,
+            "end": 78.99
+          },
+          {
+            "text": "horizon",
+            "start": 78.99,
+            "end": 79.39
+          },
+          {
+            "text": "lies",
+            "start": 79.39,
+            "end": 79.79
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Open",
+            "start": 77.43,
+            "end": 78.01
+          },
+          {
+            "text": "your",
+            "start": 78.01,
+            "end": 78.21
+          },
+          {
+            "text": "eyes,",
+            "start": 78.21,
+            "end": 78.51
+          },
+          {
+            "text": "see",
+            "start": 78.59,
+            "end": 78.67
+          },
+          {
+            "text": "where",
+            "start": 78.67,
+            "end": 78.89
+          },
+          {
+            "text": "the",
+            "start": 78.89,
+            "end": 78.99
+          },
+          {
+            "text": "horizon",
+            "start": 78.99,
+            "end": 79.39
+          },
+          {
+            "text": "lies",
+            "start": 79.39,
+            "end": 79.79
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Open your eyes, see where the horizon lies",
+      "zh": "Open your eyes, see where the horizon lies",
+      "pinyin": "Open your eyes, see where the horizon lies"
+    },
+    {
+      "id": "line-30",
+      "start": 80.35,
+      "end": 82.13,
+      "words": {
+        "zh": [
+          {
+            "text": "Pull",
+            "start": 80.35,
+            "end": 80.75
+          },
+          {
+            "text": "me",
+            "start": 80.75,
+            "end": 80.85
+          },
+          {
+            "text": "close,",
+            "start": 80.85,
+            "end": 81.19
+          },
+          {
+            "text": "you're",
+            "start": 81.55,
+            "end": 81.77
+          },
+          {
+            "text": "in",
+            "start": 81.77,
+            "end": 81.83
+          },
+          {
+            "text": "control",
+            "start": 81.83,
+            "end": 82.13
+          }
+        ],
+        "en": [
+          {
+            "text": "Pull",
+            "start": 80.35,
+            "end": 80.75
+          },
+          {
+            "text": "me",
+            "start": 80.75,
+            "end": 80.85
+          },
+          {
+            "text": "close,",
+            "start": 80.85,
+            "end": 81.19
+          },
+          {
+            "text": "you're",
+            "start": 81.55,
+            "end": 81.77
+          },
+          {
+            "text": "in",
+            "start": 81.77,
+            "end": 81.83
+          },
+          {
+            "text": "control",
+            "start": 81.83,
+            "end": 82.13
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Pull",
+            "start": 80.35,
+            "end": 80.75
+          },
+          {
+            "text": "me",
+            "start": 80.75,
+            "end": 80.85
+          },
+          {
+            "text": "close,",
+            "start": 80.85,
+            "end": 81.19
+          },
+          {
+            "text": "you're",
+            "start": 81.55,
+            "end": 81.77
+          },
+          {
+            "text": "in",
+            "start": 81.77,
+            "end": 81.83
+          },
+          {
+            "text": "control",
+            "start": 81.83,
+            "end": 82.13
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Pull me close, you're in control",
+      "zh": "Pull me close, you're in control",
+      "pinyin": "Pull me close, you're in control"
+    },
+    {
+      "id": "line-31",
+      "start": 82.685,
+      "end": 83.685,
+      "words": {
+        "zh": [
+          {
+            "text": "Freefall",
+            "start": 82.685,
+            "end": 83.685
+          }
+        ],
+        "en": [
+          {
+            "text": "Freefall",
+            "start": 82.685,
+            "end": 83.685
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Freefall",
+            "start": 82.685,
+            "end": 83.685
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Freefall",
+      "zh": "Freefall",
+      "pinyin": "Freefall"
+    },
+    {
+      "id": "line-32",
+      "start": 88.37,
+      "end": 91.03,
+      "words": {
+        "zh": [
+          {
+            "text": "They",
+            "start": 88.37,
+            "end": 88.65
+          },
+          {
+            "text": "say,",
+            "start": 88.65,
+            "end": 88.87
+          },
+          {
+            "text": "\"Slow",
+            "start": 88.99,
+            "end": 89.19
+          },
+          {
+            "text": "down",
+            "start": 89.19,
+            "end": 89.47
+          },
+          {
+            "text": "girl,",
+            "start": 89.47,
+            "end": 89.71
+          },
+          {
+            "text": "don't",
+            "start": 89.75,
+            "end": 90.03
+          },
+          {
+            "text": "fly",
+            "start": 90.03,
+            "end": 90.15
+          },
+          {
+            "text": "too",
+            "start": 90.15,
+            "end": 90.31
+          },
+          {
+            "text": "close",
+            "start": 90.31,
+            "end": 90.55
+          },
+          {
+            "text": "to",
+            "start": 90.55,
+            "end": 90.67
+          },
+          {
+            "text": "the",
+            "start": 90.67,
+            "end": 90.81
+          },
+          {
+            "text": "sun\"",
+            "start": 90.81,
+            "end": 91.03
+          }
+        ],
+        "en": [
+          {
+            "text": "They",
+            "start": 88.37,
+            "end": 88.65
+          },
+          {
+            "text": "say,",
+            "start": 88.65,
+            "end": 88.87
+          },
+          {
+            "text": "\"Slow",
+            "start": 88.99,
+            "end": 89.19
+          },
+          {
+            "text": "down",
+            "start": 89.19,
+            "end": 89.47
+          },
+          {
+            "text": "girl,",
+            "start": 89.47,
+            "end": 89.71
+          },
+          {
+            "text": "don't",
+            "start": 89.75,
+            "end": 90.03
+          },
+          {
+            "text": "fly",
+            "start": 90.03,
+            "end": 90.15
+          },
+          {
+            "text": "too",
+            "start": 90.15,
+            "end": 90.31
+          },
+          {
+            "text": "close",
+            "start": 90.31,
+            "end": 90.55
+          },
+          {
+            "text": "to",
+            "start": 90.55,
+            "end": 90.67
+          },
+          {
+            "text": "the",
+            "start": 90.67,
+            "end": 90.81
+          },
+          {
+            "text": "sun\"",
+            "start": 90.81,
+            "end": 91.03
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "They",
+            "start": 88.37,
+            "end": 88.65
+          },
+          {
+            "text": "say,",
+            "start": 88.65,
+            "end": 88.87
+          },
+          {
+            "text": "\"Slow",
+            "start": 88.99,
+            "end": 89.19
+          },
+          {
+            "text": "down",
+            "start": 89.19,
+            "end": 89.47
+          },
+          {
+            "text": "girl,",
+            "start": 89.47,
+            "end": 89.71
+          },
+          {
+            "text": "don't",
+            "start": 89.75,
+            "end": 90.03
+          },
+          {
+            "text": "fly",
+            "start": 90.03,
+            "end": 90.15
+          },
+          {
+            "text": "too",
+            "start": 90.15,
+            "end": 90.31
+          },
+          {
+            "text": "close",
+            "start": 90.31,
+            "end": 90.55
+          },
+          {
+            "text": "to",
+            "start": 90.55,
+            "end": 90.67
+          },
+          {
+            "text": "the",
+            "start": 90.67,
+            "end": 90.81
+          },
+          {
+            "text": "sun\"",
+            "start": 90.81,
+            "end": 91.03
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "They say, \"Slow down girl, don't fly too close to the sun\"",
+      "zh": "They say, \"Slow down girl, don't fly too close to the sun\"",
+      "pinyin": "They say, \"Slow down girl, don't fly too close to the sun\""
+    },
+    {
+      "id": "line-33",
+      "start": 91.14,
+      "end": 93.56,
+      "words": {
+        "zh": [
+          {
+            "text": "They",
+            "start": 91.14,
+            "end": 91.52
+          },
+          {
+            "text": "don't",
+            "start": 91.52,
+            "end": 91.7
+          },
+          {
+            "text": "know",
+            "start": 91.7,
+            "end": 91.86
+          },
+          {
+            "text": "it,",
+            "start": 91.86,
+            "end": 92.08
+          },
+          {
+            "text": "though.",
+            "start": 92.2,
+            "end": 92.34
+          },
+          {
+            "text": "Your",
+            "start": 92.54,
+            "end": 92.7
+          },
+          {
+            "text": "legend's",
+            "start": 92.7,
+            "end": 93.12
+          },
+          {
+            "text": "only",
+            "start": 93.12,
+            "end": 93.34
+          },
+          {
+            "text": "begun",
+            "start": 93.34,
+            "end": 93.56
+          }
+        ],
+        "en": [
+          {
+            "text": "They",
+            "start": 91.14,
+            "end": 91.52
+          },
+          {
+            "text": "don't",
+            "start": 91.52,
+            "end": 91.7
+          },
+          {
+            "text": "know",
+            "start": 91.7,
+            "end": 91.86
+          },
+          {
+            "text": "it,",
+            "start": 91.86,
+            "end": 92.08
+          },
+          {
+            "text": "though.",
+            "start": 92.2,
+            "end": 92.34
+          },
+          {
+            "text": "Your",
+            "start": 92.54,
+            "end": 92.7
+          },
+          {
+            "text": "legend's",
+            "start": 92.7,
+            "end": 93.12
+          },
+          {
+            "text": "only",
+            "start": 93.12,
+            "end": 93.34
+          },
+          {
+            "text": "begun",
+            "start": 93.34,
+            "end": 93.56
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "They",
+            "start": 91.14,
+            "end": 91.52
+          },
+          {
+            "text": "don't",
+            "start": 91.52,
+            "end": 91.7
+          },
+          {
+            "text": "know",
+            "start": 91.7,
+            "end": 91.86
+          },
+          {
+            "text": "it,",
+            "start": 91.86,
+            "end": 92.08
+          },
+          {
+            "text": "though.",
+            "start": 92.2,
+            "end": 92.34
+          },
+          {
+            "text": "Your",
+            "start": 92.54,
+            "end": 92.7
+          },
+          {
+            "text": "legend's",
+            "start": 92.7,
+            "end": 93.12
+          },
+          {
+            "text": "only",
+            "start": 93.12,
+            "end": 93.34
+          },
+          {
+            "text": "begun",
+            "start": 93.34,
+            "end": 93.56
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "They don't know it, though. Your legend's only begun",
+      "zh": "They don't know it, though. Your legend's only begun",
+      "pinyin": "They don't know it, though. Your legend's only begun"
+    },
+    {
+      "id": "line-34",
+      "start": 93.91,
+      "end": 96.53,
+      "words": {
+        "zh": [
+          {
+            "text": "Take",
+            "start": 93.91,
+            "end": 94.19
+          },
+          {
+            "text": "it",
+            "start": 94.19,
+            "end": 94.33
+          },
+          {
+            "text": "beyond,",
+            "start": 94.33,
+            "end": 94.57
+          },
+          {
+            "text": "take",
+            "start": 94.67,
+            "end": 94.85
+          },
+          {
+            "text": "it",
+            "start": 94.85,
+            "end": 94.97
+          },
+          {
+            "text": "above,",
+            "start": 94.97,
+            "end": 95.21
+          },
+          {
+            "text": "take",
+            "start": 95.39,
+            "end": 95.51
+          },
+          {
+            "text": "it",
+            "start": 95.51,
+            "end": 95.61
+          },
+          {
+            "text": "so",
+            "start": 95.61,
+            "end": 95.71
+          },
+          {
+            "text": "nothing",
+            "start": 95.71,
+            "end": 95.95
+          },
+          {
+            "text": "will",
+            "start": 95.95,
+            "end": 96.15
+          },
+          {
+            "text": "make",
+            "start": 96.15,
+            "end": 96.31
+          },
+          {
+            "text": "it",
+            "start": 96.31,
+            "end": 96.43
+          },
+          {
+            "text": "stop",
+            "start": 96.43,
+            "end": 96.53
+          }
+        ],
+        "en": [
+          {
+            "text": "Take",
+            "start": 93.91,
+            "end": 94.19
+          },
+          {
+            "text": "it",
+            "start": 94.19,
+            "end": 94.33
+          },
+          {
+            "text": "beyond,",
+            "start": 94.33,
+            "end": 94.57
+          },
+          {
+            "text": "take",
+            "start": 94.67,
+            "end": 94.85
+          },
+          {
+            "text": "it",
+            "start": 94.85,
+            "end": 94.97
+          },
+          {
+            "text": "above,",
+            "start": 94.97,
+            "end": 95.21
+          },
+          {
+            "text": "take",
+            "start": 95.39,
+            "end": 95.51
+          },
+          {
+            "text": "it",
+            "start": 95.51,
+            "end": 95.61
+          },
+          {
+            "text": "so",
+            "start": 95.61,
+            "end": 95.71
+          },
+          {
+            "text": "nothing",
+            "start": 95.71,
+            "end": 95.95
+          },
+          {
+            "text": "will",
+            "start": 95.95,
+            "end": 96.15
+          },
+          {
+            "text": "make",
+            "start": 96.15,
+            "end": 96.31
+          },
+          {
+            "text": "it",
+            "start": 96.31,
+            "end": 96.43
+          },
+          {
+            "text": "stop",
+            "start": 96.43,
+            "end": 96.53
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Take",
+            "start": 93.91,
+            "end": 94.19
+          },
+          {
+            "text": "it",
+            "start": 94.19,
+            "end": 94.33
+          },
+          {
+            "text": "beyond,",
+            "start": 94.33,
+            "end": 94.57
+          },
+          {
+            "text": "take",
+            "start": 94.67,
+            "end": 94.85
+          },
+          {
+            "text": "it",
+            "start": 94.85,
+            "end": 94.97
+          },
+          {
+            "text": "above,",
+            "start": 94.97,
+            "end": 95.21
+          },
+          {
+            "text": "take",
+            "start": 95.39,
+            "end": 95.51
+          },
+          {
+            "text": "it",
+            "start": 95.51,
+            "end": 95.61
+          },
+          {
+            "text": "so",
+            "start": 95.61,
+            "end": 95.71
+          },
+          {
+            "text": "nothing",
+            "start": 95.71,
+            "end": 95.95
+          },
+          {
+            "text": "will",
+            "start": 95.95,
+            "end": 96.15
+          },
+          {
+            "text": "make",
+            "start": 96.15,
+            "end": 96.31
+          },
+          {
+            "text": "it",
+            "start": 96.31,
+            "end": 96.43
+          },
+          {
+            "text": "stop",
+            "start": 96.43,
+            "end": 96.53
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Take it beyond, take it above, take it so nothing will make it stop",
+      "zh": "Take it beyond, take it above, take it so nothing will make it stop",
+      "pinyin": "Take it beyond, take it above, take it so nothing will make it stop"
+    },
+    {
+      "id": "line-35",
+      "start": 96.71,
+      "end": 98.63,
+      "words": {
+        "zh": [
+          {
+            "text": "Hammer",
+            "start": 96.71,
+            "end": 96.99
+          },
+          {
+            "text": "it",
+            "start": 96.99,
+            "end": 97.11
+          },
+          {
+            "text": "home,",
+            "start": 97.11,
+            "end": 97.27
+          },
+          {
+            "text": "hammer",
+            "start": 97.39,
+            "end": 97.61
+          },
+          {
+            "text": "it",
+            "start": 97.61,
+            "end": 97.75
+          },
+          {
+            "text": "loud,",
+            "start": 97.75,
+            "end": 97.95
+          },
+          {
+            "text": "hammer",
+            "start": 98.01,
+            "end": 98.23
+          },
+          {
+            "text": "it",
+            "start": 98.23,
+            "end": 98.39
+          },
+          {
+            "text": "proud",
+            "start": 98.39,
+            "end": 98.63
+          }
+        ],
+        "en": [
+          {
+            "text": "Hammer",
+            "start": 96.71,
+            "end": 96.99
+          },
+          {
+            "text": "it",
+            "start": 96.99,
+            "end": 97.11
+          },
+          {
+            "text": "home,",
+            "start": 97.11,
+            "end": 97.27
+          },
+          {
+            "text": "hammer",
+            "start": 97.39,
+            "end": 97.61
+          },
+          {
+            "text": "it",
+            "start": 97.61,
+            "end": 97.75
+          },
+          {
+            "text": "loud,",
+            "start": 97.75,
+            "end": 97.95
+          },
+          {
+            "text": "hammer",
+            "start": 98.01,
+            "end": 98.23
+          },
+          {
+            "text": "it",
+            "start": 98.23,
+            "end": 98.39
+          },
+          {
+            "text": "proud",
+            "start": 98.39,
+            "end": 98.63
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Hammer",
+            "start": 96.71,
+            "end": 96.99
+          },
+          {
+            "text": "it",
+            "start": 96.99,
+            "end": 97.11
+          },
+          {
+            "text": "home,",
+            "start": 97.11,
+            "end": 97.27
+          },
+          {
+            "text": "hammer",
+            "start": 97.39,
+            "end": 97.61
+          },
+          {
+            "text": "it",
+            "start": 97.61,
+            "end": 97.75
+          },
+          {
+            "text": "loud,",
+            "start": 97.75,
+            "end": 97.95
+          },
+          {
+            "text": "hammer",
+            "start": 98.01,
+            "end": 98.23
+          },
+          {
+            "text": "it",
+            "start": 98.23,
+            "end": 98.39
+          },
+          {
+            "text": "proud",
+            "start": 98.39,
+            "end": 98.63
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Hammer it home, hammer it loud, hammer it proud",
+      "zh": "Hammer it home, hammer it loud, hammer it proud",
+      "pinyin": "Hammer it home, hammer it loud, hammer it proud"
+    },
+    {
+      "id": "line-36",
+      "start": 98.91,
+      "end": 101.39,
+      "words": {
+        "zh": [
+          {
+            "text": "'Cuz",
+            "start": 98.91,
+            "end": 99.11
+          },
+          {
+            "text": "there",
+            "start": 99.11,
+            "end": 99.31
+          },
+          {
+            "text": "is",
+            "start": 99.31,
+            "end": 99.47
+          },
+          {
+            "text": "still",
+            "start": 99.47,
+            "end": 99.65
+          },
+          {
+            "text": "fire",
+            "start": 99.65,
+            "end": 100.21
+          },
+          {
+            "text": "inside",
+            "start": 100.21,
+            "end": 100.77
+          },
+          {
+            "text": "our",
+            "start": 100.77,
+            "end": 101.01
+          },
+          {
+            "text": "hearts",
+            "start": 101.01,
+            "end": 101.39
+          }
+        ],
+        "en": [
+          {
+            "text": "'Cuz",
+            "start": 98.91,
+            "end": 99.11
+          },
+          {
+            "text": "there",
+            "start": 99.11,
+            "end": 99.31
+          },
+          {
+            "text": "is",
+            "start": 99.31,
+            "end": 99.47
+          },
+          {
+            "text": "still",
+            "start": 99.47,
+            "end": 99.65
+          },
+          {
+            "text": "fire",
+            "start": 99.65,
+            "end": 100.21
+          },
+          {
+            "text": "inside",
+            "start": 100.21,
+            "end": 100.77
+          },
+          {
+            "text": "our",
+            "start": 100.77,
+            "end": 101.01
+          },
+          {
+            "text": "hearts",
+            "start": 101.01,
+            "end": 101.39
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "'Cuz",
+            "start": 98.91,
+            "end": 99.11
+          },
+          {
+            "text": "there",
+            "start": 99.11,
+            "end": 99.31
+          },
+          {
+            "text": "is",
+            "start": 99.31,
+            "end": 99.47
+          },
+          {
+            "text": "still",
+            "start": 99.47,
+            "end": 99.65
+          },
+          {
+            "text": "fire",
+            "start": 99.65,
+            "end": 100.21
+          },
+          {
+            "text": "inside",
+            "start": 100.21,
+            "end": 100.77
+          },
+          {
+            "text": "our",
+            "start": 100.77,
+            "end": 101.01
+          },
+          {
+            "text": "hearts",
+            "start": 101.01,
+            "end": 101.39
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "'Cuz there is still fire inside our hearts",
+      "zh": "'Cuz there is still fire inside our hearts",
+      "pinyin": "'Cuz there is still fire inside our hearts"
+    },
+    {
+      "id": "line-37",
+      "start": 101.57,
+      "end": 103.89,
+      "words": {
+        "zh": [
+          {
+            "text": "无畏的目光",
+            "start": 101.57,
+            "end": 102.95
+          },
+          {
+            "text": "right",
+            "start": 102.95,
+            "end": 103.21
+          },
+          {
+            "text": "from",
+            "start": 103.21,
+            "end": 103.45
+          },
+          {
+            "text": "the",
+            "start": 103.45,
+            "end": 103.61
+          },
+          {
+            "text": "start",
+            "start": 103.61,
+            "end": 103.89
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "A fearless gaze right from the start",
+      "zh": "无畏的目光 right from the start",
+      "pinyin": "Wu wei de mu guang right from the start"
+    },
+    {
+      "id": "line-38",
+      "start": 104.14,
+      "end": 106.5,
+      "words": {
+        "zh": [
+          {
+            "text": "不再隐藏,",
+            "start": 104.14,
+            "end": 105.36
+          },
+          {
+            "text": "不再回望",
+            "start": 105.5,
+            "end": 106.5
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "No more hiding, no more looking back",
+      "zh": "不再隐藏, 不再回望",
+      "pinyin": "Bu zai yin cang, bu zai hui wang"
+    },
+    {
+      "id": "line-39",
+      "start": 106.72,
+      "end": 110.3,
+      "words": {
+        "zh": [
+          {
+            "text": "Taking",
+            "start": 106.72,
+            "end": 107.42
+          },
+          {
+            "text": "it",
+            "start": 107.42,
+            "end": 107.64
+          },
+          {
+            "text": "far,",
+            "start": 107.64,
+            "end": 108.04
+          },
+          {
+            "text": "born",
+            "start": 108.14,
+            "end": 108.62
+          },
+          {
+            "text": "to",
+            "start": 108.62,
+            "end": 108.88
+          },
+          {
+            "text": "aim",
+            "start": 108.88,
+            "end": 109.26
+          },
+          {
+            "text": "for",
+            "start": 109.26,
+            "end": 109.66
+          },
+          {
+            "text": "the",
+            "start": 109.66,
+            "end": 109.9
+          },
+          {
+            "text": "stars",
+            "start": 109.9,
+            "end": 110.3
+          }
+        ],
+        "en": [
+          {
+            "text": "Taking",
+            "start": 106.72,
+            "end": 107.42
+          },
+          {
+            "text": "it",
+            "start": 107.42,
+            "end": 107.64
+          },
+          {
+            "text": "far,",
+            "start": 107.64,
+            "end": 108.04
+          },
+          {
+            "text": "born",
+            "start": 108.14,
+            "end": 108.62
+          },
+          {
+            "text": "to",
+            "start": 108.62,
+            "end": 108.88
+          },
+          {
+            "text": "aim",
+            "start": 108.88,
+            "end": 109.26
+          },
+          {
+            "text": "for",
+            "start": 109.26,
+            "end": 109.66
+          },
+          {
+            "text": "the",
+            "start": 109.66,
+            "end": 109.9
+          },
+          {
+            "text": "stars",
+            "start": 109.9,
+            "end": 110.3
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Taking",
+            "start": 106.72,
+            "end": 107.42
+          },
+          {
+            "text": "it",
+            "start": 107.42,
+            "end": 107.64
+          },
+          {
+            "text": "far,",
+            "start": 107.64,
+            "end": 108.04
+          },
+          {
+            "text": "born",
+            "start": 108.14,
+            "end": 108.62
+          },
+          {
+            "text": "to",
+            "start": 108.62,
+            "end": 108.88
+          },
+          {
+            "text": "aim",
+            "start": 108.88,
+            "end": 109.26
+          },
+          {
+            "text": "for",
+            "start": 109.26,
+            "end": 109.66
+          },
+          {
+            "text": "the",
+            "start": 109.66,
+            "end": 109.9
+          },
+          {
+            "text": "stars",
+            "start": 109.9,
+            "end": 110.3
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Taking it far, born to aim for the stars",
+      "zh": "Taking it far, born to aim for the stars",
+      "pinyin": "Taking it far, born to aim for the stars"
+    },
+    {
+      "id": "line-40",
+      "start": 112.54,
+      "end": 114.47,
+      "words": {
+        "zh": [
+          {
+            "text": "We",
+            "start": 112.54,
+            "end": 113.29
+          },
+          {
+            "text": "going",
+            "start": 113.29,
+            "end": 113.59
+          },
+          {
+            "text": "up",
+            "start": 113.59,
+            "end": 113.83
+          },
+          {
+            "text": "so",
+            "start": 113.83,
+            "end": 113.99
+          },
+          {
+            "text": "high",
+            "start": 113.99,
+            "end": 114.47
+          }
+        ],
+        "en": [
+          {
+            "text": "We",
+            "start": 112.54,
+            "end": 113.29
+          },
+          {
+            "text": "going",
+            "start": 113.29,
+            "end": 113.59
+          },
+          {
+            "text": "up",
+            "start": 113.59,
+            "end": 113.83
+          },
+          {
+            "text": "so",
+            "start": 113.83,
+            "end": 113.99
+          },
+          {
+            "text": "high",
+            "start": 113.99,
+            "end": 114.47
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "We",
+            "start": 112.54,
+            "end": 113.29
+          },
+          {
+            "text": "going",
+            "start": 113.29,
+            "end": 113.59
+          },
+          {
+            "text": "up",
+            "start": 113.59,
+            "end": 113.83
+          },
+          {
+            "text": "so",
+            "start": 113.83,
+            "end": 113.99
+          },
+          {
+            "text": "high",
+            "start": 113.99,
+            "end": 114.47
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "We going up so high",
+      "zh": "We going up so high",
+      "pinyin": "We going up so high"
+    },
+    {
+      "id": "line-41",
+      "start": 115.18,
+      "end": 115.52,
+      "words": {
+        "zh": [
+          {
+            "text": "Freefall",
+            "start": 115.18,
+            "end": 115.52
+          }
+        ],
+        "en": [
+          {
+            "text": "Freefall",
+            "start": 115.18,
+            "end": 115.52
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Freefall",
+            "start": 115.18,
+            "end": 115.52
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Freefall",
+      "zh": "Freefall",
+      "pinyin": "Freefall"
+    },
+    {
+      "id": "line-42",
+      "start": 115.52,
+      "end": 116.4,
+      "words": {
+        "zh": [
+          {
+            "text": "Got me",
+            "start": 115.52,
+            "end": 115.7
+          },
+          {
+            "text": "feelin'",
+            "start": 115.7,
+            "end": 116.08
+          },
+          {
+            "text": "alive",
+            "start": 116.08,
+            "end": 116.4
+          }
+        ],
+        "en": [
+          {
+            "text": "Got me",
+            "start": 115.52,
+            "end": 115.7
+          },
+          {
+            "text": "feelin'",
+            "start": 115.7,
+            "end": 116.08
+          },
+          {
+            "text": "alive",
+            "start": 116.08,
+            "end": 116.4
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Got me",
+            "start": 115.52,
+            "end": 115.7
+          },
+          {
+            "text": "feelin'",
+            "start": 115.7,
+            "end": 116.08
+          },
+          {
+            "text": "alive",
+            "start": 116.08,
+            "end": 116.4
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Got me feelin' alive",
+      "zh": "Got me feelin' alive",
+      "pinyin": "Got me feelin' alive"
+    },
+    {
+      "id": "line-43",
+      "start": 117.805,
+      "end": 119.685,
+      "words": {
+        "zh": [
+          {
+            "text": "No",
+            "start": 117.805,
+            "end": 118.165
+          },
+          {
+            "text": "more",
+            "start": 118.165,
+            "end": 118.345
+          },
+          {
+            "text": "ties,",
+            "start": 118.345,
+            "end": 118.585
+          },
+          {
+            "text": "no",
+            "start": 118.685,
+            "end": 118.825
+          },
+          {
+            "text": "more",
+            "start": 118.825,
+            "end": 119.065
+          },
+          {
+            "text": "rules",
+            "start": 119.065,
+            "end": 119.225
+          },
+          {
+            "text": "that",
+            "start": 119.225,
+            "end": 119.385
+          },
+          {
+            "text": "apply",
+            "start": 119.385,
+            "end": 119.685
+          }
+        ],
+        "en": [
+          {
+            "text": "No",
+            "start": 117.805,
+            "end": 118.165
+          },
+          {
+            "text": "more",
+            "start": 118.165,
+            "end": 118.345
+          },
+          {
+            "text": "ties,",
+            "start": 118.345,
+            "end": 118.585
+          },
+          {
+            "text": "no",
+            "start": 118.685,
+            "end": 118.825
+          },
+          {
+            "text": "more",
+            "start": 118.825,
+            "end": 119.065
+          },
+          {
+            "text": "rules",
+            "start": 119.065,
+            "end": 119.225
+          },
+          {
+            "text": "that",
+            "start": 119.225,
+            "end": 119.385
+          },
+          {
+            "text": "apply",
+            "start": 119.385,
+            "end": 119.685
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "No",
+            "start": 117.805,
+            "end": 118.165
+          },
+          {
+            "text": "more",
+            "start": 118.165,
+            "end": 118.345
+          },
+          {
+            "text": "ties,",
+            "start": 118.345,
+            "end": 118.585
+          },
+          {
+            "text": "no",
+            "start": 118.685,
+            "end": 118.825
+          },
+          {
+            "text": "more",
+            "start": 118.825,
+            "end": 119.065
+          },
+          {
+            "text": "rules",
+            "start": 119.065,
+            "end": 119.225
+          },
+          {
+            "text": "that",
+            "start": 119.225,
+            "end": 119.385
+          },
+          {
+            "text": "apply",
+            "start": 119.385,
+            "end": 119.685
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "No more ties, no more rules that apply",
+      "zh": "No more ties, no more rules that apply",
+      "pinyin": "No more ties, no more rules that apply"
+    },
+    {
+      "id": "line-44",
+      "start": 120.22,
+      "end": 121.57,
+      "words": {
+        "zh": [
+          {
+            "text": "Cast",
+            "start": 120.22,
+            "end": 120.87
+          },
+          {
+            "text": "the",
+            "start": 120.87,
+            "end": 121.01
+          },
+          {
+            "text": "limits",
+            "start": 121.01,
+            "end": 121.35
+          },
+          {
+            "text": "aside",
+            "start": 121.35,
+            "end": 121.57
+          }
+        ],
+        "en": [
+          {
+            "text": "Cast",
+            "start": 120.22,
+            "end": 120.87
+          },
+          {
+            "text": "the",
+            "start": 120.87,
+            "end": 121.01
+          },
+          {
+            "text": "limits",
+            "start": 121.01,
+            "end": 121.35
+          },
+          {
+            "text": "aside",
+            "start": 121.35,
+            "end": 121.57
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Cast",
+            "start": 120.22,
+            "end": 120.87
+          },
+          {
+            "text": "the",
+            "start": 120.87,
+            "end": 121.01
+          },
+          {
+            "text": "limits",
+            "start": 121.01,
+            "end": 121.35
+          },
+          {
+            "text": "aside",
+            "start": 121.35,
+            "end": 121.57
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Cast the limits aside",
+      "zh": "Cast the limits aside",
+      "pinyin": "Cast the limits aside"
+    },
+    {
+      "id": "line-45",
+      "start": 121.94,
+      "end": 123.6,
+      "words": {
+        "zh": [
+          {
+            "text": "Freefall",
+            "start": 121.94,
+            "end": 122.64
+          },
+          {
+            "text": "Freefall",
+            "start": 122.64,
+            "end": 123.6
+          }
+        ],
+        "en": [
+          {
+            "text": "Freefall",
+            "start": 121.94,
+            "end": 122.64
+          },
+          {
+            "text": "Freefall",
+            "start": 122.64,
+            "end": 123.6
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Freefall",
+            "start": 121.94,
+            "end": 122.64
+          },
+          {
+            "text": "Freefall",
+            "start": 122.64,
+            "end": 123.6
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Freefall Freefall",
+      "zh": "Freefall Freefall",
+      "pinyin": "Freefall Freefall"
+    },
+    {
+      "id": "line-46",
+      "start": 123.86,
+      "end": 125.62,
+      "words": {
+        "zh": [
+          {
+            "text": "仿佛就要",
+            "start": 123.86,
+            "end": 124.74
+          },
+          {
+            "text": "touch",
+            "start": 124.74,
+            "end": 125.16
+          },
+          {
+            "text": "the",
+            "start": 125.16,
+            "end": 125.3
+          },
+          {
+            "text": "sky",
+            "start": 125.3,
+            "end": 125.62
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "As if we're about to touch the sky",
+      "zh": "仿佛就要 touch the sky",
+      "pinyin": "Fang fu jiu yao touch the sky"
+    },
+    {
+      "id": "line-47",
+      "start": 126.265,
+      "end": 128.525,
+      "words": {
+        "zh": [
+          {
+            "text": "闪耀无双",
+            "start": 126.265,
+            "end": 127.365
+          },
+          {
+            "text": "burning",
+            "start": 127.365,
+            "end": 127.945
+          },
+          {
+            "text": "bright",
+            "start": 127.945,
+            "end": 128.525
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Shining like no other, burning bright",
+      "zh": "闪耀无双 burning bright",
+      "pinyin": "Shan yao wu shuang burning bright"
+    },
+    {
+      "id": "line-48",
+      "start": 128.925,
+      "end": 131.765,
+      "words": {
+        "zh": [
+          {
+            "text": "心声不徘徊,",
+            "start": 128.925,
+            "end": 130.525
+          },
+          {
+            "text": "自信不摇摆",
+            "start": 130.745,
+            "end": 131.765
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "My inner voice won't hesitate; my confidence won't waver",
+      "zh": "心声不徘徊, 自信不摇摆",
+      "pinyin": "Xin sheng bu pai huai, zi xin bu yao bai"
+    },
+    {
+      "id": "line-49",
+      "start": 131.91,
+      "end": 133.19,
+      "words": {
+        "zh": [
+          {
+            "text": "You",
+            "start": 131.91,
+            "end": 132.19
+          },
+          {
+            "text": "know",
+            "start": 132.19,
+            "end": 132.35
+          },
+          {
+            "text": "what",
+            "start": 132.35,
+            "end": 132.61
+          },
+          {
+            "text": "it's",
+            "start": 132.61,
+            "end": 132.89
+          },
+          {
+            "text": "like",
+            "start": 132.89,
+            "end": 133.19
+          }
+        ],
+        "en": [
+          {
+            "text": "You",
+            "start": 131.91,
+            "end": 132.19
+          },
+          {
+            "text": "know",
+            "start": 132.19,
+            "end": 132.35
+          },
+          {
+            "text": "what",
+            "start": 132.35,
+            "end": 132.61
+          },
+          {
+            "text": "it's",
+            "start": 132.61,
+            "end": 132.89
+          },
+          {
+            "text": "like",
+            "start": 132.89,
+            "end": 133.19
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "You",
+            "start": 131.91,
+            "end": 132.19
+          },
+          {
+            "text": "know",
+            "start": 132.19,
+            "end": 132.35
+          },
+          {
+            "text": "what",
+            "start": 132.35,
+            "end": 132.61
+          },
+          {
+            "text": "it's",
+            "start": 132.61,
+            "end": 132.89
+          },
+          {
+            "text": "like",
+            "start": 132.89,
+            "end": 133.19
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "You know what it's like",
+      "zh": "You know what it's like",
+      "pinyin": "You know what it's like"
+    },
+    {
+      "id": "line-50",
+      "start": 134.36,
+      "end": 136.54,
+      "words": {
+        "zh": [
+          {
+            "text": "一往无前,",
+            "start": 134.36,
+            "end": 135.34
+          },
+          {
+            "text": "light",
+            "start": 135.58,
+            "end": 135.72
+          },
+          {
+            "text": "the",
+            "start": 135.72,
+            "end": 136.02
+          },
+          {
+            "text": "dark",
+            "start": 136.02,
+            "end": 136.54
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Charge ahead fearlessly, light the dark",
+      "zh": "一往无前, light the dark",
+      "pinyin": "Yi wang wu qian, light the dark"
+    },
+    {
+      "id": "line-51",
+      "start": 136.905,
+      "end": 139.005,
+      "words": {
+        "zh": [
+          {
+            "text": "告诉世界",
+            "start": 136.905,
+            "end": 138.005
+          },
+          {
+            "text": "who",
+            "start": 138.005,
+            "end": 138.365
+          },
+          {
+            "text": "you",
+            "start": 138.365,
+            "end": 138.625
+          },
+          {
+            "text": "are",
+            "start": 138.625,
+            "end": 139.005
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Tell the world who you are",
+      "zh": "告诉世界 who you are",
+      "pinyin": "Gao su shi jie who you are"
+    },
+    {
+      "id": "line-52",
+      "start": 139.48,
+      "end": 141.99,
+      "words": {
+        "zh": [
+          {
+            "text": "Let",
+            "start": 139.48,
+            "end": 140.23
+          },
+          {
+            "text": "them",
+            "start": 140.23,
+            "end": 140.35
+          },
+          {
+            "text": "see",
+            "start": 140.35,
+            "end": 140.59
+          },
+          {
+            "text": "us",
+            "start": 140.59,
+            "end": 140.83
+          },
+          {
+            "text": "glow",
+            "start": 140.83,
+            "end": 141.13
+          },
+          {
+            "text": "from",
+            "start": 141.13,
+            "end": 141.59
+          },
+          {
+            "text": "afar",
+            "start": 141.59,
+            "end": 141.99
+          }
+        ],
+        "en": [
+          {
+            "text": "Let",
+            "start": 139.48,
+            "end": 140.23
+          },
+          {
+            "text": "them",
+            "start": 140.23,
+            "end": 140.35
+          },
+          {
+            "text": "see",
+            "start": 140.35,
+            "end": 140.59
+          },
+          {
+            "text": "us",
+            "start": 140.59,
+            "end": 140.83
+          },
+          {
+            "text": "glow",
+            "start": 140.83,
+            "end": 141.13
+          },
+          {
+            "text": "from",
+            "start": 141.13,
+            "end": 141.59
+          },
+          {
+            "text": "afar",
+            "start": 141.59,
+            "end": 141.99
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Let",
+            "start": 139.48,
+            "end": 140.23
+          },
+          {
+            "text": "them",
+            "start": 140.23,
+            "end": 140.35
+          },
+          {
+            "text": "see",
+            "start": 140.35,
+            "end": 140.59
+          },
+          {
+            "text": "us",
+            "start": 140.59,
+            "end": 140.83
+          },
+          {
+            "text": "glow",
+            "start": 140.83,
+            "end": 141.13
+          },
+          {
+            "text": "from",
+            "start": 141.13,
+            "end": 141.59
+          },
+          {
+            "text": "afar",
+            "start": 141.59,
+            "end": 141.99
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Let them see us glow from afar",
+      "zh": "Let them see us glow from afar",
+      "pinyin": "Let them see us glow from afar"
+    },
+    {
+      "id": "line-53",
+      "start": 147.87,
+      "end": 149.91,
+      "words": {
+        "zh": [
+          {
+            "text": "We",
+            "start": 147.87,
+            "end": 148.31
+          },
+          {
+            "text": "goin'",
+            "start": 148.31,
+            "end": 148.55
+          },
+          {
+            "text": "up,",
+            "start": 148.77,
+            "end": 148.93
+          },
+          {
+            "text": "we",
+            "start": 149.15,
+            "end": 149.33
+          },
+          {
+            "text": "goin'",
+            "start": 149.33,
+            "end": 149.57
+          },
+          {
+            "text": "up",
+            "start": 149.71,
+            "end": 149.91
+          }
+        ],
+        "en": [
+          {
+            "text": "We",
+            "start": 147.87,
+            "end": 148.31
+          },
+          {
+            "text": "goin'",
+            "start": 148.31,
+            "end": 148.55
+          },
+          {
+            "text": "up,",
+            "start": 148.77,
+            "end": 148.93
+          },
+          {
+            "text": "we",
+            "start": 149.15,
+            "end": 149.33
+          },
+          {
+            "text": "goin'",
+            "start": 149.33,
+            "end": 149.57
+          },
+          {
+            "text": "up",
+            "start": 149.71,
+            "end": 149.91
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "We",
+            "start": 147.87,
+            "end": 148.31
+          },
+          {
+            "text": "goin'",
+            "start": 148.31,
+            "end": 148.55
+          },
+          {
+            "text": "up,",
+            "start": 148.77,
+            "end": 148.93
+          },
+          {
+            "text": "we",
+            "start": 149.15,
+            "end": 149.33
+          },
+          {
+            "text": "goin'",
+            "start": 149.33,
+            "end": 149.57
+          },
+          {
+            "text": "up",
+            "start": 149.71,
+            "end": 149.91
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "We goin' up, we goin' up",
+      "zh": "We goin' up, we goin' up",
+      "pinyin": "We goin' up, we goin' up"
+    },
+    {
+      "id": "line-54",
+      "start": 150.57,
+      "end": 152.49,
+      "words": {
+        "zh": [
+          {
+            "text": "We",
+            "start": 150.57,
+            "end": 150.99
+          },
+          {
+            "text": "goin' up,",
+            "start": 150.99,
+            "end": 151.21
+          },
+          {
+            "text": "we",
+            "start": 151.83,
+            "end": 152.01
+          },
+          {
+            "text": "goin'",
+            "start": 152.01,
+            "end": 152.23
+          },
+          {
+            "text": "up",
+            "start": 152.35,
+            "end": 152.49
+          }
+        ],
+        "en": [
+          {
+            "text": "We",
+            "start": 150.57,
+            "end": 150.99
+          },
+          {
+            "text": "goin' up,",
+            "start": 150.99,
+            "end": 151.21
+          },
+          {
+            "text": "we",
+            "start": 151.83,
+            "end": 152.01
+          },
+          {
+            "text": "goin'",
+            "start": 152.01,
+            "end": 152.23
+          },
+          {
+            "text": "up",
+            "start": 152.35,
+            "end": 152.49
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "We",
+            "start": 150.57,
+            "end": 150.99
+          },
+          {
+            "text": "goin' up,",
+            "start": 150.99,
+            "end": 151.21
+          },
+          {
+            "text": "we",
+            "start": 151.83,
+            "end": 152.01
+          },
+          {
+            "text": "goin'",
+            "start": 152.01,
+            "end": 152.23
+          },
+          {
+            "text": "up",
+            "start": 152.35,
+            "end": 152.49
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "We goin' up, we goin' up",
+      "zh": "We goin' up, we goin' up",
+      "pinyin": "We goin' up, we goin' up"
+    },
+    {
+      "id": "line-55",
+      "start": 152.95,
+      "end": 154.25,
+      "words": {
+        "zh": [
+          {
+            "text": "We",
+            "start": 152.95,
+            "end": 153.37
+          },
+          {
+            "text": "goin'",
+            "start": 153.37,
+            "end": 153.57
+          },
+          {
+            "text": "up",
+            "start": 153.79,
+            "end": 153.83
+          },
+          {
+            "text": "so",
+            "start": 153.83,
+            "end": 153.97
+          },
+          {
+            "text": "high",
+            "start": 153.97,
+            "end": 154.25
+          }
+        ],
+        "en": [
+          {
+            "text": "We",
+            "start": 152.95,
+            "end": 153.37
+          },
+          {
+            "text": "goin'",
+            "start": 153.37,
+            "end": 153.57
+          },
+          {
+            "text": "up",
+            "start": 153.79,
+            "end": 153.83
+          },
+          {
+            "text": "so",
+            "start": 153.83,
+            "end": 153.97
+          },
+          {
+            "text": "high",
+            "start": 153.97,
+            "end": 154.25
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "We",
+            "start": 152.95,
+            "end": 153.37
+          },
+          {
+            "text": "goin'",
+            "start": 153.37,
+            "end": 153.57
+          },
+          {
+            "text": "up",
+            "start": 153.79,
+            "end": 153.83
+          },
+          {
+            "text": "so",
+            "start": 153.83,
+            "end": 153.97
+          },
+          {
+            "text": "high",
+            "start": 153.97,
+            "end": 154.25
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "We goin' up so high",
+      "zh": "We goin' up so high",
+      "pinyin": "We goin' up so high"
+    },
+    {
+      "id": "line-56",
+      "start": 154.53,
+      "end": 154.89,
+      "words": {
+        "zh": [
+          {
+            "text": "Freefall",
+            "start": 154.53,
+            "end": 154.89
+          }
+        ],
+        "en": [
+          {
+            "text": "Freefall",
+            "start": 154.53,
+            "end": 154.89
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Freefall",
+            "start": 154.53,
+            "end": 154.89
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Freefall",
+      "zh": "Freefall",
+      "pinyin": "Freefall"
+    },
+    {
+      "id": "line-57",
+      "start": 155.23,
+      "end": 156.25,
+      "words": {
+        "zh": [
+          {
+            "text": "Got",
+            "start": 155.23,
+            "end": 155.49
+          },
+          {
+            "text": "me",
+            "start": 155.49,
+            "end": 155.67
+          },
+          {
+            "text": "feelin'",
+            "start": 155.67,
+            "end": 156.07
+          },
+          {
+            "text": "alive",
+            "start": 156.07,
+            "end": 156.25
+          }
+        ],
+        "en": [
+          {
+            "text": "Got",
+            "start": 155.23,
+            "end": 155.49
+          },
+          {
+            "text": "me",
+            "start": 155.49,
+            "end": 155.67
+          },
+          {
+            "text": "feelin'",
+            "start": 155.67,
+            "end": 156.07
+          },
+          {
+            "text": "alive",
+            "start": 156.07,
+            "end": 156.25
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Got",
+            "start": 155.23,
+            "end": 155.49
+          },
+          {
+            "text": "me",
+            "start": 155.49,
+            "end": 155.67
+          },
+          {
+            "text": "feelin'",
+            "start": 155.67,
+            "end": 156.07
+          },
+          {
+            "text": "alive",
+            "start": 156.07,
+            "end": 156.25
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Got me feelin' alive",
+      "zh": "Got me feelin' alive",
+      "pinyin": "Got me feelin' alive"
+    },
+    {
+      "id": "line-58",
+      "start": 157.805,
+      "end": 159.705,
+      "words": {
+        "zh": [
+          {
+            "text": "No",
+            "start": 157.805,
+            "end": 158.165
+          },
+          {
+            "text": "more",
+            "start": 158.165,
+            "end": 158.345
+          },
+          {
+            "text": "ties,",
+            "start": 158.345,
+            "end": 158.585
+          },
+          {
+            "text": "no",
+            "start": 158.705,
+            "end": 158.825
+          },
+          {
+            "text": "more",
+            "start": 158.825,
+            "end": 159.085
+          },
+          {
+            "text": "rules",
+            "start": 159.085,
+            "end": 159.265
+          },
+          {
+            "text": "that",
+            "start": 159.265,
+            "end": 159.385
+          },
+          {
+            "text": "apply",
+            "start": 159.385,
+            "end": 159.705
+          }
+        ],
+        "en": [
+          {
+            "text": "No",
+            "start": 157.805,
+            "end": 158.165
+          },
+          {
+            "text": "more",
+            "start": 158.165,
+            "end": 158.345
+          },
+          {
+            "text": "ties,",
+            "start": 158.345,
+            "end": 158.585
+          },
+          {
+            "text": "no",
+            "start": 158.705,
+            "end": 158.825
+          },
+          {
+            "text": "more",
+            "start": 158.825,
+            "end": 159.085
+          },
+          {
+            "text": "rules",
+            "start": 159.085,
+            "end": 159.265
+          },
+          {
+            "text": "that",
+            "start": 159.265,
+            "end": 159.385
+          },
+          {
+            "text": "apply",
+            "start": 159.385,
+            "end": 159.705
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "No",
+            "start": 157.805,
+            "end": 158.165
+          },
+          {
+            "text": "more",
+            "start": 158.165,
+            "end": 158.345
+          },
+          {
+            "text": "ties,",
+            "start": 158.345,
+            "end": 158.585
+          },
+          {
+            "text": "no",
+            "start": 158.705,
+            "end": 158.825
+          },
+          {
+            "text": "more",
+            "start": 158.825,
+            "end": 159.085
+          },
+          {
+            "text": "rules",
+            "start": 159.085,
+            "end": 159.265
+          },
+          {
+            "text": "that",
+            "start": 159.265,
+            "end": 159.385
+          },
+          {
+            "text": "apply",
+            "start": 159.385,
+            "end": 159.705
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "No more ties, no more rules that apply",
+      "zh": "No more ties, no more rules that apply",
+      "pinyin": "No more ties, no more rules that apply"
+    },
+    {
+      "id": "line-59",
+      "start": 160.295,
+      "end": 161.535,
+      "words": {
+        "zh": [
+          {
+            "text": "Cast",
+            "start": 160.295,
+            "end": 160.875
+          },
+          {
+            "text": "the",
+            "start": 160.875,
+            "end": 160.995
+          },
+          {
+            "text": "limits",
+            "start": 160.995,
+            "end": 161.335
+          },
+          {
+            "text": "aside",
+            "start": 161.335,
+            "end": 161.535
+          }
+        ],
+        "en": [
+          {
+            "text": "Cast",
+            "start": 160.295,
+            "end": 160.875
+          },
+          {
+            "text": "the",
+            "start": 160.875,
+            "end": 160.995
+          },
+          {
+            "text": "limits",
+            "start": 160.995,
+            "end": 161.335
+          },
+          {
+            "text": "aside",
+            "start": 161.335,
+            "end": 161.535
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Cast",
+            "start": 160.295,
+            "end": 160.875
+          },
+          {
+            "text": "the",
+            "start": 160.875,
+            "end": 160.995
+          },
+          {
+            "text": "limits",
+            "start": 160.995,
+            "end": 161.335
+          },
+          {
+            "text": "aside",
+            "start": 161.335,
+            "end": 161.535
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Cast the limits aside",
+      "zh": "Cast the limits aside",
+      "pinyin": "Cast the limits aside"
+    },
+    {
+      "id": "line-60",
+      "start": 161.95,
+      "end": 162.63,
+      "words": {
+        "zh": [
+          {
+            "text": "Freefall",
+            "start": 161.95,
+            "end": 162.63
+          }
+        ],
+        "en": [
+          {
+            "text": "Freefall",
+            "start": 161.95,
+            "end": 162.63
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Freefall",
+            "start": 161.95,
+            "end": 162.63
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Freefall",
+      "zh": "Freefall",
+      "pinyin": "Freefall"
+    },
+    {
+      "id": "line-61",
+      "start": 162.77,
+      "end": 163.59,
+      "words": {
+        "zh": [
+          {
+            "text": "Freefall",
+            "start": 162.77,
+            "end": 163.59
+          }
+        ],
+        "en": [
+          {
+            "text": "Freefall",
+            "start": 162.77,
+            "end": 163.59
+          }
+        ],
+        "pinyin": [
+          {
+            "text": "Freefall",
+            "start": 162.77,
+            "end": 163.59
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Freefall",
+      "zh": "Freefall",
+      "pinyin": "Freefall"
+    }
+  ],
+  "alignment": {
+    "recording": "songs/Kasane Teto - Freefall.m4a",
+    "audioSha256": "d77719074cd1223f89628a1607312ec29b7500f6fb333b232571dc0120e8c0b1",
+    "duration": 170.852,
+    "model": "mlx-community/whisper-large-v3-turbo",
+    "stableTs": "2.19.1",
+    "method": "ASR-anchored phrase-constrained forced alignment",
+    "seconds": 40.51,
+    "reviewed": false,
+    "status": "approved",
+    "approved": true,
+    "approvedBy": "Joshua Glass",
+    "approvalDate": "2026-10-23",
+    "sourceText": "../drafts/freefall.json",
+    "reviewNotes": [
+      {
+        "line": 2,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 13,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 18,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 19,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.286
+      },
+      {
+        "line": 22,
+        "issue": "Background entrance measured in an English-language vocal excerpt"
+      },
+      {
+        "line": 22,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 23,
+        "issue": "Background entrance measured in an English-language vocal excerpt"
+      },
+      {
+        "line": 23,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 32,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.048
+      },
+      {
+        "line": 33,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.175
+      },
+      {
+        "line": 34,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 35,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.054
+      },
+      {
+        "line": 36,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.235
+      },
+      {
+        "line": 37,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 38,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 39,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.097
+      },
+      {
+        "line": 41,
+        "issue": "Background entrance measured in an English-language vocal excerpt"
+      },
+      {
+        "line": 41,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 42,
+        "issue": "Background entrance measured in an English-language vocal excerpt"
+      },
+      {
+        "line": 42,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 46,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 47,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 48,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 49,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 50,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 51,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 52,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 53,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 54,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 54,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 55,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 56,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 57,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 58,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 59,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 60,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 61,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      }
+    ],
+    "repairs": {
+      "sourceClips": [
+        {
+          "line": 22,
+          "file": "freefall.entrances.json",
+          "clip": 0,
+          "segment": 1
+        },
+        {
+          "line": 23,
+          "file": "freefall.entrances.json",
+          "clip": 0,
+          "segment": 2
+        },
+        {
+          "line": 41,
+          "file": "freefall.entrances.json",
+          "clip": 1,
+          "segment": 1
+        },
+        {
+          "line": 42,
+          "file": "freefall.entrances.json",
+          "clip": 1,
+          "segment": 2
+        }
+      ],
+      "reason": "English acoustic alignment of short chorus excerpts resolves two background Freefall entrances that the Chinese-language whole-song pass compressed into 40ms and 160ms cues."
+    }
+  }
+}

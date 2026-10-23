@@ -1,0 +1,2479 @@
+{
+  "schemaVersion": 1,
+  "recording": "songs/MIMI - Science.m4a",
+  "language": "ja",
+  "duration": 188.058437,
+  "preview": false,
+  "source": "Joshua's supplied text; recording-specific MLX Whisper large-v3-turbo / stable-ts acoustic alignment. Approved by Joshua for publication on 2026-10-23. Companion translations are provisional meaning translations.",
+  "rows": [
+    {
+      "id": "line-1",
+      "start": 0.54,
+      "end": 0.98,
+      "words": {
+        "romaji": [
+          {
+            "text": "Itsuka",
+            "start": 0.54,
+            "end": 0.98
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Itsuka",
+      "en": "Someday",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-2",
+      "start": 1.11,
+      "end": 2.83,
+      "words": {
+        "romaji": [
+          {
+            "text": "Awai",
+            "start": 1.11,
+            "end": 1.47
+          },
+          {
+            "text": "kimochi",
+            "start": 1.47,
+            "end": 1.89
+          },
+          {
+            "text": "wa",
+            "start": 2.03,
+            "end": 2.07
+          },
+          {
+            "text": "kakushitekita",
+            "start": 2.07,
+            "end": 2.83
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Awai kimochi wa kakushitekita",
+      "en": "I've kept these faint feelings hidden",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-3",
+      "start": 2.98,
+      "end": 5.46,
+      "words": {
+        "romaji": [
+          {
+            "text": "Boku",
+            "start": 2.98,
+            "end": 3.5
+          },
+          {
+            "text": "no",
+            "start": 3.5,
+            "end": 3.68
+          },
+          {
+            "text": "honto",
+            "start": 3.68,
+            "end": 4.14
+          },
+          {
+            "text": "no",
+            "start": 4.14,
+            "end": 4.3
+          },
+          {
+            "text": "kokoro",
+            "start": 4.3,
+            "end": 4.76
+          },
+          {
+            "text": "kagi",
+            "start": 4.76,
+            "end": 5.12
+          },
+          {
+            "text": "kakete",
+            "start": 5.12,
+            "end": 5.46
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Boku no honto no kokoro kagi kakete",
+      "en": "Locking away what's truly in my heart",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-4",
+      "start": 5.56,
+      "end": 8.0,
+      "words": {
+        "romaji": [
+          {
+            "text": "Dare",
+            "start": 5.56,
+            "end": 6.06
+          },
+          {
+            "text": "mo",
+            "start": 6.06,
+            "end": 6.26
+          },
+          {
+            "text": "shiranai",
+            "start": 6.26,
+            "end": 6.8
+          },
+          {
+            "text": "basho",
+            "start": 6.8,
+            "end": 7.16
+          },
+          {
+            "text": "e",
+            "start": 7.16,
+            "end": 7.36
+          },
+          {
+            "text": "kakedashite",
+            "start": 7.36,
+            "end": 8.0
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Dare mo shiranai basho e kakedashite",
+      "en": "Running toward a place nobody knows",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-5",
+      "start": 8.14,
+      "end": 10.8,
+      "words": {
+        "romaji": [
+          {
+            "text": "Utauyo",
+            "start": 8.14,
+            "end": 8.96
+          },
+          {
+            "text": "saisho",
+            "start": 8.96,
+            "end": 9.42
+          },
+          {
+            "text": "de",
+            "start": 9.42,
+            "end": 9.56
+          },
+          {
+            "text": "saigo",
+            "start": 9.56,
+            "end": 10.06
+          },
+          {
+            "text": "no",
+            "start": 10.06,
+            "end": 10.22
+          },
+          {
+            "text": "jikken",
+            "start": 10.22,
+            "end": 10.8
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Utauyo saisho de saigo no jikken",
+      "en": "I'll sing this first and final experiment",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-6",
+      "start": 11.04,
+      "end": 15.78,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kokoro",
+            "start": 11.04,
+            "end": 11.64
+          },
+          {
+            "text": "ni",
+            "start": 11.64,
+            "end": 11.84
+          },
+          {
+            "text": "shikkari",
+            "start": 11.84,
+            "end": 12.42
+          },
+          {
+            "text": "shimitsuita,",
+            "start": 12.42,
+            "end": 13.24
+          },
+          {
+            "text": "kono",
+            "start": 13.32,
+            "end": 13.7
+          },
+          {
+            "text": "sabishi",
+            "start": 13.7,
+            "end": 14.18
+          },
+          {
+            "text": "sa",
+            "start": 14.18,
+            "end": 14.36
+          },
+          {
+            "text": "no",
+            "start": 14.36,
+            "end": 14.52
+          },
+          {
+            "text": "kakera",
+            "start": 14.52,
+            "end": 14.98
+          },
+          {
+            "text": "hitotsu",
+            "start": 14.98,
+            "end": 15.46
+          },
+          {
+            "text": "dake",
+            "start": 15.46,
+            "end": 15.78
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kokoro ni shikkari shimitsuita, kono sabishi sa no kakera hitotsu dake",
+      "en": "Just this one fragment of loneliness, soaked deep into my heart",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-7",
+      "start": 16.315,
+      "end": 18.275,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ashita",
+            "start": 16.315,
+            "end": 16.715
+          },
+          {
+            "text": "no",
+            "start": 16.715,
+            "end": 16.915
+          },
+          {
+            "text": "choushi",
+            "start": 16.915,
+            "end": 17.375
+          },
+          {
+            "text": "wa",
+            "start": 17.535,
+            "end": 17.555
+          },
+          {
+            "text": "doudesu",
+            "start": 17.555,
+            "end": 18.155
+          },
+          {
+            "text": "ka?",
+            "start": 18.155,
+            "end": 18.275
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ashita no choushi wa doudesu ka?",
+      "en": "How will you be doing tomorrow?",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-8",
+      "start": 18.3,
+      "end": 19.44,
+      "words": {
+        "romaji": [
+          {
+            "text": "Tte",
+            "start": 18.3,
+            "end": 18.68
+          },
+          {
+            "text": "kikarete",
+            "start": 18.68,
+            "end": 19.22
+          },
+          {
+            "text": "mo",
+            "start": 19.22,
+            "end": 19.44
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Tte kikarete mo",
+      "en": "Even if you ask me that",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-9",
+      "start": 19.46,
+      "end": 21.56,
+      "words": {
+        "romaji": [
+          {
+            "text": "Nani",
+            "start": 19.46,
+            "end": 19.86
+          },
+          {
+            "text": "ni",
+            "start": 19.86,
+            "end": 20.04
+          },
+          {
+            "text": "mo",
+            "start": 20.04,
+            "end": 20.14
+          },
+          {
+            "text": "kotae",
+            "start": 20.14,
+            "end": 20.68
+          },
+          {
+            "text": "ran",
+            "start": 20.68,
+            "end": 21.16
+          },
+          {
+            "text": "maisa",
+            "start": 21.16,
+            "end": 21.56
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Nani ni mo kotae ran maisa",
+      "en": "I can't give you any answer",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-10",
+      "start": 21.75,
+      "end": 23.14,
+      "words": {
+        "romaji": [
+          {
+            "text": "Bokura",
+            "start": 21.75,
+            "end": 22.34
+          },
+          {
+            "text": "wa",
+            "start": 22.48,
+            "end": 22.5
+          },
+          {
+            "text": "kyou",
+            "start": 22.5,
+            "end": 22.84
+          },
+          {
+            "text": "dake",
+            "start": 22.84,
+            "end": 23.14
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Bokura wa kyou dake",
+      "en": "Just for today, we",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-11",
+      "start": 23.26,
+      "end": 25.71,
+      "words": {
+        "romaji": [
+          {
+            "text": "Chotto",
+            "start": 23.26,
+            "end": 23.71
+          },
+          {
+            "text": "muri",
+            "start": 24.01,
+            "end": 24.23
+          },
+          {
+            "text": "shite",
+            "start": 24.23,
+            "end": 24.57
+          },
+          {
+            "text": "waratte",
+            "start": 24.69,
+            "end": 25.23
+          },
+          {
+            "text": "misete",
+            "start": 25.23,
+            "end": 25.71
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Chotto muri shite waratte misete",
+      "en": "Push ourselves a little and put on a smile",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-12",
+      "start": 25.82,
+      "end": 28.92,
+      "words": {
+        "romaji": [
+          {
+            "text": "Mada",
+            "start": 25.82,
+            "end": 26.32
+          },
+          {
+            "text": "matteru",
+            "start": 26.32,
+            "end": 27.1
+          },
+          {
+            "text": "ikiru",
+            "start": 27.1,
+            "end": 27.8
+          },
+          {
+            "text": "imi",
+            "start": 27.8,
+            "end": 28.24
+          },
+          {
+            "text": "o",
+            "start": 28.24,
+            "end": 28.46
+          },
+          {
+            "text": "tada",
+            "start": 28.46,
+            "end": 28.92
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Mada matteru ikiru imi o tada",
+      "en": "Still waiting, simply for a reason to live",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-13",
+      "start": 29.99,
+      "end": 31.09,
+      "words": {
+        "romaji": [
+          {
+            "text": "Tankyuu",
+            "start": 29.99,
+            "end": 30.79
+          },
+          {
+            "text": "shite!",
+            "start": 30.79,
+            "end": 31.09
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Tankyuu shite!",
+      "en": "Keep searching!",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-14",
+      "start": 31.12,
+      "end": 34.16,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kyou",
+            "start": 31.12,
+            "end": 31.6
+          },
+          {
+            "text": "mo",
+            "start": 31.6,
+            "end": 31.78
+          },
+          {
+            "text": "sagasuyo",
+            "start": 31.78,
+            "end": 32.7
+          },
+          {
+            "text": "saiensu",
+            "start": 32.7,
+            "end": 33.5
+          },
+          {
+            "text": "mitai",
+            "start": 33.5,
+            "end": 33.94
+          },
+          {
+            "text": "ni",
+            "start": 33.94,
+            "end": 34.16
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kyou mo sagasuyo saiensu mitai ni",
+      "en": "Today I'll keep searching, like science",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-15",
+      "start": 34.18,
+      "end": 36.16,
+      "words": {
+        "romaji": [
+          {
+            "text": "Sappari",
+            "start": 34.18,
+            "end": 34.82
+          },
+          {
+            "text": "sarasara",
+            "start": 34.82,
+            "end": 35.46
+          },
+          {
+            "text": "sanzanna",
+            "start": 35.46,
+            "end": 36.16
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Sappari sarasara sanzanna",
+      "en": "Completely, utterly disastrous",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-16",
+      "start": 36.28,
+      "end": 39.22,
+      "words": {
+        "romaji": [
+          {
+            "text": "Mainichidarou",
+            "start": 36.28,
+            "end": 37.44
+          },
+          {
+            "text": "to",
+            "start": 37.44,
+            "end": 37.66
+          },
+          {
+            "text": "furasuko",
+            "start": 37.66,
+            "end": 38.48
+          },
+          {
+            "text": "no",
+            "start": 38.48,
+            "end": 38.68
+          },
+          {
+            "text": "hannou",
+            "start": 38.68,
+            "end": 39.22
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Mainichidarou to furasuko no hannou",
+      "en": "Even through days like these, a reaction in a flask",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-17",
+      "start": 39.28,
+      "end": 41.24,
+      "words": {
+        "romaji": [
+          {
+            "text": "Sonzai",
+            "start": 39.28,
+            "end": 39.98
+          },
+          {
+            "text": "shoumei",
+            "start": 39.98,
+            "end": 40.58
+          },
+          {
+            "text": "mitsuketai",
+            "start": 40.58,
+            "end": 41.24
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Sonzai shoumei mitsuketai",
+      "en": "I want to find proof that I exist",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-18",
+      "start": 41.34,
+      "end": 41.88,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ah",
+            "start": 41.34,
+            "end": 41.88
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ah",
+      "en": "Ah",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-19",
+      "start": 42.05,
+      "end": 44.33,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kai",
+            "start": 42.05,
+            "end": 42.19
+          },
+          {
+            "text": "ga",
+            "start": 42.19,
+            "end": 42.31
+          },
+          {
+            "text": "nai",
+            "start": 42.31,
+            "end": 42.65
+          },
+          {
+            "text": "nante",
+            "start": 42.65,
+            "end": 43.11
+          },
+          {
+            "text": "iwanaidekureyo",
+            "start": 43.11,
+            "end": 44.33
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kai ga nai nante iwanaidekureyo",
+      "en": "Please don't tell me there's no solution",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-20",
+      "start": 44.36,
+      "end": 46.44,
+      "words": {
+        "romaji": [
+          {
+            "text": "Hisshi",
+            "start": 44.36,
+            "end": 44.8
+          },
+          {
+            "text": "ni",
+            "start": 44.8,
+            "end": 45.02
+          },
+          {
+            "text": "ikiteru",
+            "start": 45.02,
+            "end": 45.62
+          },
+          {
+            "text": "kono",
+            "start": 45.62,
+            "end": 45.88
+          },
+          {
+            "text": "sekai",
+            "start": 45.88,
+            "end": 46.44
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Hisshi ni ikiteru kono sekai",
+      "en": "In this world where I'm desperately trying to live",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-21",
+      "start": 46.47,
+      "end": 49.31,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ima",
+            "start": 46.47,
+            "end": 46.95
+          },
+          {
+            "text": "dare",
+            "start": 46.95,
+            "end": 47.25
+          },
+          {
+            "text": "mo",
+            "start": 47.25,
+            "end": 47.41
+          },
+          {
+            "text": "shiranai",
+            "start": 47.41,
+            "end": 48.19
+          },
+          {
+            "text": "teiri",
+            "start": 48.19,
+            "end": 48.69
+          },
+          {
+            "text": "o",
+            "start": 48.69,
+            "end": 48.85
+          },
+          {
+            "text": "mitsukete",
+            "start": 48.85,
+            "end": 49.31
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ima dare mo shiranai teiri o mitsukete",
+      "en": "Now I'll find a theorem nobody knows",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-22",
+      "start": 49.4,
+      "end": 51.56,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kono",
+            "start": 49.4,
+            "end": 49.78
+          },
+          {
+            "text": "sabishi",
+            "start": 49.78,
+            "end": 50.4
+          },
+          {
+            "text": "sa",
+            "start": 50.4,
+            "end": 50.6
+          },
+          {
+            "text": "ni",
+            "start": 50.6,
+            "end": 50.76
+          },
+          {
+            "text": "o",
+            "start": 50.76,
+            "end": 50.96
+          },
+          {
+            "text": "wakare",
+            "start": 51.0,
+            "end": 51.38
+          },
+          {
+            "text": "o",
+            "start": 51.38,
+            "end": 51.56
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kono sabishi sa ni o wakare o",
+      "en": "And say goodbye to this loneliness",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-23",
+      "start": 51.795,
+      "end": 53.935,
+      "words": {
+        "romaji": [
+          {
+            "text": "Sukoshi",
+            "start": 51.795,
+            "end": 52.495
+          },
+          {
+            "text": "no",
+            "start": 52.495,
+            "end": 52.655
+          },
+          {
+            "text": "nemurenu",
+            "start": 52.655,
+            "end": 53.375
+          },
+          {
+            "text": "yoru",
+            "start": 53.375,
+            "end": 53.775
+          },
+          {
+            "text": "ni",
+            "start": 53.775,
+            "end": 53.935
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Sukoshi no nemurenu yoru ni",
+      "en": "On a slightly sleepless night",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-24",
+      "start": 53.96,
+      "end": 56.36,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kono",
+            "start": 53.96,
+            "end": 54.4
+          },
+          {
+            "text": "mahou",
+            "start": 54.4,
+            "end": 54.88
+          },
+          {
+            "text": "ga",
+            "start": 54.88,
+            "end": 55.06
+          },
+          {
+            "text": "honoka",
+            "start": 55.06,
+            "end": 55.54
+          },
+          {
+            "text": "ni",
+            "start": 55.54,
+            "end": 55.72
+          },
+          {
+            "text": "tomorunara",
+            "start": 55.72,
+            "end": 56.36
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kono mahou ga honoka ni tomorunara",
+      "en": "If this magic can glow faintly",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-25",
+      "start": 56.44,
+      "end": 58.95,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ima",
+            "start": 56.44,
+            "end": 56.98
+          },
+          {
+            "text": "ga",
+            "start": 56.98,
+            "end": 57.12
+          },
+          {
+            "text": "sonnani",
+            "start": 57.12,
+            "end": 57.78
+          },
+          {
+            "text": "warukunai",
+            "start": 57.92,
+            "end": 58.5
+          },
+          {
+            "text": "tte",
+            "start": 58.5,
+            "end": 58.95
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ima ga sonnani warukunai tte",
+      "en": "Until I can say things aren't so bad right now",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-26",
+      "start": 59.06,
+      "end": 61.02,
+      "words": {
+        "romaji": [
+          {
+            "text": "Waraeru",
+            "start": 59.06,
+            "end": 59.82
+          },
+          {
+            "text": "toki",
+            "start": 59.82,
+            "end": 60.16
+          },
+          {
+            "text": "made",
+            "start": 60.16,
+            "end": 60.48
+          },
+          {
+            "text": "kyou",
+            "start": 60.48,
+            "end": 60.8
+          },
+          {
+            "text": "mo",
+            "start": 60.8,
+            "end": 61.02
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Waraeru toki made kyou mo",
+      "en": "Until I can smile, today too",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-27",
+      "start": 61.04,
+      "end": 61.98,
+      "words": {
+        "romaji": [
+          {
+            "text": "Science!",
+            "start": 61.04,
+            "end": 61.98
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Science!",
+      "en": "Science!",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-28",
+      "start": 82.51,
+      "end": 84.73,
+      "words": {
+        "romaji": [
+          {
+            "text": "Tsurai",
+            "start": 82.51,
+            "end": 83.09
+          },
+          {
+            "text": "kimochi",
+            "start": 83.09,
+            "end": 83.59
+          },
+          {
+            "text": "ga",
+            "start": 83.59,
+            "end": 83.79
+          },
+          {
+            "text": "komiagete",
+            "start": 83.79,
+            "end": 84.57
+          },
+          {
+            "text": "mo",
+            "start": 84.57,
+            "end": 84.73
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Tsurai kimochi ga komiagete mo",
+      "en": "Even when painful feelings well up",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-29",
+      "start": 84.76,
+      "end": 87.34,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kyou",
+            "start": 84.76,
+            "end": 85.22
+          },
+          {
+            "text": "mo",
+            "start": 85.22,
+            "end": 85.38
+          },
+          {
+            "text": "honto",
+            "start": 85.38,
+            "end": 85.84
+          },
+          {
+            "text": "no",
+            "start": 85.84,
+            "end": 86.0
+          },
+          {
+            "text": "kokoro",
+            "start": 86.0,
+            "end": 86.46
+          },
+          {
+            "text": "kagi",
+            "start": 86.46,
+            "end": 86.8
+          },
+          {
+            "text": "kaketa",
+            "start": 86.8,
+            "end": 87.34
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kyou mo honto no kokoro kagi kaketa",
+      "en": "Today again, I locked away my true feelings",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-30",
+      "start": 87.875,
+      "end": 89.855,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kotoba",
+            "start": 87.875,
+            "end": 88.235
+          },
+          {
+            "text": "ja",
+            "start": 88.235,
+            "end": 88.515
+          },
+          {
+            "text": "wakaran",
+            "start": 88.515,
+            "end": 89.055
+          },
+          {
+            "text": "koto",
+            "start": 89.055,
+            "end": 89.355
+          },
+          {
+            "text": "bakari",
+            "start": 89.355,
+            "end": 89.855
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kotoba ja wakaran koto bakari",
+      "en": "So much can't be understood through words",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-31",
+      "start": 89.91,
+      "end": 93.02,
+      "words": {
+        "romaji": [
+          {
+            "text": "Soshite",
+            "start": 89.91,
+            "end": 90.36
+          },
+          {
+            "text": "sekai",
+            "start": 90.36,
+            "end": 91.12
+          },
+          {
+            "text": "wa",
+            "start": 91.28,
+            "end": 91.3
+          },
+          {
+            "text": "rifujindarakedashita",
+            "start": 91.42,
+            "end": 93.02
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Soshite sekai wa rifujindarakedashita",
+      "en": "And the world was full of things that made no sense",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-32",
+      "start": 93.425,
+      "end": 94.825,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ashita",
+            "start": 93.425,
+            "end": 93.845
+          },
+          {
+            "text": "no",
+            "start": 93.845,
+            "end": 94.005
+          },
+          {
+            "text": "tenki",
+            "start": 94.005,
+            "end": 94.625
+          },
+          {
+            "text": "o",
+            "start": 94.625,
+            "end": 94.825
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ashita no tenki o",
+      "en": "Tomorrow's weather",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-33",
+      "start": 94.95,
+      "end": 96.29,
+      "words": {
+        "romaji": [
+          {
+            "text": "Yosou",
+            "start": 94.95,
+            "end": 95.35
+          },
+          {
+            "text": "dekiru",
+            "start": 95.35,
+            "end": 95.91
+          },
+          {
+            "text": "you",
+            "start": 96.05,
+            "end": 96.11
+          },
+          {
+            "text": "ni",
+            "start": 96.11,
+            "end": 96.29
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Yosou dekiru you ni",
+      "en": "Just as we can predict it",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-34",
+      "start": 96.32,
+      "end": 98.16,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kono",
+            "start": 96.32,
+            "end": 96.7
+          },
+          {
+            "text": "kokoro",
+            "start": 96.7,
+            "end": 97.16
+          },
+          {
+            "text": "moyou",
+            "start": 97.16,
+            "end": 97.56
+          },
+          {
+            "text": "sae",
+            "start": 97.56,
+            "end": 97.98
+          },
+          {
+            "text": "mo",
+            "start": 97.98,
+            "end": 98.16
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kono kokoro moyou sae mo",
+      "en": "If even the weather in this heart",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-35",
+      "start": 98.18,
+      "end": 99.84,
+      "words": {
+        "romaji": [
+          {
+            "text": "Wakareba",
+            "start": 98.18,
+            "end": 99.14
+          },
+          {
+            "text": "dore",
+            "start": 99.14,
+            "end": 99.6
+          },
+          {
+            "text": "dake",
+            "start": 99.6,
+            "end": 99.84
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Wakareba dore dake",
+      "en": "Could be understood, how much",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-36",
+      "start": 99.86,
+      "end": 101.6,
+      "words": {
+        "romaji": [
+          {
+            "text": "Raku",
+            "start": 99.86,
+            "end": 100.36
+          },
+          {
+            "text": "ni",
+            "start": 100.36,
+            "end": 100.56
+          },
+          {
+            "text": "nareru",
+            "start": 100.56,
+            "end": 100.94
+          },
+          {
+            "text": "ka",
+            "start": 100.94,
+            "end": 101.2
+          },
+          {
+            "text": "natte",
+            "start": 101.2,
+            "end": 101.6
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Raku ni nareru ka natte",
+      "en": "Easier would things become?",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-37",
+      "start": 101.62,
+      "end": 102.66,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kyou",
+            "start": 101.62,
+            "end": 102.0
+          },
+          {
+            "text": "mo",
+            "start": 102.0,
+            "end": 102.18
+          },
+          {
+            "text": "tankyuu",
+            "start": 102.18,
+            "end": 102.66
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kyou mo tankyuu",
+      "en": "Today, I'll keep searching",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-38",
+      "start": 102.68,
+      "end": 105.62,
+      "words": {
+        "romaji": [
+          {
+            "text": "Zutto",
+            "start": 102.68,
+            "end": 103.3
+          },
+          {
+            "text": "sagasuyo",
+            "start": 103.3,
+            "end": 104.22
+          },
+          {
+            "text": "saiensu",
+            "start": 104.22,
+            "end": 104.98
+          },
+          {
+            "text": "mitai",
+            "start": 104.98,
+            "end": 105.44
+          },
+          {
+            "text": "ni",
+            "start": 105.44,
+            "end": 105.62
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Zutto sagasuyo saiensu mitai ni",
+      "en": "I'll always keep searching, like science",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-39",
+      "start": 105.7,
+      "end": 107.6,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kikkari",
+            "start": 105.7,
+            "end": 106.28
+          },
+          {
+            "text": "kirikiri",
+            "start": 106.28,
+            "end": 106.94
+          },
+          {
+            "text": "itamukedo",
+            "start": 107.08,
+            "end": 107.6
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kikkari kirikiri itamukedo",
+      "en": "Though the pain cuts sharply",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-40",
+      "start": 107.7,
+      "end": 110.68,
+      "words": {
+        "romaji": [
+          {
+            "text": "Itsuka",
+            "start": 107.7,
+            "end": 108.38
+          },
+          {
+            "text": "kono",
+            "start": 108.38,
+            "end": 108.78
+          },
+          {
+            "text": "tsura",
+            "start": 108.78,
+            "end": 109.14
+          },
+          {
+            "text": "sa",
+            "start": 109.14,
+            "end": 109.3
+          },
+          {
+            "text": "ga",
+            "start": 109.3,
+            "end": 109.5
+          },
+          {
+            "text": "kate",
+            "start": 109.5,
+            "end": 109.96
+          },
+          {
+            "text": "ni",
+            "start": 109.96,
+            "end": 110.16
+          },
+          {
+            "text": "narukara",
+            "start": 110.16,
+            "end": 110.68
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Itsuka kono tsura sa ga kate ni narukara",
+      "en": "Someday this hardship will help me grow",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-41",
+      "start": 110.7,
+      "end": 112.72,
+      "words": {
+        "romaji": [
+          {
+            "text": "Shoumei",
+            "start": 110.7,
+            "end": 111.46
+          },
+          {
+            "text": "shitaina",
+            "start": 111.46,
+            "end": 112.02
+          },
+          {
+            "text": "shourai",
+            "start": 112.02,
+            "end": 112.56
+          },
+          {
+            "text": "o",
+            "start": 112.56,
+            "end": 112.72
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Shoumei shitaina shourai o",
+      "en": "I want to prove there's a future",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-42",
+      "start": 112.75,
+      "end": 113.23,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ah",
+            "start": 112.75,
+            "end": 113.23
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ah",
+      "en": "Ah",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-43",
+      "start": 113.53,
+      "end": 115.83,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kai",
+            "start": 113.53,
+            "end": 113.65
+          },
+          {
+            "text": "wa",
+            "start": 113.75,
+            "end": 113.77
+          },
+          {
+            "text": "hitotsu",
+            "start": 113.77,
+            "end": 114.41
+          },
+          {
+            "text": "ja",
+            "start": 114.41,
+            "end": 114.67
+          },
+          {
+            "text": "nai",
+            "start": 114.67,
+            "end": 114.95
+          },
+          {
+            "text": "kamo",
+            "start": 114.95,
+            "end": 115.23
+          },
+          {
+            "text": "shirenga",
+            "start": 115.23,
+            "end": 115.83
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kai wa hitotsu ja nai kamo shirenga",
+      "en": "There may be more than one solution",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-44",
+      "start": 115.95,
+      "end": 117.97,
+      "words": {
+        "romaji": [
+          {
+            "text": "Hisshi",
+            "start": 115.95,
+            "end": 116.31
+          },
+          {
+            "text": "ni",
+            "start": 116.31,
+            "end": 116.53
+          },
+          {
+            "text": "aruitetara",
+            "start": 116.53,
+            "end": 117.43
+          },
+          {
+            "text": "seikai?",
+            "start": 117.43,
+            "end": 117.97
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Hisshi ni aruitetara seikai?",
+      "en": "If I keep walking with all I've got, is that the right answer?",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-45",
+      "start": 118.0,
+      "end": 120.8,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ima",
+            "start": 118.0,
+            "end": 118.44
+          },
+          {
+            "text": "dare",
+            "start": 118.44,
+            "end": 118.74
+          },
+          {
+            "text": "mo",
+            "start": 118.74,
+            "end": 118.9
+          },
+          {
+            "text": "shiranai",
+            "start": 118.9,
+            "end": 119.68
+          },
+          {
+            "text": "kotae",
+            "start": 119.68,
+            "end": 120.18
+          },
+          {
+            "text": "o",
+            "start": 120.18,
+            "end": 120.34
+          },
+          {
+            "text": "mitsukete",
+            "start": 120.34,
+            "end": 120.8
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ima dare mo shiranai kotae o mitsukete",
+      "en": "Now I'll find an answer nobody knows",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-46",
+      "start": 120.9,
+      "end": 123.12,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kono",
+            "start": 120.9,
+            "end": 121.26
+          },
+          {
+            "text": "sabishi",
+            "start": 121.26,
+            "end": 121.88
+          },
+          {
+            "text": "sa",
+            "start": 121.88,
+            "end": 122.1
+          },
+          {
+            "text": "o",
+            "start": 122.1,
+            "end": 122.26
+          },
+          {
+            "text": "dakishimetai",
+            "start": 122.26,
+            "end": 123.12
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kono sabishi sa o dakishimetai",
+      "en": "I want to embrace this loneliness",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-47",
+      "start": 123.48,
+      "end": 125.98,
+      "words": {
+        "romaji": [
+          {
+            "text": "Sukoshi",
+            "start": 123.48,
+            "end": 123.98
+          },
+          {
+            "text": "no",
+            "start": 123.98,
+            "end": 124.18
+          },
+          {
+            "text": "ondo",
+            "start": 124.18,
+            "end": 124.62
+          },
+          {
+            "text": "ga",
+            "start": 124.62,
+            "end": 124.88
+          },
+          {
+            "text": "yoru",
+            "start": 124.88,
+            "end": 125.28
+          },
+          {
+            "text": "ni",
+            "start": 125.28,
+            "end": 125.48
+          },
+          {
+            "text": "matte",
+            "start": 125.48,
+            "end": 125.98
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Sukoshi no ondo ga yoru ni matte",
+      "en": "A little warmth dances through the night",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-48",
+      "start": 126.0,
+      "end": 128.64,
+      "words": {
+        "romaji": [
+          {
+            "text": "Sora",
+            "start": 126.0,
+            "end": 126.4
+          },
+          {
+            "text": "no",
+            "start": 126.4,
+            "end": 126.58
+          },
+          {
+            "text": "hate",
+            "start": 126.58,
+            "end": 127.02
+          },
+          {
+            "text": "made",
+            "start": 127.02,
+            "end": 127.36
+          },
+          {
+            "text": "todoite",
+            "start": 127.36,
+            "end": 127.94
+          },
+          {
+            "text": "hoshikute",
+            "start": 127.94,
+            "end": 128.64
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Sora no hate made todoite hoshikute",
+      "en": "Wishing it could reach the edge of the sky",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-49",
+      "start": 128.83,
+      "end": 131.03,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kinou",
+            "start": 128.83,
+            "end": 129.11
+          },
+          {
+            "text": "no",
+            "start": 129.11,
+            "end": 129.27
+          },
+          {
+            "text": "shousoukan",
+            "start": 129.27,
+            "end": 130.23
+          },
+          {
+            "text": "mo",
+            "start": 130.23,
+            "end": 130.37
+          },
+          {
+            "text": "sa",
+            "start": 130.37,
+            "end": 130.59
+          },
+          {
+            "text": "ima wa",
+            "start": 130.59,
+            "end": 131.03
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kinou no shousoukan mo sa ima wa",
+      "en": "Even yesterday's anxious restlessness is now",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-50",
+      "start": 131.1,
+      "end": 133.28,
+      "words": {
+        "romaji": [
+          {
+            "text": "Nami",
+            "start": 131.1,
+            "end": 131.48
+          },
+          {
+            "text": "no",
+            "start": 131.48,
+            "end": 131.66
+          },
+          {
+            "text": "mukou",
+            "start": 131.76,
+            "end": 132.22
+          },
+          {
+            "text": "ni",
+            "start": 132.22,
+            "end": 132.52
+          },
+          {
+            "text": "arun",
+            "start": 132.52,
+            "end": 133.16
+          },
+          {
+            "text": "da",
+            "start": 133.16,
+            "end": 133.28
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Nami no mukou ni arun da",
+      "en": "Beyond the waves",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-51",
+      "start": 153.29,
+      "end": 156.71,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kyou",
+            "start": 153.29,
+            "end": 154.03
+          },
+          {
+            "text": "mo",
+            "start": 154.03,
+            "end": 154.33
+          },
+          {
+            "text": "sagasuyo",
+            "start": 154.33,
+            "end": 155.31
+          },
+          {
+            "text": "saiensu",
+            "start": 155.31,
+            "end": 156.05
+          },
+          {
+            "text": "mitai",
+            "start": 156.05,
+            "end": 156.49
+          },
+          {
+            "text": "ni",
+            "start": 156.49,
+            "end": 156.71
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kyou mo sagasuyo saiensu mitai ni",
+      "en": "Today I'll keep searching, like science",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-52",
+      "start": 156.74,
+      "end": 158.72,
+      "words": {
+        "romaji": [
+          {
+            "text": "Sappari",
+            "start": 156.74,
+            "end": 157.38
+          },
+          {
+            "text": "sarasara",
+            "start": 157.38,
+            "end": 158.02
+          },
+          {
+            "text": "sanzanna",
+            "start": 158.02,
+            "end": 158.72
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Sappari sarasara sanzanna",
+      "en": "Completely, utterly disastrous",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-53",
+      "start": 158.82,
+      "end": 161.8,
+      "words": {
+        "romaji": [
+          {
+            "text": "Mainichidarou",
+            "start": 158.82,
+            "end": 159.98
+          },
+          {
+            "text": "to",
+            "start": 159.98,
+            "end": 160.22
+          },
+          {
+            "text": "furasuko",
+            "start": 160.22,
+            "end": 161.06
+          },
+          {
+            "text": "no",
+            "start": 161.06,
+            "end": 161.18
+          },
+          {
+            "text": "hannou",
+            "start": 161.18,
+            "end": 161.8
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Mainichidarou to furasuko no hannou",
+      "en": "Even through days like these, a reaction in a flask",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-54",
+      "start": 161.83,
+      "end": 163.79,
+      "words": {
+        "romaji": [
+          {
+            "text": "Sonzai",
+            "start": 161.83,
+            "end": 162.53
+          },
+          {
+            "text": "shoumei",
+            "start": 162.53,
+            "end": 163.11
+          },
+          {
+            "text": "mitsuketai",
+            "start": 163.11,
+            "end": 163.79
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Sonzai shoumei mitsuketai",
+      "en": "I want to find proof that I exist",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-55",
+      "start": 163.92,
+      "end": 164.36,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ah",
+            "start": 163.92,
+            "end": 164.36
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ah",
+      "en": "Ah",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-56",
+      "start": 164.61,
+      "end": 166.89,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kai",
+            "start": 164.61,
+            "end": 164.75
+          },
+          {
+            "text": "ga",
+            "start": 164.75,
+            "end": 164.89
+          },
+          {
+            "text": "nai",
+            "start": 164.89,
+            "end": 165.19
+          },
+          {
+            "text": "nante",
+            "start": 165.19,
+            "end": 165.67
+          },
+          {
+            "text": "iwanaidekureyo",
+            "start": 165.67,
+            "end": 166.89
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kai ga nai nante iwanaidekureyo",
+      "en": "Please don't tell me there's no solution",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-57",
+      "start": 166.92,
+      "end": 168.86,
+      "words": {
+        "romaji": [
+          {
+            "text": "Hisshi",
+            "start": 166.92,
+            "end": 167.36
+          },
+          {
+            "text": "ni",
+            "start": 167.36,
+            "end": 167.56
+          },
+          {
+            "text": "ikiteru",
+            "start": 167.56,
+            "end": 168.18
+          },
+          {
+            "text": "kono",
+            "start": 168.18,
+            "end": 168.42
+          },
+          {
+            "text": "sekai",
+            "start": 168.42,
+            "end": 168.86
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Hisshi ni ikiteru kono sekai",
+      "en": "In this world where I'm desperately trying to live",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-58",
+      "start": 168.96,
+      "end": 171.88,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ima",
+            "start": 168.96,
+            "end": 169.52
+          },
+          {
+            "text": "dare",
+            "start": 169.52,
+            "end": 169.8
+          },
+          {
+            "text": "mo",
+            "start": 169.8,
+            "end": 169.98
+          },
+          {
+            "text": "shiranai",
+            "start": 169.98,
+            "end": 170.74
+          },
+          {
+            "text": "teiri",
+            "start": 170.74,
+            "end": 171.24
+          },
+          {
+            "text": "o",
+            "start": 171.24,
+            "end": 171.4
+          },
+          {
+            "text": "mitsukete",
+            "start": 171.4,
+            "end": 171.88
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ima dare mo shiranai teiri o mitsukete",
+      "en": "Now I'll find a theorem nobody knows",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-59",
+      "start": 171.96,
+      "end": 174.12,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kono",
+            "start": 171.96,
+            "end": 172.34
+          },
+          {
+            "text": "sabishi",
+            "start": 172.34,
+            "end": 172.96
+          },
+          {
+            "text": "sa",
+            "start": 172.96,
+            "end": 173.14
+          },
+          {
+            "text": "ni",
+            "start": 173.14,
+            "end": 173.32
+          },
+          {
+            "text": "o",
+            "start": 173.32,
+            "end": 173.52
+          },
+          {
+            "text": "wakare",
+            "start": 173.58,
+            "end": 173.94
+          },
+          {
+            "text": "o",
+            "start": 173.94,
+            "end": 174.12
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kono sabishi sa ni o wakare o",
+      "en": "And say goodbye to this loneliness",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-60",
+      "start": 174.285,
+      "end": 176.495,
+      "words": {
+        "romaji": [
+          {
+            "text": "Sukoshi",
+            "start": 174.285,
+            "end": 175.055
+          },
+          {
+            "text": "no",
+            "start": 175.055,
+            "end": 175.235
+          },
+          {
+            "text": "nemurenu",
+            "start": 175.235,
+            "end": 175.895
+          },
+          {
+            "text": "yoru",
+            "start": 175.895,
+            "end": 176.315
+          },
+          {
+            "text": "ni",
+            "start": 176.315,
+            "end": 176.495
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Sukoshi no nemurenu yoru ni",
+      "en": "On a slightly sleepless night",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-61",
+      "start": 176.52,
+      "end": 178.92,
+      "words": {
+        "romaji": [
+          {
+            "text": "Kono",
+            "start": 176.52,
+            "end": 176.96
+          },
+          {
+            "text": "mahou",
+            "start": 176.96,
+            "end": 177.44
+          },
+          {
+            "text": "ga",
+            "start": 177.44,
+            "end": 177.62
+          },
+          {
+            "text": "honoka",
+            "start": 177.62,
+            "end": 178.1
+          },
+          {
+            "text": "ni",
+            "start": 178.1,
+            "end": 178.26
+          },
+          {
+            "text": "tomorunara",
+            "start": 178.26,
+            "end": 178.92
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Kono mahou ga honoka ni tomorunara",
+      "en": "If this magic can glow faintly",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-62",
+      "start": 179.04,
+      "end": 181.42,
+      "words": {
+        "romaji": [
+          {
+            "text": "Ima",
+            "start": 179.04,
+            "end": 179.54
+          },
+          {
+            "text": "ga",
+            "start": 179.54,
+            "end": 179.68
+          },
+          {
+            "text": "sonnani",
+            "start": 179.68,
+            "end": 180.34
+          },
+          {
+            "text": "warukunai",
+            "start": 180.34,
+            "end": 181.18
+          },
+          {
+            "text": "tte",
+            "start": 181.18,
+            "end": 181.42
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Ima ga sonnani warukunai tte",
+      "en": "Until I can say things aren't so bad right now",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-63",
+      "start": 181.58,
+      "end": 183.54,
+      "words": {
+        "romaji": [
+          {
+            "text": "Waraeru",
+            "start": 181.58,
+            "end": 182.4
+          },
+          {
+            "text": "toki",
+            "start": 182.4,
+            "end": 182.7
+          },
+          {
+            "text": "made",
+            "start": 182.7,
+            "end": 183.02
+          },
+          {
+            "text": "kyou",
+            "start": 183.02,
+            "end": 183.38
+          },
+          {
+            "text": "mo",
+            "start": 183.38,
+            "end": 183.54
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Waraeru toki made kyou mo",
+      "en": "Until I can smile, today too",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-64",
+      "start": 184.07,
+      "end": 184.53,
+      "words": {
+        "romaji": [
+          {
+            "text": "Science!",
+            "start": 184.07,
+            "end": 184.53
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "Science!",
+      "en": "Science!",
+      "zh": "",
+      "pinyin": ""
+    }
+  ],
+  "alignment": {
+    "recording": "songs/MIMI - Science.m4a",
+    "audioSha256": "5731c745fe08754449cf4cd7ead8aa01e972301debe43157d4d9f47815073576",
+    "duration": 188.058437,
+    "model": "mlx-community/whisper-large-v3-turbo",
+    "stableTs": "2.19.1",
+    "method": "ASR-anchored phrase-constrained forced alignment",
+    "seconds": 37.91,
+    "reviewed": false,
+    "status": "approved",
+    "approved": true,
+    "approvedBy": "Joshua Glass",
+    "approvalDate": "2026-10-23",
+    "sourceText": "../drafts/science-jp.json",
+    "reviewNotes": [
+      {
+        "line": 13,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.286
+      },
+      {
+        "line": 49,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      }
+    ],
+    "repairs": {}
+  }
+}

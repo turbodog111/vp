@@ -2,26 +2,28 @@ VP VOCALOID-RELATED / BTS LYRIC COVERAGE
 Includes named Vocaloid-related songs and their covers. Explicit instrumental tracks are exempt; piano/drum covers require a vocal-presence check.
 English-language recordings require English, not artificial Japanese or romaji.
 Text-complete means required language text exists on every line. It does NOT certify acoustic timing.
-Missing words/translations need user-provided or appropriately licensed source material.
+Text-ready drafts contain user-supplied words but do not have verified timing. Ochame Kinou is excluded at user request.
+Local-review means acoustic timing candidates are available on localhost; it does not mean listening approval or publication.
+Approved means Joshua accepted the recording-specific lyric presentation for publication; it is not a claim of sample-perfect acoustic timing.
 
-Summary: {"missing":19,"text-complete":8,"vocal-review":10,"instrumental":1}
+Summary: {"approved":9,"excluded":15,"vocal-review":6,"missing":1,"instrumental":1,"text-complete":6}
 
-1. [missing] songs/BTS - Butter.m4a
-   Needs: en
-2. [missing] songs/BTS - Dynamite.m4a
-   Needs: en
-3. [missing] songs/Campus Village - Teto.m4a
-   Needs: source-language review, en
-4. [text-complete] songs/Farewell225 - Window View.m4a
-   47 timed lines; ./songs/lyrics/window-view-jp.json
-5. [missing] songs/Glitterbee - Ochame Kinou (English Language).m4a
-   Needs: en
-6. [missing] songs/hololive - Ochame Kinou (Japanese).m4a
-   Needs: romaji, en
-7. [missing] songs/hololive English - Ochame Kinou (English).m4a
-   Needs: en
-8. [missing] songs/Jamie Paige - Machine Love.m4a
-   Needs: en
+1. [approved] songs/BTS - Butter.m4a
+   52 timed lines; ./songs/lyrics/aligned/butter.json
+2. [approved] songs/BTS - Dynamite.m4a
+   58 timed lines; ./songs/lyrics/aligned/dynamite.json
+3. [excluded] songs/Campus Village - Teto.m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
+4. [approved] songs/Farewell225 - Window View.m4a
+   43 timed lines; ./songs/lyrics/window-view-jp.json
+5. [excluded] songs/Glitterbee - Ochame Kinou (English Language).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
+6. [excluded] songs/hololive - Ochame Kinou (Japanese).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
+7. [excluded] songs/hololive English - Ochame Kinou (English).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
+8. [excluded] songs/Jamie Paige - Machine Love.m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
 9. [vocal-review] songs/Joshua Glass & GPT-5.6 Sol - Encore Dance (Piano Hyperpop).m4a
    Needs: Confirm whether this rendition retains sung backing vocals.
 10. [vocal-review] songs/Joshua Glass & GPT-5.6 Sol - Encore Dance (Piano, Strings & Harp).m4a
@@ -32,53 +34,53 @@ Summary: {"missing":19,"text-complete":8,"vocal-review":10,"instrumental":1}
    Needs: source-language review, en
 13. [instrumental] songs/Joshua Glass & GPT-6 Sol - Magic Maid (Hyperpop Instrumental).m4a
    No sung-lyric requirement.
-14. [missing] songs/Kasane Teto - Freefall.m4a
-   Needs: source-language review, en
+14. [approved] songs/Kasane Teto - Freefall.m4a
+   61 timed lines; ./songs/lyrics/aligned/freefall.json
 15. [text-complete] songs/Kasane Teto - One More Bite.m4a
    43 timed lines; ./songs/lyrics/one-more-bite.json
 16. [text-complete] songs/Kasane Teto - Waiting for Tomorrow.m4a
    43 timed lines; ./songs/lyrics/waiting-for-tomorrow.json
-17. [missing] songs/Kasane Teto SV - Fever Dream.m4a
-   Needs: source-language review, en
-18. [missing] songs/Kasane Teto SV - Ochame Kinou (New Teto).m4a
-   Needs: romaji, en
-19. [vocal-review] songs/Lambie - Machine Love (Drums).m4a
-   Needs: Confirm whether this rendition retains sung backing vocals.
+17. [excluded] songs/Kasane Teto SV - Fever Dream.m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
+18. [excluded] songs/Kasane Teto SV - Ochame Kinou (New Teto).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
+19. [excluded] songs/Lambie - Machine Love (Drums).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
 20. [vocal-review] songs/Marco D. Piano Tutorial - Encore Dance (Piano).m4a
    Needs: Confirm whether this rendition retains sung backing vocals.
-21. [missing] songs/MiliSen - Ever Romantic.m4a
-   Needs: en
+21. [approved] songs/MiliSen - Ever Romantic.m4a
+   31 timed lines; ./songs/lyrics/aligned/ever-romantic.json
 22. [text-complete] songs/MIMI - Encore Dance (Japanese).m4a
    27 timed lines; ./songs/lyrics/encore-dance.json
-23. [missing] songs/MIMI - Science.m4a
-   Needs: romaji, en
-24. [missing] songs/MIMI feat. Hatsune Miku - Marshmary.m4a
-   Needs: romaji, en
+23. [approved] songs/MIMI - Science.m4a
+   64 timed lines; ./songs/lyrics/aligned/science-jp.json
+24. [approved] songs/MIMI feat. Hatsune Miku - Marshmary.m4a
+   48 timed lines; ./songs/lyrics/aligned/marshmary.json
 25. [text-complete] songs/MIMI feat. Kasane Teto SV - Magic Maid.m4a
    48 timed lines; ./songs/lyrics/magic-maid.json
-26. [missing] songs/MIMI feat. Kasane Teto SV - Petal Lament.m4a
-   Needs: romaji, en
+26. [approved] songs/MIMI feat. Kasane Teto SV - Petal Lament.m4a
+   25 timed lines; ./songs/lyrics/aligned/petal-lament.json
 27. [text-complete] songs/MIMI feat. Kasane Teto SV - Trick Heart.m4a
    54 timed lines; ./songs/lyrics/trick-heart.json
 28. [text-complete] songs/Moonlit Star - Encore Dance (English).m4a
    31 timed lines; ./songs/lyrics/encore-dance.json
-29. [missing] songs/Moonlit Star - Science (English).m4a
-   Needs: en
-30. [text-complete] songs/Moonlit Star - Window View (English).m4a
+29. [excluded] songs/Moonlit Star - Science (English).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
+30. [approved] songs/Moonlit Star - Window View (English).m4a
    45 timed lines; ./songs/lyrics/window-view-en.json
-31. [vocal-review] songs/Octosona - Machine Love (Piano).m4a
-   Needs: Confirm whether this rendition retains sung backing vocals.
+31. [excluded] songs/Octosona - Machine Love (Piano).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
 32. [vocal-review] songs/rinboku - piano - Encore Dance (Piano).m4a
    Needs: Confirm whether this rendition retains sung backing vocals.
-33. [missing] songs/sinitaina - Ochame Kinou (Onvocal).m4a
-   Needs: romaji, en
+33. [excluded] songs/sinitaina - Ochame Kinou (Onvocal).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
 34. [vocal-review] songs/Sky - Encore Dance (Piano).m4a
    Needs: Confirm whether this rendition retains sung backing vocals.
-35. [vocal-review] songs/The8BitDrummer - Machine Love (Drums).m4a
-   Needs: Confirm whether this rendition retains sung backing vocals.
-36. [missing] songs/tripflag - Ochame Kinou (Old Teto).m4a
-   Needs: romaji, en
-37. [missing] songs/venvn - Machine Love (Acoustic).m4a
-   Needs: en
-38. [vocal-review] songs/Yanny the Laurel - Machine Love (Piano Duo).m4a
-   Needs: Confirm whether this rendition retains sung backing vocals.
+35. [excluded] songs/The8BitDrummer - Machine Love (Drums).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
+36. [excluded] songs/tripflag - Ochame Kinou (Old Teto).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
+37. [excluded] songs/venvn - Machine Love (Acoustic).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
+38. [excluded] songs/Yanny the Laurel - Machine Love (Piano Duo).m4a
+   Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.

@@ -1,0 +1,150 @@
+VP LYRIC IMPLEMENTATION / 2026-10-23 / APPROVED RELEASE
+
+JOSHUA'S REVIEW / 2026-10-23
+Joshua approved the complete reviewed build and authorized its GitHub push.
+This covers all seven synchronized timelines, both Window View renditions,
+the lyric studio and seamless display, and smooth train-window motion.
+Approval metadata and release labels changed; accepted words, timings and
+visuals remain as reviewed. Future acoustic rebuilds reset approval.
+
+WINDOW VIEW / JAPANESE RECORDING
+Romaji now uses acoustically measured word/group highlighting rather than a
+static companion. Japanese, romaji and English stay centered, without a panel.
+The Japanese and romaji have separate measured token spans; the English meaning
+translation remains phrase-level, not falsely assigned sung English timings.
+Exact recording duration: 145.8213125s, measured from decoded samples.
+Independent transcription plus bounded alignment replaces text-length estimates.
+The opening first line now ends around 3.09s rather than 2.02s. A later phrase
+ends at 35.36s rather than remaining visible until 39.90s across the rest.
+Four artificial ending refrain repeats from the original builder were removed:
+full-recording recognition and two separate ending excerpts support the last
+phrase ending around 99.8s followed by instrumental music. Accepted by Joshua.
+Evidence and originals: ../lyric-alignment-20261022/window-view/ (local only).
+Window View (English): Joshua supplied the actual cover lyrics after the initial
+Japanese review. All 45 supplied phrases now replace the old literal translation,
+with 316 measured word/group spans on Moonlit Star's exact recording. The original
+timeline remains preserved in the local evidence folder. Source text is kept at
+songs/lyrics/sources/window-view-en.txt with a SHA-256 binding in the timeline.
+Vocals run from 0.56s to 99.86s; instrumental gaps and the ending have no lyrics.
+Independent excerpt checks repair the Just kidding entrance to 51.22s and keep
+the held Somewhere visible for both measured syllables, 95.24-96.06s. Repairs
+and evidence references are recorded in alignment-repairs.json. The source's
+So I'll phrase has low independent-recognition coverage and remains a listening
+review point in the retained acoustic evidence; supplied wording is unchanged.
+Joshua accepted this rendition for publication along with the complete build.
+
+Window View scenery now uses absolute audio time at a constant travel speed.
+Loudness affects only small lighting accents, never position. All depth layers
+move in the same direction; off-screen wraps and six-second palette/scenery
+crossfades replace speed jumps, hard scene cuts and crowded foreground poles.
+Shared scene fix covers both Window View renditions; no audio transport changes.
+Paused seeks and viewport resizing also repaint the story background once at
+the new audio time; previously only the lyric/section labels changed on a seek.
+Verified muted in the in-app browser; 99 JavaScript and 12 Python checks pass.
+
+SYNCHRONIZED APPROVED TIMELINES
+Preview: http://127.0.0.1:4187/ with FX for supported songs enabled.
+Butter: 52 cues; Dynamite: 58; Ever Romantic: 31; Science: 64;
+Petal Lament: 25; Marshmary: 48; Freefall: 61. Total: 339.
+All seven are bound to their exact local audio path, measured duration and SHA-256.
+They automatically render through lyric-workbench.js without changing audio
+transport, graph, timing calibration or published theater code.
+
+Alignment: cached multilingual Whisper large-v3-turbo on Apple MLX, stable-ts
+2.19.1. Independent transcription established vocal neighborhoods; phrase-
+constrained forced alignment measured source-language words. Japanese romaji
+was converted to pronunciation kana internally, then mapped back to the original
+romaji words. No Japanese script was guessed for the on-screen text. Chinese
+and mixed English remain the source lane for Freefall; pinyin is its companion.
+Translation words are not assigned fabricated phonetic timings.
+
+The original whole-song pass failed around several repeated refrains and
+instrumental breaks. Those results were not used wholesale. Bounded passes,
+independent ASR comparisons, exact rest corrections and English excerpt checks
+resolved those failures. alignment-repairs.json records the explicit repairs:
+- Dynamite: two repeated chorus entrances restored from the supplied refrain;
+  unrelated live callouts removed from the working copy; final refrain repaired.
+- Ever Romantic: rests after 'again' and before the closing 'til the end' restored.
+- Freefall: two short background entrances checked in separate English excerpts.
+Adjacent source tokens that could not be timed independently remain measured
+groups. Review notes identify low independent-recognition matches, grouped
+ad-libs and uncertain source wording. Automated validation is not listening
+approval. Joshua's explicit acceptance on 2026-10-23 authorizes this release.
+
+Browser checks: word states reset on backwards seek; instrumental gaps clear;
+FX off hides lyrics; compact bilingual layout fits without covering controls.
+The preview was tested muted, without launching Chrome or a second audio player.
+
+SAVED TEXT, NOT YET ACOUSTICALLY ALIGNED
+Butter: 52 lines; English.
+Dynamite: 56 lines; English; supplied live callouts and opening need recording review.
+Ever Romantic: 28 lines; English.
+Science: 64 lines; supplied romaji + provisional English meaning translation.
+Petal Lament: 25 lines; supplied romaji + provisional English meaning translation.
+Marshmary: 48 lines; supplied romaji + provisional English meaning translation.
+Freefall: 61 lines; mixed Chinese/English + untoned pinyin + English meaning translation.
+Total: 334 lines. All timestamps are null until measured. No automated guessed timings.
+Recommendation widgets, links, and stanza headings were removed. Supplied lyric
+wording is retained, with punctuation normalization. Translation uncertainties
+are identified in the source notes. These are not official translations.
+
+DEFERRED AT JOSHUA'S REQUEST
+Machine Love and its renditions; Science (English); Teto by Campus Village;
+Fever Dream; every Ochame Kinou rendition. No text requests remain for the seven
+recordings included in this local synchronization pass.
+
+LOCAL EDITING
+Open VP, select a recording, and choose Lyrics (or Settings > Lyric studio).
+Load prepared text populates an EMPTY draft for the seven recordings above.
+It does not overwrite an existing draft or change published lyric files.
+For new material, paste one phrase per line in the appropriate language columns.
+Blank lines are ignored. All supplied columns must have equal line counts.
+English songs only display the English column. Japanese songs use romaji and
+English, with optional Japanese script. Freefall uses Chinese/pinyin/English.
+Line numbers are automatic. Enter seconds or mm:ss.xxx in In/Out fields, or
+use Mark in/Mark out while listening. Use Seek to review a line with the existing
+player. The editor never creates a second audio player or changes playback rate.
+Draft changes save on blur/change in this browser. A storage failure is visible;
+Export draft remains available. Export/Import transfers the exact recording's
+draft between Macs. This is not cloud sync.
+Preview local draft affects only this browser. FX for supported songs must also
+be enabled. Untimed/invalid drafts cannot become active lyrics. Now Playing
+returns to the original graphics with the local lyric display above them.
+
+DISPLAY CONTRACT
+One current phrase, with English prominent and native/romanized text subordinate.
+Whole words change solid color when word timings are supplied; no per-letter
+gradients, constant-speed fill, or simulated timing based on character count.
+Without word timings, the entire phrase displays for its measured interval.
+Line end is exclusive: text disappears at end and stays absent during silence.
+The overlay never intercepts controls. Original graphics and audio remain.
+Published lyric displays are hidden only during an explicitly enabled local
+preview and return when the preview or FX setting is disabled.
+
+REVIEW CHECKLIST BEFORE PUBLICATION
+1. Confirm exact audio file, duration, source text, omissions and ad-libs.
+2. Mark actual vocal phrase starts and ends on this recording; amplitude alone
+   cannot identify words or distinguish a drum hit from a consonant.
+3. Align source-language words using acoustic evidence and review difficult
+   consonants, pickups, sustained vowels, repeated choruses and backing vocals.
+4. Do not independently timestamp translated English words to unrelated sounds.
+   Use phrase-level companions unless semantic word groups have been reviewed.
+5. Check first entrance, every section transition, instrumental gap, last sung
+   word, seek backwards, repeated pause/play and playback-rate changes.
+6. Export validated draft; review all warnings; only then promote to a published
+   recording-specific timeline and update the coverage audit.
+
+JSON FORMAT
+schemaVersion: 1
+recording: exact manifest path, including extension
+language: en | ja | zh-en | und
+duration: seconds, or null while unverified
+source: source/rendition/review notes
+preview: boolean local opt-in
+rows: [{id, start, end, ja, romaji, en, zh, pinyin, words}]
+start/end: seconds, or null in drafts
+words: optional language-keyed arrays of {text,start,end}; all word text must
+match the corresponding line and all intervals must remain inside that line.
+Drafts reject unknown schema, mismatched recording, duplicate IDs, excessive
+input size, malformed numeric fields, overlap, reversed intervals, wrong
+duration and inconsistent word text. Text is rendered with textContent.

@@ -148,6 +148,9 @@ def audio_analysis(path):
 
 
 def write_dataset(filename, language, artist, audio_path, line_specs):
+    destination = ROOT / "songs" / "lyrics" / filename
+    if destination.exists() and json.loads(destination.read_text()).get("alignment"):
+        raise RuntimeError("Acoustic timeline protected; use align_window_view.py instead of the legacy estimated builder")
     lines = []
     for start, end, text, tokens in line_specs:
         if isinstance(tokens, str):
@@ -168,7 +171,6 @@ def write_dataset(filename, language, artist, audio_path, line_specs):
         "analysis": audio_analysis(audio_path),
         "timingMethod": "Recording-specific synced LRC anchors, phrase mapping, and measured audio envelope.",
     }
-    destination = ROOT / "songs" / "lyrics" / filename
     destination.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 

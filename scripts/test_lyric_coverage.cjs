@@ -4,14 +4,24 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { audit } = require('./audit_lyric_coverage.cjs');
 
-test('coverage reports missing BTS lyrics honestly instead of certifying graphics as lyrics', () => {
+test('coverage records Joshua approval for the synchronized BTS release', () => {
   const rows = audit();
   for (const title of ['Butter', 'Dynamite']) {
     const row = rows.find(row => row.recording === `songs/BTS - ${title}.m4a`);
     assert.ok(row);
-    assert.equal(row.status, 'missing');
-    assert.deepEqual(row.missing, ['en']);
+    assert.equal(row.status, 'approved');
+    assert.deepEqual(row.missing, []);
   }
+});
+
+test('all expressly deferred songs are excluded from this synchronization task', () => {
+  for (const row of audit().filter(row => /Machine Love|Science \(English\)|Campus Village - Teto|Fever Dream/.test(row.recording))) assert.equal(row.status,'excluded');
+});
+
+test('Ochame Kinou is excluded at the user request, not marked complete', () => {
+  const rows = audit().filter(row => /Ochame Kinou/.test(row.recording));
+  assert.equal(rows.length, 6);
+  for (const row of rows) assert.equal(row.status, 'excluded');
 });
 
 test('Japanese Window View has a companion translation for every existing timed line', () => {
@@ -21,7 +31,7 @@ test('Japanese Window View has a companion translation for every existing timed 
     assert.ok(entry.romaji.trim()); assert.ok(entry.en.trim());
     assert.ok(!/[\u3040-\u30ff\u4e00-\u9fff]/u.test(entry.romaji));
   }
-  assert.equal(audit().find(row => row.recording.includes('Farewell225')).status, 'text-complete');
+  assert.equal(audit().find(row => row.recording.includes('Farewell225')).status, 'approved');
 });
 
 test('all three established parallel Japanese songs retain complete language coverage', () => {

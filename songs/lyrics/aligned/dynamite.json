@@ -1,0 +1,3129 @@
+{
+  "schemaVersion": 1,
+  "recording": "songs/BTS - Dynamite.m4a",
+  "language": "en",
+  "duration": 200.272125,
+  "preview": false,
+  "source": "Joshua's supplied text; recording-specific MLX Whisper large-v3-turbo / stable-ts acoustic alignment. Approved by Joshua for publication on 2026-10-23. Companion translations are provisional meaning translations.",
+  "rows": [
+    {
+      "id": "opening-repeated-chorus",
+      "start": 0.38,
+      "end": 3.26,
+      "words": {
+        "en": [
+          {
+            "text": "'Cause",
+            "start": 0.38,
+            "end": 0.68
+          },
+          {
+            "text": "I,",
+            "start": 0.68,
+            "end": 1.22
+          },
+          {
+            "text": "I,",
+            "start": 1.28,
+            "end": 1.74
+          },
+          {
+            "text": "I'm in",
+            "start": 1.8,
+            "end": 2.5
+          },
+          {
+            "text": "the",
+            "start": 2.5,
+            "end": 2.66
+          },
+          {
+            "text": "stars",
+            "start": 2.66,
+            "end": 2.94
+          },
+          {
+            "text": "tonight",
+            "start": 2.94,
+            "end": 3.26
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "'Cause I, I, I'm in the stars tonight",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-1",
+      "start": 3.61,
+      "end": 6.15,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 3.61,
+            "end": 4.31
+          },
+          {
+            "text": "watch",
+            "start": 4.31,
+            "end": 4.49
+          },
+          {
+            "text": "me",
+            "start": 4.49,
+            "end": 4.71
+          },
+          {
+            "text": "bring",
+            "start": 4.71,
+            "end": 5.23
+          },
+          {
+            "text": "the",
+            "start": 5.23,
+            "end": 5.71
+          },
+          {
+            "text": "fire",
+            "start": 5.71,
+            "end": 6.15
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So watch me bring the fire",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-2",
+      "start": 6.26,
+      "end": 7.52,
+      "words": {
+        "en": [
+          {
+            "text": "And",
+            "start": 6.26,
+            "end": 6.46
+          },
+          {
+            "text": "set",
+            "start": 6.46,
+            "end": 6.72
+          },
+          {
+            "text": "the",
+            "start": 6.72,
+            "end": 6.84
+          },
+          {
+            "text": "night",
+            "start": 6.84,
+            "end": 7.1
+          },
+          {
+            "text": "alight",
+            "start": 7.1,
+            "end": 7.52
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "And set the night alight",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-3",
+      "start": 9.35,
+      "end": 10.87,
+      "words": {
+        "en": [
+          {
+            "text": "Shoes",
+            "start": 9.35,
+            "end": 9.67
+          },
+          {
+            "text": "on,",
+            "start": 9.67,
+            "end": 9.99
+          },
+          {
+            "text": "get",
+            "start": 10.15,
+            "end": 10.25
+          },
+          {
+            "text": "up",
+            "start": 10.25,
+            "end": 10.41
+          },
+          {
+            "text": "in",
+            "start": 10.41,
+            "end": 10.53
+          },
+          {
+            "text": "the",
+            "start": 10.53,
+            "end": 10.63
+          },
+          {
+            "text": "morn'",
+            "start": 10.63,
+            "end": 10.87
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Shoes on, get up in the morn'",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-4",
+      "start": 10.9,
+      "end": 12.52,
+      "words": {
+        "en": [
+          {
+            "text": "Cup",
+            "start": 10.9,
+            "end": 11.08
+          },
+          {
+            "text": "of",
+            "start": 11.08,
+            "end": 11.18
+          },
+          {
+            "text": "milk,",
+            "start": 11.18,
+            "end": 11.4
+          },
+          {
+            "text": "let's",
+            "start": 11.54,
+            "end": 11.72
+          },
+          {
+            "text": "rock",
+            "start": 11.72,
+            "end": 12.02
+          },
+          {
+            "text": "and",
+            "start": 12.02,
+            "end": 12.16
+          },
+          {
+            "text": "roll",
+            "start": 12.16,
+            "end": 12.52
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Cup of milk, let's rock and roll",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-5",
+      "start": 13.135,
+      "end": 14.975,
+      "words": {
+        "en": [
+          {
+            "text": "King",
+            "start": 13.135,
+            "end": 13.735
+          },
+          {
+            "text": "Kong,",
+            "start": 13.735,
+            "end": 14.115
+          },
+          {
+            "text": "kick",
+            "start": 14.395,
+            "end": 14.515
+          },
+          {
+            "text": "the",
+            "start": 14.515,
+            "end": 14.735
+          },
+          {
+            "text": "drum",
+            "start": 14.735,
+            "end": 14.975
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "King Kong, kick the drum",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-6",
+      "start": 15.09,
+      "end": 16.89,
+      "words": {
+        "en": [
+          {
+            "text": "Rolling",
+            "start": 15.09,
+            "end": 15.41
+          },
+          {
+            "text": "on",
+            "start": 15.41,
+            "end": 15.57
+          },
+          {
+            "text": "like",
+            "start": 15.57,
+            "end": 15.83
+          },
+          {
+            "text": "a",
+            "start": 15.83,
+            "end": 15.93
+          },
+          {
+            "text": "rolling",
+            "start": 15.93,
+            "end": 16.21
+          },
+          {
+            "text": "stone",
+            "start": 16.21,
+            "end": 16.89
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Rolling on like a rolling stone",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-7",
+      "start": 17.42,
+      "end": 19.21,
+      "words": {
+        "en": [
+          {
+            "text": "Sing-song",
+            "start": 17.42,
+            "end": 18.17
+          },
+          {
+            "text": "when",
+            "start": 18.17,
+            "end": 18.45
+          },
+          {
+            "text": "I'm",
+            "start": 18.45,
+            "end": 18.59
+          },
+          {
+            "text": "walking",
+            "start": 18.59,
+            "end": 18.91
+          },
+          {
+            "text": "home",
+            "start": 18.91,
+            "end": 19.21
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Sing-song when I'm walking home",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-8",
+      "start": 19.24,
+      "end": 20.96,
+      "words": {
+        "en": [
+          {
+            "text": "Jump",
+            "start": 19.24,
+            "end": 19.58
+          },
+          {
+            "text": "up",
+            "start": 19.58,
+            "end": 19.76
+          },
+          {
+            "text": "to",
+            "start": 19.76,
+            "end": 20.0
+          },
+          {
+            "text": "the",
+            "start": 20.0,
+            "end": 20.1
+          },
+          {
+            "text": "top,",
+            "start": 20.1,
+            "end": 20.38
+          },
+          {
+            "text": "LeBron",
+            "start": 20.42,
+            "end": 20.96
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Jump up to the top, LeBron",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-9",
+      "start": 22.035,
+      "end": 23.405,
+      "words": {
+        "en": [
+          {
+            "text": "Ding-dong,",
+            "start": 22.035,
+            "end": 22.385
+          },
+          {
+            "text": "call",
+            "start": 22.505,
+            "end": 22.645
+          },
+          {
+            "text": "me",
+            "start": 22.645,
+            "end": 22.785
+          },
+          {
+            "text": "on",
+            "start": 22.785,
+            "end": 22.925
+          },
+          {
+            "text": "my",
+            "start": 22.925,
+            "end": 23.065
+          },
+          {
+            "text": "phone",
+            "start": 23.065,
+            "end": 23.405
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Ding-dong, call me on my phone",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-10",
+      "start": 23.5,
+      "end": 24.93,
+      "words": {
+        "en": [
+          {
+            "text": "Ice",
+            "start": 23.5,
+            "end": 23.82
+          },
+          {
+            "text": "tea,",
+            "start": 23.82,
+            "end": 24.04
+          },
+          {
+            "text": "and",
+            "start": 24.16,
+            "end": 24.26
+          },
+          {
+            "text": "a",
+            "start": 24.26,
+            "end": 24.32
+          },
+          {
+            "text": "game",
+            "start": 24.32,
+            "end": 24.46
+          },
+          {
+            "text": "of",
+            "start": 24.46,
+            "end": 24.58
+          },
+          {
+            "text": "ping-pong",
+            "start": 24.58,
+            "end": 24.93
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Ice tea, and a game of ping-pong",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-11",
+      "start": 25.52,
+      "end": 29.27,
+      "words": {
+        "en": [
+          {
+            "text": "This",
+            "start": 25.52,
+            "end": 26.17
+          },
+          {
+            "text": "is",
+            "start": 26.17,
+            "end": 26.43
+          },
+          {
+            "text": "getting",
+            "start": 26.43,
+            "end": 26.65
+          },
+          {
+            "text": "heavy,",
+            "start": 26.65,
+            "end": 27.27
+          },
+          {
+            "text": "can",
+            "start": 27.37,
+            "end": 27.65
+          },
+          {
+            "text": "you",
+            "start": 27.65,
+            "end": 27.77
+          },
+          {
+            "text": "hear",
+            "start": 27.77,
+            "end": 27.95
+          },
+          {
+            "text": "the",
+            "start": 27.95,
+            "end": 28.03
+          },
+          {
+            "text": "bass",
+            "start": 28.03,
+            "end": 28.31
+          },
+          {
+            "text": "boom?",
+            "start": 28.31,
+            "end": 28.65
+          },
+          {
+            "text": "I'm",
+            "start": 28.97,
+            "end": 29.11
+          },
+          {
+            "text": "ready",
+            "start": 29.11,
+            "end": 29.27
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "This is getting heavy, can you hear the bass boom? I'm ready",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-12",
+      "start": 29.54,
+      "end": 33.52,
+      "words": {
+        "en": [
+          {
+            "text": "Life",
+            "start": 29.54,
+            "end": 30.34
+          },
+          {
+            "text": "is",
+            "start": 30.34,
+            "end": 30.48
+          },
+          {
+            "text": "sweet",
+            "start": 30.48,
+            "end": 30.8
+          },
+          {
+            "text": "as",
+            "start": 30.8,
+            "end": 31.0
+          },
+          {
+            "text": "honey,",
+            "start": 31.0,
+            "end": 31.44
+          },
+          {
+            "text": "yeah,",
+            "start": 31.58,
+            "end": 31.9
+          },
+          {
+            "text": "this",
+            "start": 31.98,
+            "end": 32.14
+          },
+          {
+            "text": "beat",
+            "start": 32.14,
+            "end": 32.48
+          },
+          {
+            "text": "cha-ching",
+            "start": 32.48,
+            "end": 32.98
+          },
+          {
+            "text": "like",
+            "start": 32.98,
+            "end": 33.24
+          },
+          {
+            "text": "money, huh",
+            "start": 33.24,
+            "end": 33.52
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Life is sweet as honey, yeah, this beat cha-ching like money, huh",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-13",
+      "start": 34.91,
+      "end": 38.07,
+      "words": {
+        "en": [
+          {
+            "text": "Disco",
+            "start": 34.91,
+            "end": 35.39
+          },
+          {
+            "text": "overload,",
+            "start": 35.39,
+            "end": 35.87
+          },
+          {
+            "text": "I'm",
+            "start": 36.17,
+            "end": 36.51
+          },
+          {
+            "text": "into",
+            "start": 36.51,
+            "end": 36.75
+          },
+          {
+            "text": "that,",
+            "start": 36.75,
+            "end": 37.05
+          },
+          {
+            "text": "I'm",
+            "start": 37.25,
+            "end": 37.45
+          },
+          {
+            "text": "good",
+            "start": 37.45,
+            "end": 37.69
+          },
+          {
+            "text": "to",
+            "start": 37.69,
+            "end": 37.85
+          },
+          {
+            "text": "go",
+            "start": 37.85,
+            "end": 38.07
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Disco overload, I'm into that, I'm good to go",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-14",
+      "start": 38.1,
+      "end": 40.82,
+      "words": {
+        "en": [
+          {
+            "text": "I'm",
+            "start": 38.1,
+            "end": 38.46
+          },
+          {
+            "text": "diamond,",
+            "start": 38.46,
+            "end": 39.0
+          },
+          {
+            "text": "you",
+            "start": 39.36,
+            "end": 39.46
+          },
+          {
+            "text": "know",
+            "start": 39.46,
+            "end": 39.76
+          },
+          {
+            "text": "I",
+            "start": 39.76,
+            "end": 39.96
+          },
+          {
+            "text": "glow",
+            "start": 39.96,
+            "end": 40.26
+          },
+          {
+            "text": "up",
+            "start": 40.26,
+            "end": 40.82
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "I'm diamond, you know I glow up",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-15",
+      "start": 41.34,
+      "end": 41.87,
+      "words": {
+        "en": [
+          {
+            "text": "Everybody,",
+            "start": 41.34,
+            "end": 41.69
+          },
+          {
+            "text": "let's",
+            "start": 41.69,
+            "end": 41.73
+          },
+          {
+            "text": "go",
+            "start": 41.73,
+            "end": 41.87
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Everybody, let's go",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-16",
+      "start": 42.0,
+      "end": 45.24,
+      "words": {
+        "en": [
+          {
+            "text": "'Cause",
+            "start": 42.0,
+            "end": 42.74
+          },
+          {
+            "text": "I,",
+            "start": 42.74,
+            "end": 43.3
+          },
+          {
+            "text": "I,",
+            "start": 43.32,
+            "end": 43.54
+          },
+          {
+            "text": "I'm",
+            "start": 43.64,
+            "end": 44.56
+          },
+          {
+            "text": "in",
+            "start": 44.56,
+            "end": 44.58
+          },
+          {
+            "text": "the",
+            "start": 44.58,
+            "end": 44.7
+          },
+          {
+            "text": "stars",
+            "start": 44.7,
+            "end": 45.0
+          },
+          {
+            "text": "tonight",
+            "start": 45.0,
+            "end": 45.24
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "'Cause I, I, I'm in the stars tonight",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-17",
+      "start": 45.88,
+      "end": 49.68,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 45.88,
+            "end": 46.4
+          },
+          {
+            "text": "watch",
+            "start": 46.4,
+            "end": 46.6
+          },
+          {
+            "text": "me",
+            "start": 46.6,
+            "end": 46.74
+          },
+          {
+            "text": "bring",
+            "start": 46.74,
+            "end": 47.3
+          },
+          {
+            "text": "the",
+            "start": 47.3,
+            "end": 47.74
+          },
+          {
+            "text": "fire, and",
+            "start": 47.74,
+            "end": 48.32
+          },
+          {
+            "text": "set",
+            "start": 48.52,
+            "end": 48.78
+          },
+          {
+            "text": "the",
+            "start": 48.78,
+            "end": 48.96
+          },
+          {
+            "text": "night",
+            "start": 48.96,
+            "end": 49.2
+          },
+          {
+            "text": "alight",
+            "start": 49.2,
+            "end": 49.68
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So watch me bring the fire, and set the night alight",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-18",
+      "start": 50.54,
+      "end": 54.43,
+      "words": {
+        "en": [
+          {
+            "text": "Shining",
+            "start": 50.54,
+            "end": 51.49
+          },
+          {
+            "text": "through",
+            "start": 51.49,
+            "end": 51.73
+          },
+          {
+            "text": "the",
+            "start": 51.73,
+            "end": 52.01
+          },
+          {
+            "text": "city",
+            "start": 52.01,
+            "end": 52.45
+          },
+          {
+            "text": "with",
+            "start": 52.45,
+            "end": 52.83
+          },
+          {
+            "text": "a",
+            "start": 52.83,
+            "end": 53.05
+          },
+          {
+            "text": "little",
+            "start": 53.05,
+            "end": 53.53
+          },
+          {
+            "text": "funk",
+            "start": 53.53,
+            "end": 53.93
+          },
+          {
+            "text": "and",
+            "start": 53.93,
+            "end": 54.13
+          },
+          {
+            "text": "soul",
+            "start": 54.13,
+            "end": 54.43
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Shining through the city with a little funk and soul",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-19",
+      "start": 54.5,
+      "end": 59.08,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 54.5,
+            "end": 54.82
+          },
+          {
+            "text": "I'ma",
+            "start": 54.82,
+            "end": 55.18
+          },
+          {
+            "text": "light",
+            "start": 55.18,
+            "end": 55.7
+          },
+          {
+            "text": "it",
+            "start": 55.7,
+            "end": 56.22
+          },
+          {
+            "text": "up",
+            "start": 56.22,
+            "end": 56.74
+          },
+          {
+            "text": "like",
+            "start": 56.74,
+            "end": 57.24
+          },
+          {
+            "text": "dynamite,",
+            "start": 57.24,
+            "end": 58.08
+          },
+          {
+            "text": "whoa-oh-oh",
+            "start": 58.08,
+            "end": 59.08
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So I'ma light it up like dynamite, whoa-oh-oh",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-20",
+      "start": 59.76,
+      "end": 62.94,
+      "words": {
+        "en": [
+          {
+            "text": "Bring",
+            "start": 59.76,
+            "end": 60.0
+          },
+          {
+            "text": "a",
+            "start": 60.0,
+            "end": 60.14
+          },
+          {
+            "text": "friend,",
+            "start": 60.14,
+            "end": 60.44
+          },
+          {
+            "text": "join",
+            "start": 60.6,
+            "end": 60.84
+          },
+          {
+            "text": "the",
+            "start": 60.84,
+            "end": 60.98
+          },
+          {
+            "text": "crowd,",
+            "start": 60.98,
+            "end": 61.08
+          },
+          {
+            "text": "whoever",
+            "start": 61.48,
+            "end": 61.84
+          },
+          {
+            "text": "wanna",
+            "start": 61.84,
+            "end": 62.14
+          },
+          {
+            "text": "come",
+            "start": 62.14,
+            "end": 62.46
+          },
+          {
+            "text": "along",
+            "start": 62.46,
+            "end": 62.94
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Bring a friend, join the crowd, whoever wanna come along",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-21",
+      "start": 63.925,
+      "end": 67.205,
+      "words": {
+        "en": [
+          {
+            "text": "Word",
+            "start": 63.925,
+            "end": 64.345
+          },
+          {
+            "text": "up,",
+            "start": 64.345,
+            "end": 64.645
+          },
+          {
+            "text": "talk",
+            "start": 64.845,
+            "end": 65.065
+          },
+          {
+            "text": "the",
+            "start": 65.065,
+            "end": 65.285
+          },
+          {
+            "text": "talk,",
+            "start": 65.285,
+            "end": 65.545
+          },
+          {
+            "text": "just",
+            "start": 65.665,
+            "end": 65.825
+          },
+          {
+            "text": "move",
+            "start": 65.825,
+            "end": 66.145
+          },
+          {
+            "text": "like",
+            "start": 66.145,
+            "end": 66.325
+          },
+          {
+            "text": "we",
+            "start": 66.325,
+            "end": 66.465
+          },
+          {
+            "text": "off",
+            "start": 66.465,
+            "end": 66.665
+          },
+          {
+            "text": "the",
+            "start": 66.665,
+            "end": 66.785
+          },
+          {
+            "text": "wall",
+            "start": 66.785,
+            "end": 67.205
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Word up, talk the talk, just move like we off the wall",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-22",
+      "start": 67.865,
+      "end": 71.355,
+      "words": {
+        "en": [
+          {
+            "text": "Day",
+            "start": 67.865,
+            "end": 68.415
+          },
+          {
+            "text": "or",
+            "start": 68.415,
+            "end": 68.535
+          },
+          {
+            "text": "night,",
+            "start": 68.535,
+            "end": 68.815
+          },
+          {
+            "text": "the",
+            "start": 69.035,
+            "end": 69.055
+          },
+          {
+            "text": "sky's",
+            "start": 69.055,
+            "end": 69.395
+          },
+          {
+            "text": "alight,",
+            "start": 69.395,
+            "end": 69.775
+          },
+          {
+            "text": "so",
+            "start": 69.855,
+            "end": 69.975
+          },
+          {
+            "text": "we",
+            "start": 69.975,
+            "end": 70.135
+          },
+          {
+            "text": "dance",
+            "start": 70.135,
+            "end": 70.395
+          },
+          {
+            "text": "to",
+            "start": 70.395,
+            "end": 70.555
+          },
+          {
+            "text": "the",
+            "start": 70.555,
+            "end": 70.675
+          },
+          {
+            "text": "break",
+            "start": 70.675,
+            "end": 70.975
+          },
+          {
+            "text": "of",
+            "start": 70.975,
+            "end": 71.135
+          },
+          {
+            "text": "dawn",
+            "start": 71.135,
+            "end": 71.355
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Day or night, the sky's alight, so we dance to the break of dawn",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-23",
+      "start": 72.105,
+      "end": 73.975,
+      "words": {
+        "en": [
+          {
+            "text": "Ladies",
+            "start": 72.105,
+            "end": 72.455
+          },
+          {
+            "text": "and",
+            "start": 72.455,
+            "end": 72.595
+          },
+          {
+            "text": "gentlemen,",
+            "start": 72.595,
+            "end": 72.875
+          },
+          {
+            "text": "I",
+            "start": 73.315,
+            "end": 73.395
+          },
+          {
+            "text": "got",
+            "start": 73.395,
+            "end": 73.535
+          },
+          {
+            "text": "the",
+            "start": 73.535,
+            "end": 73.675
+          },
+          {
+            "text": "medicine",
+            "start": 73.675,
+            "end": 73.975
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Ladies and gentlemen, I got the medicine",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-24",
+      "start": 74.0,
+      "end": 75.5,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 74.0,
+            "end": 74.32
+          },
+          {
+            "text": "you",
+            "start": 74.32,
+            "end": 74.46
+          },
+          {
+            "text": "should",
+            "start": 74.46,
+            "end": 74.58
+          },
+          {
+            "text": "keep",
+            "start": 74.58,
+            "end": 74.74
+          },
+          {
+            "text": "ya",
+            "start": 74.74,
+            "end": 74.84
+          },
+          {
+            "text": "eyes",
+            "start": 74.84,
+            "end": 75.16
+          },
+          {
+            "text": "on",
+            "start": 75.16,
+            "end": 75.24
+          },
+          {
+            "text": "the",
+            "start": 75.24,
+            "end": 75.36
+          },
+          {
+            "text": "ball, huh",
+            "start": 75.36,
+            "end": 75.5
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So you should keep ya eyes on the ball, huh",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-25",
+      "start": 75.92,
+      "end": 79.79,
+      "words": {
+        "en": [
+          {
+            "text": "This",
+            "start": 75.92,
+            "end": 76.57
+          },
+          {
+            "text": "is",
+            "start": 76.57,
+            "end": 76.83
+          },
+          {
+            "text": "getting",
+            "start": 76.83,
+            "end": 77.17
+          },
+          {
+            "text": "heavy,",
+            "start": 77.17,
+            "end": 77.75
+          },
+          {
+            "text": "can",
+            "start": 77.77,
+            "end": 78.15
+          },
+          {
+            "text": "you",
+            "start": 78.15,
+            "end": 78.25
+          },
+          {
+            "text": "hear",
+            "start": 78.25,
+            "end": 78.39
+          },
+          {
+            "text": "the",
+            "start": 78.39,
+            "end": 78.51
+          },
+          {
+            "text": "bass",
+            "start": 78.51,
+            "end": 78.77
+          },
+          {
+            "text": "boom?",
+            "start": 78.77,
+            "end": 79.19
+          },
+          {
+            "text": "I'm",
+            "start": 79.47,
+            "end": 79.59
+          },
+          {
+            "text": "ready",
+            "start": 79.59,
+            "end": 79.79
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "This is getting heavy, can you hear the bass boom? I'm ready",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-26",
+      "start": 80.545,
+      "end": 84.465,
+      "words": {
+        "en": [
+          {
+            "text": "Life",
+            "start": 80.545,
+            "end": 80.845
+          },
+          {
+            "text": "is",
+            "start": 80.845,
+            "end": 81.105
+          },
+          {
+            "text": "sweet",
+            "start": 81.105,
+            "end": 81.305
+          },
+          {
+            "text": "as",
+            "start": 81.305,
+            "end": 81.545
+          },
+          {
+            "text": "honey,",
+            "start": 81.545,
+            "end": 82.005
+          },
+          {
+            "text": "yeah,",
+            "start": 82.245,
+            "end": 82.425
+          },
+          {
+            "text": "this",
+            "start": 82.485,
+            "end": 82.725
+          },
+          {
+            "text": "beat",
+            "start": 82.725,
+            "end": 82.965
+          },
+          {
+            "text": "cha-ching",
+            "start": 82.965,
+            "end": 83.405
+          },
+          {
+            "text": "like",
+            "start": 83.405,
+            "end": 83.745
+          },
+          {
+            "text": "money,",
+            "start": 83.745,
+            "end": 84.025
+          },
+          {
+            "text": "huh",
+            "start": 84.125,
+            "end": 84.465
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Life is sweet as honey, yeah, this beat cha-ching like money, huh",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-27",
+      "start": 85.55,
+      "end": 88.65,
+      "words": {
+        "en": [
+          {
+            "text": "Disco",
+            "start": 85.55,
+            "end": 86.15
+          },
+          {
+            "text": "overload,",
+            "start": 86.15,
+            "end": 86.53
+          },
+          {
+            "text": "I'm",
+            "start": 86.79,
+            "end": 87.03
+          },
+          {
+            "text": "into",
+            "start": 87.03,
+            "end": 87.27
+          },
+          {
+            "text": "that,",
+            "start": 87.27,
+            "end": 87.57
+          },
+          {
+            "text": "I'm",
+            "start": 87.79,
+            "end": 87.99
+          },
+          {
+            "text": "good",
+            "start": 87.99,
+            "end": 88.21
+          },
+          {
+            "text": "to",
+            "start": 88.21,
+            "end": 88.37
+          },
+          {
+            "text": "go",
+            "start": 88.37,
+            "end": 88.65
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Disco overload, I'm into that, I'm good to go",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-28",
+      "start": 88.78,
+      "end": 91.12,
+      "words": {
+        "en": [
+          {
+            "text": "I'm",
+            "start": 88.78,
+            "end": 88.98
+          },
+          {
+            "text": "diamond,",
+            "start": 88.98,
+            "end": 89.52
+          },
+          {
+            "text": "you",
+            "start": 89.72,
+            "end": 89.96
+          },
+          {
+            "text": "know",
+            "start": 89.96,
+            "end": 90.18
+          },
+          {
+            "text": "I",
+            "start": 90.18,
+            "end": 90.38
+          },
+          {
+            "text": "glow",
+            "start": 90.38,
+            "end": 90.7
+          },
+          {
+            "text": "up",
+            "start": 90.7,
+            "end": 91.12
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "I'm diamond, you know I glow up",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-29",
+      "start": 91.41,
+      "end": 92.45,
+      "words": {
+        "en": [
+          {
+            "text": "Oh,",
+            "start": 91.41,
+            "end": 92.01
+          },
+          {
+            "text": "let's",
+            "start": 92.03,
+            "end": 92.21
+          },
+          {
+            "text": "go",
+            "start": 92.21,
+            "end": 92.45
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Oh, let's go",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-30",
+      "start": 92.975,
+      "end": 95.775,
+      "words": {
+        "en": [
+          {
+            "text": "'Cause",
+            "start": 92.975,
+            "end": 93.335
+          },
+          {
+            "text": "I,",
+            "start": 93.335,
+            "end": 93.595
+          },
+          {
+            "text": "I,",
+            "start": 93.855,
+            "end": 94.075
+          },
+          {
+            "text": "I'm",
+            "start": 94.335,
+            "end": 94.855
+          },
+          {
+            "text": "in",
+            "start": 94.855,
+            "end": 95.115
+          },
+          {
+            "text": "the",
+            "start": 95.115,
+            "end": 95.235
+          },
+          {
+            "text": "stars",
+            "start": 95.235,
+            "end": 95.535
+          },
+          {
+            "text": "tonight",
+            "start": 95.535,
+            "end": 95.775
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "'Cause I, I, I'm in the stars tonight",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-31",
+      "start": 96.24,
+      "end": 100.16,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 96.24,
+            "end": 96.94
+          },
+          {
+            "text": "watch",
+            "start": 96.94,
+            "end": 97.18
+          },
+          {
+            "text": "me",
+            "start": 97.18,
+            "end": 97.3
+          },
+          {
+            "text": "bring",
+            "start": 97.3,
+            "end": 97.94
+          },
+          {
+            "text": "the",
+            "start": 97.94,
+            "end": 98.36
+          },
+          {
+            "text": "fire, and",
+            "start": 98.36,
+            "end": 98.88
+          },
+          {
+            "text": "set",
+            "start": 99.06,
+            "end": 99.26
+          },
+          {
+            "text": "the",
+            "start": 99.26,
+            "end": 99.54
+          },
+          {
+            "text": "night",
+            "start": 99.54,
+            "end": 99.72
+          },
+          {
+            "text": "alight",
+            "start": 99.72,
+            "end": 100.16
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So watch me bring the fire, and set the night alight",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-32",
+      "start": 101.095,
+      "end": 105.015,
+      "words": {
+        "en": [
+          {
+            "text": "Shining",
+            "start": 101.095,
+            "end": 101.995
+          },
+          {
+            "text": "through",
+            "start": 101.995,
+            "end": 102.275
+          },
+          {
+            "text": "the",
+            "start": 102.275,
+            "end": 102.535
+          },
+          {
+            "text": "city",
+            "start": 102.535,
+            "end": 102.935
+          },
+          {
+            "text": "with",
+            "start": 102.935,
+            "end": 103.315
+          },
+          {
+            "text": "a",
+            "start": 103.315,
+            "end": 103.635
+          },
+          {
+            "text": "little",
+            "start": 103.635,
+            "end": 103.995
+          },
+          {
+            "text": "funk",
+            "start": 103.995,
+            "end": 104.475
+          },
+          {
+            "text": "and",
+            "start": 104.475,
+            "end": 104.655
+          },
+          {
+            "text": "soul",
+            "start": 104.655,
+            "end": 105.015
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Shining through the city with a little funk and soul",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-33",
+      "start": 105.04,
+      "end": 109.14,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 105.04,
+            "end": 105.36
+          },
+          {
+            "text": "I'ma",
+            "start": 105.36,
+            "end": 105.68
+          },
+          {
+            "text": "light",
+            "start": 105.68,
+            "end": 106.22
+          },
+          {
+            "text": "it",
+            "start": 106.22,
+            "end": 106.72
+          },
+          {
+            "text": "up",
+            "start": 106.72,
+            "end": 107.24
+          },
+          {
+            "text": "like",
+            "start": 107.24,
+            "end": 107.78
+          },
+          {
+            "text": "dynamite,",
+            "start": 107.78,
+            "end": 108.58
+          },
+          {
+            "text": "whoa-oh-oh",
+            "start": 108.76,
+            "end": 109.14
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So I'ma light it up like dynamite, whoa-oh-oh",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-34",
+      "start": 109.85,
+      "end": 113.85,
+      "words": {
+        "en": [
+          {
+            "text": "Dyn-na-na-na,",
+            "start": 109.85,
+            "end": 111.31
+          },
+          {
+            "text": "na-na-na-na-na,",
+            "start": 111.31,
+            "end": 112.09
+          },
+          {
+            "text": "na-na-na,",
+            "start": 112.09,
+            "end": 112.43
+          },
+          {
+            "text": "life",
+            "start": 112.51,
+            "end": 112.89
+          },
+          {
+            "text": "is",
+            "start": 112.89,
+            "end": 113.15
+          },
+          {
+            "text": "dynamite",
+            "start": 113.15,
+            "end": 113.85
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Dyn-na-na-na, na-na-na-na-na, na-na-na, life is dynamite",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-35",
+      "start": 113.91,
+      "end": 118.04,
+      "words": {
+        "en": [
+          {
+            "text": "Dyn-na-na-na,",
+            "start": 113.91,
+            "end": 115.56
+          },
+          {
+            "text": "na-na-na-na-na,",
+            "start": 115.7,
+            "end": 116.52
+          },
+          {
+            "text": "na-na-na,",
+            "start": 116.52,
+            "end": 116.76
+          },
+          {
+            "text": "life",
+            "start": 116.76,
+            "end": 117.2
+          },
+          {
+            "text": "is",
+            "start": 117.2,
+            "end": 117.38
+          },
+          {
+            "text": "dynamite",
+            "start": 117.38,
+            "end": 118.04
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Dyn-na-na-na, na-na-na-na-na, na-na-na, life is dynamite",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-36",
+      "start": 118.25,
+      "end": 121.8,
+      "words": {
+        "en": [
+          {
+            "text": "Shining",
+            "start": 118.25,
+            "end": 118.9
+          },
+          {
+            "text": "through",
+            "start": 118.9,
+            "end": 119.12
+          },
+          {
+            "text": "the",
+            "start": 119.12,
+            "end": 119.32
+          },
+          {
+            "text": "city",
+            "start": 119.32,
+            "end": 119.8
+          },
+          {
+            "text": "with",
+            "start": 119.8,
+            "end": 120.24
+          },
+          {
+            "text": "a",
+            "start": 120.24,
+            "end": 120.46
+          },
+          {
+            "text": "little",
+            "start": 120.46,
+            "end": 120.68
+          },
+          {
+            "text": "funk",
+            "start": 120.68,
+            "end": 121.34
+          },
+          {
+            "text": "and",
+            "start": 121.34,
+            "end": 121.54
+          },
+          {
+            "text": "soul",
+            "start": 121.54,
+            "end": 121.8
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Shining through the city with a little funk and soul",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-37",
+      "start": 121.9,
+      "end": 126.32,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 121.9,
+            "end": 122.22
+          },
+          {
+            "text": "I'ma",
+            "start": 122.22,
+            "end": 122.76
+          },
+          {
+            "text": "light",
+            "start": 122.76,
+            "end": 123.06
+          },
+          {
+            "text": "it",
+            "start": 123.06,
+            "end": 123.54
+          },
+          {
+            "text": "up",
+            "start": 123.54,
+            "end": 124.12
+          },
+          {
+            "text": "like",
+            "start": 124.12,
+            "end": 124.68
+          },
+          {
+            "text": "dynamite,",
+            "start": 124.68,
+            "end": 125.44
+          },
+          {
+            "text": "whoa-oh-oh",
+            "start": 125.58,
+            "end": 126.32
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So I'ma light it up like dynamite, whoa-oh-oh",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-38",
+      "start": 127.76,
+      "end": 128.74,
+      "words": {
+        "en": [
+          {
+            "text": "Dyn-na-na-na,",
+            "start": 127.76,
+            "end": 128.06
+          },
+          {
+            "text": "na-na,",
+            "start": 128.14,
+            "end": 128.22
+          },
+          {
+            "text": "na-na,",
+            "start": 128.32,
+            "end": 128.44
+          },
+          {
+            "text": "ay",
+            "start": 128.64,
+            "end": 128.74
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Dyn-na-na-na, na-na, na-na, ay",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-39",
+      "start": 129.59,
+      "end": 130.82,
+      "words": {
+        "en": [
+          {
+            "text": "Dyn-na-na-na,",
+            "start": 129.59,
+            "end": 130.14
+          },
+          {
+            "text": "na-na,",
+            "start": 130.22,
+            "end": 130.26
+          },
+          {
+            "text": "na-na,",
+            "start": 130.36,
+            "end": 130.58
+          },
+          {
+            "text": "ay",
+            "start": 130.74,
+            "end": 130.82
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Dyn-na-na-na, na-na, na-na, ay",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-40",
+      "start": 131.69,
+      "end": 132.95,
+      "words": {
+        "en": [
+          {
+            "text": "Dyn-na-na-na,",
+            "start": 131.69,
+            "end": 132.09
+          },
+          {
+            "text": "na-na,",
+            "start": 132.25,
+            "end": 132.41
+          },
+          {
+            "text": "na-na,",
+            "start": 132.55,
+            "end": 132.67
+          },
+          {
+            "text": "yeah",
+            "start": 132.83,
+            "end": 132.95
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Dyn-na-na-na, na-na, na-na, yeah",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-41",
+      "start": 133.14,
+      "end": 134.58,
+      "words": {
+        "en": [
+          {
+            "text": "Light",
+            "start": 133.14,
+            "end": 133.58
+          },
+          {
+            "text": "it",
+            "start": 133.58,
+            "end": 133.72
+          },
+          {
+            "text": "up",
+            "start": 133.72,
+            "end": 133.92
+          },
+          {
+            "text": "like",
+            "start": 133.92,
+            "end": 134.08
+          },
+          {
+            "text": "dynamite",
+            "start": 134.08,
+            "end": 134.58
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Light it up like dynamite",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-42",
+      "start": 135.53,
+      "end": 137.08,
+      "words": {
+        "en": [
+          {
+            "text": "Dyn-na-na-na,",
+            "start": 135.53,
+            "end": 136.28
+          },
+          {
+            "text": "na-na,",
+            "start": 136.36,
+            "end": 136.62
+          },
+          {
+            "text": "na-na,",
+            "start": 136.66,
+            "end": 136.78
+          },
+          {
+            "text": "yeah",
+            "start": 136.78,
+            "end": 137.08
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Dyn-na-na-na, na-na, na-na, yeah",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-43",
+      "start": 137.82,
+      "end": 139.24,
+      "words": {
+        "en": [
+          {
+            "text": "Dyn-na-na-na,",
+            "start": 137.82,
+            "end": 138.62
+          },
+          {
+            "text": "na-na,",
+            "start": 138.64,
+            "end": 138.74
+          },
+          {
+            "text": "na-na,",
+            "start": 138.76,
+            "end": 139.08
+          },
+          {
+            "text": "yeah",
+            "start": 139.16,
+            "end": 139.24
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Dyn-na-na-na, na-na, na-na, yeah",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-44",
+      "start": 140.41,
+      "end": 141.32,
+      "words": {
+        "en": [
+          {
+            "text": "Dyn-na-na-na, na-na,",
+            "start": 140.41,
+            "end": 140.76
+          },
+          {
+            "text": "na-na,",
+            "start": 140.96,
+            "end": 141.1
+          },
+          {
+            "text": "ay",
+            "start": 141.24,
+            "end": 141.32
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Dyn-na-na-na, na-na, na-na, ay",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-45",
+      "start": 141.505,
+      "end": 143.005,
+      "words": {
+        "en": [
+          {
+            "text": "Light",
+            "start": 141.505,
+            "end": 142.005
+          },
+          {
+            "text": "it",
+            "start": 142.005,
+            "end": 142.145
+          },
+          {
+            "text": "up",
+            "start": 142.145,
+            "end": 142.345
+          },
+          {
+            "text": "like",
+            "start": 142.345,
+            "end": 142.505
+          },
+          {
+            "text": "dynamite",
+            "start": 142.505,
+            "end": 143.005
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Light it up like dynamite",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-46",
+      "start": 143.2,
+      "end": 146.34,
+      "words": {
+        "en": [
+          {
+            "text": "'Cause",
+            "start": 143.2,
+            "end": 143.88
+          },
+          {
+            "text": "I,",
+            "start": 143.88,
+            "end": 144.18
+          },
+          {
+            "text": "I,",
+            "start": 144.44,
+            "end": 144.7
+          },
+          {
+            "text": "I'm",
+            "start": 144.82,
+            "end": 145.32
+          },
+          {
+            "text": "in",
+            "start": 145.32,
+            "end": 145.78
+          },
+          {
+            "text": "the",
+            "start": 145.78,
+            "end": 145.92
+          },
+          {
+            "text": "stars",
+            "start": 145.92,
+            "end": 146.12
+          },
+          {
+            "text": "tonight",
+            "start": 146.12,
+            "end": 146.34
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "'Cause I, I, I'm in the stars tonight",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-47",
+      "start": 146.93,
+      "end": 150.5,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 146.93,
+            "end": 147.48
+          },
+          {
+            "text": "watch",
+            "start": 147.48,
+            "end": 147.68
+          },
+          {
+            "text": "me",
+            "start": 147.68,
+            "end": 147.86
+          },
+          {
+            "text": "bring",
+            "start": 147.86,
+            "end": 148.38
+          },
+          {
+            "text": "the",
+            "start": 148.38,
+            "end": 148.8
+          },
+          {
+            "text": "fire,",
+            "start": 148.8,
+            "end": 149.38
+          },
+          {
+            "text": "and",
+            "start": 149.68,
+            "end": 149.8
+          },
+          {
+            "text": "set",
+            "start": 149.8,
+            "end": 149.86
+          },
+          {
+            "text": "the",
+            "start": 149.86,
+            "end": 149.98
+          },
+          {
+            "text": "night",
+            "start": 149.98,
+            "end": 150.2
+          },
+          {
+            "text": "alight",
+            "start": 150.2,
+            "end": 150.5
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So watch me bring the fire, and set the night alight",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-48",
+      "start": 151.625,
+      "end": 155.525,
+      "words": {
+        "en": [
+          {
+            "text": "Shining",
+            "start": 151.625,
+            "end": 152.625
+          },
+          {
+            "text": "through",
+            "start": 152.625,
+            "end": 152.845
+          },
+          {
+            "text": "the",
+            "start": 152.845,
+            "end": 153.065
+          },
+          {
+            "text": "city",
+            "start": 153.065,
+            "end": 153.525
+          },
+          {
+            "text": "with",
+            "start": 153.525,
+            "end": 153.925
+          },
+          {
+            "text": "a",
+            "start": 153.925,
+            "end": 154.105
+          },
+          {
+            "text": "little",
+            "start": 154.105,
+            "end": 154.525
+          },
+          {
+            "text": "funk",
+            "start": 154.525,
+            "end": 155.005
+          },
+          {
+            "text": "and",
+            "start": 155.005,
+            "end": 155.225
+          },
+          {
+            "text": "soul",
+            "start": 155.225,
+            "end": 155.525
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Shining through the city with a little funk and soul",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-49",
+      "start": 155.56,
+      "end": 159.12,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 155.56,
+            "end": 155.92
+          },
+          {
+            "text": "I'ma",
+            "start": 155.92,
+            "end": 156.18
+          },
+          {
+            "text": "light",
+            "start": 156.18,
+            "end": 156.78
+          },
+          {
+            "text": "it",
+            "start": 156.78,
+            "end": 157.22
+          },
+          {
+            "text": "up",
+            "start": 157.22,
+            "end": 157.84
+          },
+          {
+            "text": "like",
+            "start": 157.84,
+            "end": 158.32
+          },
+          {
+            "text": "dynamite",
+            "start": 158.32,
+            "end": 159.12
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So I'ma light it up like dynamite",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "final-repeated-chorus",
+      "start": 160.3,
+      "end": 162.96,
+      "words": {
+        "en": [
+          {
+            "text": "'Cause",
+            "start": 160.3,
+            "end": 160.74
+          },
+          {
+            "text": "I,",
+            "start": 160.74,
+            "end": 161.18
+          },
+          {
+            "text": "I,",
+            "start": 162.26,
+            "end": 162.48
+          },
+          {
+            "text": "I'm",
+            "start": 162.54,
+            "end": 162.58
+          },
+          {
+            "text": "in the stars",
+            "start": 162.58,
+            "end": 162.8
+          },
+          {
+            "text": "tonight",
+            "start": 162.8,
+            "end": 162.96
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "'Cause I, I, I'm in the stars tonight",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-50",
+      "start": 163.86,
+      "end": 167.5,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 163.86,
+            "end": 164.34
+          },
+          {
+            "text": "watch",
+            "start": 164.34,
+            "end": 164.52
+          },
+          {
+            "text": "me",
+            "start": 164.52,
+            "end": 164.7
+          },
+          {
+            "text": "bring",
+            "start": 164.7,
+            "end": 165.1
+          },
+          {
+            "text": "the",
+            "start": 165.1,
+            "end": 165.64
+          },
+          {
+            "text": "fire,",
+            "start": 165.64,
+            "end": 166.22
+          },
+          {
+            "text": "and",
+            "start": 166.44,
+            "end": 166.54
+          },
+          {
+            "text": "set",
+            "start": 166.54,
+            "end": 166.66
+          },
+          {
+            "text": "the",
+            "start": 166.66,
+            "end": 166.84
+          },
+          {
+            "text": "night",
+            "start": 166.84,
+            "end": 167.1
+          },
+          {
+            "text": "alight",
+            "start": 167.1,
+            "end": 167.5
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So watch me bring the fire, and set the night alight",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-51",
+      "start": 168.365,
+      "end": 172.465,
+      "words": {
+        "en": [
+          {
+            "text": "Shining",
+            "start": 168.365,
+            "end": 169.365
+          },
+          {
+            "text": "through",
+            "start": 169.365,
+            "end": 169.645
+          },
+          {
+            "text": "the",
+            "start": 169.645,
+            "end": 169.905
+          },
+          {
+            "text": "city",
+            "start": 169.905,
+            "end": 170.365
+          },
+          {
+            "text": "with",
+            "start": 170.365,
+            "end": 170.765
+          },
+          {
+            "text": "a",
+            "start": 170.765,
+            "end": 170.945
+          },
+          {
+            "text": "little",
+            "start": 170.945,
+            "end": 171.485
+          },
+          {
+            "text": "funk",
+            "start": 171.485,
+            "end": 171.865
+          },
+          {
+            "text": "and",
+            "start": 171.865,
+            "end": 172.065
+          },
+          {
+            "text": "soul",
+            "start": 172.065,
+            "end": 172.465
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Shining through the city with a little funk and soul",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-52",
+      "start": 172.7,
+      "end": 176.96,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 172.7,
+            "end": 172.8
+          },
+          {
+            "text": "I'ma",
+            "start": 172.8,
+            "end": 173.22
+          },
+          {
+            "text": "light",
+            "start": 173.22,
+            "end": 173.54
+          },
+          {
+            "text": "it",
+            "start": 173.54,
+            "end": 174.2
+          },
+          {
+            "text": "up",
+            "start": 174.2,
+            "end": 174.54
+          },
+          {
+            "text": "like",
+            "start": 174.54,
+            "end": 175.14
+          },
+          {
+            "text": "dynamite,",
+            "start": 175.14,
+            "end": 175.96
+          },
+          {
+            "text": "whoa-oh-oh",
+            "start": 175.98,
+            "end": 176.96
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So I'ma light it up like dynamite, whoa-oh-oh",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-53",
+      "start": 177.14,
+      "end": 181.4,
+      "words": {
+        "en": [
+          {
+            "text": "Dyn-na-na-na,",
+            "start": 177.14,
+            "end": 178.3
+          },
+          {
+            "text": "na-na-na-na-na,",
+            "start": 178.6,
+            "end": 179.92
+          },
+          {
+            "text": "na-na-na, life",
+            "start": 179.92,
+            "end": 180.34
+          },
+          {
+            "text": "is",
+            "start": 180.34,
+            "end": 180.5
+          },
+          {
+            "text": "dynamite",
+            "start": 180.5,
+            "end": 181.4
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Dyn-na-na-na, na-na-na-na-na, na-na-na, life is dynamite",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-54",
+      "start": 181.58,
+      "end": 185.42,
+      "words": {
+        "en": [
+          {
+            "text": "Dyn-na-na-na,",
+            "start": 181.58,
+            "end": 182.7
+          },
+          {
+            "text": "na-na-na-na-na,",
+            "start": 182.7,
+            "end": 184.02
+          },
+          {
+            "text": "na-na-na,",
+            "start": 184.1,
+            "end": 184.22
+          },
+          {
+            "text": "life",
+            "start": 184.22,
+            "end": 184.44
+          },
+          {
+            "text": "is",
+            "start": 184.44,
+            "end": 184.7
+          },
+          {
+            "text": "dynamite",
+            "start": 184.7,
+            "end": 185.42
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Dyn-na-na-na, na-na-na-na-na, na-na-na, life is dynamite",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-55",
+      "start": 185.86,
+      "end": 189.46,
+      "words": {
+        "en": [
+          {
+            "text": "Shining",
+            "start": 185.86,
+            "end": 186.24
+          },
+          {
+            "text": "through",
+            "start": 186.24,
+            "end": 186.48
+          },
+          {
+            "text": "the",
+            "start": 186.48,
+            "end": 186.82
+          },
+          {
+            "text": "city",
+            "start": 186.82,
+            "end": 187.14
+          },
+          {
+            "text": "with",
+            "start": 187.14,
+            "end": 187.56
+          },
+          {
+            "text": "a",
+            "start": 187.56,
+            "end": 187.8
+          },
+          {
+            "text": "little",
+            "start": 187.8,
+            "end": 188.28
+          },
+          {
+            "text": "funk",
+            "start": 188.28,
+            "end": 188.7
+          },
+          {
+            "text": "and",
+            "start": 188.7,
+            "end": 188.92
+          },
+          {
+            "text": "soul",
+            "start": 188.92,
+            "end": 189.46
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Shining through the city with a little funk and soul",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-56",
+      "start": 190.04,
+      "end": 193.76,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 190.04,
+            "end": 190.26
+          },
+          {
+            "text": "I'ma light",
+            "start": 190.26,
+            "end": 190.64
+          },
+          {
+            "text": "it",
+            "start": 190.64,
+            "end": 190.9
+          },
+          {
+            "text": "up",
+            "start": 190.9,
+            "end": 191.46
+          },
+          {
+            "text": "like",
+            "start": 191.46,
+            "end": 192.04
+          },
+          {
+            "text": "dynamite,",
+            "start": 192.04,
+            "end": 192.8
+          },
+          {
+            "text": "whoa-oh-oh",
+            "start": 193.0,
+            "end": 193.76
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So I'ma light it up like dynamite, whoa-oh-oh",
+      "zh": "",
+      "pinyin": ""
+    }
+  ],
+  "alignment": {
+    "recording": "songs/BTS - Dynamite.m4a",
+    "audioSha256": "4d40eb15e3c4b70693c1007d17bb8e9a5f8f6f69fdbe7d2a620de025e2288df2",
+    "duration": 200.272125,
+    "model": "mlx-community/whisper-large-v3-turbo",
+    "stableTs": "2.19.1",
+    "method": "ASR-anchored phrase-constrained forced alignment",
+    "seconds": 35.71,
+    "reviewed": false,
+    "status": "approved",
+    "approved": true,
+    "approvedBy": "Joshua Glass",
+    "approvalDate": "2026-10-23",
+    "sourceText": "../drafts/dynamite.json",
+    "reviewNotes": [
+      {
+        "line": 1,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 13,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 18,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 25,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 32,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 35,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.333
+      },
+      {
+        "line": 45,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 51,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 2
+      },
+      {
+        "line": 54,
+        "issue": "Used valid whole-recording alignment after bounded pass failure"
+      },
+      {
+        "line": 54,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.324
+      },
+      {
+        "line": 55,
+        "issue": "Used valid whole-recording alignment after bounded pass failure"
+      },
+      {
+        "line": 55,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 55,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 56,
+        "issue": "Used valid whole-recording alignment after bounded pass failure"
+      },
+      {
+        "line": 56,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 57,
+        "issue": "Used valid whole-recording alignment after bounded pass failure"
+      },
+      {
+        "line": 57,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.209
+      },
+      {
+        "line": 58,
+        "issue": "Used valid whole-recording alignment after bounded pass failure"
+      },
+      {
+        "line": 58,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      }
+    ],
+    "repairs": {
+      "useGlobalRows": [
+        54,
+        55,
+        56,
+        57,
+        58
+      ],
+      "reason": "Independent ASR repeats a hallucinated phrase over the final refrain. The whole-recording forced pass retains the correct final refrain and outro sequence at 172.70-193.76s."
+    }
+  }
+}

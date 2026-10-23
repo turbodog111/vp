@@ -1,0 +1,51 @@
+[
+  {
+    "recording": "songs/BTS - Butter.m4a",
+    "file": "butter.json",
+    "lines": 52,
+    "status": "text-ready-timing-unassigned",
+    "note": "English original. Parenthetical ad-libs retained. Timing must be checked against the uploaded rendition."
+  },
+  {
+    "recording": "songs/BTS - Dynamite.m4a",
+    "file": "dynamite.json",
+    "lines": 56,
+    "status": "text-ready-timing-unassigned",
+    "note": "RECORDING REVIEW REQUIRED: supplied text has live callouts and begins mid-opening phrase. Preserve it as supplied; verify against the Nightly upload before alignment. No missing words invented."
+  },
+  {
+    "recording": "songs/MiliSen - Ever Romantic.m4a",
+    "file": "ever-romantic.json",
+    "lines": 28,
+    "status": "text-ready-timing-unassigned",
+    "note": "English text supplied by Joshua. Stanza separators removed, wording preserved. Timing unassigned."
+  },
+  {
+    "recording": "songs/MIMI - Science.m4a",
+    "file": "science-jp.json",
+    "lines": 64,
+    "status": "text-ready-timing-unassigned",
+    "note": "User-supplied romaji preserved, including potentially uncertain spellings. English is a provisional meaning translation by Codex, not Moonlit Star's sung adaptation. Japanese script not reconstructed from ambiguous romaji. Timing unassigned."
+  },
+  {
+    "recording": "songs/MIMI feat. Kasane Teto SV - Petal Lament.m4a",
+    "file": "petal-lament.json",
+    "lines": 25,
+    "status": "text-ready-timing-unassigned",
+    "note": "User-supplied romaji preserved. English is a provisional meaning translation; the phrase 'Boku ga sa maeru' is ambiguous and needs original-script review. No Japanese characters or timings invented."
+  },
+  {
+    "recording": "songs/MIMI feat. Hatsune Miku - Marshmary.m4a",
+    "file": "marshmary.json",
+    "lines": 48,
+    "status": "text-ready-timing-unassigned",
+    "note": "User-supplied romaji with English meaning translation by Codex. Uncertain fragments remain flagged here: 'Te ukabu', 'Shuuten datte naku naraba'. Review against Japanese script before final publication; timing unassigned."
+  },
+  {
+    "recording": "songs/Kasane Teto - Freefall.m4a",
+    "file": "freefall.json",
+    "lines": 61,
+    "status": "text-ready-timing-unassigned",
+    "note": "User-supplied mixed Chinese and English. Chinese uses pinyin, not romaji. Pinyin and English meaning translation prepared by Codex; timing unassigned."
+  }
+]

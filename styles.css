@@ -4455,6 +4455,26 @@ body.story-theater-active .now-view.active {
    continuously moving scenery, with route-map controls rather than disco UI. */
 .story-theater[data-story^="window-"] { color: #f7fcf4; }
 .story-theater[data-story^="window-"] .story-chrome { display: none; }
+.story-theater[data-story^="window-"] .story-stage { position: static; display: block; padding: 0; }
+.story-theater[data-story^="window-"] .story-act { display: none; }
+.story-theater[data-story^="window-"] .story-lyrics {
+  position: absolute;
+  inset: 27% 12% 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  pointer-events: none;
+}
+.story-theater[data-story^="window-"] .story-current { margin: 0; width: 100%; }
+.story-theater[data-story^="window-"] .story-control {
+  position: absolute;
+  right: 24px;
+  bottom: 48px;
+  width: 120px;
+}
+.story-theater[data-story^="window-"] .story-time { top: calc(50% + 43px); width: 108px; }
 .story-theater[data-story^="window-"] .story-header {
   padding: 18px 28px 7px;
   text-shadow: 0 2px 12px rgba(5, 13, 23, 0.7);
@@ -4521,8 +4541,14 @@ body.story-theater-active .now-view.active {
 }
 .story-translation-romaji { color: #a9eee1; font-size: 20px; }
 .story-translation-en { color: #fff8f2; font-size: 24px; }
+.story-theater[data-story="window-jp"] .story-vocal-line { font-size: 22px; font-weight: 650; }
+.story-theater[data-story="window-jp"] .story-translation-romaji { font-size: 28px; font-weight: 800; }
 @media (max-width: 780px), (max-height: 600px) {
+  .story-theater[data-story^="window-"] .story-lyrics { inset: 28% 16px 32%; }
+  .story-theater[data-story^="window-"] .story-control { right: 16px; bottom: 42px; width: 104px; }
   .story-theater[data-story="window-jp"] .story-current.is-multilingual { font-size: 22px; gap: 8px; }
+  .story-theater[data-story="window-jp"] .story-vocal-line { font-size: 18px; }
+  .story-theater[data-story="window-jp"] .story-translation-romaji { font-size: 22px; }
   .story-translation-romaji { font-size: 16px; }
   .story-translation-en { font-size: 18px; }
 }

@@ -2,57 +2,1148 @@
   "song": "Window View",
   "artist": "farewell225 feat. Kasane Teto SV",
   "language": "ja",
-  "translationMethod": "Romaji and English companions translated from the existing Japanese project text. Each entry follows the corresponding original timed line; translated words are not claimed as independently audio-aligned.",
+  "translationMethod": "Existing Japanese, romaji and English preserved; Japanese and romaji acoustically timed, English phrase-level meaning translation.",
   "translations": [
-    {"romaji": "Chotto zutsu ugokidasu fuukei ga", "en": "The scenery slowly starts to move."},
-    {"romaji": "Genzaichi o oshiete kureru no", "en": "It tells me where I am now."},
-    {"romaji": "Nara", "en": "If so,"},
-    {"romaji": "Ima wa yorikakatterya ii no kamo", "en": "Maybe I can just lean back for now."},
-    {"romaji": "Nantonaku omoidasu koukei ga", "en": "The scenes that come back to me"},
-    {"romaji": "Doushitemo tanoshikunai kara", "en": "Never seem to bring me any joy."},
-    {"romaji": "Mada", "en": "So, for now,"},
-    {"romaji": "Wasurekitta furi o suru yo", "en": "I'll pretend I've forgotten them completely."},
-    {"romaji": "Nee", "en": "Hey,"},
-    {"romaji": "Atama no naka de kikoeru", "en": "Those voices I hear inside my head,"},
-    {"romaji": "Itsuka no basei wa oite kou yo", "en": "Let's leave those old insults behind."},
-    {"romaji": "Mechakucha ni natta ato wa", "en": "Once everything falls apart,"},
-    {"romaji": "Sabishiku natte tsuttatterun dakara", "en": "I end up lonely, just standing there."},
-    {"romaji": "Semete ima wa", "en": "At least for now,"},
-    {"romaji": "Hetakuso nari no suteppu o fumanakya", "en": "I've got to take a step, however clumsy."},
-    {"romaji": "Tonikaku arukitsuzukereba", "en": "If I just keep walking,"},
-    {"romaji": "Dokoka ni tadoritsukeru ki ga shiteru", "en": "I feel like I'll reach somewhere."},
-    {"romaji": "Itsuka", "en": "Someday,"},
-    {"romaji": "Michi machigatte", "en": "I might take the wrong road,"},
-    {"romaji": "Ashi ga tomatte", "en": "My feet might stop,"},
-    {"romaji": "Mawari kara hito wa inaku natteru kamo", "en": "And everyone around me might be gone."},
-    {"romaji": "Nante ne", "en": "Just kidding."},
-    {"romaji": "Mata kurai koto itteru", "en": "There I go, saying gloomy things again."},
-    {"romaji": "Osaifu ni itaku naranai teido ni", "en": "Without hurting our wallets too much,"},
-    {"romaji": "Attakai mono o tabe ni ikou yo", "en": "Let's go get something warm to eat."},
-    {"romaji": "Maa", "en": "Well,"},
-    {"romaji": "Betsu ni ii kedo sa", "en": "I guess it's all right,"},
-    {"romaji": "Ki ni shinai you ni", "en": "But I'm only trying"},
-    {"romaji": "Shiteru dake dakara", "en": "Not to let it bother me."},
-    {"romaji": "Kitto yokunai no", "en": "That probably isn't good."},
-    {"romaji": "Itsu no ma ni ka", "en": "Before I knew it,"},
-    {"romaji": "Dokka tondetta shuumatsuron ya", "en": "Those doomsday thoughts had flown away,"},
-    {"romaji": "Kaite kesu o kurikaeshita hibi ga", "en": "And the days spent writing and erasing"},
-    {"romaji": "Nanka zenbu", "en": "Somehow all"},
-    {"romaji": "Imi nai you ni miete sa", "en": "Seemed to have no meaning."},
-    {"romaji": "Dondon to tooku naru fuukei ga", "en": "As the scenery grows more distant,"},
-    {"romaji": "Genzaichi o koushin suru tabi ni", "en": "Each time it updates where I am,"},
-    {"romaji": "Mata", "en": "If once again"},
-    {"romaji": "Nanika o wasurechatte iku no nara", "en": "I go on forgetting something,"},
-    {"romaji": "Nantonaku omoidasu koukei ga", "en": "So the scenes that come back to me"},
-    {"romaji": "Chotto demo kurushikunai you ni", "en": "Might hurt even a little less,"},
-    {"romaji": "Tada", "en": "I'll just"},
-    {"romaji": "Kami o kitte mae o muku no", "en": "Cut my hair and face forward."},
-    {"romaji": "Kami o kitte mae o muku no", "en": "Cut my hair and face forward."},
-    {"romaji": "Kami o kitte mae o muku no", "en": "Cut my hair and face forward."},
-    {"romaji": "Kami o kitte mae o muku no", "en": "Cut my hair and face forward."},
-    {"romaji": "Kami o kitte mae o muku no", "en": "Cut my hair and face forward."}
+    {
+      "romaji": "Chotto zutsu ugokidasu fuukei ga",
+      "en": "The scenery slowly starts to move.",
+      "words": [
+        {
+          "word": "Chotto",
+          "start": 0.79,
+          "end": 1.11
+        },
+        {
+          "word": "zutsu",
+          "start": 1.11,
+          "end": 1.53
+        },
+        {
+          "word": "ugokidasu",
+          "start": 1.53,
+          "end": 2.27
+        },
+        {
+          "word": "fuukei",
+          "start": 2.27,
+          "end": 2.93
+        },
+        {
+          "word": "ga",
+          "start": 2.93,
+          "end": 3.09
+        }
+      ]
+    },
+    {
+      "romaji": "Genzaichi o oshiete kureru no",
+      "en": "It tells me where I am now.",
+      "words": [
+        {
+          "word": "Genzaichi",
+          "start": 3.17,
+          "end": 3.97
+        },
+        {
+          "word": "o",
+          "start": 3.97,
+          "end": 4.19
+        },
+        {
+          "word": "oshiete",
+          "start": 4.19,
+          "end": 5.01
+        },
+        {
+          "word": "kureru",
+          "start": 5.01,
+          "end": 5.59
+        },
+        {
+          "word": "no",
+          "start": 5.59,
+          "end": 5.85
+        }
+      ]
+    },
+    {
+      "romaji": "Nara",
+      "en": "If so,",
+      "words": [
+        {
+          "word": "Nara",
+          "start": 5.93,
+          "end": 6.57
+        }
+      ]
+    },
+    {
+      "romaji": "Ima wa yorikakatterya ii no kamo",
+      "en": "Maybe I can just lean back for now.",
+      "words": [
+        {
+          "word": "Ima wa",
+          "start": 7.77,
+          "end": 8.17
+        },
+        {
+          "word": "yorikakatterya",
+          "start": 8.33,
+          "end": 9.61
+        },
+        {
+          "word": "ii",
+          "start": 9.71,
+          "end": 9.81
+        },
+        {
+          "word": "no",
+          "start": 9.81,
+          "end": 10.01
+        },
+        {
+          "word": "kamo",
+          "start": 10.01,
+          "end": 10.33
+        }
+      ]
+    },
+    {
+      "romaji": "Nantonaku omoidasu koukei ga",
+      "en": "The scenes that come back to me",
+      "words": [
+        {
+          "word": "Nantonaku",
+          "start": 10.47,
+          "end": 11.35
+        },
+        {
+          "word": "omoidasu",
+          "start": 11.35,
+          "end": 12.21
+        },
+        {
+          "word": "koukei",
+          "start": 12.21,
+          "end": 12.83
+        },
+        {
+          "word": "ga",
+          "start": 12.83,
+          "end": 12.99
+        }
+      ]
+    },
+    {
+      "romaji": "Doushitemo tanoshikunai kara",
+      "en": "Never seem to bring me any joy.",
+      "words": [
+        {
+          "word": "Doushitemo",
+          "start": 13.05,
+          "end": 13.93
+        },
+        {
+          "word": "tanoshikunai",
+          "start": 13.93,
+          "end": 15.35
+        },
+        {
+          "word": "kara",
+          "start": 15.35,
+          "end": 15.75
+        }
+      ]
+    },
+    {
+      "romaji": "Mada",
+      "en": "So, for now,",
+      "words": [
+        {
+          "word": "Mada",
+          "start": 15.85,
+          "end": 16.47
+        }
+      ]
+    },
+    {
+      "romaji": "Wasurekitta furi o suru yo",
+      "en": "I'll pretend I've forgotten them completely.",
+      "words": [
+        {
+          "word": "Wasurekitta",
+          "start": 18.47,
+          "end": 19.35
+        },
+        {
+          "word": "furi",
+          "start": 19.35,
+          "end": 19.75
+        },
+        {
+          "word": "o",
+          "start": 19.75,
+          "end": 19.93
+        },
+        {
+          "word": "suru",
+          "start": 19.93,
+          "end": 20.21
+        },
+        {
+          "word": "yo",
+          "start": 20.21,
+          "end": 20.41
+        }
+      ]
+    },
+    {
+      "romaji": "Nee",
+      "en": "Hey,",
+      "words": [
+        {
+          "word": "Nee",
+          "start": 20.55,
+          "end": 20.85
+        }
+      ]
+    },
+    {
+      "romaji": "Atama no naka de kikoeru",
+      "en": "Those voices I hear inside my head,",
+      "words": [
+        {
+          "word": "Atama",
+          "start": 20.88,
+          "end": 21.46
+        },
+        {
+          "word": "no",
+          "start": 21.46,
+          "end": 21.66
+        },
+        {
+          "word": "naka",
+          "start": 21.66,
+          "end": 21.92
+        },
+        {
+          "word": "de",
+          "start": 21.92,
+          "end": 22.06
+        },
+        {
+          "word": "kikoeru",
+          "start": 22.06,
+          "end": 22.58
+        }
+      ]
+    },
+    {
+      "romaji": "Itsuka no basei wa oite kou yo",
+      "en": "Let's leave those old insults behind.",
+      "words": [
+        {
+          "word": "Itsuka",
+          "start": 22.71,
+          "end": 23.19
+        },
+        {
+          "word": "no",
+          "start": 23.19,
+          "end": 23.31
+        },
+        {
+          "word": "basei",
+          "start": 23.31,
+          "end": 23.79
+        },
+        {
+          "word": "wa",
+          "start": 23.89,
+          "end": 23.95
+        },
+        {
+          "word": "oite",
+          "start": 23.95,
+          "end": 24.35
+        },
+        {
+          "word": "kou",
+          "start": 24.35,
+          "end": 24.75
+        },
+        {
+          "word": "yo",
+          "start": 24.75,
+          "end": 24.93
+        }
+      ]
+    },
+    {
+      "romaji": "Mechakucha ni natta ato wa",
+      "en": "Once everything falls apart,",
+      "words": [
+        {
+          "word": "Mechakucha",
+          "start": 25.81,
+          "end": 26.57
+        },
+        {
+          "word": "ni",
+          "start": 26.57,
+          "end": 26.73
+        },
+        {
+          "word": "natta",
+          "start": 26.73,
+          "end": 27.21
+        },
+        {
+          "word": "ato",
+          "start": 27.21,
+          "end": 27.49
+        },
+        {
+          "word": "wa",
+          "start": 27.55,
+          "end": 27.63
+        }
+      ]
+    },
+    {
+      "romaji": "Sabishiku natte tsuttatterun dakara",
+      "en": "I end up lonely, just standing there.",
+      "words": [
+        {
+          "word": "Sabishiku",
+          "start": 27.82,
+          "end": 28.24
+        },
+        {
+          "word": "natte",
+          "start": 28.24,
+          "end": 28.7
+        },
+        {
+          "word": "tsuttatterun",
+          "start": 28.7,
+          "end": 29.8
+        },
+        {
+          "word": "dakara",
+          "start": 29.8,
+          "end": 30.26
+        }
+      ]
+    },
+    {
+      "romaji": "Semete ima wa",
+      "en": "At least for now,",
+      "words": [
+        {
+          "word": "Semete",
+          "start": 31.35,
+          "end": 31.99
+        },
+        {
+          "word": "ima",
+          "start": 31.99,
+          "end": 32.31
+        },
+        {
+          "word": "wa",
+          "start": 32.39,
+          "end": 32.45
+        }
+      ]
+    },
+    {
+      "romaji": "Hetakuso nari no suteppu o fumanakya",
+      "en": "I've got to take a step, however clumsy.",
+      "words": [
+        {
+          "word": "Hetakuso",
+          "start": 32.72,
+          "end": 33.22
+        },
+        {
+          "word": "nari",
+          "start": 33.22,
+          "end": 33.52
+        },
+        {
+          "word": "no",
+          "start": 33.52,
+          "end": 33.66
+        },
+        {
+          "word": "suteppu",
+          "start": 33.66,
+          "end": 34.34
+        },
+        {
+          "word": "o",
+          "start": 34.34,
+          "end": 34.5
+        },
+        {
+          "word": "fumanakya",
+          "start": 34.5,
+          "end": 35.32
+        }
+      ]
+    },
+    {
+      "romaji": "Tonikaku arukitsuzukereba",
+      "en": "If I just keep walking,",
+      "words": [
+        {
+          "word": "Tonikaku",
+          "start": 39.83,
+          "end": 40.69
+        },
+        {
+          "word": "arukitsuzukereba",
+          "start": 40.69,
+          "end": 41.89
+        }
+      ]
+    },
+    {
+      "romaji": "Dokoka ni tadoritsukeru ki ga shiteru",
+      "en": "I feel like I'll reach somewhere.",
+      "words": [
+        {
+          "word": "Dokoka",
+          "start": 41.97,
+          "end": 42.51
+        },
+        {
+          "word": "ni",
+          "start": 42.51,
+          "end": 42.67
+        },
+        {
+          "word": "tadoritsukeru",
+          "start": 42.67,
+          "end": 43.51
+        },
+        {
+          "word": "ki",
+          "start": 43.51,
+          "end": 43.73
+        },
+        {
+          "word": "ga",
+          "start": 43.73,
+          "end": 43.87
+        },
+        {
+          "word": "shiteru",
+          "start": 43.87,
+          "end": 44.35
+        }
+      ]
+    },
+    {
+      "romaji": "Itsuka",
+      "en": "Someday,",
+      "words": [
+        {
+          "word": "Itsuka",
+          "start": 44.43,
+          "end": 44.99
+        }
+      ]
+    },
+    {
+      "romaji": "Michi machigatte",
+      "en": "I might take the wrong road,",
+      "words": [
+        {
+          "word": "Michi",
+          "start": 45.01,
+          "end": 45.29
+        },
+        {
+          "word": "machigatte",
+          "start": 45.29,
+          "end": 46.03
+        }
+      ]
+    },
+    {
+      "romaji": "Ashi ga tomatte",
+      "en": "My feet might stop,",
+      "words": [
+        {
+          "word": "Ashi",
+          "start": 46.13,
+          "end": 46.49
+        },
+        {
+          "word": "ga",
+          "start": 46.49,
+          "end": 46.67
+        },
+        {
+          "word": "tomatte",
+          "start": 46.67,
+          "end": 47.33
+        }
+      ]
+    },
+    {
+      "romaji": "Mawari kara hito wa inaku natteru kamo",
+      "en": "And everyone around me might be gone.",
+      "words": [
+        {
+          "word": "Mawari",
+          "start": 47.66,
+          "end": 47.92
+        },
+        {
+          "word": "kara",
+          "start": 47.92,
+          "end": 48.2
+        },
+        {
+          "word": "hito",
+          "start": 48.2,
+          "end": 48.56
+        },
+        {
+          "word": "wa",
+          "start": 48.66,
+          "end": 48.7
+        },
+        {
+          "word": "inaku",
+          "start": 48.7,
+          "end": 49.1
+        },
+        {
+          "word": "natteru",
+          "start": 49.1,
+          "end": 49.72
+        },
+        {
+          "word": "kamo",
+          "start": 49.72,
+          "end": 50.08
+        }
+      ]
+    },
+    {
+      "romaji": "Nante ne",
+      "en": "Just kidding.",
+      "words": [
+        {
+          "word": "Nante",
+          "start": 51.18,
+          "end": 52.09
+        },
+        {
+          "word": "ne",
+          "start": 52.09,
+          "end": 52.23
+        }
+      ]
+    },
+    {
+      "romaji": "Mata kurai koto itteru",
+      "en": "There I go, saying gloomy things again.",
+      "words": [
+        {
+          "word": "Mata",
+          "start": 52.41,
+          "end": 52.67
+        },
+        {
+          "word": "kurai",
+          "start": 52.67,
+          "end": 53.45
+        },
+        {
+          "word": "koto",
+          "start": 53.45,
+          "end": 53.97
+        },
+        {
+          "word": "itteru",
+          "start": 53.97,
+          "end": 54.59
+        }
+      ]
+    },
+    {
+      "romaji": "Osaifu ni itaku naranai teido ni",
+      "en": "Without hurting our wallets too much,",
+      "words": [
+        {
+          "word": "Osaifu",
+          "start": 54.75,
+          "end": 55.45
+        },
+        {
+          "word": "ni",
+          "start": 55.45,
+          "end": 55.67
+        },
+        {
+          "word": "itaku",
+          "start": 55.77,
+          "end": 56.09
+        },
+        {
+          "word": "naranai",
+          "start": 56.09,
+          "end": 56.71
+        },
+        {
+          "word": "teido",
+          "start": 56.71,
+          "end": 57.19
+        },
+        {
+          "word": "ni",
+          "start": 57.19,
+          "end": 57.35
+        }
+      ]
+    },
+    {
+      "romaji": "Attakai mono o tabe ni ikou yo",
+      "en": "Let's go get something warm to eat.",
+      "words": [
+        {
+          "word": "Attakai",
+          "start": 57.73,
+          "end": 58.11
+        },
+        {
+          "word": "mono",
+          "start": 58.11,
+          "end": 58.45
+        },
+        {
+          "word": "o",
+          "start": 58.45,
+          "end": 58.61
+        },
+        {
+          "word": "tabe",
+          "start": 58.61,
+          "end": 58.89
+        },
+        {
+          "word": "ni",
+          "start": 58.89,
+          "end": 59.07
+        },
+        {
+          "word": "ikou",
+          "start": 59.07,
+          "end": 59.41
+        },
+        {
+          "word": "yo",
+          "start": 59.41,
+          "end": 59.67
+        }
+      ]
+    },
+    {
+      "romaji": "Maa",
+      "en": "Well,",
+      "words": [
+        {
+          "word": "Maa",
+          "start": 59.79,
+          "end": 60.07
+        }
+      ]
+    },
+    {
+      "romaji": "Betsu ni ii kedo sa",
+      "en": "I guess it's all right,",
+      "words": [
+        {
+          "word": "Betsu",
+          "start": 61.25,
+          "end": 61.51
+        },
+        {
+          "word": "ni",
+          "start": 61.51,
+          "end": 61.69
+        },
+        {
+          "word": "ii",
+          "start": 61.77,
+          "end": 61.99
+        },
+        {
+          "word": "kedo",
+          "start": 61.99,
+          "end": 62.27
+        },
+        {
+          "word": "sa",
+          "start": 62.27,
+          "end": 62.45
+        }
+      ]
+    },
+    {
+      "romaji": "Ki ni shinai you ni",
+      "en": "But I'm only trying",
+      "words": [
+        {
+          "word": "Ki",
+          "start": 63.45,
+          "end": 63.81
+        },
+        {
+          "word": "ni",
+          "start": 63.81,
+          "end": 63.99
+        },
+        {
+          "word": "shinai",
+          "start": 63.99,
+          "end": 64.41
+        },
+        {
+          "word": "you",
+          "start": 64.57,
+          "end": 64.69
+        },
+        {
+          "word": "ni",
+          "start": 64.69,
+          "end": 64.91
+        }
+      ]
+    },
+    {
+      "romaji": "Shiteru dake dakara",
+      "en": "Not to let it bother me.",
+      "words": [
+        {
+          "word": "Shiteru",
+          "start": 65.77,
+          "end": 66.49
+        },
+        {
+          "word": "dake",
+          "start": 66.49,
+          "end": 66.79
+        },
+        {
+          "word": "dakara",
+          "start": 66.79,
+          "end": 67.37
+        }
+      ]
+    },
+    {
+      "romaji": "Kitto yokunai no",
+      "en": "That probably isn't good.",
+      "words": [
+        {
+          "word": "Kitto",
+          "start": 67.97,
+          "end": 68.93
+        },
+        {
+          "word": "yokunai",
+          "start": 68.93,
+          "end": 69.61
+        },
+        {
+          "word": "no",
+          "start": 69.61,
+          "end": 69.91
+        }
+      ]
+    },
+    {
+      "romaji": "Itsu no ma ni ka",
+      "en": "Before I knew it,",
+      "words": [
+        {
+          "word": "Itsu",
+          "start": 71.07,
+          "end": 71.39
+        },
+        {
+          "word": "no",
+          "start": 71.39,
+          "end": 71.57
+        },
+        {
+          "word": "ma",
+          "start": 71.57,
+          "end": 71.73
+        },
+        {
+          "word": "ni",
+          "start": 71.73,
+          "end": 71.87
+        },
+        {
+          "word": "ka",
+          "start": 71.87,
+          "end": 72.03
+        }
+      ]
+    },
+    {
+      "romaji": "Dokka tondetta shuumatsuron ya",
+      "en": "Those doomsday thoughts had flown away,",
+      "words": [
+        {
+          "word": "Dokka",
+          "start": 72.11,
+          "end": 72.67
+        },
+        {
+          "word": "tondetta",
+          "start": 72.67,
+          "end": 73.37
+        },
+        {
+          "word": "shuumatsuron",
+          "start": 73.37,
+          "end": 74.33
+        },
+        {
+          "word": "ya",
+          "start": 74.33,
+          "end": 74.49
+        }
+      ]
+    },
+    {
+      "romaji": "Kaite kesu o kurikaeshita hibi ga",
+      "en": "And the days spent writing and erasing",
+      "words": [
+        {
+          "word": "Kaite",
+          "start": 74.57,
+          "end": 75.05
+        },
+        {
+          "word": "kesu",
+          "start": 75.05,
+          "end": 75.45
+        },
+        {
+          "word": "o",
+          "start": 75.45,
+          "end": 75.63
+        },
+        {
+          "word": "kurikaeshita",
+          "start": 75.63,
+          "end": 76.47
+        },
+        {
+          "word": "hibi",
+          "start": 76.47,
+          "end": 76.81
+        },
+        {
+          "word": "ga",
+          "start": 76.81,
+          "end": 76.99
+        }
+      ]
+    },
+    {
+      "romaji": "Nanka zenbu",
+      "en": "Somehow all",
+      "words": [
+        {
+          "word": "Nanka",
+          "start": 77.09,
+          "end": 77.55
+        },
+        {
+          "word": "zenbu",
+          "start": 77.55,
+          "end": 78.03
+        }
+      ]
+    },
+    {
+      "romaji": "Imi nai you ni miete sa",
+      "en": "Seemed to have no meaning.",
+      "words": [
+        {
+          "word": "Imi",
+          "start": 78.05,
+          "end": 78.39
+        },
+        {
+          "word": "nai",
+          "start": 78.39,
+          "end": 78.73
+        },
+        {
+          "word": "you",
+          "start": 78.89,
+          "end": 78.99
+        },
+        {
+          "word": "ni",
+          "start": 78.99,
+          "end": 79.25
+        },
+        {
+          "word": "miete",
+          "start": 79.25,
+          "end": 79.49
+        },
+        {
+          "word": "sa",
+          "start": 79.49,
+          "end": 79.59
+        }
+      ]
+    },
+    {
+      "romaji": "Dondon to tooku naru fuukei ga",
+      "en": "As the scenery grows more distant,",
+      "words": [
+        {
+          "word": "Dondon",
+          "start": 79.71,
+          "end": 80.53
+        },
+        {
+          "word": "to",
+          "start": 80.53,
+          "end": 80.71
+        },
+        {
+          "word": "tooku",
+          "start": 80.71,
+          "end": 81.15
+        },
+        {
+          "word": "naru",
+          "start": 81.15,
+          "end": 81.45
+        },
+        {
+          "word": "fuukei",
+          "start": 81.45,
+          "end": 82.17
+        },
+        {
+          "word": "ga",
+          "start": 82.17,
+          "end": 82.29
+        }
+      ]
+    },
+    {
+      "romaji": "Genzaichi o koushin suru tabi ni",
+      "en": "Each time it updates where I am,",
+      "words": [
+        {
+          "word": "Genzaichi",
+          "start": 82.35,
+          "end": 83.15
+        },
+        {
+          "word": "o",
+          "start": 83.15,
+          "end": 83.37
+        },
+        {
+          "word": "koushin",
+          "start": 83.37,
+          "end": 84.09
+        },
+        {
+          "word": "suru",
+          "start": 84.09,
+          "end": 84.39
+        },
+        {
+          "word": "tabi",
+          "start": 84.39,
+          "end": 84.85
+        },
+        {
+          "word": "ni",
+          "start": 84.85,
+          "end": 85.07
+        }
+      ]
+    },
+    {
+      "romaji": "Mata",
+      "en": "If once again",
+      "words": [
+        {
+          "word": "Mata",
+          "start": 85.27,
+          "end": 85.73
+        }
+      ]
+    },
+    {
+      "romaji": "Nanika o wasurechatte iku no nara",
+      "en": "I go on forgetting something,",
+      "words": [
+        {
+          "word": "Nanika",
+          "start": 86.83,
+          "end": 87.55
+        },
+        {
+          "word": "o",
+          "start": 87.55,
+          "end": 87.73
+        },
+        {
+          "word": "wasurechatte",
+          "start": 87.85,
+          "end": 88.59
+        },
+        {
+          "word": "iku",
+          "start": 88.59,
+          "end": 89.03
+        },
+        {
+          "word": "no",
+          "start": 89.03,
+          "end": 89.21
+        },
+        {
+          "word": "nara",
+          "start": 89.21,
+          "end": 89.49
+        }
+      ]
+    },
+    {
+      "romaji": "Nantonaku omoidasu koukei ga",
+      "en": "So the scenes that come back to me",
+      "words": [
+        {
+          "word": "Nantonaku",
+          "start": 89.71,
+          "end": 90.59
+        },
+        {
+          "word": "omoidasu",
+          "start": 90.59,
+          "end": 91.39
+        },
+        {
+          "word": "koukei",
+          "start": 91.39,
+          "end": 92.01
+        },
+        {
+          "word": "ga",
+          "start": 92.01,
+          "end": 92.21
+        }
+      ]
+    },
+    {
+      "romaji": "Chotto demo kurushikunai you ni",
+      "en": "Might hurt even a little less,",
+      "words": [
+        {
+          "word": "Chotto",
+          "start": 92.23,
+          "end": 92.67
+        },
+        {
+          "word": "demo",
+          "start": 92.67,
+          "end": 93.03
+        },
+        {
+          "word": "kurushikunai",
+          "start": 93.03,
+          "end": 94.49
+        },
+        {
+          "word": "you",
+          "start": 94.49,
+          "end": 94.81
+        },
+        {
+          "word": "ni",
+          "start": 94.81,
+          "end": 94.95
+        }
+      ]
+    },
+    {
+      "romaji": "Tada",
+      "en": "I'll just",
+      "words": [
+        {
+          "word": "Tada",
+          "start": 95.05,
+          "end": 95.59
+        }
+      ]
+    },
+    {
+      "romaji": "Kami o kitte mae o muku no",
+      "en": "Cut my hair and face forward.",
+      "words": [
+        {
+          "word": "Kami",
+          "start": 97.41,
+          "end": 97.85
+        },
+        {
+          "word": "o",
+          "start": 97.85,
+          "end": 98.03
+        },
+        {
+          "word": "kitte",
+          "start": 98.03,
+          "end": 98.49
+        },
+        {
+          "word": "mae",
+          "start": 98.49,
+          "end": 98.97
+        },
+        {
+          "word": "o",
+          "start": 98.97,
+          "end": 99.09
+        },
+        {
+          "word": "muku",
+          "start": 99.17,
+          "end": 99.39
+        },
+        {
+          "word": "no",
+          "start": 99.39,
+          "end": 99.63
+        }
+      ]
+    }
   ],
-  "duration": 145.890975,
+  "duration": 145.8213125,
   "theater": "window-ja",
   "bpm": 97,
   "beatOffset": 0.22,
@@ -118,891 +1209,793 @@
   ],
   "lines": [
     {
-      "start": 0.84,
-      "end": 2.02,
+      "start": 0.71,
+      "end": 3.09,
       "text": "ちょっとずつ動き出す風景が",
       "words": [
         {
           "word": "ちょっとずつ",
-          "start": 0.84,
-          "end": 1.335
+          "start": 0.71,
+          "end": 1.57
         },
         {
           "word": "動き出す",
-          "start": 1.335,
-          "end": 1.711
+          "start": 1.57,
+          "end": 2.31
         },
         {
           "word": "風景が",
-          "start": 1.711,
-          "end": 2.02
+          "start": 2.31,
+          "end": 3.09
         }
       ]
     },
     {
-      "start": 2.1,
-      "end": 5.94,
+      "start": 3.17,
+      "end": 5.85,
       "text": "現在地を教えてくれるの",
       "words": [
         {
           "word": "現在地を",
-          "start": 2.1,
-          "end": 3.461
+          "start": 3.17,
+          "end": 4.21
         },
         {
           "word": "教えて",
-          "start": 3.461,
-          "end": 4.579
+          "start": 4.21,
+          "end": 5.01
         },
         {
           "word": "くれるの",
-          "start": 4.579,
-          "end": 5.94
+          "start": 5.01,
+          "end": 5.85
         }
       ]
     },
     {
-      "start": 6.04,
-      "end": 7.56,
+      "start": 5.93,
+      "end": 6.57,
       "text": "なら",
       "words": [
         {
           "word": "なら",
-          "start": 6.04,
-          "end": 7.56
+          "start": 5.93,
+          "end": 6.57
         }
       ]
     },
     {
-      "start": 7.66,
-      "end": 10.27,
+      "start": 7.73,
+      "end": 10.33,
       "text": "今は寄りかかってりゃいいのかも",
       "words": [
         {
           "word": "今は",
-          "start": 7.66,
-          "end": 8.141
+          "start": 7.73,
+          "end": 8.35
         },
         {
           "word": "寄りかかってりゃ",
-          "start": 8.141,
-          "end": 9.374
+          "start": 8.35,
+          "end": 9.61
         },
         {
           "word": "いいのかも",
-          "start": 9.374,
-          "end": 10.27
+          "start": 9.61,
+          "end": 10.33
         }
       ]
     },
     {
-      "start": 10.37,
-      "end": 12.85,
+      "start": 10.39,
+      "end": 13.03,
       "text": "なんとなく思い出す光景が",
       "words": [
         {
           "word": "なんとなく",
-          "start": 10.37,
-          "end": 11.337
+          "start": 10.39,
+          "end": 11.35
         },
         {
           "word": "思い出す",
-          "start": 11.337,
-          "end": 12.167
+          "start": 11.35,
+          "end": 12.21
         },
         {
           "word": "光景が",
-          "start": 12.167,
-          "end": 12.85
+          "start": 12.21,
+          "end": 13.03
         }
       ]
     },
     {
-      "start": 12.95,
-      "end": 15.9,
+      "start": 13.05,
+      "end": 15.75,
       "text": "どうしても楽しくないから",
       "words": [
         {
           "word": "どうしても",
-          "start": 12.95,
-          "end": 14.1
+          "start": 13.05,
+          "end": 13.91
         },
         {
           "word": "楽しく",
-          "start": 14.1,
-          "end": 14.912
+          "start": 13.91,
+          "end": 14.93
         },
         {
           "word": "ないから",
-          "start": 14.912,
-          "end": 15.9
+          "start": 14.93,
+          "end": 15.71
         }
       ]
     },
     {
-      "start": 16.0,
-      "end": 18.15,
+      "start": 15.85,
+      "end": 16.47,
       "text": "まだ",
       "words": [
         {
           "word": "まだ",
-          "start": 16.0,
-          "end": 18.15
+          "start": 15.85,
+          "end": 16.47
         }
       ]
     },
     {
-      "start": 18.25,
-      "end": 20.19,
+      "start": 18.47,
+      "end": 20.41,
       "text": "忘れきったフリをするよ",
       "words": [
         {
           "word": "忘れきった",
-          "start": 18.25,
-          "end": 19.054
+          "start": 18.47,
+          "end": 19.35
         },
         {
           "word": "フリを",
-          "start": 19.054,
-          "end": 19.622
+          "start": 19.35,
+          "end": 19.91
         },
         {
           "word": "するよ",
-          "start": 19.622,
-          "end": 20.19
+          "start": 19.91,
+          "end": 20.41
         }
       ]
     },
     {
-      "start": 20.29,
-      "end": 20.84,
+      "start": 20.55,
+      "end": 20.85,
       "text": "ねぇ",
       "words": [
         {
           "word": "ねぇ",
-          "start": 20.29,
-          "end": 20.84
+          "start": 20.55,
+          "end": 20.85
         }
       ]
     },
     {
-      "start": 20.94,
-      "end": 22.35,
+      "start": 20.88,
+      "end": 22.68,
       "text": "頭の中で聞こえる",
       "words": [
         {
           "word": "頭の中で",
-          "start": 20.94,
-          "end": 21.645
+          "start": 20.88,
+          "end": 22.08
         },
         {
           "word": "聞こえる",
-          "start": 21.645,
-          "end": 22.35
+          "start": 22.08,
+          "end": 22.68
         }
       ]
     },
     {
-      "start": 22.45,
-      "end": 25.81,
+      "start": 22.71,
+      "end": 24.95,
       "text": "いつかの罵声は置いてこうよ",
       "words": [
         {
           "word": "いつかの",
-          "start": 22.45,
-          "end": 23.52
+          "start": 22.71,
+          "end": 23.31
         },
         {
           "word": "罵声は",
-          "start": 23.52,
-          "end": 24.4
+          "start": 23.31,
+          "end": 23.95
         },
         {
           "word": "置いてこうよ",
-          "start": 24.4,
-          "end": 25.81
+          "start": 23.95,
+          "end": 24.95
         }
       ]
     },
     {
-      "start": 25.91,
-      "end": 27.26,
+      "start": 25.43,
+      "end": 27.65,
       "text": "めちゃくちゃになった後は",
       "words": [
         {
-          "word": "めちゃくちゃに",
-          "start": 25.91,
-          "end": 26.589
-        },
-        {
-          "word": "なった",
-          "start": 26.589,
-          "end": 26.97
+          "word": "めちゃくちゃに なった",
+          "start": 25.43,
+          "end": 27.21
         },
         {
           "word": "後は",
-          "start": 26.97,
-          "end": 27.26
+          "start": 27.21,
+          "end": 27.65
         }
       ]
     },
     {
-      "start": 27.36,
-      "end": 31.26,
+      "start": 27.82,
+      "end": 30.26,
       "text": "寂しくなって突っ立ってるんだから",
       "words": [
         {
           "word": "寂しくなって",
-          "start": 27.36,
-          "end": 28.975
+          "start": 27.82,
+          "end": 28.72
         },
         {
           "word": "突っ立ってるんだから",
-          "start": 28.975,
-          "end": 31.26
+          "start": 28.72,
+          "end": 30.26
         }
       ]
     },
     {
-      "start": 31.36,
-      "end": 32.23,
+      "start": 30.79,
+      "end": 32.63,
       "text": "せめて今は",
       "words": [
         {
           "word": "せめて",
-          "start": 31.36,
-          "end": 31.855
+          "start": 30.79,
+          "end": 31.99
         },
         {
           "word": "今は",
-          "start": 31.855,
-          "end": 32.23
+          "start": 31.99,
+          "end": 32.63
         }
       ]
     },
     {
-      "start": 32.33,
-      "end": 39.9,
+      "start": 32.72,
+      "end": 35.36,
       "text": "下手くそなりのステップを踏まなきゃ",
       "words": [
         {
           "word": "下手くそなりの",
-          "start": 32.33,
-          "end": 35.252
+          "start": 32.72,
+          "end": 33.66
         },
         {
           "word": "ステップを",
-          "start": 35.252,
-          "end": 37.576
+          "start": 33.66,
+          "end": 34.52
         },
         {
           "word": "踏まなきゃ",
-          "start": 37.576,
-          "end": 39.9
+          "start": 34.52,
+          "end": 35.36
         }
       ]
     },
     {
-      "start": 40.0,
-      "end": 41.73,
+      "start": 39.79,
+      "end": 41.89,
       "text": "とにかく歩き続ければ",
       "words": [
         {
           "word": "とにかく",
-          "start": 40.0,
-          "end": 40.747
+          "start": 39.79,
+          "end": 40.69
         },
         {
           "word": "歩き続ければ",
-          "start": 40.747,
-          "end": 41.73
+          "start": 40.69,
+          "end": 41.89
         }
       ]
     },
     {
-      "start": 41.83,
-      "end": 44.38,
+      "start": 41.97,
+      "end": 44.35,
       "text": "どこかにたどり着ける気がしてる",
       "words": [
         {
           "word": "どこかに",
-          "start": 41.83,
-          "end": 42.562
+          "start": 41.97,
+          "end": 42.69
         },
         {
           "word": "たどり着ける",
-          "start": 42.562,
-          "end": 43.528
+          "start": 42.69,
+          "end": 43.55
         },
         {
           "word": "気がしてる",
-          "start": 43.528,
-          "end": 44.38
+          "start": 43.55,
+          "end": 44.35
         }
       ]
     },
     {
-      "start": 44.48,
-      "end": 45.1,
+      "start": 44.43,
+      "end": 44.99,
       "text": "いつか",
       "words": [
         {
           "word": "いつか",
-          "start": 44.48,
-          "end": 45.1
+          "start": 44.43,
+          "end": 44.99
         }
       ]
     },
     {
-      "start": 45.1,
-      "end": 45.84,
+      "start": 45.01,
+      "end": 46.03,
       "text": "道間違って",
       "words": [
         {
           "word": "道",
-          "start": 45.1,
-          "end": 45.307
+          "start": 45.01,
+          "end": 45.29
         },
         {
           "word": "間違って",
-          "start": 45.307,
-          "end": 45.84
+          "start": 45.29,
+          "end": 46.03
         }
       ]
     },
     {
-      "start": 45.94,
-      "end": 47.35,
+      "start": 46.13,
+      "end": 47.33,
       "text": "足が止まって",
       "words": [
         {
           "word": "足が",
-          "start": 45.94,
-          "end": 46.482
+          "start": 46.13,
+          "end": 46.69
         },
         {
           "word": "止まって",
-          "start": 46.482,
-          "end": 47.35
+          "start": 46.69,
+          "end": 47.31
         }
       ]
     },
     {
-      "start": 47.45,
-      "end": 51.34,
+      "start": 47.66,
+      "end": 50.1,
       "text": "周りから人はいなくなってるかも",
       "words": [
         {
           "word": "周りから",
-          "start": 47.45,
-          "end": 48.608
+          "start": 47.66,
+          "end": 48.2
         },
         {
-          "word": "人は",
-          "start": 48.608,
-          "end": 49.33
-        },
-        {
-          "word": "いなくなってるかも",
-          "start": 49.33,
-          "end": 51.34
+          "word": "人は いなくなってるかも",
+          "start": 48.2,
+          "end": 50.1
         }
       ]
     },
     {
-      "start": 51.44,
-      "end": 52.17,
+      "start": 51.18,
+      "end": 52.23,
       "text": "なんてね",
       "words": [
         {
           "word": "なんてね",
-          "start": 51.44,
-          "end": 52.17
+          "start": 51.18,
+          "end": 52.23
         }
       ]
     },
     {
-      "start": 52.27,
-      "end": 54.56,
+      "start": 52.41,
+      "end": 54.65,
       "text": "また暗い事言ってる",
       "words": [
         {
           "word": "また",
-          "start": 52.27,
-          "end": 52.854
+          "start": 52.41,
+          "end": 52.73
         },
         {
           "word": "暗い事",
-          "start": 52.854,
-          "end": 53.624
+          "start": 52.73,
+          "end": 53.89
         },
         {
           "word": "言ってる",
-          "start": 53.624,
-          "end": 54.56
+          "start": 53.89,
+          "end": 54.65
         }
       ]
     },
     {
-      "start": 54.66,
-      "end": 56.93,
+      "start": 54.75,
+      "end": 57.39,
       "text": "お財布に痛くならない程度に",
       "words": [
         {
           "word": "お財布に",
-          "start": 54.66,
-          "end": 55.383
+          "start": 54.75,
+          "end": 55.67
         },
         {
           "word": "痛くならない",
-          "start": 55.383,
-          "end": 56.335
+          "start": 55.67,
+          "end": 56.73
         },
         {
           "word": "程度に",
-          "start": 56.335,
-          "end": 56.93
+          "start": 56.73,
+          "end": 57.39
         }
       ]
     },
     {
-      "start": 57.03,
-      "end": 59.56,
+      "start": 57.73,
+      "end": 59.69,
       "text": "あったかいものを食べに行こうよ",
       "words": [
         {
           "word": "あったかいものを",
-          "start": 57.03,
-          "end": 58.214
+          "start": 57.73,
+          "end": 58.63
         },
         {
           "word": "食べに",
-          "start": 58.214,
-          "end": 58.821
+          "start": 58.63,
+          "end": 59.07
         },
         {
           "word": "行こうよ",
-          "start": 58.821,
-          "end": 59.56
+          "start": 59.07,
+          "end": 59.69
         }
       ]
     },
     {
-      "start": 59.66,
-      "end": 61.02,
+      "start": 59.79,
+      "end": 60.07,
       "text": "まぁ",
       "words": [
         {
           "word": "まぁ",
-          "start": 59.66,
-          "end": 61.02
+          "start": 59.79,
+          "end": 60.07
         }
       ]
     },
     {
-      "start": 61.12,
-      "end": 63.46,
+      "start": 61.25,
+      "end": 62.47,
       "text": "別に良いけどさ",
       "words": [
         {
           "word": "別に",
-          "start": 61.12,
-          "end": 61.937
+          "start": 61.25,
+          "end": 61.69
         },
         {
           "word": "良いけどさ",
-          "start": 61.937,
-          "end": 63.46
+          "start": 61.69,
+          "end": 62.47
         }
       ]
     },
     {
-      "start": 63.56,
-      "end": 65.75,
+      "start": 63.18,
+      "end": 64.91,
       "text": "気にしないように",
       "words": [
         {
           "word": "気にしない",
-          "start": 63.56,
-          "end": 64.843
+          "start": 63.18,
+          "end": 64.41
         },
         {
           "word": "ように",
-          "start": 64.843,
-          "end": 65.75
+          "start": 64.41,
+          "end": 64.85
         }
       ]
     },
     {
-      "start": 65.75,
-      "end": 68.22,
+      "start": 64.99,
+      "end": 67.37,
       "text": "してるだけだから",
       "words": [
         {
           "word": "してる",
-          "start": 65.75,
-          "end": 66.773
+          "start": 64.99,
+          "end": 66.49
         },
         {
           "word": "だけだから",
-          "start": 66.773,
-          "end": 68.22
+          "start": 66.49,
+          "end": 67.33
         }
       ]
     },
     {
-      "start": 68.32,
-      "end": 70.84,
+      "start": 67.97,
+      "end": 69.93,
       "text": "きっと良くないの",
       "words": [
         {
           "word": "きっと",
-          "start": 68.32,
-          "end": 69.363
+          "start": 68.02,
+          "end": 68.93
         },
         {
           "word": "良くないの",
-          "start": 69.363,
-          "end": 70.84
+          "start": 68.93,
+          "end": 69.93
         }
       ]
     },
     {
-      "start": 70.94,
-      "end": 71.9,
+      "start": 71.07,
+      "end": 72.03,
       "text": "いつのまにか",
       "words": [
         {
           "word": "いつのまにか",
-          "start": 70.94,
-          "end": 71.9
+          "start": 71.07,
+          "end": 72.03
         }
       ]
     },
     {
-      "start": 72.0,
-      "end": 74.35,
+      "start": 72.11,
+      "end": 74.49,
       "text": "どっか飛んでった終末論や",
       "words": [
         {
           "word": "どっか",
-          "start": 72.0,
-          "end": 72.647
+          "start": 72.11,
+          "end": 72.67
         },
         {
           "word": "飛んでった",
-          "start": 72.647,
-          "end": 73.563
+          "start": 72.67,
+          "end": 73.39
         },
         {
           "word": "終末論や",
-          "start": 73.563,
-          "end": 74.35
+          "start": 73.39,
+          "end": 74.49
         }
       ]
     },
     {
-      "start": 74.45,
-      "end": 76.81,
+      "start": 74.57,
+      "end": 77.01,
       "text": "書いて消すを繰り返した日々が",
       "words": [
         {
           "word": "書いて",
-          "start": 74.45,
-          "end": 74.985
+          "start": 74.57,
+          "end": 75.11
         },
         {
           "word": "消すを",
-          "start": 74.985,
-          "end": 75.519
+          "start": 75.11,
+          "end": 75.63
         },
         {
           "word": "繰り返した",
-          "start": 75.519,
-          "end": 76.275
+          "start": 75.63,
+          "end": 76.49
         },
         {
           "word": "日々が",
-          "start": 76.275,
-          "end": 76.81
+          "start": 76.49,
+          "end": 77.01
         }
       ]
     },
     {
-      "start": 76.91,
-      "end": 77.93,
+      "start": 77.09,
+      "end": 78.03,
       "text": "なんか全部",
       "words": [
         {
           "word": "なんか",
-          "start": 76.91,
-          "end": 77.49
+          "start": 77.09,
+          "end": 77.53
         },
         {
           "word": "全部",
-          "start": 77.49,
-          "end": 77.93
+          "start": 77.53,
+          "end": 77.83
         }
       ]
     },
     {
-      "start": 78.03,
-      "end": 79.79,
+      "start": 78.05,
+      "end": 79.59,
       "text": "意味ないように見えてさ",
       "words": [
         {
           "word": "意味ないように",
-          "start": 78.03,
-          "end": 79.075
+          "start": 78.05,
+          "end": 79.07
         },
         {
           "word": "見えてさ",
-          "start": 79.075,
-          "end": 79.79
+          "start": 79.07,
+          "end": 79.59
         }
       ]
     },
     {
-      "start": 79.89,
-      "end": 82.1,
+      "start": 79.61,
+      "end": 82.29,
       "text": "どんどんと遠くなる風景が",
       "words": [
         {
           "word": "どんどんと",
-          "start": 79.89,
-          "end": 80.751
+          "start": 79.61,
+          "end": 80.69
         },
         {
           "word": "遠くなる",
-          "start": 80.751,
-          "end": 81.491
+          "start": 80.69,
+          "end": 81.45
         },
         {
           "word": "風景が",
-          "start": 81.491,
-          "end": 82.1
+          "start": 81.45,
+          "end": 82.29
         }
       ]
     },
     {
-      "start": 82.2,
-      "end": 85.23,
+      "start": 82.35,
+      "end": 85.09,
       "text": "現在地を更新するたびに",
       "words": [
         {
           "word": "現在地を",
-          "start": 82.2,
-          "end": 83.274
+          "start": 82.35,
+          "end": 83.37
         },
         {
           "word": "更新する",
-          "start": 83.274,
-          "end": 84.347
+          "start": 83.37,
+          "end": 84.39
         },
         {
           "word": "たびに",
-          "start": 84.347,
-          "end": 85.23
+          "start": 84.39,
+          "end": 85.09
         }
       ]
     },
     {
-      "start": 85.33,
-      "end": 86.05,
+      "start": 85.27,
+      "end": 85.73,
       "text": "また",
       "words": [
         {
           "word": "また",
-          "start": 85.33,
-          "end": 86.05
+          "start": 85.27,
+          "end": 85.73
         }
       ]
     },
     {
-      "start": 86.05,
-      "end": 89.45,
+      "start": 86.77,
+      "end": 89.49,
       "text": "何かを忘れちゃっていくのなら",
       "words": [
         {
           "word": "何かを",
-          "start": 86.05,
-          "end": 86.896
+          "start": 86.77,
+          "end": 87.73
         },
         {
           "word": "忘れちゃって",
-          "start": 86.896,
-          "end": 88.252
+          "start": 87.73,
+          "end": 88.59
         },
         {
           "word": "いくのなら",
-          "start": 88.252,
+          "start": 88.59,
           "end": 89.45
         }
       ]
     },
     {
-      "start": 89.55,
-      "end": 92.02,
+      "start": 89.57,
+      "end": 92.21,
       "text": "なんとなく思い出す光景が",
       "words": [
         {
           "word": "なんとなく",
-          "start": 89.55,
-          "end": 90.513
+          "start": 89.57,
+          "end": 90.57
         },
         {
           "word": "思い出す",
-          "start": 90.513,
-          "end": 91.34
+          "start": 90.57,
+          "end": 91.41
         },
         {
           "word": "光景が",
-          "start": 91.34,
-          "end": 92.02
+          "start": 91.41,
+          "end": 92.21
         }
       ]
     },
     {
-      "start": 92.12,
-      "end": 95.13,
+      "start": 92.23,
+      "end": 94.95,
       "text": "ちょっとでも苦しくないように",
       "words": [
         {
           "word": "ちょっとでも",
-          "start": 92.12,
-          "end": 93.32
+          "start": 92.23,
+          "end": 93.05
         },
         {
           "word": "苦しく",
-          "start": 93.32,
-          "end": 94.07
+          "start": 93.05,
+          "end": 94.09
         },
         {
           "word": "ないように",
-          "start": 94.07,
-          "end": 95.13
+          "start": 94.09,
+          "end": 94.85
         }
       ]
     },
     {
-      "start": 95.23,
-      "end": 97.22,
+      "start": 95.05,
+      "end": 95.59,
       "text": "ただ",
       "words": [
         {
           "word": "ただ",
-          "start": 95.23,
-          "end": 97.22
+          "start": 95.05,
+          "end": 95.59
         }
       ]
     },
     {
-      "start": 97.32,
-      "end": 101.4,
+      "start": 97.39,
+      "end": 99.69,
       "text": "髪を切って前を向くの",
       "words": [
         {
           "word": "髪を切って",
-          "start": 97.32,
-          "end": 99.139
+          "start": 97.39,
+          "end": 98.51
         },
         {
           "word": "前を",
-          "start": 99.139,
-          "end": 100.115
+          "start": 98.51,
+          "end": 99.11
         },
         {
           "word": "向くの",
-          "start": 100.115,
-          "end": 101.4
-        }
-      ]
-    },
-    {
-      "start": 101.72,
-      "end": 105.18,
-      "text": "髪を切って前を向くの",
-      "words": [
-        {
-          "word": "髪を切って",
-          "start": 101.72,
-          "end": 103.263
-        },
-        {
-          "word": "前を",
-          "start": 103.263,
-          "end": 104.09
-        },
-        {
-          "word": "向くの",
-          "start": 104.09,
-          "end": 105.18
-        }
-      ]
-    },
-    {
-      "start": 105.78,
-      "end": 109.24,
-      "text": "髪を切って前を向くの",
-      "words": [
-        {
-          "word": "髪を切って",
-          "start": 105.78,
-          "end": 107.323
-        },
-        {
-          "word": "前を",
-          "start": 107.323,
-          "end": 108.15
-        },
-        {
-          "word": "向くの",
-          "start": 108.15,
-          "end": 109.24
-        }
-      ]
-    },
-    {
-      "start": 109.84,
-      "end": 113.3,
-      "text": "髪を切って前を向くの",
-      "words": [
-        {
-          "word": "髪を切って",
-          "start": 109.84,
-          "end": 111.383
-        },
-        {
-          "word": "前を",
-          "start": 111.383,
-          "end": 112.21
-        },
-        {
-          "word": "向くの",
-          "start": 112.21,
-          "end": 113.3
-        }
-      ]
-    },
-    {
-      "start": 113.9,
-      "end": 117.72,
-      "text": "髪を切って前を向くの",
-      "words": [
-        {
-          "word": "髪を切って",
-          "start": 113.9,
-          "end": 115.603
-        },
-        {
-          "word": "前を",
-          "start": 115.603,
-          "end": 116.517
-        },
-        {
-          "word": "向くの",
-          "start": 116.517,
-          "end": 117.72
+          "start": 99.11,
+          "end": 99.69
         }
       ]
     }
@@ -1012,5 +2005,25 @@
     "energyBase64": "AAAAAAAPFxcuODc/PDk3Nz5BPj0+OTk4OTg2PDw5Pj06R0VCSUhEQEFJS0VDQUBRVE1PTkdEQ0E/P0FGQz46OD9CQ0I/Ojo4ODY1NTQyMDY9P0JEREREQ0I/RENAQUBERUlJSEdMSkdCPThDQ0FFRUM/PklPVFFPSEVCRUNAQUA9QUA8RkpGQ0FEREFIREFKSEVERD9GSUVKTEpOUFNbWFFLSE9OU1ZTTEpJSEREQUA9Ojo3NDc3PkJAREhIS0pHSktKSkhHSUVHRkRTU1BQT01KR1BPTVFWVVRRUFBPS1dcXFlYXFhUU1FQTk1VU1JVXFtXVVFaWlZdWlZSUVVRTkpJSEJST01LRlRTU1NRUlJXWlhWUllWUlBNTU1NWFVQTk5XVlZSUVFQWFdVUVBaVVBNSkhFQ1NPSkdSUE5OSUtLSVZVVFNQWVZST0xMTVFXVE9LV1ZRT09TUU1YVlRSUldXVVFPTUdVUk9LRVRQTUtJTUxMVlVSTlhWUU9LSkhFVFFMSUhVUk5MS1BOU1NRTEdVUk5OSkxQUVpVT01SUFRSUFVUT1lWVFNSW1lXV1RQTUxWU05LV1JOTUxOTUpWVE9PU1ZTUU5NTE5ZVlRUUltWU1JOUlFTW1lXVl1bWVdTUlJPWVVTU1RcWlVUVlhVVVVTT01YVE5MSEZEQVJOSEZNTUdEQEhKR0ZHS0dDU1FRTUpIR01WVE5JVlJRUExPTkpXVVJOTVNSUk9OT05ZVlNOTFdVU1NTUlFRWllWVVtaVVJPU1NRWlhXVVNaWFVUVFNTW1pZVlNRTktGPzYvKSQfGxgVEhkZLDc6OTgyMS8pODs5ODY0MS8uKSclJCM1Ozk5REpLSkhHREJAPz5BPzw4NS8uLS4uLjc5Q0RFRUdERENCQD8+PTs3NzYzMjE2NTM+Rk9NS05RUE5NSkdGRUJCPjk0MTY3Nzo8PkZISEZCRkRCQ0A8PTxDSEdGQD47Ojs6RUJBR0VEREZFRUdGRkRGRkRDPj1BPUVNSVFPT1FPTU1PTlNRTk5MTFNSUU9OVFNWVlZVVFNTUlFPTUlST0tLS0pOT1lWUFFaWFVTUlJRUFlXVlVSW1lTVFJQVVhZVlRSWl9hX1lYVlFaWFRUV1pYVlRSUUtUU1JQUltXUlBMUE5NWFZTT1lYVVNTUlJOWFZSUVBaWFVTUlNSVldWU1FaVVBPTkxMTFZSUFpZXlpXUVBPUVpXVlVSW1hTVlNQVlVbWlRRWldWVVBUU09ZWFVWW15dWlZTUkxUU1ZVWF5cWFRQUlBPWVdTUFdVUU5MSklNWFZUVFRcWlhVVFdVWVhWU1JaWlxZVVNQTVhUUE5PUU1KRklLSVZVU1FRWldUUU5MSkpWVFBNWFZSUE1QUE9ZVlNRUFlWU1BOTkpTUlBNSVZTT01LUE9OWVdVUlpaVlRRUE5LV1NQTUtXVFFPT1NSU1dVUExXVFBOSklHRFNQTUtPVlBNSktMS1dWVFNQWlZTUExLSEhTUU5LV1RRT0xPT01YVlNQUVlXVFFQT0tTUlBNSVZSTkxKTk5NWFZUUVhXU1BNTUxJVlNRTk1YVVFPT1NRUVZUUExJRUE/PTw7Ojg2NDQ0MzIyLy8vLi0sMjEvLy0sMTMzMjE1NDMyMTEvMDU1NTU3OTc3NjQzMjU2OTY0MjAvLi0rKS8wNTQ0NDo5NzUzMjI1Nzg3ODY0MzQzMjE3OTk5Nzc2NDIxMC8vLy0tKysrKi0vLjAwLi4uLSwrMTAuLS0rLS4vMDAyMTAvLy4tLzMzMzM3ODY1NDIxMTM2ODY0MjAuLSwrKCwwNTU0Nzw7ODUzMjM3Ojo5OTg6OTo5ODY9Pz8+PDs6ODYyLy0qJiIeGxcUEg8NDAoJCAcGBQQEAwMDAgICAQEBAQEBAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
     "onsetsBase64": "AAAAAABkOABkRwA7AAAAADYXAAADAAAADQAALgAAKwAAZAAAMwAAAAQ9CwAAAABkFgARAAAAAAAAAA8kAAAAADAXDAAAAAAABgAAAAAAADE1CRcSAQAAAAAAIgAABQAgBxkAAAAoAAAAAABPBAAcAAAAAFcnKwAAAAAAFQAADQAAHwAATh0AAAARBQAxAABCAAAAAAAyFQAlDwAfDhw2AAAAADUAIRgAAAAAAAAAAAAAAAAAABUANSAAHx0AFgAAFgYAAAAADAAQAABkAAAAAAAAAEYAAB8eAAAAAAAAAFoqAAAAIQAAAAAAAAA3AAAZNgAAAABFAQAzAAAAAB0AAAAAAABkAAAAAGQAAgAAAgMjFQAAADEAAAAAAwEAUgAAAAJEAAAAAAQAOwAAAABIAAAAAAAAAGQAAABMAAABAA0AAGEAAAAAQAAAAAACBRwsAAAAWwAAAAAhAABSAAAAACsAAAAAAABkAAAAAGQAAAAAJAAAUAAAAFAAAAAAAAAAZAAAAABgAAAAACEAJAAAAABkAAAAAAkjCT0AAAApABoAACQAAEoAAAAAQAAAAAAAAABIAAAAWwAAAAAWAABfAAAAHRoAAAAAABNOAAAAAEAAAAAAGwAKPgAAADEAAAAAAAAATAAAAAQ6AAAAEgwAAQAAAABSAAAAAAAAAGQAAAA2AAAAADoTAAAGIQAAZAAAAAAAADBCAAAAYAAAAAAbAABcAAAAACsAAAAACgBPAAAAAFgAAAAAAAAARAAAADEAAAAAGgAARAAAAAA5AAAAAAAAPgAAAAAAAAAAAAAAAAAAAAAAADgAZFEXAAAAAAAAZBEAAAAAAAAAAAAAAABkKgAATTEJAAAAAAAAAAAcAAAAAAAAAAkAAkMPSgsIABEAAAAAAAAAAAAAAAAAAAAmAABSO0IAABAYAAAAAAAAAAAAAAAAACgGBBcKEj8LAAAAHwAACgAACQAzKAAAAAAAAAoATQAAKgAAAQ4ABg4AAAAOAAAAAAAYADs8ADsAABMAAAAOACcAAAAABDIAAAAALgAUBAAAAAAAAAAAAABCAAAAAAAgB0oAAAlFAAAAAAQAAEkAAAAAQgAACAAAJBoJAAAAQCESAAAAAABEAAABGBgAAAAAAABHAAAAEj8AAAAAGgAAUwAAAEoAAAAAAAAAUAAAAABHAAAAAAUAIwQAAABGAAAAAAABAkoAAEcAJwAAAAAAD0YAAAAAQQAAFQAALQAvAAAARAAAAAAkAABMAAALIBgAAAAAAAA+ABwAFCwAAAAADQAATAAAADgAAAAAAAAgUgAAAwA6AAAAABUAGAAAAABAAA0AAAAAAFQAAAAKCwAAABgJAGAAAAAARgAAAAAAAARbAAAAUAAAAAAUAABNAAAAAEAAAAAAAABJAAAAAGAAAAAAKAAATwAAAD4AAAAAAAAAXAAAAABaAAAAACQABB8AAABYAAAAAAAAAGQAAAAfMAAAAAMMAFoAAAAARwAAAAAAAAFQAAAAWAAAAAARAABUAAAACjsAAAAAAAA7AAAAAGMAAAAAIAAAUgAAADMAAAAAAAAAYQAAAABPAAAAAB8AACoAAAAAAAAAAAAAAAAAAAAGAAAAAAAEAAAALAAAAAAAKBAAAAAcAAAAAAAACyYAAAATCwAAAAAAABULDwAAAAAAAAAAACwKJQAABSkAAAAAAAAXFgMABAAAAAYAAAAqEQAAAAAAAAAAAAAEAAAAAAAAABkNAA8AAAAAAAAALQAAAAAACwoHBgAQAAAAAAAADSEAAAAfBQAAAAAAABMVEAAAAAAAAAAAAB8ZKAAAEycAAAAAAAwfEgIAAAAJAAYAAAA0FAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
   },
-  "timingMethod": "Recording-specific synced LRC anchors, phrase mapping, and measured audio envelope."
+  "timingMethod": "Recording-specific independent recognition and bounded acoustic alignment; not text-length interpolation. Approved by Joshua for publication on 2026-10-23.",
+  "alignment": {
+    "recording": "songs/Farewell225 - Window View.m4a",
+    "audioSha256": "25a61f4922409a6b37ce0e214769824824e9fe9ce81991009df149da90ff8096",
+    "duration": 145.8213125,
+    "model": "mlx-community/whisper-large-v3-turbo",
+    "reviewed": false,
+    "status": "approved",
+    "approved": true,
+    "approvedBy": "Joshua Glass",
+    "approvalDate": "2026-10-23",
+    "method": "Independent ASR plus bounded phrase forced alignment",
+    "lowRecognitionCoverageLines": [],
+    "removedSyntheticEndingRepeats": [
+      44,
+      45,
+      46,
+      47
+    ],
+    "endingEvidence": "window-view-jp.check-tail.json"
+  }
 }

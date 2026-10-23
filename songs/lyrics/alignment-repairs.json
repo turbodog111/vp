@@ -1,0 +1,31 @@
+{
+  "dynamite": {
+    "useGlobalRows": [54, 55, 56, 57, 58],
+    "reason": "Independent ASR repeats a hallucinated phrase over the final refrain. The whole-recording forced pass retains the correct final refrain and outro sequence at 172.70-193.76s."
+  },
+  "freefall": {
+    "sourceClips": [
+      {"line": 22, "file": "freefall.entrances.json", "clip": 0, "segment": 1},
+      {"line": 23, "file": "freefall.entrances.json", "clip": 0, "segment": 2},
+      {"line": 41, "file": "freefall.entrances.json", "clip": 1, "segment": 1},
+      {"line": 42, "file": "freefall.entrances.json", "clip": 1, "segment": 2}
+    ],
+    "reason": "English acoustic alignment of short chorus excerpts resolves two background Freefall entrances that the Chinese-language whole-song pass compressed into 40ms and 160ms cues."
+  },
+  "window-view-en": {
+    "wordIntervals": [
+      {"line": 24, "text": "Just", "start": 51.22, "end": 51.92},
+      {"line": 24, "text": "kidding", "start": 51.92, "end": 52.3},
+      {"line": 44, "text": "Somewhere", "start": 95.24, "end": 96.06}
+    ],
+    "evidence": ["window-view/window-view-en.check-tail.json: 50-55s excerpt", "window-view/window-view-en.transcribe.json: 95.24-96.06s syllables"],
+    "reason": "The independent short excerpt places Just kidding after the actual rest. Two measured syllables recognized as So where map to the supplied word Somewhere; forced alignment had collapsed the held word to 100ms."
+  },
+  "ever-romantic": {
+    "wordIntervals": [
+      {"line": 11, "text": "again", "start": 77.26, "end": 78.5},
+      {"line": 28, "text": "'til", "start": 208.58, "end": 208.8}
+    ],
+    "reason": "Independent word-timestamp recognition resolves the rests after 'again' and before the closing 'til the end'; forced attention had incorrectly filled those rests."
+  }
+}

@@ -1,0 +1,1630 @@
+{
+  "schemaVersion": 1,
+  "recording": "songs/MiliSen - Ever Romantic.m4a",
+  "language": "en",
+  "duration": 226.115938,
+  "preview": false,
+  "source": "Joshua's supplied text; recording-specific MLX Whisper large-v3-turbo / stable-ts acoustic alignment. Approved by Joshua for publication on 2026-10-23. Companion translations are provisional meaning translations.",
+  "rows": [
+    {
+      "id": "line-1",
+      "start": 15.61,
+      "end": 19.37,
+      "words": {
+        "en": [
+          {
+            "text": "All",
+            "start": 15.61,
+            "end": 16.81
+          },
+          {
+            "text": "the",
+            "start": 16.81,
+            "end": 17.07
+          },
+          {
+            "text": "pieces",
+            "start": 17.07,
+            "end": 17.67
+          },
+          {
+            "text": "that",
+            "start": 17.67,
+            "end": 18.03
+          },
+          {
+            "text": "you've",
+            "start": 18.03,
+            "end": 18.53
+          },
+          {
+            "text": "given",
+            "start": 18.53,
+            "end": 18.89
+          },
+          {
+            "text": "me",
+            "start": 18.89,
+            "end": 19.37
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "All the pieces that you've given me",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-2",
+      "start": 19.73,
+      "end": 25.62,
+      "words": {
+        "en": [
+          {
+            "text": "All",
+            "start": 19.73,
+            "end": 21.08
+          },
+          {
+            "text": "the",
+            "start": 21.08,
+            "end": 21.24
+          },
+          {
+            "text": "tears",
+            "start": 21.24,
+            "end": 21.94
+          },
+          {
+            "text": "of",
+            "start": 21.94,
+            "end": 22.58
+          },
+          {
+            "text": "joy",
+            "start": 22.58,
+            "end": 23.1
+          },
+          {
+            "text": "and",
+            "start": 23.1,
+            "end": 23.34
+          },
+          {
+            "text": "sorrow",
+            "start": 23.34,
+            "end": 23.9
+          },
+          {
+            "text": "that",
+            "start": 23.9,
+            "end": 24.44
+          },
+          {
+            "text": "you've",
+            "start": 24.44,
+            "end": 24.78
+          },
+          {
+            "text": "left",
+            "start": 24.78,
+            "end": 25.02
+          },
+          {
+            "text": "behind",
+            "start": 25.02,
+            "end": 25.62
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "All the tears of joy and sorrow that you've left behind",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-3",
+      "start": 26.445,
+      "end": 31.105,
+      "words": {
+        "en": [
+          {
+            "text": "And",
+            "start": 26.445,
+            "end": 27.645
+          },
+          {
+            "text": "although",
+            "start": 27.645,
+            "end": 28.025
+          },
+          {
+            "text": "it",
+            "start": 28.025,
+            "end": 28.625
+          },
+          {
+            "text": "was",
+            "start": 28.625,
+            "end": 28.825
+          },
+          {
+            "text": "never",
+            "start": 28.825,
+            "end": 29.125
+          },
+          {
+            "text": "meant",
+            "start": 29.125,
+            "end": 29.605
+          },
+          {
+            "text": "to",
+            "start": 29.605,
+            "end": 30.685
+          },
+          {
+            "text": "be",
+            "start": 30.685,
+            "end": 31.105
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "And although it was never meant to be",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-4",
+      "start": 31.32,
+      "end": 36.42,
+      "words": {
+        "en": [
+          {
+            "text": "They",
+            "start": 31.32,
+            "end": 32.08
+          },
+          {
+            "text": "keep",
+            "start": 32.08,
+            "end": 32.28
+          },
+          {
+            "text": "on",
+            "start": 32.28,
+            "end": 32.5
+          },
+          {
+            "text": "lingering",
+            "start": 32.5,
+            "end": 32.88
+          },
+          {
+            "text": "forever",
+            "start": 32.88,
+            "end": 34.74
+          },
+          {
+            "text": "in",
+            "start": 34.74,
+            "end": 35.54
+          },
+          {
+            "text": "my",
+            "start": 35.54,
+            "end": 35.72
+          },
+          {
+            "text": "mind",
+            "start": 35.72,
+            "end": 36.42
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "They keep on lingering forever in my mind",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-5",
+      "start": 37.075,
+      "end": 40.995,
+      "words": {
+        "en": [
+          {
+            "text": "Among",
+            "start": 37.075,
+            "end": 37.515
+          },
+          {
+            "text": "the",
+            "start": 37.515,
+            "end": 37.835
+          },
+          {
+            "text": "bells",
+            "start": 37.835,
+            "end": 38.635
+          },
+          {
+            "text": "and",
+            "start": 38.635,
+            "end": 40.075
+          },
+          {
+            "text": "velvety",
+            "start": 40.075,
+            "end": 40.615
+          },
+          {
+            "text": "strings",
+            "start": 40.615,
+            "end": 40.995
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Among the bells and velvety strings",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-6",
+      "start": 41.855,
+      "end": 46.635,
+      "words": {
+        "en": [
+          {
+            "text": "With",
+            "start": 41.855,
+            "end": 43.355
+          },
+          {
+            "text": "a",
+            "start": 43.355,
+            "end": 43.515
+          },
+          {
+            "text": "tender",
+            "start": 43.515,
+            "end": 43.895
+          },
+          {
+            "text": "voice",
+            "start": 43.895,
+            "end": 44.495
+          },
+          {
+            "text": "the",
+            "start": 44.495,
+            "end": 44.695
+          },
+          {
+            "text": "piano",
+            "start": 44.695,
+            "end": 45.435
+          },
+          {
+            "text": "quietly",
+            "start": 45.435,
+            "end": 46.015
+          },
+          {
+            "text": "sings",
+            "start": 46.015,
+            "end": 46.635
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "With a tender voice the piano quietly sings",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-7",
+      "start": 47.755,
+      "end": 50.565,
+      "words": {
+        "en": [
+          {
+            "text": "And",
+            "start": 47.755,
+            "end": 48.705
+          },
+          {
+            "text": "every",
+            "start": 48.705,
+            "end": 48.985
+          },
+          {
+            "text": "note",
+            "start": 48.985,
+            "end": 49.345
+          },
+          {
+            "text": "that",
+            "start": 49.345,
+            "end": 49.585
+          },
+          {
+            "text": "passes",
+            "start": 49.585,
+            "end": 49.965
+          },
+          {
+            "text": "by",
+            "start": 49.965,
+            "end": 50.565
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "And every note that passes by",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-8",
+      "start": 51.27,
+      "end": 54.37,
+      "words": {
+        "en": [
+          {
+            "text": "As",
+            "start": 51.27,
+            "end": 51.83
+          },
+          {
+            "text": "if",
+            "start": 51.83,
+            "end": 52.39
+          },
+          {
+            "text": "confessions",
+            "start": 52.39,
+            "end": 53.57
+          },
+          {
+            "text": "in",
+            "start": 53.57,
+            "end": 54.03
+          },
+          {
+            "text": "disguise",
+            "start": 54.03,
+            "end": 54.37
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "As if confessions in disguise",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-9",
+      "start": 64.01,
+      "end": 69.67,
+      "words": {
+        "en": [
+          {
+            "text": "Still",
+            "start": 64.01,
+            "end": 65.01
+          },
+          {
+            "text": "I",
+            "start": 65.01,
+            "end": 65.35
+          },
+          {
+            "text": "am",
+            "start": 65.35,
+            "end": 65.59
+          },
+          {
+            "text": "chasing",
+            "start": 65.59,
+            "end": 66.57
+          },
+          {
+            "text": "the",
+            "start": 66.57,
+            "end": 68.25
+          },
+          {
+            "text": "sound",
+            "start": 68.25,
+            "end": 68.69
+          },
+          {
+            "text": "of",
+            "start": 68.69,
+            "end": 68.89
+          },
+          {
+            "text": "golden",
+            "start": 68.89,
+            "end": 69.27
+          },
+          {
+            "text": "years",
+            "start": 69.27,
+            "end": 69.67
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Still I am chasing the sound of golden years",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-10",
+      "start": 70.02,
+      "end": 75.4,
+      "words": {
+        "en": [
+          {
+            "text": "Still",
+            "start": 70.02,
+            "end": 70.66
+          },
+          {
+            "text": "I",
+            "start": 70.66,
+            "end": 70.94
+          },
+          {
+            "text": "am",
+            "start": 70.94,
+            "end": 71.12
+          },
+          {
+            "text": "dreaming",
+            "start": 71.12,
+            "end": 72.22
+          },
+          {
+            "text": "of",
+            "start": 72.22,
+            "end": 73.72
+          },
+          {
+            "text": "magic",
+            "start": 73.72,
+            "end": 74.32
+          },
+          {
+            "text": "in",
+            "start": 74.32,
+            "end": 74.76
+          },
+          {
+            "text": "the",
+            "start": 74.76,
+            "end": 74.9
+          },
+          {
+            "text": "air",
+            "start": 74.9,
+            "end": 75.4
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Still I am dreaming of magic in the air",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-11-part-1",
+      "start": 75.42,
+      "end": 78.5,
+      "words": {
+        "en": [
+          {
+            "text": "Let",
+            "start": 75.42,
+            "end": 75.92
+          },
+          {
+            "text": "me",
+            "start": 75.92,
+            "end": 76.24
+          },
+          {
+            "text": "be",
+            "start": 76.24,
+            "end": 76.48
+          },
+          {
+            "text": "once",
+            "start": 76.48,
+            "end": 77.18
+          },
+          {
+            "text": "again",
+            "start": 77.26,
+            "end": 78.5
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Let me be once again",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-11-part-2",
+      "start": 80.6,
+      "end": 84.38,
+      "words": {
+        "en": [
+          {
+            "text": "lost",
+            "start": 80.6,
+            "end": 81.34
+          },
+          {
+            "text": "within",
+            "start": 81.34,
+            "end": 81.86
+          },
+          {
+            "text": "the",
+            "start": 81.86,
+            "end": 82.12
+          },
+          {
+            "text": "reverie",
+            "start": 82.12,
+            "end": 82.94
+          },
+          {
+            "text": "of",
+            "start": 82.94,
+            "end": 83.5
+          },
+          {
+            "text": "where",
+            "start": 83.5,
+            "end": 83.86
+          },
+          {
+            "text": "we",
+            "start": 83.86,
+            "end": 84.06
+          },
+          {
+            "text": "began",
+            "start": 84.06,
+            "end": 84.38
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "lost within the reverie of where we began",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-12",
+      "start": 88.46,
+      "end": 93.55,
+      "words": {
+        "en": [
+          {
+            "text": "Ever",
+            "start": 88.46,
+            "end": 90.11
+          },
+          {
+            "text": "romantic,",
+            "start": 90.11,
+            "end": 90.77
+          },
+          {
+            "text": "'til",
+            "start": 90.81,
+            "end": 92.77
+          },
+          {
+            "text": "the",
+            "start": 92.77,
+            "end": 93.01
+          },
+          {
+            "text": "end",
+            "start": 93.01,
+            "end": 93.55
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Ever romantic, 'til the end",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-13",
+      "start": 96.21,
+      "end": 99.33,
+      "words": {
+        "en": [
+          {
+            "text": "Sometimes",
+            "start": 96.21,
+            "end": 97.05
+          },
+          {
+            "text": "there",
+            "start": 97.05,
+            "end": 97.61
+          },
+          {
+            "text": "would",
+            "start": 97.61,
+            "end": 97.79
+          },
+          {
+            "text": "be",
+            "start": 97.79,
+            "end": 98.05
+          },
+          {
+            "text": "those",
+            "start": 98.05,
+            "end": 98.47
+          },
+          {
+            "text": "moody",
+            "start": 98.47,
+            "end": 98.99
+          },
+          {
+            "text": "days",
+            "start": 98.99,
+            "end": 99.33
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Sometimes there would be those moody days",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-14",
+      "start": 100.02,
+      "end": 105.52,
+      "words": {
+        "en": [
+          {
+            "text": "But",
+            "start": 100.02,
+            "end": 101.12
+          },
+          {
+            "text": "I",
+            "start": 101.12,
+            "end": 101.24
+          },
+          {
+            "text": "know",
+            "start": 101.24,
+            "end": 101.7
+          },
+          {
+            "text": "that",
+            "start": 101.7,
+            "end": 102.56
+          },
+          {
+            "text": "you",
+            "start": 102.56,
+            "end": 102.92
+          },
+          {
+            "text": "would",
+            "start": 102.92,
+            "end": 103.36
+          },
+          {
+            "text": "always",
+            "start": 103.36,
+            "end": 104.0
+          },
+          {
+            "text": "let",
+            "start": 104.0,
+            "end": 104.5
+          },
+          {
+            "text": "the",
+            "start": 104.5,
+            "end": 104.74
+          },
+          {
+            "text": "cadence",
+            "start": 104.74,
+            "end": 105.08
+          },
+          {
+            "text": "bloom",
+            "start": 105.08,
+            "end": 105.52
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "But I know that you would always let the cadence bloom",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-15",
+      "start": 106.85,
+      "end": 111.17,
+      "words": {
+        "en": [
+          {
+            "text": "And",
+            "start": 106.85,
+            "end": 107.65
+          },
+          {
+            "text": "even",
+            "start": 107.65,
+            "end": 107.99
+          },
+          {
+            "text": "when",
+            "start": 107.99,
+            "end": 108.57
+          },
+          {
+            "text": "the",
+            "start": 108.57,
+            "end": 108.81
+          },
+          {
+            "text": "world",
+            "start": 108.81,
+            "end": 109.09
+          },
+          {
+            "text": "has",
+            "start": 109.09,
+            "end": 109.49
+          },
+          {
+            "text": "lost",
+            "start": 109.49,
+            "end": 110.31
+          },
+          {
+            "text": "its",
+            "start": 110.31,
+            "end": 110.83
+          },
+          {
+            "text": "way",
+            "start": 110.83,
+            "end": 111.17
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "And even when the world has lost its way",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-16",
+      "start": 111.36,
+      "end": 115.94,
+      "words": {
+        "en": [
+          {
+            "text": "You",
+            "start": 111.36,
+            "end": 112.08
+          },
+          {
+            "text": "turned",
+            "start": 112.08,
+            "end": 112.32
+          },
+          {
+            "text": "those",
+            "start": 112.32,
+            "end": 112.48
+          },
+          {
+            "text": "bitter",
+            "start": 112.48,
+            "end": 112.7
+          },
+          {
+            "text": "times",
+            "start": 112.7,
+            "end": 113.34
+          },
+          {
+            "text": "into",
+            "start": 113.34,
+            "end": 114.42
+          },
+          {
+            "text": "familiar",
+            "start": 114.42,
+            "end": 115.6
+          },
+          {
+            "text": "tunes",
+            "start": 115.6,
+            "end": 115.94
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "You turned those bitter times into familiar tunes",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-17-part-1",
+      "start": 116.43,
+      "end": 118.38,
+      "words": {
+        "en": [
+          {
+            "text": "The",
+            "start": 116.43,
+            "end": 117.28
+          },
+          {
+            "text": "distant",
+            "start": 117.28,
+            "end": 117.6
+          },
+          {
+            "text": "stars,",
+            "start": 117.6,
+            "end": 118.38
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "The distant stars,",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-17-part-2",
+      "start": 119.86,
+      "end": 121.1,
+      "words": {
+        "en": [
+          {
+            "text": "a",
+            "start": 119.86,
+            "end": 120.0
+          },
+          {
+            "text": "choir",
+            "start": 120.0,
+            "end": 120.34
+          },
+          {
+            "text": "of",
+            "start": 120.34,
+            "end": 120.76
+          },
+          {
+            "text": "night",
+            "start": 120.76,
+            "end": 121.1
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "a choir of night",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-18",
+      "start": 122.365,
+      "end": 126.565,
+      "words": {
+        "en": [
+          {
+            "text": "Like",
+            "start": 122.365,
+            "end": 123.365
+          },
+          {
+            "text": "a",
+            "start": 123.365,
+            "end": 123.505
+          },
+          {
+            "text": "thousand",
+            "start": 123.505,
+            "end": 123.905
+          },
+          {
+            "text": "diamonds",
+            "start": 123.905,
+            "end": 124.445
+          },
+          {
+            "text": "sparkling",
+            "start": 124.445,
+            "end": 125.345
+          },
+          {
+            "text": "high",
+            "start": 125.345,
+            "end": 125.865
+          },
+          {
+            "text": "in",
+            "start": 125.865,
+            "end": 126.065
+          },
+          {
+            "text": "the",
+            "start": 126.065,
+            "end": 126.165
+          },
+          {
+            "text": "sky",
+            "start": 126.165,
+            "end": 126.565
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Like a thousand diamonds sparkling high in the sky",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-19",
+      "start": 128.24,
+      "end": 130.36,
+      "words": {
+        "en": [
+          {
+            "text": "Upon",
+            "start": 128.24,
+            "end": 128.84
+          },
+          {
+            "text": "this",
+            "start": 128.84,
+            "end": 129.02
+          },
+          {
+            "text": "prelude",
+            "start": 129.02,
+            "end": 129.48
+          },
+          {
+            "text": "to",
+            "start": 129.48,
+            "end": 129.76
+          },
+          {
+            "text": "a",
+            "start": 129.76,
+            "end": 130.06
+          },
+          {
+            "text": "dawn",
+            "start": 130.06,
+            "end": 130.36
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Upon this prelude to a dawn",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-20",
+      "start": 130.74,
+      "end": 134.54,
+      "words": {
+        "en": [
+          {
+            "text": "A",
+            "start": 130.74,
+            "end": 131.64
+          },
+          {
+            "text": "song",
+            "start": 131.64,
+            "end": 132.4
+          },
+          {
+            "text": "of",
+            "start": 132.4,
+            "end": 133.18
+          },
+          {
+            "text": "galaxies",
+            "start": 133.18,
+            "end": 133.76
+          },
+          {
+            "text": "beyond",
+            "start": 133.76,
+            "end": 134.54
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "A song of galaxies beyond",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-21",
+      "start": 143.05,
+      "end": 149.99,
+      "words": {
+        "en": [
+          {
+            "text": "I",
+            "start": 143.05,
+            "end": 144.83
+          },
+          {
+            "text": "always",
+            "start": 144.83,
+            "end": 145.49
+          },
+          {
+            "text": "pondered",
+            "start": 145.49,
+            "end": 147.13
+          },
+          {
+            "text": "the",
+            "start": 147.13,
+            "end": 148.25
+          },
+          {
+            "text": "stories",
+            "start": 148.25,
+            "end": 148.75
+          },
+          {
+            "text": "left",
+            "start": 148.75,
+            "end": 149.17
+          },
+          {
+            "text": "untold",
+            "start": 149.17,
+            "end": 149.99
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "I always pondered the stories left untold",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-22",
+      "start": 150.06,
+      "end": 155.1,
+      "words": {
+        "en": [
+          {
+            "text": "Through",
+            "start": 150.06,
+            "end": 150.58
+          },
+          {
+            "text": "all",
+            "start": 150.58,
+            "end": 150.78
+          },
+          {
+            "text": "those",
+            "start": 150.78,
+            "end": 151.1
+          },
+          {
+            "text": "whispers",
+            "start": 151.1,
+            "end": 152.6
+          },
+          {
+            "text": "of",
+            "start": 152.6,
+            "end": 153.8
+          },
+          {
+            "text": "memories",
+            "start": 153.8,
+            "end": 154.28
+          },
+          {
+            "text": "long",
+            "start": 154.28,
+            "end": 154.76
+          },
+          {
+            "text": "ago",
+            "start": 154.76,
+            "end": 155.1
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Through all those whispers of memories long ago",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-23",
+      "start": 155.26,
+      "end": 158.32,
+      "words": {
+        "en": [
+          {
+            "text": "So",
+            "start": 155.26,
+            "end": 155.8
+          },
+          {
+            "text": "have",
+            "start": 155.8,
+            "end": 156.28
+          },
+          {
+            "text": "me",
+            "start": 156.28,
+            "end": 156.66
+          },
+          {
+            "text": "lean",
+            "start": 156.66,
+            "end": 157.6
+          },
+          {
+            "text": "in",
+            "start": 157.6,
+            "end": 157.76
+          },
+          {
+            "text": "close",
+            "start": 157.76,
+            "end": 158.32
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "So have me lean in close",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-24",
+      "start": 160.095,
+      "end": 168.135,
+      "words": {
+        "en": [
+          {
+            "text": "And",
+            "start": 160.095,
+            "end": 161.395
+          },
+          {
+            "text": "hear",
+            "start": 161.395,
+            "end": 161.715
+          },
+          {
+            "text": "the",
+            "start": 161.715,
+            "end": 162.035
+          },
+          {
+            "text": "never",
+            "start": 162.035,
+            "end": 162.595
+          },
+          {
+            "text": "ending",
+            "start": 162.595,
+            "end": 163.215
+          },
+          {
+            "text": "harmonies",
+            "start": 163.215,
+            "end": 164.555
+          },
+          {
+            "text": "and",
+            "start": 164.555,
+            "end": 164.875
+          },
+          {
+            "text": "ever",
+            "start": 164.875,
+            "end": 165.295
+          },
+          {
+            "text": "lasting",
+            "start": 165.295,
+            "end": 166.055
+          },
+          {
+            "text": "melodies",
+            "start": 166.055,
+            "end": 166.895
+          },
+          {
+            "text": "in",
+            "start": 166.895,
+            "end": 167.415
+          },
+          {
+            "text": "your",
+            "start": 167.415,
+            "end": 167.615
+          },
+          {
+            "text": "heart",
+            "start": 167.615,
+            "end": 168.135
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "And hear the never ending harmonies and ever lasting melodies in your heart",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-25",
+      "start": 171.91,
+      "end": 177.19,
+      "words": {
+        "en": [
+          {
+            "text": "Still",
+            "start": 171.91,
+            "end": 172.63
+          },
+          {
+            "text": "I",
+            "start": 172.63,
+            "end": 172.91
+          },
+          {
+            "text": "am",
+            "start": 172.91,
+            "end": 173.11
+          },
+          {
+            "text": "chasing",
+            "start": 173.11,
+            "end": 174.25
+          },
+          {
+            "text": "the",
+            "start": 174.25,
+            "end": 175.89
+          },
+          {
+            "text": "sound",
+            "start": 175.89,
+            "end": 176.25
+          },
+          {
+            "text": "of",
+            "start": 176.25,
+            "end": 176.49
+          },
+          {
+            "text": "golden",
+            "start": 176.49,
+            "end": 176.87
+          },
+          {
+            "text": "years",
+            "start": 176.87,
+            "end": 177.19
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Still I am chasing the sound of golden years",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-26",
+      "start": 177.46,
+      "end": 182.78,
+      "words": {
+        "en": [
+          {
+            "text": "Still",
+            "start": 177.46,
+            "end": 178.2
+          },
+          {
+            "text": "I",
+            "start": 178.2,
+            "end": 178.46
+          },
+          {
+            "text": "am",
+            "start": 178.46,
+            "end": 178.72
+          },
+          {
+            "text": "dreaming",
+            "start": 178.72,
+            "end": 179.82
+          },
+          {
+            "text": "of",
+            "start": 179.82,
+            "end": 181.38
+          },
+          {
+            "text": "magic",
+            "start": 181.38,
+            "end": 181.9
+          },
+          {
+            "text": "in",
+            "start": 181.9,
+            "end": 182.34
+          },
+          {
+            "text": "the",
+            "start": 182.34,
+            "end": 182.5
+          },
+          {
+            "text": "air",
+            "start": 182.5,
+            "end": 182.78
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Still I am dreaming of magic in the air",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-27",
+      "start": 183.05,
+      "end": 191.87,
+      "words": {
+        "en": [
+          {
+            "text": "Let",
+            "start": 183.05,
+            "end": 183.49
+          },
+          {
+            "text": "me",
+            "start": 183.49,
+            "end": 183.81
+          },
+          {
+            "text": "be",
+            "start": 183.81,
+            "end": 184.05
+          },
+          {
+            "text": "once",
+            "start": 184.05,
+            "end": 184.87
+          },
+          {
+            "text": "again",
+            "start": 184.87,
+            "end": 186.85
+          },
+          {
+            "text": "lost",
+            "start": 186.85,
+            "end": 188.99
+          },
+          {
+            "text": "within",
+            "start": 188.99,
+            "end": 189.49
+          },
+          {
+            "text": "the",
+            "start": 189.49,
+            "end": 189.73
+          },
+          {
+            "text": "reverie",
+            "start": 189.73,
+            "end": 190.79
+          },
+          {
+            "text": "of",
+            "start": 190.79,
+            "end": 191.13
+          },
+          {
+            "text": "where",
+            "start": 191.13,
+            "end": 191.39
+          },
+          {
+            "text": "we",
+            "start": 191.39,
+            "end": 191.61
+          },
+          {
+            "text": "began",
+            "start": 191.61,
+            "end": 191.87
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Let me be once again lost within the reverie of where we began",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-28-part-1",
+      "start": 196.33,
+      "end": 198.35,
+      "words": {
+        "en": [
+          {
+            "text": "Ever",
+            "start": 196.33,
+            "end": 197.71
+          },
+          {
+            "text": "romantic,",
+            "start": 197.71,
+            "end": 198.35
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Ever romantic,",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-28-part-2",
+      "start": 208.58,
+      "end": 210.25,
+      "words": {
+        "en": [
+          {
+            "text": "'til",
+            "start": 208.58,
+            "end": 208.8
+          },
+          {
+            "text": "the",
+            "start": 208.99,
+            "end": 209.43
+          },
+          {
+            "text": "end",
+            "start": 209.43,
+            "end": 210.25
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "'til the end",
+      "zh": "",
+      "pinyin": ""
+    }
+  ],
+  "alignment": {
+    "recording": "songs/MiliSen - Ever Romantic.m4a",
+    "audioSha256": "e1fdb5e884763336589f62202cbd1aba2dd222c5dcd45f0d891d6cb852f8038b",
+    "duration": 226.115938,
+    "model": "mlx-community/whisper-large-v3-turbo",
+    "stableTs": "2.19.1",
+    "method": "ASR-anchored phrase-constrained forced alignment",
+    "seconds": 16.79,
+    "reviewed": false,
+    "status": "approved",
+    "approved": true,
+    "approvedBy": "Joshua Glass",
+    "approvalDate": "2026-10-23",
+    "sourceText": "../drafts/ever-romantic.json",
+    "reviewNotes": [
+      {
+        "line": 5,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.3
+      },
+      {
+        "line": 11,
+        "issue": "Rest boundary corrected from independent word-timestamp recognition"
+      },
+      {
+        "line": 28,
+        "issue": "Rest boundary corrected from independent word-timestamp recognition"
+      },
+      {
+        "line": 28,
+        "issue": "Long phrase or held note; audition end boundary"
+      }
+    ],
+    "repairs": {
+      "wordIntervals": [
+        {
+          "line": 11,
+          "text": "again",
+          "start": 77.26,
+          "end": 78.5
+        },
+        {
+          "line": 28,
+          "text": "'til",
+          "start": 208.58,
+          "end": 208.8
+        }
+      ],
+      "reason": "Independent word-timestamp recognition resolves the rests after 'again' and before the closing 'til the end'; forced attention had incorrectly filled those rests."
+    }
+  }
+}

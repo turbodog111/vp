@@ -1,0 +1,2631 @@
+{
+  "schemaVersion": 1,
+  "recording": "songs/BTS - Butter.m4a",
+  "language": "en",
+  "duration": 166.788938,
+  "preview": false,
+  "source": "Joshua's supplied text; recording-specific MLX Whisper large-v3-turbo / stable-ts acoustic alignment. Approved by Joshua for publication on 2026-10-23. Companion translations are provisional meaning translations.",
+  "rows": [
+    {
+      "id": "line-1",
+      "start": 4.77,
+      "end": 7.95,
+      "words": {
+        "en": [
+          {
+            "text": "Smooth",
+            "start": 4.77,
+            "end": 5.17
+          },
+          {
+            "text": "like",
+            "start": 5.31,
+            "end": 5.73
+          },
+          {
+            "text": "butter,",
+            "start": 5.73,
+            "end": 6.15
+          },
+          {
+            "text": "like",
+            "start": 6.51,
+            "end": 6.67
+          },
+          {
+            "text": "a",
+            "start": 6.67,
+            "end": 6.85
+          },
+          {
+            "text": "criminal",
+            "start": 6.87,
+            "end": 7.33
+          },
+          {
+            "text": "undercover",
+            "start": 7.33,
+            "end": 7.95
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Smooth like butter, like a criminal undercover",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-2",
+      "start": 8.28,
+      "end": 12.56,
+      "words": {
+        "en": [
+          {
+            "text": "Gon'",
+            "start": 8.28,
+            "end": 8.9
+          },
+          {
+            "text": "pop",
+            "start": 9.14,
+            "end": 9.5
+          },
+          {
+            "text": "like",
+            "start": 9.5,
+            "end": 10.04
+          },
+          {
+            "text": "trouble",
+            "start": 10.04,
+            "end": 10.48
+          },
+          {
+            "text": "breaking",
+            "start": 10.48,
+            "end": 11.14
+          },
+          {
+            "text": "into",
+            "start": 11.14,
+            "end": 11.54
+          },
+          {
+            "text": "your",
+            "start": 11.54,
+            "end": 11.78
+          },
+          {
+            "text": "heart",
+            "start": 11.78,
+            "end": 12.1
+          },
+          {
+            "text": "like",
+            "start": 12.1,
+            "end": 12.36
+          },
+          {
+            "text": "that, ooh",
+            "start": 12.36,
+            "end": 12.56
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Gon' pop like trouble breaking into your heart like that, ooh",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-3",
+      "start": 13.48,
+      "end": 17.06,
+      "words": {
+        "en": [
+          {
+            "text": "Cool",
+            "start": 13.48,
+            "end": 13.84
+          },
+          {
+            "text": "shade,",
+            "start": 13.84,
+            "end": 14.36
+          },
+          {
+            "text": "stunner,",
+            "start": 14.62,
+            "end": 14.96
+          },
+          {
+            "text": "yeah,",
+            "start": 15.04,
+            "end": 15.4
+          },
+          {
+            "text": "I",
+            "start": 15.72,
+            "end": 15.76
+          },
+          {
+            "text": "owe",
+            "start": 15.76,
+            "end": 15.92
+          },
+          {
+            "text": "it",
+            "start": 15.92,
+            "end": 16.06
+          },
+          {
+            "text": "all",
+            "start": 16.06,
+            "end": 16.16
+          },
+          {
+            "text": "to",
+            "start": 16.16,
+            "end": 16.42
+          },
+          {
+            "text": "my",
+            "start": 16.42,
+            "end": 16.72
+          },
+          {
+            "text": "mother,",
+            "start": 16.72,
+            "end": 17.0
+          },
+          {
+            "text": "uh",
+            "start": 17.04,
+            "end": 17.06
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Cool shade, stunner, yeah, I owe it all to my mother, uh",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-4",
+      "start": 17.84,
+      "end": 21.94,
+      "words": {
+        "en": [
+          {
+            "text": "Hot",
+            "start": 17.84,
+            "end": 18.24
+          },
+          {
+            "text": "like",
+            "start": 18.24,
+            "end": 18.76
+          },
+          {
+            "text": "summer,",
+            "start": 18.76,
+            "end": 19.22
+          },
+          {
+            "text": "yeah,",
+            "start": 19.52,
+            "end": 19.72
+          },
+          {
+            "text": "I'm",
+            "start": 19.94,
+            "end": 19.98
+          },
+          {
+            "text": "making",
+            "start": 19.98,
+            "end": 20.24
+          },
+          {
+            "text": "you",
+            "start": 20.24,
+            "end": 20.52
+          },
+          {
+            "text": "sweat",
+            "start": 20.52,
+            "end": 20.82
+          },
+          {
+            "text": "like",
+            "start": 20.82,
+            "end": 21.12
+          },
+          {
+            "text": "that",
+            "start": 21.12,
+            "end": 21.34
+          },
+          {
+            "text": "(break",
+            "start": 21.34,
+            "end": 21.6
+          },
+          {
+            "text": "it",
+            "start": 21.6,
+            "end": 21.74
+          },
+          {
+            "text": "down)",
+            "start": 21.74,
+            "end": 21.94
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Hot like summer, yeah, I'm making you sweat like that (break it down)",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-5",
+      "start": 22.1,
+      "end": 24.2,
+      "words": {
+        "en": [
+          {
+            "text": "Ooh,",
+            "start": 22.1,
+            "end": 22.68
+          },
+          {
+            "text": "when",
+            "start": 22.84,
+            "end": 23.1
+          },
+          {
+            "text": "I",
+            "start": 23.1,
+            "end": 23.18
+          },
+          {
+            "text": "look",
+            "start": 23.18,
+            "end": 23.52
+          },
+          {
+            "text": "in",
+            "start": 23.52,
+            "end": 23.64
+          },
+          {
+            "text": "the",
+            "start": 23.64,
+            "end": 23.78
+          },
+          {
+            "text": "mirror",
+            "start": 23.78,
+            "end": 24.2
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Ooh, when I look in the mirror",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-6",
+      "start": 24.53,
+      "end": 26.23,
+      "words": {
+        "en": [
+          {
+            "text": "I'll",
+            "start": 24.53,
+            "end": 25.03
+          },
+          {
+            "text": "melt",
+            "start": 25.03,
+            "end": 25.23
+          },
+          {
+            "text": "your",
+            "start": 25.23,
+            "end": 25.37
+          },
+          {
+            "text": "heart",
+            "start": 25.37,
+            "end": 25.69
+          },
+          {
+            "text": "into",
+            "start": 25.69,
+            "end": 25.89
+          },
+          {
+            "text": "two",
+            "start": 25.89,
+            "end": 26.23
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "I'll melt your heart into two",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-7",
+      "start": 26.38,
+      "end": 28.76,
+      "words": {
+        "en": [
+          {
+            "text": "I",
+            "start": 26.38,
+            "end": 27.06
+          },
+          {
+            "text": "got",
+            "start": 27.06,
+            "end": 27.38
+          },
+          {
+            "text": "that",
+            "start": 27.38,
+            "end": 27.52
+          },
+          {
+            "text": "superstar",
+            "start": 27.52,
+            "end": 28.06
+          },
+          {
+            "text": "glow,",
+            "start": 28.06,
+            "end": 28.44
+          },
+          {
+            "text": "so",
+            "start": 28.62,
+            "end": 28.76
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "I got that superstar glow, so",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-8",
+      "start": 29.12,
+      "end": 29.7,
+      "words": {
+        "en": [
+          {
+            "text": "Ooh (do the boogie,",
+            "start": 29.12,
+            "end": 29.2
+          },
+          {
+            "text": "like)",
+            "start": 29.64,
+            "end": 29.7
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Ooh (do the boogie, like)",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-9",
+      "start": 30.115,
+      "end": 33.515,
+      "words": {
+        "en": [
+          {
+            "text": "A",
+            "start": 30.115,
+            "end": 30.835
+          },
+          {
+            "text": "side",
+            "start": 30.835,
+            "end": 31.315
+          },
+          {
+            "text": "step,",
+            "start": 31.315,
+            "end": 31.655
+          },
+          {
+            "text": "right-left,",
+            "start": 31.855,
+            "end": 32.455
+          },
+          {
+            "text": "to",
+            "start": 32.535,
+            "end": 32.675
+          },
+          {
+            "text": "my",
+            "start": 32.675,
+            "end": 33.055
+          },
+          {
+            "text": "beat",
+            "start": 33.055,
+            "end": 33.515
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "A side step, right-left, to my beat",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-10",
+      "start": 34.655,
+      "end": 38.315,
+      "words": {
+        "en": [
+          {
+            "text": "High",
+            "start": 34.655,
+            "end": 35.655
+          },
+          {
+            "text": "like",
+            "start": 35.655,
+            "end": 36.055
+          },
+          {
+            "text": "the",
+            "start": 36.055,
+            "end": 36.235
+          },
+          {
+            "text": "moon,",
+            "start": 36.235,
+            "end": 36.775
+          },
+          {
+            "text": "rock",
+            "start": 36.895,
+            "end": 37.035
+          },
+          {
+            "text": "with",
+            "start": 37.035,
+            "end": 37.495
+          },
+          {
+            "text": "me,",
+            "start": 37.495,
+            "end": 37.875
+          },
+          {
+            "text": "baby",
+            "start": 37.975,
+            "end": 38.315
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "High like the moon, rock with me, baby",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-11",
+      "start": 39.16,
+      "end": 40.96,
+      "words": {
+        "en": [
+          {
+            "text": "Know",
+            "start": 39.16,
+            "end": 39.74
+          },
+          {
+            "text": "that",
+            "start": 39.74,
+            "end": 40.04
+          },
+          {
+            "text": "I",
+            "start": 40.04,
+            "end": 40.14
+          },
+          {
+            "text": "got",
+            "start": 40.14,
+            "end": 40.48
+          },
+          {
+            "text": "that",
+            "start": 40.48,
+            "end": 40.68
+          },
+          {
+            "text": "heat",
+            "start": 40.68,
+            "end": 40.96
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Know that I got that heat",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-12",
+      "start": 41.04,
+      "end": 43.04,
+      "words": {
+        "en": [
+          {
+            "text": "Let",
+            "start": 41.04,
+            "end": 41.46
+          },
+          {
+            "text": "me",
+            "start": 41.46,
+            "end": 41.64
+          },
+          {
+            "text": "show",
+            "start": 41.64,
+            "end": 42.0
+          },
+          {
+            "text": "you",
+            "start": 42.0,
+            "end": 42.18
+          },
+          {
+            "text": "'cause",
+            "start": 42.18,
+            "end": 42.42
+          },
+          {
+            "text": "talk",
+            "start": 42.42,
+            "end": 42.74
+          },
+          {
+            "text": "is",
+            "start": 42.74,
+            "end": 42.94
+          },
+          {
+            "text": "cheap",
+            "start": 42.94,
+            "end": 43.04
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Let me show you 'cause talk is cheap",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-13",
+      "start": 43.795,
+      "end": 46.535,
+      "words": {
+        "en": [
+          {
+            "text": "Side",
+            "start": 43.795,
+            "end": 44.395
+          },
+          {
+            "text": "step,",
+            "start": 44.395,
+            "end": 44.695
+          },
+          {
+            "text": "right-left,",
+            "start": 44.895,
+            "end": 45.515
+          },
+          {
+            "text": "to",
+            "start": 45.695,
+            "end": 45.775
+          },
+          {
+            "text": "my",
+            "start": 45.775,
+            "end": 46.175
+          },
+          {
+            "text": "beat",
+            "start": 46.175,
+            "end": 46.535
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Side step, right-left, to my beat",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-14",
+      "start": 46.74,
+      "end": 48.06,
+      "words": {
+        "en": [
+          {
+            "text": "Get",
+            "start": 46.74,
+            "end": 46.96
+          },
+          {
+            "text": "it,",
+            "start": 46.96,
+            "end": 47.18
+          },
+          {
+            "text": "let",
+            "start": 47.28,
+            "end": 47.5
+          },
+          {
+            "text": "it",
+            "start": 47.5,
+            "end": 47.76
+          },
+          {
+            "text": "roll",
+            "start": 47.76,
+            "end": 48.06
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Get it, let it roll",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-15",
+      "start": 48.14,
+      "end": 51.96,
+      "words": {
+        "en": [
+          {
+            "text": "Smooth",
+            "start": 48.14,
+            "end": 48.84
+          },
+          {
+            "text": "like",
+            "start": 48.98,
+            "end": 49.34
+          },
+          {
+            "text": "butter,",
+            "start": 49.34,
+            "end": 49.82
+          },
+          {
+            "text": "pull",
+            "start": 50.04,
+            "end": 50.66
+          },
+          {
+            "text": "you",
+            "start": 50.66,
+            "end": 50.84
+          },
+          {
+            "text": "in",
+            "start": 50.84,
+            "end": 51.12
+          },
+          {
+            "text": "like",
+            "start": 51.12,
+            "end": 51.34
+          },
+          {
+            "text": "no",
+            "start": 51.34,
+            "end": 51.62
+          },
+          {
+            "text": "other",
+            "start": 51.62,
+            "end": 51.96
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Smooth like butter, pull you in like no other",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-16",
+      "start": 52.07,
+      "end": 56.32,
+      "words": {
+        "en": [
+          {
+            "text": "Don't",
+            "start": 52.07,
+            "end": 52.82
+          },
+          {
+            "text": "need",
+            "start": 52.82,
+            "end": 53.16
+          },
+          {
+            "text": "no",
+            "start": 53.16,
+            "end": 53.68
+          },
+          {
+            "text": "Usher",
+            "start": 53.68,
+            "end": 54.36
+          },
+          {
+            "text": "to",
+            "start": 54.42,
+            "end": 54.68
+          },
+          {
+            "text": "remind",
+            "start": 54.68,
+            "end": 54.92
+          },
+          {
+            "text": "me",
+            "start": 54.92,
+            "end": 55.28
+          },
+          {
+            "text": "you",
+            "start": 55.28,
+            "end": 55.52
+          },
+          {
+            "text": "got",
+            "start": 55.52,
+            "end": 55.82
+          },
+          {
+            "text": "it",
+            "start": 56.0,
+            "end": 56.1
+          },
+          {
+            "text": "bad",
+            "start": 56.1,
+            "end": 56.32
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Don't need no Usher to remind me you got it bad",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-17",
+      "start": 56.97,
+      "end": 60.67,
+      "words": {
+        "en": [
+          {
+            "text": "Ain't",
+            "start": 56.97,
+            "end": 57.67
+          },
+          {
+            "text": "no",
+            "start": 57.67,
+            "end": 58.03
+          },
+          {
+            "text": "other",
+            "start": 58.03,
+            "end": 58.55
+          },
+          {
+            "text": "that",
+            "start": 58.55,
+            "end": 58.99
+          },
+          {
+            "text": "can",
+            "start": 58.99,
+            "end": 59.15
+          },
+          {
+            "text": "sweep",
+            "start": 59.15,
+            "end": 59.41
+          },
+          {
+            "text": "you",
+            "start": 59.41,
+            "end": 59.63
+          },
+          {
+            "text": "up",
+            "start": 59.63,
+            "end": 59.89
+          },
+          {
+            "text": "like",
+            "start": 59.89,
+            "end": 60.17
+          },
+          {
+            "text": "a",
+            "start": 60.17,
+            "end": 60.39
+          },
+          {
+            "text": "robber",
+            "start": 60.39,
+            "end": 60.67
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Ain't no other that can sweep you up like a robber",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-18",
+      "start": 60.87,
+      "end": 65.5,
+      "words": {
+        "en": [
+          {
+            "text": "Straight",
+            "start": 60.87,
+            "end": 61.52
+          },
+          {
+            "text": "up,",
+            "start": 61.52,
+            "end": 61.86
+          },
+          {
+            "text": "I",
+            "start": 62.34,
+            "end": 62.42
+          },
+          {
+            "text": "(got",
+            "start": 62.42,
+            "end": 62.84
+          },
+          {
+            "text": "ya)",
+            "start": 62.84,
+            "end": 63.08
+          },
+          {
+            "text": "making",
+            "start": 63.36,
+            "end": 63.86
+          },
+          {
+            "text": "you",
+            "start": 63.86,
+            "end": 64.14
+          },
+          {
+            "text": "fall",
+            "start": 64.14,
+            "end": 64.4
+          },
+          {
+            "text": "like",
+            "start": 64.4,
+            "end": 64.76
+          },
+          {
+            "text": "that",
+            "start": 64.76,
+            "end": 65.0
+          },
+          {
+            "text": "(break",
+            "start": 65.0,
+            "end": 65.26
+          },
+          {
+            "text": "it",
+            "start": 65.26,
+            "end": 65.38
+          },
+          {
+            "text": "down)",
+            "start": 65.38,
+            "end": 65.5
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Straight up, I (got ya) making you fall like that (break it down)",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-19",
+      "start": 65.795,
+      "end": 67.805,
+      "words": {
+        "en": [
+          {
+            "text": "Ooh,",
+            "start": 65.795,
+            "end": 66.345
+          },
+          {
+            "text": "when",
+            "start": 66.485,
+            "end": 66.705
+          },
+          {
+            "text": "I",
+            "start": 66.705,
+            "end": 66.785
+          },
+          {
+            "text": "look",
+            "start": 66.785,
+            "end": 67.105
+          },
+          {
+            "text": "in",
+            "start": 67.105,
+            "end": 67.265
+          },
+          {
+            "text": "the",
+            "start": 67.265,
+            "end": 67.465
+          },
+          {
+            "text": "mirror",
+            "start": 67.465,
+            "end": 67.805
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Ooh, when I look in the mirror",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-20",
+      "start": 68.04,
+      "end": 69.74,
+      "words": {
+        "en": [
+          {
+            "text": "I'll",
+            "start": 68.04,
+            "end": 68.64
+          },
+          {
+            "text": "melt",
+            "start": 68.64,
+            "end": 68.86
+          },
+          {
+            "text": "your",
+            "start": 68.86,
+            "end": 69.0
+          },
+          {
+            "text": "heart",
+            "start": 69.0,
+            "end": 69.32
+          },
+          {
+            "text": "into",
+            "start": 69.32,
+            "end": 69.5
+          },
+          {
+            "text": "two",
+            "start": 69.5,
+            "end": 69.74
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "I'll melt your heart into two",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-21",
+      "start": 69.98,
+      "end": 72.06,
+      "words": {
+        "en": [
+          {
+            "text": "I",
+            "start": 69.98,
+            "end": 70.68
+          },
+          {
+            "text": "got",
+            "start": 70.68,
+            "end": 71.0
+          },
+          {
+            "text": "that",
+            "start": 71.0,
+            "end": 71.12
+          },
+          {
+            "text": "superstar",
+            "start": 71.12,
+            "end": 71.68
+          },
+          {
+            "text": "glow, so",
+            "start": 71.68,
+            "end": 72.06
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "I got that superstar glow, so",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-22",
+      "start": 72.25,
+      "end": 73.53,
+      "words": {
+        "en": [
+          {
+            "text": "Ooh",
+            "start": 72.25,
+            "end": 72.83
+          },
+          {
+            "text": "(do the boogie, like)",
+            "start": 72.83,
+            "end": 73.53
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Ooh (do the boogie, like)",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-23",
+      "start": 73.895,
+      "end": 77.145,
+      "words": {
+        "en": [
+          {
+            "text": "Side",
+            "start": 73.895,
+            "end": 74.945
+          },
+          {
+            "text": "step,",
+            "start": 74.945,
+            "end": 75.285
+          },
+          {
+            "text": "right-left,",
+            "start": 75.565,
+            "end": 76.065
+          },
+          {
+            "text": "to",
+            "start": 76.185,
+            "end": 76.325
+          },
+          {
+            "text": "my",
+            "start": 76.325,
+            "end": 76.745
+          },
+          {
+            "text": "beat",
+            "start": 76.745,
+            "end": 77.145
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Side step, right-left, to my beat",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-24",
+      "start": 78.605,
+      "end": 82.065,
+      "words": {
+        "en": [
+          {
+            "text": "High",
+            "start": 78.605,
+            "end": 79.285
+          },
+          {
+            "text": "like",
+            "start": 79.285,
+            "end": 79.705
+          },
+          {
+            "text": "the",
+            "start": 79.705,
+            "end": 79.905
+          },
+          {
+            "text": "moon,",
+            "start": 79.905,
+            "end": 80.465
+          },
+          {
+            "text": "rock",
+            "start": 80.545,
+            "end": 80.665
+          },
+          {
+            "text": "with",
+            "start": 80.665,
+            "end": 80.965
+          },
+          {
+            "text": "me,",
+            "start": 80.965,
+            "end": 81.545
+          },
+          {
+            "text": "baby",
+            "start": 81.685,
+            "end": 82.065
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "High like the moon, rock with me, baby",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-25",
+      "start": 83.01,
+      "end": 84.61,
+      "words": {
+        "en": [
+          {
+            "text": "Know",
+            "start": 83.01,
+            "end": 83.49
+          },
+          {
+            "text": "that",
+            "start": 83.49,
+            "end": 83.65
+          },
+          {
+            "text": "I",
+            "start": 83.65,
+            "end": 83.85
+          },
+          {
+            "text": "got",
+            "start": 83.85,
+            "end": 84.11
+          },
+          {
+            "text": "that",
+            "start": 84.11,
+            "end": 84.33
+          },
+          {
+            "text": "heat",
+            "start": 84.33,
+            "end": 84.61
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Know that I got that heat",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-26",
+      "start": 84.68,
+      "end": 86.84,
+      "words": {
+        "en": [
+          {
+            "text": "Let",
+            "start": 84.68,
+            "end": 85.1
+          },
+          {
+            "text": "me",
+            "start": 85.1,
+            "end": 85.28
+          },
+          {
+            "text": "show",
+            "start": 85.28,
+            "end": 85.64
+          },
+          {
+            "text": "you",
+            "start": 85.64,
+            "end": 85.84
+          },
+          {
+            "text": "'cause",
+            "start": 85.84,
+            "end": 86.06
+          },
+          {
+            "text": "talk",
+            "start": 86.06,
+            "end": 86.36
+          },
+          {
+            "text": "is",
+            "start": 86.36,
+            "end": 86.58
+          },
+          {
+            "text": "cheap",
+            "start": 86.58,
+            "end": 86.84
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Let me show you 'cause talk is cheap",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-27",
+      "start": 86.94,
+      "end": 90.06,
+      "words": {
+        "en": [
+          {
+            "text": "A",
+            "start": 86.94,
+            "end": 87.58
+          },
+          {
+            "text": "side",
+            "start": 87.58,
+            "end": 88.0
+          },
+          {
+            "text": "step,",
+            "start": 88.0,
+            "end": 88.42
+          },
+          {
+            "text": "right-left,",
+            "start": 88.58,
+            "end": 89.22
+          },
+          {
+            "text": "to",
+            "start": 89.28,
+            "end": 89.44
+          },
+          {
+            "text": "my",
+            "start": 89.44,
+            "end": 89.84
+          },
+          {
+            "text": "beat",
+            "start": 89.84,
+            "end": 90.06
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "A side step, right-left, to my beat",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-28",
+      "start": 90.34,
+      "end": 91.9,
+      "words": {
+        "en": [
+          {
+            "text": "Get",
+            "start": 90.34,
+            "end": 90.56
+          },
+          {
+            "text": "it,",
+            "start": 90.56,
+            "end": 90.76
+          },
+          {
+            "text": "let",
+            "start": 90.96,
+            "end": 91.1
+          },
+          {
+            "text": "it",
+            "start": 91.1,
+            "end": 91.4
+          },
+          {
+            "text": "roll",
+            "start": 91.4,
+            "end": 91.9
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Get it, let it roll",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-29",
+      "start": 98.91,
+      "end": 100.41,
+      "words": {
+        "en": [
+          {
+            "text": "Get",
+            "start": 98.91,
+            "end": 99.33
+          },
+          {
+            "text": "it,",
+            "start": 99.33,
+            "end": 99.51
+          },
+          {
+            "text": "let",
+            "start": 99.67,
+            "end": 99.91
+          },
+          {
+            "text": "it",
+            "start": 99.91,
+            "end": 100.05
+          },
+          {
+            "text": "roll",
+            "start": 100.05,
+            "end": 100.41
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Get it, let it roll",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-30",
+      "start": 107.48,
+      "end": 109.3,
+      "words": {
+        "en": [
+          {
+            "text": "Get",
+            "start": 107.48,
+            "end": 108.04
+          },
+          {
+            "text": "it,",
+            "start": 108.04,
+            "end": 108.28
+          },
+          {
+            "text": "let",
+            "start": 108.3,
+            "end": 108.62
+          },
+          {
+            "text": "it",
+            "start": 108.62,
+            "end": 108.84
+          },
+          {
+            "text": "roll",
+            "start": 108.84,
+            "end": 109.3
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Get it, let it roll",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-31",
+      "start": 110.1,
+      "end": 111.64,
+      "words": {
+        "en": [
+          {
+            "text": "Ice",
+            "start": 110.1,
+            "end": 110.38
+          },
+          {
+            "text": "on",
+            "start": 110.38,
+            "end": 110.48
+          },
+          {
+            "text": "my",
+            "start": 110.48,
+            "end": 110.62
+          },
+          {
+            "text": "wrist,",
+            "start": 110.62,
+            "end": 110.86
+          },
+          {
+            "text": "I'm",
+            "start": 110.9,
+            "end": 111.02
+          },
+          {
+            "text": "the",
+            "start": 111.02,
+            "end": 111.12
+          },
+          {
+            "text": "nice",
+            "start": 111.12,
+            "end": 111.38
+          },
+          {
+            "text": "guy",
+            "start": 111.38,
+            "end": 111.64
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Ice on my wrist, I'm the nice guy",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-32",
+      "start": 111.72,
+      "end": 113.8,
+      "words": {
+        "en": [
+          {
+            "text": "Got",
+            "start": 111.72,
+            "end": 112.34
+          },
+          {
+            "text": "the",
+            "start": 112.34,
+            "end": 112.48
+          },
+          {
+            "text": "right",
+            "start": 112.48,
+            "end": 112.74
+          },
+          {
+            "text": "body",
+            "start": 112.74,
+            "end": 113.02
+          },
+          {
+            "text": "and",
+            "start": 113.02,
+            "end": 113.22
+          },
+          {
+            "text": "the",
+            "start": 113.22,
+            "end": 113.3
+          },
+          {
+            "text": "right",
+            "start": 113.3,
+            "end": 113.56
+          },
+          {
+            "text": "mind",
+            "start": 113.56,
+            "end": 113.8
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Got the right body and the right mind",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-33",
+      "start": 114.46,
+      "end": 115.8,
+      "words": {
+        "en": [
+          {
+            "text": "Rolling",
+            "start": 114.46,
+            "end": 114.7
+          },
+          {
+            "text": "up",
+            "start": 114.7,
+            "end": 114.82
+          },
+          {
+            "text": "the",
+            "start": 114.82,
+            "end": 114.92
+          },
+          {
+            "text": "party,",
+            "start": 114.92,
+            "end": 115.22
+          },
+          {
+            "text": "got",
+            "start": 115.32,
+            "end": 115.36
+          },
+          {
+            "text": "the",
+            "start": 115.36,
+            "end": 115.5
+          },
+          {
+            "text": "right",
+            "start": 115.5,
+            "end": 115.7
+          },
+          {
+            "text": "vibe",
+            "start": 115.7,
+            "end": 115.8
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Rolling up the party, got the right vibe",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-34",
+      "start": 116.0,
+      "end": 117.81,
+      "words": {
+        "en": [
+          {
+            "text": "Smooth",
+            "start": 116.0,
+            "end": 116.55
+          },
+          {
+            "text": "like",
+            "start": 116.55,
+            "end": 116.89
+          },
+          {
+            "text": "(butter),",
+            "start": 116.89,
+            "end": 117.45
+          },
+          {
+            "text": "hate",
+            "start": 117.45,
+            "end": 117.67
+          },
+          {
+            "text": "us (love us)",
+            "start": 117.67,
+            "end": 117.81
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Smooth like (butter), hate us (love us)",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-35",
+      "start": 118.68,
+      "end": 120.32,
+      "words": {
+        "en": [
+          {
+            "text": "Fresh",
+            "start": 118.68,
+            "end": 119.04
+          },
+          {
+            "text": "boy,",
+            "start": 119.04,
+            "end": 119.24
+          },
+          {
+            "text": "pull",
+            "start": 119.38,
+            "end": 119.48
+          },
+          {
+            "text": "up",
+            "start": 119.48,
+            "end": 119.66
+          },
+          {
+            "text": "and",
+            "start": 119.66,
+            "end": 119.74
+          },
+          {
+            "text": "we",
+            "start": 119.74,
+            "end": 119.88
+          },
+          {
+            "text": "lay",
+            "start": 119.88,
+            "end": 120.06
+          },
+          {
+            "text": "low",
+            "start": 120.06,
+            "end": 120.32
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Fresh boy, pull up and we lay low",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-36",
+      "start": 120.38,
+      "end": 122.52,
+      "words": {
+        "en": [
+          {
+            "text": "All",
+            "start": 120.38,
+            "end": 120.82
+          },
+          {
+            "text": "the",
+            "start": 120.82,
+            "end": 120.96
+          },
+          {
+            "text": "players",
+            "start": 120.96,
+            "end": 121.22
+          },
+          {
+            "text": "get",
+            "start": 121.22,
+            "end": 121.46
+          },
+          {
+            "text": "moving",
+            "start": 121.46,
+            "end": 121.72
+          },
+          {
+            "text": "when",
+            "start": 121.72,
+            "end": 121.92
+          },
+          {
+            "text": "the",
+            "start": 121.92,
+            "end": 122.04
+          },
+          {
+            "text": "bass",
+            "start": 122.04,
+            "end": 122.3
+          },
+          {
+            "text": "low",
+            "start": 122.3,
+            "end": 122.52
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "All the players get moving when the bass low",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-37",
+      "start": 122.55,
+      "end": 124.72,
+      "words": {
+        "en": [
+          {
+            "text": "Got",
+            "start": 122.55,
+            "end": 123.0
+          },
+          {
+            "text": "ARMY",
+            "start": 123.0,
+            "end": 123.38
+          },
+          {
+            "text": "right",
+            "start": 123.38,
+            "end": 123.56
+          },
+          {
+            "text": "behind",
+            "start": 123.56,
+            "end": 123.86
+          },
+          {
+            "text": "us",
+            "start": 123.86,
+            "end": 123.98
+          },
+          {
+            "text": "when",
+            "start": 123.98,
+            "end": 124.1
+          },
+          {
+            "text": "we",
+            "start": 124.1,
+            "end": 124.22
+          },
+          {
+            "text": "say",
+            "start": 124.22,
+            "end": 124.38
+          },
+          {
+            "text": "so",
+            "start": 124.38,
+            "end": 124.72
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Got ARMY right behind us when we say so",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-38",
+      "start": 125.415,
+      "end": 126.655,
+      "words": {
+        "en": [
+          {
+            "text": "Let's",
+            "start": 125.415,
+            "end": 126.395
+          },
+          {
+            "text": "go",
+            "start": 126.395,
+            "end": 126.655
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Let's go",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-39",
+      "start": 126.68,
+      "end": 130.2,
+      "words": {
+        "en": [
+          {
+            "text": "Side",
+            "start": 126.68,
+            "end": 127.36
+          },
+          {
+            "text": "step,",
+            "start": 127.36,
+            "end": 127.68
+          },
+          {
+            "text": "right-left,",
+            "start": 127.72,
+            "end": 128.44
+          },
+          {
+            "text": "to",
+            "start": 128.6,
+            "end": 128.66
+          },
+          {
+            "text": "my",
+            "start": 128.66,
+            "end": 129.1
+          },
+          {
+            "text": "beat",
+            "start": 129.1,
+            "end": 129.46
+          },
+          {
+            "text": "(right-left, to my beat)",
+            "start": 129.46,
+            "end": 130.2
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Side step, right-left, to my beat (right-left, to my beat)",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-40",
+      "start": 131.11,
+      "end": 134.27,
+      "words": {
+        "en": [
+          {
+            "text": "High",
+            "start": 131.11,
+            "end": 131.63
+          },
+          {
+            "text": "like",
+            "start": 131.63,
+            "end": 132.01
+          },
+          {
+            "text": "the",
+            "start": 132.01,
+            "end": 132.29
+          },
+          {
+            "text": "moon,",
+            "start": 132.29,
+            "end": 132.81
+          },
+          {
+            "text": "rock",
+            "start": 132.89,
+            "end": 133.13
+          },
+          {
+            "text": "with",
+            "start": 133.13,
+            "end": 133.33
+          },
+          {
+            "text": "me,",
+            "start": 133.33,
+            "end": 133.81
+          },
+          {
+            "text": "baby",
+            "start": 134.03,
+            "end": 134.27
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "High like the moon, rock with me, baby",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-41",
+      "start": 134.74,
+      "end": 136.94,
+      "words": {
+        "en": [
+          {
+            "text": "You",
+            "start": 134.74,
+            "end": 135.44
+          },
+          {
+            "text": "know",
+            "start": 135.44,
+            "end": 135.76
+          },
+          {
+            "text": "that",
+            "start": 135.76,
+            "end": 135.94
+          },
+          {
+            "text": "I",
+            "start": 135.94,
+            "end": 136.12
+          },
+          {
+            "text": "got",
+            "start": 136.12,
+            "end": 136.38
+          },
+          {
+            "text": "that",
+            "start": 136.38,
+            "end": 136.66
+          },
+          {
+            "text": "heat",
+            "start": 136.66,
+            "end": 136.94
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "You know that I got that heat",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-42",
+      "start": 137.08,
+      "end": 139.14,
+      "words": {
+        "en": [
+          {
+            "text": "Let",
+            "start": 137.08,
+            "end": 137.48
+          },
+          {
+            "text": "me",
+            "start": 137.48,
+            "end": 137.68
+          },
+          {
+            "text": "show",
+            "start": 137.68,
+            "end": 137.98
+          },
+          {
+            "text": "you",
+            "start": 137.98,
+            "end": 138.12
+          },
+          {
+            "text": "'cause",
+            "start": 138.12,
+            "end": 138.38
+          },
+          {
+            "text": "talk",
+            "start": 138.38,
+            "end": 138.74
+          },
+          {
+            "text": "is",
+            "start": 138.74,
+            "end": 138.96
+          },
+          {
+            "text": "cheap (you know that talk is cheap)",
+            "start": 138.96,
+            "end": 139.14
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Let me show you 'cause talk is cheap (you know that talk is cheap)",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-43",
+      "start": 139.9,
+      "end": 142.46,
+      "words": {
+        "en": [
+          {
+            "text": "Side",
+            "start": 139.9,
+            "end": 140.52
+          },
+          {
+            "text": "step,",
+            "start": 140.52,
+            "end": 140.76
+          },
+          {
+            "text": "right-left,",
+            "start": 141.04,
+            "end": 141.56
+          },
+          {
+            "text": "to",
+            "start": 141.68,
+            "end": 141.76
+          },
+          {
+            "text": "my",
+            "start": 141.76,
+            "end": 142.12
+          },
+          {
+            "text": "beat",
+            "start": 142.12,
+            "end": 142.46
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Side step, right-left, to my beat",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-44",
+      "start": 142.48,
+      "end": 144.06,
+      "words": {
+        "en": [
+          {
+            "text": "Get",
+            "start": 142.48,
+            "end": 142.92
+          },
+          {
+            "text": "it,",
+            "start": 142.92,
+            "end": 143.16
+          },
+          {
+            "text": "let",
+            "start": 143.28,
+            "end": 143.5
+          },
+          {
+            "text": "it",
+            "start": 143.5,
+            "end": 143.76
+          },
+          {
+            "text": "roll",
+            "start": 143.76,
+            "end": 144.06
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Get it, let it roll",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-45",
+      "start": 144.14,
+      "end": 146.14,
+      "words": {
+        "en": [
+          {
+            "text": "Smooth",
+            "start": 144.14,
+            "end": 144.66
+          },
+          {
+            "text": "like",
+            "start": 144.66,
+            "end": 145.12
+          },
+          {
+            "text": "(butter), cool",
+            "start": 145.12,
+            "end": 145.78
+          },
+          {
+            "text": "shade",
+            "start": 145.78,
+            "end": 145.94
+          },
+          {
+            "text": "(stunner)",
+            "start": 145.94,
+            "end": 146.14
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Smooth like (butter), cool shade (stunner)",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-46",
+      "start": 146.16,
+      "end": 148.14,
+      "words": {
+        "en": [
+          {
+            "text": "And",
+            "start": 146.16,
+            "end": 146.82
+          },
+          {
+            "text": "you",
+            "start": 146.82,
+            "end": 147.0
+          },
+          {
+            "text": "know",
+            "start": 147.0,
+            "end": 147.3
+          },
+          {
+            "text": "we",
+            "start": 147.3,
+            "end": 147.56
+          },
+          {
+            "text": "don't",
+            "start": 147.56,
+            "end": 147.86
+          },
+          {
+            "text": "stop",
+            "start": 147.86,
+            "end": 148.14
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "And you know we don't stop",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-47",
+      "start": 148.28,
+      "end": 150.52,
+      "words": {
+        "en": [
+          {
+            "text": "Hot",
+            "start": 148.28,
+            "end": 149.04
+          },
+          {
+            "text": "like",
+            "start": 149.04,
+            "end": 149.6
+          },
+          {
+            "text": "(summer),",
+            "start": 149.6,
+            "end": 150.16
+          },
+          {
+            "text": "ain't",
+            "start": 150.16,
+            "end": 150.2
+          },
+          {
+            "text": "no",
+            "start": 150.2,
+            "end": 150.38
+          },
+          {
+            "text": "(bummer)",
+            "start": 150.38,
+            "end": 150.52
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Hot like (summer), ain't no (bummer)",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-48",
+      "start": 151.02,
+      "end": 152.48,
+      "words": {
+        "en": [
+          {
+            "text": "You'll",
+            "start": 151.02,
+            "end": 151.3
+          },
+          {
+            "text": "be",
+            "start": 151.3,
+            "end": 151.38
+          },
+          {
+            "text": "like,",
+            "start": 151.38,
+            "end": 151.68
+          },
+          {
+            "text": "\"Oh,",
+            "start": 151.82,
+            "end": 151.94
+          },
+          {
+            "text": "my",
+            "start": 151.96,
+            "end": 152.18
+          },
+          {
+            "text": "God\"",
+            "start": 152.18,
+            "end": 152.48
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "You'll be like, \"Oh, my God\"",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-49",
+      "start": 153.02,
+      "end": 154.54,
+      "words": {
+        "en": [
+          {
+            "text": "We",
+            "start": 153.02,
+            "end": 153.26
+          },
+          {
+            "text": "gon'",
+            "start": 153.26,
+            "end": 153.38
+          },
+          {
+            "text": "make",
+            "start": 153.44,
+            "end": 153.56
+          },
+          {
+            "text": "you",
+            "start": 153.56,
+            "end": 153.66
+          },
+          {
+            "text": "rock,",
+            "start": 153.66,
+            "end": 153.96
+          },
+          {
+            "text": "and",
+            "start": 154.1,
+            "end": 154.12
+          },
+          {
+            "text": "you",
+            "start": 154.12,
+            "end": 154.24
+          },
+          {
+            "text": "say",
+            "start": 154.24,
+            "end": 154.4
+          },
+          {
+            "text": "(yeah)",
+            "start": 154.4,
+            "end": 154.54
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "We gon' make you rock, and you say (yeah)",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-50",
+      "start": 155.14,
+      "end": 156.86,
+      "words": {
+        "en": [
+          {
+            "text": "We",
+            "start": 155.14,
+            "end": 155.46
+          },
+          {
+            "text": "gon' make",
+            "start": 155.46,
+            "end": 155.58
+          },
+          {
+            "text": "you",
+            "start": 155.76,
+            "end": 155.86
+          },
+          {
+            "text": "bounce, and",
+            "start": 155.86,
+            "end": 156.18
+          },
+          {
+            "text": "you",
+            "start": 156.28,
+            "end": 156.42
+          },
+          {
+            "text": "say",
+            "start": 156.42,
+            "end": 156.58
+          },
+          {
+            "text": "(yeah)",
+            "start": 156.58,
+            "end": 156.86
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "We gon' make you bounce, and you say (yeah)",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-51",
+      "start": 157.42,
+      "end": 159.34,
+      "words": {
+        "en": [
+          {
+            "text": "Hotter,",
+            "start": 157.42,
+            "end": 157.9
+          },
+          {
+            "text": "sweeter,",
+            "start": 158.14,
+            "end": 158.32
+          },
+          {
+            "text": "cooler,",
+            "start": 158.6,
+            "end": 158.9
+          },
+          {
+            "text": "butter",
+            "start": 159.14,
+            "end": 159.34
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Hotter, sweeter, cooler, butter",
+      "zh": "",
+      "pinyin": ""
+    },
+    {
+      "id": "line-52",
+      "start": 159.75,
+      "end": 161.58,
+      "words": {
+        "en": [
+          {
+            "text": "Get",
+            "start": 159.75,
+            "end": 160.4
+          },
+          {
+            "text": "it,",
+            "start": 160.4,
+            "end": 160.58
+          },
+          {
+            "text": "let",
+            "start": 160.7,
+            "end": 160.96
+          },
+          {
+            "text": "it",
+            "start": 160.96,
+            "end": 161.22
+          },
+          {
+            "text": "roll",
+            "start": 161.22,
+            "end": 161.58
+          }
+        ]
+      },
+      "ja": "",
+      "romaji": "",
+      "en": "Get it, let it roll",
+      "zh": "",
+      "pinyin": ""
+    }
+  ],
+  "alignment": {
+    "recording": "songs/BTS - Butter.m4a",
+    "audioSha256": "fcedd6a0650d77bc1a430e617091b4c6657dbb53ab311dc713bd321e2139f531",
+    "duration": 166.788938,
+    "model": "mlx-community/whisper-large-v3-turbo",
+    "stableTs": "2.19.1",
+    "method": "ASR-anchored phrase-constrained forced alignment",
+    "seconds": 31.63,
+    "reviewed": false,
+    "status": "approved",
+    "approved": true,
+    "approvedBy": "Joshua Glass",
+    "approvalDate": "2026-10-23",
+    "sourceText": "../drafts/butter.json",
+    "reviewNotes": [
+      {
+        "line": 2,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 8,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 3
+      },
+      {
+        "line": 8,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.0
+      },
+      {
+        "line": 21,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 22,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 3
+      },
+      {
+        "line": 22,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.278
+      },
+      {
+        "line": 34,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 2
+      },
+      {
+        "line": 39,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 3
+      },
+      {
+        "line": 42,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 6
+      },
+      {
+        "line": 45,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 1
+      },
+      {
+        "line": 47,
+        "issue": "Low independent-transcript match; audition this phrase",
+        "coverage": 0.28
+      },
+      {
+        "line": 50,
+        "issue": "Acoustically inseparable tokens retained as measured groups",
+        "groups": 2
+      }
+    ],
+    "repairs": {}
+  }
+}

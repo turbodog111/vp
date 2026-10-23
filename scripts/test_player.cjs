@@ -111,6 +111,40 @@ test('MIMI: compact canvas dimensions preserve the view aspect ratio', () => {
   c.resizeFxCanvas(true);
   assert.equal(canvas.width, 300); assert.equal(canvas.height, 114);
 });
+test('paused story theaters repaint the resized scene once without restarting animation', () => {
+  let callback;
+  const operations = [];
+  const c = context(['scheduleNowLayoutSync'], { nowLayoutRaf: 0,
+    requestAnimationFrame(fn) { callback = fn; return 1; }, audio: { paused: true },
+    resizeWaveform: () => operations.push('wave-size'), resizeFxCanvas: () => operations.push('fx-size'),
+    drawWaveform: idle => operations.push(idle ? 'paused-frame' : 'playing-frame'),
+    waveSizeKey: '', fxSizeKey: '',
+    document: { body: { classList: { contains: name => name === 'story-theater-active' } } }
+  });
+  c.scheduleNowLayoutSync(); callback(); callback();
+  assert.deepEqual(operations, ['wave-size', 'fx-size', 'paused-frame']);
+});
+test('a paused Window View seek repaints after the clock and lyric state, ignoring stale media', () => {
+  const events = new Map(), calls = [];
+  const el = { dataset: {}, paused: true, addEventListener(name, fn, options) {
+    if (!options?.capture) events.set(name, fn);
+  } };
+  const c = context(['bindAudioElementEvents'], {
+    audio: el, mediaEventMatchesExpectedSong: () => true,
+    currentSong: () => ({ path: 'window.m4a' }),
+    syncCalibratedClockToNative: () => calls.push('clock'), syncReferenceVideo: noop,
+    updatePlaybackVisuals: () => calls.push('lyrics'), spatialActive: false, spatialForcePaint: false,
+    seekTransaction: null, isNowViewActive: () => true,
+    window: { SongMotionFx: { track: () => null } },
+    document: { body: { classList: { contains: name => name === 'story-theater-active' } } },
+    drawWaveform: idle => calls.push(idle ? 'paused-frame' : 'playing-frame'),
+  });
+  c.bindAudioElementEvents(el);
+  events.get('seeked')();
+  assert.deepEqual(calls, ['clock', 'lyrics', 'paused-frame']);
+  calls.length = 0; c.mediaEventMatchesExpectedSong = () => false;
+  events.get('seeked')(); assert.deepEqual(calls, []);
+});
 test('MIMI: the desktop bridge stays inactive for in-app-only scenes', () => {
   const c = context(['publishDesktopEffectsState'], {
     lastDesktopEffectsPublishAt: 0, currentSong: () => ({ path: 'songs/petal.m4a' }),
@@ -145,9 +179,118 @@ test('Japanese story companions render without changing source word timing and c
   assert.equal(c.supportedLyricsWordNodes[0].end, 1.8);
   assert.equal(controls['story-next'].hidden, true);
   c.renderStoryTheaterLine(-1, data, 2.5);
-  assert.equal(controls['story-current'].children.length, 1);
+  assert.equal(controls['story-current'].children.length, 0);
   assert.equal(controls['story-current'].classList.contains('is-multilingual'), false);
-  assert.equal(controls['story-next'].hidden, false);
+  assert.equal(controls['story-next'].hidden, true);
+});
+test('Window View romaji uses its own measured words and resets on backwards seek', () => {
+  const controls = Object.fromEntries(['story-current', 'story-previous', 'story-next'].map(id => [id, element()]));
+  const c = context(['renderStoryTheaterLine', 'measuredWordTimings', 'updateTimedWordStates'], {
+    $: id => controls[id], supportedLyricsWordNodes: [], storyLyricsWordLanes: [],
+    document: { createElement: element, createTextNode: text => ({ textContent: text }) },
+    clamp: (a, b, x) => Math.max(a, Math.min(b, x)),
+    storyTheaterVariant: () => 'window-jp', storyInterludeText: () => '',
+  });
+  c.renderStoryTheaterLine(0, { language: 'ja', lines: [{ text: 'source', start: 1, end: 4,
+    words: [{ word: 'source', start: 1, end: 3.8 }] }], translations: [{
+      romaji: 'Chotto zutsu', en: 'A little at a time',
+      words: [{ word: 'Chotto', start: 1.1, end: 1.5 }, { word: 'zutsu', start: 1.7, end: 2.4 }]
+    }] }, 1.3);
+  assert.equal(c.storyLyricsWordLanes.length, 2);
+  const lane = c.storyLyricsWordLanes[1];
+  c.updateTimedWordStates(lane, 2);
+  assert.equal(lane[0].element.classList.contains('is-sung'), true);
+  assert.equal(lane[1].element.classList.contains('is-current'), true);
+  c.updateTimedWordStates(lane, 1.3);
+  assert.equal(lane[0].element.classList.contains('is-current'), true);
+  assert.equal(lane[1].element.classList.contains('is-pending'), true);
+  assert.equal(controls['story-current'].children[2].textContent, 'A little at a time');
+  c.renderStoryTheaterLine(-1, { language: 'ja', lines: [] }, 8);
+  assert.equal(c.storyLyricsWordLanes.length, 0);
+});
+test('Window View measured Japanese and romaji timelines preserve text, gaps and final vocal boundary', () => {
+  const data = JSON.parse(fs.readFileSync(path.join(ROOT, 'songs/lyrics/window-view-jp.json')));
+  assert.equal(data.lines.length, data.translations.length);
+  assert.match(data.alignment.audioSha256, /^[a-f0-9]{64}$/);
+  const canonical = text => text.toLowerCase().replace(/\s+/g, '');
+  data.lines.forEach((line, index) => {
+    assert.ok(line.end > line.start);
+    if (index) assert.ok(line.start >= data.lines[index - 1].end);
+    const companion = data.translations[index];
+    for (const [words, text] of [[line.words, line.text], [companion.words, companion.romaji]]) {
+      assert.equal(canonical(words.map(word => word.word).join(' ')), canonical(text));
+      words.forEach((word, i) => {
+        assert.ok(word.end > word.start);
+        assert.ok(word.start >= line.start && word.end <= line.end);
+        if (i) assert.ok(word.start >= words[i - 1].end);
+      });
+    }
+  });
+  const c = context(['activeLyricLineIndex']);
+  assert.equal(c.activeLyricLineIndex(data.lines, 37), -1);
+  assert.equal(c.activeLyricLineIndex(data.lines, 103), -1);
+  assert.ok(data.lines[0].end > 3 && data.lines[0].end < 3.3);
+  assert.ok(data.lines.at(-1).end < 100);
+});
+test('English Window View preserves all supplied lines with measured words and real rests', () => {
+  const data = JSON.parse(fs.readFileSync(path.join(ROOT, 'songs/lyrics/window-view-en.json')));
+  const source = fs.readFileSync(path.join(ROOT, 'songs/lyrics/sources/window-view-en.txt'), 'utf8');
+  const lines = source.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+  assert.deepEqual(data.lines.map(line => line.text), lines);
+  assert.equal(data.alignment.sourceSha256, require('node:crypto').createHash('sha256').update(source).digest('hex'));
+  assert.equal(data.alignment.recording, 'songs/Moonlit Star - Window View (English).m4a');
+  assert.equal(data.alignment.status, 'approved');
+  const canonical = text => text.toLowerCase().replace(/[^a-z0-9]/g, '');
+  for (const [index, line] of data.lines.entries()) {
+    assert.ok(line.end > line.start);
+    if (index) assert.ok(line.start >= data.lines[index - 1].end);
+    assert.equal(canonical(line.words.map(word => word.word).join(' ')), canonical(line.text));
+    line.words.forEach((word, i) => {
+      assert.ok(word.end > word.start);
+      assert.ok(word.start >= line.start && word.end <= line.end);
+      if (i) assert.ok(word.start >= line.words[i - 1].end);
+    });
+  }
+  const c = context(['activeLyricLineIndex']);
+  for (const time of [0, 37, 50.8, 96.5, 103, 138]) assert.equal(c.activeLyricLineIndex(data.lines, time), -1);
+  assert.equal(data.lines[c.activeLyricLineIndex(data.lines, 95.8)].text, 'Somewhere');
+  assert.ok(data.lines.at(-1).end < 100);
+});
+test('Window View scenery crossfades continuously and distance never resets at section boundaries', () => {
+  const sections = JSON.parse(fs.readFileSync(path.join(ROOT, 'songs/lyrics/window-view-jp.json'))).sections;
+  const c = context(['windowViewSceneryAt']);
+  for (const { start } of sections.slice(1)) {
+    const before = c.windowViewSceneryAt(start - .001, sections);
+    const after = c.windowViewSceneryAt(start + .001, sections);
+    assert.ok(Math.abs(after.distance - before.distance - .00026) < 1e-9);
+    for (const key of ['phase', 'city', 'water', 'dusk', 'night', 'peak']) {
+      assert.ok(Math.abs(after[key] - before[key]) < .002, key + ' crosses smoothly');
+    }
+    assert.ok(Math.abs(after.weights.reduce((a, b) => a + b, 0) - 1) < 1e-10);
+  }
+  assert.equal(c.windowViewSceneryAt(100, sections).distance, 13);
+  assert.equal(c.windowViewSceneryAt(100, sections).distance, c.windowViewSceneryAt(100, sections).distance);
+});
+test('Window View landscape geometry cannot jump when energy or beat changes', () => {
+  const sections = JSON.parse(fs.readFileSync(path.join(ROOT, 'songs/lyrics/window-view-jp.json'))).sections;
+  const c = context(['windowViewSceneryAt', 'drawWindowViewTheaterFx'], {
+    supportedLyricsData: { sections }, storyCanvasColor: () => '#fff',
+  });
+  vm.runInContext(APP.slice(APP.indexOf('const seededUnit ='), APP.indexOf('const ONE_MORE_BITE_CRUMBS')), c);
+  const palette = { primary: [238, 91, 126], secondary: [112, 214, 194], accent: [247, 252, 244] };
+  function geometry(energy, onset, pulse, time = 110) {
+    const operations = [];
+    const ctx = {};
+    for (const name of ['fillRect', 'moveTo', 'lineTo', 'ellipse', 'translate', 'rotate', 'roundRect', 'strokeRect']) {
+      ctx[name] = (...args) => operations.push([name, ...args]);
+    }
+    for (const name of ['beginPath', 'closePath', 'stroke', 'fill', 'save', 'restore']) ctx[name] = noop;
+    ctx.createLinearGradient = ctx.createRadialGradient = () => ({ addColorStop: noop });
+    c.drawWindowViewTheaterFx(ctx, 1280, 720, 1, palette, time, { pulse }, energy, onset, 5, true);
+    return operations;
+  }
+  assert.deepEqual(geometry(0, 0, 0), geometry(1, 1, 1));
+  assert.notDeepEqual(geometry(.5, 0, 0, 110), geometry(.5, 0, 0, 110.03));
 });
 test('F2: every ordered pair in each shared lyric theater family invalidates song identity',()=>{
   const declaration='const SUPPORTED_LYRIC_TRACKS = ';

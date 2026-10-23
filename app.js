@@ -1775,6 +1775,12 @@ function renderStoryTheaterLine(index, data, time) {
   previous.hidden = multilingual;
   next.hidden = multilingual;
   if (!line) {
+    if (storyTheaterVariant().startsWith('window-')) {
+      previous.textContent = '';
+      next.textContent = '';
+      previous.hidden = next.hidden = true;
+      return;
+    }
     const note = document.createElement('span');
     note.className = 'story-instrumental';
     note.textContent = storyInterludeText(time, data);
@@ -1826,12 +1832,25 @@ function renderStoryTheaterLine(index, data, time) {
     current.appendChild(vocalLine);
   });
   if (multilingual) {
-    // Companion translations share the source line's interval, not fabricated word timings.
     for (const [language, text] of [['romaji', translation.romaji], ['en', translation.en]]) {
       const companion = document.createElement('span');
       companion.className = `story-translation story-translation-${language}`;
       companion.lang = language === 'romaji' ? 'ja-Latn' : 'en';
-      companion.textContent = text;
+      if (language === 'romaji' && translation.words?.length) {
+        const laneNodes = [];
+        measuredWordTimings({ start: line.start, end: line.end, words: translation.words }).forEach((timing, wordIndex) => {
+          if (wordIndex) companion.appendChild(document.createTextNode(' '));
+          const span = document.createElement('span');
+          span.className = 'story-word';
+          span.textContent = timing.word;
+          companion.appendChild(span);
+          laneNodes.push({ ...timing, element: span });
+        });
+        storyLyricsWordLanes.push(laneNodes);
+      } else {
+        // A meaning translation has no separately sung word onsets.
+        companion.textContent = text;
+      }
       current.appendChild(companion);
     }
   }
@@ -2443,6 +2462,7 @@ function setTetoFxEnabled(enabled) {
   updateEncoreDanceLyrics(currentCalibratedTime(), true);
   updateStoryTheaterLyrics(currentCalibratedTime(), true);
   updateTrickHeartLyrics(currentCalibratedTime(), true);
+  window.LyricWorkbench?.tick(currentCalibratedTime());
 }
 
 function setFxTheme(theme) {
@@ -2672,6 +2692,7 @@ function switchView(view) {
     stopDdfFxLoop();
   }
   syncReferenceVideo(true);
+  window.LyricWorkbench?.tick(currentCalibratedTime());
 }
 
 function filteredLibraryEntries(filter = '') {
@@ -3025,6 +3046,7 @@ function updateNowPlaying(song = currentSong()) {
   $('now-title').textContent = title;
   $('now-subtitle').textContent = song ? parts.join(' · ') : 'Pick a song from the library.';
   $('now-kicker').textContent = currentPlaylist || song?.collectionLabel || 'vp';
+  window.LyricWorkbench?.setSong(song);
   updateUpNext();
   updatePlaybackVisuals();
   updateFxState();
@@ -5128,6 +5150,7 @@ function updatePlaybackVisuals() {
   updateEncoreDanceLyrics(current);
   updateStoryTheaterLyrics(current);
   updateTrickHeartLyrics(current);
+  window.LyricWorkbench?.tick(current);
   publishDesktopEffectsState(false, current);
   if (timingDebugEnabled) updateTimingDebug(current);
 }
@@ -5526,7 +5549,8 @@ function scheduleNowLayoutSync() {
       fxSizeKey = '';
       resizeWaveform(true);
       resizeFxCanvas(true);
-      if (document.body.classList.contains('song-motion-fx-active') && audio.paused) drawWaveform(true);
+      if ((document.body.classList.contains('song-motion-fx-active')
+        || document.body.classList.contains('story-theater-active')) && audio.paused) drawWaveform(true);
       if (document.body.classList.contains('ddf-theater-active')) {
         ddfFxSizeKey = '';
         ddfFxCtx = null;
@@ -8667,6 +8691,37 @@ function drawVioletTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, 
   }
 }
 
+function windowViewSceneryAt(time, sections) {
+  const clock = Math.max(0, time);
+  const weights = Array(8).fill(0);
+  let phase = 0;
+  for (let i = 1; i < sections.length; i++) {
+    if (clock >= sections[i].start) phase = Math.min(7, i);
+  }
+  weights[phase] = 1;
+  for (let i = 1; i < Math.min(8, sections.length); i++) {
+    const progress = (clock - sections[i].start + 3) / 6;
+    if (progress <= 0 || progress >= 1) continue;
+    const blend = progress * progress * (3 - 2 * progress);
+    weights.fill(0);
+    weights[i - 1] = 1 - blend;
+    weights[i] = blend;
+    break;
+  }
+  return {
+    weights,
+    phase: weights.reduce((sum, weight, i) => sum + i * weight, 0),
+    // Absolute track distance must never be multiplied by live energy. Doing
+    // that teleports the world farther on each loudness change as time grows.
+    distance: clock * 0.13,
+    city: weights.reduce((sum, weight, i) => sum + ((i === 0 || i === 3 || i >= 5) ? weight : 0), 0),
+    water: weights[2] + weights[4],
+    dusk: weights[5] + weights[6] + weights[7],
+    night: weights[6] + weights[7],
+    peak: weights[2] + weights[5]
+  };
+}
+
 function drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, beat, energy, onset, phase, isPeakPhase) {
   const phaseColors = [
     [[182, 224, 236], [244, 198, 166], [50, 76, 88]],
@@ -8678,9 +8733,11 @@ function drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, be
     [[39, 50, 91], [230, 102, 138], [13, 21, 44]],
     [[28, 38, 61], [168, 190, 197], [8, 14, 25]]
   ];
-  const colors = phaseColors[Math.max(0, Math.min(phaseColors.length - 1, phase))];
-  const intensity = clamp(0, 1.25, 0.32 + energy * 0.55 + onset * 0.35 + (isPeakPhase ? beat.pulse * 0.22 : 0));
-  const speed = width * (0.105 + energy * 0.035 + (isPeakPhase ? 0.018 : 0));
+  const scenery = windowViewSceneryAt(audioTime, supportedLyricsData?.sections || []);
+  const colors = [0, 1, 2].map(band => [0, 1, 2].map(channel =>
+    phaseColors.reduce((sum, color, i) => sum + color[band][channel] * scenery.weights[i], 0)));
+  const intensity = 0.32 + energy * 0.22;
+  const distance = width * scenery.distance;
   const horizon = height * (0.52 + Math.sin(audioTime * 0.055) * 0.008);
 
   const sky = ctx.createLinearGradient(0, 0, 0, height);
@@ -8690,10 +8747,10 @@ function drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, be
   ctx.fillStyle = sky;
   ctx.fillRect(0, 0, width, height);
 
-  const sunX = width * (0.78 - phase * 0.055);
-  const sunY = height * (0.2 + phase * 0.035);
+  const sunX = width * (0.78 - scenery.phase * 0.055);
+  const sunY = height * (0.2 + scenery.phase * 0.035);
   const sun = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, width * 0.34);
-  sun.addColorStop(0, storyCanvasColor(phase >= 6 ? [244, 214, 225] : [255, 247, 202], 0.34 + beat.pulse * 0.07));
+  sun.addColorStop(0, storyCanvasColor([255 - scenery.night * 11, 247 - scenery.night * 33, 202 + scenery.night * 23], 0.34));
   sun.addColorStop(0.18, storyCanvasColor(colors[1], 0.16));
   sun.addColorStop(1, 'rgba(255,255,255,0)');
   ctx.fillStyle = sun;
@@ -8704,7 +8761,7 @@ function drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, be
     ctx.beginPath();
     ctx.moveTo(-20, height);
     for (let x = -20; x <= width + 20; x += width / 48) {
-      const drift = audioTime * speed * (0.035 + ridge * 0.012);
+      const drift = distance * (0.035 + ridge * 0.012);
       const y = horizon - height * (0.03 + ridge * 0.035)
         + Math.sin((x + drift) / width * Math.PI * (2.2 + ridge * 0.7) + ridge) * height * (0.025 + ridge * 0.008);
       ctx.lineTo(x, y);
@@ -8715,7 +8772,15 @@ function drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, be
     ctx.fill();
   }
 
-  if (phase === 2 || phase === 4) {
+  const ground = ctx.createLinearGradient(0, horizon, 0, height);
+  ground.addColorStop(0, storyCanvasColor(colors[2], 0.56));
+  ground.addColorStop(1, storyCanvasColor([12, 21, 29], 0.94));
+  ctx.fillStyle = ground;
+  ctx.fillRect(0, horizon, width, height - horizon);
+
+  if (scenery.water > 0) {
+    ctx.save();
+    ctx.globalAlpha = scenery.water;
     // Open water and almost-nothing passages give the eye somewhere to rest.
     const water = ctx.createLinearGradient(0, horizon, 0, height);
     water.addColorStop(0, storyCanvasColor(palette.accent, 0.16));
@@ -8724,7 +8789,7 @@ function drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, be
     ctx.fillRect(0, horizon, width, height - horizon);
     for (let line = 0; line < 18; line++) {
       const y = horizon + (line / 18) ** 1.45 * height * 0.45;
-      const offset = (audioTime * speed * (0.08 + line * 0.006)) % (width * 0.22);
+      const offset = -(distance * (0.08 + line * 0.006)) % (width * 0.22);
       ctx.beginPath();
       for (let x = -width * 0.22 + offset; x < width + width * 0.22; x += width * 0.22) {
         ctx.moveTo(x, y);
@@ -8734,38 +8799,39 @@ function drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, be
       ctx.lineWidth = dpr * (0.7 + line / 18);
       ctx.stroke();
     }
-  } else {
-    const ground = ctx.createLinearGradient(0, horizon, 0, height);
-    ground.addColorStop(0, storyCanvasColor(colors[2], 0.56));
-    ground.addColorStop(1, storyCanvasColor([12, 21, 29], 0.94));
-    ctx.fillStyle = ground;
-    ctx.fillRect(0, horizon, width, height - horizon);
+    ctx.restore();
   }
 
-  const cityPhase = phase === 0 || phase === 3 || phase >= 5;
-  if (cityPhase) {
-    const buildingCount = phase >= 6 ? 20 : 14;
-    for (let index = 0; index < buildingCount; index++) {
-      const slot = width * (0.095 + seededUnit(index * 8.31) * 0.06);
-      const x = width - ((audioTime * speed * 0.32 + index * slot) % (width + slot * 2)) + slot;
+  if (scenery.city > 0) {
+    ctx.save();
+    ctx.globalAlpha = scenery.city;
+    const slot = width * 0.12;
+    for (let index = 0; index < 12; index++) {
+      const span = slot * 12;
+      const wrappedX = ((index * slot - distance * 0.32) % span + span) % span - slot * 2;
       const buildingWidth = slot * (0.62 + seededUnit(index * 3.71) * 0.6);
-      const buildingHeight = height * (0.1 + seededUnit(index * 9.17) * (phase >= 5 ? 0.32 : 0.2));
+      const buildingHeight = height * (0.1 + seededUnit(index * 9.17) * (0.2 + scenery.dusk * 0.12));
       const y = horizon - buildingHeight;
-      ctx.fillStyle = storyCanvasColor(phase >= 6 ? [18, 29, 55] : colors[2], 0.48 + seededUnit(index) * 0.2);
-      ctx.fillRect(x, y, buildingWidth, buildingHeight);
+      ctx.fillStyle = storyCanvasColor(colors[2], 0.48 + seededUnit(index) * 0.2);
+      ctx.fillRect(wrappedX, y, buildingWidth, buildingHeight);
       const rows = Math.max(2, Math.floor(buildingHeight / (dpr * 18)));
       for (let row = 0; row < rows; row++) {
         for (let column = 0; column < 3; column++) {
           if (seededUnit(index * 71 + row * 11 + column) < 0.48) continue;
-          ctx.fillStyle = storyCanvasColor(phase >= 5 ? [255, 210, 138] : palette.accent, 0.22 + beat.pulse * 0.08);
-          ctx.fillRect(x + buildingWidth * (0.16 + column * 0.27), y + 8 * dpr + row * 15 * dpr, buildingWidth * 0.11, 5 * dpr);
+          ctx.fillStyle = storyCanvasColor([247, 230 - scenery.dusk * 20, 211 - scenery.dusk * 73], 0.22 + scenery.dusk * 0.12);
+          ctx.fillRect(wrappedX + buildingWidth * (0.16 + column * 0.27), y + 8 * dpr + row * 15 * dpr, buildingWidth * 0.11, 5 * dpr);
         }
       }
     }
-  } else {
+    ctx.restore();
+  }
+  if (scenery.city < 1) {
+    ctx.save();
+    ctx.globalAlpha = 1 - scenery.city;
     for (let index = 0; index < 18; index++) {
       const spacing = width * 0.085;
-      const x = width - ((audioTime * speed * 0.48 + index * spacing) % (width + spacing * 2)) + spacing;
+      const span = spacing * 18;
+      const x = ((index * spacing - distance * 0.48) % span + span) % span - spacing * 2;
       const trunkHeight = height * (0.16 + seededUnit(index * 2.7) * 0.17);
       ctx.strokeStyle = storyCanvasColor([31, 60, 49], 0.55);
       ctx.lineWidth = dpr * (2 + seededUnit(index) * 3);
@@ -8775,9 +8841,10 @@ function drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, be
       ctx.ellipse(x, horizon - trunkHeight, width * (0.025 + seededUnit(index * 4.1) * 0.025), height * 0.08, 0, 0, Math.PI * 2);
       ctx.fill();
     }
+    ctx.restore();
   }
 
-  // Rails and sleepers accelerate toward the passenger, selling train speed.
+  // All depth layers share the same steady journey, at different parallax rates.
   ctx.fillStyle = storyCanvasColor([9, 14, 21], 0.78);
   ctx.fillRect(0, height * 0.78, width, height * 0.22);
   for (let rail = 0; rail < 4; rail++) {
@@ -8786,22 +8853,23 @@ function drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, be
     ctx.lineWidth = dpr * (1.2 + rail * 0.6);
     ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
   }
-  const sleeperOffset = (audioTime * speed * 1.4) % (width * 0.09);
+  const sleeperOffset = -(distance * 1.4) % (width * 0.09);
   for (let x = -width * 0.1 + sleeperOffset; x < width * 1.1; x += width * 0.09) {
     ctx.strokeStyle = storyCanvasColor([174, 154, 127], 0.2);
     ctx.lineWidth = dpr * 3;
     ctx.beginPath(); ctx.moveTo(x, height * 0.79); ctx.lineTo(x - width * 0.035, height); ctx.stroke();
   }
 
-  // Nearby poles cross in a fraction of a second; the smear is a full motion cue.
-  for (let index = 0; index < 7; index++) {
-    const spacing = width * 0.27;
-    const x = width - ((audioTime * speed * 1.05 + index * spacing) % (width + spacing));
-    ctx.fillStyle = storyCanvasColor([20, 29, 36], 0.72);
-    ctx.fillRect(x, 0, dpr * 5, height);
+  // Sparse trackside poles pass the window; reflections and frame stay calm.
+  for (let index = 0; index < 4; index++) {
+    const spacing = width * 0.42;
+    const span = spacing * 4;
+    const x = ((index * spacing - distance * 1.05) % span + span) % span - spacing;
+    ctx.fillStyle = storyCanvasColor([20, 29, 36], 0.5);
+    ctx.fillRect(x, 0, dpr * 3, height);
     const streak = ctx.createLinearGradient(x - width * 0.08, 0, x + dpr * 5, 0);
     streak.addColorStop(0, 'rgba(0,0,0,0)');
-    streak.addColorStop(1, storyCanvasColor([20, 29, 36], 0.16 + onset * 0.1));
+    streak.addColorStop(1, storyCanvasColor([20, 29, 36], 0.08));
     ctx.fillStyle = streak;
     ctx.fillRect(x - width * 0.08, 0, width * 0.08, height);
   }
@@ -8843,10 +8911,10 @@ function drawWindowViewTheaterFx(ctx, width, height, dpr, palette, audioTime, be
     ctx.beginPath(); ctx.roundRect(x - width * 0.018, height * 0.13, width * 0.036, height * 0.055, 8 * dpr); ctx.stroke();
   }
 
-  if (isPeakPhase) {
+  if (scenery.peak > 0) {
     const bloom = ctx.createLinearGradient(0, 0, width, 0);
     bloom.addColorStop(0, 'rgba(255,255,255,0)');
-    bloom.addColorStop(0.48, storyCanvasColor(palette.primary, 0.035 + beat.pulse * 0.09 + onset * 0.08));
+    bloom.addColorStop(0.48, storyCanvasColor(palette.primary, scenery.peak * (0.025 + beat.pulse * 0.025)));
     bloom.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = bloom;
     ctx.fillRect(0, 0, width, height);
@@ -10216,7 +10284,8 @@ function bindAudioElementEvents(el) {
     spatialForcePaint = true;
     if (spatialActive) paintSpatialGuide(currentCalibratedTime(), true);
     if (seekTransaction?.finishOnSeeked && Math.abs(nativePlaybackTime() - seekTransaction.targetTime) < 0.1) finishSeekTransaction();
-    if (el.paused && isNowViewActive() && window.SongMotionFx?.track(currentSong())) drawWaveform(true);
+    if (el.paused && isNowViewActive() && (window.SongMotionFx?.track(currentSong())
+      || document.body.classList.contains('story-theater-active'))) drawWaveform(true);
   });
   el.addEventListener('ratechange', () => {
     if (!mediaEventMatchesExpectedSong(el)) return;
@@ -11098,6 +11167,16 @@ if (typeof ResizeObserver !== 'undefined') {
 $('storage-retry').addEventListener('click', retryPendingStorageWrites);
 $('storage-download').addEventListener('click', downloadStorageRecovery);
 renderStorageStatus();
+window.LyricWorkbench?.init({
+  song: currentSong,
+  time: currentCalibratedTime,
+  duration: effectiveDuration,
+  fxEnabled: () => tetoFxEnabled,
+  nowVisible: isNowViewActive,
+  open: () => switchView('lyrics'),
+  showPreview: () => switchView('now'),
+  seek: time => { previewSeekTarget(time); commitSeekTransaction(); },
+});
 scheduleNowLayoutSync();
 updateFxState();
 publishDesktopEffectsState(true);
