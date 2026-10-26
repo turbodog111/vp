@@ -22,10 +22,10 @@ function audit() {
     if (/Ochame Kinou|Machine Love|Science \(English\)|Campus Village - Teto|Fever Dream/i.test(song.name)) return { recording, status: 'excluded', missing: [], note: 'Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.' };
     if (/instrumental/i.test(song.name)) return { recording, status: 'instrumental', missing: [] };
     if (instrumental.test(song.name)) return { recording, status: 'vocal-review', missing: ['Confirm whether this rendition retains sung backing vocals.'] };
-    const english = /^BTS - |\(English(?: Language)?\)|^hololive English|Machine Love|One More Bite|Waiting for Tomorrow|Ever Romantic/i.test(song.name);
-    const japanese = /MIMI|Ochame Kinou|^Farewell225 - Window View/i.test(song.name) && !english;
-    const required = japanese ? ['romaji', 'en'] : english ? ['en'] : ['source-language review', 'en'];
     const config = registry[normalize(recording)];
+    const english = /^BTS - |\(English(?: Language)?\)|^hololive English|Machine Love|One More Bite|Waiting for Tomorrow|Ever Romantic/i.test(song.name);
+    const japanese = (/MIMI|Ochame Kinou|^Farewell225 - Window View/i.test(song.name) || config?.variant === 'jp') && !english;
+    const required = japanese ? ['romaji', 'en'] : english ? ['en'] : ['source-language review', 'en'];
     const packet = prepared.find(entry => entry.recording === recording);
     const candidate = aligned.find(entry => entry.recording === recording);
     if (candidate) {
@@ -45,7 +45,7 @@ function audit() {
       return language === 'en' && english && typeof line.text === 'string' && line.text.trim();
     });
     const missing = required.filter(language => !has(language));
-    return { recording, status: missing.length ? 'incomplete' : data.alignment?.approved === true ? 'approved' : 'text-complete', missing,
+    return { recording, status: missing.length ? 'incomplete' : data.alignment?.approved === true ? 'approved' : data.alignment?.status === 'local-review' ? 'local-review' : 'text-complete', missing,
       lines: lines?.length || 0, source: config.dataUrl };
   });
 }

@@ -111,7 +111,7 @@ test('MIMI: compact canvas dimensions preserve the view aspect ratio', () => {
   c.resizeFxCanvas(true);
   assert.equal(canvas.width, 300); assert.equal(canvas.height, 114);
 });
-test('paused story theaters repaint the resized scene once without restarting animation', () => {
+for (const theme of ['story-theater-active', 'encore-theater-active']) test('paused ' + theme + ' repaints the resized scene once without restarting animation', () => {
   let callback;
   const operations = [];
   const c = context(['scheduleNowLayoutSync'], { nowLayoutRaf: 0,
@@ -119,12 +119,12 @@ test('paused story theaters repaint the resized scene once without restarting an
     resizeWaveform: () => operations.push('wave-size'), resizeFxCanvas: () => operations.push('fx-size'),
     drawWaveform: idle => operations.push(idle ? 'paused-frame' : 'playing-frame'),
     waveSizeKey: '', fxSizeKey: '',
-    document: { body: { classList: { contains: name => name === 'story-theater-active' } } }
+    document: { body: { classList: { contains: name => name === theme } } }
   });
   c.scheduleNowLayoutSync(); callback(); callback();
   assert.deepEqual(operations, ['wave-size', 'fx-size', 'paused-frame']);
 });
-test('a paused Window View seek repaints after the clock and lyric state, ignoring stale media', () => {
+for (const theme of ['story-theater-active', 'encore-theater-active']) test('a paused ' + theme + ' seek repaints after the clock and lyric state, ignoring stale media', () => {
   const events = new Map(), calls = [];
   const el = { dataset: {}, paused: true, addEventListener(name, fn, options) {
     if (!options?.capture) events.set(name, fn);
@@ -136,7 +136,7 @@ test('a paused Window View seek repaints after the clock and lyric state, ignori
     updatePlaybackVisuals: () => calls.push('lyrics'), spatialActive: false, spatialForcePaint: false,
     seekTransaction: null, isNowViewActive: () => true,
     window: { SongMotionFx: { track: () => null } },
-    document: { body: { classList: { contains: name => name === 'story-theater-active' } } },
+    document: { body: { classList: { contains: name => name === theme } } },
     drawWaveform: idle => calls.push(idle ? 'paused-frame' : 'playing-frame'),
   });
   c.bindAudioElementEvents(el);

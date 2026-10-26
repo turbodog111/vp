@@ -1,0 +1,41 @@
+ENCORE DANCE / 2026-10-25 / APPROVED RELEASE
+
+New secular recording: Encore Dance (Japanese), Evil (Neuro-sama).
+Source: https://www.youtube.com/watch?v=-KrxHwn6BSw
+Clip uploader: Neuro Sama Clipper. Original music and lyrics: MIMI.
+Music cut: source 00:05.890 through 02:20.480; output 02:14.590.
+The spoken title before the music is removed. The natural music/reverb tail is
+retained, then cut before the non-musical signal after 02:20.800. Only a 6ms
+entrance and 20ms tail fade are applied; no loudness or tempo manipulation.
+AAC / 44.1kHz / stereo; title, performer and composer tags are included.
+The full source, raw extractor metadata and acoustic evidence stay outside VP
+in ../encore-remaster-20261025/. No raw clip or extractor URLs are published.
+
+Six independently matched backing-track excerpts agree on the source offset:
+5.89, 5.89, 5.89, 5.88, 5.89, 5.89 seconds, with no measurable tempo drift.
+The cover therefore follows the existing Japanese song clock, 132 BPM, with
+the existing Japanese, romaji and English companion text. Its individual vocal
+phonemes are not independently re-aligned or claimed sample-perfect. The preview
+was approved by Joshua Glass on 2026-10-25 for publication.
+songs/imports/encore-dance-evil.json records the cut,
+source URL, credits and audio hashes; its dedicated lyrics JSON has its own
+recording envelope and measured output duration.
+
+The remaster covers MIMI Japanese, Moonlit Star English, and the new Evil cover.
+It uses one deterministic Canvas 2D renderer in the existing throttled loop:
+- A proscenium, pleated curtains and flowing perspective dance floor.
+- Quiet sleeping-city / crescent-moon / water reflections during the verses.
+- Sweeping gold, coral and mint spotlights, broad ribbons, bar-timed lateral
+  wipes and motion-line afterimages during the choruses.
+- Several overlapping beat rings, each expanding outwards until it fades.
+- One continuous final-chorus envelope, including the amends subsections.
+- No confetti particles, second audio player, added animation loop or CSS blur.
+- Unframed centered lyrics, solid word-state colors, compact layout and native
+  reduced-motion handling. Paused seeks/resizes repaint exactly once.
+
+Verification: 107 Node and 12 Python tests pass; lyric registry and the new
+cover's 336 source word spans validate. Browser checks were muted: three song
+selections, live motion, paused seek, FX off/on, and 390px compact framing.
+Desktop motion screenshots are nonblank and change during actual playback.
+The previously approved lyric timelines and unrelated media are unchanged.
+Preview: http://127.0.0.1:4187/. Approved for commit and push on 2026-10-25.

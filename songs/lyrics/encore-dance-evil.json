@@ -1,0 +1,2243 @@
+{
+  "song": "Encore Dance",
+  "duration": 134.59,
+  "credits": {
+    "original": "MIMI feat. Kasane Teto SV",
+    "musicLyrics": "MIMI",
+    "coverPerformance": "Evil (Neuro-sama)",
+    "clipUploader": "Neuro Sama Clipper"
+  },
+  "timing": {
+    "base": "jp",
+    "sourceOffset": 5.89,
+    "method": "Six independent multi-band backing-track correlations at 0-132s agree on a 5.89s source offset (within 0.01s); no global tempo drift. Japanese lyric cues follow the existing source-song timeline; cover vocals remain a listening-review candidate."
+  },
+  "sections": [
+    {
+      "start": 0.0,
+      "end": 14.6,
+      "name": "Velvet count-in",
+      "short": "BOOT // 132",
+      "phase": 0
+    },
+    {
+      "start": 14.6,
+      "end": 29.55,
+      "name": "City stumble",
+      "short": "VERSE // 01",
+      "phase": 1
+    },
+    {
+      "start": 29.55,
+      "end": 47.5,
+      "name": "First encore",
+      "short": "ENCORE // 01",
+      "phase": 2,
+      "chorus": true,
+      "intensity": 1.0
+    },
+    {
+      "start": 47.5,
+      "end": 54.95,
+      "name": "Moon break",
+      "short": "NIGHT WINDOW",
+      "phase": 3
+    },
+    {
+      "start": 54.95,
+      "end": 69.6,
+      "name": "Lonely moon",
+      "short": "VERSE // 02",
+      "phase": 4
+    },
+    {
+      "start": 69.6,
+      "end": 87.45,
+      "name": "Love loop",
+      "short": "LOVE // LOOP",
+      "phase": 5,
+      "chorus": true,
+      "intensity": 1.0
+    },
+    {
+      "start": 87.45,
+      "end": 102.3,
+      "name": "Redline interlude",
+      "short": "DANCE BREAK",
+      "phase": 6
+    },
+    {
+      "start": 102.3,
+      "end": 116.65,
+      "name": "Final chorus — opening",
+      "short": "FINAL CHORUS",
+      "phase": 7,
+      "chorus": true,
+      "intensity": 1.0
+    },
+    {
+      "start": 116.65,
+      "end": 123.9,
+      "name": "Final chorus — amends",
+      "short": "FINAL CHORUS",
+      "phase": 8,
+      "chorus": true,
+      "intensity": 0.96
+    },
+    {
+      "start": 123.9,
+      "end": 133.0,
+      "name": "Final chorus — encore",
+      "short": "FINAL CHORUS",
+      "phase": 9,
+      "chorus": true,
+      "intensity": 1.0
+    },
+    {
+      "start": 133.0,
+      "end": 134.59,
+      "name": "Final chorus — afterimage",
+      "short": "FINAL CHORUS",
+      "phase": 10,
+      "chorus": true,
+      "intensity": 0.84
+    }
+  ],
+  "variants": {
+    "jp": {
+      "label": "EVIL / NEURO-SAMA",
+      "language": "ja",
+      "lines": [
+        {
+          "start": 14.6,
+          "end": 18.66,
+          "text": "つまづいた夜に 眠ってる街で",
+          "romaji": [
+            "tsumazuita yoru ni",
+            "nemutteru machi de"
+          ],
+          "en": [
+            "On a night when I stumbled",
+            "in the sleeping city"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "つ",
+              "start": 14.6,
+              "end": 15.2
+            },
+            {
+              "word": "ま",
+              "start": 15.2,
+              "end": 15.44
+            },
+            {
+              "word": "づ",
+              "start": 15.44,
+              "end": 15.72
+            },
+            {
+              "word": "い",
+              "start": 15.72,
+              "end": 15.86
+            },
+            {
+              "word": "た",
+              "start": 15.86,
+              "end": 16.0
+            },
+            {
+              "word": "夜",
+              "start": 16.0,
+              "end": 16.44
+            },
+            {
+              "word": "に",
+              "start": 16.44,
+              "end": 16.84
+            },
+            {
+              "word": "眠",
+              "start": 16.88,
+              "end": 17.28
+            },
+            {
+              "word": "っ",
+              "start": 17.28,
+              "end": 17.46
+            },
+            {
+              "word": "て",
+              "start": 17.46,
+              "end": 17.64
+            },
+            {
+              "word": "る",
+              "start": 17.64,
+              "end": 17.82
+            },
+            {
+              "word": "街",
+              "start": 17.82,
+              "end": 18.3
+            },
+            {
+              "word": "で",
+              "start": 18.3,
+              "end": 18.66
+            }
+          ]
+        },
+        {
+          "start": 18.66,
+          "end": 22.22,
+          "text": "おやすみさえも 言えないままで",
+          "romaji": [
+            "oyasumi sae mo",
+            "ienai mama de"
+          ],
+          "en": [
+            "still unable",
+            "even to say goodnight"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "お",
+              "start": 18.66,
+              "end": 19.14
+            },
+            {
+              "word": "や",
+              "start": 19.14,
+              "end": 19.36
+            },
+            {
+              "word": "す",
+              "start": 19.36,
+              "end": 19.48
+            },
+            {
+              "word": "み",
+              "start": 19.48,
+              "end": 19.78
+            },
+            {
+              "word": "さ",
+              "start": 19.78,
+              "end": 19.96
+            },
+            {
+              "word": "え",
+              "start": 19.96,
+              "end": 20.22
+            },
+            {
+              "word": "も",
+              "start": 20.22,
+              "end": 20.4
+            },
+            {
+              "word": "言",
+              "start": 20.54,
+              "end": 20.98
+            },
+            {
+              "word": "え",
+              "start": 20.98,
+              "end": 21.24
+            },
+            {
+              "word": "な",
+              "start": 21.24,
+              "end": 21.38
+            },
+            {
+              "word": "い",
+              "start": 21.38,
+              "end": 21.52
+            },
+            {
+              "word": "ま",
+              "start": 21.52,
+              "end": 21.86
+            },
+            {
+              "word": "ま",
+              "start": 21.86,
+              "end": 22.04
+            },
+            {
+              "word": "で",
+              "start": 22.04,
+              "end": 22.22
+            }
+          ]
+        },
+        {
+          "start": 22.22,
+          "end": 25.16,
+          "text": "夢のまま今日が 溶けだして",
+          "romaji": [
+            "yume no mama kyou ga",
+            "tokedashite"
+          ],
+          "en": [
+            "Today melts away",
+            "still inside a dream"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "夢",
+              "start": 22.22,
+              "end": 22.62
+            },
+            {
+              "word": "の",
+              "start": 22.62,
+              "end": 22.96
+            },
+            {
+              "word": "ま",
+              "start": 22.96,
+              "end": 23.24
+            },
+            {
+              "word": "ま",
+              "start": 23.24,
+              "end": 23.54
+            },
+            {
+              "word": "今",
+              "start": 23.54,
+              "end": 23.69
+            },
+            {
+              "word": "日",
+              "start": 23.69,
+              "end": 23.84
+            },
+            {
+              "word": "が",
+              "start": 23.84,
+              "end": 24.12
+            },
+            {
+              "word": "溶",
+              "start": 24.16,
+              "end": 24.44
+            },
+            {
+              "word": "け",
+              "start": 24.44,
+              "end": 24.68
+            },
+            {
+              "word": "だ",
+              "start": 24.68,
+              "end": 24.8
+            },
+            {
+              "word": "し",
+              "start": 24.8,
+              "end": 24.98
+            },
+            {
+              "word": "て",
+              "start": 24.98,
+              "end": 25.16
+            }
+          ]
+        },
+        {
+          "start": 25.16,
+          "end": 26.98,
+          "text": "君と駆け出して",
+          "romaji": [
+            "kimi to",
+            "kakedashite"
+          ],
+          "en": [
+            "I run away",
+            "with you"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "君",
+              "start": 25.16,
+              "end": 25.52
+            },
+            {
+              "word": "と",
+              "start": 25.52,
+              "end": 25.92
+            },
+            {
+              "word": "駆",
+              "start": 25.92,
+              "end": 26.26
+            },
+            {
+              "word": "け",
+              "start": 26.26,
+              "end": 26.46
+            },
+            {
+              "word": "出",
+              "start": 26.46,
+              "end": 26.62
+            },
+            {
+              "word": "し",
+              "start": 26.62,
+              "end": 26.8
+            },
+            {
+              "word": "て",
+              "start": 26.8,
+              "end": 26.98
+            }
+          ]
+        },
+        {
+          "start": 26.98,
+          "end": 29.54,
+          "text": "どこか遠い所へと",
+          "romaji": [
+            "dokoka",
+            "tooi tokoro e to"
+          ],
+          "en": [
+            "toward somewhere",
+            "far away"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "ど",
+              "start": 26.98,
+              "end": 27.34
+            },
+            {
+              "word": "こ",
+              "start": 27.34,
+              "end": 27.6
+            },
+            {
+              "word": "か",
+              "start": 27.6,
+              "end": 27.74
+            },
+            {
+              "word": "遠",
+              "start": 27.74,
+              "end": 28.1
+            },
+            {
+              "word": "い",
+              "start": 28.1,
+              "end": 28.54
+            },
+            {
+              "word": "所",
+              "start": 28.54,
+              "end": 28.86
+            },
+            {
+              "word": "へ",
+              "start": 28.86,
+              "end": 29.38
+            },
+            {
+              "word": "と",
+              "start": 29.38,
+              "end": 29.54
+            }
+          ]
+        },
+        {
+          "start": 29.54,
+          "end": 32.78,
+          "text": "明日に落ちてくその景色",
+          "romaji": [
+            "ashita ni ochiteku",
+            "sono keshiki"
+          ],
+          "en": [
+            "That scenery falls",
+            "into tomorrow"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "明",
+              "start": 29.54,
+              "end": 30.1
+            },
+            {
+              "word": "日",
+              "start": 30.1,
+              "end": 30.42
+            },
+            {
+              "word": "に",
+              "start": 30.42,
+              "end": 30.82
+            },
+            {
+              "word": "落",
+              "start": 30.82,
+              "end": 31.02
+            },
+            {
+              "word": "ち",
+              "start": 31.02,
+              "end": 31.18
+            },
+            {
+              "word": "て",
+              "start": 31.18,
+              "end": 31.36
+            },
+            {
+              "word": "く",
+              "start": 31.36,
+              "end": 31.56
+            },
+            {
+              "word": "そ",
+              "start": 31.56,
+              "end": 31.72
+            },
+            {
+              "word": "の",
+              "start": 31.72,
+              "end": 31.88
+            },
+            {
+              "word": "景",
+              "start": 31.88,
+              "end": 32.32
+            },
+            {
+              "word": "色",
+              "start": 32.32,
+              "end": 32.78
+            }
+          ]
+        },
+        {
+          "start": 32.78,
+          "end": 36.98,
+          "text": "バイバイバイ 寂しい夜が溶けて",
+          "romaji": [
+            "bai bai bai",
+            "sabishii yoru ga tokete"
+          ],
+          "en": [
+            "Bye bye bye",
+            "the lonely night dissolves"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "バ",
+              "start": 32.78,
+              "end": 33.32
+            },
+            {
+              "word": "イ",
+              "start": 33.32,
+              "end": 33.86
+            },
+            {
+              "word": "バ",
+              "start": 33.86,
+              "end": 34.05
+            },
+            {
+              "word": "イ",
+              "start": 34.05,
+              "end": 34.24
+            },
+            {
+              "word": "バ",
+              "start": 34.24,
+              "end": 34.36
+            },
+            {
+              "word": "イ",
+              "start": 34.36,
+              "end": 34.48
+            },
+            {
+              "word": "寂",
+              "start": 34.62,
+              "end": 35.0
+            },
+            {
+              "word": "し",
+              "start": 35.0,
+              "end": 35.21
+            },
+            {
+              "word": "い",
+              "start": 35.21,
+              "end": 35.42
+            },
+            {
+              "word": "夜",
+              "start": 35.42,
+              "end": 36.04
+            },
+            {
+              "word": "が",
+              "start": 36.04,
+              "end": 36.26
+            },
+            {
+              "word": "溶",
+              "start": 36.26,
+              "end": 36.74
+            },
+            {
+              "word": "け",
+              "start": 36.74,
+              "end": 36.86
+            },
+            {
+              "word": "て",
+              "start": 36.86,
+              "end": 36.98
+            }
+          ]
+        },
+        {
+          "start": 36.98,
+          "end": 39.96,
+          "text": "アンコール 空に歌うだけ",
+          "romaji": [
+            "ankooru",
+            "sora ni utau dake"
+          ],
+          "en": [
+            "An encore",
+            "all I do is sing to the sky"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "ア",
+              "start": 36.98,
+              "end": 37.18
+            },
+            {
+              "word": "ン",
+              "start": 37.18,
+              "end": 37.38
+            },
+            {
+              "word": "コ",
+              "start": 37.38,
+              "end": 37.58
+            },
+            {
+              "word": "ー",
+              "start": 37.58,
+              "end": 37.78
+            },
+            {
+              "word": "ル",
+              "start": 37.78,
+              "end": 37.98
+            },
+            {
+              "word": "空",
+              "start": 37.98,
+              "end": 38.52
+            },
+            {
+              "word": "に",
+              "start": 38.52,
+              "end": 39.04
+            },
+            {
+              "word": "歌",
+              "start": 39.04,
+              "end": 39.18
+            },
+            {
+              "word": "う",
+              "start": 39.18,
+              "end": 39.32
+            },
+            {
+              "word": "だ",
+              "start": 39.32,
+              "end": 39.64
+            },
+            {
+              "word": "け",
+              "start": 39.64,
+              "end": 39.96
+            }
+          ]
+        },
+        {
+          "start": 39.96,
+          "end": 43.38,
+          "text": "ライライライ 世界は今日だって",
+          "romaji": [
+            "rai rai rai",
+            "sekai wa kyou datte"
+          ],
+          "en": [
+            "Lie lie lie",
+            "even today the world"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "ラ",
+              "start": 39.96,
+              "end": 40.267
+            },
+            {
+              "word": "イ",
+              "start": 40.267,
+              "end": 40.573
+            },
+            {
+              "word": "ラ",
+              "start": 40.573,
+              "end": 40.88
+            },
+            {
+              "word": "イ",
+              "start": 40.88,
+              "end": 41.187
+            },
+            {
+              "word": "ラ",
+              "start": 41.187,
+              "end": 41.493
+            },
+            {
+              "word": "イ",
+              "start": 41.493,
+              "end": 41.8
+            },
+            {
+              "word": "世",
+              "start": 41.8,
+              "end": 42.04
+            },
+            {
+              "word": "界",
+              "start": 42.04,
+              "end": 42.28
+            },
+            {
+              "word": "は",
+              "start": 42.28,
+              "end": 42.64
+            },
+            {
+              "word": "今",
+              "start": 42.64,
+              "end": 42.8
+            },
+            {
+              "word": "日",
+              "start": 42.8,
+              "end": 42.96
+            },
+            {
+              "word": "だ",
+              "start": 42.96,
+              "end": 43.18
+            },
+            {
+              "word": "っ",
+              "start": 43.18,
+              "end": 43.28
+            },
+            {
+              "word": "て",
+              "start": 43.28,
+              "end": 43.38
+            }
+          ]
+        },
+        {
+          "start": 43.38,
+          "end": 47.42,
+          "text": "何も考えちゃいないの この通り",
+          "romaji": [
+            "nani mo kangaecha inai no",
+            "kono toori"
+          ],
+          "en": [
+            "is not thinking of anything",
+            "just as you see"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "何",
+              "start": 43.38,
+              "end": 43.92
+            },
+            {
+              "word": "も",
+              "start": 43.92,
+              "end": 44.34
+            },
+            {
+              "word": "考",
+              "start": 44.34,
+              "end": 44.72
+            },
+            {
+              "word": "え",
+              "start": 44.72,
+              "end": 45.16
+            },
+            {
+              "word": "ち",
+              "start": 45.16,
+              "end": 45.24
+            },
+            {
+              "word": "ゃ",
+              "start": 45.24,
+              "end": 45.32
+            },
+            {
+              "word": "い",
+              "start": 45.32,
+              "end": 45.64
+            },
+            {
+              "word": "な",
+              "start": 45.64,
+              "end": 45.84
+            },
+            {
+              "word": "い",
+              "start": 45.84,
+              "end": 46.04
+            },
+            {
+              "word": "の",
+              "start": 46.04,
+              "end": 46.2
+            },
+            {
+              "word": "こ",
+              "start": 46.2,
+              "end": 46.4
+            },
+            {
+              "word": "の",
+              "start": 46.4,
+              "end": 46.6
+            },
+            {
+              "word": "通",
+              "start": 46.6,
+              "end": 46.96
+            },
+            {
+              "word": "り",
+              "start": 46.96,
+              "end": 47.42
+            }
+          ]
+        },
+        {
+          "start": 54.98,
+          "end": 58.68,
+          "text": "輝く月に 歌うよ孤独を",
+          "romaji": [
+            "kagayaku tsuki ni",
+            "utau yo kodoku o"
+          ],
+          "en": [
+            "To the shining moon",
+            "I sing of loneliness"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "輝",
+              "start": 54.98,
+              "end": 55.68
+            },
+            {
+              "word": "く",
+              "start": 55.68,
+              "end": 56.16
+            },
+            {
+              "word": "月",
+              "start": 56.16,
+              "end": 56.52
+            },
+            {
+              "word": "に",
+              "start": 56.52,
+              "end": 56.82
+            },
+            {
+              "word": "歌",
+              "start": 56.82,
+              "end": 57.26
+            },
+            {
+              "word": "う",
+              "start": 57.26,
+              "end": 57.6
+            },
+            {
+              "word": "よ",
+              "start": 57.6,
+              "end": 57.84
+            },
+            {
+              "word": "孤",
+              "start": 57.9,
+              "end": 58.2
+            },
+            {
+              "word": "独",
+              "start": 58.2,
+              "end": 58.34
+            },
+            {
+              "word": "を",
+              "start": 58.34,
+              "end": 58.68
+            }
+          ]
+        },
+        {
+          "start": 58.68,
+          "end": 62.28,
+          "text": "その涙だけ 海に隠したよ",
+          "romaji": [
+            "sono namida dake",
+            "umi ni kakushita yo"
+          ],
+          "en": [
+            "Only those tears",
+            "I hid in the sea"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "そ",
+              "start": 58.68,
+              "end": 58.97
+            },
+            {
+              "word": "の",
+              "start": 58.97,
+              "end": 59.26
+            },
+            {
+              "word": "涙",
+              "start": 59.26,
+              "end": 59.9
+            },
+            {
+              "word": "だ",
+              "start": 59.9,
+              "end": 60.13
+            },
+            {
+              "word": "け",
+              "start": 60.13,
+              "end": 60.36
+            },
+            {
+              "word": "海",
+              "start": 60.36,
+              "end": 60.82
+            },
+            {
+              "word": "に",
+              "start": 60.82,
+              "end": 61.24
+            },
+            {
+              "word": "隠",
+              "start": 61.24,
+              "end": 61.58
+            },
+            {
+              "word": "し",
+              "start": 61.58,
+              "end": 61.77
+            },
+            {
+              "word": "た",
+              "start": 61.77,
+              "end": 61.96
+            },
+            {
+              "word": "よ",
+              "start": 61.96,
+              "end": 62.28
+            }
+          ]
+        },
+        {
+          "start": 62.28,
+          "end": 65.94,
+          "text": "これが夢なら 何処へも行けるよ",
+          "romaji": [
+            "kore ga yume nara",
+            "doko e mo ikeru yo"
+          ],
+          "en": [
+            "If this is a dream",
+            "we can go anywhere"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "こ",
+              "start": 62.28,
+              "end": 62.62
+            },
+            {
+              "word": "れ",
+              "start": 62.62,
+              "end": 62.96
+            },
+            {
+              "word": "が",
+              "start": 62.96,
+              "end": 63.2
+            },
+            {
+              "word": "夢",
+              "start": 63.2,
+              "end": 63.54
+            },
+            {
+              "word": "な",
+              "start": 63.54,
+              "end": 63.76
+            },
+            {
+              "word": "ら",
+              "start": 63.76,
+              "end": 63.98
+            },
+            {
+              "word": "何",
+              "start": 63.98,
+              "end": 64.27
+            },
+            {
+              "word": "処",
+              "start": 64.27,
+              "end": 64.56
+            },
+            {
+              "word": "へ",
+              "start": 64.56,
+              "end": 64.84
+            },
+            {
+              "word": "も",
+              "start": 64.84,
+              "end": 65.04
+            },
+            {
+              "word": "行",
+              "start": 65.04,
+              "end": 65.22
+            },
+            {
+              "word": "け",
+              "start": 65.22,
+              "end": 65.45
+            },
+            {
+              "word": "る",
+              "start": 65.45,
+              "end": 65.68
+            },
+            {
+              "word": "よ",
+              "start": 65.68,
+              "end": 65.94
+            }
+          ]
+        },
+        {
+          "start": 65.94,
+          "end": 69.58,
+          "text": "揺られてどこか 遠い所へと",
+          "romaji": [
+            "yurarete dokoka",
+            "tooi tokoro e to"
+          ],
+          "en": [
+            "Swaying onward",
+            "toward somewhere far away"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "揺",
+              "start": 65.94,
+              "end": 66.46
+            },
+            {
+              "word": "ら",
+              "start": 66.46,
+              "end": 66.74
+            },
+            {
+              "word": "れ",
+              "start": 66.74,
+              "end": 66.86
+            },
+            {
+              "word": "て",
+              "start": 66.86,
+              "end": 66.98
+            },
+            {
+              "word": "ど",
+              "start": 66.98,
+              "end": 67.34
+            },
+            {
+              "word": "こ",
+              "start": 67.34,
+              "end": 67.52
+            },
+            {
+              "word": "か",
+              "start": 67.52,
+              "end": 67.66
+            },
+            {
+              "word": "遠",
+              "start": 67.66,
+              "end": 68.1
+            },
+            {
+              "word": "い",
+              "start": 68.1,
+              "end": 68.56
+            },
+            {
+              "word": "所",
+              "start": 68.56,
+              "end": 68.86
+            },
+            {
+              "word": "へ",
+              "start": 68.86,
+              "end": 69.4
+            },
+            {
+              "word": "と",
+              "start": 69.4,
+              "end": 69.58
+            }
+          ]
+        },
+        {
+          "start": 69.58,
+          "end": 72.74,
+          "text": "繊細なままに回ってる",
+          "romaji": [
+            "sensai na mama ni",
+            "mawatteru"
+          ],
+          "en": [
+            "Still delicate",
+            "it keeps turning"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "繊",
+              "start": 69.58,
+              "end": 70.24
+            },
+            {
+              "word": "細",
+              "start": 70.24,
+              "end": 70.56
+            },
+            {
+              "word": "な",
+              "start": 70.56,
+              "end": 70.98
+            },
+            {
+              "word": "ま",
+              "start": 70.98,
+              "end": 71.22
+            },
+            {
+              "word": "ま",
+              "start": 71.22,
+              "end": 71.46
+            },
+            {
+              "word": "に",
+              "start": 71.46,
+              "end": 71.74
+            },
+            {
+              "word": "回",
+              "start": 71.74,
+              "end": 72.0
+            },
+            {
+              "word": "っ",
+              "start": 72.0,
+              "end": 72.247
+            },
+            {
+              "word": "て",
+              "start": 72.247,
+              "end": 72.493
+            },
+            {
+              "word": "る",
+              "start": 72.493,
+              "end": 72.74
+            }
+          ]
+        },
+        {
+          "start": 72.74,
+          "end": 76.24,
+          "text": "愛愛愛して欲しいだけだ",
+          "romaji": [
+            "ai ai ai shite",
+            "hoshii dake da"
+          ],
+          "en": [
+            "Love love love me",
+            "that is all I want"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "愛",
+              "start": 72.74,
+              "end": 73.84
+            },
+            {
+              "word": "愛",
+              "start": 73.84,
+              "end": 74.18
+            },
+            {
+              "word": "愛",
+              "start": 74.18,
+              "end": 74.56
+            },
+            {
+              "word": "し",
+              "start": 74.56,
+              "end": 74.76
+            },
+            {
+              "word": "て",
+              "start": 74.76,
+              "end": 74.96
+            },
+            {
+              "word": "欲",
+              "start": 74.96,
+              "end": 75.24
+            },
+            {
+              "word": "し",
+              "start": 75.24,
+              "end": 75.38
+            },
+            {
+              "word": "い",
+              "start": 75.38,
+              "end": 75.52
+            },
+            {
+              "word": "だ",
+              "start": 75.52,
+              "end": 75.78
+            },
+            {
+              "word": "け",
+              "start": 75.78,
+              "end": 76.04
+            },
+            {
+              "word": "だ",
+              "start": 76.04,
+              "end": 76.24
+            }
+          ]
+        },
+        {
+          "start": 76.24,
+          "end": 80.3,
+          "text": "魔法みたいな今日に舞う 言葉ひとつ",
+          "romaji": [
+            "mahou mitai na kyou ni mau",
+            "kotoba hitotsu"
+          ],
+          "en": [
+            "One word dances through",
+            "this magical day"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "魔",
+              "start": 76.24,
+              "end": 76.64
+            },
+            {
+              "word": "法",
+              "start": 76.64,
+              "end": 77.06
+            },
+            {
+              "word": "み",
+              "start": 77.06,
+              "end": 77.22
+            },
+            {
+              "word": "た",
+              "start": 77.22,
+              "end": 77.38
+            },
+            {
+              "word": "い",
+              "start": 77.38,
+              "end": 77.6
+            },
+            {
+              "word": "な",
+              "start": 77.6,
+              "end": 77.64
+            },
+            {
+              "word": "今",
+              "start": 77.64,
+              "end": 77.868
+            },
+            {
+              "word": "日",
+              "start": 77.868,
+              "end": 78.096
+            },
+            {
+              "word": "に",
+              "start": 78.096,
+              "end": 78.324
+            },
+            {
+              "word": "舞",
+              "start": 78.324,
+              "end": 78.552
+            },
+            {
+              "word": "う",
+              "start": 78.552,
+              "end": 78.78
+            },
+            {
+              "word": "言",
+              "start": 78.78,
+              "end": 79.08
+            },
+            {
+              "word": "葉",
+              "start": 79.08,
+              "end": 79.52
+            },
+            {
+              "word": "ひ",
+              "start": 79.52,
+              "end": 79.8
+            },
+            {
+              "word": "と",
+              "start": 79.8,
+              "end": 79.98
+            },
+            {
+              "word": "つ",
+              "start": 79.98,
+              "end": 80.3
+            }
+          ]
+        },
+        {
+          "start": 80.3,
+          "end": 87.3,
+          "text": "ライライライ世界はなんだって ラララ毎日に僕が居なくても",
+          "romaji": [
+            "rai rai rai sekai wa nandatte",
+            "rarara mainichi ni boku ga inakute mo"
+          ],
+          "en": [
+            "Lie lie lie whatever the world may be",
+            "even if I am absent from every la-la-la day"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "ラ",
+              "start": 80.3,
+              "end": 80.547
+            },
+            {
+              "word": "イ",
+              "start": 80.547,
+              "end": 80.793
+            },
+            {
+              "word": "ラ",
+              "start": 80.793,
+              "end": 81.04
+            },
+            {
+              "word": "イ",
+              "start": 81.04,
+              "end": 81.287
+            },
+            {
+              "word": "ラ",
+              "start": 81.287,
+              "end": 81.533
+            },
+            {
+              "word": "イ",
+              "start": 81.533,
+              "end": 81.78
+            },
+            {
+              "word": "世",
+              "start": 81.78,
+              "end": 81.95
+            },
+            {
+              "word": "界",
+              "start": 81.95,
+              "end": 82.12
+            },
+            {
+              "word": "は",
+              "start": 82.12,
+              "end": 82.64
+            },
+            {
+              "word": "な",
+              "start": 82.64,
+              "end": 82.733
+            },
+            {
+              "word": "ん",
+              "start": 82.733,
+              "end": 82.827
+            },
+            {
+              "word": "だ",
+              "start": 82.827,
+              "end": 82.92
+            },
+            {
+              "word": "っ",
+              "start": 82.92,
+              "end": 83.17
+            },
+            {
+              "word": "て",
+              "start": 83.17,
+              "end": 83.42
+            },
+            {
+              "word": "ラ",
+              "start": 83.42,
+              "end": 83.753
+            },
+            {
+              "word": "ラ",
+              "start": 83.753,
+              "end": 84.087
+            },
+            {
+              "word": "ラ",
+              "start": 84.087,
+              "end": 84.42
+            },
+            {
+              "word": "毎",
+              "start": 84.42,
+              "end": 84.88
+            },
+            {
+              "word": "日",
+              "start": 84.88,
+              "end": 85.2
+            },
+            {
+              "word": "に",
+              "start": 85.2,
+              "end": 85.47
+            },
+            {
+              "word": "僕",
+              "start": 85.47,
+              "end": 85.74
+            },
+            {
+              "word": "が",
+              "start": 85.74,
+              "end": 86.01
+            },
+            {
+              "word": "居",
+              "start": 86.01,
+              "end": 86.28
+            },
+            {
+              "word": "な",
+              "start": 86.28,
+              "end": 86.55
+            },
+            {
+              "word": "く",
+              "start": 86.55,
+              "end": 86.82
+            },
+            {
+              "word": "て",
+              "start": 86.82,
+              "end": 86.96
+            },
+            {
+              "word": "も",
+              "start": 86.96,
+              "end": 87.3
+            }
+          ]
+        },
+        {
+          "start": 102.27,
+          "end": 105.62,
+          "text": "バイバイバイ 寂しい夜が",
+          "romaji": [
+            "bai bai bai",
+            "sabishii yoru ga"
+          ],
+          "en": [
+            "Bye bye bye",
+            "the lonely night"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "バ",
+              "start": 102.27,
+              "end": 102.575
+            },
+            {
+              "word": "イ",
+              "start": 102.575,
+              "end": 102.879
+            },
+            {
+              "word": "バ",
+              "start": 102.879,
+              "end": 103.184
+            },
+            {
+              "word": "イ",
+              "start": 103.184,
+              "end": 103.488
+            },
+            {
+              "word": "バ",
+              "start": 103.488,
+              "end": 103.793
+            },
+            {
+              "word": "イ",
+              "start": 103.793,
+              "end": 104.097
+            },
+            {
+              "word": "寂",
+              "start": 104.097,
+              "end": 104.402
+            },
+            {
+              "word": "し",
+              "start": 104.402,
+              "end": 104.706
+            },
+            {
+              "word": "い",
+              "start": 104.706,
+              "end": 105.011
+            },
+            {
+              "word": "夜",
+              "start": 105.011,
+              "end": 105.315
+            },
+            {
+              "word": "が",
+              "start": 105.315,
+              "end": 105.62
+            }
+          ]
+        },
+        {
+          "start": 105.62,
+          "end": 109.21,
+          "text": "溶けてアンコール 空に歌うだけ",
+          "romaji": [
+            "tokete ankooru",
+            "sora ni utau dake"
+          ],
+          "en": [
+            "dissolves into an encore",
+            "all I do is sing to the sky"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "溶",
+              "start": 105.62,
+              "end": 105.876
+            },
+            {
+              "word": "け",
+              "start": 105.876,
+              "end": 106.133
+            },
+            {
+              "word": "て",
+              "start": 106.133,
+              "end": 106.389
+            },
+            {
+              "word": "ア",
+              "start": 106.389,
+              "end": 106.646
+            },
+            {
+              "word": "ン",
+              "start": 106.646,
+              "end": 106.902
+            },
+            {
+              "word": "コ",
+              "start": 106.902,
+              "end": 107.159
+            },
+            {
+              "word": "ー",
+              "start": 107.159,
+              "end": 107.415
+            },
+            {
+              "word": "ル",
+              "start": 107.415,
+              "end": 107.671
+            },
+            {
+              "word": "空",
+              "start": 107.671,
+              "end": 107.928
+            },
+            {
+              "word": "に",
+              "start": 107.928,
+              "end": 108.184
+            },
+            {
+              "word": "歌",
+              "start": 108.184,
+              "end": 108.441
+            },
+            {
+              "word": "う",
+              "start": 108.441,
+              "end": 108.697
+            },
+            {
+              "word": "だ",
+              "start": 108.697,
+              "end": 108.954
+            },
+            {
+              "word": "け",
+              "start": 108.954,
+              "end": 109.21
+            }
+          ]
+        },
+        {
+          "start": 109.21,
+          "end": 112.55,
+          "text": "ライライ来世 無いわ 今日だって",
+          "romaji": [
+            "rai rai raise",
+            "nai wa kyou datte"
+          ],
+          "en": [
+            "Lie lie, there is no next life",
+            "not even today"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "ラ",
+              "start": 109.21,
+              "end": 109.449
+            },
+            {
+              "word": "イ",
+              "start": 109.449,
+              "end": 109.687
+            },
+            {
+              "word": "ラ",
+              "start": 109.687,
+              "end": 109.926
+            },
+            {
+              "word": "イ",
+              "start": 109.926,
+              "end": 110.164
+            },
+            {
+              "word": "来",
+              "start": 110.164,
+              "end": 110.403
+            },
+            {
+              "word": "世",
+              "start": 110.403,
+              "end": 110.641
+            },
+            {
+              "word": "無",
+              "start": 110.641,
+              "end": 110.88
+            },
+            {
+              "word": "い",
+              "start": 110.88,
+              "end": 111.119
+            },
+            {
+              "word": "わ",
+              "start": 111.119,
+              "end": 111.357
+            },
+            {
+              "word": "今",
+              "start": 111.357,
+              "end": 111.596
+            },
+            {
+              "word": "日",
+              "start": 111.596,
+              "end": 111.834
+            },
+            {
+              "word": "だ",
+              "start": 111.834,
+              "end": 112.073
+            },
+            {
+              "word": "っ",
+              "start": 112.073,
+              "end": 112.311
+            },
+            {
+              "word": "て",
+              "start": 112.311,
+              "end": 112.55
+            }
+          ]
+        },
+        {
+          "start": 112.55,
+          "end": 116.51,
+          "text": "何も考えちゃいないの この通り",
+          "romaji": [
+            "nani mo kangaecha inai no",
+            "kono toori"
+          ],
+          "en": [
+            "I am not thinking of anything",
+            "just as you see"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "何",
+              "start": 112.55,
+              "end": 112.833
+            },
+            {
+              "word": "も",
+              "start": 112.833,
+              "end": 113.116
+            },
+            {
+              "word": "考",
+              "start": 113.116,
+              "end": 113.399
+            },
+            {
+              "word": "え",
+              "start": 113.399,
+              "end": 113.681
+            },
+            {
+              "word": "ち",
+              "start": 113.681,
+              "end": 113.964
+            },
+            {
+              "word": "ゃ",
+              "start": 113.964,
+              "end": 114.247
+            },
+            {
+              "word": "い",
+              "start": 114.247,
+              "end": 114.53
+            },
+            {
+              "word": "な",
+              "start": 114.53,
+              "end": 114.813
+            },
+            {
+              "word": "い",
+              "start": 114.813,
+              "end": 115.096
+            },
+            {
+              "word": "の",
+              "start": 115.096,
+              "end": 115.379
+            },
+            {
+              "word": "こ",
+              "start": 115.379,
+              "end": 115.661
+            },
+            {
+              "word": "の",
+              "start": 115.661,
+              "end": 115.944
+            },
+            {
+              "word": "通",
+              "start": 115.944,
+              "end": 116.227
+            },
+            {
+              "word": "り",
+              "start": 116.227,
+              "end": 116.51
+            }
+          ]
+        },
+        {
+          "start": 117.09,
+          "end": 120.35,
+          "text": "そのままで くたばるよ",
+          "romaji": [
+            "sono mama de",
+            "kutabaru yo"
+          ],
+          "en": [
+            "Just as I am",
+            "I will fall away"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "そ",
+              "start": 117.09,
+              "end": 117.416
+            },
+            {
+              "word": "の",
+              "start": 117.416,
+              "end": 117.742
+            },
+            {
+              "word": "ま",
+              "start": 117.742,
+              "end": 118.068
+            },
+            {
+              "word": "ま",
+              "start": 118.068,
+              "end": 118.394
+            },
+            {
+              "word": "で",
+              "start": 118.394,
+              "end": 118.72
+            },
+            {
+              "word": "く",
+              "start": 118.72,
+              "end": 119.046
+            },
+            {
+              "word": "た",
+              "start": 119.046,
+              "end": 119.372
+            },
+            {
+              "word": "ば",
+              "start": 119.372,
+              "end": 119.698
+            },
+            {
+              "word": "る",
+              "start": 119.698,
+              "end": 120.024
+            },
+            {
+              "word": "よ",
+              "start": 120.024,
+              "end": 120.35
+            }
+          ]
+        },
+        {
+          "start": 120.35,
+          "end": 123.57,
+          "text": "でも言葉だけ綺麗で居たくて",
+          "romaji": [
+            "demo kotoba dake",
+            "kirei de itakute"
+          ],
+          "en": [
+            "But I want my words",
+            "at least, to remain beautiful"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "で",
+              "start": 120.35,
+              "end": 120.598
+            },
+            {
+              "word": "も",
+              "start": 120.598,
+              "end": 120.845
+            },
+            {
+              "word": "言",
+              "start": 120.845,
+              "end": 121.093
+            },
+            {
+              "word": "葉",
+              "start": 121.093,
+              "end": 121.341
+            },
+            {
+              "word": "だ",
+              "start": 121.341,
+              "end": 121.588
+            },
+            {
+              "word": "け",
+              "start": 121.588,
+              "end": 121.836
+            },
+            {
+              "word": "綺",
+              "start": 121.836,
+              "end": 122.084
+            },
+            {
+              "word": "麗",
+              "start": 122.084,
+              "end": 122.332
+            },
+            {
+              "word": "で",
+              "start": 122.332,
+              "end": 122.579
+            },
+            {
+              "word": "居",
+              "start": 122.579,
+              "end": 122.827
+            },
+            {
+              "word": "た",
+              "start": 122.827,
+              "end": 123.075
+            },
+            {
+              "word": "く",
+              "start": 123.075,
+              "end": 123.322
+            },
+            {
+              "word": "て",
+              "start": 123.322,
+              "end": 123.57
+            }
+          ]
+        },
+        {
+          "start": 124.17,
+          "end": 127.35,
+          "text": "嗚呼バイバイバイ 寂しい夜が",
+          "romaji": [
+            "aa bai bai bai",
+            "sabishii yoru ga"
+          ],
+          "en": [
+            "Ah, bye bye bye",
+            "the lonely night"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "嗚",
+              "start": 124.17,
+              "end": 124.415
+            },
+            {
+              "word": "呼",
+              "start": 124.415,
+              "end": 124.659
+            },
+            {
+              "word": "バ",
+              "start": 124.659,
+              "end": 124.904
+            },
+            {
+              "word": "イ",
+              "start": 124.904,
+              "end": 125.148
+            },
+            {
+              "word": "バ",
+              "start": 125.148,
+              "end": 125.393
+            },
+            {
+              "word": "イ",
+              "start": 125.393,
+              "end": 125.638
+            },
+            {
+              "word": "バ",
+              "start": 125.638,
+              "end": 125.882
+            },
+            {
+              "word": "イ",
+              "start": 125.882,
+              "end": 126.127
+            },
+            {
+              "word": "寂",
+              "start": 126.127,
+              "end": 126.372
+            },
+            {
+              "word": "し",
+              "start": 126.372,
+              "end": 126.616
+            },
+            {
+              "word": "い",
+              "start": 126.616,
+              "end": 126.861
+            },
+            {
+              "word": "夜",
+              "start": 126.861,
+              "end": 127.105
+            },
+            {
+              "word": "が",
+              "start": 127.105,
+              "end": 127.35
+            }
+          ]
+        },
+        {
+          "start": 127.35,
+          "end": 131.11,
+          "text": "溶けてアンコール 空に歌うだけ",
+          "romaji": [
+            "tokete ankooru",
+            "sora ni utau dake"
+          ],
+          "en": [
+            "dissolves into an encore",
+            "all I do is sing to the sky"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "溶",
+              "start": 127.35,
+              "end": 127.619
+            },
+            {
+              "word": "け",
+              "start": 127.619,
+              "end": 127.887
+            },
+            {
+              "word": "て",
+              "start": 127.887,
+              "end": 128.156
+            },
+            {
+              "word": "ア",
+              "start": 128.156,
+              "end": 128.424
+            },
+            {
+              "word": "ン",
+              "start": 128.424,
+              "end": 128.693
+            },
+            {
+              "word": "コ",
+              "start": 128.693,
+              "end": 128.961
+            },
+            {
+              "word": "ー",
+              "start": 128.961,
+              "end": 129.23
+            },
+            {
+              "word": "ル",
+              "start": 129.23,
+              "end": 129.499
+            },
+            {
+              "word": "空",
+              "start": 129.499,
+              "end": 129.767
+            },
+            {
+              "word": "に",
+              "start": 129.767,
+              "end": 130.036
+            },
+            {
+              "word": "歌",
+              "start": 130.036,
+              "end": 130.304
+            },
+            {
+              "word": "う",
+              "start": 130.304,
+              "end": 130.573
+            },
+            {
+              "word": "だ",
+              "start": 130.573,
+              "end": 130.841
+            },
+            {
+              "word": "け",
+              "start": 130.841,
+              "end": 131.11
+            }
+          ]
+        },
+        {
+          "start": 131.11,
+          "end": 132.73,
+          "text": "歌うだけ",
+          "romaji": [
+            "utau dake"
+          ],
+          "en": [
+            "I only sing"
+          ],
+          "aside": false,
+          "words": [
+            {
+              "word": "歌",
+              "start": 131.11,
+              "end": 131.515
+            },
+            {
+              "word": "う",
+              "start": 131.515,
+              "end": 131.92
+            },
+            {
+              "word": "だ",
+              "start": 131.92,
+              "end": 132.325
+            },
+            {
+              "word": "け",
+              "start": 132.325,
+              "end": 132.73
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "analysis": {
+    "jp": {
+      "step": 0.1,
+      "energyBase64": "AAAAAAAAAAEBAgUFBgUFBQcGCAgKCwoJCAkICAgMDgwLCgoKCQkIBwYFBAUHBgkICAcGBQcJCQkJDAsKCQgJCQoKDw0LCgkKCQgHBgUFBgYJCRYaGBYUHh0aFx8iIB0aJSMgHSAkIiAcJCMgHh8kIBwYIiEeHBsiHx0aIyIgHRwmJSIfJCQhHh0nJSMgIyYjIB0nJiIeICIfMkZUUk1KSkxFREJIR0NAPzw6PDxEQ0A8NkNCPz1IRz89PDo1LigtPTw5MjtASERCTktIRkhEOzQyPj08OUBDQDs7Q0JAPjw4OzxLV1VSTUxRT0tBTUxKR0ZCOzw0RENAOjlHQUE7RENBPEA9Njs3Pz88ODRAOz4/R0xGQUdPSEVCQ0hFQjxEPz09PkVDPjw7NjAqJykjKSczOTk5OzozNTI0MjAvKTA4NzQyMCwuKDU1Mi0qJyYlKEVRUVNbXVddXmFcWltaWFNUU1dVU1FYXFhXWV5dW19cXllZWFdWUk5ZXmFfXFxbVl1gX11bV1VUTFhPT0pJSERIREVCTk5SVFNWVFFUW1pXV1dXU1NQVFRTUk5YWVZUXFxWWFpbV1ZXVVVTV1NUVlRSVVxWVlpfW1hXVVdVVlRYVVBZUFlYXl1cW1NJPzcwKiQkJSIfHCUkIR0gJSMgHSYlIiAiJiQjIiorKCUlKiclIigpJyUkKSclIScqKSQiLCooJCgoJSMhKyooJiotLCglKykpJyYrJyMgLj48Ozk4MzUxLy4rLC0nIiwtLDU2NTk6NjU1MzQuNzo1LigjIi4zMy45OD4+Oj89Ojo5NDExNjc2NTExMS4wKi8sLS0sJiEdGTBAQDw6SEZDPEhGRUNCPjg/OkRGRUJBUldUTUtKRkNCPzkzLDxBQUJASURDQ0NNRkFDT0pGQ0JGREI9Qj8+PTxGREA+PTkyLClAQj86QElIR0VEQUJCQkE9OzhIR0ZKSklCQ0BAQT89Ozg1MzJJVl1bWl1cXVxfXFdWUltXV1RTU1NPT1BOTVFaWlZdXGBfXltaWllUVFxZVlZdX1lcW1xbXVtXXVRcVVVSTkxETUlIRU1PVFhXWldWVVhYVVpbXVlXVlVVUlJPWVlVUVpYU1NUVlRTW1tfX19cW1lXVFNQUVBQWVdUXFddW1paWlZQVUxXUVFPTVhSRz42LykkISEeHxwbGhkYFhgXGxoZGRgXFRYVFRQTEhITEhUTFxYVFBMSERkXFxYVFhQUExMRFBQUFhUWFBQUExIQDw4REBISEhIRHyElJiclIyEfJyQiICAhHyIfJSMhHx4lIyMgKCYjISEmIyUkJyYjIh8mJCQiKCgmJSMpJyclKSspKCYvLS0rKispKikxMS8uLi0rKjA+SFNOWF5ZWltfXVlbWlpUUlFTU1JOTllXVVZcXFddXFxZVlVWWVhTVl1gX1xbXFddYGBeW1hWV05ZUlRRTk9GT0pGQ0dVVldVV1ZUVFpaWVtdX1tZWVlbV1VRWVleW2BfWFhYW1hWWVdXVllVVFlYVVZdWFZXXVxXV1ZVU1NRT1VOVk1YWlpfXl5YVVFOSUZFRk5NTUpXXVpXVFJOSUVFQD8+PE5NTExRWlhaWVpXU1BNSUhRTk9OTUxMV1ZTUlVSUFBQU1JSUFBPTldPWVJaV1VWU1BMVlZaWFhZVU9ZXlxaWl1cVl1cW1ZTUVFRUE5NWFdTUlpcVl1bWlhVVFJUVVFQWl9dWllXU1RcXFpWVVNXUVVTTVZNWFFYVE1EPjcyLSk2NzdJQ1NLV1JRUUk/NzAqJCAbGBUSEA4MCgkI",
+      "onsetsBase64": "AAAAAAAAAAUABx0ACAAAAA8AEgAQBQAAAAYAAAUaDwAAAAQAAAAAAAAAAAIOABUAAAAAAAkQBAAAFwAAAAAEAAUAJQAAAAAEAAAAAAAACAEYAGQhAAAASQAAADwWAAAAUAAAABwaAAAAPgAAAAgpAAAARQAAAAAzAAAARQAAAABPAAAAIwAAAABMAAAAFBoAAABMAAAADREAZGRkAAAAAA0AAAAuAAAAAAAAEAA9AAAAAGQAAABSAAAAAAAAAAAlZAAAAEQnPAAAWgAAABAAAAAAXQAAADQZAAAAQwAAAAAAGAVkWAAAAAApAAAAXgAAAAAAAAYAZAAAAABkAAAARQAAAB0AACUAPAcAAABbAB0BQiIAADBAAAAAAygAAABBAAAABzcAAAAAAAAAAA0AKQBXMAAAEAAADgANAAAAADQ5AAAAAAAJAGECAAAAAAAAEWRgAAo+EAAvAhcAAAYAAAAKABoAAAA2IwAADiYAACEAEQAAAAAAAABPKRUAAAAAADMZAAAAAAAAAFYAAAAAAAAgAAMAVwAfDwAUAAARNgAAAAAAAAUAGwIAAABMDQAAOwQAEhEGAAAIAAAAIgAIDgAAGDYAAB4mAAAAAAsACgAaAAA/AEkAKwAAAAAAAAAAAAAACgAAAEkAAAAaIAAAAEEAAAAQGwAAAD8EAAAAJQAAAC4GAAAAKwAAACYcAAAASQAAAB0AAAAATQAAAB0ZAAAAKQAAAAAfAAAAZGQAAAAAABAAAAAACgMAAEwFAEgBABoKAAAAAAwASxAAAAAAAGEfAABTADEAACUAAAAAAAAEIwkAAAAAAAAPACYACAAAAAAAAGRkBAAAZAAAAFcAAAAAAAA4AEsTAAAAZCQAAAAAAAAAAAAAAGQpAAwAPwAAAABQAAARVwAAAAAhAAAAJgAAAABIAAAAAAAAAABkDQAAMkIAAAAAAAkAAAAAAABkAAAbAwAAAwAABwAAAAAAAABkYjMAABQAAgAZAAAAAEAAAAAAAAEAAAgAABpGAAA0ABwAAAAAAQAAADoAAAAyDQASAAcAEQAAMAA6AAAAAAAAQAAAADwSIyAAFAAAABIEACANCwAAAAAEAAAASgAAAEQAAAAFDwAAPAAeAAAAAAAAAAAAAwAASQAAOgAuAAAAAAAAJgBTAAAAAFIAAAAAAAAAAAAABgAAAAAAAA4AIgAAAAAAAAgAAAAAAAANABUAHQAAAAAAAEAAAAAABwADAAAAFwMAEgAHAAAAAAAAAAAWAA8AAAMAZA0hAgoAAAAAPgAAAAAEABoAKQAAAAA2AAAAOgAAAAArABEAGQAAAAA2AAAAKQEAAAArAAAAGRIAAABFAAAAAAoABwBCAAAAAAAAAClkS1AARi0ABgYgAAAOAAAAAAARAAAABE4AAAY0AAAtAAAAAAALEgAAFzIaAAAABAAwGQAAAAAABwBQAAwAAAcAPwAAAB5kCAMAFgAAADABABERDgAAAgAOAAAAPAApAB8AAAAAEAAAFAAEABQAACMAAAYzAAAILgAAAAAAAAAAADIAPABTEQAjAAAAAAAAAAAACjgAAABcMAAAAAAAAAAAAAAAAGQAAAAhRQAJAAcAAAAAAABFAAcAAAAAWAAAABUAAAAAGQAAAAAAAEEASwBCAAAKAAAASgAfAAAFAABLJwAAABsAADIAAAAAAAAEAAAAUwAAADkSADEAAAAAAAATBgAASCUAAAAAAAU6AAAAAAAiABwAAEEAUwAyAAAAAAAAAABhCQJkAGQAWQAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "bpm": 132,
+      "beatOffset": 0.275,
+      "encoding": "base64-u8-0-100"
+    }
+  },
+  "alignment": {
+    "recording": "songs/Evil (Neuro-sama) - Encore Dance (Japanese).m4a",
+    "audioSha256": "ea14a710fd476f29d890f02867d96e62af7e1064ee01bb82f346c9977859190e",
+    "status": "approved",
+    "approved": true,
+    "approvedBy": "Joshua Glass",
+    "approvalDate": "2026-10-25",
+    "method": "Matched accompaniment clock; reused existing Japanese song cues, not a claim of independently measured cover phonemes."
+  }
+}

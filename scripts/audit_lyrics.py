@@ -17,6 +17,7 @@ TRACKS = (
     ("hero.json", "base", "songs/Himemiya Rie - Hero (Mili Cover).m4a"),
     ("encore-dance.json", "jp", "songs/MIMI - Encore Dance (Japanese).m4a"),
     ("encore-dance.json", "en", "songs/Moonlit Star - Encore Dance (English).m4a"),
+    ("encore-dance-evil.json", "jp", "songs/Evil (Neuro-sama) - Encore Dance (Japanese).m4a"),
     ("waiting-for-tomorrow.json", "base", "songs/Kasane Teto - Waiting for Tomorrow.m4a"),
     ("through-patches-of-violet-metal.json", "base", "songs/Paul Owen Music - Through Patches of Violet (Metal Version).m4a"),
     ("compass-rock.json", "base", "songs/Paul Owen Music - Compass (Rock Version feat. Mili Vocals).m4a"),

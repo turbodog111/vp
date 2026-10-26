@@ -2717,6 +2717,55 @@ body.hero-story-active .now-view.active {
    Encore Dance theater - lacquer-red hyperpop signal stage
    ========================================================================== */
 
+/* Remaster: the entire stage surrounds the unframed lyric band. */
+body.encore-theater-active .now-stage { position: static; padding: 0; }
+body.encore-theater-active .now-meta { position: absolute; top: 24px; left: 30px; max-width: 65%; }
+body.encore-theater-active .now-meta h1 { font-size: 32px; line-height: 1.15; color: #fff4f2; }
+body.encore-theater-active .now-subtitle { color: #efd0dd; font-size: 13px; }
+body.encore-theater-active .now-kicker { color: #ffbaab; }
+body.encore-theater-active .now-queue { display: none; }
+body.encore-theater-active .hero-control { position: absolute; right: 28px; bottom: 20px; width: 104px; padding: 0; }
+body.encore-theater-active .hero-play { width: 66px; height: 66px; }
+body.encore-theater-active .hero-icon { font-size: 24px; }
+body.encore-theater-active .hero-time { font-size: 11px; color: #f7d5e2; }
+body.encore-theater-active .encore-echo-rails { display: none; }
+body.encore-theater-active .trick-heart-overlay {
+  inset: 26% 9% 27%; display: flex; flex-direction: column; justify-content: center;
+}
+body.encore-theater-active .trick-heart-heading { display: none; }
+body.encore-theater-active .trick-heart-lyrics { min-height: 0; align-items: center; }
+body.encore-theater-active .trick-heart-lane { padding: 10px 16px; align-items: center; text-align: center; }
+body.encore-theater-active .trick-heart-language { display: none; }
+body.encore-theater-active .trick-heart-line { font-size: 22px; line-height: 1.45; font-weight: 750; }
+body.encore-theater-active .lane-en .trick-heart-line { font-size: 28px; }
+body.encore-theater-active .lane-romaji .trick-heart-line { font-size: 20px; }
+body.encore-theater-active #view-now .trick-heart-word { color: #efc9d9; opacity: .75; }
+body.encore-theater-active #view-now .trick-heart-word.is-sung { color: #ffc3a0; opacity: 1; }
+body.encore-theater-active #view-now .lane-romaji .trick-heart-word.is-sung { color: #a8ece0; }
+body.encore-theater-active #view-now .trick-heart-word.is-current { color: #fff; opacity: 1; }
+@media (max-width: 780px) {
+  body.encore-theater-active .now-meta { top: 16px; left: 20px; max-width: 90%; }
+  body.encore-theater-active .now-meta h1 { font-size: 25px; }
+  body.encore-theater-active .trick-heart-overlay { inset: 27% 18px 27%; }
+  body.encore-theater-active .trick-heart-lyrics { display: flex; flex-direction: column; gap: 5px; }
+  body.encore-theater-active .trick-heart-lane { padding: 2px 0; width: 100%; }
+  body.encore-theater-active .lane-en { order: 2; }
+  body.encore-theater-active .lane-romaji { order: 1; }
+  body.encore-theater-active .trick-heart-line { font-size: 18px; }
+  body.encore-theater-active .lane-en .trick-heart-line { font-size: 23px; }
+  body.encore-theater-active .lane-romaji .trick-heart-line { font-size: 18px; }
+  body.encore-theater-active .hero-control { right: 16px; bottom: 14px; width: 90px; }
+  body.encore-theater-active .hero-play { width: 54px; height: 54px; }
+}
+@media (max-height: 520px) {
+  body.encore-theater-active .now-meta h1 { font-size: 23px; }
+  body.encore-theater-active .trick-heart-overlay { inset: 29% 12% 22%; }
+  body.encore-theater-active .trick-heart-lane { padding: 2px 7px; }
+  body.encore-theater-active .trick-heart-line,
+  body.encore-theater-active .lane-romaji .trick-heart-line { font-size: 16px; }
+  body.encore-theater-active .lane-en .trick-heart-line { font-size: 20px; }
+}
+
 body.encore-theater-active {
   --accent: var(--encore-primary, #f22f58);
   --accent-2: var(--encore-secondary, #dc8a91);

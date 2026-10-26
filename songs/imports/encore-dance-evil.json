@@ -1,0 +1,16 @@
+{
+  "recording": "songs/Evil (Neuro-sama) - Encore Dance (Japanese).m4a",
+  "source": "https://www.youtube.com/watch?v=-KrxHwn6BSw",
+  "sourceTitle": "Evil sings Encore Dance by MIMI",
+  "uploader": "Neuro Sama Clipper",
+  "performer": "Evil (Neuro-sama)",
+  "originalMusicLyrics": "MIMI",
+  "sourceAudioSha256": "86268f74b82cb8141c1008360f20704a927f01b2647675945396f806c3d5d817",
+  "sourceDuration": 142.686621,
+  "trimStart": 5.89,
+  "trimEnd": 140.48,
+  "outputDuration": 134.59,
+  "outputAudioSha256": "ea14a710fd476f29d890f02867d96e62af7e1064ee01bb82f346c9977859190e",
+  "edgeTreatment": "6ms entrance and 20ms tail fade; no normalization or tempo change.",
+  "evidence": "Backing-track correlations: reference 0s/15s/35s/60s/100s/125s match source offsets 5.89/5.89/5.89/5.88/5.89/5.89s. Intro speech at 3.82-4.58s excluded. Ending signal decays below -79dB by 140.4s; cut before non-musical signal after 140.8s."
+}
