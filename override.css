@@ -1,0 +1,64 @@
+body.override-active {
+  --accent: #e74662;
+  --accent-2: #ffeb8b;
+  --accent-fg: #fff9e6;
+  --motion-ink: #28262b;
+  --motion-muted: #5e303a;
+}
+body.override-active #view-now.active { background: #ffeb8b; }
+body.override-active .now-stage { position: static; padding: 0; }
+body.override-active .now-meta { position: absolute; top: 20px; left: 12%; max-width: 76%; }
+body.override-active .now-meta h1 { font-size: 34px; color: #28262b; text-shadow: none; }
+body.override-active .now-kicker { display: none; }
+body.override-active .now-subtitle { margin-top: 5px; font-size: 13px; color: #5e303a; }
+body.override-active .song-motion-art:not([hidden]) { display: none; }
+body.override-active .hero-control { position: absolute; right: 22px; bottom: 20px; width: 98px; padding: 0; }
+body.override-active .hero-play { width: 62px; height: 62px; color: #28262b; background: #fff9e6; }
+body.override-active .hero-icon { font-size: 24px; }
+body.override-active .hero-time { color: #fff9e6; text-shadow: 0 1px 3px #28262b, 0 0 3px #28262b; font-size: 11px; }
+body.override-active .player { --accent: #e74662; --accent-fg: #fff9e6; }
+body.override-active #play { color: #fff9e6; background: #bd2447; box-shadow: 0 0 0 4px rgba(231,70,98,.22); }
+body.override-active .trick-heart-overlay { inset: 27% 7% 23%; color: #28262b; }
+body.override-active .trick-heart-heading { display: none; }
+body.override-active .trick-heart-lyrics {
+  height: 100%; min-height: 0; align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr) minmax(0, 1fr);
+}
+body.override-active .trick-heart-lane {
+  background: none; border: 0; backdrop-filter: none; -webkit-backdrop-filter: none;
+  padding: 12px 16px; text-align: center; align-items: center; justify-content: center;
+  flex-direction: column; color: #28262b;
+}
+body.override-active .trick-heart-language { display: none; }
+body.override-active .trick-heart-line { font-size: 25px; font-weight: 800; line-height: 1.45; text-shadow: none; }
+body.override-active .lane-en .trick-heart-line { font-size: 28px; line-height: 1.3; }
+body.override-active .lane-romaji .trick-heart-line { font-size: 21px; font-style: normal; }
+body.override-active #view-now .trick-heart-word { color: #6c5550; opacity: 1; text-shadow: none; }
+body.override-active #view-now .trick-heart-word.is-sung { color: #a61f40; opacity: 1; }
+body.override-active #view-now .trick-heart-word.is-current { color: #171519; opacity: 1; text-shadow: 1px 1px 0 #fff9e6; }
+body.override-active .trick-heart-word { transition: color 65ms linear; }
+@media (max-width: 780px) {
+  body.override-active .now-meta { top: 16px; left: 12%; max-width: 80%; }
+  body.override-active .now-meta h1 { font-size: 28px; }
+  body.override-active .now-subtitle { font-size: 12px; }
+  body.override-active .trick-heart-overlay { inset: 26% 24px 26%; }
+  body.override-active .trick-heart-lyrics { display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+  body.override-active .trick-heart-lane { width: 100%; padding: 0; }
+  body.override-active .lane-jp { order: 0; }
+  body.override-active .lane-romaji { order: 1; }
+  body.override-active .lane-en { order: 2; }
+  body.override-active .trick-heart-line { font-size: 21px; }
+  body.override-active .lane-en .trick-heart-line { font-size: 23px; }
+  body.override-active .lane-romaji .trick-heart-line { font-size: 18px; }
+  body.override-active .hero-control { bottom: 16px; right: 15px; width: 90px; }
+  body.override-active .hero-play { width: 54px; height: 54px; }
+}
+@media (max-height: 540px) and (min-width: 781px) {
+  body.override-active .now-meta h1 { font-size: 25px; }
+  body.override-active .trick-heart-line { font-size: 19px; }
+  body.override-active .lane-en .trick-heart-line { font-size: 23px; }
+  body.override-active .lane-romaji .trick-heart-line { font-size: 17px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.override-active .trick-heart-lyrics { transition: none; transform: none; }
+}

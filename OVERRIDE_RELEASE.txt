@@ -1,0 +1,43 @@
+OVERRIDE / 2026-10-26
+
+Recording: Yoshida Yasei feat. Kasane Teto SV - Override.
+Source: https://www.youtube.com/watch?v=LLjfal8jCYI
+Original music, lyrics, video, mix and mastering: Yoshida Yasei.
+Original illustration: シシア (credited in the source video description).
+Complete 2:18.495 recording, AAC 192k / 48kHz stereo / faststart.
+No gain, tempo, or structural editing. Source extraction metadata remains local.
+
+THEATER
+Butter-yellow paper, vermilion, charcoal and a small warm-white highlight color,
+derived from the official video's artwork. This is a separate renderer, not a
+recolored Encore scene. The lyrics remain unboxed in the center.
+
+Eleven musical chapters: overture, badlands city, crossroads, first override,
+reversal, lottery, escape, second rewrite, reversal, code and coda. The changing
+set uses passing buildings, a tipped chess king, an animated capsule machine,
+Teto drill silhouettes, moving printed code, a large override stamp, sweeping
+diagonal wipes with motion-line afterimages and simultaneous outward wavefronts.
+The measured 204 BPM / 0.046s beat origin follows native audio time. Exposure
+pulses are restrained and half-time; both whole choruses retain their lift.
+No random confetti, added audio player, extra animation loop or CSS blur.
+Reduced motion retains the chapter composition without traveling or pulsing.
+
+LYRICS
+All 42 Japanese lines are the text supplied by Joshua, never recognition output.
+Romaji and an English meaning translation accompany them. Independent Japanese
+recognition checked the global alignment; bounded phrase alignment then measured
+Japanese tokens and kana-pronunciation romaji. Inseparable tokens remain grouped.
+English is phrase-level meaning, not invented English vocal timing.
+The instrumental opening and ending have no fabricated sung text.
+Partial recognition anchors are not permitted to truncate a phrase: the quiet
+ending of line 20 is specifically regression-tested.
+
+Publication was explicitly authorized by Joshua in the request. This does not
+claim a separate user listening approval or sample-perfect phoneme timing.
+External alignment evidence is retained in ../override-20261025/.
+The media, motion data, lyric source and lyric timeline are fingerprint-linked.
+
+TECHNICAL CHECKS
+115 Node and 12 Python tests; player registry and timeline validation.
+Browser: actual playback motion, paused seeking, word states, desktop/compact
+framing and clean console. Existing Encore and player regressions remain covered.

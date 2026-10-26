@@ -2,6 +2,12 @@ window.SongMotionFx = (() => {
   'use strict';
 
   const tracks = Object.freeze({
+    'songs/yoshida yasei feat. kasane teto sv - override': Object.freeze({
+      key: 'override', theme: 'override', bpm: 204, beatOffset: 0.046,
+      title: 'Override', art: './songs/art/override.webp',
+      data: './songs/motion/override.json',
+      source: 'https://www.youtube.com/watch?v=LLjfal8jCYI'
+    }),
     'songs/mimi feat. kasane teto sv - petal lament': Object.freeze({
       key: 'petal-lament', theme: 'mimi-petal', bpm: 170, beatOffset: 0.011,
       title: 'Petal Lament', art: './songs/art/petal-lament.webp',
@@ -559,7 +565,8 @@ window.SongMotionFx = (() => {
     if (reduced) m.pulse = 0;
     ctx.save(); ctx.globalCompositeOperation = 'source-over';
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    if (active.key === 'petal-lament') drawPetal(ctx, w, h, time, m, active, reduced);
+    if (active.key === 'override') window.OverrideFx?.draw(ctx, w, h, { ...m, time, reducedMotion: reduced });
+    else if (active.key === 'petal-lament') drawPetal(ctx, w, h, time, m, active, reduced);
     else if (active.key === 'marshmary') drawMarshmary(ctx, w, h, time, m, active, reduced);
     else if (active.key === 'dynamite') drawDynamite(ctx, w, h, time, m, active, reduced);
     else if (active.key === 'butter') drawButter(ctx, w, h, time, m, active, reduced);

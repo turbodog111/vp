@@ -1,0 +1,4285 @@
+{
+  "song": "Override",
+  "artist": "Yoshida Yasei feat. Kasane Teto SV",
+  "duration": 138.4954,
+  "language": "ja",
+  "source": "Japanese supplied by Joshua Glass; original composition and lyrics by Yoshida Yasei.",
+  "timingMethod": "Cached Whisper large-v3-turbo: whole-recording alignment checked against independent recognition, then bounded Japanese and kana-pronunciation romaji alignment. Not uniform text-length timing.",
+  "translationMethod": "English is a meaning translation at phrase level, not sung English. Japanese and romaji use acoustic token groups; inseparable syllables remain grouped.",
+  "translationNotes": [
+    "Shitai in the second chorus can suggest both wanting to do something and a corpse; the translation keeps the desire reading."
+  ],
+  "variants": {
+    "jp": {
+      "label": "JAPANESE / ROMAJI / ENGLISH",
+      "lines": [
+        {
+          "id": "override-01",
+          "text": "バッドランドに生まれた",
+          "jp": [
+            "バッドランドに生まれた"
+          ],
+          "romaji": [
+            "baddo rando ni umareta"
+          ],
+          "en": [
+            "Born into the badlands"
+          ],
+          "start": 11.96,
+          "end": 13.66,
+          "words": [
+            {
+              "word": "バ",
+              "start": 11.96,
+              "end": 12.22
+            },
+            {
+              "word": "ッ",
+              "start": 12.22,
+              "end": 12.36
+            },
+            {
+              "word": "ド",
+              "start": 12.36,
+              "end": 12.5
+            },
+            {
+              "word": "ラ",
+              "start": 12.5,
+              "end": 12.68
+            },
+            {
+              "word": "ンド",
+              "start": 12.68,
+              "end": 12.9
+            },
+            {
+              "word": "に",
+              "start": 12.9,
+              "end": 13.08
+            },
+            {
+              "word": "生",
+              "start": 13.08,
+              "end": 13.26
+            },
+            {
+              "word": "ま",
+              "start": 13.26,
+              "end": 13.42
+            },
+            {
+              "word": "れた",
+              "start": 13.42,
+              "end": 13.66
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "baddo",
+              "start": 11.96,
+              "end": 12.52
+            },
+            {
+              "word": "rando",
+              "start": 12.6,
+              "end": 12.9
+            },
+            {
+              "word": "ni",
+              "start": 12.9,
+              "end": 13.06
+            },
+            {
+              "word": "umareta",
+              "start": 13.06,
+              "end": 13.62
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Born into the badlands",
+              "start": 11.96,
+              "end": 13.66
+            }
+          ]
+        },
+        {
+          "id": "override-02",
+          "text": "だけでバッドライフがデフォとか",
+          "jp": [
+            "だけでバッドライフがデフォとか"
+          ],
+          "romaji": [
+            "dake de baddo raifu ga defo toka"
+          ],
+          "en": [
+            "And a bad life is the default?"
+          ],
+          "start": 13.865,
+          "end": 16.025,
+          "words": [
+            {
+              "word": "だけ",
+              "start": 13.865,
+              "end": 14.245
+            },
+            {
+              "word": "で",
+              "start": 14.245,
+              "end": 14.385
+            },
+            {
+              "word": "バ",
+              "start": 14.385,
+              "end": 14.585
+            },
+            {
+              "word": "ッ",
+              "start": 14.585,
+              "end": 14.705
+            },
+            {
+              "word": "ド",
+              "start": 14.705,
+              "end": 14.825
+            },
+            {
+              "word": "ライ",
+              "start": 14.825,
+              "end": 15.085
+            },
+            {
+              "word": "フ",
+              "start": 15.085,
+              "end": 15.265
+            },
+            {
+              "word": "が",
+              "start": 15.265,
+              "end": 15.425
+            },
+            {
+              "word": "デ",
+              "start": 15.425,
+              "end": 15.545
+            },
+            {
+              "word": "フ",
+              "start": 15.545,
+              "end": 15.705
+            },
+            {
+              "word": "ォ",
+              "start": 15.705,
+              "end": 15.785
+            },
+            {
+              "word": "とか",
+              "start": 15.785,
+              "end": 15.925
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "dake",
+              "start": 13.865,
+              "end": 14.245
+            },
+            {
+              "word": "de",
+              "start": 14.245,
+              "end": 14.385
+            },
+            {
+              "word": "baddo",
+              "start": 14.385,
+              "end": 14.885
+            },
+            {
+              "word": "raifu",
+              "start": 15.065,
+              "end": 15.265
+            },
+            {
+              "word": "ga",
+              "start": 15.265,
+              "end": 15.425
+            },
+            {
+              "word": "defo",
+              "start": 15.425,
+              "end": 15.785
+            },
+            {
+              "word": "toka",
+              "start": 15.785,
+              "end": 16.025
+            }
+          ],
+          "enWords": [
+            {
+              "word": "And a bad life is the default?",
+              "start": 13.865,
+              "end": 16.025
+            }
+          ]
+        },
+        {
+          "id": "override-03",
+          "text": "くだらないけど それが理なんだって",
+          "jp": [
+            "くだらないけど それが理なんだって"
+          ],
+          "romaji": [
+            "kudaranai kedo sore ga kotowari nandatte"
+          ],
+          "en": [
+            "Ridiculous, but that's how the world works, they say"
+          ],
+          "start": 16.06,
+          "end": 19.22,
+          "words": [
+            {
+              "word": "く",
+              "start": 16.06,
+              "end": 16.44
+            },
+            {
+              "word": "だ",
+              "start": 16.44,
+              "end": 16.62
+            },
+            {
+              "word": "ら",
+              "start": 16.62,
+              "end": 16.74
+            },
+            {
+              "word": "ない",
+              "start": 16.74,
+              "end": 17.0
+            },
+            {
+              "word": "けど",
+              "start": 17.0,
+              "end": 17.32
+            },
+            {
+              "word": "それ",
+              "start": 17.32,
+              "end": 17.72
+            },
+            {
+              "word": "が",
+              "start": 17.72,
+              "end": 17.94
+            },
+            {
+              "word": "理",
+              "start": 17.94,
+              "end": 18.1
+            },
+            {
+              "word": "なんだ",
+              "start": 18.1,
+              "end": 18.86
+            },
+            {
+              "word": "って",
+              "start": 18.86,
+              "end": 19.22
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "kudaranai",
+              "start": 16.06,
+              "end": 16.98
+            },
+            {
+              "word": "kedo",
+              "start": 16.98,
+              "end": 17.34
+            },
+            {
+              "word": "sore",
+              "start": 17.34,
+              "end": 17.74
+            },
+            {
+              "word": "ga",
+              "start": 17.74,
+              "end": 17.92
+            },
+            {
+              "word": "kotowari",
+              "start": 17.92,
+              "end": 18.5
+            },
+            {
+              "word": "nandatte",
+              "start": 18.5,
+              "end": 19.22
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Ridiculous, but that's how the world works, they say",
+              "start": 16.06,
+              "end": 19.22
+            }
+          ]
+        },
+        {
+          "id": "override-04",
+          "text": "もう参っちゃうね",
+          "jp": [
+            "もう参っちゃうね"
+          ],
+          "romaji": [
+            "mou maicchau ne"
+          ],
+          "en": [
+            "I'm already fed up"
+          ],
+          "start": 19.31,
+          "end": 21.03,
+          "words": [
+            {
+              "word": "もう",
+              "start": 19.31,
+              "end": 19.89
+            },
+            {
+              "word": "参",
+              "start": 19.89,
+              "end": 20.33
+            },
+            {
+              "word": "っちゃ",
+              "start": 20.33,
+              "end": 20.71
+            },
+            {
+              "word": "う",
+              "start": 20.71,
+              "end": 20.87
+            },
+            {
+              "word": "ね",
+              "start": 20.87,
+              "end": 21.03
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "mou",
+              "start": 19.31,
+              "end": 19.89
+            },
+            {
+              "word": "maicchau",
+              "start": 19.89,
+              "end": 20.87
+            },
+            {
+              "word": "ne",
+              "start": 20.87,
+              "end": 21.03
+            }
+          ],
+          "enWords": [
+            {
+              "word": "I'm already fed up",
+              "start": 19.31,
+              "end": 21.03
+            }
+          ]
+        },
+        {
+          "id": "override-05",
+          "text": "抗うために",
+          "jp": [
+            "抗うために"
+          ],
+          "romaji": [
+            "aragau tame ni"
+          ],
+          "en": [
+            "To fight against it"
+          ],
+          "start": 21.44,
+          "end": 22.66,
+          "words": [
+            {
+              "word": "抗",
+              "start": 21.44,
+              "end": 21.96
+            },
+            {
+              "word": "う",
+              "start": 21.96,
+              "end": 22.26
+            },
+            {
+              "word": "ため",
+              "start": 22.26,
+              "end": 22.34
+            },
+            {
+              "word": "に",
+              "start": 22.34,
+              "end": 22.66
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "aragau",
+              "start": 21.44,
+              "end": 22.24
+            },
+            {
+              "word": "tame",
+              "start": 22.24,
+              "end": 22.48
+            },
+            {
+              "word": "ni",
+              "start": 22.48,
+              "end": 22.64
+            }
+          ],
+          "enWords": [
+            {
+              "word": "To fight against it",
+              "start": 21.44,
+              "end": 22.66
+            }
+          ]
+        },
+        {
+          "id": "override-06",
+          "text": "エスケープ・フロム・デンエン",
+          "jp": [
+            "エスケープ・フロム・デンエン"
+          ],
+          "romaji": [
+            "esukeepu furomu den'en"
+          ],
+          "en": [
+            "Escape from the countryside"
+          ],
+          "start": 22.765,
+          "end": 24.385,
+          "words": [
+            {
+              "word": "エ ス",
+              "start": 22.765,
+              "end": 22.885
+            },
+            {
+              "word": "ケ",
+              "start": 22.885,
+              "end": 23.105
+            },
+            {
+              "word": "ープ ・ フ",
+              "start": 23.105,
+              "end": 23.485
+            },
+            {
+              "word": "ロ",
+              "start": 23.565,
+              "end": 23.645
+            },
+            {
+              "word": "ム ・",
+              "start": 23.645,
+              "end": 23.805
+            },
+            {
+              "word": "デ",
+              "start": 23.945,
+              "end": 23.985
+            },
+            {
+              "word": "ン",
+              "start": 23.985,
+              "end": 24.145
+            },
+            {
+              "word": "エ",
+              "start": 24.145,
+              "end": 24.285
+            },
+            {
+              "word": "ン",
+              "start": 24.285,
+              "end": 24.385
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "esukeepu",
+              "start": 22.765,
+              "end": 23.565
+            },
+            {
+              "word": "furomu",
+              "start": 23.565,
+              "end": 23.805
+            },
+            {
+              "word": "den'en",
+              "start": 23.805,
+              "end": 24.385
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Escape from the countryside",
+              "start": 22.765,
+              "end": 24.385
+            }
+          ]
+        },
+        {
+          "id": "override-07",
+          "text": "蛇のように這い 善戦",
+          "jp": [
+            "蛇のように這い 善戦"
+          ],
+          "romaji": [
+            "hebi no you ni hai zensen"
+          ],
+          "en": [
+            "Crawling like a snake, putting up a fight"
+          ],
+          "start": 24.41,
+          "end": 26.35,
+          "words": [
+            {
+              "word": "蛇",
+              "start": 24.41,
+              "end": 24.77
+            },
+            {
+              "word": "の",
+              "start": 24.77,
+              "end": 24.97
+            },
+            {
+              "word": "ように",
+              "start": 24.97,
+              "end": 25.39
+            },
+            {
+              "word": "這",
+              "start": 25.39,
+              "end": 25.63
+            },
+            {
+              "word": "い",
+              "start": 25.63,
+              "end": 25.87
+            },
+            {
+              "word": "善",
+              "start": 25.99,
+              "end": 26.11
+            },
+            {
+              "word": "戦",
+              "start": 26.11,
+              "end": 26.25
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "hebi",
+              "start": 24.41,
+              "end": 24.83
+            },
+            {
+              "word": "no",
+              "start": 24.83,
+              "end": 24.99
+            },
+            {
+              "word": "you",
+              "start": 25.05,
+              "end": 25.21
+            },
+            {
+              "word": "ni",
+              "start": 25.21,
+              "end": 25.45
+            },
+            {
+              "word": "hai",
+              "start": 25.45,
+              "end": 25.69
+            },
+            {
+              "word": "zensen",
+              "start": 25.69,
+              "end": 26.35
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Crawling like a snake, putting up a fight",
+              "start": 24.41,
+              "end": 26.35
+            }
+          ]
+        },
+        {
+          "id": "override-08",
+          "text": "だけど最後 逆転の一手だけ",
+          "jp": [
+            "だけど最後 逆転の一手だけ"
+          ],
+          "romaji": [
+            "dakedo saigo gyakuten no itte dake"
+          ],
+          "en": [
+            "But that final move to turn it all around"
+          ],
+          "start": 26.385,
+          "end": 29.265,
+          "words": [
+            {
+              "word": "だ",
+              "start": 26.385,
+              "end": 26.625
+            },
+            {
+              "word": "けど",
+              "start": 26.625,
+              "end": 26.865
+            },
+            {
+              "word": "最後",
+              "start": 26.865,
+              "end": 27.325
+            },
+            {
+              "word": "逆",
+              "start": 27.405,
+              "end": 27.565
+            },
+            {
+              "word": "転",
+              "start": 27.565,
+              "end": 27.905
+            },
+            {
+              "word": "の",
+              "start": 27.905,
+              "end": 28.105
+            },
+            {
+              "word": "一",
+              "start": 28.105,
+              "end": 28.485
+            },
+            {
+              "word": "手",
+              "start": 28.485,
+              "end": 28.705
+            },
+            {
+              "word": "だけ",
+              "start": 28.705,
+              "end": 29.105
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "dakedo",
+              "start": 26.385,
+              "end": 26.865
+            },
+            {
+              "word": "saigo",
+              "start": 26.865,
+              "end": 27.325
+            },
+            {
+              "word": "gyakuten",
+              "start": 27.325,
+              "end": 27.925
+            },
+            {
+              "word": "no",
+              "start": 27.925,
+              "end": 28.105
+            },
+            {
+              "word": "itte",
+              "start": 28.105,
+              "end": 28.685
+            },
+            {
+              "word": "dake",
+              "start": 28.685,
+              "end": 29.265
+            }
+          ],
+          "enWords": [
+            {
+              "word": "But that final move to turn it all around",
+              "start": 26.385,
+              "end": 29.265
+            }
+          ]
+        },
+        {
+          "id": "override-09",
+          "text": "何故か詰められないの！",
+          "jp": [
+            "何故か詰められないの！"
+          ],
+          "romaji": [
+            "nazeka tsumerarenai no"
+          ],
+          "en": [
+            "Why can't I ever finish it?"
+          ],
+          "start": 29.285,
+          "end": 31.085,
+          "words": [
+            {
+              "word": "何",
+              "start": 29.285,
+              "end": 29.585
+            },
+            {
+              "word": "故",
+              "start": 29.585,
+              "end": 29.825
+            },
+            {
+              "word": "か",
+              "start": 29.825,
+              "end": 29.985
+            },
+            {
+              "word": "詰",
+              "start": 29.985,
+              "end": 30.205
+            },
+            {
+              "word": "め",
+              "start": 30.205,
+              "end": 30.285
+            },
+            {
+              "word": "ら",
+              "start": 30.285,
+              "end": 30.465
+            },
+            {
+              "word": "れない",
+              "start": 30.465,
+              "end": 30.825
+            },
+            {
+              "word": "の！",
+              "start": 30.825,
+              "end": 31.065
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "nazeka",
+              "start": 29.285,
+              "end": 29.985
+            },
+            {
+              "word": "tsumerarenai",
+              "start": 29.985,
+              "end": 30.825
+            },
+            {
+              "word": "no",
+              "start": 30.825,
+              "end": 31.085
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Why can't I ever finish it?",
+              "start": 29.285,
+              "end": 31.085
+            }
+          ]
+        },
+        {
+          "id": "override-10",
+          "text": "暗い無頼社会 vs bright 未来世界",
+          "jp": [
+            "暗い無頼社会 vs bright 未来世界"
+          ],
+          "romaji": [
+            "kurai burai shakai baasasu buraito mirai sekai"
+          ],
+          "en": [
+            "A dark, lawless society versus a bright future world"
+          ],
+          "start": 31.34,
+          "end": 35.12,
+          "words": [
+            {
+              "word": "暗",
+              "start": 31.34,
+              "end": 31.66
+            },
+            {
+              "word": "い",
+              "start": 31.66,
+              "end": 31.82
+            },
+            {
+              "word": "無",
+              "start": 31.82,
+              "end": 32.1
+            },
+            {
+              "word": "頼",
+              "start": 32.1,
+              "end": 32.3
+            },
+            {
+              "word": "社",
+              "start": 32.3,
+              "end": 32.64
+            },
+            {
+              "word": "会",
+              "start": 32.64,
+              "end": 32.92
+            },
+            {
+              "word": "vs",
+              "start": 32.92,
+              "end": 33.28
+            },
+            {
+              "word": "bright",
+              "start": 33.28,
+              "end": 33.9
+            },
+            {
+              "word": "未",
+              "start": 34.3,
+              "end": 34.42
+            },
+            {
+              "word": "来",
+              "start": 34.42,
+              "end": 34.68
+            },
+            {
+              "word": "世界",
+              "start": 34.68,
+              "end": 35.02
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "kurai",
+              "start": 31.34,
+              "end": 31.72
+            },
+            {
+              "word": "burai",
+              "start": 31.72,
+              "end": 32.3
+            },
+            {
+              "word": "shakai",
+              "start": 32.3,
+              "end": 32.92
+            },
+            {
+              "word": "baasasu",
+              "start": 32.92,
+              "end": 33.56
+            },
+            {
+              "word": "buraito",
+              "start": 33.56,
+              "end": 34.38
+            },
+            {
+              "word": "mirai",
+              "start": 34.38,
+              "end": 34.62
+            },
+            {
+              "word": "sekai",
+              "start": 34.62,
+              "end": 35.12
+            }
+          ],
+          "enWords": [
+            {
+              "word": "A dark, lawless society versus a bright future world",
+              "start": 31.34,
+              "end": 35.12
+            }
+          ]
+        },
+        {
+          "id": "override-11",
+          "text": "ならちょっと後者に行ってくる",
+          "jp": [
+            "ならちょっと後者に行ってくる"
+          ],
+          "romaji": [
+            "nara chotto kousha ni itte kuru"
+          ],
+          "en": [
+            "Then I'll just head for the latter"
+          ],
+          "start": 35.145,
+          "end": 37.485,
+          "words": [
+            {
+              "word": "なら",
+              "start": 35.145,
+              "end": 35.525
+            },
+            {
+              "word": "ちょっと",
+              "start": 35.525,
+              "end": 35.985
+            },
+            {
+              "word": "後",
+              "start": 35.985,
+              "end": 36.345
+            },
+            {
+              "word": "者",
+              "start": 36.345,
+              "end": 36.625
+            },
+            {
+              "word": "に",
+              "start": 36.625,
+              "end": 36.765
+            },
+            {
+              "word": "行",
+              "start": 36.765,
+              "end": 36.965
+            },
+            {
+              "word": "って",
+              "start": 36.965,
+              "end": 37.185
+            },
+            {
+              "word": "く",
+              "start": 37.185,
+              "end": 37.325
+            },
+            {
+              "word": "る",
+              "start": 37.325,
+              "end": 37.485
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "nara",
+              "start": 35.145,
+              "end": 35.525
+            },
+            {
+              "word": "chotto",
+              "start": 35.525,
+              "end": 36.045
+            },
+            {
+              "word": "kousha",
+              "start": 36.045,
+              "end": 36.605
+            },
+            {
+              "word": "ni",
+              "start": 36.605,
+              "end": 36.745
+            },
+            {
+              "word": "itte",
+              "start": 36.745,
+              "end": 37.165
+            },
+            {
+              "word": "kuru",
+              "start": 37.165,
+              "end": 37.485
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Then I'll just head for the latter",
+              "start": 35.145,
+              "end": 37.485
+            }
+          ]
+        },
+        {
+          "id": "override-12",
+          "text": "大丈夫か？ うるせえよ",
+          "jp": [
+            "大丈夫か？ うるせえよ"
+          ],
+          "romaji": [
+            "daijoubu ka urusee yo"
+          ],
+          "en": [
+            "Will you be okay? Shut up!"
+          ],
+          "start": 37.565,
+          "end": 39.885,
+          "words": [
+            {
+              "word": "大丈夫",
+              "start": 37.945,
+              "end": 38.345
+            },
+            {
+              "word": "か？ う",
+              "start": 38.345,
+              "end": 38.705
+            },
+            {
+              "word": "る",
+              "start": 39.185,
+              "end": 39.325
+            },
+            {
+              "word": "せ",
+              "start": 39.325,
+              "end": 39.605
+            },
+            {
+              "word": "え",
+              "start": 39.605,
+              "end": 39.725
+            },
+            {
+              "word": "よ",
+              "start": 39.725,
+              "end": 39.885
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "daijoubu",
+              "start": 37.565,
+              "end": 38.505
+            },
+            {
+              "word": "ka",
+              "start": 38.505,
+              "end": 38.725
+            },
+            {
+              "word": "urusee",
+              "start": 38.725,
+              "end": 39.725
+            },
+            {
+              "word": "yo",
+              "start": 39.725,
+              "end": 39.865
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Will you be okay? Shut up!",
+              "start": 37.565,
+              "end": 39.885
+            }
+          ]
+        },
+        {
+          "id": "override-13",
+          "text": "限界まで足掻いた人生は",
+          "jp": [
+            "限界まで足掻いた人生は"
+          ],
+          "romaji": [
+            "genkai made agaita jinsei wa"
+          ],
+          "en": [
+            "A life spent struggling to the limit"
+          ],
+          "start": 40.01,
+          "end": 42.21,
+          "words": [
+            {
+              "word": "限",
+              "start": 40.01,
+              "end": 40.17
+            },
+            {
+              "word": "界",
+              "start": 40.17,
+              "end": 40.57
+            },
+            {
+              "word": "まで",
+              "start": 40.57,
+              "end": 40.85
+            },
+            {
+              "word": "足",
+              "start": 40.85,
+              "end": 41.05
+            },
+            {
+              "word": "掻",
+              "start": 41.05,
+              "end": 41.23
+            },
+            {
+              "word": "いた",
+              "start": 41.23,
+              "end": 41.43
+            },
+            {
+              "word": "人",
+              "start": 41.43,
+              "end": 41.63
+            },
+            {
+              "word": "生",
+              "start": 41.63,
+              "end": 41.93
+            },
+            {
+              "word": "は",
+              "start": 41.93,
+              "end": 42.21
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "genkai",
+              "start": 40.01,
+              "end": 40.57
+            },
+            {
+              "word": "made",
+              "start": 40.57,
+              "end": 40.89
+            },
+            {
+              "word": "agaita",
+              "start": 40.89,
+              "end": 41.39
+            },
+            {
+              "word": "jinsei wa",
+              "start": 41.39,
+              "end": 42.03
+            }
+          ],
+          "enWords": [
+            {
+              "word": "A life spent struggling to the limit",
+              "start": 40.01,
+              "end": 42.21
+            }
+          ]
+        },
+        {
+          "id": "override-14",
+          "text": "想像よりも狂っているらしい",
+          "jp": [
+            "想像よりも狂っているらしい"
+          ],
+          "romaji": [
+            "souzou yori mo kurutte iru rashii"
+          ],
+          "en": [
+            "Seems crazier than I ever imagined"
+          ],
+          "start": 42.325,
+          "end": 44.645,
+          "words": [
+            {
+              "word": "想",
+              "start": 42.325,
+              "end": 42.565
+            },
+            {
+              "word": "像",
+              "start": 42.565,
+              "end": 42.925
+            },
+            {
+              "word": "よ",
+              "start": 42.925,
+              "end": 43.045
+            },
+            {
+              "word": "り",
+              "start": 43.045,
+              "end": 43.205
+            },
+            {
+              "word": "も",
+              "start": 43.205,
+              "end": 43.425
+            },
+            {
+              "word": "狂",
+              "start": 43.425,
+              "end": 43.685
+            },
+            {
+              "word": "って",
+              "start": 43.685,
+              "end": 43.965
+            },
+            {
+              "word": "いる",
+              "start": 43.965,
+              "end": 44.225
+            },
+            {
+              "word": "ら",
+              "start": 44.225,
+              "end": 44.365
+            },
+            {
+              "word": "しい",
+              "start": 44.365,
+              "end": 44.645
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "souzou",
+              "start": 42.325,
+              "end": 42.965
+            },
+            {
+              "word": "yori",
+              "start": 42.965,
+              "end": 43.205
+            },
+            {
+              "word": "mo",
+              "start": 43.205,
+              "end": 43.385
+            },
+            {
+              "word": "kurutte",
+              "start": 43.385,
+              "end": 43.965
+            },
+            {
+              "word": "iru",
+              "start": 43.965,
+              "end": 44.225
+            },
+            {
+              "word": "rashii",
+              "start": 44.345,
+              "end": 44.645
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Seems crazier than I ever imagined",
+              "start": 42.325,
+              "end": 44.645
+            }
+          ]
+        },
+        {
+          "id": "override-15",
+          "text": "半端な生命の関数を",
+          "jp": [
+            "半端な生命の関数を"
+          ],
+          "romaji": [
+            "hanpa na inochi no kansuu o"
+          ],
+          "en": [
+            "This function of a half-baked life"
+          ],
+          "start": 44.895,
+          "end": 46.955,
+          "words": [
+            {
+              "word": "半",
+              "start": 44.895,
+              "end": 45.215
+            },
+            {
+              "word": "端",
+              "start": 45.215,
+              "end": 45.475
+            },
+            {
+              "word": "な",
+              "start": 45.475,
+              "end": 45.675
+            },
+            {
+              "word": "生",
+              "start": 45.675,
+              "end": 45.755
+            },
+            {
+              "word": "命",
+              "start": 45.755,
+              "end": 46.015
+            },
+            {
+              "word": "の",
+              "start": 46.015,
+              "end": 46.195
+            },
+            {
+              "word": "関",
+              "start": 46.195,
+              "end": 46.495
+            },
+            {
+              "word": "数",
+              "start": 46.495,
+              "end": 46.675
+            },
+            {
+              "word": "を",
+              "start": 46.675,
+              "end": 46.955
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "hanpa",
+              "start": 44.895,
+              "end": 45.435
+            },
+            {
+              "word": "na",
+              "start": 45.435,
+              "end": 45.635
+            },
+            {
+              "word": "inochi",
+              "start": 45.635,
+              "end": 45.995
+            },
+            {
+              "word": "no",
+              "start": 45.995,
+              "end": 46.175
+            },
+            {
+              "word": "kansuu",
+              "start": 46.175,
+              "end": 46.855
+            },
+            {
+              "word": "o",
+              "start": 46.855,
+              "end": 46.955
+            }
+          ],
+          "enWords": [
+            {
+              "word": "This function of a half-baked life",
+              "start": 44.895,
+              "end": 46.955
+            }
+          ]
+        },
+        {
+          "id": "override-16",
+          "text": "少々ここらでオーバーライド",
+          "jp": [
+            "少々ここらでオーバーライド"
+          ],
+          "romaji": [
+            "shoushou kokora de oobaa raido"
+          ],
+          "en": [
+            "Let's override it right here"
+          ],
+          "start": 46.98,
+          "end": 49.28,
+          "words": [
+            {
+              "word": "少",
+              "start": 46.98,
+              "end": 47.24
+            },
+            {
+              "word": "々",
+              "start": 47.24,
+              "end": 47.6
+            },
+            {
+              "word": "ここ",
+              "start": 47.6,
+              "end": 47.82
+            },
+            {
+              "word": "ら",
+              "start": 47.82,
+              "end": 48.06
+            },
+            {
+              "word": "で",
+              "start": 48.06,
+              "end": 48.26
+            },
+            {
+              "word": "オ",
+              "start": 48.26,
+              "end": 48.46
+            },
+            {
+              "word": "ーバ",
+              "start": 48.46,
+              "end": 48.7
+            },
+            {
+              "word": "ー",
+              "start": 48.7,
+              "end": 48.84
+            },
+            {
+              "word": "ライ",
+              "start": 48.84,
+              "end": 49.04
+            },
+            {
+              "word": "ド",
+              "start": 49.04,
+              "end": 49.2
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "shoushou",
+              "start": 46.98,
+              "end": 47.62
+            },
+            {
+              "word": "kokora",
+              "start": 47.62,
+              "end": 48.06
+            },
+            {
+              "word": "de",
+              "start": 48.06,
+              "end": 48.26
+            },
+            {
+              "word": "oobaa",
+              "start": 48.26,
+              "end": 48.84
+            },
+            {
+              "word": "raido",
+              "start": 49.06,
+              "end": 49.28
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Let's override it right here",
+              "start": 46.98,
+              "end": 49.28
+            }
+          ]
+        },
+        {
+          "id": "override-17",
+          "text": "したい所だけど現実は",
+          "jp": [
+            "したい所だけど現実は"
+          ],
+          "romaji": [
+            "shitai tokoro dakedo genjitsu wa"
+          ],
+          "en": [
+            "I'd like to, but reality"
+          ],
+          "start": 49.3,
+          "end": 51.62,
+          "words": [
+            {
+              "word": "した",
+              "start": 49.3,
+              "end": 49.78
+            },
+            {
+              "word": "い",
+              "start": 49.78,
+              "end": 50.0
+            },
+            {
+              "word": "所",
+              "start": 50.0,
+              "end": 50.38
+            },
+            {
+              "word": "だ",
+              "start": 50.38,
+              "end": 50.58
+            },
+            {
+              "word": "けど",
+              "start": 50.58,
+              "end": 50.84
+            },
+            {
+              "word": "現",
+              "start": 50.84,
+              "end": 51.08
+            },
+            {
+              "word": "実",
+              "start": 51.08,
+              "end": 51.36
+            },
+            {
+              "word": "は",
+              "start": 51.36,
+              "end": 51.62
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "shitai",
+              "start": 49.3,
+              "end": 50.0
+            },
+            {
+              "word": "tokoro",
+              "start": 50.0,
+              "end": 50.4
+            },
+            {
+              "word": "dakedo",
+              "start": 50.4,
+              "end": 50.78
+            },
+            {
+              "word": "genjitsu",
+              "start": 50.78,
+              "end": 51.4
+            },
+            {
+              "word": "wa",
+              "start": 51.4,
+              "end": 51.6
+            }
+          ],
+          "enWords": [
+            {
+              "word": "I'd like to, but reality",
+              "start": 49.3,
+              "end": 51.62
+            }
+          ]
+        },
+        {
+          "id": "override-18",
+          "text": "そうそう上手くはいかないようで",
+          "jp": [
+            "そうそう上手くはいかないようで"
+          ],
+          "romaji": [
+            "sousou umaku wa ikanai you de"
+          ],
+          "en": [
+            "Doesn't seem to work out so easily"
+          ],
+          "start": 51.7,
+          "end": 54.0,
+          "words": [
+            {
+              "word": "そうそう",
+              "start": 51.7,
+              "end": 52.18
+            },
+            {
+              "word": "上",
+              "start": 52.18,
+              "end": 52.54
+            },
+            {
+              "word": "手",
+              "start": 52.54,
+              "end": 52.66
+            },
+            {
+              "word": "く",
+              "start": 52.66,
+              "end": 52.84
+            },
+            {
+              "word": "はい",
+              "start": 52.84,
+              "end": 53.0
+            },
+            {
+              "word": "か",
+              "start": 53.0,
+              "end": 53.22
+            },
+            {
+              "word": "ない",
+              "start": 53.22,
+              "end": 53.52
+            },
+            {
+              "word": "よう",
+              "start": 53.52,
+              "end": 53.74
+            },
+            {
+              "word": "で",
+              "start": 53.74,
+              "end": 54.0
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "sousou",
+              "start": 51.7,
+              "end": 52.18
+            },
+            {
+              "word": "umaku",
+              "start": 52.18,
+              "end": 52.86
+            },
+            {
+              "word": "wa",
+              "start": 52.86,
+              "end": 52.94
+            },
+            {
+              "word": "ikanai",
+              "start": 52.94,
+              "end": 53.48
+            },
+            {
+              "word": "you",
+              "start": 53.48,
+              "end": 53.76
+            },
+            {
+              "word": "de",
+              "start": 53.76,
+              "end": 54.0
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Doesn't seem to work out so easily",
+              "start": 51.7,
+              "end": 54.0
+            }
+          ]
+        },
+        {
+          "id": "override-19",
+          "text": "吐いた言葉だけが信条だって",
+          "jp": [
+            "吐いた言葉だけが信条だって"
+          ],
+          "romaji": [
+            "haita kotoba dake ga shinjou datte"
+          ],
+          "en": [
+            "They think the words I spit out are all I believe"
+          ],
+          "start": 54.28,
+          "end": 56.92,
+          "words": [
+            {
+              "word": "吐",
+              "start": 54.28,
+              "end": 54.64
+            },
+            {
+              "word": "いた",
+              "start": 54.64,
+              "end": 54.82
+            },
+            {
+              "word": "言",
+              "start": 54.82,
+              "end": 55.06
+            },
+            {
+              "word": "葉",
+              "start": 55.06,
+              "end": 55.3
+            },
+            {
+              "word": "だけ",
+              "start": 55.3,
+              "end": 55.52
+            },
+            {
+              "word": "が",
+              "start": 55.52,
+              "end": 55.76
+            },
+            {
+              "word": "信",
+              "start": 55.76,
+              "end": 56.02
+            },
+            {
+              "word": "条",
+              "start": 56.02,
+              "end": 56.38
+            },
+            {
+              "word": "だ",
+              "start": 56.38,
+              "end": 56.66
+            },
+            {
+              "word": "って",
+              "start": 56.66,
+              "end": 56.92
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "haita",
+              "start": 54.28,
+              "end": 54.82
+            },
+            {
+              "word": "kotoba",
+              "start": 54.82,
+              "end": 55.28
+            },
+            {
+              "word": "dake",
+              "start": 55.28,
+              "end": 55.56
+            },
+            {
+              "word": "ga",
+              "start": 55.56,
+              "end": 55.76
+            },
+            {
+              "word": "shinjou",
+              "start": 55.76,
+              "end": 56.48
+            },
+            {
+              "word": "datte",
+              "start": 56.48,
+              "end": 56.92
+            }
+          ],
+          "enWords": [
+            {
+              "word": "They think the words I spit out are all I believe",
+              "start": 54.28,
+              "end": 56.92
+            }
+          ]
+        },
+        {
+          "id": "override-20",
+          "text": "思われてまた 離れ離れ",
+          "jp": [
+            "思われてまた 離れ離れ"
+          ],
+          "romaji": [
+            "omowarete mata hanarebanare"
+          ],
+          "en": [
+            "And once again, we're torn apart"
+          ],
+          "start": 56.95,
+          "end": 59.29,
+          "words": [
+            {
+              "word": "思",
+              "start": 56.95,
+              "end": 57.35
+            },
+            {
+              "word": "わ",
+              "start": 57.35,
+              "end": 57.55
+            },
+            {
+              "word": "れて",
+              "start": 57.55,
+              "end": 57.75
+            },
+            {
+              "word": "また",
+              "start": 57.75,
+              "end": 58.09
+            },
+            {
+              "word": "離",
+              "start": 58.45,
+              "end": 58.63
+            },
+            {
+              "word": "れ",
+              "start": 58.63,
+              "end": 58.83
+            },
+            {
+              "word": "離",
+              "start": 58.83,
+              "end": 58.97
+            },
+            {
+              "word": "れ",
+              "start": 58.97,
+              "end": 59.29
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "omowarete",
+              "start": 56.95,
+              "end": 57.75
+            },
+            {
+              "word": "mata",
+              "start": 57.75,
+              "end": 58.23
+            },
+            {
+              "word": "hanarebanare",
+              "start": 58.23,
+              "end": 59.29
+            }
+          ],
+          "enWords": [
+            {
+              "word": "And once again, we're torn apart",
+              "start": 56.95,
+              "end": 59.29
+            }
+          ]
+        },
+        {
+          "id": "override-21",
+          "text": "まぁ この世の中ガチャの引き次第で",
+          "jp": [
+            "まぁ この世の中ガチャの引き次第で"
+          ],
+          "romaji": [
+            "maa kono yo no naka gacha no hiki shidai de"
+          ],
+          "en": [
+            "Well, if this world depends on your luck in the draw"
+          ],
+          "start": 68.36,
+          "end": 71.04,
+          "words": [
+            {
+              "word": "まぁ",
+              "start": 68.36,
+              "end": 68.72
+            },
+            {
+              "word": "この",
+              "start": 68.72,
+              "end": 69.02
+            },
+            {
+              "word": "世",
+              "start": 69.02,
+              "end": 69.24
+            },
+            {
+              "word": "の",
+              "start": 69.24,
+              "end": 69.38
+            },
+            {
+              "word": "中",
+              "start": 69.38,
+              "end": 69.66
+            },
+            {
+              "word": "ガ",
+              "start": 69.66,
+              "end": 69.8
+            },
+            {
+              "word": "チャ",
+              "start": 69.8,
+              "end": 69.96
+            },
+            {
+              "word": "の",
+              "start": 69.96,
+              "end": 70.12
+            },
+            {
+              "word": "引",
+              "start": 70.12,
+              "end": 70.26
+            },
+            {
+              "word": "き",
+              "start": 70.26,
+              "end": 70.4
+            },
+            {
+              "word": "次",
+              "start": 70.4,
+              "end": 70.58
+            },
+            {
+              "word": "第",
+              "start": 70.58,
+              "end": 70.82
+            },
+            {
+              "word": "で",
+              "start": 70.82,
+              "end": 71.04
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "maa",
+              "start": 68.4,
+              "end": 68.72
+            },
+            {
+              "word": "kono",
+              "start": 68.72,
+              "end": 69.02
+            },
+            {
+              "word": "yo",
+              "start": 69.02,
+              "end": 69.24
+            },
+            {
+              "word": "no",
+              "start": 69.24,
+              "end": 69.38
+            },
+            {
+              "word": "naka",
+              "start": 69.38,
+              "end": 69.66
+            },
+            {
+              "word": "gacha",
+              "start": 69.66,
+              "end": 69.98
+            },
+            {
+              "word": "no",
+              "start": 69.98,
+              "end": 70.1
+            },
+            {
+              "word": "hiki",
+              "start": 70.1,
+              "end": 70.38
+            },
+            {
+              "word": "shidai",
+              "start": 70.38,
+              "end": 70.86
+            },
+            {
+              "word": "de",
+              "start": 70.86,
+              "end": 71.04
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Well, if this world depends on your luck in the draw",
+              "start": 68.36,
+              "end": 71.04
+            }
+          ]
+        },
+        {
+          "id": "override-22",
+          "text": "何もかも説明つくわけだし？",
+          "jp": [
+            "何もかも説明つくわけだし？"
+          ],
+          "romaji": [
+            "nani mo kamo setsumei tsuku wake dashi"
+          ],
+          "en": [
+            "That explains absolutely everything, doesn't it?"
+          ],
+          "start": 71.065,
+          "end": 73.365,
+          "words": [
+            {
+              "word": "何",
+              "start": 71.065,
+              "end": 71.365
+            },
+            {
+              "word": "も",
+              "start": 71.365,
+              "end": 71.585
+            },
+            {
+              "word": "か",
+              "start": 71.585,
+              "end": 71.745
+            },
+            {
+              "word": "も",
+              "start": 71.745,
+              "end": 71.885
+            },
+            {
+              "word": "説",
+              "start": 71.885,
+              "end": 72.145
+            },
+            {
+              "word": "明",
+              "start": 72.145,
+              "end": 72.405
+            },
+            {
+              "word": "つ",
+              "start": 72.405,
+              "end": 72.585
+            },
+            {
+              "word": "く",
+              "start": 72.585,
+              "end": 72.805
+            },
+            {
+              "word": "わ",
+              "start": 72.805,
+              "end": 72.925
+            },
+            {
+              "word": "け",
+              "start": 72.925,
+              "end": 73.065
+            },
+            {
+              "word": "だ",
+              "start": 73.065,
+              "end": 73.185
+            },
+            {
+              "word": "し？",
+              "start": 73.185,
+              "end": 73.365
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "nani",
+              "start": 71.065,
+              "end": 71.445
+            },
+            {
+              "word": "mo",
+              "start": 71.445,
+              "end": 71.585
+            },
+            {
+              "word": "kamo",
+              "start": 71.585,
+              "end": 71.905
+            },
+            {
+              "word": "setsumei",
+              "start": 71.905,
+              "end": 72.465
+            },
+            {
+              "word": "tsuku",
+              "start": 72.465,
+              "end": 72.765
+            },
+            {
+              "word": "wake",
+              "start": 72.845,
+              "end": 73.065
+            },
+            {
+              "word": "dashi",
+              "start": 73.065,
+              "end": 73.365
+            }
+          ],
+          "enWords": [
+            {
+              "word": "That explains absolutely everything, doesn't it?",
+              "start": 71.065,
+              "end": 73.365
+            }
+          ]
+        },
+        {
+          "id": "override-23",
+          "text": "巻き返しに必要な力で",
+          "jp": [
+            "巻き返しに必要な力で"
+          ],
+          "romaji": [
+            "makikaeshi ni hitsuyou na chikara de"
+          ],
+          "en": [
+            "With all the effort you'd need to make a comeback"
+          ],
+          "start": 73.52,
+          "end": 75.76,
+          "words": [
+            {
+              "word": "巻",
+              "start": 73.52,
+              "end": 73.74
+            },
+            {
+              "word": "き",
+              "start": 73.74,
+              "end": 73.82
+            },
+            {
+              "word": "返",
+              "start": 73.82,
+              "end": 74.06
+            },
+            {
+              "word": "し",
+              "start": 74.06,
+              "end": 74.24
+            },
+            {
+              "word": "に",
+              "start": 74.24,
+              "end": 74.38
+            },
+            {
+              "word": "必",
+              "start": 74.38,
+              "end": 74.58
+            },
+            {
+              "word": "要",
+              "start": 74.58,
+              "end": 74.9
+            },
+            {
+              "word": "な",
+              "start": 74.9,
+              "end": 75.12
+            },
+            {
+              "word": "力",
+              "start": 75.12,
+              "end": 75.5
+            },
+            {
+              "word": "で",
+              "start": 75.5,
+              "end": 75.76
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "makikaeshi",
+              "start": 73.52,
+              "end": 74.24
+            },
+            {
+              "word": "ni",
+              "start": 74.24,
+              "end": 74.38
+            },
+            {
+              "word": "hitsuyou",
+              "start": 74.38,
+              "end": 74.88
+            },
+            {
+              "word": "na",
+              "start": 74.88,
+              "end": 75.1
+            },
+            {
+              "word": "chikara",
+              "start": 75.1,
+              "end": 75.52
+            },
+            {
+              "word": "de",
+              "start": 75.52,
+              "end": 75.76
+            }
+          ],
+          "enWords": [
+            {
+              "word": "With all the effort you'd need to make a comeback",
+              "start": 73.52,
+              "end": 75.76
+            }
+          ]
+        },
+        {
+          "id": "override-24",
+          "text": "別の事頑張ればいいじゃん",
+          "jp": [
+            "別の事頑張ればいいじゃん"
+          ],
+          "romaji": [
+            "betsu no koto ganbareba ii jan"
+          ],
+          "en": [
+            "Why not put it into something else?"
+          ],
+          "start": 75.785,
+          "end": 77.865,
+          "words": [
+            {
+              "word": "別",
+              "start": 75.785,
+              "end": 76.065
+            },
+            {
+              "word": "の",
+              "start": 76.065,
+              "end": 76.305
+            },
+            {
+              "word": "事",
+              "start": 76.305,
+              "end": 76.545
+            },
+            {
+              "word": "頑",
+              "start": 76.545,
+              "end": 76.905
+            },
+            {
+              "word": "張",
+              "start": 76.905,
+              "end": 77.045
+            },
+            {
+              "word": "れ",
+              "start": 77.045,
+              "end": 77.185
+            },
+            {
+              "word": "ば",
+              "start": 77.185,
+              "end": 77.365
+            },
+            {
+              "word": "いい",
+              "start": 77.365,
+              "end": 77.545
+            },
+            {
+              "word": "じゃ",
+              "start": 77.545,
+              "end": 77.745
+            },
+            {
+              "word": "ん",
+              "start": 77.745,
+              "end": 77.865
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "betsu",
+              "start": 75.785,
+              "end": 76.145
+            },
+            {
+              "word": "no",
+              "start": 76.145,
+              "end": 76.285
+            },
+            {
+              "word": "koto",
+              "start": 76.285,
+              "end": 76.585
+            },
+            {
+              "word": "ganbareba",
+              "start": 76.585,
+              "end": 77.345
+            },
+            {
+              "word": "ii",
+              "start": 77.345,
+              "end": 77.525
+            },
+            {
+              "word": "jan",
+              "start": 77.525,
+              "end": 77.865
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Why not put it into something else?",
+              "start": 75.785,
+              "end": 77.865
+            }
+          ]
+        },
+        {
+          "id": "override-25",
+          "text": "まぁ この地獄の沙汰も金次第で",
+          "jp": [
+            "まぁ この地獄の沙汰も金次第で"
+          ],
+          "romaji": [
+            "maa kono jigoku no sata mo kane shidai de"
+          ],
+          "en": [
+            "Well, if even judgment in hell depends on money"
+          ],
+          "start": 77.885,
+          "end": 80.465,
+          "words": [
+            {
+              "word": "まぁ",
+              "start": 77.885,
+              "end": 78.125
+            },
+            {
+              "word": "この",
+              "start": 78.125,
+              "end": 78.485
+            },
+            {
+              "word": "地",
+              "start": 78.485,
+              "end": 78.665
+            },
+            {
+              "word": "獄",
+              "start": 78.665,
+              "end": 78.885
+            },
+            {
+              "word": "の",
+              "start": 78.885,
+              "end": 79.085
+            },
+            {
+              "word": "沙",
+              "start": 79.085,
+              "end": 79.305
+            },
+            {
+              "word": "汰",
+              "start": 79.305,
+              "end": 79.425
+            },
+            {
+              "word": "も",
+              "start": 79.425,
+              "end": 79.565
+            },
+            {
+              "word": "金",
+              "start": 79.565,
+              "end": 79.765
+            },
+            {
+              "word": "次",
+              "start": 79.765,
+              "end": 79.985
+            },
+            {
+              "word": "第",
+              "start": 79.985,
+              "end": 80.225
+            },
+            {
+              "word": "で",
+              "start": 80.225,
+              "end": 80.425
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "maa",
+              "start": 77.885,
+              "end": 78.145
+            },
+            {
+              "word": "kono",
+              "start": 78.145,
+              "end": 78.365
+            },
+            {
+              "word": "jigoku",
+              "start": 78.365,
+              "end": 78.925
+            },
+            {
+              "word": "no",
+              "start": 78.925,
+              "end": 79.085
+            },
+            {
+              "word": "sata",
+              "start": 79.085,
+              "end": 79.365
+            },
+            {
+              "word": "mo",
+              "start": 79.365,
+              "end": 79.545
+            },
+            {
+              "word": "kane",
+              "start": 79.545,
+              "end": 79.805
+            },
+            {
+              "word": "shidai",
+              "start": 79.805,
+              "end": 80.265
+            },
+            {
+              "word": "de",
+              "start": 80.265,
+              "end": 80.465
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Well, if even judgment in hell depends on money",
+              "start": 77.885,
+              "end": 80.465
+            }
+          ]
+        },
+        {
+          "id": "override-26",
+          "text": "どこまでも左右出来るわけだし？",
+          "jp": [
+            "どこまでも左右出来るわけだし？"
+          ],
+          "romaji": [
+            "doko made mo sayuu dekiru wake dashi"
+          ],
+          "en": [
+            "Then you can bend anything your way, can't you?"
+          ],
+          "start": 80.485,
+          "end": 82.805,
+          "words": [
+            {
+              "word": "ど",
+              "start": 80.485,
+              "end": 80.725
+            },
+            {
+              "word": "こ",
+              "start": 80.725,
+              "end": 80.905
+            },
+            {
+              "word": "ま",
+              "start": 80.905,
+              "end": 81.025
+            },
+            {
+              "word": "でも",
+              "start": 81.025,
+              "end": 81.265
+            },
+            {
+              "word": "左右",
+              "start": 81.265,
+              "end": 81.585
+            },
+            {
+              "word": "出来",
+              "start": 81.585,
+              "end": 81.945
+            },
+            {
+              "word": "る",
+              "start": 81.945,
+              "end": 82.185
+            },
+            {
+              "word": "わ",
+              "start": 82.185,
+              "end": 82.325
+            },
+            {
+              "word": "け",
+              "start": 82.325,
+              "end": 82.485
+            },
+            {
+              "word": "だ",
+              "start": 82.485,
+              "end": 82.605
+            },
+            {
+              "word": "し？",
+              "start": 82.605,
+              "end": 82.805
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "doko",
+              "start": 80.485,
+              "end": 80.905
+            },
+            {
+              "word": "made",
+              "start": 80.905,
+              "end": 81.145
+            },
+            {
+              "word": "mo",
+              "start": 81.145,
+              "end": 81.325
+            },
+            {
+              "word": "sayuu",
+              "start": 81.325,
+              "end": 81.785
+            },
+            {
+              "word": "dekiru",
+              "start": 81.785,
+              "end": 82.185
+            },
+            {
+              "word": "wake",
+              "start": 82.265,
+              "end": 82.485
+            },
+            {
+              "word": "dashi",
+              "start": 82.485,
+              "end": 82.805
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Then you can bend anything your way, can't you?",
+              "start": 80.485,
+              "end": 82.805
+            }
+          ]
+        },
+        {
+          "id": "override-27",
+          "text": "アンタが抜け出せるわけがないよ",
+          "jp": [
+            "アンタが抜け出せるわけがないよ"
+          ],
+          "romaji": [
+            "anta ga nukedaseru wake ga nai yo"
+          ],
+          "en": [
+            "There's no way someone like you could escape"
+          ],
+          "start": 82.825,
+          "end": 85.145,
+          "words": [
+            {
+              "word": "ア",
+              "start": 82.825,
+              "end": 83.105
+            },
+            {
+              "word": "ンタ",
+              "start": 83.105,
+              "end": 83.325
+            },
+            {
+              "word": "が",
+              "start": 83.325,
+              "end": 83.505
+            },
+            {
+              "word": "抜",
+              "start": 83.505,
+              "end": 83.705
+            },
+            {
+              "word": "け",
+              "start": 83.705,
+              "end": 83.785
+            },
+            {
+              "word": "出",
+              "start": 83.785,
+              "end": 83.925
+            },
+            {
+              "word": "せ",
+              "start": 83.925,
+              "end": 84.105
+            },
+            {
+              "word": "る",
+              "start": 84.105,
+              "end": 84.245
+            },
+            {
+              "word": "わ",
+              "start": 84.245,
+              "end": 84.385
+            },
+            {
+              "word": "け",
+              "start": 84.385,
+              "end": 84.545
+            },
+            {
+              "word": "が",
+              "start": 84.545,
+              "end": 84.725
+            },
+            {
+              "word": "ない",
+              "start": 84.725,
+              "end": 84.925
+            },
+            {
+              "word": "よ",
+              "start": 84.925,
+              "end": 85.145
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "anta",
+              "start": 82.825,
+              "end": 83.365
+            },
+            {
+              "word": "ga",
+              "start": 83.365,
+              "end": 83.505
+            },
+            {
+              "word": "nukedaseru",
+              "start": 83.505,
+              "end": 84.245
+            },
+            {
+              "word": "wake",
+              "start": 84.345,
+              "end": 84.545
+            },
+            {
+              "word": "ga",
+              "start": 84.545,
+              "end": 84.705
+            },
+            {
+              "word": "nai",
+              "start": 84.705,
+              "end": 84.965
+            },
+            {
+              "word": "yo",
+              "start": 84.965,
+              "end": 85.145
+            }
+          ],
+          "enWords": [
+            {
+              "word": "There's no way someone like you could escape",
+              "start": 82.825,
+              "end": 85.145
+            }
+          ]
+        },
+        {
+          "id": "override-28",
+          "text": "それで話はおしまい？",
+          "jp": [
+            "それで話はおしまい？"
+          ],
+          "romaji": [
+            "sore de hanashi wa oshimai"
+          ],
+          "en": [
+            "And that's the end of the story?"
+          ],
+          "start": 85.165,
+          "end": 86.885,
+          "words": [
+            {
+              "word": "それで",
+              "start": 85.165,
+              "end": 85.665
+            },
+            {
+              "word": "話",
+              "start": 85.665,
+              "end": 86.005
+            },
+            {
+              "word": "は",
+              "start": 86.005,
+              "end": 86.305
+            },
+            {
+              "word": "お",
+              "start": 86.305,
+              "end": 86.485
+            },
+            {
+              "word": "しま",
+              "start": 86.485,
+              "end": 86.685
+            },
+            {
+              "word": "い？",
+              "start": 86.685,
+              "end": 86.885
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "sore",
+              "start": 85.205,
+              "end": 85.605
+            },
+            {
+              "word": "de",
+              "start": 85.605,
+              "end": 85.725
+            },
+            {
+              "word": "hanashi",
+              "start": 85.725,
+              "end": 86.125
+            },
+            {
+              "word": "wa",
+              "start": 86.285,
+              "end": 86.305
+            },
+            {
+              "word": "oshimai",
+              "start": 86.305,
+              "end": 86.885
+            }
+          ],
+          "enWords": [
+            {
+              "word": "And that's the end of the story?",
+              "start": 85.165,
+              "end": 86.885
+            }
+          ]
+        },
+        {
+          "id": "override-29",
+          "text": "ならば もう こないからね",
+          "jp": [
+            "ならば もう こないからね"
+          ],
+          "romaji": [
+            "naraba mou konai kara ne"
+          ],
+          "en": [
+            "Then I won't be coming back"
+          ],
+          "start": 86.92,
+          "end": 89.3,
+          "words": [
+            {
+              "word": "なら",
+              "start": 86.92,
+              "end": 87.14
+            },
+            {
+              "word": "ば",
+              "start": 87.14,
+              "end": 87.34
+            },
+            {
+              "word": "もう",
+              "start": 87.46,
+              "end": 87.7
+            },
+            {
+              "word": "こ",
+              "start": 87.7,
+              "end": 88.46
+            },
+            {
+              "word": "ない",
+              "start": 88.46,
+              "end": 88.76
+            },
+            {
+              "word": "から",
+              "start": 88.76,
+              "end": 89.06
+            },
+            {
+              "word": "ね",
+              "start": 89.06,
+              "end": 89.3
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "naraba",
+              "start": 86.92,
+              "end": 87.34
+            },
+            {
+              "word": "mou",
+              "start": 87.46,
+              "end": 87.7
+            },
+            {
+              "word": "konai",
+              "start": 87.7,
+              "end": 88.76
+            },
+            {
+              "word": "kara",
+              "start": 88.76,
+              "end": 89.1
+            },
+            {
+              "word": "ne",
+              "start": 89.1,
+              "end": 89.3
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Then I won't be coming back",
+              "start": 86.92,
+              "end": 89.3
+            }
+          ]
+        },
+        {
+          "id": "override-30",
+          "text": "豪快さにかまけた人生は",
+          "jp": [
+            "豪快さにかまけた人生は"
+          ],
+          "romaji": [
+            "goukai sa ni kamaketa jinsei wa"
+          ],
+          "en": [
+            "A life given over to reckless abandon"
+          ],
+          "start": 89.325,
+          "end": 91.605,
+          "words": [
+            {
+              "word": "豪",
+              "start": 89.325,
+              "end": 89.645
+            },
+            {
+              "word": "快",
+              "start": 89.645,
+              "end": 89.945
+            },
+            {
+              "word": "さ",
+              "start": 89.945,
+              "end": 90.145
+            },
+            {
+              "word": "に",
+              "start": 90.145,
+              "end": 90.285
+            },
+            {
+              "word": "か",
+              "start": 90.285,
+              "end": 90.425
+            },
+            {
+              "word": "ま",
+              "start": 90.425,
+              "end": 90.545
+            },
+            {
+              "word": "け",
+              "start": 90.545,
+              "end": 90.705
+            },
+            {
+              "word": "た",
+              "start": 90.705,
+              "end": 90.845
+            },
+            {
+              "word": "人",
+              "start": 90.845,
+              "end": 91.005
+            },
+            {
+              "word": "生",
+              "start": 91.005,
+              "end": 91.225
+            },
+            {
+              "word": "は",
+              "start": 91.225,
+              "end": 91.605
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "goukai",
+              "start": 89.325,
+              "end": 89.965
+            },
+            {
+              "word": "sa",
+              "start": 89.965,
+              "end": 90.125
+            },
+            {
+              "word": "ni",
+              "start": 90.125,
+              "end": 90.265
+            },
+            {
+              "word": "kamaketa",
+              "start": 90.265,
+              "end": 90.845
+            },
+            {
+              "word": "jinsei wa",
+              "start": 90.845,
+              "end": 91.525
+            }
+          ],
+          "enWords": [
+            {
+              "word": "A life given over to reckless abandon",
+              "start": 89.325,
+              "end": 91.605
+            }
+          ]
+        },
+        {
+          "id": "override-31",
+          "text": "きっと燃やされてしまうらしい",
+          "jp": [
+            "きっと燃やされてしまうらしい"
+          ],
+          "romaji": [
+            "kitto moyasarete shimau rashii"
+          ],
+          "en": [
+            "Will surely end up burned away"
+          ],
+          "start": 91.665,
+          "end": 93.985,
+          "words": [
+            {
+              "word": "き",
+              "start": 91.665,
+              "end": 91.905
+            },
+            {
+              "word": "っと",
+              "start": 91.905,
+              "end": 92.285
+            },
+            {
+              "word": "燃",
+              "start": 92.285,
+              "end": 92.545
+            },
+            {
+              "word": "や",
+              "start": 92.545,
+              "end": 92.685
+            },
+            {
+              "word": "さ",
+              "start": 92.685,
+              "end": 92.825
+            },
+            {
+              "word": "れて",
+              "start": 92.825,
+              "end": 93.085
+            },
+            {
+              "word": "しま",
+              "start": 93.085,
+              "end": 93.405
+            },
+            {
+              "word": "う",
+              "start": 93.405,
+              "end": 93.625
+            },
+            {
+              "word": "ら",
+              "start": 93.625,
+              "end": 93.785
+            },
+            {
+              "word": "しい",
+              "start": 93.785,
+              "end": 93.985
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "kitto",
+              "start": 91.665,
+              "end": 92.285
+            },
+            {
+              "word": "moyasarete",
+              "start": 92.285,
+              "end": 93.085
+            },
+            {
+              "word": "shimau",
+              "start": 93.085,
+              "end": 93.585
+            },
+            {
+              "word": "rashii",
+              "start": 93.585,
+              "end": 93.985
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Will surely end up burned away",
+              "start": 91.665,
+              "end": 93.985
+            }
+          ]
+        },
+        {
+          "id": "override-32",
+          "text": "じゃあワタシなど要らないと",
+          "jp": [
+            "じゃあワタシなど要らないと"
+          ],
+          "romaji": [
+            "jaa watashi nado iranai to"
+          ],
+          "en": [
+            "Then, saying there's no need for someone like me"
+          ],
+          "start": 94.125,
+          "end": 96.345,
+          "words": [
+            {
+              "word": "じゃあ",
+              "start": 94.125,
+              "end": 94.625
+            },
+            {
+              "word": "ワ",
+              "start": 94.625,
+              "end": 94.865
+            },
+            {
+              "word": "タ",
+              "start": 94.865,
+              "end": 95.005
+            },
+            {
+              "word": "シ",
+              "start": 95.005,
+              "end": 95.145
+            },
+            {
+              "word": "な",
+              "start": 95.145,
+              "end": 95.265
+            },
+            {
+              "word": "ど",
+              "start": 95.265,
+              "end": 95.465
+            },
+            {
+              "word": "要",
+              "start": 95.465,
+              "end": 95.605
+            },
+            {
+              "word": "ら",
+              "start": 95.605,
+              "end": 95.805
+            },
+            {
+              "word": "ない",
+              "start": 95.805,
+              "end": 96.125
+            },
+            {
+              "word": "と",
+              "start": 96.125,
+              "end": 96.345
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "jaa",
+              "start": 94.175,
+              "end": 94.625
+            },
+            {
+              "word": "watashi",
+              "start": 94.825,
+              "end": 95.145
+            },
+            {
+              "word": "nado",
+              "start": 95.145,
+              "end": 95.445
+            },
+            {
+              "word": "iranai",
+              "start": 95.445,
+              "end": 96.105
+            },
+            {
+              "word": "to",
+              "start": 96.105,
+              "end": 96.345
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Then, saying there's no need for someone like me",
+              "start": 94.125,
+              "end": 96.345
+            }
+          ]
+        },
+        {
+          "id": "override-33",
+          "text": "蹴った果てにいた付和雷同",
+          "jp": [
+            "蹴った果てにいた付和雷同"
+          ],
+          "romaji": [
+            "ketta hate ni ita fuwa raidou"
+          ],
+          "en": [
+            "What waited at the end was blind conformity"
+          ],
+          "start": 96.505,
+          "end": 98.685,
+          "words": [
+            {
+              "word": "蹴",
+              "start": 96.505,
+              "end": 96.725
+            },
+            {
+              "word": "った",
+              "start": 96.725,
+              "end": 96.965
+            },
+            {
+              "word": "果",
+              "start": 96.965,
+              "end": 97.185
+            },
+            {
+              "word": "て",
+              "start": 97.185,
+              "end": 97.345
+            },
+            {
+              "word": "に",
+              "start": 97.345,
+              "end": 97.525
+            },
+            {
+              "word": "いた",
+              "start": 97.525,
+              "end": 97.765
+            },
+            {
+              "word": "付",
+              "start": 97.765,
+              "end": 97.925
+            },
+            {
+              "word": "和",
+              "start": 97.925,
+              "end": 98.145
+            },
+            {
+              "word": "雷",
+              "start": 98.145,
+              "end": 98.525
+            },
+            {
+              "word": "同",
+              "start": 98.525,
+              "end": 98.685
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "ketta",
+              "start": 96.505,
+              "end": 96.925
+            },
+            {
+              "word": "hate",
+              "start": 96.925,
+              "end": 97.325
+            },
+            {
+              "word": "ni",
+              "start": 97.325,
+              "end": 97.525
+            },
+            {
+              "word": "ita",
+              "start": 97.705,
+              "end": 97.765
+            },
+            {
+              "word": "fuwa",
+              "start": 97.765,
+              "end": 98.145
+            },
+            {
+              "word": "raidou",
+              "start": 98.445,
+              "end": 98.685
+            }
+          ],
+          "enWords": [
+            {
+              "word": "What waited at the end was blind conformity",
+              "start": 96.505,
+              "end": 98.685
+            }
+          ]
+        },
+        {
+          "id": "override-34",
+          "text": "シタイだけ探した冒険 tongue",
+          "jp": [
+            "シタイだけ探した冒険 tongue"
+          ],
+          "romaji": [
+            "shitai dake sagashita bouken tangu"
+          ],
+          "en": [
+            "An adventurous tongue, searching only for what it wants"
+          ],
+          "start": 98.885,
+          "end": 101.265,
+          "words": [
+            {
+              "word": "シ",
+              "start": 98.885,
+              "end": 99.085
+            },
+            {
+              "word": "タ",
+              "start": 99.085,
+              "end": 99.265
+            },
+            {
+              "word": "イ",
+              "start": 99.265,
+              "end": 99.405
+            },
+            {
+              "word": "だけ",
+              "start": 99.405,
+              "end": 99.685
+            },
+            {
+              "word": "探",
+              "start": 99.685,
+              "end": 99.925
+            },
+            {
+              "word": "した",
+              "start": 99.925,
+              "end": 100.245
+            },
+            {
+              "word": "冒",
+              "start": 100.245,
+              "end": 100.525
+            },
+            {
+              "word": "険",
+              "start": 100.525,
+              "end": 100.865
+            },
+            {
+              "word": "tongue",
+              "start": 100.865,
+              "end": 101.045
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "shitai",
+              "start": 98.895,
+              "end": 99.425
+            },
+            {
+              "word": "dake",
+              "start": 99.425,
+              "end": 99.705
+            },
+            {
+              "word": "sagashita",
+              "start": 99.705,
+              "end": 100.225
+            },
+            {
+              "word": "bouken",
+              "start": 100.225,
+              "end": 100.865
+            },
+            {
+              "word": "tangu",
+              "start": 100.865,
+              "end": 101.265
+            }
+          ],
+          "enWords": [
+            {
+              "word": "An adventurous tongue, searching only for what it wants",
+              "start": 98.885,
+              "end": 101.265
+            }
+          ]
+        },
+        {
+          "id": "override-35",
+          "text": "どうか消えるまでスタンド・バイ・ミー",
+          "jp": [
+            "どうか消えるまでスタンド・バイ・ミー"
+          ],
+          "romaji": [
+            "douka kieru made sutando bai mii"
+          ],
+          "en": [
+            "Please stand by me until I disappear"
+          ],
+          "start": 101.285,
+          "end": 103.685,
+          "words": [
+            {
+              "word": "どう",
+              "start": 101.285,
+              "end": 101.325
+            },
+            {
+              "word": "か",
+              "start": 101.325,
+              "end": 101.625
+            },
+            {
+              "word": "消",
+              "start": 101.625,
+              "end": 101.905
+            },
+            {
+              "word": "える",
+              "start": 101.905,
+              "end": 102.185
+            },
+            {
+              "word": "まで",
+              "start": 102.185,
+              "end": 102.465
+            },
+            {
+              "word": "ス",
+              "start": 102.465,
+              "end": 102.645
+            },
+            {
+              "word": "タ",
+              "start": 102.645,
+              "end": 102.825
+            },
+            {
+              "word": "ンド ・",
+              "start": 102.825,
+              "end": 102.965
+            },
+            {
+              "word": "バイ ・",
+              "start": 102.965,
+              "end": 103.205
+            },
+            {
+              "word": "ミー",
+              "start": 103.305,
+              "end": 103.425
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "douka",
+              "start": 101.285,
+              "end": 101.625
+            },
+            {
+              "word": "kieru",
+              "start": 101.625,
+              "end": 102.165
+            },
+            {
+              "word": "made",
+              "start": 102.165,
+              "end": 102.505
+            },
+            {
+              "word": "sutando",
+              "start": 102.505,
+              "end": 103.105
+            },
+            {
+              "word": "bai",
+              "start": 103.105,
+              "end": 103.225
+            },
+            {
+              "word": "mii",
+              "start": 103.225,
+              "end": 103.685
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Please stand by me until I disappear",
+              "start": 101.285,
+              "end": 103.685
+            }
+          ]
+        },
+        {
+          "id": "override-36",
+          "text": "撒いたエラーすら読んじゃいない",
+          "jp": [
+            "撒いたエラーすら読んじゃいない"
+          ],
+          "romaji": [
+            "maita eraa sura yonjainai"
+          ],
+          "en": [
+            "You don't even read the errors you've scattered"
+          ],
+          "start": 103.705,
+          "end": 105.725,
+          "words": [
+            {
+              "word": "撒",
+              "start": 103.735,
+              "end": 104.085
+            },
+            {
+              "word": "いた",
+              "start": 104.085,
+              "end": 104.305
+            },
+            {
+              "word": "エ",
+              "start": 104.305,
+              "end": 104.405
+            },
+            {
+              "word": "ラ",
+              "start": 104.405,
+              "end": 104.565
+            },
+            {
+              "word": "ー",
+              "start": 104.565,
+              "end": 104.705
+            },
+            {
+              "word": "す",
+              "start": 104.705,
+              "end": 104.825
+            },
+            {
+              "word": "ら",
+              "start": 104.825,
+              "end": 104.965
+            },
+            {
+              "word": "読",
+              "start": 104.965,
+              "end": 105.185
+            },
+            {
+              "word": "ん",
+              "start": 105.185,
+              "end": 105.305
+            },
+            {
+              "word": "じゃ",
+              "start": 105.305,
+              "end": 105.465
+            },
+            {
+              "word": "い",
+              "start": 105.465,
+              "end": 105.605
+            },
+            {
+              "word": "ない",
+              "start": 105.605,
+              "end": 105.725
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "maita",
+              "start": 103.705,
+              "end": 104.285
+            },
+            {
+              "word": "eraa",
+              "start": 104.285,
+              "end": 104.705
+            },
+            {
+              "word": "sura",
+              "start": 104.705,
+              "end": 104.965
+            },
+            {
+              "word": "yonjainai",
+              "start": 104.965,
+              "end": 105.725
+            }
+          ],
+          "enWords": [
+            {
+              "word": "You don't even read the errors you've scattered",
+              "start": 103.705,
+              "end": 105.725
+            }
+          ]
+        },
+        {
+          "id": "override-37",
+          "text": "人間の思う事は知らないね！",
+          "jp": [
+            "人間の思う事は知らないね！"
+          ],
+          "romaji": [
+            "ningen no omou koto wa shiranai ne"
+          ],
+          "en": [
+            "Who knows what humans are thinking!"
+          ],
+          "start": 105.84,
+          "end": 108.68,
+          "words": [
+            {
+              "word": "人",
+              "start": 105.84,
+              "end": 106.08
+            },
+            {
+              "word": "間",
+              "start": 106.08,
+              "end": 106.38
+            },
+            {
+              "word": "の",
+              "start": 106.38,
+              "end": 106.66
+            },
+            {
+              "word": "思",
+              "start": 106.66,
+              "end": 106.9
+            },
+            {
+              "word": "う",
+              "start": 106.9,
+              "end": 107.08
+            },
+            {
+              "word": "事",
+              "start": 107.08,
+              "end": 107.2
+            },
+            {
+              "word": "は",
+              "start": 107.2,
+              "end": 107.56
+            },
+            {
+              "word": "知",
+              "start": 107.56,
+              "end": 107.94
+            },
+            {
+              "word": "ら",
+              "start": 107.94,
+              "end": 108.16
+            },
+            {
+              "word": "ない",
+              "start": 108.16,
+              "end": 108.48
+            },
+            {
+              "word": "ね！",
+              "start": 108.48,
+              "end": 108.68
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "ningen",
+              "start": 105.84,
+              "end": 106.48
+            },
+            {
+              "word": "no",
+              "start": 106.48,
+              "end": 106.66
+            },
+            {
+              "word": "omou",
+              "start": 106.66,
+              "end": 106.98
+            },
+            {
+              "word": "koto",
+              "start": 106.98,
+              "end": 107.34
+            },
+            {
+              "word": "wa",
+              "start": 107.52,
+              "end": 107.54
+            },
+            {
+              "word": "shiranai",
+              "start": 107.54,
+              "end": 108.42
+            },
+            {
+              "word": "ne",
+              "start": 108.42,
+              "end": 108.68
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Who knows what humans are thinking!",
+              "start": 105.84,
+              "end": 108.68
+            }
+          ]
+        },
+        {
+          "id": "override-38",
+          "text": "アンタが書いた杜撰なコード",
+          "jp": [
+            "アンタが書いた杜撰なコード"
+          ],
+          "romaji": [
+            "anta ga kaita zusan na koodo"
+          ],
+          "en": [
+            "That sloppy code you wrote"
+          ],
+          "start": 117.84,
+          "end": 120.16,
+          "words": [
+            {
+              "word": "ア",
+              "start": 117.84,
+              "end": 118.12
+            },
+            {
+              "word": "ンタ",
+              "start": 118.12,
+              "end": 118.36
+            },
+            {
+              "word": "が",
+              "start": 118.36,
+              "end": 118.52
+            },
+            {
+              "word": "書",
+              "start": 118.52,
+              "end": 118.72
+            },
+            {
+              "word": "いた",
+              "start": 118.72,
+              "end": 118.96
+            },
+            {
+              "word": "杜",
+              "start": 118.96,
+              "end": 119.12
+            },
+            {
+              "word": "撰",
+              "start": 119.12,
+              "end": 119.36
+            },
+            {
+              "word": "な",
+              "start": 119.36,
+              "end": 119.6
+            },
+            {
+              "word": "コ",
+              "start": 119.6,
+              "end": 119.9
+            },
+            {
+              "word": "ード",
+              "start": 119.9,
+              "end": 120.14
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "anta",
+              "start": 117.84,
+              "end": 118.38
+            },
+            {
+              "word": "ga",
+              "start": 118.38,
+              "end": 118.48
+            },
+            {
+              "word": "kaita",
+              "start": 118.48,
+              "end": 118.94
+            },
+            {
+              "word": "zusan",
+              "start": 118.94,
+              "end": 119.4
+            },
+            {
+              "word": "na",
+              "start": 119.4,
+              "end": 119.6
+            },
+            {
+              "word": "koodo",
+              "start": 119.6,
+              "end": 120.16
+            }
+          ],
+          "enWords": [
+            {
+              "word": "That sloppy code you wrote",
+              "start": 117.84,
+              "end": 120.16
+            }
+          ]
+        },
+        {
+          "id": "override-39",
+          "text": "ばっか持てはやすユーザーよ",
+          "jp": [
+            "ばっか持てはやすユーザーよ"
+          ],
+          "romaji": [
+            "bakka motehayasu yuuzaa yo"
+          ],
+          "en": [
+            "You users do nothing but praise it"
+          ],
+          "start": 120.245,
+          "end": 122.265,
+          "words": [
+            {
+              "word": "ば",
+              "start": 120.245,
+              "end": 120.465
+            },
+            {
+              "word": "っ",
+              "start": 120.465,
+              "end": 120.565
+            },
+            {
+              "word": "か",
+              "start": 120.565,
+              "end": 120.725
+            },
+            {
+              "word": "持",
+              "start": 120.725,
+              "end": 120.845
+            },
+            {
+              "word": "て",
+              "start": 120.845,
+              "end": 121.005
+            },
+            {
+              "word": "は",
+              "start": 121.005,
+              "end": 121.165
+            },
+            {
+              "word": "や",
+              "start": 121.165,
+              "end": 121.285
+            },
+            {
+              "word": "す",
+              "start": 121.285,
+              "end": 121.465
+            },
+            {
+              "word": "ユ",
+              "start": 121.465,
+              "end": 121.645
+            },
+            {
+              "word": "ー",
+              "start": 121.645,
+              "end": 121.785
+            },
+            {
+              "word": "ザ",
+              "start": 121.785,
+              "end": 121.965
+            },
+            {
+              "word": "ー",
+              "start": 121.965,
+              "end": 122.105
+            },
+            {
+              "word": "よ",
+              "start": 122.105,
+              "end": 122.245
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "bakka",
+              "start": 120.245,
+              "end": 120.725
+            },
+            {
+              "word": "motehayasu",
+              "start": 120.725,
+              "end": 121.445
+            },
+            {
+              "word": "yuuzaa",
+              "start": 121.545,
+              "end": 122.085
+            },
+            {
+              "word": "yo",
+              "start": 122.085,
+              "end": 122.265
+            }
+          ],
+          "enWords": [
+            {
+              "word": "You users do nothing but praise it",
+              "start": 120.245,
+              "end": 122.265
+            }
+          ]
+        },
+        {
+          "id": "override-40",
+          "text": "吐いた言葉の裏なんて",
+          "jp": [
+            "吐いた言葉の裏なんて"
+          ],
+          "romaji": [
+            "haita kotoba no ura nante"
+          ],
+          "en": [
+            "What lies behind the words I spit out"
+          ],
+          "start": 122.515,
+          "end": 124.595,
+          "words": [
+            {
+              "word": "吐",
+              "start": 122.515,
+              "end": 122.875
+            },
+            {
+              "word": "いた",
+              "start": 122.875,
+              "end": 123.055
+            },
+            {
+              "word": "言",
+              "start": 123.055,
+              "end": 123.295
+            },
+            {
+              "word": "葉",
+              "start": 123.295,
+              "end": 123.515
+            },
+            {
+              "word": "の",
+              "start": 123.515,
+              "end": 123.675
+            },
+            {
+              "word": "裏",
+              "start": 123.675,
+              "end": 124.035
+            },
+            {
+              "word": "なん",
+              "start": 124.035,
+              "end": 124.215
+            },
+            {
+              "word": "て",
+              "start": 124.215,
+              "end": 124.595
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "haita",
+              "start": 122.515,
+              "end": 123.055
+            },
+            {
+              "word": "kotoba",
+              "start": 123.055,
+              "end": 123.515
+            },
+            {
+              "word": "no",
+              "start": 123.515,
+              "end": 123.675
+            },
+            {
+              "word": "ura",
+              "start": 123.675,
+              "end": 124.015
+            },
+            {
+              "word": "nante",
+              "start": 124.015,
+              "end": 124.575
+            }
+          ],
+          "enWords": [
+            {
+              "word": "What lies behind the words I spit out",
+              "start": 122.515,
+              "end": 124.595
+            }
+          ]
+        },
+        {
+          "id": "override-41",
+          "text": "知る由もないだろう",
+          "jp": [
+            "知る由もないだろう"
+          ],
+          "romaji": [
+            "shiru yoshi mo nai darou"
+          ],
+          "en": [
+            "You couldn't possibly know"
+          ],
+          "start": 124.755,
+          "end": 126.355,
+          "words": [
+            {
+              "word": "知",
+              "start": 124.755,
+              "end": 124.935
+            },
+            {
+              "word": "る",
+              "start": 124.935,
+              "end": 125.155
+            },
+            {
+              "word": "由",
+              "start": 125.155,
+              "end": 125.415
+            },
+            {
+              "word": "も",
+              "start": 125.415,
+              "end": 125.695
+            },
+            {
+              "word": "ない",
+              "start": 125.695,
+              "end": 126.015
+            },
+            {
+              "word": "だ",
+              "start": 126.015,
+              "end": 126.175
+            },
+            {
+              "word": "ろう",
+              "start": 126.175,
+              "end": 126.355
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "shiru",
+              "start": 124.755,
+              "end": 125.175
+            },
+            {
+              "word": "yoshi",
+              "start": 125.355,
+              "end": 125.495
+            },
+            {
+              "word": "mo",
+              "start": 125.495,
+              "end": 125.715
+            },
+            {
+              "word": "nai",
+              "start": 125.715,
+              "end": 126.015
+            },
+            {
+              "word": "darou",
+              "start": 126.015,
+              "end": 126.355
+            }
+          ],
+          "enWords": [
+            {
+              "word": "You couldn't possibly know",
+              "start": 124.755,
+              "end": 126.355
+            }
+          ]
+        },
+        {
+          "id": "override-42",
+          "text": "哀れ あはれ",
+          "jp": [
+            "哀れ あはれ"
+          ],
+          "romaji": [
+            "aware aware"
+          ],
+          "en": [
+            "Pitiful, how pitiful"
+          ],
+          "start": 126.61,
+          "end": 127.53,
+          "words": [
+            {
+              "word": "哀",
+              "start": 126.61,
+              "end": 126.87
+            },
+            {
+              "word": "れ",
+              "start": 126.87,
+              "end": 127.05
+            },
+            {
+              "word": "あ",
+              "start": 127.05,
+              "end": 127.25
+            },
+            {
+              "word": "は",
+              "start": 127.25,
+              "end": 127.41
+            },
+            {
+              "word": "れ",
+              "start": 127.41,
+              "end": 127.51
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "aware",
+              "start": 126.61,
+              "end": 127.05
+            },
+            {
+              "word": "aware",
+              "start": 127.05,
+              "end": 127.53
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Pitiful, how pitiful",
+              "start": 126.61,
+              "end": 127.53
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "sections": [
+    {
+      "start": 0,
+      "end": 12.1,
+      "key": "overture",
+      "label": "OVERTURE",
+      "chorus": false
+    },
+    {
+      "start": 12.1,
+      "end": 31.3,
+      "key": "badlands",
+      "label": "BADLANDS",
+      "chorus": false
+    },
+    {
+      "start": 31.3,
+      "end": 40,
+      "key": "crossroads",
+      "label": "CROSSROADS",
+      "chorus": false
+    },
+    {
+      "start": 40,
+      "end": 59.7,
+      "key": "override",
+      "label": "OVERRIDE",
+      "chorus": true
+    },
+    {
+      "start": 59.7,
+      "end": 68,
+      "key": "reversal",
+      "label": "REVERSAL",
+      "chorus": false
+    },
+    {
+      "start": 68,
+      "end": 85.2,
+      "key": "lottery",
+      "label": "LOTTERY",
+      "chorus": false
+    },
+    {
+      "start": 85.2,
+      "end": 89.45,
+      "key": "escape",
+      "label": "ESCAPE",
+      "chorus": false
+    },
+    {
+      "start": 89.45,
+      "end": 108.9,
+      "key": "rewrite",
+      "label": "REWRITE",
+      "chorus": true
+    },
+    {
+      "start": 108.9,
+      "end": 117.9,
+      "key": "reversal",
+      "label": "REVERSAL",
+      "chorus": false
+    },
+    {
+      "start": 117.9,
+      "end": 127.8,
+      "key": "code",
+      "label": "CODE",
+      "chorus": false
+    },
+    {
+      "start": 127.8,
+      "end": 138.4954,
+      "key": "coda",
+      "label": "CODA",
+      "chorus": false
+    }
+  ],
+  "alignment": {
+    "recording": "songs/Yoshida Yasei feat. Kasane Teto SV - Override.m4a",
+    "audioSha256": "76e30aeba4cca915eb9861c7350e628f7bfc4a4b5e1b2ed66ff2b25e59013f61",
+    "sourceSha256": "7f8899ca1bb162b3a94497ab4ef7c29a32c7c95ac4178da6b2415aba70aee828",
+    "status": "acoustically-aligned",
+    "approved": false,
+    "publicationAuthorizedBy": "Joshua Glass",
+    "publicationAuthorizationDate": "2026-10-26",
+    "review": "Technical alignment checked; no claim of user listening approval or sample-perfect phoneme boundaries."
+  }
+}

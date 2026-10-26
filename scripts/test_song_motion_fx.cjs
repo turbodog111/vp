@@ -7,6 +7,7 @@ const crypto = require('node:crypto');
 const root = path.resolve(__dirname, '..');
 const source = fs.readFileSync(path.join(root, 'song-motion-fx.js'), 'utf8');
 const recordings = [
+  ['override', 'Yoshida Yasei feat. Kasane Teto SV - Override.m4a'],
   ['petal-lament', 'MIMI feat. Kasane Teto SV - Petal Lament.m4a'],
   ['marshmary', 'MIMI feat. Hatsune Miku - Marshmary.m4a'],
   ['dynamite', 'BTS - Dynamite.m4a'],
@@ -16,7 +17,7 @@ const dataFor = key => JSON.parse(fs.readFileSync(path.join(root, 'songs/motion'
 function create(fetcher, reduced = false) {
   let requests = 0;
   const context = vm.createContext({
-    window: { matchMedia: () => ({ matches: reduced }) },
+    window: { matchMedia: () => ({ matches: reduced }), OverrideFx: require('../override-fx.js') },
     AbortController, setTimeout, clearTimeout, console: { warn() {} },
     fetch: async (url, options) => {
       requests++;
@@ -51,7 +52,7 @@ function render(api, time, width = 1280, height = 720) {
   return JSON.parse(JSON.stringify(trace.calls));
 }
 
-test('only the four exact recordings receive their own scenes', () => {
+test('only the five exact recordings receive their own scenes', () => {
   const { api } = create();
   for (const [key, name] of recordings) {
     assert.equal(api.track({ path: `songs/${name}` }).key, key);
@@ -78,7 +79,7 @@ for (const [key, name] of recordings) {
       assert.ok(Math.abs(data[band].length * data.sampleInterval - data.duration) < 0.1);
     }
     assert.equal(data.sampleInterval, 0.04);
-    assert.ok(Math.abs(data.bpm - { 'petal-lament': 170, marshmary: 182, dynamite: 114, butter: 110 }[key]) < 1);
+    assert.ok(Math.abs(data.bpm - { override: 204, 'petal-lament': 170, marshmary: 182, dynamite: 114, butter: 110 }[key]) < 1);
     const config = create().api.track({ path: `songs/${name}` });
     assert.equal(config.bpm, data.bpm, 'fallback uses the measured tempo');
     assert.equal(config.beatOffset, data.beatOffset, 'fallback uses the measured phase');
@@ -147,7 +148,8 @@ test('reduced motion removes traveling objects and beat pulses for every scene',
   const { api } = create(async () => ({ ok: true, json: async () => constant }), true);
   for (const [, name] of recordings) {
     await api.activate(api.track({ path: `songs/${name}` }));
-    assert.deepEqual(render(api, 15), render(api, 90), name);
+    // Narrative chapter changes are retained; motion inside a chapter is frozen.
+    assert.deepEqual(render(api, 15), render(api, name.includes('Override') ? 16 : 90), name);
   }
 });
 

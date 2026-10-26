@@ -6,7 +6,7 @@ Text-ready drafts contain user-supplied words but do not have verified timing. O
 Local-review means acoustic timing candidates are available on localhost; it does not mean listening approval or publication.
 Approved means Joshua accepted the recording-specific lyric presentation for publication; it is not a claim of sample-perfect acoustic timing.
 
-Summary: {"approved":10,"excluded":15,"vocal-review":6,"missing":1,"instrumental":1,"text-complete":6}
+Summary: {"approved":10,"excluded":15,"vocal-review":6,"missing":1,"instrumental":1,"text-complete":7}
 
 1. [approved] songs/BTS - Butter.m4a
    52 timed lines; ./songs/lyrics/aligned/butter.json
@@ -86,3 +86,5 @@ Summary: {"approved":10,"excluded":15,"vocal-review":6,"missing":1,"instrumental
    Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
 39. [excluded] songs/Yanny the Laurel - Machine Love (Piano Duo).m4a
    Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
+40. [text-complete] songs/Yoshida Yasei feat. Kasane Teto SV - Override.m4a
+   42 timed lines; ./songs/lyrics/override.json

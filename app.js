@@ -36,6 +36,14 @@ const REFERENCE_VIDEO_TRACKS = {
 };
 
 const SUPPORTED_LYRIC_TRACKS = {
+  'songs/yoshida yasei feat. kasane teto sv - override': {
+    dataUrl: './songs/lyrics/override.json',
+    scene: 'parallel-lyrics',
+    visualTheme: 'override',
+    variant: 'jp',
+    lyricTitle: 'OVERRIDE',
+    hideSection: true
+  },
   'songs/mimi feat. kasane teto sv - trick heart': {
     dataUrl: './songs/lyrics/trick-heart.json',
     scene: 'trick-heart',
@@ -1136,7 +1144,10 @@ function renderTrickHeartLane(id, tokens, line, language) {
   const element = $(id);
   if (!element) return [];
   element.replaceChildren();
-  const timings = language === 'ja' && Array.isArray(line?.words)
+  const companion = language === 'romaji' ? line?.romajiWords : language === 'en' ? line?.enWords : null;
+  const timings = Array.isArray(companion) && companion.length
+    ? companion
+    : language === 'ja' && Array.isArray(line?.words)
     ? measuredWordTimings(line)
     : trickHeartTokenTimings(tokens, line, language);
   return timings.map(timing => {
@@ -2481,6 +2492,7 @@ function setSongMotionFxActive(enabled) {
   document.body.classList.toggle('mimi-marshmary-active', config?.key === 'marshmary');
   document.body.classList.toggle('bts-dynamite-active', config?.key === 'dynamite');
   document.body.classList.toggle('bts-butter-active', config?.key === 'butter');
+  document.body.classList.toggle('override-active', config?.key === 'override');
   const artwork = $('song-motion-art');
   if (artwork) {
     artwork.hidden = !config;
@@ -2514,7 +2526,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   if (theme === renderedFxTheme && songId === renderedFxSongId) return;
   renderedFxTheme = theme;
   renderedFxSongId = songId;
-  setSongMotionFxActive(['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter'].includes(theme));
+  setSongMotionFxActive(['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter', 'override'].includes(theme));
   document.body.classList.toggle('fx-active', active);
   document.body.classList.toggle('disco-fx-active', theme === 'disco');
   document.body.classList.toggle('teto-fx-active', theme === 'teto');
@@ -9518,7 +9530,7 @@ function drawTetoFx(level) {
   const theme = activeFxTheme();
   updateFxState(levels.glow);
   if (theme === 'off') return;
-  if (['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter'].includes(theme)) {
+  if (['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter', 'override'].includes(theme)) {
     window.SongMotionFx?.draw(ctx, w, h, { time: currentCalibratedTime(), energy: levels.glow });
     return;
   }
