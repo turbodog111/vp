@@ -1,0 +1,15 @@
+{
+  "recording": "songs/christian/ELEVATION RHYTHM & Josiah Queen - AMAZING!.m4a",
+  "title": "AMAZING!",
+  "artist": "ELEVATION RHYTHM & Josiah Queen",
+  "source": "https://www.youtube.com/watch?v=30lZMGp7KQI",
+  "sourceTitle": "AMAZING! | ELEVATION RHYTHM & Josiah Queen",
+  "sourceChannel": "ELEVATION RHYTHM",
+  "rendition": "Official live video; full recording, no trimming",
+  "duration": 262.931167,
+  "encoding": "AAC 192k, 48kHz stereo, faststart; no tempo or gain manipulation",
+  "sourceAudioSha256": "18739defc971a39b84fca4a11d82acb5ebb6ecc2bf782a4141bdd63f9d17839e",
+  "outputAudioSha256": "3cb5afc79d3392540a6b474590e808cff580a71f0c48e5ad77a5a41f511a0668",
+  "importDate": "2026-10-26",
+  "graphics": "None added, as requested"
+}
