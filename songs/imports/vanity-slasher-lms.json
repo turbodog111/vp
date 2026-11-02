@@ -1,0 +1,24 @@
+{
+  "recording": "songs/APREX & FLAVOR FOLEY - Butcher Vanity (Vanity Slasher LMS).m4a",
+  "title": "Butcher Vanity (Vanity Slasher LMS)",
+  "artist": "APREX & FLAVOR FOLEY",
+  "source": "https://www.youtube.com/watch?v=aLBOzb3IMPA",
+  "sourceTitle": "Forsaken OST - Vanity (Slasher) LMS Chase Theme",
+  "sourceUploader": "The Strongest Cat",
+  "uploaderRole": "Upload and visualizer; not credited as the composer",
+  "originalSong": "BUTCHER VANITY",
+  "originalArtist": "FLAVOR FOLEY",
+  "originalComposers": ["Vane Lily", "JamieP", "ricedeity"],
+  "originalVocals": "Yi Xi (Synthesizer V)",
+  "remixArtist": "APREX",
+  "creditSources": {
+    "original": "https://flavorfoley.com/butchervanity",
+    "remix": "https://forsaken2024.fandom.com/wiki/Slasher/OST"
+  },
+  "attributionNote": "Original credits verified against the artists' site; LMS arrangement attribution follows the Forsaken soundtrack wiki, since the selected upload does not name the arranger.",
+  "duration": 73.073208,
+  "encoding": "AAC 192k, 48kHz stereo, faststart; full upload with no trimming, tempo or gain manipulation",
+  "sourceAudioSha256": "75a876e40da3b484b4fbe825c2deb39c428d4d05c7741b054dcc47612dd94539",
+  "outputAudioSha256": "6038eb8ea48dd786f1e7aea94279c314e149d2b0ba0c4c1779ba3fc4fafaf2a5",
+  "importDate": "2026-11-02"
+}
