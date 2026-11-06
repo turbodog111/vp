@@ -6,7 +6,7 @@ Text-ready drafts contain user-supplied words but do not have verified timing. O
 Local-review means acoustic timing candidates are available on localhost; it does not mean listening approval or publication.
 Approved means Joshua accepted the recording-specific lyric presentation for publication; it is not a claim of sample-perfect acoustic timing.
 
-Summary: {"approved":10,"excluded":15,"vocal-review":6,"missing":1,"instrumental":1,"text-complete":7}
+Summary: {"approved":10,"excluded":15,"vocal-review":6,"missing":1,"instrumental":1,"text-complete":9}
 
 1. [approved] songs/BTS - Butter.m4a
    52 timed lines; ./songs/lyrics/aligned/butter.json
@@ -56,35 +56,39 @@ Summary: {"approved":10,"excluded":15,"vocal-review":6,"missing":1,"instrumental
    27 timed lines; ./songs/lyrics/encore-dance.json
 24. [approved] songs/MIMI - Science.m4a
    64 timed lines; ./songs/lyrics/aligned/science-jp.json
-25. [approved] songs/MIMI feat. Hatsune Miku - Marshmary.m4a
+25. [text-complete] songs/MIMI feat. Hatsune Miku & KAFU - Kuu ni Naru.m4a
+   40 timed lines; ./songs/lyrics/kuu-ni-naru.json
+26. [approved] songs/MIMI feat. Hatsune Miku - Marshmary.m4a
    48 timed lines; ./songs/lyrics/aligned/marshmary.json
-26. [text-complete] songs/MIMI feat. Kasane Teto SV - Magic Maid.m4a
+27. [text-complete] songs/MIMI feat. Kasane Teto SV - Magic Maid.m4a
    48 timed lines; ./songs/lyrics/magic-maid.json
-27. [approved] songs/MIMI feat. Kasane Teto SV - Petal Lament.m4a
+28. [approved] songs/MIMI feat. Kasane Teto SV - Petal Lament.m4a
    25 timed lines; ./songs/lyrics/aligned/petal-lament.json
-28. [text-complete] songs/MIMI feat. Kasane Teto SV - Trick Heart.m4a
+29. [text-complete] songs/MIMI feat. Kasane Teto SV - Trick Heart.m4a
    54 timed lines; ./songs/lyrics/trick-heart.json
-29. [text-complete] songs/Moonlit Star - Encore Dance (English).m4a
+30. [text-complete] songs/Moonlit Star - Encore Dance (English).m4a
    31 timed lines; ./songs/lyrics/encore-dance.json
-30. [excluded] songs/Moonlit Star - Science (English).m4a
+31. [excluded] songs/Moonlit Star - Science (English).m4a
    Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
-31. [approved] songs/Moonlit Star - Window View (English).m4a
+32. [approved] songs/Moonlit Star - Window View (English).m4a
    45 timed lines; ./songs/lyrics/window-view-en.json
-32. [excluded] songs/Octosona - Machine Love (Piano).m4a
+33. [excluded] songs/Octosona - Machine Love (Piano).m4a
    Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
-33. [vocal-review] songs/rinboku - piano - Encore Dance (Piano).m4a
+34. [text-complete] songs/Okosama Lunch - Magic Maid.m4a
+   48 timed lines; ./songs/lyrics/magic-maid-okosama.json
+35. [vocal-review] songs/rinboku - piano - Encore Dance (Piano).m4a
    Needs: Confirm whether this rendition retains sung backing vocals.
-34. [excluded] songs/sinitaina - Ochame Kinou (Onvocal).m4a
+36. [excluded] songs/sinitaina - Ochame Kinou (Onvocal).m4a
    Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
-35. [vocal-review] songs/Sky - Encore Dance (Piano).m4a
+37. [vocal-review] songs/Sky - Encore Dance (Piano).m4a
    Needs: Confirm whether this rendition retains sung backing vocals.
-36. [excluded] songs/The8BitDrummer - Machine Love (Drums).m4a
+38. [excluded] songs/The8BitDrummer - Machine Love (Drums).m4a
    Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
-37. [excluded] songs/tripflag - Ochame Kinou (Old Teto).m4a
+39. [excluded] songs/tripflag - Ochame Kinou (Old Teto).m4a
    Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
-38. [excluded] songs/venvn - Machine Love (Acoustic).m4a
+40. [excluded] songs/venvn - Machine Love (Acoustic).m4a
    Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
-39. [excluded] songs/Yanny the Laurel - Machine Love (Piano Duo).m4a
+41. [excluded] songs/Yanny the Laurel - Machine Love (Piano Duo).m4a
    Joshua excluded this recording from the current lyric synchronization task on 2026-10-22.
-40. [text-complete] songs/Yoshida Yasei feat. Kasane Teto SV - Override.m4a
+42. [text-complete] songs/Yoshida Yasei feat. Kasane Teto SV - Override.m4a
    42 timed lines; ./songs/lyrics/override.json

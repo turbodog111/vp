@@ -1,0 +1,46 @@
+FIVE RECORDING IMPORT / 2026-11-06
+
+Secular:
+- Kuu ni Naru / MIMI feat. Hatsune Miku & KAFU / 154.215s
+- Kuu ni Naru / Okosama Lunch (おこさまランチ) / 154.688s
+- Override / Shirakami Fubuki feat. Kurokami Fubuki / 138.542s
+- Magic Maid / Okosama Lunch (おこさまランチ) / 161.280s
+Christian:
+- Peace on Earth / Phil Wickham & CeCe Winans / 276.373s
+
+All five are full AAC 192k / 48kHz stereo / faststart recordings, with explicit
+title and performer tags. Original composers are preserved separately in each
+songs/imports provenance record. Radio/playlist URL parameters were not used.
+Raw downloads and extractor metadata are outside the published repository in
+../five-song-import-20261106/. The original recordings in VP are unchanged.
+
+Kuu ni Naru:
+40 user-supplied Japanese lines; recommendations and duplicate ruby readings
+removed. Each recording has its own Japanese/kana-romaji acoustic alignment,
+English phrase-level meaning translation, native duration and audio fingerprint.
+The whole-recording aligner initially misplaced entrances after instrumental
+gaps. Independent recognition re-anchored those neighborhoods before bounded
+forced alignment. No sung text is fabricated during the instrumental breaks.
+Measured groups are kept when syllables cannot be timed separately. This is
+technical alignment, not a claim of separate human listening approval.
+Both versions share a moonlit-water/wind scene with unboxed central lyric lanes.
+
+Existing-song covers:
+Override shares the original renderer and supplied lyric content. Six multiband
+backing-track matches give coverTime = referenceTime * 1.0000523 - 0.04513s,
+with maximum residual under 0.005s. The cover has its own motion envelope.
+Magic Maid shares the original theater/content with a +1.720s recording offset
+confirmed at six positions. Its renderer and lyric cues use the same adjusted
+clock. The family now uses centered, higher-contrast text and compact controls.
+These matches measure accompaniment timing, not independent cover phonemes.
+Copied approval flags were cleared rather than inherited from the original.
+
+Peace on Earth has no added lyric timeline or special theater.
+
+Validation:
+126 Node tests and 12 Python tests passed, plus lyric registry coverage for all
+21 lyric-bearing player recordings. All four new lyric timelines validate.
+The five imports pass full decode, duration, SHA-256, size and duplicate checks.
+Browser checks: all five selections, cover switching, paused seek, live muted
+motion, three lyric lanes, compact bounds, FX gating and clean console.
+Preview: http://127.0.0.1:4187/.

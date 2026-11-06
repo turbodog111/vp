@@ -2,6 +2,22 @@ window.SongMotionFx = (() => {
   'use strict';
 
   const tracks = Object.freeze({
+    'songs/mimi feat. hatsune miku & kafu - kuu ni naru': Object.freeze({
+      key: 'kuu-ni-naru', theme: 'kuu-ni-naru', bpm: 83, beatOffset: .158,
+      title: 'Kuu ni Naru', data: './songs/motion/kuu-ni-naru.json',
+      source: 'https://www.youtube.com/watch?v=f6TytcA47rI'
+    }),
+    'songs/okosama lunch - kuu ni naru': Object.freeze({
+      key: 'kuu-ni-naru-okosama', theme: 'kuu-ni-naru', bpm: 83, beatOffset: .497,
+      title: 'Kuu ni Naru', data: './songs/motion/kuu-ni-naru-okosama.json',
+      source: 'https://www.youtube.com/watch?v=emSnkwlzfls'
+    }),
+    'songs/shirakami fubuki feat. kurokami fubuki - override': Object.freeze({
+      key: 'override-fubuki', theme: 'override', bpm: 203.99, beatOffset: 0,
+      title: 'Override', art: './songs/art/override.webp', data: './songs/motion/override-fubuki.json',
+      timelineOffset: -.04513, timelineScale: 1.0000523,
+      source: 'https://www.youtube.com/watch?v=mLMASFdWYng'
+    }),
     'songs/yoshida yasei feat. kasane teto sv - override': Object.freeze({
       key: 'override', theme: 'override', bpm: 204, beatOffset: 0.046,
       title: 'Override', art: './songs/art/override.webp',
@@ -565,7 +581,10 @@ window.SongMotionFx = (() => {
     if (reduced) m.pulse = 0;
     ctx.save(); ctx.globalCompositeOperation = 'source-over';
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    if (active.key === 'override') window.OverrideFx?.draw(ctx, w, h, { ...m, time, reducedMotion: reduced });
+    if (active.theme === 'override') window.OverrideFx?.draw(ctx, w, h, { ...m,
+      time: Math.max(0, (time - (active.timelineOffset || 0)) / (active.timelineScale || 1)), reducedMotion: reduced });
+    else if (active.theme === 'kuu-ni-naru') window.KuuFx?.draw(ctx, w, h, { ...m, time,
+      sections: cache.get(active.key)?.sections || [], reducedMotion: reduced });
     else if (active.key === 'petal-lament') drawPetal(ctx, w, h, time, m, active, reduced);
     else if (active.key === 'marshmary') drawMarshmary(ctx, w, h, time, m, active, reduced);
     else if (active.key === 'dynamite') drawDynamite(ctx, w, h, time, m, active, reduced);

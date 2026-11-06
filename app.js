@@ -36,6 +36,23 @@ const REFERENCE_VIDEO_TRACKS = {
 };
 
 const SUPPORTED_LYRIC_TRACKS = {
+  'songs/mimi feat. hatsune miku & kafu - kuu ni naru': {
+    dataUrl: './songs/lyrics/kuu-ni-naru.json', scene: 'parallel-lyrics',
+    visualTheme: 'kuu-ni-naru', variant: 'jp', lyricTitle: 'KUU NI NARU', hideSection: true
+  },
+  'songs/okosama lunch - kuu ni naru': {
+    dataUrl: './songs/lyrics/kuu-ni-naru-okosama.json', scene: 'parallel-lyrics',
+    visualTheme: 'kuu-ni-naru', variant: 'jp', lyricTitle: 'KUU NI NARU', hideSection: true
+  },
+  'songs/okosama lunch - magic maid': {
+    dataUrl: './songs/lyrics/magic-maid-okosama.json', scene: 'parallel-lyrics',
+    visualTheme: 'magic-maid', language: 'ja', lyricTitle: 'MAGIC MAID', hideSection: true,
+    timelineOffset: 1.72, timelineScale: 1
+  },
+  'songs/shirakami fubuki feat. kurokami fubuki - override': {
+    dataUrl: './songs/lyrics/override-fubuki.json', scene: 'parallel-lyrics',
+    visualTheme: 'override', variant: 'jp', lyricTitle: 'OVERRIDE', hideSection: true
+  },
   'songs/yoshida yasei feat. kasane teto sv - override': {
     dataUrl: './songs/lyrics/override.json',
     scene: 'parallel-lyrics',
@@ -969,10 +986,7 @@ function usesParallelLyrics(song = currentSong()) {
 }
 
 function isMagicMaidSong(song = currentSong()) {
-  if (!song) return false;
-  return [song.path, song.id, song.name]
-    .map(normalizeSongRef)
-    .includes('songs/mimi feat. kasane teto sv - magic maid');
+  return supportedLyricTrackForSong(song)?.visualTheme === 'magic-maid';
 }
 
 function isHeroStorySong(song = currentSong()) {
@@ -2492,11 +2506,12 @@ function setSongMotionFxActive(enabled) {
   document.body.classList.toggle('mimi-marshmary-active', config?.key === 'marshmary');
   document.body.classList.toggle('bts-dynamite-active', config?.key === 'dynamite');
   document.body.classList.toggle('bts-butter-active', config?.key === 'butter');
-  document.body.classList.toggle('override-active', config?.key === 'override');
+  document.body.classList.toggle('override-active', config?.theme === 'override');
+  document.body.classList.toggle('kuu-active', config?.theme === 'kuu-ni-naru');
   const artwork = $('song-motion-art');
   if (artwork) {
-    artwork.hidden = !config;
-    if (config) {
+    artwork.hidden = !config?.art;
+    if (config?.art) {
       artwork.href = config.source;
       artwork.title = `${config.title} - source video`;
       const image = artwork.querySelector('img');
@@ -2526,7 +2541,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   if (theme === renderedFxTheme && songId === renderedFxSongId) return;
   renderedFxTheme = theme;
   renderedFxSongId = songId;
-  setSongMotionFxActive(['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter', 'override'].includes(theme));
+  setSongMotionFxActive(['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter', 'override', 'kuu-ni-naru'].includes(theme));
   document.body.classList.toggle('fx-active', active);
   document.body.classList.toggle('disco-fx-active', theme === 'disco');
   document.body.classList.toggle('teto-fx-active', theme === 'teto');
@@ -9279,6 +9294,8 @@ function drawMagicMaidBow(ctx, x, y, size, colors, alpha, rotation = 0) {
 }
 
 function drawMagicMaidFx(levels, audioTime) {
+  const clock = supportedLyricTrackForSong();
+  audioTime = Math.max(0, (audioTime - (clock?.timelineOffset || 0)) / (clock?.timelineScale || 1));
   const canvas = $('teto-fx');
   if (!canvas) return;
   const ctx = canvas.getContext('2d', { alpha: true });
@@ -9530,7 +9547,7 @@ function drawTetoFx(level) {
   const theme = activeFxTheme();
   updateFxState(levels.glow);
   if (theme === 'off') return;
-  if (['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter', 'override'].includes(theme)) {
+  if (['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter', 'override', 'kuu-ni-naru'].includes(theme)) {
     window.SongMotionFx?.draw(ctx, w, h, { time: currentCalibratedTime(), energy: levels.glow });
     return;
   }

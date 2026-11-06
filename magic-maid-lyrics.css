@@ -1,0 +1,41 @@
+body.magic-maid-fx-active .now-stage { position: static; padding: 0; }
+body.magic-maid-fx-active .now-meta { position: absolute; left: 24px; top: 22px; max-width: 76%; }
+body.magic-maid-fx-active .now-meta h1 { font-size: 34px; }
+body.magic-maid-fx-active .now-kicker, body.magic-maid-fx-active .now-queue { display: none; }
+body.magic-maid-fx-active .now-subtitle { font-size: 13px; color: #efd7cd; }
+body.magic-maid-fx-active .hero-control { position: absolute; right: 24px; bottom: 18px; width: 100px; padding: 0; }
+body.magic-maid-fx-active .hero-play { width: 62px; height: 62px; }
+body.magic-maid-fx-active .hero-icon { font-size: 24px; }
+body.magic-maid-fx-active .hero-time { font-size: 11px; color: #fff7e6; }
+body.magic-maid-fx-active .trick-heart-overlay { inset: 26% 6% 27%; }
+body.magic-maid-fx-active .trick-heart-heading, body.magic-maid-fx-active .trick-heart-language { display: none; }
+body.magic-maid-fx-active .trick-heart-lyrics { height: 100%; min-height: 0; align-items: center; }
+body.magic-maid-fx-active .trick-heart-lane { flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10px 16px; }
+body.magic-maid-fx-active .trick-heart-line { font-size: 23px; line-height: 1.45; font-weight: 750; }
+body.magic-maid-fx-active .lane-en .trick-heart-line { font-size: 27px; }
+body.magic-maid-fx-active .lane-romaji .trick-heart-line { font-size: 20px; }
+body.magic-maid-fx-active #view-now .trick-heart-word { color: #f1d4e0; opacity: .9; text-shadow: 0 2px 4px #25152d; }
+body.magic-maid-fx-active #view-now .trick-heart-word.is-sung { color: #ffd58d; opacity: 1; }
+body.magic-maid-fx-active #view-now .lane-romaji .trick-heart-word.is-sung { color: #c6e8e4; }
+body.magic-maid-fx-active #view-now .trick-heart-word.is-current { color: #fff; opacity: 1; }
+@media (max-width: 780px) {
+  body.magic-maid-fx-active .now-meta { left: 18px; top: 16px; max-width: 90%; }
+  body.magic-maid-fx-active .now-meta h1 { font-size: 28px; }
+  body.magic-maid-fx-active .trick-heart-overlay { inset: 25% 22px 26%; }
+  body.magic-maid-fx-active .trick-heart-lyrics { display: flex; flex-direction: column; justify-content: center; gap: 7px; }
+  body.magic-maid-fx-active .trick-heart-lane { width: 100%; padding: 0; }
+  body.magic-maid-fx-active .lane-jp { order: 0; }
+  body.magic-maid-fx-active .lane-romaji { order: 1; }
+  body.magic-maid-fx-active .lane-en { order: 2; }
+  body.magic-maid-fx-active .trick-heart-line { font-size: 21px; }
+  body.magic-maid-fx-active .lane-en .trick-heart-line { font-size: 23px; }
+  body.magic-maid-fx-active .lane-romaji .trick-heart-line { font-size: 18px; }
+  body.magic-maid-fx-active .hero-control { width: 90px; right: 16px; bottom: 14px; }
+  body.magic-maid-fx-active .hero-play { width: 54px; height: 54px; }
+}
+@media (max-height: 540px) and (min-width: 781px) {
+  body.magic-maid-fx-active .now-meta h1 { font-size: 25px; }
+  body.magic-maid-fx-active .trick-heart-line { font-size: 18px; }
+  body.magic-maid-fx-active .lane-en .trick-heart-line { font-size: 21px; }
+  body.magic-maid-fx-active .lane-romaji .trick-heart-line { font-size: 17px; }
+}

@@ -1,0 +1,13 @@
+{
+  "recording": "songs/christian/Phil Wickham & CeCe Winans - Peace on Earth.m4a",
+  "title": "Peace on Earth",
+  "artist": "Phil Wickham & CeCe Winans",
+  "source": "https://www.youtube.com/watch?v=XKuuIuYiqHU",
+  "sourceTitle": "Phil Wickham, CeCe Winans - Peace On Earth (Official Lyric Video)",
+  "sourceUploader": "Phil Wickham",
+  "duration": 276.373333,
+  "encoding": "AAC 192k / 48kHz stereo / faststart; full recording, no tempo or gain editing",
+  "sourceAudioSha256": "7373b5192a44505e4e5a2af5a4e140be2369b367c9d91f11fd7acf5440d78549",
+  "outputAudioSha256": "1518873c1aa254bc00c39770e91654605a25360a893fc298c64c81f974d8b384",
+  "importDate": "2026-11-06"
+}

@@ -1,0 +1,15 @@
+{
+  "recording": "songs/Okosama Lunch - Magic Maid.m4a",
+  "title": "Magic Maid",
+  "artist": "Okosama Lunch",
+  "source": "https://www.youtube.com/watch?v=WGG24fmA86c",
+  "sourceTitle": "『マジックメイド』- MIMI / covered by おこさまランチ",
+  "sourceUploader": "おこさまランチ",
+  "duration": 161.28,
+  "encoding": "AAC 192k / 48kHz stereo / faststart; full recording, no tempo or gain editing",
+  "sourceAudioSha256": "ef933e35059a173499347f889fa243a8ed6bf729c618b16ff3a897e8710ba277",
+  "outputAudioSha256": "59f35ef9de168a89a9f0c0c1e09a011bb44319d3af2cb9acffad313cdc2b6eda",
+  "importDate": "2026-11-06",
+  "originalMusicLyrics": "MIMI",
+  "performerOriginalName": "おこさまランチ"
+}

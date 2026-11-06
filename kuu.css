@@ -1,0 +1,43 @@
+body.kuu-active { --accent: #bddbd3; --accent-2: #fff2ce; --accent-fg: #234650; --motion-ink: #234650; --motion-muted: #44616b; }
+body.kuu-active #view-now.active { background: #d8e7ea; }
+body.kuu-active .now-stage { position: static; padding: 0; }
+body.kuu-active .now-meta { position: absolute; left: 25px; top: 23px; max-width: 78%; }
+body.kuu-active .now-meta h1 { font-size: 34px; color: #234650; text-shadow: none; }
+body.kuu-active .now-kicker { display: none; }
+body.kuu-active .now-subtitle { font-size: 13px; color: #44616b; }
+body.kuu-active .hero-control { position: absolute; right: 24px; bottom: 18px; width: 100px; padding: 0; }
+body.kuu-active .hero-play { height: 62px; width: 62px; color: #234650; background: #fff7df; }
+body.kuu-active .hero-icon { font-size: 24px; }
+body.kuu-active .hero-time { font-size: 11px; color: #fff; text-shadow: 0 1px 3px #234650; }
+body.kuu-active .trick-heart-overlay { inset: 27% 6% 26%; }
+body.kuu-active .trick-heart-heading, body.kuu-active .trick-heart-language { display: none; }
+body.kuu-active .trick-heart-lyrics { height: 100%; min-height: 0; align-items: center; }
+body.kuu-active .trick-heart-lane { flex-direction: column; justify-content: center; align-items: center; text-align: center; background: none; border: 0; padding: 10px 16px; }
+body.kuu-active .trick-heart-line { font-size: 23px; line-height: 1.45; font-weight: 750; text-shadow: none; }
+body.kuu-active .lane-en .trick-heart-line { font-size: 27px; }
+body.kuu-active .lane-romaji .trick-heart-line { font-size: 20px; font-style: normal; }
+body.kuu-active #view-now .trick-heart-word { color: #4c6872; opacity: 1; text-shadow: none; }
+body.kuu-active #view-now .trick-heart-word.is-sung { color: #913a64; }
+body.kuu-active #view-now .trick-heart-word.is-current { color: #18343d; text-shadow: 1px 1px #fff7df; }
+body.kuu-active #play { background: #bddbd3; color: #234650; }
+@media (max-width: 780px) {
+  body.kuu-active .now-meta { top: 16px; left: 18px; max-width: 90%; }
+  body.kuu-active .now-meta h1 { font-size: 28px; }
+  body.kuu-active .trick-heart-overlay { inset: 25% 22px 26%; }
+  body.kuu-active .trick-heart-lyrics { display: flex; flex-direction: column; justify-content: center; gap: 7px; }
+  body.kuu-active .trick-heart-lane { width: 100%; padding: 0; }
+  body.kuu-active .lane-jp { order: 0; }
+  body.kuu-active .lane-romaji { order: 1; }
+  body.kuu-active .lane-en { order: 2; }
+  body.kuu-active .trick-heart-line { font-size: 21px; }
+  body.kuu-active .lane-en .trick-heart-line { font-size: 23px; }
+  body.kuu-active .lane-romaji .trick-heart-line { font-size: 18px; }
+  body.kuu-active .hero-control { width: 90px; right: 16px; bottom: 14px; }
+  body.kuu-active .hero-play { width: 54px; height: 54px; }
+}
+@media (max-height: 540px) and (min-width: 781px) {
+  body.kuu-active .now-meta h1 { font-size: 25px; }
+  body.kuu-active .trick-heart-line { font-size: 18px; }
+  body.kuu-active .lane-en .trick-heart-line { font-size: 21px; }
+  body.kuu-active .lane-romaji .trick-heart-line { font-size: 17px; }
+}

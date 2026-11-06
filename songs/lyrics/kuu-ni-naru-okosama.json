@@ -1,0 +1,4144 @@
+{
+  "song": "Kuu ni Naru",
+  "artist": "Okosama Lunch",
+  "duration": 154.688021,
+  "language": "ja",
+  "variants": {
+    "jp": {
+      "label": "JAPANESE / ROMAJI / ENGLISH",
+      "lines": [
+        {
+          "id": "kuu-01",
+          "text": "嗚呼何も分からないから",
+          "jp": [
+            "嗚呼何も分からないから"
+          ],
+          "romaji": [
+            "aa nani mo wakaranai kara"
+          ],
+          "en": [
+            "Ah, because I don't understand anything"
+          ],
+          "start": 7.6,
+          "end": 10.36,
+          "words": [
+            {
+              "word": "嗚",
+              "start": 7.6,
+              "end": 8.0
+            },
+            {
+              "word": "呼",
+              "start": 8.0,
+              "end": 8.16
+            },
+            {
+              "word": "何",
+              "start": 8.16,
+              "end": 8.48
+            },
+            {
+              "word": "も",
+              "start": 8.48,
+              "end": 8.9
+            },
+            {
+              "word": "分",
+              "start": 8.9,
+              "end": 9.3
+            },
+            {
+              "word": "から",
+              "start": 9.3,
+              "end": 9.64
+            },
+            {
+              "word": "ない",
+              "start": 9.64,
+              "end": 9.96
+            },
+            {
+              "word": "から",
+              "start": 9.96,
+              "end": 10.34
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "aa",
+              "start": 7.6,
+              "end": 8.06
+            },
+            {
+              "word": "nani",
+              "start": 8.06,
+              "end": 8.7
+            },
+            {
+              "word": "mo",
+              "start": 8.7,
+              "end": 8.96
+            },
+            {
+              "word": "wakaranai",
+              "start": 9.18,
+              "end": 9.94
+            },
+            {
+              "word": "kara",
+              "start": 9.94,
+              "end": 10.36
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Ah, because I don't understand anything",
+              "start": 7.6,
+              "end": 10.36
+            }
+          ]
+        },
+        {
+          "id": "kuu-02",
+          "text": "憂いを数えている",
+          "jp": [
+            "憂いを数えている"
+          ],
+          "romaji": [
+            "urei o kazoete iru"
+          ],
+          "en": [
+            "I keep counting my sorrows"
+          ],
+          "start": 10.5,
+          "end": 12.48,
+          "words": [
+            {
+              "word": "憂",
+              "start": 10.5,
+              "end": 10.98
+            },
+            {
+              "word": "い",
+              "start": 10.98,
+              "end": 11.2
+            },
+            {
+              "word": "を",
+              "start": 11.2,
+              "end": 11.5
+            },
+            {
+              "word": "数",
+              "start": 11.5,
+              "end": 11.78
+            },
+            {
+              "word": "えて",
+              "start": 11.78,
+              "end": 12.1
+            },
+            {
+              "word": "いる",
+              "start": 12.1,
+              "end": 12.48
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "urei",
+              "start": 10.5,
+              "end": 11.24
+            },
+            {
+              "word": "o",
+              "start": 11.24,
+              "end": 11.46
+            },
+            {
+              "word": "kazoete",
+              "start": 11.46,
+              "end": 12.12
+            },
+            {
+              "word": "iru",
+              "start": 12.24,
+              "end": 12.48
+            }
+          ],
+          "enWords": [
+            {
+              "word": "I keep counting my sorrows",
+              "start": 10.5,
+              "end": 12.48
+            }
+          ]
+        },
+        {
+          "id": "kuu-03",
+          "text": "きっと見えないまま落ちてった",
+          "jp": [
+            "きっと見えないまま落ちてった"
+          ],
+          "romaji": [
+            "kitto mienai mama ochitetta"
+          ],
+          "en": [
+            "They must have fallen out of sight"
+          ],
+          "start": 13.07,
+          "end": 16.11,
+          "words": [
+            {
+              "word": "き",
+              "start": 13.07,
+              "end": 13.59
+            },
+            {
+              "word": "っと",
+              "start": 13.59,
+              "end": 13.99
+            },
+            {
+              "word": "見",
+              "start": 13.99,
+              "end": 14.31
+            },
+            {
+              "word": "え",
+              "start": 14.31,
+              "end": 14.55
+            },
+            {
+              "word": "ない",
+              "start": 14.55,
+              "end": 14.87
+            },
+            {
+              "word": "ま",
+              "start": 14.87,
+              "end": 15.03
+            },
+            {
+              "word": "ま",
+              "start": 15.03,
+              "end": 15.27
+            },
+            {
+              "word": "落",
+              "start": 15.27,
+              "end": 15.43
+            },
+            {
+              "word": "ち",
+              "start": 15.43,
+              "end": 15.57
+            },
+            {
+              "word": "て",
+              "start": 15.57,
+              "end": 15.79
+            },
+            {
+              "word": "った",
+              "start": 15.79,
+              "end": 16.11
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "kitto",
+              "start": 13.07,
+              "end": 13.95
+            },
+            {
+              "word": "mienai",
+              "start": 13.95,
+              "end": 14.77
+            },
+            {
+              "word": "mama",
+              "start": 14.77,
+              "end": 15.23
+            },
+            {
+              "word": "ochitetta",
+              "start": 15.23,
+              "end": 16.11
+            }
+          ],
+          "enWords": [
+            {
+              "word": "They must have fallen out of sight",
+              "start": 13.07,
+              "end": 16.11
+            }
+          ]
+        },
+        {
+          "id": "kuu-04",
+          "text": "言の葉の欠片とか",
+          "jp": [
+            "言の葉の欠片とか"
+          ],
+          "romaji": [
+            "kotonoha no kakera toka"
+          ],
+          "en": [
+            "Those fragments of words"
+          ],
+          "start": 16.26,
+          "end": 18.26,
+          "words": [
+            {
+              "word": "言",
+              "start": 16.26,
+              "end": 16.56
+            },
+            {
+              "word": "の",
+              "start": 16.56,
+              "end": 17.0
+            },
+            {
+              "word": "葉",
+              "start": 17.0,
+              "end": 17.18
+            },
+            {
+              "word": "の",
+              "start": 17.18,
+              "end": 17.42
+            },
+            {
+              "word": "欠",
+              "start": 17.42,
+              "end": 17.7
+            },
+            {
+              "word": "片",
+              "start": 17.7,
+              "end": 17.9
+            },
+            {
+              "word": "とか",
+              "start": 17.9,
+              "end": 18.24
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "kotonoha",
+              "start": 16.26,
+              "end": 17.12
+            },
+            {
+              "word": "no",
+              "start": 17.12,
+              "end": 17.38
+            },
+            {
+              "word": "kakera",
+              "start": 17.38,
+              "end": 17.9
+            },
+            {
+              "word": "toka",
+              "start": 17.9,
+              "end": 18.26
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Those fragments of words",
+              "start": 16.26,
+              "end": 18.26
+            }
+          ]
+        },
+        {
+          "id": "kuu-05",
+          "text": "嗚呼寂しいから連れ出して",
+          "jp": [
+            "嗚呼寂しいから連れ出して"
+          ],
+          "romaji": [
+            "aa samishii kara tsuredashite"
+          ],
+          "en": [
+            "Ah, I'm lonely, so take me away"
+          ],
+          "start": 19.36,
+          "end": 21.88,
+          "words": [
+            {
+              "word": "嗚",
+              "start": 19.36,
+              "end": 19.66
+            },
+            {
+              "word": "呼",
+              "start": 19.66,
+              "end": 19.74
+            },
+            {
+              "word": "寂",
+              "start": 19.74,
+              "end": 20.32
+            },
+            {
+              "word": "しい",
+              "start": 20.32,
+              "end": 20.6
+            },
+            {
+              "word": "から",
+              "start": 20.6,
+              "end": 20.98
+            },
+            {
+              "word": "連",
+              "start": 20.98,
+              "end": 21.22
+            },
+            {
+              "word": "れ",
+              "start": 21.22,
+              "end": 21.38
+            },
+            {
+              "word": "出",
+              "start": 21.38,
+              "end": 21.52
+            },
+            {
+              "word": "して",
+              "start": 21.52,
+              "end": 21.88
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "aa",
+              "start": 19.36,
+              "end": 19.66
+            },
+            {
+              "word": "samishii",
+              "start": 19.66,
+              "end": 20.58
+            },
+            {
+              "word": "kara",
+              "start": 20.58,
+              "end": 21.0
+            },
+            {
+              "word": "tsuredashite",
+              "start": 21.0,
+              "end": 21.8
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Ah, I'm lonely, so take me away",
+              "start": 19.36,
+              "end": 21.88
+            }
+          ]
+        },
+        {
+          "id": "kuu-06",
+          "text": "また月明かりの信号",
+          "jp": [
+            "また月明かりの信号"
+          ],
+          "romaji": [
+            "mata tsukiakari no shingou"
+          ],
+          "en": [
+            "Another signal in the moonlight"
+          ],
+          "start": 22.0,
+          "end": 24.22,
+          "words": [
+            {
+              "word": "また",
+              "start": 22.0,
+              "end": 22.42
+            },
+            {
+              "word": "月",
+              "start": 22.42,
+              "end": 22.72
+            },
+            {
+              "word": "明",
+              "start": 22.72,
+              "end": 23.02
+            },
+            {
+              "word": "か",
+              "start": 23.02,
+              "end": 23.22
+            },
+            {
+              "word": "り",
+              "start": 23.22,
+              "end": 23.34
+            },
+            {
+              "word": "の",
+              "start": 23.34,
+              "end": 23.52
+            },
+            {
+              "word": "信",
+              "start": 23.52,
+              "end": 23.7
+            },
+            {
+              "word": "号",
+              "start": 23.7,
+              "end": 24.12
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "mata",
+              "start": 22.0,
+              "end": 22.38
+            },
+            {
+              "word": "tsukiakari",
+              "start": 22.38,
+              "end": 23.34
+            },
+            {
+              "word": "no",
+              "start": 23.34,
+              "end": 23.48
+            },
+            {
+              "word": "shingou",
+              "start": 23.48,
+              "end": 24.22
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Another signal in the moonlight",
+              "start": 22.0,
+              "end": 24.22
+            }
+          ]
+        },
+        {
+          "id": "kuu-07",
+          "text": "じゃあねそして会えた時には",
+          "jp": [
+            "じゃあねそして会えた時には"
+          ],
+          "romaji": [
+            "jaa ne soshite aeta toki ni wa"
+          ],
+          "en": [
+            "See you; and when we meet again"
+          ],
+          "start": 24.38,
+          "end": 27.72,
+          "words": [
+            {
+              "word": "じゃあ",
+              "start": 24.38,
+              "end": 25.22
+            },
+            {
+              "word": "ね",
+              "start": 25.22,
+              "end": 25.56
+            },
+            {
+              "word": "そして",
+              "start": 25.56,
+              "end": 25.94
+            },
+            {
+              "word": "会",
+              "start": 25.94,
+              "end": 26.62
+            },
+            {
+              "word": "え",
+              "start": 26.62,
+              "end": 26.82
+            },
+            {
+              "word": "た",
+              "start": 26.82,
+              "end": 26.98
+            },
+            {
+              "word": "時",
+              "start": 26.98,
+              "end": 27.22
+            },
+            {
+              "word": "には",
+              "start": 27.22,
+              "end": 27.68
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "jaa",
+              "start": 24.65,
+              "end": 25.2
+            },
+            {
+              "word": "ne",
+              "start": 25.2,
+              "end": 25.54
+            },
+            {
+              "word": "soshite",
+              "start": 25.54,
+              "end": 26.26
+            },
+            {
+              "word": "aeta",
+              "start": 26.26,
+              "end": 26.94
+            },
+            {
+              "word": "toki",
+              "start": 26.94,
+              "end": 27.3
+            },
+            {
+              "word": "ni",
+              "start": 27.3,
+              "end": 27.52
+            },
+            {
+              "word": "wa",
+              "start": 27.7,
+              "end": 27.72
+            }
+          ],
+          "enWords": [
+            {
+              "word": "See you; and when we meet again",
+              "start": 24.38,
+              "end": 27.72
+            }
+          ]
+        },
+        {
+          "id": "kuu-08",
+          "text": "手を繋いで踊りましょ",
+          "jp": [
+            "手を繋いで踊りましょ"
+          ],
+          "romaji": [
+            "te o tsunaide odorimasho"
+          ],
+          "en": [
+            "Let's hold hands and dance"
+          ],
+          "start": 27.82,
+          "end": 29.88,
+          "words": [
+            {
+              "word": "手",
+              "start": 27.82,
+              "end": 28.04
+            },
+            {
+              "word": "を",
+              "start": 28.04,
+              "end": 28.32
+            },
+            {
+              "word": "繋",
+              "start": 28.32,
+              "end": 28.64
+            },
+            {
+              "word": "い",
+              "start": 28.64,
+              "end": 28.8
+            },
+            {
+              "word": "で",
+              "start": 28.8,
+              "end": 29.02
+            },
+            {
+              "word": "踊",
+              "start": 29.02,
+              "end": 29.32
+            },
+            {
+              "word": "り",
+              "start": 29.32,
+              "end": 29.48
+            },
+            {
+              "word": "ま",
+              "start": 29.48,
+              "end": 29.72
+            },
+            {
+              "word": "しょ",
+              "start": 29.72,
+              "end": 29.88
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "te",
+              "start": 27.82,
+              "end": 28.04
+            },
+            {
+              "word": "o",
+              "start": 28.04,
+              "end": 28.28
+            },
+            {
+              "word": "tsunaide",
+              "start": 28.28,
+              "end": 28.96
+            },
+            {
+              "word": "odorimasho",
+              "start": 28.96,
+              "end": 29.86
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Let's hold hands and dance",
+              "start": 27.82,
+              "end": 29.88
+            }
+          ]
+        },
+        {
+          "id": "kuu-09",
+          "text": "今日も今日も眠れないから",
+          "jp": [
+            "今日も今日も眠れないから"
+          ],
+          "romaji": [
+            "kyou mo kyou mo nemurenai kara"
+          ],
+          "en": [
+            "Again today, I cannot sleep"
+          ],
+          "start": 29.94,
+          "end": 32.74,
+          "words": [
+            {
+              "word": "今日",
+              "start": 29.94,
+              "end": 30.34
+            },
+            {
+              "word": "も",
+              "start": 30.34,
+              "end": 30.82
+            },
+            {
+              "word": "今日",
+              "start": 30.82,
+              "end": 30.98
+            },
+            {
+              "word": "も",
+              "start": 30.98,
+              "end": 31.38
+            },
+            {
+              "word": "眠",
+              "start": 31.38,
+              "end": 31.84
+            },
+            {
+              "word": "れない",
+              "start": 31.84,
+              "end": 32.24
+            },
+            {
+              "word": "から",
+              "start": 32.24,
+              "end": 32.74
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "kyou",
+              "start": 29.94,
+              "end": 30.44
+            },
+            {
+              "word": "mo",
+              "start": 30.44,
+              "end": 30.64
+            },
+            {
+              "word": "kyou",
+              "start": 30.64,
+              "end": 31.14
+            },
+            {
+              "word": "mo",
+              "start": 31.14,
+              "end": 31.34
+            },
+            {
+              "word": "nemurenai",
+              "start": 31.34,
+              "end": 32.16
+            },
+            {
+              "word": "kara",
+              "start": 32.16,
+              "end": 32.74
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Again today, I cannot sleep",
+              "start": 29.94,
+              "end": 32.74
+            }
+          ]
+        },
+        {
+          "id": "kuu-10",
+          "text": "僕は僕は夜と友達",
+          "jp": [
+            "僕は僕は夜と友達"
+          ],
+          "romaji": [
+            "boku wa boku wa yoru to tomodachi"
+          ],
+          "en": [
+            "So I make friends with the night"
+          ],
+          "start": 32.76,
+          "end": 35.58,
+          "words": [
+            {
+              "word": "僕",
+              "start": 32.76,
+              "end": 33.2
+            },
+            {
+              "word": "は",
+              "start": 33.2,
+              "end": 33.52
+            },
+            {
+              "word": "僕",
+              "start": 33.52,
+              "end": 33.88
+            },
+            {
+              "word": "は",
+              "start": 33.88,
+              "end": 34.32
+            },
+            {
+              "word": "夜",
+              "start": 34.32,
+              "end": 34.68
+            },
+            {
+              "word": "と",
+              "start": 34.68,
+              "end": 34.94
+            },
+            {
+              "word": "友",
+              "start": 34.94,
+              "end": 35.26
+            },
+            {
+              "word": "達",
+              "start": 35.26,
+              "end": 35.58
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "boku",
+              "start": 32.78,
+              "end": 33.28
+            },
+            {
+              "word": "wa",
+              "start": 33.46,
+              "end": 33.5
+            },
+            {
+              "word": "boku",
+              "start": 33.5,
+              "end": 34.04
+            },
+            {
+              "word": "wa",
+              "start": 34.22,
+              "end": 34.26
+            },
+            {
+              "word": "yoru",
+              "start": 34.26,
+              "end": 34.74
+            },
+            {
+              "word": "to",
+              "start": 34.74,
+              "end": 34.94
+            },
+            {
+              "word": "tomodachi",
+              "start": 34.94,
+              "end": 35.58
+            }
+          ],
+          "enWords": [
+            {
+              "word": "So I make friends with the night",
+              "start": 32.76,
+              "end": 35.58
+            }
+          ]
+        },
+        {
+          "id": "kuu-11",
+          "text": "いつかいつか笑えるのなら",
+          "jp": [
+            "いつかいつか笑えるのなら"
+          ],
+          "romaji": [
+            "itsuka itsuka waraeru no nara"
+          ],
+          "en": [
+            "If someday I can smile"
+          ],
+          "start": 35.61,
+          "end": 38.51,
+          "words": [
+            {
+              "word": "いつ",
+              "start": 35.61,
+              "end": 36.19
+            },
+            {
+              "word": "か",
+              "start": 36.19,
+              "end": 36.45
+            },
+            {
+              "word": "いつ",
+              "start": 36.45,
+              "end": 36.85
+            },
+            {
+              "word": "か",
+              "start": 36.85,
+              "end": 37.15
+            },
+            {
+              "word": "笑",
+              "start": 37.15,
+              "end": 37.59
+            },
+            {
+              "word": "える",
+              "start": 37.59,
+              "end": 38.01
+            },
+            {
+              "word": "の",
+              "start": 38.01,
+              "end": 38.19
+            },
+            {
+              "word": "なら",
+              "start": 38.19,
+              "end": 38.45
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "itsuka",
+              "start": 35.61,
+              "end": 36.45
+            },
+            {
+              "word": "itsuka",
+              "start": 36.45,
+              "end": 37.15
+            },
+            {
+              "word": "waraeru",
+              "start": 37.41,
+              "end": 37.99
+            },
+            {
+              "word": "no",
+              "start": 37.99,
+              "end": 38.19
+            },
+            {
+              "word": "nara",
+              "start": 38.19,
+              "end": 38.51
+            }
+          ],
+          "enWords": [
+            {
+              "word": "If someday I can smile",
+              "start": 35.61,
+              "end": 38.51
+            }
+          ]
+        },
+        {
+          "id": "kuu-12",
+          "text": "今だけは泣いちゃうことくらい",
+          "jp": [
+            "今だけは泣いちゃうことくらい"
+          ],
+          "romaji": [
+            "ima dake wa naichau koto kurai"
+          ],
+          "en": [
+            "At least let me cry for now"
+          ],
+          "start": 38.55,
+          "end": 41.32,
+          "words": [
+            {
+              "word": "今",
+              "start": 38.68,
+              "end": 39.28
+            },
+            {
+              "word": "だけ",
+              "start": 39.28,
+              "end": 39.52
+            },
+            {
+              "word": "は",
+              "start": 39.52,
+              "end": 39.86
+            },
+            {
+              "word": "泣",
+              "start": 39.86,
+              "end": 40.06
+            },
+            {
+              "word": "い",
+              "start": 40.06,
+              "end": 40.18
+            },
+            {
+              "word": "ちゃ",
+              "start": 40.18,
+              "end": 40.34
+            },
+            {
+              "word": "う",
+              "start": 40.34,
+              "end": 40.6
+            },
+            {
+              "word": "こと",
+              "start": 40.6,
+              "end": 40.88
+            },
+            {
+              "word": "く",
+              "start": 40.88,
+              "end": 41.1
+            },
+            {
+              "word": "らい",
+              "start": 41.1,
+              "end": 41.32
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "ima",
+              "start": 38.55,
+              "end": 39.28
+            },
+            {
+              "word": "dake wa",
+              "start": 39.28,
+              "end": 39.62
+            },
+            {
+              "word": "naichau",
+              "start": 39.82,
+              "end": 40.6
+            },
+            {
+              "word": "koto",
+              "start": 40.6,
+              "end": 40.88
+            },
+            {
+              "word": "kurai",
+              "start": 40.88,
+              "end": 41.3
+            }
+          ],
+          "enWords": [
+            {
+              "word": "At least let me cry for now",
+              "start": 38.55,
+              "end": 41.32
+            }
+          ]
+        },
+        {
+          "id": "kuu-13",
+          "text": "空っぽになる心の裏が",
+          "jp": [
+            "空っぽになる心の裏が"
+          ],
+          "romaji": [
+            "karappo ni naru kokoro no ura ga"
+          ],
+          "en": [
+            "Behind this heart becoming empty"
+          ],
+          "start": 41.4,
+          "end": 44.36,
+          "words": [
+            {
+              "word": "空",
+              "start": 41.4,
+              "end": 41.96
+            },
+            {
+              "word": "っぽ",
+              "start": 41.96,
+              "end": 42.36
+            },
+            {
+              "word": "にな",
+              "start": 42.36,
+              "end": 42.64
+            },
+            {
+              "word": "る",
+              "start": 42.64,
+              "end": 42.96
+            },
+            {
+              "word": "心",
+              "start": 42.96,
+              "end": 43.36
+            },
+            {
+              "word": "の",
+              "start": 43.36,
+              "end": 43.78
+            },
+            {
+              "word": "裏",
+              "start": 43.78,
+              "end": 44.16
+            },
+            {
+              "word": "が",
+              "start": 44.16,
+              "end": 44.36
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "karappo",
+              "start": 41.4,
+              "end": 42.36
+            },
+            {
+              "word": "ni",
+              "start": 42.36,
+              "end": 42.5
+            },
+            {
+              "word": "naru",
+              "start": 42.5,
+              "end": 42.9
+            },
+            {
+              "word": "kokoro",
+              "start": 42.9,
+              "end": 43.54
+            },
+            {
+              "word": "no",
+              "start": 43.54,
+              "end": 43.78
+            },
+            {
+              "word": "ura",
+              "start": 43.78,
+              "end": 44.14
+            },
+            {
+              "word": "ga",
+              "start": 44.14,
+              "end": 44.32
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Behind this heart becoming empty",
+              "start": 41.4,
+              "end": 44.36
+            }
+          ]
+        },
+        {
+          "id": "kuu-14",
+          "text": "チクリチクリ 痛いの明日も",
+          "jp": [
+            "チクリチクリ 痛いの明日も"
+          ],
+          "romaji": [
+            "chikuri chikuri itai no ashita mo"
+          ],
+          "en": [
+            "It pricks and aches, tomorrow too"
+          ],
+          "start": 44.39,
+          "end": 47.23,
+          "words": [
+            {
+              "word": "チ",
+              "start": 44.39,
+              "end": 44.67
+            },
+            {
+              "word": "ク",
+              "start": 44.67,
+              "end": 44.89
+            },
+            {
+              "word": "リ",
+              "start": 44.89,
+              "end": 45.09
+            },
+            {
+              "word": "チ",
+              "start": 45.09,
+              "end": 45.39
+            },
+            {
+              "word": "ク",
+              "start": 45.39,
+              "end": 45.59
+            },
+            {
+              "word": "リ",
+              "start": 45.59,
+              "end": 45.85
+            },
+            {
+              "word": "痛",
+              "start": 46.03,
+              "end": 46.25
+            },
+            {
+              "word": "い",
+              "start": 46.25,
+              "end": 46.51
+            },
+            {
+              "word": "の",
+              "start": 46.51,
+              "end": 46.69
+            },
+            {
+              "word": "明",
+              "start": 46.69,
+              "end": 46.99
+            },
+            {
+              "word": "日",
+              "start": 46.99,
+              "end": 47.09
+            },
+            {
+              "word": "も",
+              "start": 47.09,
+              "end": 47.23
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "chikuri",
+              "start": 44.39,
+              "end": 45.11
+            },
+            {
+              "word": "chikuri",
+              "start": 45.11,
+              "end": 45.85
+            },
+            {
+              "word": "itai",
+              "start": 46.03,
+              "end": 46.51
+            },
+            {
+              "word": "no",
+              "start": 46.51,
+              "end": 46.69
+            },
+            {
+              "word": "ashita",
+              "start": 46.69,
+              "end": 47.05
+            },
+            {
+              "word": "mo",
+              "start": 47.05,
+              "end": 47.23
+            }
+          ],
+          "enWords": [
+            {
+              "word": "It pricks and aches, tomorrow too",
+              "start": 44.39,
+              "end": 47.23
+            }
+          ]
+        },
+        {
+          "id": "kuu-15",
+          "text": "見えないままに 息を続ける",
+          "jp": [
+            "見えないままに 息を続ける"
+          ],
+          "romaji": [
+            "mienai mama ni iki o tsuzukeru"
+          ],
+          "en": [
+            "Unable to see, I keep on breathing"
+          ],
+          "start": 47.38,
+          "end": 50.08,
+          "words": [
+            {
+              "word": "見",
+              "start": 47.38,
+              "end": 47.62
+            },
+            {
+              "word": "え",
+              "start": 47.62,
+              "end": 47.84
+            },
+            {
+              "word": "ない",
+              "start": 47.84,
+              "end": 48.1
+            },
+            {
+              "word": "ま",
+              "start": 48.1,
+              "end": 48.28
+            },
+            {
+              "word": "ま",
+              "start": 48.28,
+              "end": 48.5
+            },
+            {
+              "word": "に",
+              "start": 48.5,
+              "end": 48.76
+            },
+            {
+              "word": "息",
+              "start": 48.9,
+              "end": 49.12
+            },
+            {
+              "word": "を",
+              "start": 49.12,
+              "end": 49.42
+            },
+            {
+              "word": "続",
+              "start": 49.42,
+              "end": 49.68
+            },
+            {
+              "word": "ける",
+              "start": 49.68,
+              "end": 50.08
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "mienai",
+              "start": 47.38,
+              "end": 48.06
+            },
+            {
+              "word": "mama",
+              "start": 48.06,
+              "end": 48.48
+            },
+            {
+              "word": "ni",
+              "start": 48.48,
+              "end": 48.72
+            },
+            {
+              "word": "iki",
+              "start": 48.72,
+              "end": 49.18
+            },
+            {
+              "word": "o",
+              "start": 49.18,
+              "end": 49.42
+            },
+            {
+              "word": "tsuzukeru",
+              "start": 49.42,
+              "end": 49.98
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Unable to see, I keep on breathing",
+              "start": 47.38,
+              "end": 50.08
+            }
+          ]
+        },
+        {
+          "id": "kuu-16",
+          "text": "なんにも知らないから風になる 嗚呼",
+          "jp": [
+            "なんにも知らないから風になる 嗚呼"
+          ],
+          "romaji": [
+            "nan ni mo shiranai kara kaze ni naru aa"
+          ],
+          "en": [
+            "Knowing nothing, I become the wind, ah"
+          ],
+          "start": 50.1,
+          "end": 53.64,
+          "words": [
+            {
+              "word": "なん",
+              "start": 50.1,
+              "end": 50.54
+            },
+            {
+              "word": "に",
+              "start": 50.54,
+              "end": 50.82
+            },
+            {
+              "word": "も",
+              "start": 50.82,
+              "end": 51.06
+            },
+            {
+              "word": "知",
+              "start": 51.06,
+              "end": 51.16
+            },
+            {
+              "word": "ら",
+              "start": 51.16,
+              "end": 51.34
+            },
+            {
+              "word": "ない",
+              "start": 51.34,
+              "end": 51.7
+            },
+            {
+              "word": "から",
+              "start": 51.7,
+              "end": 52.02
+            },
+            {
+              "word": "風",
+              "start": 52.02,
+              "end": 52.34
+            },
+            {
+              "word": "にな",
+              "start": 52.34,
+              "end": 52.8
+            },
+            {
+              "word": "る",
+              "start": 52.8,
+              "end": 53.08
+            },
+            {
+              "word": "嗚",
+              "start": 53.32,
+              "end": 53.62
+            },
+            {
+              "word": "呼",
+              "start": 53.62,
+              "end": 53.64
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "nan",
+              "start": 50.1,
+              "end": 50.54
+            },
+            {
+              "word": "ni",
+              "start": 50.54,
+              "end": 50.82
+            },
+            {
+              "word": "mo",
+              "start": 50.82,
+              "end": 50.98
+            },
+            {
+              "word": "shiranai",
+              "start": 50.98,
+              "end": 51.68
+            },
+            {
+              "word": "kara",
+              "start": 51.68,
+              "end": 52.06
+            },
+            {
+              "word": "kaze",
+              "start": 52.06,
+              "end": 52.44
+            },
+            {
+              "word": "ni",
+              "start": 52.44,
+              "end": 52.74
+            },
+            {
+              "word": "naru",
+              "start": 52.74,
+              "end": 53.04
+            },
+            {
+              "word": "aa",
+              "start": 53.04,
+              "end": 53.62
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Knowing nothing, I become the wind, ah",
+              "start": 50.1,
+              "end": 53.64
+            }
+          ]
+        },
+        {
+          "id": "kuu-17",
+          "text": "嗚呼 愛しい理由も知らず",
+          "jp": [
+            "嗚呼 愛しい理由も知らず"
+          ],
+          "romaji": [
+            "aa itoshii riyuu mo shirazu"
+          ],
+          "en": [
+            "Ah, not even knowing why I feel this love"
+          ],
+          "start": 65.398,
+          "end": 68.198,
+          "words": [
+            {
+              "word": "嗚",
+              "start": 65.398,
+              "end": 65.878
+            },
+            {
+              "word": "呼",
+              "start": 65.878,
+              "end": 66.338
+            },
+            {
+              "word": "愛",
+              "start": 66.358,
+              "end": 66.378
+            },
+            {
+              "word": "しい",
+              "start": 66.378,
+              "end": 66.858
+            },
+            {
+              "word": "理",
+              "start": 66.858,
+              "end": 67.138
+            },
+            {
+              "word": "由",
+              "start": 67.138,
+              "end": 67.378
+            },
+            {
+              "word": "も",
+              "start": 67.378,
+              "end": 67.618
+            },
+            {
+              "word": "知",
+              "start": 67.618,
+              "end": 67.818
+            },
+            {
+              "word": "ら",
+              "start": 67.818,
+              "end": 67.958
+            },
+            {
+              "word": "ず",
+              "start": 67.958,
+              "end": 68.198
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "aa",
+              "start": 65.478,
+              "end": 65.898
+            },
+            {
+              "word": "itoshii",
+              "start": 65.898,
+              "end": 66.858
+            },
+            {
+              "word": "riyuu",
+              "start": 66.878,
+              "end": 67.398
+            },
+            {
+              "word": "mo",
+              "start": 67.398,
+              "end": 67.598
+            },
+            {
+              "word": "shirazu",
+              "start": 67.598,
+              "end": 68.178
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Ah, not even knowing why I feel this love",
+              "start": 65.398,
+              "end": 68.198
+            }
+          ]
+        },
+        {
+          "id": "kuu-18",
+          "text": "空の底見つめてる",
+          "jp": [
+            "空の底見つめてる"
+          ],
+          "romaji": [
+            "sora no soko mitsumeteru"
+          ],
+          "en": [
+            "I gaze into the depths of the sky"
+          ],
+          "start": 68.288,
+          "end": 70.388,
+          "words": [
+            {
+              "word": "空",
+              "start": 68.288,
+              "end": 68.828
+            },
+            {
+              "word": "の",
+              "start": 68.828,
+              "end": 69.048
+            },
+            {
+              "word": "底",
+              "start": 69.048,
+              "end": 69.308
+            },
+            {
+              "word": "見",
+              "start": 69.308,
+              "end": 69.628
+            },
+            {
+              "word": "つ",
+              "start": 69.628,
+              "end": 69.828
+            },
+            {
+              "word": "めて",
+              "start": 69.828,
+              "end": 70.108
+            },
+            {
+              "word": "る",
+              "start": 70.108,
+              "end": 70.388
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "sora",
+              "start": 68.288,
+              "end": 68.868
+            },
+            {
+              "word": "no",
+              "start": 68.868,
+              "end": 69.068
+            },
+            {
+              "word": "soko",
+              "start": 69.068,
+              "end": 69.408
+            },
+            {
+              "word": "mitsumeteru",
+              "start": 69.408,
+              "end": 70.388
+            }
+          ],
+          "enWords": [
+            {
+              "word": "I gaze into the depths of the sky",
+              "start": 68.288,
+              "end": 70.388
+            }
+          ]
+        },
+        {
+          "id": "kuu-19",
+          "text": "さあね空っぽの身体には",
+          "jp": [
+            "さあね空っぽの身体には"
+          ],
+          "romaji": [
+            "saa ne karappo no karada ni wa"
+          ],
+          "en": [
+            "Who knows? For this empty body"
+          ],
+          "start": 70.698,
+          "end": 73.908,
+          "words": [
+            {
+              "word": "さ",
+              "start": 70.698,
+              "end": 71.448
+            },
+            {
+              "word": "あ",
+              "start": 71.448,
+              "end": 71.708
+            },
+            {
+              "word": "ね",
+              "start": 71.708,
+              "end": 71.808
+            },
+            {
+              "word": "空",
+              "start": 71.808,
+              "end": 72.288
+            },
+            {
+              "word": "っぽ",
+              "start": 72.288,
+              "end": 72.848
+            },
+            {
+              "word": "の",
+              "start": 72.848,
+              "end": 73.008
+            },
+            {
+              "word": "身",
+              "start": 73.008,
+              "end": 73.208
+            },
+            {
+              "word": "体",
+              "start": 73.208,
+              "end": 73.508
+            },
+            {
+              "word": "には",
+              "start": 73.508,
+              "end": 73.908
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "saa",
+              "start": 70.948,
+              "end": 71.708
+            },
+            {
+              "word": "ne",
+              "start": 71.708,
+              "end": 71.808
+            },
+            {
+              "word": "karappo",
+              "start": 71.808,
+              "end": 72.868
+            },
+            {
+              "word": "no",
+              "start": 72.868,
+              "end": 73.008
+            },
+            {
+              "word": "karada",
+              "start": 73.008,
+              "end": 73.548
+            },
+            {
+              "word": "ni wa",
+              "start": 73.548,
+              "end": 73.748
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Who knows? For this empty body",
+              "start": 70.698,
+              "end": 73.908
+            }
+          ]
+        },
+        {
+          "id": "kuu-20",
+          "text": "嘘は重すぎるから",
+          "jp": [
+            "嘘は重すぎるから"
+          ],
+          "romaji": [
+            "uso wa omosugiru kara"
+          ],
+          "en": [
+            "Lies are far too heavy"
+          ],
+          "start": 73.988,
+          "end": 76.048,
+          "words": [
+            {
+              "word": "嘘",
+              "start": 74.108,
+              "end": 74.708
+            },
+            {
+              "word": "は",
+              "start": 74.708,
+              "end": 74.868
+            },
+            {
+              "word": "重",
+              "start": 74.868,
+              "end": 75.128
+            },
+            {
+              "word": "す",
+              "start": 75.128,
+              "end": 75.368
+            },
+            {
+              "word": "ぎ",
+              "start": 75.368,
+              "end": 75.608
+            },
+            {
+              "word": "る",
+              "start": 75.608,
+              "end": 75.768
+            },
+            {
+              "word": "から",
+              "start": 75.768,
+              "end": 76.048
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "uso",
+              "start": 73.988,
+              "end": 74.628
+            },
+            {
+              "word": "wa",
+              "start": 74.808,
+              "end": 74.868
+            },
+            {
+              "word": "omosugiru",
+              "start": 74.868,
+              "end": 75.768
+            },
+            {
+              "word": "kara",
+              "start": 75.768,
+              "end": 76.048
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Lies are far too heavy",
+              "start": 73.988,
+              "end": 76.048
+            }
+          ]
+        },
+        {
+          "id": "kuu-21",
+          "text": "今日も今日も眠れないから",
+          "jp": [
+            "今日も今日も眠れないから"
+          ],
+          "romaji": [
+            "kyou mo kyou mo nemurenai kara"
+          ],
+          "en": [
+            "Again today, I cannot sleep"
+          ],
+          "start": 76.074,
+          "end": 79.014,
+          "words": [
+            {
+              "word": "今日",
+              "start": 76.074,
+              "end": 76.754
+            },
+            {
+              "word": "も",
+              "start": 76.754,
+              "end": 77.114
+            },
+            {
+              "word": "今日",
+              "start": 77.114,
+              "end": 77.254
+            },
+            {
+              "word": "も",
+              "start": 77.254,
+              "end": 77.694
+            },
+            {
+              "word": "眠",
+              "start": 77.694,
+              "end": 78.114
+            },
+            {
+              "word": "れない",
+              "start": 78.114,
+              "end": 78.474
+            },
+            {
+              "word": "から",
+              "start": 78.474,
+              "end": 78.994
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "kyou",
+              "start": 76.094,
+              "end": 76.754
+            },
+            {
+              "word": "mo",
+              "start": 76.754,
+              "end": 77.114
+            },
+            {
+              "word": "kyou",
+              "start": 77.114,
+              "end": 77.414
+            },
+            {
+              "word": "mo",
+              "start": 77.414,
+              "end": 77.634
+            },
+            {
+              "word": "nemurenai",
+              "start": 77.634,
+              "end": 78.434
+            },
+            {
+              "word": "kara",
+              "start": 78.434,
+              "end": 79.014
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Again today, I cannot sleep",
+              "start": 76.074,
+              "end": 79.014
+            }
+          ]
+        },
+        {
+          "id": "kuu-22",
+          "text": "君と君と夜を囲むの",
+          "jp": [
+            "君と君と夜を囲むの"
+          ],
+          "romaji": [
+            "kimi to kimi to yoru o kakomu no"
+          ],
+          "en": [
+            "So together with you, we gather around the night"
+          ],
+          "start": 79.24,
+          "end": 81.94,
+          "words": [
+            {
+              "word": "君",
+              "start": 79.24,
+              "end": 79.48
+            },
+            {
+              "word": "と",
+              "start": 79.48,
+              "end": 79.82
+            },
+            {
+              "word": "君",
+              "start": 79.82,
+              "end": 80.16
+            },
+            {
+              "word": "と",
+              "start": 80.16,
+              "end": 80.52
+            },
+            {
+              "word": "夜",
+              "start": 80.52,
+              "end": 80.88
+            },
+            {
+              "word": "を",
+              "start": 80.88,
+              "end": 81.24
+            },
+            {
+              "word": "囲",
+              "start": 81.24,
+              "end": 81.5
+            },
+            {
+              "word": "む",
+              "start": 81.5,
+              "end": 81.76
+            },
+            {
+              "word": "の",
+              "start": 81.76,
+              "end": 81.94
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "kimi",
+              "start": 79.24,
+              "end": 79.56
+            },
+            {
+              "word": "to",
+              "start": 79.56,
+              "end": 79.8
+            },
+            {
+              "word": "kimi",
+              "start": 79.8,
+              "end": 80.26
+            },
+            {
+              "word": "to",
+              "start": 80.26,
+              "end": 80.5
+            },
+            {
+              "word": "yoru",
+              "start": 80.5,
+              "end": 81.0
+            },
+            {
+              "word": "o",
+              "start": 81.0,
+              "end": 81.18
+            },
+            {
+              "word": "kakomu",
+              "start": 81.18,
+              "end": 81.72
+            },
+            {
+              "word": "no",
+              "start": 81.72,
+              "end": 81.94
+            }
+          ],
+          "enWords": [
+            {
+              "word": "So together with you, we gather around the night",
+              "start": 79.24,
+              "end": 81.94
+            }
+          ]
+        },
+        {
+          "id": "kuu-23",
+          "text": "きっときっと解るのならば",
+          "jp": [
+            "きっときっと解るのならば"
+          ],
+          "romaji": [
+            "kitto kitto wakaru no naraba"
+          ],
+          "en": [
+            "If someday we truly understand"
+          ],
+          "start": 81.96,
+          "end": 84.82,
+          "words": [
+            {
+              "word": "き",
+              "start": 81.96,
+              "end": 82.32
+            },
+            {
+              "word": "っと",
+              "start": 82.32,
+              "end": 82.72
+            },
+            {
+              "word": "き",
+              "start": 82.72,
+              "end": 83.02
+            },
+            {
+              "word": "っと",
+              "start": 83.02,
+              "end": 83.4
+            },
+            {
+              "word": "解",
+              "start": 83.4,
+              "end": 83.8
+            },
+            {
+              "word": "る",
+              "start": 83.8,
+              "end": 84.1
+            },
+            {
+              "word": "の",
+              "start": 84.1,
+              "end": 84.26
+            },
+            {
+              "word": "なら",
+              "start": 84.26,
+              "end": 84.56
+            },
+            {
+              "word": "ば",
+              "start": 84.56,
+              "end": 84.82
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "kitto",
+              "start": 81.96,
+              "end": 82.68
+            },
+            {
+              "word": "kitto",
+              "start": 82.68,
+              "end": 83.4
+            },
+            {
+              "word": "wakaru",
+              "start": 83.48,
+              "end": 84.1
+            },
+            {
+              "word": "no",
+              "start": 84.1,
+              "end": 84.24
+            },
+            {
+              "word": "naraba",
+              "start": 84.24,
+              "end": 84.8
+            }
+          ],
+          "enWords": [
+            {
+              "word": "If someday we truly understand",
+              "start": 81.96,
+              "end": 84.82
+            }
+          ]
+        },
+        {
+          "id": "kuu-24",
+          "text": "今だけは笑っていいですか",
+          "jp": [
+            "今だけは笑っていいですか"
+          ],
+          "romaji": [
+            "ima dake wa waratte ii desu ka"
+          ],
+          "en": [
+            "May I smile, just for now?"
+          ],
+          "start": 85.05,
+          "end": 87.71,
+          "words": [
+            {
+              "word": "今",
+              "start": 85.05,
+              "end": 85.53
+            },
+            {
+              "word": "だけ",
+              "start": 85.53,
+              "end": 85.89
+            },
+            {
+              "word": "は",
+              "start": 85.89,
+              "end": 86.11
+            },
+            {
+              "word": "笑",
+              "start": 86.11,
+              "end": 86.39
+            },
+            {
+              "word": "って",
+              "start": 86.39,
+              "end": 86.81
+            },
+            {
+              "word": "いい",
+              "start": 86.81,
+              "end": 87.09
+            },
+            {
+              "word": "ですか",
+              "start": 87.09,
+              "end": 87.67
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "ima",
+              "start": 85.05,
+              "end": 85.55
+            },
+            {
+              "word": "dake",
+              "start": 85.55,
+              "end": 85.91
+            },
+            {
+              "word": "wa",
+              "start": 85.91,
+              "end": 86.23
+            },
+            {
+              "word": "waratte",
+              "start": 86.41,
+              "end": 86.81
+            },
+            {
+              "word": "ii",
+              "start": 86.85,
+              "end": 87.09
+            },
+            {
+              "word": "desu",
+              "start": 87.09,
+              "end": 87.39
+            },
+            {
+              "word": "ka",
+              "start": 87.39,
+              "end": 87.71
+            }
+          ],
+          "enWords": [
+            {
+              "word": "May I smile, just for now?",
+              "start": 85.05,
+              "end": 87.71
+            }
+          ]
+        },
+        {
+          "id": "kuu-25",
+          "text": "何時までに答えを知るの？",
+          "jp": [
+            "何時までに答えを知るの？"
+          ],
+          "romaji": [
+            "itsu made ni kotae o shiru no"
+          ],
+          "en": [
+            "When will we learn the answer?"
+          ],
+          "start": 88.26,
+          "end": 90.62,
+          "words": [
+            {
+              "word": "何",
+              "start": 88.26,
+              "end": 88.46
+            },
+            {
+              "word": "時",
+              "start": 88.46,
+              "end": 88.6
+            },
+            {
+              "word": "まで",
+              "start": 88.6,
+              "end": 88.88
+            },
+            {
+              "word": "に",
+              "start": 88.88,
+              "end": 89.22
+            },
+            {
+              "word": "答",
+              "start": 89.22,
+              "end": 89.6
+            },
+            {
+              "word": "え",
+              "start": 89.6,
+              "end": 89.86
+            },
+            {
+              "word": "を",
+              "start": 89.86,
+              "end": 90.06
+            },
+            {
+              "word": "知",
+              "start": 90.06,
+              "end": 90.22
+            },
+            {
+              "word": "る",
+              "start": 90.22,
+              "end": 90.4
+            },
+            {
+              "word": "の？",
+              "start": 90.4,
+              "end": 90.62
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "itsu",
+              "start": 88.26,
+              "end": 88.58
+            },
+            {
+              "word": "made",
+              "start": 88.58,
+              "end": 88.96
+            },
+            {
+              "word": "ni",
+              "start": 88.96,
+              "end": 89.22
+            },
+            {
+              "word": "kotae",
+              "start": 89.22,
+              "end": 89.86
+            },
+            {
+              "word": "o",
+              "start": 89.86,
+              "end": 90.02
+            },
+            {
+              "word": "shiru",
+              "start": 90.02,
+              "end": 90.38
+            },
+            {
+              "word": "no",
+              "start": 90.38,
+              "end": 90.6
+            }
+          ],
+          "enWords": [
+            {
+              "word": "When will we learn the answer?",
+              "start": 88.26,
+              "end": 90.62
+            }
+          ]
+        },
+        {
+          "id": "kuu-26",
+          "text": "僕ら 僕ら息をする理由",
+          "jp": [
+            "僕ら 僕ら息をする理由"
+          ],
+          "romaji": [
+            "bokura bokura iki o suru riyuu"
+          ],
+          "en": [
+            "The reason that we keep breathing"
+          ],
+          "start": 90.75,
+          "end": 93.63,
+          "words": [
+            {
+              "word": "僕",
+              "start": 90.75,
+              "end": 91.07
+            },
+            {
+              "word": "ら",
+              "start": 91.07,
+              "end": 91.35
+            },
+            {
+              "word": "僕",
+              "start": 91.57,
+              "end": 91.77
+            },
+            {
+              "word": "ら",
+              "start": 91.77,
+              "end": 92.09
+            },
+            {
+              "word": "息",
+              "start": 92.09,
+              "end": 92.51
+            },
+            {
+              "word": "を",
+              "start": 92.51,
+              "end": 92.75
+            },
+            {
+              "word": "する",
+              "start": 92.75,
+              "end": 93.09
+            },
+            {
+              "word": "理",
+              "start": 93.09,
+              "end": 93.35
+            },
+            {
+              "word": "由",
+              "start": 93.35,
+              "end": 93.55
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "bokura",
+              "start": 90.75,
+              "end": 91.35
+            },
+            {
+              "word": "bokura",
+              "start": 91.35,
+              "end": 92.11
+            },
+            {
+              "word": "iki",
+              "start": 92.11,
+              "end": 92.57
+            },
+            {
+              "word": "o",
+              "start": 92.57,
+              "end": 92.81
+            },
+            {
+              "word": "suru",
+              "start": 92.81,
+              "end": 93.13
+            },
+            {
+              "word": "riyuu",
+              "start": 93.27,
+              "end": 93.63
+            }
+          ],
+          "enWords": [
+            {
+              "word": "The reason that we keep breathing",
+              "start": 90.75,
+              "end": 93.63
+            }
+          ]
+        },
+        {
+          "id": "kuu-27",
+          "text": "嗚呼何時までに忘れられるの？",
+          "jp": [
+            "嗚呼何時までに忘れられるの？"
+          ],
+          "romaji": [
+            "aa itsu made ni wasurerareru no"
+          ],
+          "en": [
+            "Ah, when will I be able to forget?"
+          ],
+          "start": 93.72,
+          "end": 96.36,
+          "words": [
+            {
+              "word": "嗚",
+              "start": 93.72,
+              "end": 93.96
+            },
+            {
+              "word": "呼",
+              "start": 93.96,
+              "end": 94.04
+            },
+            {
+              "word": "何",
+              "start": 94.04,
+              "end": 94.16
+            },
+            {
+              "word": "時",
+              "start": 94.16,
+              "end": 94.36
+            },
+            {
+              "word": "まで",
+              "start": 94.36,
+              "end": 94.66
+            },
+            {
+              "word": "に",
+              "start": 94.66,
+              "end": 94.98
+            },
+            {
+              "word": "忘",
+              "start": 94.98,
+              "end": 95.4
+            },
+            {
+              "word": "れ",
+              "start": 95.4,
+              "end": 95.64
+            },
+            {
+              "word": "ら",
+              "start": 95.64,
+              "end": 95.84
+            },
+            {
+              "word": "れる",
+              "start": 95.84,
+              "end": 96.16
+            },
+            {
+              "word": "の？",
+              "start": 96.16,
+              "end": 96.36
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "aa",
+              "start": 93.72,
+              "end": 93.94
+            },
+            {
+              "word": "itsu",
+              "start": 93.94,
+              "end": 94.36
+            },
+            {
+              "word": "made",
+              "start": 94.36,
+              "end": 94.72
+            },
+            {
+              "word": "ni",
+              "start": 94.72,
+              "end": 95.02
+            },
+            {
+              "word": "wasurerareru",
+              "start": 95.18,
+              "end": 96.14
+            },
+            {
+              "word": "no",
+              "start": 96.14,
+              "end": 96.34
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Ah, when will I be able to forget?",
+              "start": 93.72,
+              "end": 96.36
+            }
+          ]
+        },
+        {
+          "id": "kuu-28",
+          "text": "何にも知らないから風になるんだ",
+          "jp": [
+            "何にも知らないから風になるんだ"
+          ],
+          "romaji": [
+            "nan ni mo shiranai kara kaze ni narun da"
+          ],
+          "en": [
+            "Knowing nothing, I become the wind"
+          ],
+          "start": 96.48,
+          "end": 99.64,
+          "words": [
+            {
+              "word": "何",
+              "start": 96.48,
+              "end": 96.86
+            },
+            {
+              "word": "に",
+              "start": 96.86,
+              "end": 97.12
+            },
+            {
+              "word": "も",
+              "start": 97.12,
+              "end": 97.34
+            },
+            {
+              "word": "知",
+              "start": 97.34,
+              "end": 97.46
+            },
+            {
+              "word": "ら",
+              "start": 97.46,
+              "end": 97.62
+            },
+            {
+              "word": "ない",
+              "start": 97.62,
+              "end": 97.94
+            },
+            {
+              "word": "から",
+              "start": 97.94,
+              "end": 98.26
+            },
+            {
+              "word": "風",
+              "start": 98.26,
+              "end": 98.6
+            },
+            {
+              "word": "にな",
+              "start": 98.6,
+              "end": 99.06
+            },
+            {
+              "word": "る",
+              "start": 99.06,
+              "end": 99.32
+            },
+            {
+              "word": "んだ",
+              "start": 99.32,
+              "end": 99.6
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "nan",
+              "start": 96.48,
+              "end": 96.82
+            },
+            {
+              "word": "ni",
+              "start": 96.82,
+              "end": 97.12
+            },
+            {
+              "word": "mo",
+              "start": 97.12,
+              "end": 97.26
+            },
+            {
+              "word": "shiranai",
+              "start": 97.26,
+              "end": 97.94
+            },
+            {
+              "word": "kara",
+              "start": 97.94,
+              "end": 98.32
+            },
+            {
+              "word": "kaze",
+              "start": 98.32,
+              "end": 98.74
+            },
+            {
+              "word": "ni",
+              "start": 98.74,
+              "end": 98.94
+            },
+            {
+              "word": "narun",
+              "start": 98.94,
+              "end": 99.48
+            },
+            {
+              "word": "da",
+              "start": 99.48,
+              "end": 99.64
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Knowing nothing, I become the wind",
+              "start": 96.48,
+              "end": 99.64
+            }
+          ]
+        },
+        {
+          "id": "kuu-29",
+          "text": "空になる心の裏を",
+          "jp": [
+            "空になる心の裏を"
+          ],
+          "romaji": [
+            "kuu ni naru kokoro no ura o"
+          ],
+          "en": [
+            "Behind this heart becoming empty"
+          ],
+          "start": 99.8,
+          "end": 102.2,
+          "words": [
+            {
+              "word": "空",
+              "start": 99.8,
+              "end": 100.08
+            },
+            {
+              "word": "にな",
+              "start": 100.08,
+              "end": 100.48
+            },
+            {
+              "word": "る",
+              "start": 100.48,
+              "end": 100.78
+            },
+            {
+              "word": "心",
+              "start": 100.78,
+              "end": 101.28
+            },
+            {
+              "word": "の",
+              "start": 101.28,
+              "end": 101.66
+            },
+            {
+              "word": "裏",
+              "start": 101.66,
+              "end": 101.98
+            },
+            {
+              "word": "を",
+              "start": 101.98,
+              "end": 102.2
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "kuu",
+              "start": 99.8,
+              "end": 100.24
+            },
+            {
+              "word": "ni",
+              "start": 100.24,
+              "end": 100.38
+            },
+            {
+              "word": "naru",
+              "start": 100.38,
+              "end": 100.74
+            },
+            {
+              "word": "kokoro",
+              "start": 100.74,
+              "end": 101.38
+            },
+            {
+              "word": "no",
+              "start": 101.38,
+              "end": 101.62
+            },
+            {
+              "word": "ura",
+              "start": 101.62,
+              "end": 101.96
+            },
+            {
+              "word": "o",
+              "start": 101.96,
+              "end": 102.16
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Behind this heart becoming empty",
+              "start": 99.8,
+              "end": 102.2
+            }
+          ]
+        },
+        {
+          "id": "kuu-30",
+          "text": "ふわりふわりゆらぎで満たす",
+          "jp": [
+            "ふわりふわりゆらぎで満たす"
+          ],
+          "romaji": [
+            "fuwari fuwari yuragi de mitasu"
+          ],
+          "en": [
+            "A gentle drifting fills the space"
+          ],
+          "start": 102.22,
+          "end": 105.04,
+          "words": [
+            {
+              "word": "ふ",
+              "start": 102.22,
+              "end": 102.54
+            },
+            {
+              "word": "わ",
+              "start": 102.54,
+              "end": 102.74
+            },
+            {
+              "word": "り",
+              "start": 102.74,
+              "end": 102.96
+            },
+            {
+              "word": "ふ",
+              "start": 102.96,
+              "end": 103.24
+            },
+            {
+              "word": "わ",
+              "start": 103.24,
+              "end": 103.48
+            },
+            {
+              "word": "り",
+              "start": 103.48,
+              "end": 103.7
+            },
+            {
+              "word": "ゆ",
+              "start": 103.7,
+              "end": 103.98
+            },
+            {
+              "word": "ら",
+              "start": 103.98,
+              "end": 104.16
+            },
+            {
+              "word": "ぎ",
+              "start": 104.16,
+              "end": 104.34
+            },
+            {
+              "word": "で",
+              "start": 104.34,
+              "end": 104.52
+            },
+            {
+              "word": "満",
+              "start": 104.52,
+              "end": 104.74
+            },
+            {
+              "word": "た",
+              "start": 104.74,
+              "end": 104.84
+            },
+            {
+              "word": "す",
+              "start": 104.84,
+              "end": 105.04
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "fuwari",
+              "start": 102.22,
+              "end": 102.96
+            },
+            {
+              "word": "fuwari",
+              "start": 102.96,
+              "end": 103.7
+            },
+            {
+              "word": "yuragi",
+              "start": 103.86,
+              "end": 104.34
+            },
+            {
+              "word": "de",
+              "start": 104.34,
+              "end": 104.52
+            },
+            {
+              "word": "mitasu",
+              "start": 104.52,
+              "end": 105.04
+            }
+          ],
+          "enWords": [
+            {
+              "word": "A gentle drifting fills the space",
+              "start": 102.22,
+              "end": 105.04
+            }
+          ]
+        },
+        {
+          "id": "kuu-31",
+          "text": "さざ波の様な 感情二つ",
+          "jp": [
+            "さざ波の様な 感情二つ"
+          ],
+          "romaji": [
+            "sazanami no you na kanjou futatsu"
+          ],
+          "en": [
+            "Two feelings, like ripples on water"
+          ],
+          "start": 105.16,
+          "end": 107.88,
+          "words": [
+            {
+              "word": "さ",
+              "start": 105.16,
+              "end": 105.44
+            },
+            {
+              "word": "ざ",
+              "start": 105.44,
+              "end": 105.6
+            },
+            {
+              "word": "波",
+              "start": 105.6,
+              "end": 105.86
+            },
+            {
+              "word": "の",
+              "start": 105.86,
+              "end": 106.12
+            },
+            {
+              "word": "様",
+              "start": 106.12,
+              "end": 106.32
+            },
+            {
+              "word": "な",
+              "start": 106.32,
+              "end": 106.72
+            },
+            {
+              "word": "感",
+              "start": 106.8,
+              "end": 106.96
+            },
+            {
+              "word": "情",
+              "start": 106.96,
+              "end": 107.32
+            },
+            {
+              "word": "二",
+              "start": 107.32,
+              "end": 107.62
+            },
+            {
+              "word": "つ",
+              "start": 107.62,
+              "end": 107.88
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "sazanami",
+              "start": 105.16,
+              "end": 105.96
+            },
+            {
+              "word": "no",
+              "start": 105.96,
+              "end": 106.12
+            },
+            {
+              "word": "you",
+              "start": 106.24,
+              "end": 106.32
+            },
+            {
+              "word": "na",
+              "start": 106.32,
+              "end": 106.58
+            },
+            {
+              "word": "kanjou",
+              "start": 106.58,
+              "end": 107.46
+            },
+            {
+              "word": "futatsu",
+              "start": 107.46,
+              "end": 107.88
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Two feelings, like ripples on water",
+              "start": 105.16,
+              "end": 107.88
+            }
+          ]
+        },
+        {
+          "id": "kuu-32",
+          "text": "ここに居る理由が欲しかっただけ",
+          "jp": [
+            "ここに居る理由が欲しかっただけ"
+          ],
+          "romaji": [
+            "koko ni iru riyuu ga hoshikatta dake"
+          ],
+          "en": [
+            "I only wanted a reason to be here"
+          ],
+          "start": 107.9,
+          "end": 111.54,
+          "words": [
+            {
+              "word": "ここ",
+              "start": 107.9,
+              "end": 108.44
+            },
+            {
+              "word": "に",
+              "start": 108.44,
+              "end": 108.74
+            },
+            {
+              "word": "居",
+              "start": 108.74,
+              "end": 108.98
+            },
+            {
+              "word": "る",
+              "start": 108.98,
+              "end": 109.2
+            },
+            {
+              "word": "理",
+              "start": 109.2,
+              "end": 109.42
+            },
+            {
+              "word": "由",
+              "start": 109.42,
+              "end": 109.66
+            },
+            {
+              "word": "が",
+              "start": 109.66,
+              "end": 109.9
+            },
+            {
+              "word": "欲",
+              "start": 109.9,
+              "end": 110.18
+            },
+            {
+              "word": "し",
+              "start": 110.18,
+              "end": 110.26
+            },
+            {
+              "word": "かった",
+              "start": 110.26,
+              "end": 110.8
+            },
+            {
+              "word": "だけ",
+              "start": 110.8,
+              "end": 111.4
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "koko",
+              "start": 107.9,
+              "end": 108.44
+            },
+            {
+              "word": "ni",
+              "start": 108.44,
+              "end": 108.74
+            },
+            {
+              "word": "iru",
+              "start": 108.74,
+              "end": 109.2
+            },
+            {
+              "word": "riyuu",
+              "start": 109.22,
+              "end": 109.74
+            },
+            {
+              "word": "ga",
+              "start": 109.74,
+              "end": 109.9
+            },
+            {
+              "word": "hoshikatta",
+              "start": 109.9,
+              "end": 110.8
+            },
+            {
+              "word": "dake",
+              "start": 110.8,
+              "end": 111.54
+            }
+          ],
+          "enWords": [
+            {
+              "word": "I only wanted a reason to be here",
+              "start": 107.9,
+              "end": 111.54
+            }
+          ]
+        },
+        {
+          "id": "kuu-33",
+          "text": "空になる心の裏が",
+          "jp": [
+            "空になる心の裏が"
+          ],
+          "romaji": [
+            "kuu ni naru kokoro no ura ga"
+          ],
+          "en": [
+            "Behind this heart becoming empty"
+          ],
+          "start": 122.638,
+          "end": 125.358,
+          "words": [
+            {
+              "word": "空",
+              "start": 122.638,
+              "end": 123.198
+            },
+            {
+              "word": "にな",
+              "start": 123.198,
+              "end": 123.638
+            },
+            {
+              "word": "る",
+              "start": 123.638,
+              "end": 123.918
+            },
+            {
+              "word": "心",
+              "start": 123.918,
+              "end": 124.378
+            },
+            {
+              "word": "の",
+              "start": 124.378,
+              "end": 124.798
+            },
+            {
+              "word": "裏",
+              "start": 124.798,
+              "end": 125.138
+            },
+            {
+              "word": "が",
+              "start": 125.138,
+              "end": 125.358
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "kuu",
+              "start": 122.638,
+              "end": 123.398
+            },
+            {
+              "word": "ni",
+              "start": 123.398,
+              "end": 123.478
+            },
+            {
+              "word": "naru",
+              "start": 123.478,
+              "end": 123.898
+            },
+            {
+              "word": "kokoro",
+              "start": 123.898,
+              "end": 124.518
+            },
+            {
+              "word": "no",
+              "start": 124.518,
+              "end": 124.758
+            },
+            {
+              "word": "ura",
+              "start": 124.758,
+              "end": 125.118
+            },
+            {
+              "word": "ga",
+              "start": 125.118,
+              "end": 125.318
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Behind this heart becoming empty",
+              "start": 122.638,
+              "end": 125.358
+            }
+          ]
+        },
+        {
+          "id": "kuu-34",
+          "text": "チクリチクリ 痛いの君も？",
+          "jp": [
+            "チクリチクリ 痛いの君も？"
+          ],
+          "romaji": [
+            "chikuri chikuri itai no kimi mo"
+          ],
+          "en": [
+            "Does it prick and ache for you too?"
+          ],
+          "start": 125.538,
+          "end": 128.218,
+          "words": [
+            {
+              "word": "チ",
+              "start": 125.538,
+              "end": 125.658
+            },
+            {
+              "word": "ク",
+              "start": 125.658,
+              "end": 125.858
+            },
+            {
+              "word": "リ",
+              "start": 125.858,
+              "end": 126.058
+            },
+            {
+              "word": "チ",
+              "start": 126.058,
+              "end": 126.338
+            },
+            {
+              "word": "ク",
+              "start": 126.338,
+              "end": 126.538
+            },
+            {
+              "word": "リ",
+              "start": 126.538,
+              "end": 126.798
+            },
+            {
+              "word": "痛",
+              "start": 126.998,
+              "end": 127.178
+            },
+            {
+              "word": "い",
+              "start": 127.178,
+              "end": 127.438
+            },
+            {
+              "word": "の",
+              "start": 127.438,
+              "end": 127.618
+            },
+            {
+              "word": "君",
+              "start": 127.618,
+              "end": 127.878
+            },
+            {
+              "word": "も？",
+              "start": 127.878,
+              "end": 128.218
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "chikuri",
+              "start": 125.538,
+              "end": 126.078
+            },
+            {
+              "word": "chikuri",
+              "start": 126.078,
+              "end": 126.798
+            },
+            {
+              "word": "itai",
+              "start": 126.998,
+              "end": 127.438
+            },
+            {
+              "word": "no",
+              "start": 127.438,
+              "end": 127.618
+            },
+            {
+              "word": "kimi",
+              "start": 127.618,
+              "end": 127.998
+            },
+            {
+              "word": "mo",
+              "start": 127.998,
+              "end": 128.218
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Does it prick and ache for you too?",
+              "start": 125.538,
+              "end": 128.218
+            }
+          ]
+        },
+        {
+          "id": "kuu-35",
+          "text": "見えないままに 息を続ける",
+          "jp": [
+            "見えないままに 息を続ける"
+          ],
+          "romaji": [
+            "mienai mama ni iki o tsuzukeru"
+          ],
+          "en": [
+            "Unable to see, I keep on breathing"
+          ],
+          "start": 128.238,
+          "end": 131.038,
+          "words": [
+            {
+              "word": "見",
+              "start": 128.238,
+              "end": 128.598
+            },
+            {
+              "word": "え",
+              "start": 128.598,
+              "end": 128.798
+            },
+            {
+              "word": "ない",
+              "start": 128.798,
+              "end": 129.058
+            },
+            {
+              "word": "ま",
+              "start": 129.058,
+              "end": 129.238
+            },
+            {
+              "word": "ま",
+              "start": 129.238,
+              "end": 129.458
+            },
+            {
+              "word": "に",
+              "start": 129.458,
+              "end": 129.718
+            },
+            {
+              "word": "息",
+              "start": 129.858,
+              "end": 130.078
+            },
+            {
+              "word": "を",
+              "start": 130.078,
+              "end": 130.358
+            },
+            {
+              "word": "続",
+              "start": 130.358,
+              "end": 130.618
+            },
+            {
+              "word": "ける",
+              "start": 130.618,
+              "end": 131.038
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "mienai",
+              "start": 128.238,
+              "end": 129.018
+            },
+            {
+              "word": "mama",
+              "start": 129.018,
+              "end": 129.458
+            },
+            {
+              "word": "ni",
+              "start": 129.458,
+              "end": 129.698
+            },
+            {
+              "word": "iki",
+              "start": 129.698,
+              "end": 130.118
+            },
+            {
+              "word": "o",
+              "start": 130.118,
+              "end": 130.358
+            },
+            {
+              "word": "tsuzukeru",
+              "start": 130.358,
+              "end": 130.978
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Unable to see, I keep on breathing",
+              "start": 128.238,
+              "end": 131.038
+            }
+          ]
+        },
+        {
+          "id": "kuu-36",
+          "text": "なんにも知らないから風になる",
+          "jp": [
+            "なんにも知らないから風になる"
+          ],
+          "romaji": [
+            "nan ni mo shiranai kara kaze ni naru"
+          ],
+          "en": [
+            "Knowing nothing, I become the wind"
+          ],
+          "start": 131.238,
+          "end": 134.018,
+          "words": [
+            {
+              "word": "なん",
+              "start": 131.238,
+              "end": 131.578
+            },
+            {
+              "word": "に",
+              "start": 131.578,
+              "end": 131.798
+            },
+            {
+              "word": "も",
+              "start": 131.798,
+              "end": 132.058
+            },
+            {
+              "word": "知",
+              "start": 132.058,
+              "end": 132.178
+            },
+            {
+              "word": "ら",
+              "start": 132.178,
+              "end": 132.318
+            },
+            {
+              "word": "ない",
+              "start": 132.318,
+              "end": 132.638
+            },
+            {
+              "word": "から",
+              "start": 132.638,
+              "end": 132.998
+            },
+            {
+              "word": "風",
+              "start": 132.998,
+              "end": 133.318
+            },
+            {
+              "word": "にな",
+              "start": 133.318,
+              "end": 133.778
+            },
+            {
+              "word": "る",
+              "start": 133.778,
+              "end": 134.018
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "nan",
+              "start": 131.238,
+              "end": 131.598
+            },
+            {
+              "word": "ni",
+              "start": 131.598,
+              "end": 131.818
+            },
+            {
+              "word": "mo",
+              "start": 131.818,
+              "end": 131.958
+            },
+            {
+              "word": "shiranai",
+              "start": 131.958,
+              "end": 132.618
+            },
+            {
+              "word": "kara",
+              "start": 132.618,
+              "end": 133.018
+            },
+            {
+              "word": "kaze",
+              "start": 133.018,
+              "end": 133.418
+            },
+            {
+              "word": "ni",
+              "start": 133.418,
+              "end": 133.678
+            },
+            {
+              "word": "naru",
+              "start": 133.678,
+              "end": 134.018
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Knowing nothing, I become the wind",
+              "start": 131.238,
+              "end": 134.018
+            }
+          ]
+        },
+        {
+          "id": "kuu-37",
+          "text": "最後だけ笑って頂戴",
+          "jp": [
+            "最後だけ笑って頂戴"
+          ],
+          "romaji": [
+            "saigo dake waratte choudai"
+          ],
+          "en": [
+            "At least smile for me at the end"
+          ],
+          "start": 134.538,
+          "end": 136.838,
+          "words": [
+            {
+              "word": "最後",
+              "start": 134.538,
+              "end": 135.018
+            },
+            {
+              "word": "だけ",
+              "start": 135.018,
+              "end": 135.438
+            },
+            {
+              "word": "笑",
+              "start": 135.438,
+              "end": 135.838
+            },
+            {
+              "word": "って",
+              "start": 135.838,
+              "end": 136.258
+            },
+            {
+              "word": "頂",
+              "start": 136.258,
+              "end": 136.678
+            },
+            {
+              "word": "戴",
+              "start": 136.678,
+              "end": 136.838
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "saigo",
+              "start": 134.538,
+              "end": 135.018
+            },
+            {
+              "word": "dake",
+              "start": 135.018,
+              "end": 135.458
+            },
+            {
+              "word": "waratte",
+              "start": 135.718,
+              "end": 136.258
+            },
+            {
+              "word": "choudai",
+              "start": 136.258,
+              "end": 136.838
+            }
+          ],
+          "enWords": [
+            {
+              "word": "At least smile for me at the end",
+              "start": 134.538,
+              "end": 136.838
+            }
+          ]
+        },
+        {
+          "id": "kuu-38",
+          "text": "いつか いつか 報われるから",
+          "jp": [
+            "いつか いつか 報われるから"
+          ],
+          "romaji": [
+            "itsuka itsuka mukuwareru kara"
+          ],
+          "en": [
+            "Someday, someday it will be worth it"
+          ],
+          "start": 136.874,
+          "end": 139.754,
+          "words": [
+            {
+              "word": "いつ",
+              "start": 136.874,
+              "end": 137.414
+            },
+            {
+              "word": "か",
+              "start": 137.414,
+              "end": 137.674
+            },
+            {
+              "word": "い",
+              "start": 137.674,
+              "end": 137.994
+            },
+            {
+              "word": "つ",
+              "start": 137.994,
+              "end": 138.114
+            },
+            {
+              "word": "か",
+              "start": 138.114,
+              "end": 138.414
+            },
+            {
+              "word": "報",
+              "start": 138.574,
+              "end": 138.674
+            },
+            {
+              "word": "わ",
+              "start": 138.674,
+              "end": 139.074
+            },
+            {
+              "word": "れる",
+              "start": 139.074,
+              "end": 139.314
+            },
+            {
+              "word": "から",
+              "start": 139.314,
+              "end": 139.674
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "itsuka",
+              "start": 136.874,
+              "end": 137.674
+            },
+            {
+              "word": "itsuka",
+              "start": 137.674,
+              "end": 138.414
+            },
+            {
+              "word": "mukuwareru",
+              "start": 138.574,
+              "end": 139.294
+            },
+            {
+              "word": "kara",
+              "start": 139.294,
+              "end": 139.754
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Someday, someday it will be worth it",
+              "start": 136.874,
+              "end": 139.754
+            }
+          ]
+        },
+        {
+          "id": "kuu-39",
+          "text": "さざ波の様な 感情二つ",
+          "jp": [
+            "さざ波の様な 感情二つ"
+          ],
+          "romaji": [
+            "sazanami no you na kanjou futatsu"
+          ],
+          "en": [
+            "Two feelings, like ripples on water"
+          ],
+          "start": 139.78,
+          "end": 142.64,
+          "words": [
+            {
+              "word": "さ",
+              "start": 139.78,
+              "end": 140.1
+            },
+            {
+              "word": "ざ",
+              "start": 140.1,
+              "end": 140.28
+            },
+            {
+              "word": "波",
+              "start": 140.28,
+              "end": 140.58
+            },
+            {
+              "word": "の",
+              "start": 140.58,
+              "end": 140.82
+            },
+            {
+              "word": "様",
+              "start": 140.82,
+              "end": 141.0
+            },
+            {
+              "word": "な",
+              "start": 141.0,
+              "end": 141.44
+            },
+            {
+              "word": "感",
+              "start": 141.5,
+              "end": 141.54
+            },
+            {
+              "word": "情",
+              "start": 141.54,
+              "end": 142.0
+            },
+            {
+              "word": "二",
+              "start": 142.0,
+              "end": 142.3
+            },
+            {
+              "word": "つ",
+              "start": 142.3,
+              "end": 142.64
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "sazanami",
+              "start": 139.78,
+              "end": 140.64
+            },
+            {
+              "word": "no",
+              "start": 140.64,
+              "end": 140.84
+            },
+            {
+              "word": "you",
+              "start": 140.94,
+              "end": 141.0
+            },
+            {
+              "word": "na",
+              "start": 141.0,
+              "end": 141.26
+            },
+            {
+              "word": "kanjou",
+              "start": 141.26,
+              "end": 142.18
+            },
+            {
+              "word": "futatsu",
+              "start": 142.18,
+              "end": 142.64
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Two feelings, like ripples on water",
+              "start": 139.78,
+              "end": 142.64
+            }
+          ]
+        },
+        {
+          "id": "kuu-40",
+          "text": "ここに居る理由見つけられるまで",
+          "jp": [
+            "ここに居る理由見つけられるまで"
+          ],
+          "romaji": [
+            "koko ni iru riyuu mitsukerareru made"
+          ],
+          "en": [
+            "Until we find our reason to be here"
+          ],
+          "start": 142.66,
+          "end": 146.28,
+          "words": [
+            {
+              "word": "ここ",
+              "start": 142.66,
+              "end": 143.16
+            },
+            {
+              "word": "に",
+              "start": 143.16,
+              "end": 143.48
+            },
+            {
+              "word": "居",
+              "start": 143.48,
+              "end": 143.74
+            },
+            {
+              "word": "る",
+              "start": 143.74,
+              "end": 143.92
+            },
+            {
+              "word": "理",
+              "start": 143.92,
+              "end": 144.12
+            },
+            {
+              "word": "由",
+              "start": 144.12,
+              "end": 144.4
+            },
+            {
+              "word": "見",
+              "start": 144.4,
+              "end": 144.64
+            },
+            {
+              "word": "つ",
+              "start": 144.64,
+              "end": 144.8
+            },
+            {
+              "word": "け",
+              "start": 144.8,
+              "end": 145.02
+            },
+            {
+              "word": "ら",
+              "start": 145.02,
+              "end": 145.18
+            },
+            {
+              "word": "れる",
+              "start": 145.18,
+              "end": 145.6
+            },
+            {
+              "word": "まで",
+              "start": 145.6,
+              "end": 146.14
+            }
+          ],
+          "romajiWords": [
+            {
+              "word": "koko",
+              "start": 142.66,
+              "end": 143.14
+            },
+            {
+              "word": "ni",
+              "start": 143.14,
+              "end": 143.48
+            },
+            {
+              "word": "iru",
+              "start": 143.5,
+              "end": 143.92
+            },
+            {
+              "word": "riyuu",
+              "start": 143.94,
+              "end": 144.52
+            },
+            {
+              "word": "mitsukerareru",
+              "start": 144.52,
+              "end": 145.56
+            },
+            {
+              "word": "made",
+              "start": 145.56,
+              "end": 146.28
+            }
+          ],
+          "enWords": [
+            {
+              "word": "Until we find our reason to be here",
+              "start": 142.66,
+              "end": 146.28
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "sections": [
+    {
+      "start": 0,
+      "end": 7.6,
+      "phase": 0,
+      "chorus": false,
+      "name": "WIND / 0",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 7.6,
+      "end": 29.94,
+      "phase": 1,
+      "chorus": false,
+      "name": "WIND / 1",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 29.94,
+      "end": 41.4,
+      "phase": 2,
+      "chorus": false,
+      "name": "WIND / 2",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 41.4,
+      "end": 53.64,
+      "phase": 3,
+      "chorus": true,
+      "name": "WIND / 3",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 53.64,
+      "end": 65.398,
+      "phase": 4,
+      "chorus": false,
+      "name": "WIND / 4",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 65.398,
+      "end": 76.074,
+      "phase": 5,
+      "chorus": false,
+      "name": "WIND / 5",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 76.074,
+      "end": 88.26,
+      "phase": 6,
+      "chorus": false,
+      "name": "WIND / 6",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 88.26,
+      "end": 99.8,
+      "phase": 7,
+      "chorus": true,
+      "name": "WIND / 7",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 99.8,
+      "end": 111.54,
+      "phase": 8,
+      "chorus": true,
+      "name": "WIND / 8",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 111.54,
+      "end": 122.638,
+      "phase": 9,
+      "chorus": false,
+      "name": "WIND / 9",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 122.638,
+      "end": 134.538,
+      "phase": 10,
+      "chorus": true,
+      "name": "WIND / 10",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 134.538,
+      "end": 146.28,
+      "phase": 11,
+      "chorus": false,
+      "name": "WIND / 11",
+      "short": "KUU NI NARU"
+    },
+    {
+      "start": 146.28,
+      "end": 154.688021,
+      "phase": 12,
+      "chorus": false,
+      "name": "WIND / 12",
+      "short": "KUU NI NARU"
+    }
+  ],
+  "timingMethod": "Independent recognition plus bounded phrase and kana-romaji forced alignment to this exact recording. Instrumental entrances were re-anchored rather than stretching text through gaps.",
+  "translationMethod": "Japanese and romaji have measured acoustic token groups. English is phrase-level meaning translation, not sung English timing.",
+  "alignment": {
+    "recording": "songs/Okosama Lunch - Kuu ni Naru.m4a",
+    "audioSha256": "5ed00460037f7b1a491cb23746cc8fcdc6e85d140b6d04a5300c18ff698e10fc",
+    "sourceSha256": "e4cc5b68141419cd12e40668cb95faea3312c0b4897452a70f193c19622533d3",
+    "status": "acoustically-aligned",
+    "approved": false,
+    "publicationAuthorizedBy": "Joshua Glass"
+  }
+}

@@ -10,6 +10,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACKS = (
+    ("kuu-ni-naru.json", "jp", "songs/MIMI feat. Hatsune Miku & KAFU - Kuu ni Naru.m4a"),
+    ("kuu-ni-naru-okosama.json", "jp", "songs/Okosama Lunch - Kuu ni Naru.m4a"),
+    ("magic-maid-okosama.json", "base", "songs/Okosama Lunch - Magic Maid.m4a"),
+    ("override-fubuki.json", "jp", "songs/Shirakami Fubuki feat. Kurokami Fubuki - Override.m4a"),
     ("override.json", "jp", "songs/Yoshida Yasei feat. Kasane Teto SV - Override.m4a"),
     ("trick-heart.json", "base", "songs/MIMI feat. Kasane Teto SV - Trick Heart.m4a"),
     ("magic-maid.json", "base", "songs/MIMI feat. Kasane Teto SV - Magic Maid.m4a"),

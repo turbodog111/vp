@@ -35,8 +35,8 @@ test('Japanese Window View has a companion translation for every existing timed 
 });
 
 test('all three established parallel Japanese songs retain complete language coverage', () => {
-  for (const fragment of ['Trick Heart.m4a', 'Magic Maid.m4a', 'MIMI - Encore Dance (Japanese)']) {
-    const rows = audit().filter(row => row.recording.includes(fragment));
+  for (const recording of ['MIMI feat. Kasane Teto SV - Trick Heart.m4a', 'MIMI feat. Kasane Teto SV - Magic Maid.m4a', 'MIMI - Encore Dance (Japanese).m4a']) {
+    const rows = audit().filter(row => row.recording === 'songs/' + recording);
     assert.equal(rows.length, 1); assert.equal(rows[0].status, 'text-complete');
   }
 });

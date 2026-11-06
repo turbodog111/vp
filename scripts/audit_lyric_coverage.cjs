@@ -24,7 +24,7 @@ function audit() {
     if (instrumental.test(song.name)) return { recording, status: 'vocal-review', missing: ['Confirm whether this rendition retains sung backing vocals.'] };
     const config = registry[normalize(recording)];
     const english = /^BTS - |\(English(?: Language)?\)|^hololive English|Machine Love|One More Bite|Waiting for Tomorrow|Ever Romantic/i.test(song.name);
-    const japanese = (/MIMI|Ochame Kinou|^Farewell225 - Window View/i.test(song.name) || config?.variant === 'jp') && !english;
+    const japanese = (/MIMI|Ochame Kinou|^Farewell225 - Window View/i.test(song.name) || config?.variant === 'jp' || config?.language === 'ja') && !english;
     const required = japanese ? ['romaji', 'en'] : english ? ['en'] : ['source-language review', 'en'];
     const packet = prepared.find(entry => entry.recording === recording);
     const candidate = aligned.find(entry => entry.recording === recording);
