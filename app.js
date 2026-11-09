@@ -32,6 +32,10 @@ const REFERENCE_VIDEO_TRACKS = {
   [HIT_BREAKS_AUDIO_PATH]: {
     url: './songs/videos/A%20Flock%20of%20Altruists%20-%20Hit%20The%20Breaks%20Except%20For%20Me.mp4',
     title: 'Hit The Breaks Except For Me'
+  },
+  'songs/hiroki. feat. Kasane Teto & Hatsune Miku - My Way, So What!.m4a': {
+    url: './songs/videos/hiroki.%20-%20My%20Way%2C%20So%20What!.mp4',
+    title: 'My Way, So What!'
   }
 };
 

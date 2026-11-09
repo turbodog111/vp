@@ -1,0 +1,18 @@
+{
+  "recording": "songs/hiroki. feat. Kasane Teto & Hatsune Miku - My Way, So What!.m4a",
+  "video": "songs/videos/hiroki. - My Way, So What!.mp4",
+  "title": "My Way, So What!",
+  "artist": "hiroki. feat. Kasane Teto & Hatsune Miku",
+  "source": "https://www.youtube.com/watch?v=fyvfjx7MHLw",
+  "sourceTitle": "わがままで何が悪い！ / 重音テト・初音ミク - My Way, So What!",
+  "sourceChannel": "hiroki.",
+  "videoCredit": "天麗 (@tnri_0404)",
+  "rendition": "Official music video; full recording, no trimming",
+  "duration": 162.052063,
+  "encoding": "Original AAC audio and 1920x1080 H.264 video stream-copied into separate faststart files",
+  "sourceSha256": "1a64b4a8b3c0328d3c21bc66c122ce78d42aa622cabc327f651bfd477f5f624a",
+  "outputAudioSha256": "a9c8b1829e556555d0f4f6015155c15732d913539a6e4a594d57d565036f6921",
+  "outputVideoSha256": "7262646aa9f22f5c9c89662ab1d1dc7fffd9206cbb2d61c6236e0627db916abc",
+  "importDate": "2026-11-09",
+  "graphics": "Official music video via the existing FX toggle; no custom theater"
+}
