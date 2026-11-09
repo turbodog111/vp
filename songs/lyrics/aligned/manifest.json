@@ -1,5 +1,19 @@
 [
   {
+    "recording": "songs/HUNTRIX - Golden.m4a",
+    "file": "golden.json",
+    "lines": 40,
+    "status": "approved",
+    "audioSha256": "e61d90d6b8fe23e6963d3fea2618c41c7f7b36c59ac3787d053d2b8701d4cba5"
+  },
+  {
+    "recording": "songs/EJAE & Andrew Choi - Free.m4a",
+    "file": "free.json",
+    "lines": 50,
+    "status": "approved",
+    "audioSha256": "d1f64d22ddb3da9be756e8b96c5b7fb476ac869dd21701fc337c90afac97b679"
+  },
+  {
     "recording": "songs/BTS - Butter.m4a",
     "file": "butter.json",
     "lines": 52,

@@ -96,10 +96,10 @@ test('all seven prepared lyric packets retain untimed status and omit scraped re
   assert.equal(count,334);
 });
 
-test('all seven exact recordings have complete, valid publication-approved timelines', () => {
+test('all nine exact recordings have complete, valid publication-approved timelines', () => {
   const folder=path.resolve(__dirname,'../songs/lyrics/aligned');
-  const manifest=JSON.parse(fs.readFileSync(path.join(folder,'manifest.json')));
-  assert.equal(manifest.length,7);
+  const manifest=JSON.parse(fs.readFileSync(path.join(folder,'manifest.json'))).filter(entry=>entry.status==='approved');
+  assert.equal(manifest.length,9);
   for(const entry of manifest) {
     const source=JSON.parse(fs.readFileSync(path.join(folder,entry.file)));
     const d=W.decode(source,entry.recording);

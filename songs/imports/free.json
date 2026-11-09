@@ -1,0 +1,20 @@
+{
+  "recording": "songs/EJAE & Andrew Choi - Free.m4a",
+  "title": "Free",
+  "artist": "EJAE & Andrew Choi",
+  "source": "https://www.youtube.com/watch?v=xDMpGyvzBdA",
+  "sourceTitle": "RUMI & JINU - Free (Lyrics) | KPop Demon Hunters",
+  "sourceChannel": "7clouds",
+  "performerCredits": [
+    "EJAE",
+    "Andrew Choi"
+  ],
+  "creditSource": "https://www.republicrecords.com/collections/kids-family/products/kpop-demon-hunters-soundtrack-from-the-netflix-film-digital-album",
+  "duration": 188.0236,
+  "encoding": "AAC 192k, 48kHz stereo, faststart; no gain or tempo manipulation",
+  "sourceAudioSha256": "9b163eb82a24d1f54de5c9ac0366cf1fee05544a9b12bcaaf9e40350daaa332e",
+  "outputAudioSha256": "d1f64d22ddb3da9be756e8b96c5b7fb476ac869dd21701fc337c90afac97b679",
+  "importDate": "2026-11-09",
+  "graphics": "Recording-specific free theater; FX gated",
+  "lyrics": "songs/lyrics/aligned/free.json"
+}

@@ -162,6 +162,7 @@ const SUPPORTED_LYRIC_TRACKS = {
   }
 };
 const SONG_METADATA_OVERRIDES = {
+  'songs/HUNTRIX - Golden.m4a': { artist: 'HUNTR/X', title: 'Golden' },
   'songs/Joshua Glass & GPT-5.6 Sol - Encore Dance (Piano Hyperpop).m4a': {
     artist: 'Joshua Glass & GPT-5.6 Sol',
     title: 'Encore Dance: Piano Hyperpop'
@@ -2503,13 +2504,16 @@ function setFxTheme(theme) {
   updateFxState();
 }
 
-function setSongMotionFxActive(enabled) {
-  const config = enabled ? window.SongMotionFx?.track(currentSong()) : null;
+function setSongMotionFxActive(theme) {
+  const track = theme !== 'off' ? window.SongMotionFx?.track(currentSong()) : null;
+  const config = track?.theme === theme ? track : null;
   document.body.classList.toggle('song-motion-fx-active', !!config);
   document.body.classList.toggle('mimi-petal-active', config?.key === 'petal-lament');
   document.body.classList.toggle('mimi-marshmary-active', config?.key === 'marshmary');
   document.body.classList.toggle('bts-dynamite-active', config?.key === 'dynamite');
   document.body.classList.toggle('bts-butter-active', config?.key === 'butter');
+  document.body.classList.toggle('hunters-golden-active', config?.theme === 'hunters-golden');
+  document.body.classList.toggle('hunters-free-active', config?.theme === 'hunters-free');
   document.body.classList.toggle('override-active', config?.theme === 'override');
   document.body.classList.toggle('kuu-active', config?.theme === 'kuu-ni-naru');
   const artwork = $('song-motion-art');
@@ -2545,7 +2549,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   if (theme === renderedFxTheme && songId === renderedFxSongId) return;
   renderedFxTheme = theme;
   renderedFxSongId = songId;
-  setSongMotionFxActive(['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter', 'override', 'kuu-ni-naru'].includes(theme));
+  setSongMotionFxActive(theme);
   document.body.classList.toggle('fx-active', active);
   document.body.classList.toggle('disco-fx-active', theme === 'disco');
   document.body.classList.toggle('teto-fx-active', theme === 'teto');
@@ -9551,7 +9555,7 @@ function drawTetoFx(level) {
   const theme = activeFxTheme();
   updateFxState(levels.glow);
   if (theme === 'off') return;
-  if (['mimi-petal', 'mimi-marshmary', 'bts-dynamite', 'bts-butter', 'override', 'kuu-ni-naru'].includes(theme)) {
+  if (document.body.classList.contains('song-motion-fx-active')) {
     window.SongMotionFx?.draw(ctx, w, h, { time: currentCalibratedTime(), energy: levels.glow });
     return;
   }

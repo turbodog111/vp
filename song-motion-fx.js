@@ -2,6 +2,16 @@ window.SongMotionFx = (() => {
   'use strict';
 
   const tracks = Object.freeze({
+    'songs/huntrix - golden': Object.freeze({
+      key: 'golden', theme: 'hunters-golden', bpm: 123.02, beatOffset: .206,
+      title: 'Golden', data: './songs/motion/golden.json',
+      source: 'https://www.youtube.com/watch?v=htk6MRjmcnQ'
+    }),
+    'songs/ejae & andrew choi - free': Object.freeze({
+      key: 'free', theme: 'hunters-free', bpm: 140, beatOffset: .094,
+      title: 'Free', data: './songs/motion/free.json',
+      source: 'https://www.youtube.com/watch?v=xDMpGyvzBdA'
+    }),
     'songs/mimi feat. hatsune miku & kafu - kuu ni naru': Object.freeze({
       key: 'kuu-ni-naru', theme: 'kuu-ni-naru', bpm: 83, beatOffset: .158,
       title: 'Kuu ni Naru', data: './songs/motion/kuu-ni-naru.json',
@@ -581,7 +591,11 @@ window.SongMotionFx = (() => {
     if (reduced) m.pulse = 0;
     ctx.save(); ctx.globalCompositeOperation = 'source-over';
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    if (active.theme === 'override') window.OverrideFx?.draw(ctx, w, h, { ...m,
+    if (active.theme === 'hunters-golden' || active.theme === 'hunters-free') {
+      const data = cache.get(active.key);
+      window.HuntersFx?.draw(active.theme, ctx, w, h, { ...m, time,
+        sections: data?.sections || [], duration: data?.duration || 190, reducedMotion: reduced });
+    } else if (active.theme === 'override') window.OverrideFx?.draw(ctx, w, h, { ...m,
       time: Math.max(0, (time - (active.timelineOffset || 0)) / (active.timelineScale || 1)), reducedMotion: reduced });
     else if (active.theme === 'kuu-ni-naru') window.KuuFx?.draw(ctx, w, h, { ...m, time,
       sections: cache.get(active.key)?.sections || [], reducedMotion: reduced });

@@ -1,0 +1,21 @@
+{
+  "recording": "songs/HUNTRIX - Golden.m4a",
+  "title": "Golden",
+  "artist": "HUNTR/X",
+  "source": "https://www.youtube.com/watch?v=htk6MRjmcnQ",
+  "sourceTitle": "Huntrix - Golden (Lyrics) KPop Demon Hunters",
+  "sourceChannel": "7clouds",
+  "performerCredits": [
+    "EJAE",
+    "Audrey Nuna",
+    "REI AMI"
+  ],
+  "creditSource": "https://www.republicrecords.com/collections/kids-family/products/kpop-demon-hunters-soundtrack-from-the-netflix-film-digital-album",
+  "duration": 192.0291,
+  "encoding": "AAC 192k, 48kHz stereo, faststart; no gain or tempo manipulation",
+  "sourceAudioSha256": "e313fefb1e01645f79fea58f5c5bc6ceecd4a0d08ee6e91b19b7232c7bec7fae",
+  "outputAudioSha256": "e61d90d6b8fe23e6963d3fea2618c41c7f7b36c59ac3787d053d2b8701d4cba5",
+  "importDate": "2026-11-09",
+  "graphics": "Recording-specific golden theater; FX gated",
+  "lyrics": "songs/lyrics/aligned/golden.json"
+}

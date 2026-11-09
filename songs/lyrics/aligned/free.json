@@ -1,0 +1,2411 @@
+{
+  "schemaVersion": 1,
+  "recording": "songs/EJAE & Andrew Choi - Free.m4a",
+  "language": "en",
+  "duration": 188.0236,
+  "preview": false,
+  "source": "Lyrics supplied by Joshua.",
+  "rows": [
+    {
+      "id": "line-1",
+      "start": 13.55,
+      "end": 16.29,
+      "en": "I tried to hide, but something broke",
+      "words": {
+        "en": [
+          {
+            "text": "I",
+            "start": 13.55,
+            "end": 14.23
+          },
+          {
+            "text": "tried",
+            "start": 14.23,
+            "end": 14.45
+          },
+          {
+            "text": "to",
+            "start": 14.45,
+            "end": 14.63
+          },
+          {
+            "text": "hide,",
+            "start": 14.63,
+            "end": 15.07
+          },
+          {
+            "text": "but",
+            "start": 15.41,
+            "end": 15.55
+          },
+          {
+            "text": "something",
+            "start": 15.55,
+            "end": 15.91
+          },
+          {
+            "text": "broke",
+            "start": 15.91,
+            "end": 16.29
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-2",
+      "start": 17.02,
+      "end": 19.86,
+      "en": "I tried to sing, couldn't hit the notes",
+      "words": {
+        "en": [
+          {
+            "text": "I",
+            "start": 17.02,
+            "end": 17.6
+          },
+          {
+            "text": "tried",
+            "start": 17.6,
+            "end": 17.92
+          },
+          {
+            "text": "to",
+            "start": 17.92,
+            "end": 18.1
+          },
+          {
+            "text": "sing,",
+            "start": 18.1,
+            "end": 18.52
+          },
+          {
+            "text": "couldn't",
+            "start": 18.7,
+            "end": 19.1
+          },
+          {
+            "text": "hit",
+            "start": 19.1,
+            "end": 19.3
+          },
+          {
+            "text": "the",
+            "start": 19.3,
+            "end": 19.46
+          },
+          {
+            "text": "notes",
+            "start": 19.46,
+            "end": 19.86
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-3",
+      "start": 20.1,
+      "end": 22.62,
+      "en": "The words kept catching in my throat",
+      "words": {
+        "en": [
+          {
+            "text": "The",
+            "start": 20.1,
+            "end": 20.3
+          },
+          {
+            "text": "words",
+            "start": 20.3,
+            "end": 20.64
+          },
+          {
+            "text": "kept",
+            "start": 20.64,
+            "end": 20.96
+          },
+          {
+            "text": "catching",
+            "start": 20.96,
+            "end": 22.04
+          },
+          {
+            "text": "in",
+            "start": 22.04,
+            "end": 22.22
+          },
+          {
+            "text": "my",
+            "start": 22.22,
+            "end": 22.38
+          },
+          {
+            "text": "throat",
+            "start": 22.38,
+            "end": 22.62
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-4",
+      "start": 23.68,
+      "end": 26.98,
+      "en": "I tried to smile, I was suffocating, though",
+      "words": {
+        "en": [
+          {
+            "text": "I",
+            "start": 23.68,
+            "end": 24.46
+          },
+          {
+            "text": "tried",
+            "start": 24.46,
+            "end": 24.78
+          },
+          {
+            "text": "to",
+            "start": 24.78,
+            "end": 24.94
+          },
+          {
+            "text": "smile,",
+            "start": 24.94,
+            "end": 25.36
+          },
+          {
+            "text": "I",
+            "start": 25.7,
+            "end": 25.78
+          },
+          {
+            "text": "was",
+            "start": 25.78,
+            "end": 25.92
+          },
+          {
+            "text": "suffocating,",
+            "start": 25.92,
+            "end": 26.68
+          },
+          {
+            "text": "though",
+            "start": 26.86,
+            "end": 26.98
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-5",
+      "start": 27.28,
+      "end": 30.56,
+      "en": "But here with you, I can finally breathe",
+      "words": {
+        "en": [
+          {
+            "text": "But",
+            "start": 27.28,
+            "end": 27.44
+          },
+          {
+            "text": "here",
+            "start": 27.44,
+            "end": 28.16
+          },
+          {
+            "text": "with",
+            "start": 28.16,
+            "end": 28.5
+          },
+          {
+            "text": "you,",
+            "start": 28.5,
+            "end": 28.8
+          },
+          {
+            "text": "I",
+            "start": 28.88,
+            "end": 29.18
+          },
+          {
+            "text": "can",
+            "start": 29.18,
+            "end": 29.4
+          },
+          {
+            "text": "finally",
+            "start": 29.4,
+            "end": 30.1
+          },
+          {
+            "text": "breathe",
+            "start": 30.1,
+            "end": 30.56
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-6",
+      "start": 30.68,
+      "end": 34.16,
+      "en": "You say you're no good, but you're good for me",
+      "words": {
+        "en": [
+          {
+            "text": "You",
+            "start": 30.68,
+            "end": 30.94
+          },
+          {
+            "text": "say",
+            "start": 30.94,
+            "end": 31.22
+          },
+          {
+            "text": "you're",
+            "start": 31.22,
+            "end": 31.88
+          },
+          {
+            "text": "no",
+            "start": 31.88,
+            "end": 32.08
+          },
+          {
+            "text": "good,",
+            "start": 32.08,
+            "end": 32.44
+          },
+          {
+            "text": "but",
+            "start": 32.6,
+            "end": 32.78
+          },
+          {
+            "text": "you're",
+            "start": 32.78,
+            "end": 33.14
+          },
+          {
+            "text": "good",
+            "start": 33.14,
+            "end": 33.52
+          },
+          {
+            "text": "for",
+            "start": 33.52,
+            "end": 33.8
+          },
+          {
+            "text": "me",
+            "start": 33.8,
+            "end": 34.16
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-7",
+      "start": 34.36,
+      "end": 38.12,
+      "en": "I've been hoping to change, now I know we can change",
+      "words": {
+        "en": [
+          {
+            "text": "I've",
+            "start": 34.36,
+            "end": 34.7
+          },
+          {
+            "text": "been",
+            "start": 34.7,
+            "end": 34.86
+          },
+          {
+            "text": "hoping",
+            "start": 34.86,
+            "end": 35.54
+          },
+          {
+            "text": "to",
+            "start": 35.54,
+            "end": 35.72
+          },
+          {
+            "text": "change,",
+            "start": 35.72,
+            "end": 36.14
+          },
+          {
+            "text": "now",
+            "start": 36.28,
+            "end": 36.44
+          },
+          {
+            "text": "I",
+            "start": 36.44,
+            "end": 36.64
+          },
+          {
+            "text": "know",
+            "start": 36.64,
+            "end": 37.2
+          },
+          {
+            "text": "we",
+            "start": 37.2,
+            "end": 37.46
+          },
+          {
+            "text": "can",
+            "start": 37.46,
+            "end": 37.62
+          },
+          {
+            "text": "change",
+            "start": 37.62,
+            "end": 38.12
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-8",
+      "start": 38.32,
+      "end": 41.6,
+      "en": "But I won't if you're not by my side",
+      "words": {
+        "en": [
+          {
+            "text": "But",
+            "start": 38.32,
+            "end": 38.56
+          },
+          {
+            "text": "I",
+            "start": 38.56,
+            "end": 38.68
+          },
+          {
+            "text": "won't",
+            "start": 38.68,
+            "end": 39.18
+          },
+          {
+            "text": "if",
+            "start": 39.18,
+            "end": 39.72
+          },
+          {
+            "text": "you're",
+            "start": 39.72,
+            "end": 39.9
+          },
+          {
+            "text": "not",
+            "start": 39.9,
+            "end": 40.12
+          },
+          {
+            "text": "by",
+            "start": 40.12,
+            "end": 40.38
+          },
+          {
+            "text": "my",
+            "start": 40.38,
+            "end": 40.78
+          },
+          {
+            "text": "side",
+            "start": 40.78,
+            "end": 41.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-9",
+      "start": 42.78,
+      "end": 46.56,
+      "en": "Why does it feel right every time I let you in?",
+      "words": {
+        "en": [
+          {
+            "text": "Why",
+            "start": 42.78,
+            "end": 43.48
+          },
+          {
+            "text": "does",
+            "start": 43.48,
+            "end": 43.74
+          },
+          {
+            "text": "it",
+            "start": 43.74,
+            "end": 43.9
+          },
+          {
+            "text": "feel",
+            "start": 43.9,
+            "end": 44.26
+          },
+          {
+            "text": "right",
+            "start": 44.26,
+            "end": 44.98
+          },
+          {
+            "text": "every",
+            "start": 44.98,
+            "end": 45.38
+          },
+          {
+            "text": "time",
+            "start": 45.38,
+            "end": 45.68
+          },
+          {
+            "text": "I",
+            "start": 45.68,
+            "end": 45.88
+          },
+          {
+            "text": "let",
+            "start": 45.88,
+            "end": 46.12
+          },
+          {
+            "text": "you",
+            "start": 46.12,
+            "end": 46.3
+          },
+          {
+            "text": "in?",
+            "start": 46.3,
+            "end": 46.56
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-10",
+      "start": 46.98,
+      "end": 49.96,
+      "en": "Why does it feel like I can tell you anything?",
+      "words": {
+        "en": [
+          {
+            "text": "Why does",
+            "start": 46.98,
+            "end": 47.22
+          },
+          {
+            "text": "it",
+            "start": 47.22,
+            "end": 47.4
+          },
+          {
+            "text": "feel",
+            "start": 47.4,
+            "end": 47.7
+          },
+          {
+            "text": "like",
+            "start": 47.7,
+            "end": 48.42
+          },
+          {
+            "text": "I",
+            "start": 48.42,
+            "end": 48.66
+          },
+          {
+            "text": "can",
+            "start": 48.66,
+            "end": 48.84
+          },
+          {
+            "text": "tell",
+            "start": 48.84,
+            "end": 49.12
+          },
+          {
+            "text": "you",
+            "start": 49.12,
+            "end": 49.34
+          },
+          {
+            "text": "anything?",
+            "start": 49.34,
+            "end": 49.96
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-11",
+      "start": 50.84,
+      "end": 53.48,
+      "en": "All the secrets that keep me in chains and",
+      "words": {
+        "en": [
+          {
+            "text": "All the",
+            "start": 50.84,
+            "end": 51.02
+          },
+          {
+            "text": "secrets",
+            "start": 51.02,
+            "end": 51.6
+          },
+          {
+            "text": "that",
+            "start": 51.6,
+            "end": 51.92
+          },
+          {
+            "text": "keep",
+            "start": 51.92,
+            "end": 52.16
+          },
+          {
+            "text": "me",
+            "start": 52.16,
+            "end": 52.48
+          },
+          {
+            "text": "in",
+            "start": 52.48,
+            "end": 52.72
+          },
+          {
+            "text": "chains",
+            "start": 52.72,
+            "end": 53.18
+          },
+          {
+            "text": "and",
+            "start": 53.18,
+            "end": 53.48
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-12",
+      "start": 53.72,
+      "end": 56.74,
+      "en": "All the damage that might make me dangerous",
+      "words": {
+        "en": [
+          {
+            "text": "All",
+            "start": 53.72,
+            "end": 54.24
+          },
+          {
+            "text": "the",
+            "start": 54.24,
+            "end": 54.44
+          },
+          {
+            "text": "damage",
+            "start": 54.44,
+            "end": 54.92
+          },
+          {
+            "text": "that",
+            "start": 54.92,
+            "end": 55.3
+          },
+          {
+            "text": "might",
+            "start": 55.3,
+            "end": 55.58
+          },
+          {
+            "text": "make",
+            "start": 55.58,
+            "end": 55.92
+          },
+          {
+            "text": "me",
+            "start": 55.92,
+            "end": 56.12
+          },
+          {
+            "text": "dangerous",
+            "start": 56.12,
+            "end": 56.74
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-13",
+      "start": 57.06,
+      "end": 60.28,
+      "en": "You got a dark side, guess you're not the only one",
+      "words": {
+        "en": [
+          {
+            "text": "You",
+            "start": 57.06,
+            "end": 57.24
+          },
+          {
+            "text": "got",
+            "start": 57.24,
+            "end": 57.52
+          },
+          {
+            "text": "a",
+            "start": 57.52,
+            "end": 57.72
+          },
+          {
+            "text": "dark",
+            "start": 57.72,
+            "end": 58.06
+          },
+          {
+            "text": "side,",
+            "start": 58.06,
+            "end": 58.52
+          },
+          {
+            "text": "guess",
+            "start": 58.8,
+            "end": 58.98
+          },
+          {
+            "text": "you're",
+            "start": 58.98,
+            "end": 59.18
+          },
+          {
+            "text": "not",
+            "start": 59.18,
+            "end": 59.4
+          },
+          {
+            "text": "the",
+            "start": 59.4,
+            "end": 59.58
+          },
+          {
+            "text": "only",
+            "start": 59.58,
+            "end": 59.94
+          },
+          {
+            "text": "one",
+            "start": 59.94,
+            "end": 60.28
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-14",
+      "start": 60.44,
+      "end": 63.76,
+      "en": "What if we both tried fighting what we're running from?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 60.44,
+            "end": 60.72
+          },
+          {
+            "text": "if",
+            "start": 60.72,
+            "end": 60.9
+          },
+          {
+            "text": "we",
+            "start": 60.9,
+            "end": 61.08
+          },
+          {
+            "text": "both",
+            "start": 61.08,
+            "end": 61.4
+          },
+          {
+            "text": "tried",
+            "start": 61.4,
+            "end": 61.88
+          },
+          {
+            "text": "fighting",
+            "start": 61.88,
+            "end": 62.54
+          },
+          {
+            "text": "what",
+            "start": 62.54,
+            "end": 62.8
+          },
+          {
+            "text": "we're",
+            "start": 62.8,
+            "end": 63.04
+          },
+          {
+            "text": "running",
+            "start": 63.04,
+            "end": 63.36
+          },
+          {
+            "text": "from?",
+            "start": 63.36,
+            "end": 63.76
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-15",
+      "start": 64.36,
+      "end": 67.18,
+      "en": "We can't fix it if we never face it",
+      "words": {
+        "en": [
+          {
+            "text": "We",
+            "start": 64.36,
+            "end": 64.52
+          },
+          {
+            "text": "can't",
+            "start": 64.52,
+            "end": 64.86
+          },
+          {
+            "text": "fix",
+            "start": 64.86,
+            "end": 65.14
+          },
+          {
+            "text": "it",
+            "start": 65.14,
+            "end": 65.4
+          },
+          {
+            "text": "if",
+            "start": 65.4,
+            "end": 65.68
+          },
+          {
+            "text": "we",
+            "start": 65.68,
+            "end": 65.82
+          },
+          {
+            "text": "never",
+            "start": 65.82,
+            "end": 66.3
+          },
+          {
+            "text": "face",
+            "start": 66.3,
+            "end": 66.9
+          },
+          {
+            "text": "it",
+            "start": 66.9,
+            "end": 67.18
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-16",
+      "start": 67.42,
+      "end": 70.56,
+      "en": "What if we find a way to escape it?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 67.42,
+            "end": 67.96
+          },
+          {
+            "text": "if",
+            "start": 67.96,
+            "end": 68.18
+          },
+          {
+            "text": "we",
+            "start": 68.18,
+            "end": 68.4
+          },
+          {
+            "text": "find",
+            "start": 68.4,
+            "end": 68.8
+          },
+          {
+            "text": "a",
+            "start": 68.8,
+            "end": 69.02
+          },
+          {
+            "text": "way",
+            "start": 69.02,
+            "end": 69.26
+          },
+          {
+            "text": "to",
+            "start": 69.26,
+            "end": 69.6
+          },
+          {
+            "text": "escape",
+            "start": 69.6,
+            "end": 70.14
+          },
+          {
+            "text": "it?",
+            "start": 70.14,
+            "end": 70.56
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-17",
+      "start": 70.6,
+      "end": 72.8,
+      "en": "We could be free",
+      "words": {
+        "en": [
+          {
+            "text": "We",
+            "start": 70.6,
+            "end": 70.96
+          },
+          {
+            "text": "could",
+            "start": 70.96,
+            "end": 71.18
+          },
+          {
+            "text": "be",
+            "start": 71.18,
+            "end": 71.52
+          },
+          {
+            "text": "free",
+            "start": 71.52,
+            "end": 72.8
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-18",
+      "start": 72.86,
+      "end": 74.72,
+      "en": "Free",
+      "words": {
+        "en": [
+          {
+            "text": "Free",
+            "start": 72.86,
+            "end": 74.72
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-19",
+      "start": 77.41,
+      "end": 80.93,
+      "en": "We can't fix it if we never face it",
+      "words": {
+        "en": [
+          {
+            "text": "We",
+            "start": 77.41,
+            "end": 78.21
+          },
+          {
+            "text": "can't",
+            "start": 78.21,
+            "end": 78.57
+          },
+          {
+            "text": "fix",
+            "start": 78.57,
+            "end": 78.85
+          },
+          {
+            "text": "it",
+            "start": 78.85,
+            "end": 79.15
+          },
+          {
+            "text": "if",
+            "start": 79.15,
+            "end": 79.41
+          },
+          {
+            "text": "we",
+            "start": 79.41,
+            "end": 79.57
+          },
+          {
+            "text": "never",
+            "start": 79.57,
+            "end": 80.03
+          },
+          {
+            "text": "face",
+            "start": 80.03,
+            "end": 80.61
+          },
+          {
+            "text": "it",
+            "start": 80.61,
+            "end": 80.93
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-20",
+      "start": 81.54,
+      "end": 84.42,
+      "en": "Let the past be the past 'til it's weightless",
+      "words": {
+        "en": [
+          {
+            "text": "Let",
+            "start": 81.54,
+            "end": 81.62
+          },
+          {
+            "text": "the",
+            "start": 81.62,
+            "end": 81.84
+          },
+          {
+            "text": "past",
+            "start": 81.84,
+            "end": 82.22
+          },
+          {
+            "text": "be",
+            "start": 82.22,
+            "end": 82.46
+          },
+          {
+            "text": "the",
+            "start": 82.46,
+            "end": 82.7
+          },
+          {
+            "text": "past",
+            "start": 82.7,
+            "end": 83.12
+          },
+          {
+            "text": "'til",
+            "start": 83.12,
+            "end": 83.42
+          },
+          {
+            "text": "it's",
+            "start": 83.42,
+            "end": 83.68
+          },
+          {
+            "text": "weightless",
+            "start": 83.68,
+            "end": 84.42
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-21",
+      "start": 84.9,
+      "end": 88.32,
+      "en": "Ooh, time goes by, and I lose perspective",
+      "words": {
+        "en": [
+          {
+            "text": "Ooh,",
+            "start": 84.9,
+            "end": 85.24
+          },
+          {
+            "text": "time",
+            "start": 85.54,
+            "end": 85.78
+          },
+          {
+            "text": "goes",
+            "start": 85.78,
+            "end": 86.14
+          },
+          {
+            "text": "by,",
+            "start": 86.14,
+            "end": 86.52
+          },
+          {
+            "text": "and",
+            "start": 86.8,
+            "end": 87.04
+          },
+          {
+            "text": "I",
+            "start": 87.04,
+            "end": 87.28
+          },
+          {
+            "text": "lose",
+            "start": 87.28,
+            "end": 87.58
+          },
+          {
+            "text": "perspective",
+            "start": 87.58,
+            "end": 88.32
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-22",
+      "start": 88.6,
+      "end": 91.84,
+      "en": "Yeah, hope only hurts, so I just forget it",
+      "words": {
+        "en": [
+          {
+            "text": "Yeah,",
+            "start": 88.6,
+            "end": 88.7
+          },
+          {
+            "text": "hope",
+            "start": 88.82,
+            "end": 89.08
+          },
+          {
+            "text": "only",
+            "start": 89.08,
+            "end": 89.58
+          },
+          {
+            "text": "hurts,",
+            "start": 89.58,
+            "end": 90.02
+          },
+          {
+            "text": "so",
+            "start": 90.16,
+            "end": 90.42
+          },
+          {
+            "text": "I",
+            "start": 90.42,
+            "end": 90.72
+          },
+          {
+            "text": "just",
+            "start": 90.72,
+            "end": 91.06
+          },
+          {
+            "text": "forget",
+            "start": 91.06,
+            "end": 91.46
+          },
+          {
+            "text": "it",
+            "start": 91.46,
+            "end": 91.84
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-23",
+      "start": 91.92,
+      "end": 93.56,
+      "en": "But you're breaking through all the dark in me",
+      "words": {
+        "en": [
+          {
+            "text": "But",
+            "start": 91.92,
+            "end": 92.02
+          },
+          {
+            "text": "you're",
+            "start": 92.02,
+            "end": 92.22
+          },
+          {
+            "text": "breaking",
+            "start": 92.22,
+            "end": 92.48
+          },
+          {
+            "text": "through",
+            "start": 92.48,
+            "end": 92.7
+          },
+          {
+            "text": "all",
+            "start": 92.7,
+            "end": 92.9
+          },
+          {
+            "text": "the",
+            "start": 92.9,
+            "end": 93.06
+          },
+          {
+            "text": "dark",
+            "start": 93.06,
+            "end": 93.28
+          },
+          {
+            "text": "in",
+            "start": 93.28,
+            "end": 93.42
+          },
+          {
+            "text": "me",
+            "start": 93.42,
+            "end": 93.56
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-24",
+      "start": 93.64,
+      "end": 94.96,
+      "en": "When I thought that nobody could",
+      "words": {
+        "en": [
+          {
+            "text": "When",
+            "start": 93.64,
+            "end": 93.74
+          },
+          {
+            "text": "I",
+            "start": 93.74,
+            "end": 93.88
+          },
+          {
+            "text": "thought",
+            "start": 93.88,
+            "end": 94.1
+          },
+          {
+            "text": "that",
+            "start": 94.1,
+            "end": 94.26
+          },
+          {
+            "text": "nobody",
+            "start": 94.26,
+            "end": 94.64
+          },
+          {
+            "text": "could",
+            "start": 94.64,
+            "end": 94.96
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-25",
+      "start": 95.2,
+      "end": 96.96,
+      "en": "And you're waking up all these parts of me",
+      "words": {
+        "en": [
+          {
+            "text": "And",
+            "start": 95.2,
+            "end": 95.38
+          },
+          {
+            "text": "you're",
+            "start": 95.38,
+            "end": 95.68
+          },
+          {
+            "text": "waking",
+            "start": 95.68,
+            "end": 95.92
+          },
+          {
+            "text": "up",
+            "start": 95.92,
+            "end": 96.14
+          },
+          {
+            "text": "all",
+            "start": 96.14,
+            "end": 96.3
+          },
+          {
+            "text": "these",
+            "start": 96.3,
+            "end": 96.46
+          },
+          {
+            "text": "parts",
+            "start": 96.46,
+            "end": 96.7
+          },
+          {
+            "text": "of",
+            "start": 96.7,
+            "end": 96.84
+          },
+          {
+            "text": "me",
+            "start": 96.84,
+            "end": 96.96
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-26",
+      "start": 97.04,
+      "end": 98.46,
+      "en": "That I thought were buried for good",
+      "words": {
+        "en": [
+          {
+            "text": "That",
+            "start": 97.04,
+            "end": 97.14
+          },
+          {
+            "text": "I",
+            "start": 97.14,
+            "end": 97.28
+          },
+          {
+            "text": "thought",
+            "start": 97.28,
+            "end": 97.5
+          },
+          {
+            "text": "were",
+            "start": 97.5,
+            "end": 97.68
+          },
+          {
+            "text": "buried",
+            "start": 97.68,
+            "end": 97.94
+          },
+          {
+            "text": "for",
+            "start": 97.94,
+            "end": 98.18
+          },
+          {
+            "text": "good",
+            "start": 98.18,
+            "end": 98.46
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-27",
+      "start": 98.66,
+      "end": 100.24,
+      "en": "Between imposter and this monster",
+      "words": {
+        "en": [
+          {
+            "text": "Between",
+            "start": 98.66,
+            "end": 98.88
+          },
+          {
+            "text": "imposter",
+            "start": 98.88,
+            "end": 99.48
+          },
+          {
+            "text": "and",
+            "start": 99.48,
+            "end": 99.72
+          },
+          {
+            "text": "this",
+            "start": 99.72,
+            "end": 99.92
+          },
+          {
+            "text": "monster",
+            "start": 99.92,
+            "end": 100.24
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-28",
+      "start": 100.48,
+      "end": 101.86,
+      "en": "I been lost inside my head",
+      "words": {
+        "en": [
+          {
+            "text": "I",
+            "start": 100.48,
+            "end": 100.5
+          },
+          {
+            "text": "been",
+            "start": 100.5,
+            "end": 100.72
+          },
+          {
+            "text": "lost",
+            "start": 100.72,
+            "end": 101.0
+          },
+          {
+            "text": "inside",
+            "start": 101.0,
+            "end": 101.32
+          },
+          {
+            "text": "my",
+            "start": 101.4,
+            "end": 101.54
+          },
+          {
+            "text": "head",
+            "start": 101.54,
+            "end": 101.86
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-29",
+      "start": 102.14,
+      "end": 103.58,
+      "en": "Ain't no choice when all these voices",
+      "words": {
+        "en": [
+          {
+            "text": "Ain't",
+            "start": 102.14,
+            "end": 102.26
+          },
+          {
+            "text": "no",
+            "start": 102.26,
+            "end": 102.42
+          },
+          {
+            "text": "choice",
+            "start": 102.42,
+            "end": 102.68
+          },
+          {
+            "text": "when",
+            "start": 102.68,
+            "end": 102.86
+          },
+          {
+            "text": "all",
+            "start": 102.86,
+            "end": 103.04
+          },
+          {
+            "text": "these",
+            "start": 103.04,
+            "end": 103.28
+          },
+          {
+            "text": "voices",
+            "start": 103.28,
+            "end": 103.58
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-30",
+      "start": 103.82,
+      "end": 105.3,
+      "en": "Keep me pointing towards no end",
+      "words": {
+        "en": [
+          {
+            "text": "Keep",
+            "start": 103.82,
+            "end": 103.84
+          },
+          {
+            "text": "me",
+            "start": 103.84,
+            "end": 104.12
+          },
+          {
+            "text": "pointing",
+            "start": 104.12,
+            "end": 104.44
+          },
+          {
+            "text": "towards",
+            "start": 104.44,
+            "end": 104.76
+          },
+          {
+            "text": "no",
+            "start": 104.76,
+            "end": 105.02
+          },
+          {
+            "text": "end",
+            "start": 105.02,
+            "end": 105.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-31",
+      "start": 105.58,
+      "end": 107.22,
+      "en": "It's just easy when I'm with you",
+      "words": {
+        "en": [
+          {
+            "text": "It's",
+            "start": 105.58,
+            "end": 105.76
+          },
+          {
+            "text": "just",
+            "start": 105.76,
+            "end": 105.88
+          },
+          {
+            "text": "easy",
+            "start": 105.88,
+            "end": 106.36
+          },
+          {
+            "text": "when",
+            "start": 106.36,
+            "end": 106.62
+          },
+          {
+            "text": "I'm",
+            "start": 106.62,
+            "end": 106.8
+          },
+          {
+            "text": "with",
+            "start": 106.8,
+            "end": 107.1
+          },
+          {
+            "text": "you",
+            "start": 107.1,
+            "end": 107.22
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-32",
+      "start": 107.34,
+      "end": 108.94,
+      "en": "No one sees me the way you do",
+      "words": {
+        "en": [
+          {
+            "text": "No",
+            "start": 107.34,
+            "end": 107.42
+          },
+          {
+            "text": "one",
+            "start": 107.42,
+            "end": 107.58
+          },
+          {
+            "text": "sees",
+            "start": 107.58,
+            "end": 107.88
+          },
+          {
+            "text": "me",
+            "start": 107.88,
+            "end": 108.1
+          },
+          {
+            "text": "the",
+            "start": 108.1,
+            "end": 108.28
+          },
+          {
+            "text": "way",
+            "start": 108.28,
+            "end": 108.44
+          },
+          {
+            "text": "you",
+            "start": 108.44,
+            "end": 108.7
+          },
+          {
+            "text": "do",
+            "start": 108.7,
+            "end": 108.94
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-33",
+      "start": 109.08,
+      "end": 110.66,
+      "en": "I don't trust it, but I want to",
+      "words": {
+        "en": [
+          {
+            "text": "I",
+            "start": 109.08,
+            "end": 109.14
+          },
+          {
+            "text": "don't",
+            "start": 109.14,
+            "end": 109.3
+          },
+          {
+            "text": "trust",
+            "start": 109.3,
+            "end": 109.62
+          },
+          {
+            "text": "it,",
+            "start": 109.62,
+            "end": 109.86
+          },
+          {
+            "text": "but",
+            "start": 109.96,
+            "end": 110.04
+          },
+          {
+            "text": "I",
+            "start": 110.04,
+            "end": 110.14
+          },
+          {
+            "text": "want",
+            "start": 110.14,
+            "end": 110.54
+          },
+          {
+            "text": "to",
+            "start": 110.54,
+            "end": 110.66
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-34",
+      "start": 110.76,
+      "end": 111.82,
+      "en": "I keep coming back to",
+      "words": {
+        "en": [
+          {
+            "text": "I",
+            "start": 110.76,
+            "end": 110.82
+          },
+          {
+            "text": "keep",
+            "start": 110.82,
+            "end": 111.02
+          },
+          {
+            "text": "coming",
+            "start": 111.02,
+            "end": 111.28
+          },
+          {
+            "text": "back",
+            "start": 111.28,
+            "end": 111.58
+          },
+          {
+            "text": "to",
+            "start": 111.58,
+            "end": 111.82
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-35",
+      "start": 111.92,
+      "end": 115.14,
+      "en": "Why does it feel right every time I let you in?",
+      "words": {
+        "en": [
+          {
+            "text": "Why",
+            "start": 111.92,
+            "end": 112.12
+          },
+          {
+            "text": "does",
+            "start": 112.12,
+            "end": 112.34
+          },
+          {
+            "text": "it",
+            "start": 112.34,
+            "end": 112.54
+          },
+          {
+            "text": "feel",
+            "start": 112.54,
+            "end": 112.8
+          },
+          {
+            "text": "right",
+            "start": 112.8,
+            "end": 113.48
+          },
+          {
+            "text": "every",
+            "start": 113.48,
+            "end": 113.94
+          },
+          {
+            "text": "time",
+            "start": 113.94,
+            "end": 114.24
+          },
+          {
+            "text": "I",
+            "start": 114.24,
+            "end": 114.5
+          },
+          {
+            "text": "let",
+            "start": 114.5,
+            "end": 114.68
+          },
+          {
+            "text": "you",
+            "start": 114.68,
+            "end": 114.86
+          },
+          {
+            "text": "in?",
+            "start": 114.86,
+            "end": 115.14
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-36",
+      "start": 115.4,
+      "end": 118.48,
+      "en": "Why does it feel like I can tell you anything?",
+      "words": {
+        "en": [
+          {
+            "text": "Why",
+            "start": 115.4,
+            "end": 115.54
+          },
+          {
+            "text": "does",
+            "start": 115.54,
+            "end": 115.78
+          },
+          {
+            "text": "it",
+            "start": 115.78,
+            "end": 115.92
+          },
+          {
+            "text": "feel",
+            "start": 115.92,
+            "end": 116.24
+          },
+          {
+            "text": "like",
+            "start": 116.24,
+            "end": 117.0
+          },
+          {
+            "text": "I",
+            "start": 117.0,
+            "end": 117.22
+          },
+          {
+            "text": "can",
+            "start": 117.22,
+            "end": 117.38
+          },
+          {
+            "text": "tell",
+            "start": 117.38,
+            "end": 117.68
+          },
+          {
+            "text": "you",
+            "start": 117.68,
+            "end": 117.86
+          },
+          {
+            "text": "anything?",
+            "start": 117.86,
+            "end": 118.48
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-37",
+      "start": 119.2,
+      "end": 121.98,
+      "en": "We can't fix it if we never face it",
+      "words": {
+        "en": [
+          {
+            "text": "We",
+            "start": 119.2,
+            "end": 119.34
+          },
+          {
+            "text": "can't",
+            "start": 119.34,
+            "end": 119.66
+          },
+          {
+            "text": "fix",
+            "start": 119.66,
+            "end": 119.98
+          },
+          {
+            "text": "it",
+            "start": 119.98,
+            "end": 120.26
+          },
+          {
+            "text": "if",
+            "start": 120.26,
+            "end": 120.5
+          },
+          {
+            "text": "we",
+            "start": 120.5,
+            "end": 120.66
+          },
+          {
+            "text": "never",
+            "start": 120.66,
+            "end": 121.16
+          },
+          {
+            "text": "face",
+            "start": 121.16,
+            "end": 121.76
+          },
+          {
+            "text": "it",
+            "start": 121.76,
+            "end": 121.98
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-38",
+      "start": 122.46,
+      "end": 125.4,
+      "en": "What if we find a way to escape it?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 122.46,
+            "end": 122.84
+          },
+          {
+            "text": "if",
+            "start": 122.84,
+            "end": 123.04
+          },
+          {
+            "text": "we",
+            "start": 123.04,
+            "end": 123.24
+          },
+          {
+            "text": "find",
+            "start": 123.24,
+            "end": 123.72
+          },
+          {
+            "text": "a",
+            "start": 123.72,
+            "end": 123.9
+          },
+          {
+            "text": "way",
+            "start": 123.9,
+            "end": 124.16
+          },
+          {
+            "text": "to",
+            "start": 124.16,
+            "end": 124.48
+          },
+          {
+            "text": "escape",
+            "start": 124.48,
+            "end": 125.02
+          },
+          {
+            "text": "it?",
+            "start": 125.02,
+            "end": 125.4
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-39",
+      "start": 125.44,
+      "end": 127.1,
+      "en": "We could be free",
+      "words": {
+        "en": [
+          {
+            "text": "We",
+            "start": 125.44,
+            "end": 125.82
+          },
+          {
+            "text": "could",
+            "start": 125.82,
+            "end": 126.04
+          },
+          {
+            "text": "be",
+            "start": 126.04,
+            "end": 126.4
+          },
+          {
+            "text": "free",
+            "start": 126.4,
+            "end": 127.1
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-40",
+      "start": 127.38,
+      "end": 129.56,
+      "en": "Free",
+      "words": {
+        "en": [
+          {
+            "text": "Free",
+            "start": 127.38,
+            "end": 129.56
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-41",
+      "start": 132.26,
+      "end": 135.68,
+      "en": "We can't fix it if we never face it",
+      "words": {
+        "en": [
+          {
+            "text": "We",
+            "start": 132.26,
+            "end": 133.06
+          },
+          {
+            "text": "can't",
+            "start": 133.06,
+            "end": 133.38
+          },
+          {
+            "text": "fix",
+            "start": 133.38,
+            "end": 133.72
+          },
+          {
+            "text": "it",
+            "start": 133.72,
+            "end": 134.0
+          },
+          {
+            "text": "if",
+            "start": 134.0,
+            "end": 134.22
+          },
+          {
+            "text": "we",
+            "start": 134.22,
+            "end": 134.4
+          },
+          {
+            "text": "never",
+            "start": 134.4,
+            "end": 134.88
+          },
+          {
+            "text": "face",
+            "start": 134.88,
+            "end": 135.48
+          },
+          {
+            "text": "it",
+            "start": 135.48,
+            "end": 135.68
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-42",
+      "start": 135.95,
+      "end": 139.19,
+      "en": "Let the past be the past 'til it's weightless",
+      "words": {
+        "en": [
+          {
+            "text": "Let",
+            "start": 135.95,
+            "end": 136.49
+          },
+          {
+            "text": "the",
+            "start": 136.49,
+            "end": 136.71
+          },
+          {
+            "text": "past",
+            "start": 136.71,
+            "end": 137.17
+          },
+          {
+            "text": "be",
+            "start": 137.17,
+            "end": 137.37
+          },
+          {
+            "text": "the",
+            "start": 137.37,
+            "end": 137.55
+          },
+          {
+            "text": "past",
+            "start": 137.55,
+            "end": 138.05
+          },
+          {
+            "text": "'til",
+            "start": 138.05,
+            "end": 138.31
+          },
+          {
+            "text": "it's",
+            "start": 138.31,
+            "end": 138.57
+          },
+          {
+            "text": "weightless",
+            "start": 138.57,
+            "end": 139.19
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-43",
+      "start": 139.61,
+      "end": 146.27,
+      "en": "Oh, so take my hand, it's open",
+      "words": {
+        "en": [
+          {
+            "text": "Oh,",
+            "start": 139.61,
+            "end": 139.79
+          },
+          {
+            "text": "so",
+            "start": 140.99,
+            "end": 141.53
+          },
+          {
+            "text": "take",
+            "start": 141.53,
+            "end": 142.61
+          },
+          {
+            "text": "my",
+            "start": 142.61,
+            "end": 143.67
+          },
+          {
+            "text": "hand,",
+            "start": 143.67,
+            "end": 144.57
+          },
+          {
+            "text": "it's",
+            "start": 145.17,
+            "end": 145.47
+          },
+          {
+            "text": "open",
+            "start": 145.47,
+            "end": 146.27
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-44",
+      "start": 147.46,
+      "end": 151.92,
+      "en": "Free, free",
+      "words": {
+        "en": [
+          {
+            "text": "Free,",
+            "start": 147.46,
+            "end": 148.14
+          },
+          {
+            "text": "free",
+            "start": 148.16,
+            "end": 151.92
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-45",
+      "start": 153.74,
+      "end": 160.0,
+      "en": "What if we heal what's broken?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 153.74,
+            "end": 155.68
+          },
+          {
+            "text": "if",
+            "start": 155.68,
+            "end": 156.36
+          },
+          {
+            "text": "we",
+            "start": 156.36,
+            "end": 157.28
+          },
+          {
+            "text": "heal",
+            "start": 157.28,
+            "end": 158.02
+          },
+          {
+            "text": "what's",
+            "start": 158.02,
+            "end": 159.02
+          },
+          {
+            "text": "broken?",
+            "start": 159.02,
+            "end": 160.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-46",
+      "start": 160.85,
+      "end": 166.58,
+      "en": "Free, free",
+      "words": {
+        "en": [
+          {
+            "text": "Free,",
+            "start": 160.85,
+            "end": 161.65
+          },
+          {
+            "text": "free",
+            "start": 161.65,
+            "end": 166.58
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-47",
+      "start": 167.09,
+      "end": 169.97,
+      "en": "I tried to hide, but something broke",
+      "words": {
+        "en": [
+          {
+            "text": "I",
+            "start": 167.09,
+            "end": 167.89
+          },
+          {
+            "text": "tried",
+            "start": 167.89,
+            "end": 168.21
+          },
+          {
+            "text": "to",
+            "start": 168.21,
+            "end": 168.45
+          },
+          {
+            "text": "hide,",
+            "start": 168.45,
+            "end": 168.85
+          },
+          {
+            "text": "but",
+            "start": 169.17,
+            "end": 169.29
+          },
+          {
+            "text": "something",
+            "start": 169.29,
+            "end": 169.59
+          },
+          {
+            "text": "broke",
+            "start": 169.59,
+            "end": 169.97
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-48",
+      "start": 170.48,
+      "end": 173.5,
+      "en": "I couldn't sing, but you give me hope",
+      "words": {
+        "en": [
+          {
+            "text": "I",
+            "start": 170.48,
+            "end": 171.38
+          },
+          {
+            "text": "couldn't",
+            "start": 171.38,
+            "end": 171.82
+          },
+          {
+            "text": "sing,",
+            "start": 171.82,
+            "end": 172.18
+          },
+          {
+            "text": "but",
+            "start": 172.34,
+            "end": 172.64
+          },
+          {
+            "text": "you",
+            "start": 172.64,
+            "end": 172.74
+          },
+          {
+            "text": "give",
+            "start": 172.74,
+            "end": 172.96
+          },
+          {
+            "text": "me",
+            "start": 172.96,
+            "end": 173.1
+          },
+          {
+            "text": "hope",
+            "start": 173.1,
+            "end": 173.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-49",
+      "start": 173.7,
+      "end": 176.92,
+      "en": "We can't fix it if we never face it",
+      "words": {
+        "en": [
+          {
+            "text": "We",
+            "start": 173.7,
+            "end": 174.2
+          },
+          {
+            "text": "can't",
+            "start": 174.2,
+            "end": 174.62
+          },
+          {
+            "text": "fix",
+            "start": 174.62,
+            "end": 174.88
+          },
+          {
+            "text": "it",
+            "start": 174.88,
+            "end": 175.18
+          },
+          {
+            "text": "if",
+            "start": 175.18,
+            "end": 175.38
+          },
+          {
+            "text": "we",
+            "start": 175.38,
+            "end": 175.56
+          },
+          {
+            "text": "never",
+            "start": 175.56,
+            "end": 176.02
+          },
+          {
+            "text": "face",
+            "start": 176.02,
+            "end": 176.56
+          },
+          {
+            "text": "it",
+            "start": 176.56,
+            "end": 176.92
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-50",
+      "start": 177.19,
+      "end": 180.59,
+      "en": "Let the past be the past 'til it's weightless",
+      "words": {
+        "en": [
+          {
+            "text": "Let",
+            "start": 177.19,
+            "end": 177.71
+          },
+          {
+            "text": "the",
+            "start": 177.71,
+            "end": 177.91
+          },
+          {
+            "text": "past",
+            "start": 177.91,
+            "end": 178.29
+          },
+          {
+            "text": "be",
+            "start": 178.29,
+            "end": 178.51
+          },
+          {
+            "text": "the",
+            "start": 178.51,
+            "end": 178.69
+          },
+          {
+            "text": "past",
+            "start": 178.69,
+            "end": 179.21
+          },
+          {
+            "text": "'til",
+            "start": 179.21,
+            "end": 179.55
+          },
+          {
+            "text": "it's",
+            "start": 179.55,
+            "end": 179.83
+          },
+          {
+            "text": "weightless",
+            "start": 179.83,
+            "end": 180.59
+          }
+        ]
+      }
+    }
+  ],
+  "alignment": {
+    "recording": "songs/EJAE & Andrew Choi - Free.m4a",
+    "audioSha256": "d1f64d22ddb3da9be756e8b96c5b7fb476ac869dd21701fc337c90afac97b679",
+    "duration": 188.0236,
+    "model": "mlx-community/whisper-large-v3-turbo",
+    "method": "Forced alignment to the imported audio, checked against independent recognition; repeated hook and bridge re-aligned in bounded vocal windows",
+    "status": "approved",
+    "approved": true,
+    "approvedBy": "Joshua Glass",
+    "approvalDate": "2026-11-09"
+  }
+}

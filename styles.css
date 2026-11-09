@@ -472,6 +472,40 @@ body.bts-butter-active .now-meta h1 { text-shadow: 0 2px 12px #181a20; }
 body.bts-butter-active .hero-play { background: #1d2026; border-color: #fff6d9; }
 body.bts-dynamite-active .player { --accent: #f2a5b5; --accent-fg: #202b3e; }
 body.bts-butter-active .player { --accent: #ffdc38; --accent-fg: #1d2026; }
+body.hunters-golden-active {
+  --accent: #ffd784;
+  --accent-2: #e9a3bc;
+  --accent-fg: #20151d;
+  --motion-ink: #fff1cd;
+  --motion-muted: #e0c7bb;
+}
+body.hunters-free-active {
+  --accent: #92e8d9;
+  --accent-2: #f0b6ce;
+  --accent-fg: #17232b;
+  --motion-ink: #e1fbf6;
+  --motion-muted: #bbd6d4;
+}
+body.hunters-golden-active #view-now.active { background: #17111d; }
+body.hunters-free-active #view-now.active { background: #111b23; }
+body:is(.hunters-golden-active, .hunters-free-active) .now-meta h1 {
+  text-shadow: 0 2px 10px #14151d;
+}
+body:is(.hunters-golden-active, .hunters-free-active) .hero-play {
+  background: #202027;
+  color: var(--motion-ink);
+  border-color: var(--accent);
+}
+body.hunters-golden-active .player { --accent: #ffd784; --accent-fg: #20151d; }
+body.hunters-free-active .player { --accent: #92e8d9; --accent-fg: #17232b; }
+body:is(.hunters-golden-active, .hunters-free-active) #local-lyric-overlay {
+  text-shadow: 0 2px 6px #120e19, 0 0 18px #120e19;
+}
+body:is(.hunters-golden-active, .hunters-free-active) #local-lyric-overlay .singing {
+  color: #fff;
+  text-decoration: none;
+}
+body:is(.hunters-golden-active, .hunters-free-active) #local-lyric-overlay .sung { color: var(--accent); }
 @media (max-width: 650px) {
   body.song-motion-fx-active .now-stage {
     grid-template-columns: minmax(0, 1fr) 108px;
