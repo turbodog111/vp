@@ -498,6 +498,26 @@ body:is(.hunters-golden-active, .hunters-free-active) .hero-play {
 }
 body.hunters-golden-active .player { --accent: #ffd784; --accent-fg: #20151d; }
 body.hunters-free-active .player { --accent: #92e8d9; --accent-fg: #17232b; }
+body.mesmerizer-active {
+  --accent: #ffe36d;
+  --accent-2: #64e0e8;
+  --accent-fg: #17233a;
+  --motion-ink: #fffae9;
+  --motion-muted: #f2ecda;
+}
+body.mesmerizer-active #view-now.active { background: #17233a; }
+body.mesmerizer-active .now-meta { max-width: 590px; }
+body.mesmerizer-active .now-meta h1 { font-size: 34px; text-shadow: 0 2px 6px #17233a; }
+body.mesmerizer-active .now-subtitle { text-shadow: 0 1px 4px #17233a; }
+body.mesmerizer-active .hero-play {
+  color: #17233a;
+  background: #fffae9;
+  border-color: #17233a;
+}
+body.mesmerizer-active .hero-play::before {
+  background: conic-gradient(#ffe36d calc(var(--progress, 0) * 360deg), #fffae9 0);
+}
+body.mesmerizer-active .player { --accent: #ffe36d; --accent-fg: #17233a; }
 body:is(.hunters-golden-active, .hunters-free-active) #local-lyric-overlay {
   text-shadow: 0 2px 6px #120e19, 0 0 18px #120e19;
 }
@@ -514,6 +534,11 @@ body:is(.hunters-golden-active, .hunters-free-active) #local-lyric-overlay .sung
   }
   body.song-motion-fx-active .now-meta { max-width: 210px; }
   body.song-motion-fx-active .now-meta h1 { font-size: 30px; }
+  body.mesmerizer-active .now-meta {
+    grid-area: 1 / 1 / 2 / -1;
+    max-width: 100%;
+  }
+  body.mesmerizer-active .now-meta h1 { font-size: 23px; }
   body.song-motion-fx-active .song-motion-art:not([hidden]) { width: 128px; }
   body.song-motion-fx-active .hero-play { width: 72px; height: 72px; }
 }

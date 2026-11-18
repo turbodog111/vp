@@ -2,6 +2,21 @@ window.SongMotionFx = (() => {
   'use strict';
 
   const tracks = Object.freeze({
+    'songs/32ki feat. hatsune miku & kasane teto sv - mesmerizer (japanese original)': Object.freeze({
+      key: 'mesmerizer-original', theme: 'mesmerizer', variant: 'original', bpm: 92.5, beatOffset: .345,
+      title: 'Mesmerizer', data: './songs/motion/mesmerizer-original.json',
+      source: 'https://www.youtube.com/watch?v=19y8YTbvri8'
+    }),
+    'songs/will stetson & rachie - mesmerizer (official english version)': Object.freeze({
+      key: 'mesmerizer-stetson', theme: 'mesmerizer', variant: 'stetson', bpm: 92.5, beatOffset: .557,
+      title: 'Mesmerizer', data: './songs/motion/mesmerizer-stetson.json',
+      source: 'https://www.youtube.com/watch?v=2c9FqIF600A'
+    }),
+    'songs/artsythesecond feat. razaplays - mesmerizer (english cover)': Object.freeze({
+      key: 'mesmerizer-artsy', theme: 'mesmerizer', variant: 'artsy', bpm: 92.5, beatOffset: .568,
+      title: 'Mesmerizer', data: './songs/motion/mesmerizer-artsy.json',
+      source: 'https://www.youtube.com/watch?v=t3FASDXexpA'
+    }),
     'songs/huntrix - golden': Object.freeze({
       key: 'golden', theme: 'hunters-golden', bpm: 123.02, beatOffset: .206,
       title: 'Golden', data: './songs/motion/golden.json',
@@ -591,7 +606,9 @@ window.SongMotionFx = (() => {
     if (reduced) m.pulse = 0;
     ctx.save(); ctx.globalCompositeOperation = 'source-over';
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    if (active.theme === 'hunters-golden' || active.theme === 'hunters-free') {
+    if (active.theme === 'mesmerizer') {
+      window.MesmerizerFx?.draw(ctx, w, h, { ...m, time, variant: active.variant, reducedMotion: reduced });
+    } else if (active.theme === 'hunters-golden' || active.theme === 'hunters-free') {
       const data = cache.get(active.key);
       window.HuntersFx?.draw(active.theme, ctx, w, h, { ...m, time,
         sections: data?.sections || [], duration: data?.duration || 190, reducedMotion: reduced });

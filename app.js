@@ -2514,6 +2514,7 @@ function setSongMotionFxActive(theme) {
   document.body.classList.toggle('bts-butter-active', config?.key === 'butter');
   document.body.classList.toggle('hunters-golden-active', config?.theme === 'hunters-golden');
   document.body.classList.toggle('hunters-free-active', config?.theme === 'hunters-free');
+  document.body.classList.toggle('mesmerizer-active', config?.theme === 'mesmerizer');
   document.body.classList.toggle('override-active', config?.theme === 'override');
   document.body.classList.toggle('kuu-active', config?.theme === 'kuu-ni-naru');
   const artwork = $('song-motion-art');
