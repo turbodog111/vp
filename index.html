@@ -8,10 +8,10 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta name="vp-build" content="2026-11-17-mesmerizer">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="styles.css?v=20261117-mesmerizer">
+<link rel="stylesheet" href="styles.css?v=20261118-mv">
 <link rel="stylesheet" href="lyric-workbench.css?v=20261023-synced-lyrics">
 <link rel="stylesheet" href="override.css?v=20261026-override">
-<link rel="stylesheet" href="kuu.css?v=20261106-recordings">
+<link rel="stylesheet" href="kuu.css?v=20261118-mv">
 <link rel="stylesheet" href="magic-maid-lyrics.css?v=20261106-recordings">
 </head>
 <body>
@@ -143,6 +143,10 @@
       <section id="local-lyric-overlay" hidden aria-label="Local timed lyrics"></section>
       <video id="reference-video" class="reference-video" muted playsinline preload="none"
              aria-label="Song music video" title="Play or pause"></video>
+      <div id="visual-mode-switch" class="visual-mode-switch" role="group" aria-label="Song visuals" hidden>
+        <button type="button" data-visual-mode="theatre" aria-pressed="true">Theatre</button>
+        <button type="button" data-visual-mode="video" aria-pressed="false">Video</button>
+      </div>
       <canvas id="teto-fx" class="teto-fx-canvas" aria-hidden="true"></canvas>
       <pre id="timing-debug" class="timing-debug hidden" aria-live="polite"></pre>
 
@@ -538,11 +542,16 @@
 <script src="encore-harp-fx.js?v=20260913-harp-theater"></script>
 <script src="encore-remaster-fx.js?v=20261025-encore-remaster"></script>
 <script src="override-fx.js?v=20261026-override"></script>
-<script src="kuu-fx.js?v=20261106-recordings"></script>
+<script src="mv-kit.js?v=20261118-mv"></script>
+<script src="kuu-fx.js?v=20261118-mv"></script>
 <script src="hunters-fx.js?v=20261109"></script>
-<script src="mesmerizer-fx.js?v=20261117"></script>
-<script src="song-motion-fx.js?v=20261117-mesmerizer"></script>
+<script src="free-fx.js?v=20261118-mv"></script>
+<script src="mesmerizer-fx.js?v=20261118-mv"></script>
+<script src="demons-fx.js?v=20261118-mv"></script>
+<script src="joy-fx.js?v=20261118-mv"></script>
+<script src="my-way-fx.js?v=20261118-mv"></script>
+<script src="song-motion-fx.js?v=20261118-mv"></script>
 <script src="lyric-workbench.js?v=20261023-synced-lyrics"></script>
-<script src="app.js?v=20261117-battery"></script>
+<script src="app.js?v=20261118-mv"></script>
 </body>
 </html>

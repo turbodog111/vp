@@ -518,6 +518,41 @@ body.mesmerizer-active .hero-play::before {
   background: conic-gradient(#ffe36d calc(var(--progress, 0) * 360deg), #fffae9 0);
 }
 body.mesmerizer-active .player { --accent: #ffe36d; --accent-fg: #17233a; }
+body.demons-active {
+  --accent: #ffd27a;
+  --accent-2: #9fb4ff;
+  --accent-fg: #1a1408;
+  --motion-ink: #fff3d6;
+  --motion-muted: #d8cdb8;
+}
+body.demons-active #view-now.active { background: #070a14; }
+body.demons-active .now-meta h1,
+body.demons-active .now-subtitle { text-shadow: 0 2px 10px #05070d; }
+body.demons-active .hero-play { background: #141826; color: #fff3d6; border-color: #ffd27a; }
+body.demons-active .player { --accent: #ffd27a; --accent-fg: #1a1408; }
+body.joy-active {
+  --accent: #ffd23f;
+  --accent-2: #ff5d8f;
+  --accent-fg: #3b2a1a;
+  --motion-ink: #3b2a1a;
+  --motion-muted: #5a4024;
+}
+body.joy-active #view-now.active { background: #bfe9ff; }
+body.joy-active .now-meta h1 { text-shadow: 0 2px 10px rgba(255, 255, 255, .7); }
+body.joy-active .hero-play { background: #fff6d0; color: #3b2a1a; border-color: #ff9f1c; }
+body.joy-active .player { --accent: #ffd23f; --accent-fg: #3b2a1a; }
+body.my-way-active {
+  --accent: #ff8fb8;
+  --accent-2: #39c5bb;
+  --accent-fg: #2a1426;
+  --motion-ink: #fff7fb;
+  --motion-muted: #ffd6e6;
+}
+body.my-way-active #view-now.active { background: #1a0f24; }
+body.my-way-active .now-meta h1,
+body.my-way-active .now-subtitle { text-shadow: 0 2px 8px #2a1426, 0 0 2px #2a1426; }
+body.my-way-active .hero-play { background: #2a1426; color: #fff7fb; border-color: #ff8fb8; }
+body.my-way-active .player { --accent: #ff8fb8; --accent-fg: #2a1426; }
 body:is(.hunters-golden-active, .hunters-free-active) #local-lyric-overlay {
   text-shadow: 0 2px 6px #120e19, 0 0 18px #120e19;
 }
@@ -4753,6 +4788,34 @@ body.reference-video-active #view-now.view.active {
   background: #000;
 }
 body.reference-video-active .reference-video { display: block; }
+/* Songs with both a theatre and the official video can switch between them. */
+.visual-mode-switch {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 40;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(18, 8, 26, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.visual-mode-switch[hidden] { display: none; }
+.visual-mode-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(255, 247, 251, 0.75);
+  background: transparent;
+  cursor: pointer;
+}
+.visual-mode-switch button[aria-pressed="true"] { color: #2a1426; background: #ff8fb8; }
+.visual-mode-switch button:focus-visible { outline: 2px solid #39c5bb; outline-offset: 2px; }
 body.reference-video-active #view-now .now-stage,
 body.reference-video-active #view-now .wave-panel,
 body.reference-video-active #view-now .spatial-guide,

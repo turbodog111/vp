@@ -37,6 +37,18 @@ window.SongMotionFx = (() => {
       title: 'Kuu ni Naru', data: './songs/motion/kuu-ni-naru-okosama.json',
       source: 'https://www.youtube.com/watch?v=emSnkwlzfls'
     }),
+    'songs/christian/josiah queen - demons': Object.freeze({
+      key: 'demons', theme: 'demons', bpm: 127, beatOffset: .022,
+      title: 'demons', data: './songs/motion/demons.json'
+    }),
+    "songs/christian/josiah queen - can't steal my joy feat. brandon lake": Object.freeze({
+      key: 'cant-steal-my-joy', theme: 'joy', bpm: 124, beatOffset: .212,
+      title: "Can't Steal My Joy", data: './songs/motion/cant-steal-my-joy.json'
+    }),
+    'songs/hiroki. feat. kasane teto & hatsune miku - my way, so what!': Object.freeze({
+      key: 'my-way-so-what', theme: 'my-way', bpm: 96, beatOffset: .098,
+      title: 'My Way, So What!', data: './songs/motion/my-way-so-what.json'
+    }),
     'songs/shirakami fubuki feat. kurokami fubuki - override': Object.freeze({
       key: 'override-fubuki', theme: 'override', bpm: 203.99, beatOffset: 0,
       title: 'Override', art: './songs/art/override.webp', data: './songs/motion/override-fubuki.json',
@@ -606,16 +618,21 @@ window.SongMotionFx = (() => {
     if (reduced) m.pulse = 0;
     ctx.save(); ctx.globalCompositeOperation = 'source-over';
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    if (active.theme === 'mesmerizer') {
-      window.MesmerizerFx?.draw(ctx, w, h, { ...m, time, variant: active.variant, reducedMotion: reduced });
-    } else if (active.theme === 'hunters-golden' || active.theme === 'hunters-free') {
-      const data = cache.get(active.key);
+    const data = cache.get(active.key) || null;
+    // Music-video scenes read the recording's measured data directly.
+    const video = { ...m, time, data, variant: active.variant || active.key, reducedMotion: reduced,
+      sections: data?.sections || [], structure: data?.structure || [], duration: data?.duration || 0 };
+    if (active.theme === 'mesmerizer') window.MesmerizerFx?.draw(ctx, w, h, video);
+    else if (active.theme === 'hunters-free') window.FreeFx?.draw(ctx, w, h, video);
+    else if (active.theme === 'kuu-ni-naru') window.KuuFx?.draw(ctx, w, h, video);
+    else if (active.theme === 'demons') window.DemonsFx?.draw(ctx, w, h, video);
+    else if (active.theme === 'joy') window.JoyFx?.draw(ctx, w, h, video);
+    else if (active.theme === 'my-way') window.MyWayFx?.draw(ctx, w, h, video);
+    else if (active.theme === 'hunters-golden') {
       window.HuntersFx?.draw(active.theme, ctx, w, h, { ...m, time,
         sections: data?.sections || [], duration: data?.duration || 190, reducedMotion: reduced });
     } else if (active.theme === 'override') window.OverrideFx?.draw(ctx, w, h, { ...m,
       time: Math.max(0, (time - (active.timelineOffset || 0)) / (active.timelineScale || 1)), reducedMotion: reduced });
-    else if (active.theme === 'kuu-ni-naru') window.KuuFx?.draw(ctx, w, h, { ...m, time,
-      sections: cache.get(active.key)?.sections || [], reducedMotion: reduced });
     else if (active.key === 'petal-lament') drawPetal(ctx, w, h, time, m, active, reduced);
     else if (active.key === 'marshmary') drawMarshmary(ctx, w, h, time, m, active, reduced);
     else if (active.key === 'dynamite') drawDynamite(ctx, w, h, time, m, active, reduced);

@@ -59,3 +59,32 @@ No lyric text or guessed singing timestamps have been added.
 The renderer draws in VP only, under FX for supported songs. Desktop
 wallpaper/theater registration is intentionally deferred. Native audio,
 equalizer, queue ownership, and media clock remain the existing VP paths.
+
+Music-video scene data (2026-11-18)
+Motion envelopes were built with scripts/build_song_motion.py from the exact
+recordings below. Section structure (the `structure` key) was added with
+scripts/build_song_sections.py, which measures bar-synchronous timbre and
+pitch-class changes in the recording; loud repeated material is marked as
+chorus. It is audio structure, not lyric timing. free.json also gained a
+measured `structure`; its envelopes and lyric chorus windows are unchanged.
+
+demons
+Artist: Josiah Queen
+Audio file: songs/christian/Josiah Queen - demons.m4a
+Duration: 190.208 seconds
+Whole-recording tempo fit: 127.00 BPM, beat phase 0.022 seconds
+Measured sections: 12 (scripts/build_song_sections.py)
+
+Can't Steal My Joy
+Artist: Josiah Queen feat. Brandon Lake
+Audio file: songs/christian/Josiah Queen - Can't Steal My Joy feat. Brandon Lake.m4a
+Duration: 213.3914 seconds
+Whole-recording tempo fit: 124.00 BPM, beat phase 0.212 seconds
+Measured sections: 13 (scripts/build_song_sections.py)
+
+My Way, So What!
+Artist: hiroki. feat. Kasane Teto & Hatsune Miku
+Audio file: songs/hiroki. feat. Kasane Teto & Hatsune Miku - My Way, So What!.m4a
+Duration: 162.0521 seconds
+Whole-recording tempo fit: 96.00 BPM, beat phase 0.098 seconds
+Measured sections: 12 (scripts/build_song_sections.py)

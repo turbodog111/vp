@@ -58,6 +58,8 @@ for (const { key, file, count, quiet, peak, last } of cases) {
       assert.ok(draft.rows[45].end > 165 && draft.rows[46].start > 167);
     }
   });
+  // Free's renderer moved to free-fx.js; its drawing tests live in test_music_videos.cjs.
+  if (key === 'free') continue;
   test(`${key}: chorus lift and bounded seek-stable drawing`, () => {
     const frame = { time: peak, sections: data.sections, phase: .3, pulse: .6, bass: .8, duration: data.duration };
     assert.equal(theater.cueAt(data.sections, quiet), 0);

@@ -50,6 +50,22 @@ are fitted to the selected recording. Visuals use the native playback clock,
 bounded canvas drawing, the existing frame limiter, and reduced-motion settings.
 These are energy-driven scenes, not guessed lyric/chorus timelines.
 
+## Music videos
+
+Free, demons, Can't Steal My Joy, the three Mesmerizer recordings, both Kuu ni Naru
+recordings, and the My Way, So What! theatre are full music videos under
+**FX for supported songs**: `free-fx.js`, `demons-fx.js`, `joy-fx.js`,
+`mesmerizer-fx.js`, `kuu-fx.js` and `my-way-fx.js`, sharing `mv-kit.js`. Each scene
+changes shot at the recording's measured sections and moves on its measured beat.
+Every frame is a pure function of media time and the recording's motion data, so
+pause, seek and replay always show the same picture, and nothing accumulates.
+Section structure comes from
+`python3 scripts/build_song_sections.py <audio.m4a> <motion.json>`, which adds a
+`structure` list (audio structure, not lyric timing) without changing the envelopes.
+My Way, So What! keeps its official video: the **Theatre / Video** switch on Now
+Playing chooses per song, and the choice is remembered in this browser.
+Run `node --test scripts/test_music_videos.cjs` after edits.
+
 ## Lyric timing checks
 
 `node scripts/audit_lyric_coverage.cjs` lists Vocaloid-related and BTS recordings

@@ -770,7 +770,12 @@ function songEqKey(song = currentSong()) {
 
 function savedEqForSong(song = currentSong()) {
   const key = songEqKey(song);
-  return key && songEqProfiles[key] ? createEqProfile(songEqProfiles[key]) : createEqProfile();
+  if (!key) return createEqProfile();
+  if (songEqProfiles[key]) return createEqProfile(songEqProfiles[key]);
+  // A recording renamed only in capitalization (e.g. "demons") keeps its saved EQ.
+  const normalized = normalizeSongRef(key);
+  const legacyKey = Object.keys(songEqProfiles).find(saved => normalizeSongRef(saved) === normalized);
+  return legacyKey ? createEqProfile(songEqProfiles[legacyKey]) : createEqProfile();
 }
 
 function effectiveEqProfile(song = currentSong()) {
@@ -2344,8 +2349,55 @@ function beatPulseForProfile(profile, time) {
   return Math.pow(1 - phase, 4.2);
 }
 
+// Songs with both an in-app theatre and the official video let the listener
+// choose; the theatre is the default and the choice is remembered per song.
+let songVisualModes = loadSongVisualModes();
+
+function loadSongVisualModes() {
+  try {
+    const parsed = JSON.parse(readSetting('vp_song_visual_modes') || '{}');
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+  } catch (_) {
+    return {};
+  }
+}
+
+function hasTheatreAndVideo(song = currentSong()) {
+  return !!(song && REFERENCE_VIDEO_TRACKS[song.path] && window.SongMotionFx?.track(song));
+}
+
+function songVisualMode(song = currentSong()) {
+  if (!hasTheatreAndVideo(song)) return null;
+  return songVisualModes[song.path] === 'video' ? 'video' : 'theatre';
+}
+
+function setSongVisualMode(mode) {
+  const song = currentSong();
+  if (!hasTheatreAndVideo(song) || (mode !== 'video' && mode !== 'theatre')) return;
+  songVisualModes = { ...songVisualModes, [song.path]: mode };
+  writeSetting('vp_song_visual_modes', JSON.stringify(songVisualModes));
+  renderedFxTheme = null;
+  updateFxState();
+  syncReferenceVideo(true);
+  scheduleNowLayoutSync();
+  if (audio.paused && isNowViewActive()) drawWaveform(true);
+}
+
+function syncVisualModeSwitch() {
+  const control = $('visual-mode-switch');
+  if (!control) return;
+  const mode = tetoFxEnabled ? songVisualMode() : null;
+  control.hidden = !mode;
+  if (!mode) return;
+  control.querySelectorAll('[data-visual-mode]').forEach(button => {
+    button.setAttribute('aria-pressed', String(button.dataset.visualMode === mode));
+  });
+}
+
 function referenceVideoTrack(song = currentSong()) {
-  return REFERENCE_VIDEO_TRACKS[song?.path] || null;
+  const track = REFERENCE_VIDEO_TRACKS[song?.path] || null;
+  if (track && songVisualMode(song) === 'theatre') return null;
+  return track;
 }
 
 function syncReferenceVideo(forceSeek = false) {
@@ -2425,11 +2477,16 @@ referenceVideo?.addEventListener('error', () => {
 });
 referenceVideo?.addEventListener('click', () => togglePlay());
 document.addEventListener('visibilitychange', () => syncReferenceVideo(true));
+$('visual-mode-switch')?.addEventListener('click', event => {
+  const mode = event.target.closest?.('[data-visual-mode]')?.dataset.visualMode;
+  if (mode) setSongVisualMode(mode);
+});
 
 function activeFxTheme(song = currentSong()) {
+  // A song in video mode plays its official video even when it also has a theatre.
+  if (referenceVideoTrack(song)) return tetoFxEnabled ? 'reference-video' : 'off';
   const motionTrack = window.SongMotionFx?.track(song);
   if (motionTrack) return tetoFxEnabled ? motionTrack.theme : 'off';
-  if (referenceVideoTrack(song)) return tetoFxEnabled ? 'reference-video' : 'off';
   if (isMagicMaidSong(song)) {
     return tetoFxEnabled ? 'magic-maid' : 'off';
   }
@@ -2518,6 +2575,10 @@ function setSongMotionFxActive(theme) {
   document.body.classList.toggle('mesmerizer-active', config?.theme === 'mesmerizer');
   document.body.classList.toggle('override-active', config?.theme === 'override');
   document.body.classList.toggle('kuu-active', config?.theme === 'kuu-ni-naru');
+  document.body.classList.toggle('demons-active', config?.theme === 'demons');
+  document.body.classList.toggle('joy-active', config?.theme === 'joy');
+  document.body.classList.toggle('my-way-active', config?.theme === 'my-way');
+  syncVisualModeSwitch();
   const artwork = $('song-motion-art');
   if (artwork) {
     artwork.hidden = !config?.art;

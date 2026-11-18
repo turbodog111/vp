@@ -4,7 +4,6 @@
   else root.HuntersFx = api;
 })(typeof window === 'object' ? window : globalThis, () => {
   'use strict';
-  const TAU = Math.PI * 2;
   const clamp = x => Math.max(0, Math.min(1, x));
   const smooth = x => { const q = clamp(x); return q * q * (3 - 2 * q); };
   const mix = (a, b, x) => a + (b - a) * x;
@@ -128,74 +127,6 @@
     stroke(ctx, rgb(pearl, .36 + .47 * lift + pulse * .13), 1 + lift * 2);
   }
 
-  function drawFree(ctx, w, h, { t, phase, lift, pulse, bass, progress }) {
-    const s = Math.min(w, h);
-    const sea = [104, 227, 208], orchid = [237, 156, 185], white = [205, 249, 241];
-    const opening = .14 + .35 * lift + .2 * progress;
-    const horizon = h * (.73 - lift * .09);
-    field(ctx, w, h, '#101822', '#203039', '#101b23');
-
-    // Two different voices enter from opposite sides and leave a shared opening.
-    for (const side of [-1, 1]) {
-      const color = side < 0 ? sea : orchid;
-      const sweep = Math.sin(t * .66 + (side < 0 ? .8 : -.8));
-      const wing = ctx.createLinearGradient(w * (.5 + side * .45), h * .8, w * .5, h * .19);
-      wing.addColorStop(0, rgb(color, .12 + .2 * lift + .09 * pulse));
-      wing.addColorStop(.75, rgb(color, .025 + .05 * lift));
-      wing.addColorStop(1, rgb(color, 0));
-      ctx.beginPath();
-      ctx.moveTo(w * (.5 + side * .59), h * .91);
-      ctx.bezierCurveTo(w * (.5 + side * .2), h * .58,
-        w * (.5 + side * .28), h * (.19 + sweep * .09), w * .5, h * .14);
-      ctx.bezierCurveTo(w * (.5 + side * .38), h * (.16 + sweep * .09),
-        w * (.5 + side * .31), h * .62, w * (.5 + side * .65), h * .97);
-      ctx.closePath();
-      ctx.fillStyle = wing; ctx.fill();
-      for (let i = 6; i >= 0; i--) {
-        const age = i * .105;
-        const bend = Math.sin((t - age) * .66 + (side < 0 ? .8 : -.8));
-        const spread = w * (.18 + opening * .25 + i * .022);
-        const outer = w * .5 + side * spread;
-        const inner = w * .5 + side * w * (.07 + opening * .17 + i * .012);
-        const y = h * (.24 - opening * .16 + bend * .045 + i * .012);
-        ctx.beginPath();
-        ctx.moveTo(outer + side * w * .37, h * (.97 - i * .025));
-        ctx.bezierCurveTo(outer - side * w * .23, h * .69,
-          inner + side * w * .08, h * .2 + bend * h * .16, inner, y);
-        const join = h * (.138 - .078 * lift + i * .014 + .012 * Math.sin((t - age) * .66));
-        ctx.bezierCurveTo(inner - side * w * .055, join + h * .02,
-          w * .5 + side * w * (.04 + i * .017), join, w * (.5 + side * .035 * (1 - lift)), join);
-        stroke(ctx, rgb(color, (.46 + lift * .44 + pulse * .14) / (1 + i * .29)),
-          Math.max(.8, s * (.0045 - i * .0005)));
-      }
-    }
-
-    // The lower reflection carries the beat without moving or blurring the text.
-    for (let i = 0; i < 10; i++) {
-      const p = (i + phase * .97) / 10;
-      const y = horizon + p * p * h * .39;
-      const depth = (i + 1) / 10;
-      const wave = h * (.013 + opening * .043) * (1 + .45 * bass) * depth;
-      ctx.beginPath();
-      for (let j = 0; j <= 44; j++) {
-        const x = j / 44;
-        const ripple = Math.sin(x * TAU * 1.55 + t * 1.12 + i * .25) * wave;
-        if (j) ctx.lineTo(x * w, y + ripple);
-        else ctx.moveTo(x * w, y + ripple);
-      }
-      stroke(ctx, rgb(i % 3 === 0 ? orchid : sea, .16 + depth * .12 + lift * .26 + pulse * .1), 1 + depth);
-    }
-
-    const rise = h * (.115 + lift * .03);
-    const span = s * (.035 + opening * .09);
-    const y = rise + h * .018 * Math.sin(t * .72) - h * .012 * pulse;
-    ctx.beginPath();
-    ctx.moveTo(w * .5 - span * 1.5, y + span * .36);
-    ctx.quadraticCurveTo(w * .5 - span * .54, y - span * .24, w * .5, y);
-    ctx.quadraticCurveTo(w * .5 + span * .54, y - span * .24, w * .5 + span * 1.5, y + span * .36);
-    stroke(ctx, rgb(white, .44 + lift * .42), Math.max(1, s * .004));
-  }
-
   function draw(theme, ctx, w, h, state) {
     const { time, sections, reducedMotion, pulse, bass, phase, duration } = state;
     const frame = {
@@ -206,8 +137,8 @@
       bass: reducedMotion ? 0 : bass,
       progress: smooth(time / duration)
     };
+    // Free has its own music video (free-fx.js); this module now draws Golden only.
     if (theme === 'hunters-golden') drawGolden(ctx, w, h, frame);
-    else drawFree(ctx, w, h, frame);
   }
 
   return Object.freeze({ draw, cueAt });
