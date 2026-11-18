@@ -687,3 +687,45 @@ test('F12: render loop sleeps while paused/hidden and repaints after seek or res
   document.hidden=false;document.emit('visibilitychange');assert.equal(callbacks.size,1);
   loop.dispose();assert.equal(callbacks.size,0);
 });
+test('Battery: player visualizer loop sleeps while paused, hidden, or off Now and wakes once', () => {
+  const callbacks = new Map(); let seq = 0, draws = 0;
+  const audio = { paused: false }, document = { hidden: false };
+  let nowView = true;
+  const c = context(['waveformLoopWanted', 'startWaveform'], {
+    audio, document, waveRaf: 0, isNowViewActive: () => nowView,
+    visualFrameDue: () => true, drawWaveform: () => draws++,
+    requestAnimationFrame: fn => { callbacks.set(++seq, fn); return seq; } });
+  const tick = () => { const jobs = [...callbacks.values()]; callbacks.clear(); jobs.forEach(f => f(100)); };
+  c.startWaveform(); c.startWaveform();
+  assert.equal(callbacks.size, 1, 'one loop, not one per call');
+  tick(); tick(); assert.equal(draws, 2); assert.equal(callbacks.size, 1);
+  for (const [setOff, setOn] of [
+    [() => { audio.paused = true; }, () => { audio.paused = false; }],
+    [() => { document.hidden = true; }, () => { document.hidden = false; }],
+    [() => { nowView = false; }, () => { nowView = true; }],
+  ]) {
+    setOff(); tick();
+    assert.equal(callbacks.size, 0, 'no frame requests while idle');
+    assert.equal(c.waveRaf, 0);
+    c.startWaveform(); assert.equal(callbacks.size, 0, 'cannot start while idle');
+    setOn(); c.startWaveform(); assert.equal(callbacks.size, 1, 'wakes on play/visibility/view');
+    tick(); assert.equal(callbacks.size, 1);
+  }
+});
+test('Battery: hidden progress clock skips DOM painting but keeps timing repair and the desktop bridge', () => {
+  const intervals = []; const calls = [];
+  const document = { hidden: true };
+  const c = context(['startProgressClock', 'stopProgressClock', 'updateHiddenPlaybackState', 'syncPlaybackLoopsToVisibility'], {
+    audio: { src: 'a.m4a' }, document, progressTimer: 0, PROGRESS_MS: 50, PROGRESS_HIDDEN_MS: 100,
+    setInterval: (fn, ms) => { intervals.push(ms); return intervals.length; }, clearInterval: noop,
+    currentCalibratedTime: () => 12, repairTimingState: t => { calls.push('repair'); return t; },
+    publishDesktopEffectsState: (force, t) => calls.push('publish@' + t),
+    updatePlaybackVisuals: () => calls.push('paint'), startWaveform: () => calls.push('wave') });
+  c.startProgressClock();
+  assert.deepEqual(calls, ['repair', 'publish@12']);
+  assert.equal(intervals.at(-1), 100);
+  document.hidden = false; calls.length = 0;
+  c.syncPlaybackLoopsToVisibility();
+  assert.deepEqual(calls, ['paint', 'wave'], 'showing the page repaints immediately');
+  assert.equal(intervals.at(-1), 50);
+});

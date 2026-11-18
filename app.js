@@ -344,6 +344,7 @@ const WAVE_MIN_FREQ = 38;
 const WAVE_MAX_FREQ = 14000;
 const WAVE_FFT_SIZE = 1024; // was 2048
 const PROGRESS_MS = 50; // dedicated lightweight progress clock (~20Hz)
+const PROGRESS_HIDDEN_MS = 100; // hidden page: no painting, ~10Hz timing/bridge upkeep
 // (progress is NOT driven from the visualizer rAF — that was the lag source)
 const AUDIO_FILE_RE = /\.(mp3|m4a)$/i;
 const AUDIO_EXTENSION_RE = /\.(mp3|m4a)$/i;
@@ -5625,11 +5626,21 @@ function visualFrameDue(now) {
   return true;
 }
 
+function waveformLoopWanted() {
+  return isNowViewActive() && !document.hidden && !audio.paused;
+}
+
 function startWaveform() {
-  if (waveRaf) return;
+  if (waveRaf || !waveformLoopWanted()) return;
   const draw = (now) => {
+    // Sleep while paused, hidden, or off the Now view instead of waking on
+    // every display refresh to draw nothing. Play, view, and visibility
+    // changes start it again.
+    if (!waveformLoopWanted()) {
+      waveRaf = 0;
+      return;
+    }
     waveRaf = requestAnimationFrame(draw);
-    if (!isNowViewActive() || document.hidden || audio.paused) return;
     if (!visualFrameDue(now)) return;
     drawWaveform(false);
   };
@@ -5648,10 +5659,30 @@ function startProgressClock() {
   const tick = () => {
     // Lightweight: only progress ring / seek / times — never full visualizer
     if (!audio.src) return;
+    if (document.hidden) {
+      updateHiddenPlaybackState();
+      return;
+    }
     updatePlaybackVisuals();
   };
   tick();
-  progressTimer = setInterval(tick, PROGRESS_MS);
+  progressTimer = setInterval(tick, document.hidden ? PROGRESS_HIDDEN_MS : PROGRESS_MS);
+}
+
+// A hidden page (background tab, or a hidden Desktop UI window while music
+// plays) paints nothing, so skip the DOM work. Timing repair and the desktop
+// effects bridge keep running at about 10 Hz; showing the page repaints at once.
+function updateHiddenPlaybackState() {
+  const current = repairTimingState(currentCalibratedTime());
+  publishDesktopEffectsState(false, current);
+}
+
+function syncPlaybackLoopsToVisibility() {
+  if (progressTimer) {
+    stopProgressClock();
+    startProgressClock();
+  }
+  startWaveform();
 }
 
 function stopProgressClock() {
@@ -10942,6 +10973,7 @@ window.addEventListener('resize', () => {
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) stopDdfFxLoop();
   else startDdfFxLoop();
+  syncPlaybackLoopsToVisibility();
 });
 if (typeof ResizeObserver !== 'undefined') {
   const wavePanel = $('waveform')?.closest('.wave-panel');
