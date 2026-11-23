@@ -119,6 +119,7 @@ window.SongMotionFx = (() => {
     controller?.abort();
     controller = null;
     active = config;
+    if (config?.theme !== 'mesmerizer') pageBody()?.classList.remove('motion-3d-active');
     if (!config) return;
     if (cache.has(config.key)) { onReady?.(); return; }
     const request = new AbortController();
@@ -610,11 +611,65 @@ window.SongMotionFx = (() => {
     ctx.fillStyle = margin; ctx.fillRect(0, 0, w * 0.48, h * 0.57);
   }
 
+  // Mesmerizer's 3D music video (mesmerizer-mv.js) draws on its own WebGL canvas, made on
+  // first use. Without WebGL2, or if the GPU context is lost, the flat 2D broadcast in
+  // mesmerizer-fx.js takes over.
+  let mesmerizer3d = null;
+  let mesmerizer3dFailed = false;
+  const pageBody = () => (typeof document === 'object' ? document.body : null);
+
+  function drawMesmerizer3d(time, data, reduced) {
+    const canvas = typeof document === 'object' ? document.getElementById('motion-gl') : null;
+    if (mesmerizer3dFailed || !window.MesmerizerMv || !canvas || !data) return false;
+    if (mesmerizer3d?.lost()) {
+      mesmerizer3d = null;
+      mesmerizer3dFailed = true;
+      return false;
+    }
+    if (!mesmerizer3d) {
+      try {
+        mesmerizer3d = window.MesmerizerMv.create(canvas);
+      } catch (error) {
+        console.warn('Mesmerizer music video:', error);
+      }
+      if (!mesmerizer3d) {
+        mesmerizer3dFailed = true;
+        return false;
+      }
+    }
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return false;
+    const dpr = typeof adaptiveCanvasDpr === 'function' ? adaptiveCanvasDpr(rect, 1.25) : Math.min(1.25, window.devicePixelRatio || 1);
+    const width = Math.max(1, Math.floor(rect.width * dpr));
+    const height = Math.max(1, Math.floor(rect.height * dpr));
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+    try {
+      return !!mesmerizer3d.draw({
+        time, duration: data.duration, variant: active.variant, bpm: data.bpm, beatOffset: data.beatOffset,
+        signal: t => ({ energy: sample(data, 'energy', t), bass: sample(data, 'bass', t), high: sample(data, 'high', t), onset: sample(data, 'onset', t) }),
+        // No Mesmerizer recording has a timed lyric file yet; the video takes
+        // { lines, offset, language } here once one does.
+        lyrics: null,
+        reducedMotion: reduced, width, height
+      });
+    } catch (error) {
+      console.warn('Mesmerizer music video:', error);
+      mesmerizer3dFailed = true;
+      mesmerizer3d.dispose();
+      mesmerizer3d = null;
+      return false;
+    }
+  }
+
   function draw(ctx, w, h, state) {
     if (!active || w <= 0 || h <= 0) return;
     const time = Math.max(0, Number(state.time) || 0);
     const m = motionAt(active, time, state.energy || 0);
-    const reduced = reducedMotion.matches;
+    // VP's own Reduce motion switch wins over the system setting when it has been set.
+    const reduced = typeof window.vpReducedMotion === 'boolean' ? window.vpReducedMotion : reducedMotion.matches;
     if (reduced) m.pulse = 0;
     ctx.save(); ctx.globalCompositeOperation = 'source-over';
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
@@ -622,6 +677,9 @@ window.SongMotionFx = (() => {
     // Music-video scenes read the recording's measured data directly.
     const video = { ...m, time, data, variant: active.variant || active.key, reducedMotion: reduced,
       sections: data?.sections || [], structure: data?.structure || [], duration: data?.duration || 0 };
+    const in3d = active.theme === 'mesmerizer' && drawMesmerizer3d(time, data, reduced);
+    pageBody()?.classList.toggle('motion-3d-active', in3d);
+    if (in3d) { ctx.restore(); return; }
     if (active.theme === 'mesmerizer') window.MesmerizerFx?.draw(ctx, w, h, video);
     else if (active.theme === 'hunters-free') window.FreeFx?.draw(ctx, w, h, video);
     else if (active.theme === 'kuu-ni-naru') window.KuuFx?.draw(ctx, w, h, video);

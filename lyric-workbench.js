@@ -213,7 +213,9 @@
       if (next?.path === song?.path) return;
       song = next; draft = null; prepared = null; preparedCheckKey = ''; readBlocked = false; issue = null; revision++; lastPaint = ''; validationKey = '';
       panel.querySelector('fieldset').disabled = !song;
-      $('lyric-recording').textContent = song ? `${song.artist || ''} - ${song.title || song.displayName}` : 'Choose a song from the library';
+      $('lyric-recording').textContent = song
+        ? [song.title || song.displayName, song.artist].filter(Boolean).join(' · ')
+        : 'Choose a song from the library';
       if (song) {
         draft = fresh(song.path, /^BTS - |\(English/.test(song.name || '') ? 'en' : 'und');
         try { const saved = localStorage.getItem(STORAGE_PREFIX + song.path); if (saved) draft = decode(saved, song.path); message(saved ? 'Saved on this browser' : 'New local draft'); }

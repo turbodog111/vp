@@ -66,6 +66,77 @@ My Way, So What! keeps its official video: the **Theatre / Video** switch on Now
 Playing chooses per song, and the choice is remembered in this browser.
 Run `node --test scripts/test_music_videos.cjs` after edits.
 
+The three Encore Dance recordings (MIMI, Moonlit Star and Evil) have a 3D
+anime-style music video, `encore-dance-mv.js`, drawn with VP's small WebGL2 kit
+`mv3d.js`: cel-shaded models with ink outlines, extruded 3D lettering, light beams,
+a mirrored stage floor, bloom and speed lines. The lyrics lead: each line flies in
+as 3D type above the stage, every character pops and lights up as it is sung
+(from the measured word timing), with romaji above and the English translation
+below. One dancer (a sculpted idol with a painted anime face, layered hair, a
+swinging ponytail and a pleated dress) performs behind the words in a theatre
+that changes with each section. LED screens on the back wall and on two towers at
+the sides, footlights, streamers and drifting lights keep the whole frame moving,
+while the wall stays calm behind the lyrics. Every cut has a reason: a new
+section, the beat before a new line is sung, or the next figure of the dance
+break. Inside a shot the camera makes one slow move with a purpose (it settles in
+front of a line, glides along with the karaoke, walks with the dancer, rises to
+the moon, or pulls back as a chorus ends), always keeping the whole line in frame
+and facing it. Under Reduce motion it holds one
+still camera per section, the lettering stays still and nothing flashes. The
+title, artist, play button and times stay on screen; the text lyrics remain for
+screen readers. Without WebGL2 the theatre falls back to the flat stage in
+`encore-remaster-fx.js`. Run `node --test scripts/test_encore_dance_mv.cjs` after edits.
+
+The three Mesmerizer recordings have a 3D pop-art music video, `mesmerizer-mv.js`
+("Hypno Broadcast"), with no characters. It is a retro TV broadcast that changes
+channel at each of the recording's measured chapters:
+- a TV powers on;
+- a carousel of TVs turns in an on-air studio under a giant spiral;
+- the camera dives through a screen into a spiral tunnel;
+- channel surfing along a stacked wall of TVs;
+- a chorus vortex circled by the title in 3D;
+- a giant eye follows a swinging pocket watch;
+- a video wall whose screens join into one picture;
+- power-off.
+
+Cuts land on the beat and follow the action (the next TV, a channel flip, the
+watch's swing), and the screens' patterns, TV static and halftone dots are drawn
+by `mv3d.js`. Each recording keeps its own palette. No Mesmerizer recording has a
+timed lyric file yet; when one does, its lines fly in as 3D lettering in front of
+every scene. Without WebGL2 the flat 2D broadcast in `mesmerizer-fx.js` draws
+instead. Run `node --test scripts/test_mesmerizer_mv.cjs` after edits.
+
+Trick Heart (MIMI feat. Kasane Teto SV) has a 3D music video, `trick-heart-mv.js`
+("The Card Trick"), with no characters. It is a parlour magic show around a velvet
+card table, and the lyrics lead: each line floats above the table as 3D type, with
+romaji above and the English below, lighting up as it is sung. The props tell the
+story:
+- an ace of hearts hovers over the table and vanishes when its line is sung;
+- the curtain rises on a giant fan of cards that flips in waves through the
+  choruses, while cards pour down both sides of the frame;
+- cards fountain out of a top hat in the interlude;
+- a house of cards is built on the beat through the second verse;
+- the house collapses in the quiet reveal to show a glowing heart;
+- a tornado of cards circles the heart in the final chorus.
+
+Every cut lands on the beat and has a reason (a new section, a new line, the next
+bar of an instrumental), and the camera always keeps the whole line in frame. The
+text lyrics remain for screen readers. Without WebGL2 the 2D stage draws instead.
+Run `node --test scripts/test_trick_heart_mv.cjs` after edits.
+
+The 3D videos share their lyric lettering (layout, karaoke timing and the extruded
+type) through `mv-lyrics3d.js`.
+
+## Cover art
+
+Every song has original drawn cover art in `songs/covers/` (one small SVG per song;
+all versions of a song share it). `songs/covers/covers.json` maps each cover to song
+titles with version notes removed — "Encore Dance: Piano Hyperpop" and "Encore Dance
+(Japanese)" both become `encore dance` (see `coverKeyForTitle` in `app.js`). A new
+version of an existing song picks up its cover automatically; a new song shows a
+lettered tile until it gets a cover and a key in `covers.json`. Run
+`node --test scripts/test_song_covers.cjs` after adding songs or covers.
+
 ## Lyric timing checks
 
 `node scripts/audit_lyric_coverage.cjs` lists Vocaloid-related and BTS recordings

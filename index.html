@@ -6,9 +6,24 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-11-17-mesmerizer">
+<meta name="vp-build" content="2026-11-21-lyrics3d">
+<meta name="color-scheme" content="dark">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="styles.css?v=20261118-mv">
+<script>
+  // Apply saved accessibility choices before first paint (no flash of the default look).
+  (function () {
+    try {
+      var root = document.documentElement, motion = localStorage.getItem('vp_a11y_reduce_motion');
+      if (localStorage.getItem('vp_a11y_large_text') === 'true') root.classList.add('large-text');
+      if (localStorage.getItem('vp_a11y_high_contrast') === 'true') root.classList.add('high-contrast');
+      if (motion === 'on' || (motion !== 'off' && matchMedia('(prefers-reduced-motion: reduce)').matches)) root.classList.add('reduce-motion');
+    } catch (error) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400..800&display=swap">
+<link rel="stylesheet" href="styles.css?v=20261122-trick2">
 <link rel="stylesheet" href="lyric-workbench.css?v=20261023-synced-lyrics">
 <link rel="stylesheet" href="override.css?v=20261026-override">
 <link rel="stylesheet" href="kuu.css?v=20261118-mv">
@@ -19,47 +34,42 @@
   <header class="topbar">
     <div class="brand">vp</div>
     <input id="search" type="search" placeholder="Search songs...">
-    <button id="refresh" class="icon-btn" title="Refresh library">↻</button>
-    <button id="settings-toggle" class="icon-btn" title="Settings">⚙</button>
-    <div id="settings-menu" class="settings-menu hidden">
+    <button id="refresh" class="icon-btn" type="button" title="Refresh library" aria-label="Refresh library">↻</button>
+    <button id="settings-toggle" class="icon-btn" type="button" title="Quick settings" aria-label="Quick settings"
+            aria-haspopup="true" aria-expanded="false" aria-controls="settings-menu">⚙</button>
+    <div id="settings-menu" class="settings-menu hidden" role="group" aria-label="Quick settings">
       <label class="setting-row">
         <input id="teto-fx-enabled" type="checkbox">
         <span>FX for supported songs</span>
       </label>
-      <label class="setting-row setting-row-select">
-        <span>FX theme</span>
-        <select id="fx-theme">
-          <option value="teto">Orange Teto</option>
-          <option value="disco">Classic Disco</option>
-          <option value="teto11">Teto 1.1</option>
-        </select>
-      </label>
-      <label class="setting-row">
-        <input id="timing-debug-enabled" type="checkbox">
-        <span>Timing debug overlay</span>
-      </label>
-      <button id="audio-reset" class="setting-button" type="button">Reset audio</button>
-      <button id="lyrics-open" class="setting-button" type="button" title="Edit this recording's local lyric draft">Lyric studio</button>
+      <div class="menu-heading" id="a11y-heading">Accessibility</div>
+      <div role="group" aria-labelledby="a11y-heading">
+        <label class="setting-row">
+          <input id="a11y-large-text" type="checkbox">
+          <span>Larger text</span>
+        </label>
+        <label class="setting-row">
+          <input id="a11y-reduce-motion" type="checkbox">
+          <span>Reduce motion</span>
+        </label>
+        <label class="setting-row">
+          <input id="a11y-high-contrast" type="checkbox">
+          <span>High contrast</span>
+        </label>
+      </div>
+      <div class="menu-divider" role="presentation"></div>
       <button id="equalizer-open" class="setting-button eq-setting-button" type="button">
         <span>Equalizer</span>
         <span id="equalizer-summary">Flat</span>
       </button>
-      <button id="force-reload" class="setting-button" type="button" title="Bypass cache and reload the latest app">Reload latest app</button>
-      <a class="setting-button" href="songs/spatial/hrtf-lab/index.html" target="_blank" rel="noopener"
-         style="display:block;text-align:center;text-decoration:none;line-height:1.2;padding:10px 12px">
-        HRTF Clip Lab (30s A/B)
-      </a>
-      <div class="setting-row" style="opacity:0.65;font-size:11px;padding:4px 0 0">
-        Build: <span id="vp-build-label">—</span>
-      </div>
+      <button id="settings-open" class="setting-button" type="button">More settings</button>
     </div>
   </header>
 
-  <nav class="tabs">
-    <button class="tab active" data-view="library">Library</button>
-    <button class="tab" data-view="playlists">Playlists</button>
-    <button class="tab" data-view="now">Now Playing</button>
-    <button class="tab" data-view="lyrics">Lyrics</button>
+  <nav class="tabs" aria-label="Views">
+    <button class="tab active" type="button" data-view="library">Library</button>
+    <button class="tab" type="button" data-view="playlists">Playlists</button>
+    <button class="tab" type="button" data-view="now">Now Playing</button>
   </nav>
 
   <div id="storage-status" role="status" hidden>
@@ -75,12 +85,7 @@
         <button class="collection-tab" data-collection="secular">Secular <span class="collection-count">0</span></button>
         <button class="collection-tab" data-collection="christian">Christian <span class="collection-count">0</span></button>
       </div>
-      <div class="list-header">
-        <span class="col-num">#</span>
-        <span class="col-title">Title</span>
-        <span class="col-actions"></span>
-      </div>
-      <ul id="library-list" class="song-list"></ul>
+      <ul id="library-list" class="song-list" aria-label="Songs"></ul>
       <div id="library-empty" class="empty hidden">
         No songs found. Drop <code>.mp3</code> or <code>.m4a</code> files into the <code>songs/</code> folder, commit, and push.
       </div>
@@ -148,6 +153,8 @@
         <button type="button" data-visual-mode="video" aria-pressed="false">Video</button>
       </div>
       <canvas id="teto-fx" class="teto-fx-canvas" aria-hidden="true"></canvas>
+      <canvas id="motion-gl" class="motion-gl-canvas" aria-hidden="true"></canvas>
+      <canvas id="trick-heart-gl" class="motion-gl-canvas" aria-hidden="true"></canvas>
       <pre id="timing-debug" class="timing-debug hidden" aria-live="polite"></pre>
 
       <div id="omb-theater" class="omb-theater hidden" aria-live="polite">
@@ -249,6 +256,7 @@
 
       <div id="encore-theater" class="encore-theater hidden" aria-live="polite">
         <canvas id="encore-fx" class="encore-fx" aria-hidden="true"></canvas>
+        <canvas id="encore-gl" class="encore-gl" aria-hidden="true"></canvas>
         <div class="encore-echo-rails" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
         </div>
@@ -471,24 +479,27 @@
 
   <footer class="player">
     <div class="now-playing">
-      <div class="np-title" id="np-title">Nothing playing</div>
-      <div class="np-sub" id="np-sub"></div>
+      <span id="np-art" class="song-art np-art" aria-hidden="true" hidden></span>
+      <div class="np-text">
+        <div class="np-title" id="np-title">Nothing playing</div>
+        <div class="np-sub" id="np-sub"></div>
+      </div>
     </div>
     <div class="controls">
-      <button id="shuffle" title="Shuffle">🔀</button>
-      <button id="prev" title="Previous (Shift+Left)">⏮</button>
-      <button id="play" title="Play/Pause (Space)">▶</button>
-      <button id="next" title="Next (Shift+Right)">⏭</button>
-      <button id="loop" title="Loop" data-mode="off">🔁</button>
+      <button id="shuffle" type="button" title="Shuffle" aria-label="Shuffle">🔀</button>
+      <button id="prev" type="button" title="Previous (Shift+Left)" aria-label="Previous song">⏮</button>
+      <button id="play" type="button" title="Play/Pause (Space)" aria-label="Play or pause">▶</button>
+      <button id="next" type="button" title="Next (Shift+Right)" aria-label="Next song">⏭</button>
+      <button id="loop" type="button" title="Loop" aria-label="Loop" data-mode="off">🔁</button>
     </div>
     <div class="progress">
       <span id="time-current">0:00</span>
-      <input id="seek" type="range" min="0" max="100" value="0" step="0.1">
+      <input id="seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Song position">
       <span id="time-total">0:00</span>
     </div>
     <div class="volume">
-      <span>🔊</span>
-      <input id="volume" type="range" min="0" max="1" step="0.01" value="1">
+      <span aria-hidden="true">🔊</span>
+      <input id="volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume">
     </div>
   </footer>
 </div>
@@ -538,20 +549,63 @@
   </section>
 </div>
 
+<div id="settings-backdrop" class="eq-backdrop settings-backdrop hidden">
+  <section id="settings-panel" class="eq-panel settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <header class="eq-header">
+      <div>
+        <div class="eq-kicker">vp</div>
+        <h2 id="settings-title">Settings</h2>
+      </div>
+      <button id="settings-close" class="icon-btn" type="button" title="Close settings" aria-label="Close settings">×</button>
+    </header>
+
+    <section class="settings-section" aria-labelledby="settings-lyrics-heading">
+      <h3 id="settings-lyrics-heading">Lyrics</h3>
+      <button id="lyrics-open" class="setting-button settings-action" type="button">
+        <span>Lyric studio</span>
+        <small>Write and time lyrics for the song that's playing</small>
+      </button>
+    </section>
+
+    <section class="settings-section" aria-labelledby="settings-trouble-heading">
+      <h3 id="settings-trouble-heading">Troubleshooting</h3>
+      <button id="audio-reset" class="setting-button settings-action" type="button">
+        <span>Reset audio</span>
+        <small>Restart sound output if playback goes silent or glitches</small>
+      </button>
+      <button id="force-reload" class="setting-button settings-action" type="button">
+        <span>Reload latest app</span>
+        <small>Skip the browser's saved copy and load the newest version</small>
+      </button>
+      <label class="setting-row">
+        <input id="timing-debug-enabled" type="checkbox">
+        <span>Timing debug overlay</span>
+      </label>
+    </section>
+
+    <footer class="settings-about">Build <span id="vp-build-label">—</span></footer>
+  </section>
+</div>
+
 <audio id="audio" preload="metadata"></audio>
 <script src="encore-harp-fx.js?v=20260913-harp-theater"></script>
 <script src="encore-remaster-fx.js?v=20261025-encore-remaster"></script>
+<script src="mv3d.js?v=20261122-trick1"></script>
+<script src="mv-lyrics3d.js?v=20261122-mesmer1"></script>
+<script src="trick-heart-mv.js?v=20261122-trick1"></script>
+<script src="encore-dance-mv.js?v=20261122-mesmer1"></script>
 <script src="override-fx.js?v=20261026-override"></script>
 <script src="mv-kit.js?v=20261118-mv"></script>
 <script src="kuu-fx.js?v=20261118-mv"></script>
 <script src="hunters-fx.js?v=20261109"></script>
 <script src="free-fx.js?v=20261118-mv"></script>
 <script src="mesmerizer-fx.js?v=20261118-mv"></script>
+<script src="mesmerizer-mv.js?v=20261122-mesmer1"></script>
 <script src="demons-fx.js?v=20261118-mv"></script>
 <script src="joy-fx.js?v=20261118-mv"></script>
 <script src="my-way-fx.js?v=20261118-mv"></script>
-<script src="song-motion-fx.js?v=20261118-mv"></script>
-<script src="lyric-workbench.js?v=20261023-synced-lyrics"></script>
-<script src="app.js?v=20261118-mv"></script>
+<script src="song-motion-fx.js?v=20261122-mesmer1"></script>
+<script src="lyric-workbench.js?v=20261121-look2"></script>
+<script src="app.js?v=20261122-trick1"></script>
 </body>
 </html>

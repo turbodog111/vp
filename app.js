@@ -190,6 +190,11 @@ const SONG_METADATA_OVERRIDES = {
   [HIT_BREAKS_AUDIO_PATH]: {
     artist: 'A Flock of Altruists',
     title: 'Hit The Breaks Except For Me'
+  },
+  // The upload's "piano" tag sat in front of the song name.
+  'songs/rinboku - piano - Encore Dance (Piano).m4a': {
+    artist: 'rinboku',
+    title: 'Encore Dance (Piano)'
   }
 };
 
@@ -222,7 +227,16 @@ let collapsedPlaylists = new Set(loadCollapsedPlaylists(playlists));
 let currentPlaylist = null;
 let activeCollection = readSetting('vp_collection') || 'all';
 let tetoFxEnabled = readSetting('vp_teto_fx_enabled') !== 'false';
-let fxTheme = ['teto', 'disco', 'teto11'].includes(readSetting('vp_fx_theme')) ? readSetting('vp_fx_theme') : 'teto11';
+// The FX theme picker was retired on 2026-11-21: Teto 1.1 is the one generic visualizer.
+const fxTheme = 'teto11';
+// Accessibility options from the quick menu. The <head> script applies the same saved
+// choices before first paint; motion is 'on', 'off' or null (follow the system setting).
+const SYSTEM_REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
+const a11yOptions = {
+  largeText: readSetting('vp_a11y_large_text') === 'true',
+  highContrast: readSetting('vp_a11y_high_contrast') === 'true',
+  motion: ['on', 'off'].includes(readSetting('vp_a11y_reduce_motion')) ? readSetting('vp_a11y_reduce_motion') : null,
+};
 let timingDebugEnabled = readSetting('vp_timing_debug_enabled') === 'true';
 let addToActionOpenedAt = 0;
 let pendingPlaylistSongIdx = null;
@@ -859,11 +873,126 @@ function prettyName(filename) {
   const base = audioBaseName(filename).replace(/_/g, ' ').trim();
   const m = base.match(/^(.+?)\s+-\s+(.+)$/);
   if (m) {
-    const artist = m[1].trim();
-    const title = m[2].trim();
+    let artist = m[1].trim();
+    let title = m[2].trim();
+    // A featured singer named after the title belongs with the artists; a "feat."
+    // inside a version note, as in "Compass (Rock Version feat. Mili Vocals)", stays.
+    const feat = title.match(/^(.+?)\s+((?:feat\.|ft\.|featuring)\s+[^()]+)$/i);
+    if (feat) {
+      title = feat[1].trim();
+      artist = `${artist} ${feat[2].trim()}`;
+    }
     return { artist, title, display: `${artist} — ${title}` };
   }
   return { artist: '', title: base, display: base };
+}
+
+// What people see: the song title first, the artist second (displayName keeps the
+// file's "Artist — Title" order for matching and recording identity).
+function songTitleText(song) {
+  return song?.title || song?.displayName || '';
+}
+
+function songArtistText(song) {
+  return song?.artist || '';
+}
+
+function songLabel(song) {
+  const artist = songArtistText(song);
+  return artist ? `${songTitleText(song)} · ${artist}` : songTitleText(song);
+}
+
+// Two-line name: title above, artist below.
+function fillSongName(container, song) {
+  container.textContent = '';
+  const title = document.createElement('span');
+  title.className = 'song-name-title';
+  title.textContent = songTitleText(song);
+  container.appendChild(title);
+  const artist = songArtistText(song);
+  if (artist) {
+    const by = document.createElement('span');
+    by.className = 'song-name-artist';
+    by.textContent = artist;
+    container.appendChild(by);
+  }
+}
+
+// Cover art: one drawn cover per song in songs/covers/, shared by every version of it.
+// A song finds its cover by its title with version notes removed (see covers.json).
+let songCovers = new Map();
+
+function coverKeyForTitle(title) {
+  let key = String(title || '').normalize('NFKC').toLowerCase();
+  key = key.replace(/\s+-\s+in the room!?$/, '');
+  key = key.replace(/\s+\([^)]*\)/g, '');
+  key = key.replace(/\s+feat\..*$/, '');
+  key = key.replace(/:.*$/, '');
+  const dash = key.lastIndexOf(' - ');
+  if (dash >= 0) key = key.slice(dash + 3);
+  return key.replace(/\s+/g, ' ').trim();
+}
+
+function coverUrlForSong(song) {
+  if (!song) return null;
+  const slug = songCovers.get(coverKeyForTitle(song.title || song.displayName))
+    || songCovers.get(coverKeyForTitle(prettyName(song.name || '').title));
+  return slug ? `./songs/covers/${encodeURIComponent(slug)}.svg` : null;
+}
+
+async function loadSongCovers() {
+  try {
+    const response = await fetch('./songs/covers/covers.json', { cache: 'no-cache' });
+    if (!response.ok) return;
+    const data = await response.json();
+    const map = new Map();
+    Object.entries(data.covers || {}).forEach(([slug, keys]) => keys.forEach(key => map.set(key, slug)));
+    songCovers = map;
+  } catch {
+    return; // Covers are decoration: the lettered tiles stay if the file can't load.
+  }
+  if (library.length) {
+    renderLibrary($('search').value);
+    if ($('view-playlists')?.classList.contains('active')) renderPlaylists();
+  }
+  paintSongArt($('np-art'), currentSong());
+}
+
+// The song's cover; until covers load (or for a song without one) a tile with the
+// title's first letter on a colour picked from the title.
+function paintSongArt(element, song) {
+  if (!element) return;
+  if (!song) {
+    element.hidden = true;
+    return;
+  }
+  const key = `${songTitleText(song)}|${songArtistText(song)}`;
+  let hash = 2166136261;
+  for (let i = 0; i < key.length; i++) hash = Math.imul(hash ^ key.charCodeAt(i), 16777619);
+  element.hidden = false;
+  element.style.setProperty('--art-hue', String((hash >>> 0) % 360));
+  element.dataset.initial = (songTitleText(song).match(/[\p{L}\p{N}]/u)?.[0] || '♪').toUpperCase();
+  const cover = coverUrlForSong(song);
+  let image = element.querySelector('img');
+  if (!cover) {
+    image?.remove();
+    element.classList.remove('has-cover');
+    return;
+  }
+  if (!image) {
+    image = document.createElement('img');
+    image.alt = '';
+    image.decoding = 'async';
+    image.loading = 'lazy';
+    image.draggable = false;
+    image.addEventListener('error', () => {
+      image.remove();
+      element.classList.remove('has-cover');
+    });
+    element.appendChild(image);
+  }
+  if (image.getAttribute('src') !== cover) image.src = cover;
+  element.classList.add('has-cover');
 }
 
 function encodePath(path) {
@@ -2554,12 +2683,38 @@ function setTetoFxEnabled(enabled) {
   window.LyricWorkbench?.tick(currentCalibratedTime());
 }
 
-function setFxTheme(theme) {
-  fxTheme = ['teto', 'disco', 'teto11'].includes(theme) ? theme : 'teto11';
-  writeSetting('vp_fx_theme', fxTheme);
-  const select = $('fx-theme');
-  if (select) select.value = fxTheme;
+function prefersReducedMotion() {
+  if (a11yOptions.motion === 'on') return true;
+  if (a11yOptions.motion === 'off') return false;
+  return SYSTEM_REDUCED_MOTION.matches;
+}
+
+function applyAccessibilityOptions() {
+  const root = document.documentElement;
+  const reduced = prefersReducedMotion();
+  root.classList.toggle('large-text', a11yOptions.largeText);
+  root.classList.toggle('high-contrast', a11yOptions.highContrast);
+  root.classList.toggle('reduce-motion', reduced);
+  // Read by song-motion-fx.js so the music videos follow this choice, not only the system's.
+  window.vpReducedMotion = reduced;
+  const sync = (id, value) => { const box = $(id); if (box) box.checked = value; };
+  sync('a11y-large-text', a11yOptions.largeText);
+  sync('a11y-high-contrast', a11yOptions.highContrast);
+  sync('a11y-reduce-motion', reduced);
+}
+
+function setAccessibilityOption(option, value) {
+  if (option === 'motion') {
+    a11yOptions.motion = value ? 'on' : 'off';
+    writeSetting('vp_a11y_reduce_motion', a11yOptions.motion);
+  } else {
+    a11yOptions[option] = !!value;
+    writeSetting(option === 'largeText' ? 'vp_a11y_large_text' : 'vp_a11y_high_contrast', value ? 'true' : 'false');
+  }
+  applyAccessibilityOptions();
+  scheduleNowLayoutSync();
   updateFxState();
+  if (audio.paused) drawWaveform(true);
 }
 
 function setSongMotionFxActive(theme) {
@@ -2624,6 +2779,7 @@ function updateFxState(levelOverride = tetoGlowLevel) {
   document.body.classList.toggle('encore-harp-fx-active', theme === 'encore-harp');
   document.body.classList.toggle('story-theater-fx-active', theme === 'story-theater');
   document.body.classList.toggle('trick-heart-fx-active', theme === 'trick-heart');
+  if (theme !== 'trick-heart') document.body.classList.remove('trick-heart-3d-active');
   document.body.classList.toggle('magic-maid-fx-active', theme === 'magic-maid');
   if (theme === 'story-theater') {
     setTrickHeartOverlayActive(false);
@@ -2894,7 +3050,11 @@ async function loadLibrary() {
   snapshots.forEach((songs, id) => collectionSnapshots.set(id, songs));
   library = loaded.sort((a, b) => {
     const collectionSort = COLLECTION_ORDER.get(a.collection) - COLLECTION_ORDER.get(b.collection);
-    return collectionSort || a.displayName.localeCompare(b.displayName);
+    // Alphabetical by title (artist breaks ties), matching how songs are now shown.
+    const order = { sensitivity: 'base', numeric: true };
+    return collectionSort
+      || (a.title || a.displayName || '').localeCompare(b.title || b.displayName || '', undefined, order)
+      || (a.artist || '').localeCompare(b.artist || '', undefined, order);
   });
   if (queuedRefs.length) {
     queue = queuedRefs.map(findSongIndex).filter(index => index >= 0);
@@ -3019,19 +3179,22 @@ function renderLibrary(filter = '') {
     li.dataset.libIdx = idx;
     if (queue[queueIndex] === idx) li.classList.add('playing');
     li.innerHTML = `
-      <span class="col-num"></span>
+      <span class="song-art" aria-hidden="true"></span>
       <span class="col-title song-title-wrap">
-        <span class="song-title-text"></span>
+        <span class="song-name"></span>
         <span class="song-badge"></span>
       </span>
       <span class="col-actions">
-        <button class="icon-btn add-to" title="Add to playlist">+</button>
+        <button class="icon-btn add-to" title="Add to playlist" aria-label="Add to playlist">+</button>
       </span>
     `;
-    li.querySelector('.col-num').textContent = displayIdx + 1;
-    li.querySelector('.song-title-text').textContent = song.displayName;
+    paintSongArt(li.querySelector('.song-art'), song);
+    fillSongName(li.querySelector('.song-name'), song);
     const badge = li.querySelector('.song-badge');
-    if (songLooksLikeTravelingVoices(song)) {
+    // The collection filter above the list already says Secular/Christian, so rows
+    // only carry a badge when it adds something (the spatial guide tracks).
+    if (!songLooksLikeTravelingVoices(song)) badge.remove();
+    else {
       const slug = spatialSlugForSong(song);
       // e.g. "01 · Spatial" or short path label for batch variants
       const short = slug
@@ -3041,9 +3204,6 @@ function renderLibrary(filter = '') {
       badge.textContent = num ? `${num} · ${short.length > 18 ? short.slice(0, 16) + '…' : short}` : 'Spatial';
       badge.classList.add('spatial-track');
       badge.title = short;
-    } else {
-      badge.textContent = song.collectionLabel;
-      badge.classList.add(song.collection);
     }
     li.addEventListener('click', (e) => {
       if (e.defaultPrevented || openAddToMenuFromEvent(e)) return;
@@ -3120,6 +3280,7 @@ function playCurrent() {
   }
   resumeAudioFromCalibratedClock(song, { preserveIntent: true });
   $('np-title').textContent = song.title || song.displayName;
+  paintSongArt($('np-art'), song);
   const parts = [];
   if (song.artist) parts.push(song.artist);
   if (songLooksLikeTravelingVoices(song)) parts.push('Spatial 3D guide on Now Playing');
@@ -5191,7 +5352,7 @@ function paintDdfTheater(timeSec, pose, fDir, mDir, force) {
 function updateUpNext() {
   const nextIdx = queueIndex + 1 < queue.length ? queue[queueIndex + 1] : (loopMode === 'all' && queue.length ? queue[0] : -1);
   const next = library[nextIdx];
-  $('queue-next').textContent = next ? next.displayName : 'End of queue';
+  $('queue-next').textContent = next ? songLabel(next) : 'End of queue';
 }
 
 let lastUiTimeText = '';
@@ -7334,7 +7495,41 @@ function drawHeroStoryFx(levels, audioTime) {
   ctx.fillRect(0, 0, width, height);
 }
 
-const ENCORE_MOTION_PREFERENCE = window.matchMedia('(prefers-reduced-motion: reduce)');
+// Encore Dance's 3D music video (encore-dance-mv.js), created on first use. A missing
+// WebGL2, a shader failure or a lost GPU context falls back to the flat 2D stage.
+let encoreMusicVideoInstance = null;
+let encoreMusicVideoFailed = false;
+
+function encoreMusicVideo() {
+  if (encoreMusicVideoFailed || !window.EncoreDanceMv) return null;
+  if (encoreMusicVideoInstance?.lost()) {
+    encoreMusicVideoInstance = null;
+    encoreMusicVideoFailed = true;
+    return null;
+  }
+  if (!encoreMusicVideoInstance) {
+    const canvas = $('encore-gl');
+    try {
+      encoreMusicVideoInstance = canvas ? window.EncoreDanceMv.create(canvas) : null;
+    } catch (error) {
+      console.warn('Encore Dance music video:', error);
+      encoreMusicVideoInstance = null;
+    }
+    if (!encoreMusicVideoInstance) encoreMusicVideoFailed = true;
+  }
+  return encoreMusicVideoInstance;
+}
+
+/** The recording's timed lyric lines for the 3D video; their times are in this
+ * recording's audio clock, `offset` seconds ahead of the video's clock. */
+function encoreVideoLyrics(offset) {
+  const config = supportedLyricTrackForSong();
+  const variant = config?.variant || 'jp';
+  const lines = supportedLyricsData?.variants?.[variant]?.lines || supportedLyricsData?.lines;
+  if (!Array.isArray(lines) || !lines.length) return null;
+  const english = variant === 'en' || config?.languageMode === 'en-only';
+  return { lines, offset, language: english ? 'en' : 'jp' };
+}
 
 function drawEncoreDanceFx(levels, audioTime) {
   const canvas = $('encore-fx');
@@ -7342,6 +7537,54 @@ function drawEncoreDanceFx(levels, audioTime) {
   if (!canvas || !theater || !encoreSceneActive) return;
   const rect = theater.getBoundingClientRect();
   if (rect.width <= 0 || rect.height <= 0) return;
+  const recorded = encoreAnalysisAt(audioTime);
+  const analysis = encoreAnalysisProfile();
+  const canonicalTime = encoreCanonicalTime(audioTime);
+  const energy = clamp(0, 1, Math.max(recorded.energy, (levels.glow || 0) * .7));
+  const musicVideo = encoreMusicVideo();
+  theater.classList.toggle('is-3d', !!musicVideo);
+  if (musicVideo) {
+    // The 3D music video; the flat stage below is the fallback without WebGL2.
+    const glCanvas = $('encore-gl');
+    const glDpr = adaptiveCanvasDpr(rect, 1.25);
+    const glWidth = Math.max(1, Math.floor(rect.width * glDpr));
+    const glHeight = Math.max(1, Math.floor(rect.height * glDpr));
+    if (glCanvas.width !== glWidth || glCanvas.height !== glHeight) {
+      glCanvas.width = glWidth;
+      glCanvas.height = glHeight;
+    }
+    const audioOffset = audioTime - canonicalTime;
+    let state = null;
+    try {
+      state = musicVideo.draw({
+        time: canonicalTime,
+        duration: Math.max(0, (effectiveDuration() || supportedLyricsData?.duration || 137.23) - audioOffset),
+        sections: supportedLyricsData?.sections || [],
+        bpm: analysis?.bpm || 132,
+        beatOffset: (analysis?.beatOffset || 0) - audioOffset,
+        signal: time => encoreAnalysisAt(time + audioOffset),
+        lyrics: encoreVideoLyrics(audioOffset),
+        reducedMotion: prefersReducedMotion(),
+        width: glWidth,
+        height: glHeight
+      });
+    } catch (error) {
+      console.warn('Encore Dance music video:', error);
+      encoreMusicVideoFailed = true;
+      musicVideo.dispose();
+      encoreMusicVideoInstance = null;
+    }
+    if (state) {
+      for (const key of ['primary', 'secondary', 'accent']) {
+        theater.style.setProperty('--encore-' + key, 'rgb(' + state.palette[key].join(', ') + ')');
+      }
+      theater.style.setProperty('--encore-energy', energy.toFixed(3));
+      theater.style.setProperty('--encore-beat', state.pulse.toFixed(3));
+      return;
+    }
+    if (!encoreMusicVideoFailed) return;
+    theater.classList.remove('is-3d');
+  }
   const dpr = adaptiveCanvasDpr(rect);
   const width = Math.max(1, Math.floor(rect.width * dpr));
   const height = Math.max(1, Math.floor(rect.height * dpr));
@@ -7349,10 +7592,6 @@ function drawEncoreDanceFx(levels, audioTime) {
     canvas.width = width;
     canvas.height = height;
   }
-  const recorded = encoreAnalysisAt(audioTime);
-  const analysis = encoreAnalysisProfile();
-  const canonicalTime = encoreCanonicalTime(audioTime);
-  const energy = clamp(0, 1, Math.max(recorded.energy, (levels.glow || 0) * .7));
   const ctx = canvas.getContext('2d', { alpha: false });
   const state = window.EncoreRemasterFx?.draw(ctx, width, height, {
     time: canonicalTime,
@@ -7361,7 +7600,7 @@ function drawEncoreDanceFx(levels, audioTime) {
     bpm: analysis?.bpm || 132,
     beatOffset: (analysis?.beatOffset || 0) - (audioTime - canonicalTime),
     energy,
-    reducedMotion: ENCORE_MOTION_PREFERENCE.matches
+    reducedMotion: prefersReducedMotion()
   });
   if (!state) return;
   for (const key of ['primary', 'secondary', 'accent']) {
@@ -9075,9 +9314,77 @@ function drawTrickHeartSymbol(ctx, x, y, size, color, alpha, rotation = 0) {
   ctx.restore();
 }
 
+// Trick Heart's 3D music video (trick-heart-mv.js), made on first use. Without WebGL2,
+// after a shader failure or a lost GPU context, the flat 2D stage below draws instead.
+let trickHeartMusicVideoInstance = null;
+let trickHeartMusicVideoFailed = false;
+let trickHeartVideoLines = { source: null, lines: null };
+
+function trickHeartMusicVideo() {
+  if (trickHeartMusicVideoFailed || !window.TrickHeartMv) return null;
+  if (trickHeartMusicVideoInstance?.lost()) {
+    trickHeartMusicVideoInstance = null;
+    trickHeartMusicVideoFailed = true;
+    return null;
+  }
+  if (!trickHeartMusicVideoInstance) {
+    const canvas = $('trick-heart-gl');
+    try {
+      trickHeartMusicVideoInstance = canvas ? window.TrickHeartMv.create(canvas) : null;
+    } catch (error) {
+      console.warn('Trick Heart music video:', error);
+      trickHeartMusicVideoInstance = null;
+    }
+    if (!trickHeartMusicVideoInstance) trickHeartMusicVideoFailed = true;
+  }
+  return trickHeartMusicVideoInstance;
+}
+
+/** Draws the 3D video; returns false when the 2D stage should draw instead. */
+function drawTrickHeart3d(audioTime) {
+  const data = supportedLyricsData;
+  const musicVideo = data?.lines ? trickHeartMusicVideo() : null;
+  const canvas = $('trick-heart-gl');
+  if (!musicVideo || !canvas) return false;
+  const rect = canvas.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) return false;
+  const dpr = adaptiveCanvasDpr(rect, 1.25);
+  const width = Math.max(1, Math.floor(rect.width * dpr));
+  const height = Math.max(1, Math.floor(rect.height * dpr));
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+  if (trickHeartVideoLines.source !== data.lines) {
+    trickHeartVideoLines = { source: data.lines, lines: window.TrickHeartMv.linesFromPhrases(data.lines) };
+  }
+  try {
+    return !!musicVideo.draw({
+      time: audioTime,
+      duration: effectiveDuration() || data.duration || 157.05,
+      sections: data.sections || [],
+      bpm: data.bpm || 150,
+      beatOffset: data.beatOffset || 0,
+      lyrics: { lines: trickHeartVideoLines.lines, offset: 0, language: 'jp' },
+      reducedMotion: prefersReducedMotion(),
+      width,
+      height
+    });
+  } catch (error) {
+    console.warn('Trick Heart music video:', error);
+    trickHeartMusicVideoFailed = true;
+    musicVideo.dispose();
+    trickHeartMusicVideoInstance = null;
+    return false;
+  }
+}
+
 function drawTrickHeartFx(levels, audioTime) {
   const canvas = $('teto-fx');
   if (!canvas) return;
+  const in3d = drawTrickHeart3d(audioTime);
+  document.body.classList.toggle('trick-heart-3d-active', in3d);
+  if (in3d) return;
   const ctx = canvas.getContext('2d', { alpha: true });
   const width = canvas.width;
   const height = canvas.height;
@@ -10385,35 +10692,72 @@ volumeEl.addEventListener('change', (e) => setPlayerVolume(e.target.value, true)
 const settingsToggle = $('settings-toggle');
 const settingsMenu = $('settings-menu');
 const tetoFxCheckbox = $('teto-fx-enabled');
-const fxThemeSelect = $('fx-theme');
 const timingDebugCheckbox = $('timing-debug-enabled');
 const audioResetButton = $('audio-reset');
+const settingsBackdrop = $('settings-backdrop');
 if (tetoFxCheckbox) tetoFxCheckbox.checked = tetoFxEnabled;
-if (fxThemeSelect) fxThemeSelect.value = fxTheme;
 if (timingDebugCheckbox) timingDebugCheckbox.checked = timingDebugEnabled;
+
+function setQuickMenuOpen(open) {
+  if (!settingsMenu) return;
+  settingsMenu.classList.toggle('hidden', !open);
+  settingsToggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+function quickMenuOpen() {
+  return !!settingsMenu && !settingsMenu.classList.contains('hidden');
+}
+function openSettingsPanel() {
+  setQuickMenuOpen(false);
+  settingsBackdrop?.classList.remove('hidden');
+  $('settings-close')?.focus();
+}
+function closeSettingsPanel(returnFocus = true) {
+  if (!settingsBackdrop || settingsBackdrop.classList.contains('hidden')) return;
+  settingsBackdrop.classList.add('hidden');
+  if (returnFocus) settingsToggle?.focus();
+}
+
 if (settingsToggle && settingsMenu) {
   settingsToggle.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
-    settingsMenu.classList.toggle('hidden');
+    setQuickMenuOpen(!quickMenuOpen());
   });
   settingsMenu.addEventListener('pointerdown', (e) => e.stopPropagation());
   settingsMenu.addEventListener('click', (e) => e.stopPropagation());
   document.addEventListener('click', (e) => {
-    if (!settingsMenu.classList.contains('hidden') && !settingsMenu.contains(e.target) && e.target !== settingsToggle) {
-      settingsMenu.classList.add('hidden');
-    }
+    if (quickMenuOpen() && !settingsMenu.contains(e.target) && e.target !== settingsToggle) setQuickMenuOpen(false);
   });
 }
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  if (settingsBackdrop && !settingsBackdrop.classList.contains('hidden')) closeSettingsPanel();
+  else if (quickMenuOpen()) {
+    setQuickMenuOpen(false);
+    settingsToggle?.focus();
+  }
+});
+$('settings-open')?.addEventListener('click', openSettingsPanel);
+$('settings-close')?.addEventListener('click', () => closeSettingsPanel());
+settingsBackdrop?.addEventListener('click', (event) => {
+  if (event.target === settingsBackdrop) closeSettingsPanel();
+});
+// Lyric studio replaces the current view, so focus stays with the studio rather than the gear.
+$('lyrics-open')?.addEventListener('click', () => closeSettingsPanel(false));
+
+applyAccessibilityOptions();
+SYSTEM_REDUCED_MOTION.addEventListener?.('change', () => {
+  applyAccessibilityOptions();
+  updateFxState();
+});
+[['a11y-large-text', 'largeText'], ['a11y-reduce-motion', 'motion'], ['a11y-high-contrast', 'highContrast']]
+  .forEach(([id, option]) => {
+    $(id)?.addEventListener('change', (event) => setAccessibilityOption(option, event.target.checked));
+  });
+
 if (tetoFxCheckbox) {
   tetoFxCheckbox.addEventListener('change', () => {
     setTetoFxEnabled(tetoFxCheckbox.checked);
-    publishDesktopEffectsState(true);
-  });
-}
-if (fxThemeSelect) {
-  fxThemeSelect.addEventListener('change', () => {
-    setFxTheme(fxThemeSelect.value);
     publishDesktopEffectsState(true);
   });
 }
@@ -10430,7 +10774,7 @@ const equalizerOpenButton = $('equalizer-open');
 const equalizerBackdrop = $('equalizer-backdrop');
 const equalizerCloseButton = $('equalizer-close');
 function openEqualizer() {
-  settingsMenu?.classList.add('hidden');
+  setQuickMenuOpen(false);
   equalizerBackdrop?.classList.remove('hidden');
   renderEqualizerUi();
 }
@@ -10618,7 +10962,7 @@ function renderPlaylistActionPanel() {
     return;
   }
   panel.classList.remove('hidden');
-  $('playlist-action-title').textContent = song.displayName;
+  $('playlist-action-title').textContent = songLabel(song);
   const options = $('playlist-action-options');
   options.innerHTML = '';
   const names = orderedPlaylistNames();
@@ -10700,8 +11044,8 @@ function renderPlaylists() {
           <button class="playlist-down" title="Move playlist down" ${playlistIndex === names.length - 1 ? 'disabled' : ''}>↓</button>
         </span>
         <button class="playlist-add">+ Add songs</button>
-        <button class="playlist-play">▶ Play</button>
-        <button class="playlist-shuffle">🔀 Shuffle</button>
+        <button class="playlist-play">Play</button>
+        <button class="playlist-shuffle">Shuffle</button>
         <button class="playlist-delete">Delete</button>
       </div>
       <div class="playlist-body${isCollapsed ? ' hidden' : ''}">
@@ -10846,19 +11190,25 @@ function renderPlaylists() {
         li.dataset.playlistIdx = i;
         li.draggable = true;
         const missingName = String(songId).split('/').pop();
-        const label = libIdx >= 0 ? library[libIdx].displayName : `${missingName} (missing)`;
         li.innerHTML = `
           <span class="drag-handle" title="Drag to reorder">☰</span>
           <span class="col-num">${i + 1}</span>
-          <span class="title"></span>
+          <span class="song-art" aria-hidden="true"></span>
+          <span class="title song-name"></span>
           <span class="playlist-move">
             <button class="move-up" title="Move up" ${i === 0 ? 'disabled' : ''}>↑</button>
             <button class="move-down" title="Move down" ${i === songs.length - 1 ? 'disabled' : ''}>↓</button>
           </span>
           <button class="remove" title="Remove from playlist">×</button>
         `;
-        li.querySelector('.title').textContent = label;
-        if (libIdx < 0) li.querySelector('.title').style.color = 'var(--fg-faint)';
+        if (libIdx >= 0) {
+          fillSongName(li.querySelector('.title'), library[libIdx]);
+          paintSongArt(li.querySelector('.song-art'), library[libIdx]);
+        } else {
+          li.querySelector('.title').textContent = `${missingName} (missing)`;
+          li.querySelector('.title').style.color = 'var(--fg-faint)';
+          li.querySelector('.song-art').style.visibility = 'hidden';
+        }
         li.addEventListener('click', (e) => {
           if (e.target.closest('button') || e.target.closest('.drag-handle')) return;
           if (libIdx >= 0) playPlaylist(name, i, false);
@@ -10946,9 +11296,12 @@ function renderPlaylistAdderResults(results, name, query) {
   const q = query.trim().toLowerCase();
   const candidates = library
     .filter(song => !playlistHasSong(name, song))
-    .filter(song => !q || song.displayName.toLowerCase().includes(q) || song.collectionLabel.toLowerCase().includes(q));
+    .filter(song => !q || `${song.displayName} ${songLabel(song)} ${song.collectionLabel}`.toLowerCase().includes(q))
+    .sort((a, b) => songTitleText(a).localeCompare(songTitleText(b), undefined, { sensitivity: 'base', numeric: true }));
 
   results.innerHTML = '';
+  results.setAttribute('role', 'list');
+  results.setAttribute('aria-label', 'Songs to add');
   if (!library.length) {
     const empty = document.createElement('div');
     empty.className = 'playlist-adder-empty';
@@ -10964,16 +11317,24 @@ function renderPlaylistAdderResults(results, name, query) {
     return;
   }
 
-  candidates.slice(0, 60).forEach(song => {
+  // Every match is listed; the box scrolls (it used to stop at 60 songs).
+  const count = document.createElement('div');
+  count.className = 'playlist-adder-count';
+  count.setAttribute('role', 'status');
+  count.textContent = `${candidates.length} song${candidates.length === 1 ? '' : 's'}${q ? ' found' : ' to add'}`;
+  results.appendChild(count);
+  candidates.forEach(song => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'playlist-adder-song';
+    button.setAttribute('role', 'listitem');
+    button.setAttribute('aria-label', `Add ${songLabel(song)}`);
     button.innerHTML =
-      `<span class="playlist-adder-song-title"></span>` +
-      `<span class="playlist-adder-song-meta"></span>` +
-      `<span class="playlist-adder-song-plus">+</span>`;
-    button.querySelector('.playlist-adder-song-title').textContent = song.displayName;
-    button.querySelector('.playlist-adder-song-meta').textContent = song.collectionLabel;
+      `<span class="song-art" aria-hidden="true"></span>` +
+      `<span class="song-name"></span>` +
+      `<span class="playlist-adder-song-plus" aria-hidden="true">+</span>`;
+    paintSongArt(button.querySelector('.song-art'), song);
+    fillSongName(button.querySelector('.song-name'), song);
     button.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -11059,4 +11420,5 @@ updateFxState();
 publishDesktopEffectsState(true);
 loadSpatialMap(); // embed into cache immediately
 preloadSpatialMaps(); // warm jumpy/traveling-voices map
+loadSongCovers();
 loadLibrary();
