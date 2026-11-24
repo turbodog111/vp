@@ -11,7 +11,8 @@ const recordings = [
   ['petal-lament', 'MIMI feat. Kasane Teto SV - Petal Lament.m4a'],
   ['marshmary', 'MIMI feat. Hatsune Miku - Marshmary.m4a'],
   ['dynamite', 'BTS - Dynamite.m4a'],
-  ['butter', 'BTS - Butter.m4a']
+  ['butter', 'BTS - Butter.m4a'],
+  ['your-reality', 'Dan Salvato feat. Jillian Ashcraft - Your Reality.m4a']
 ];
 const dataFor = key => JSON.parse(fs.readFileSync(path.join(root, 'songs/motion', `${key}.json`)));
 function create(fetcher, reduced = false) {
@@ -52,7 +53,7 @@ function render(api, time, width = 1280, height = 720) {
   return JSON.parse(JSON.stringify(trace.calls));
 }
 
-test('only the five exact recordings receive their own scenes', () => {
+test('recording-specific scenes match exact filenames, not similar covers', () => {
   const { api } = create();
   for (const [key, name] of recordings) {
     assert.equal(api.track({ path: `songs/${name}` }).key, key);
@@ -62,6 +63,7 @@ test('only the five exact recordings receive their own scenes', () => {
   assert.equal(api.track({ path: 'songs/MIMI feat. Hatsune Miku - Marshmary (Cover).m4a' }), null);
   assert.equal(api.track({ path: 'songs/BTS - Butter (Remix).m4a' }), null);
   assert.equal(api.track({ path: 'songs/Other Artist - Dynamite.m4a' }), null);
+  assert.equal(api.track({ path: 'songs/Other Artist - Your Reality.m4a' }), null);
   assert.equal(api.track(null), null);
 });
 
@@ -73,14 +75,21 @@ for (const [key, name] of recordings) {
     assert.equal(manifest.find(x => x.name === name).size, media.length);
     const data = dataFor(key);
     assert.equal(crypto.createHash('sha256').update(media).digest('hex'), data.audioSha256);
-    assert.ok(fs.statSync(path.join(root, 'songs/art', `${key}.webp`)).size > 1000);
+    const config = create().api.track({ path: `songs/${name}` });
+    if (key === 'your-reality') {
+      const receipt = JSON.parse(fs.readFileSync(path.join(root, 'songs/imports/your-reality.json')));
+      assert.equal(receipt.recording, `songs/${name}`);
+      assert.equal(receipt.source, config.source);
+      assert.equal(receipt.outputAudioSha256, data.audioSha256);
+      assert.ok(Math.abs(receipt.duration - data.duration) < .01);
+      assert.equal(config.art, undefined, 'stationery is entirely procedural');
+    } else assert.ok(fs.statSync(path.join(root, 'songs/art', `${key}.webp`)).size > 1000);
     for (const band of ['energy', 'bass', 'high', 'onset']) {
       assert.ok(data[band].every(x => Number.isFinite(x) && x >= 0 && x <= 100));
       assert.ok(Math.abs(data[band].length * data.sampleInterval - data.duration) < 0.1);
     }
     assert.equal(data.sampleInterval, 0.04);
-    assert.ok(Math.abs(data.bpm - { override: 204, 'petal-lament': 170, marshmary: 182, dynamite: 114, butter: 110 }[key]) < 1);
-    const config = create().api.track({ path: `songs/${name}` });
+    assert.ok(Math.abs(data.bpm - { override: 204, 'petal-lament': 170, marshmary: 182, dynamite: 114, butter: 110, 'your-reality': 105 }[key]) < 1);
     assert.equal(config.bpm, data.bpm, 'fallback uses the measured tempo');
     assert.equal(config.beatOffset, data.beatOffset, 'fallback uses the measured phase');
   });

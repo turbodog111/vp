@@ -2,6 +2,11 @@ window.SongMotionFx = (() => {
   'use strict';
 
   const tracks = Object.freeze({
+    'songs/dan salvato feat. jillian ashcraft - your reality': Object.freeze({
+      key: 'your-reality', theme: 'your-reality', bpm: 105, beatOffset: .321,
+      title: 'Your Reality', data: './songs/motion/your-reality.json',
+      source: 'https://www.youtube.com/watch?v=CAL4WMpBNs0'
+    }),
     'songs/32ki feat. hatsune miku & kasane teto sv - mesmerizer (japanese original)': Object.freeze({
       key: 'mesmerizer-original', theme: 'mesmerizer', variant: 'original', bpm: 92.5, beatOffset: .345,
       title: 'Mesmerizer', data: './songs/motion/mesmerizer-original.json',
@@ -664,6 +669,84 @@ window.SongMotionFx = (() => {
     }
   }
 
+  // A written phrase, not a cycling waveform: the nib samples the very same
+  // curve as the ink and the finished lines stay on the page until it turns.
+  function inkPoint(u, row, phrase, width, height) {
+    const a = u * TAU * (8 + row % 2);
+    const group = .28 + .72 * Math.sin(u * Math.PI * 3) ** 2;
+    return [width * (.14 + .71 * u + .014 * Math.sin(a)),
+      height * (.34 + row * .145 - group * (.018 * Math.sin(a) +
+        .046 * Math.max(0, Math.cos(a + phrase * .7)) ** 4))];
+  }
+
+  function drawLetter(ctx, w, h, m, reduced) {
+    const beats = reduced ? 12 : m.beats;
+    const phrase = Math.floor(beats / 32);
+    const row = Math.floor(beats / 8) % 4;
+    const step = (beats % 8) / 8;
+    const progress = reduced ? .72 : ease(step / .91);
+    const pink = '#ae4c70', ink = '#39404f';
+    const desk = ctx.createLinearGradient(0, 0, w, h);
+    desk.addColorStop(0, '#f6e4df'); desk.addColorStop(.62, '#edd2cb'); desk.addColorStop(1, '#d7b4ab');
+    ctx.fillStyle = desk; ctx.fillRect(0, 0, w, h);
+
+    const pw = Math.min(w * .87, h * 1.28), ph = pw * .66;
+    const unit = pw / 400;
+    ctx.save(); ctx.translate(w * .49, h * .52);
+    ctx.rotate(-.055); ctx.translate(-pw / 2, -ph / 2);
+    ctx.fillStyle = '#cbaca8'; ctx.fillRect(4*unit, 8*unit, pw, ph);
+    ctx.fillStyle = '#f9eee5'; ctx.fillRect(-3*unit, 4*unit, pw, ph);
+    ctx.fillStyle = '#fff8ec'; ctx.fillRect(0, 0, pw, ph);
+    ctx.beginPath();
+    for (let i = 0; i < 7; i++) {
+      const y = ph * (.195 + .145 * i);
+      if (y < ph) { ctx.moveTo(0, y); ctx.lineTo(pw, y); }
+    }
+    ctx.strokeStyle = '#d5d8d4'; ctx.lineWidth = Math.max(.8, unit * .65); ctx.stroke();
+    ctx.fillStyle = '#dfa0ae'; ctx.fillRect(pw * .091, 0, unit, ph);
+    // Folded ribbon bookmark with a swallowtail cut.
+    ctx.beginPath(); ctx.moveTo(pw*.79, 0); ctx.lineTo(pw*.86, 0);
+    ctx.lineTo(pw*.86, ph*.19); ctx.lineTo(pw*.825, ph*.15); ctx.lineTo(pw*.79, ph*.19);
+    ctx.closePath(); ctx.fillStyle = pink; ctx.fill();
+
+    for (let r = 0; r <= row; r++) {
+      const limit = r === row ? progress : 1;
+      ctx.beginPath();
+      const n = Math.max(1, Math.ceil(limit * 168));
+      for (let i = 0; i <= n; i++) {
+        const [x,y] = inkPoint(i / n * limit, r, phrase, pw, ph);
+        if (i) ctx.lineTo(x,y); else ctx.moveTo(x,y);
+      }
+      ctx.strokeStyle = ink; ctx.lineWidth = 1.15 * unit; ctx.stroke();
+    }
+    const [nx, ny] = inkPoint(progress, row, phrase, pw, ph);
+    ctx.save(); ctx.translate(nx, ny); ctx.scale(unit, unit); ctx.rotate(.68);
+    ctx.fillStyle = '#38334a'; ctx.beginPath();
+    ctx.moveTo(-4,-16); ctx.lineTo(-5,-69); ctx.quadraticCurveTo(0,-79,5,-69);
+    ctx.lineTo(4,-16); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#cea45e'; ctx.fillRect(-4.5,-22,9,3);
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-4.5,-11); ctx.lineTo(-3,-16);
+    ctx.lineTo(3,-16); ctx.lineTo(4.5,-11); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = ink; ctx.lineWidth = .7; ctx.beginPath();
+    ctx.moveTo(0,-8); ctx.lineTo(0,0); ctx.stroke(); ctx.restore();
+    ctx.restore();
+
+    // A short keyboard along the lower left leaves the transport unobstructed.
+    const key = Math.min(w * .053, h * .066), kh = key * 2.45;
+    ctx.save(); ctx.translate(w * .035, h + 2); ctx.rotate(-.038);
+    ctx.fillStyle = ink; ctx.fillRect(-2, -kh-3, key*14+4, kh+key);
+    const melody = [0,4,2,6,5,3,1,4];
+    for (let k=0; k<14; k++) {
+      const lit = !reduced && k%7 === melody[Math.floor(beats)%8];
+      ctx.fillStyle = lit ? color(blend([255,248,232], [225,144,161], m.quiet * (.3 + .7 * m.pulse))) : '#fff8e8';
+      ctx.fillRect(k*key+1, -kh, key-1, kh+key);
+    }
+    ctx.fillStyle = ink;
+    for (let k=0; k<13; k++) if (k%7 !== 2 && k%7 !== 6)
+      ctx.fillRect((k+.73)*key, -kh, key*.55, kh*.57);
+    ctx.restore();
+  }
+
   function draw(ctx, w, h, state) {
     if (!active || w <= 0 || h <= 0) return;
     const time = Math.max(0, Number(state.time) || 0);
@@ -680,7 +763,8 @@ window.SongMotionFx = (() => {
     const in3d = active.theme === 'mesmerizer' && drawMesmerizer3d(time, data, reduced);
     pageBody()?.classList.toggle('motion-3d-active', in3d);
     if (in3d) { ctx.restore(); return; }
-    if (active.theme === 'mesmerizer') window.MesmerizerFx?.draw(ctx, w, h, video);
+    if (active.theme === 'your-reality') drawLetter(ctx, w, h, m, reduced);
+    else if (active.theme === 'mesmerizer') window.MesmerizerFx?.draw(ctx, w, h, video);
     else if (active.theme === 'hunters-free') window.FreeFx?.draw(ctx, w, h, video);
     else if (active.theme === 'kuu-ni-naru') window.KuuFx?.draw(ctx, w, h, video);
     else if (active.theme === 'demons') window.DemonsFx?.draw(ctx, w, h, video);

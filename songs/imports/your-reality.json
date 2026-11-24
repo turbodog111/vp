@@ -1,0 +1,17 @@
+{
+  "recording": "songs/Dan Salvato feat. Jillian Ashcraft - Your Reality.m4a",
+  "title": "Your Reality",
+  "artist": "Dan Salvato feat. Jillian Ashcraft",
+  "composer": "Dan Salvato",
+  "vocals": "Jillian Ashcraft",
+  "source": "https://www.youtube.com/watch?v=CAL4WMpBNs0",
+  "sourceTitle": "Doki Doki Literature Club! OST - Your Reality (Credits)",
+  "sourceChannel": "Team Salvato",
+  "rendition": "Original linked credits recording, untrimmed",
+  "duration": 181.6729,
+  "encoding": "AAC 192k, 48kHz stereo, faststart",
+  "sourceAudioSha256": "9b4c6f4fcb5b846ad41318e22db68d46c4aa5dcccd94270d7073baf3faebfb39",
+  "outputAudioSha256": "7e93ae4841619db651bb076677b4d35822a4fab9abb7d029c1053c227108c5c6",
+  "importDate": "2026-11-24",
+  "graphics": "Original procedural stationery, fountain pen and piano; no video frames."
+}
