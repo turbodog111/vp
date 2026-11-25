@@ -16,15 +16,19 @@ const recordings = [
   ['your-reality-metal', 'FalKKonE feat. Rena - Your Reality (Intense Symphonic Metal Cover).m4a']
 ];
 const dataFor = key => JSON.parse(fs.readFileSync(path.join(root, 'songs/motion', `${key}.json`)));
+const lyricFor = key => JSON.parse(fs.readFileSync(path.join(root, 'songs/lyrics/aligned', `${key}.json`)));
+const scenes = { OverrideFx: require('../override-fx.js'), RealityMetalFx: require('../your-reality-metal-fx.js'),
+  RealityLetterFx: require('../your-reality-fx.js') };
 function create(fetcher, reduced = false) {
   let requests = 0;
   const context = vm.createContext({
-    window: { matchMedia: () => ({ matches: reduced }), OverrideFx: require('../override-fx.js'), RealityMetalFx: require('../your-reality-metal-fx.js') },
+    window: { matchMedia: () => ({ matches: reduced }), ...scenes },
     AbortController, setTimeout, clearTimeout, console: { warn() {} },
     fetch: async (url, options) => {
       requests++;
       if (fetcher) return fetcher(url, options);
-      return { ok: true, json: async () => dataFor(path.basename(url, '.json')) };
+      const key = path.basename(url, '.json');
+      return { ok: true, json: async () => url.includes('/lyrics/aligned/') ? lyricFor(key) : dataFor(key) };
     }
   });
   vm.runInContext(source, context);
@@ -162,6 +166,78 @@ test('Your Reality: distinct stages, the full supplied sheet, independently time
   assert.notDeepEqual(pictures[0],pictures[1]);
   assert.ok(timelines[1][19].end-timelines[0][19].end>2.5,'Rena sustains the penultimate line');
   assert.equal(W.activeRow(timelines[0],162),-1); assert.equal(W.activeRow(timelines[1],162),19);
+});
+
+test('Your Reality: scenes receive when each word is sung and how long it is, never the words', async () => {
+  const { api } = create();
+  for (const key of ['your-reality', 'your-reality-metal']) {
+    const vocal = api.vocalTimeline(lyricFor(key));
+    assert.equal(vocal.lines.length, 21);
+    const words = vocal.lines.flatMap(line => [...line.words]);
+    assert.equal(words.length, 210);
+    for (const word of words) {
+      assert.deepEqual(Object.keys(word).sort(), ['end', 'n', 'start']);
+      assert.ok(word.end > word.start && word.n >= 1 && word.n <= 14);
+    }
+  }
+  assert.equal(api.vocalTimeline(null), null);
+  assert.equal(api.vocalTimeline({ rows: [{ words: { en: [{ text: 'x', start: 5, end: 4 }] } }] }), null);
+  // A missing lyric file leaves the scene on its beat-timed fallback rather than failing.
+  const { api: offline } = create(async url => url.includes('/lyrics/')
+    ? { ok: false, status: 404 } : { ok: true, json: async () => dataFor(path.basename(url, '.json')) });
+  await offline.activate(offline.track({ path: `songs/${recordings[5][1]}` }));
+  assert.ok(render(offline, 40).length > 100);
+});
+
+test('Your Reality letter: the pen writes only while she sings, rests in the instrumentals, and starts new pages', () => {
+  const { api } = create();
+  const fx = scenes.RealityLetterFx, vocal = api.vocalTimeline(lyricFor('your-reality'));
+  const plan = fx.plan(vocal), ink = t => fx.inkAmount(vocal, t);
+  assert.equal(plan.pages.length, 8);
+  assert.ok(plan.pages.every(page => page.lines.length >= 1 && page.lines.length <= 3));
+  assert.deepEqual(plan.pages.flatMap(page => page.lines.map(line => line.index)), [...Array(21).keys()]);
+  const first = vocal.lines[0].words[0];
+  assert.equal(ink(first.start - .5), 0, 'nothing is written before she sings');
+  assert.ok(ink(first.start + .12) > 0 && ink(first.start + .12) < ink(first.start + .3), 'the first word is written as it is sung');
+  assert.equal(ink(16), ink(18.8), 'the pen waits through the rest between lines');
+  assert.ok(ink(100) > 0 && ink(100) === ink(110), 'the page stays written through the instrumental');
+  assert.ok(ink(31.9) > 0 && ink(32.4) === 0, 'a full page clears before the next line begins');
+  const mid = vocal.lines[3].words[2];
+  assert.equal(fx.penAt(vocal, (mid.start + Math.min(mid.end, mid.start + .15)) / 2).writing, true);
+  const resting = fx.penAt(vocal, 105);
+  assert.equal(resting.writing, false);
+  assert.equal(resting.lift, 1, 'the pen is lifted off the page while the piano plays alone');
+  assert.equal(fx.penAt(vocal, 176).alpha, 0, 'the pen is put away when the letter is finished');
+  assert.ok(Math.abs(plan.sealAt - (vocal.lines[20].end + 2.4)) < 1e-9);
+});
+
+test('Your Reality metal: notes cross the playhead as words are sung; bar lines cross it on downbeats', async () => {
+  const { api } = create();
+  const config = api.track({ path: `songs/${recordings[6][1]}` });
+  await api.activate(config);
+  const vocal = api.vocalTimeline(lyricFor('your-reality-metal'));
+  const fx = scenes.RealityMetalFx;
+  assert.equal(fx.voiceAt(vocal, 102), 0, 'the guitar solo has no singing');
+  const W = 1280, H = 720;
+  const atPlayhead = (calls, name) => calls.filter(([key, x]) => key === name && Math.abs(x - W / 2) < .5);
+  for (const word of [vocal.lines[2].words[1], vocal.lines[9].words[0], vocal.lines[15].words[3]]) {
+    assert.equal(fx.voiceAt(vocal, word.start + .01), 1);
+    assert.ok(atPlayhead(render(api, word.start, W, H), 'ellipse').length >= 1, `a note head at the playhead at ${word.start}`);
+  }
+  const data = dataFor('your-reality-metal'), bar = 4 * 60 / data.bpm;
+  const downbeat = data.beatOffset + 30 * bar;
+  assert.ok(atPlayhead(render(api, downbeat, W, H), 'moveTo').length >= 1, 'a bar line at the playhead on the downbeat');
+});
+
+test('Your Reality: the busiest frames stay within the drawing budget', async () => {
+  const { api } = create();
+  for (const [, name] of recordings.filter(([k]) => k.startsWith('your-reality'))) {
+    await api.activate(api.track({ path: `songs/${name}` }));
+    for (const time of [12, 32.6, 50, 88, 102, 145, 158, 168, 178]) {
+      const count = render(api, time).length;
+      assert.ok(count < 5000, `${name} at ${time}: ${count} drawing calls`);
+    }
+  }
 });
 
 test('cached motion data needs no repeat download when switching back', async () => {

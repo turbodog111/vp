@@ -5,11 +5,13 @@ window.SongMotionFx = (() => {
     'songs/dan salvato feat. jillian ashcraft - your reality': Object.freeze({
       key: 'your-reality', theme: 'your-reality', bpm: 105, beatOffset: .321,
       title: 'Your Reality', data: './songs/motion/your-reality.json',
+      lyrics: './songs/lyrics/aligned/your-reality.json',
       source: 'https://www.youtube.com/watch?v=CAL4WMpBNs0'
     }),
     'songs/falkkone feat. rena - your reality (intense symphonic metal cover)': Object.freeze({
       key: 'your-reality-metal', theme: 'your-reality-metal', bpm: 105.01, beatOffset: .286,
       title: 'Your Reality (Intense Symphonic Metal Cover)', data: './songs/motion/your-reality-metal.json',
+      lyrics: './songs/lyrics/aligned/your-reality-metal.json',
       source: 'https://www.youtube.com/watch?v=7XW6AeZXEWM'
     }),
     'songs/32ki feat. hatsune miku & kasane teto sv - mesmerizer (japanese original)': Object.freeze({
@@ -136,10 +138,14 @@ window.SongMotionFx = (() => {
     controller = request;
     const timeout = setTimeout(() => request.abort(), 8000);
     try {
+      // Word timings are optional: a scene without them falls back to its measured beat.
+      const words = config.lyrics ? fetch(config.lyrics, { signal: request.signal })
+        .then(reply => reply.ok ? reply.json() : null).catch(() => null) : null;
       const response = await fetch(config.data, { signal: request.signal });
       if (!response.ok) throw new Error(`Motion data HTTP ${response.status}`);
       const data = await response.json();
       if (!validData(data)) throw new Error('Invalid motion data');
+      if (config.lyrics) data.vocal = vocalTimeline(await words);
       if (serial !== generation) return;
       cache.set(config.key, data);
       onReady?.();
@@ -150,6 +156,24 @@ window.SongMotionFx = (() => {
       clearTimeout(timeout);
       if (serial === generation) controller = null;
     }
+  }
+
+  /**
+   * When each word is sung, from a synchronized lyric file. Only the times and each word's
+   * letter count are kept; scenes never receive or draw the words.
+   */
+  function vocalTimeline(source) {
+    if (!Array.isArray(source?.rows)) return null;
+    const lines = [];
+    for (const row of source.rows) {
+      const list = row?.words?.en || Object.values(row?.words || {}).find(Array.isArray) || [];
+      const words = list.filter(word => Number.isFinite(word?.start) && Number.isFinite(word?.end) && word.end > word.start)
+        .map(word => Object.freeze({ start: word.start, end: word.end,
+          n: Math.max(1, Math.min(14, String(word.text || '').replace(/[^\p{L}\p{N}]/gu, '').length)) }));
+      if (words.length) lines.push(Object.freeze({ start: words[0].start, end: words[words.length - 1].end, words: Object.freeze(words) }));
+    }
+    lines.sort((a, b) => a.start - b.start);
+    return lines.length ? Object.freeze({ lines: Object.freeze(lines) }) : null;
   }
 
   function sample(data, key, time, fallback = 0) {
@@ -676,112 +700,6 @@ window.SongMotionFx = (() => {
 
   // A written phrase, not a cycling waveform: the nib samples the very same
   // curve as the ink and the finished lines stay on the page until it turns.
-  function inkPoint(u, row, phrase, width, height) {
-    const a = u * TAU * (8 + row % 2);
-    const group = .28 + .72 * Math.sin(u * Math.PI * 3) ** 2;
-    return [width * (.16 + .48 * u + .008 * Math.sin(a)),
-      height * (.72 + row * .059 - group * (.009 * Math.sin(a) +
-        .023 * Math.max(0, Math.cos(a + phrase * .7)) ** 4))];
-  }
-
-  function drawLetter(ctx, w, h, m, reduced) {
-    const beats = reduced ? 12 : m.beats, time = beats * m.period;
-    const close = reduced ? 0 : ease((time-163)/5);
-    const writing = Math.min(beats, 165 / m.period);
-    const phrase = Math.floor(writing / 32);
-    const row = Math.floor(writing / 8) % 4;
-    const step = (writing % 8) / 8;
-    const progress = reduced ? .72 : ease(step / .91);
-    const pink = '#ae4c70', ink = '#39404f';
-    const desk = ctx.createLinearGradient(0, 0, w, h);
-    desk.addColorStop(0, '#e8dacf'); desk.addColorStop(.6, '#ead2c4'); desk.addColorStop(1, '#b9c6bb');
-    ctx.fillStyle = desk; ctx.fillRect(0, 0, w, h);
-
-    const pw = w*.94, ph = h*.86, unit = Math.min(pw / 510, ph / 350);
-    const lightShift = Math.sin(beats*Math.PI/96)*.035 + close*.06;
-    for (let i=0;i<3;i++) {
-      const x=w*(i*.38+lightShift);
-      polygon(ctx, [[x,0],[x+w*.23,0],[x-w*.11,h],[x-w*.37,h]], [255,245,218], .36);
-    }
-    ctx.save(); ctx.translate(w * .52, h * .53);
-    ctx.rotate(-.036); ctx.translate(-pw / 2, -ph / 2);
-    ctx.fillStyle = '#cbaca8'; ctx.fillRect(4*unit, 8*unit, pw, ph);
-    ctx.fillStyle = '#f9eee5'; ctx.fillRect(-3*unit, 4*unit, pw, ph);
-    const paper=ctx.createLinearGradient(0,0,pw,ph);
-    paper.addColorStop(0,'#fffaf0'); paper.addColorStop(.57,'#f7f0df');
-    paper.addColorStop(1,color(blend([232,218,206],[216,217,204],close)));
-    ctx.fillStyle = paper; ctx.fillRect(0, 0, pw, ph);
-    ctx.beginPath();
-    for (let i = 0; i < 14; i++) {
-      const y = ph * (.13 + .059 * i);
-      ctx.moveTo(0, y); ctx.lineTo(pw, y);
-    }
-    ctx.strokeStyle = '#e0dfd3'; ctx.lineWidth = Math.max(.7, unit * .5); ctx.stroke();
-    ctx.fillStyle = '#dfa0ae'; ctx.fillRect(pw * .091, 0, unit, ph);
-    // Folded ribbon bookmark with a swallowtail cut.
-    ctx.beginPath(); ctx.moveTo(pw*.79, 0); ctx.lineTo(pw*.86, 0);
-    ctx.lineTo(pw*.86, ph*.19); ctx.lineTo(pw*.825, ph*.15); ctx.lineTo(pw*.79, ph*.19);
-    ctx.closePath(); ctx.fillStyle = pink; ctx.fill();
-
-    // A pressed sprig stitched into the sheet, outside the central reading area.
-    ctx.save(); ctx.translate(pw*.86,ph*.24); ctx.scale(unit,unit);
-    ctx.rotate(-.25+Math.sin(beats*Math.PI/48)*.012);
-    ctx.beginPath(); ctx.moveTo(0,0); ctx.bezierCurveTo(9,-7,20,-29,23,-51);
-    ctx.strokeStyle='#718373'; ctx.lineWidth=1.35; ctx.stroke();
-    for (let leaf=0;leaf<4;leaf++) {
-      const x=5+leaf*4.3, y=-6-leaf*8, side=leaf%2 ? 1 : -1;
-      ctx.beginPath(); ctx.moveTo(x,y);
-      ctx.quadraticCurveTo(x+side*12,y-1,x+side*13,y-12);
-      ctx.quadraticCurveTo(x+side*5,y-12,x,y); ctx.fillStyle=leaf%2 ? '#98a393' : '#748c7f'; ctx.fill();
-    }
-    for (let j=0;j<5;j++) {
-      const a=j*TAU/5; ctx.beginPath(); ctx.ellipse(23+4*Math.cos(a),-51+4*Math.sin(a),4.5,2.6,a,0,TAU);
-      ctx.fillStyle='#b97789'; ctx.fill();
-    }
-    ctx.beginPath(); ctx.arc(23,-51,2.4,0,TAU); ctx.fillStyle='#d7ad65'; ctx.fill(); ctx.restore();
-
-    const turn = reduced ? 0 : Math.sin(Math.PI*clamp((step-.82)/.18))**2*(1-close);
-    const fold = Math.min(pw,ph)*(.048+.033*turn+.018*close);
-    polygon(ctx, [[pw-fold,ph],[pw,ph-fold],[pw,ph]], [200,186,168], .64);
-    polygon(ctx, [[pw-fold,ph],[pw,ph-fold],[pw-fold*.86,ph-fold*.79]], [255,252,241], .98);
-    for (let r = 0; r <= row; r++) {
-      const limit = r === row ? progress : 1;
-      ctx.beginPath();
-      const n = Math.max(1, Math.ceil(limit * 168));
-      for (let i = 0; i <= n; i++) {
-        const [x,y] = inkPoint(i / n * limit, r, phrase, pw, ph);
-        if (i) ctx.lineTo(x,y); else ctx.moveTo(x,y);
-      }
-      ctx.strokeStyle = ink; ctx.lineWidth = 1.15 * unit; ctx.stroke();
-    }
-    const [nx, ny] = inkPoint(progress, row, phrase, pw, ph);
-    ctx.save(); ctx.translate(nx+close*pw*.034, ny-close*ph*.025); ctx.scale(unit, unit); ctx.rotate(.68+close*.48);
-    ctx.fillStyle = '#38334a'; ctx.beginPath();
-    ctx.moveTo(-4,-16); ctx.lineTo(-5,-69); ctx.quadraticCurveTo(0,-79,5,-69);
-    ctx.lineTo(4,-16); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = '#cea45e'; ctx.fillRect(-4.5,-22,9,3);
-    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-4.5,-11); ctx.lineTo(-3,-16);
-    ctx.lineTo(3,-16); ctx.lineTo(4.5,-11); ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = ink; ctx.lineWidth = .7; ctx.beginPath();
-    ctx.moveTo(0,-8); ctx.lineTo(0,0); ctx.stroke(); ctx.restore();
-    ctx.restore();
-
-    // A short keyboard along the lower left leaves the transport unobstructed.
-    const key = Math.min(w * .053, h * .066), kh = key * 2.45;
-    ctx.save(); ctx.translate(w * .035, h + 2); ctx.rotate(-.038);
-    ctx.fillStyle = ink; ctx.fillRect(-2, -kh-3, key*14+4, kh+key);
-    const melody = [0,4,2,6,5,3,1,4];
-    for (let k=0; k<14; k++) {
-      const lit = !reduced && k%7 === melody[Math.floor(beats)%8];
-      ctx.fillStyle = lit ? color(blend([255,248,232], [225,144,161], m.quiet * (.3 + .7 * m.pulse))) : '#fff8e8';
-      ctx.fillRect(k*key+1, -kh, key-1, kh+key);
-    }
-    ctx.fillStyle = ink;
-    for (let k=0; k<13; k++) if (k%7 !== 2 && k%7 !== 6)
-      ctx.fillRect((k+.73)*key, -kh, key*.55, kh*.57);
-    ctx.restore();
-  }
-
   function draw(ctx, w, h, state) {
     if (!active || w <= 0 || h <= 0) return;
     const time = Math.max(0, Number(state.time) || 0);
@@ -794,11 +712,12 @@ window.SongMotionFx = (() => {
     const data = cache.get(active.key) || null;
     // Music-video scenes read the recording's measured data directly.
     const video = { ...m, time, data, variant: active.variant || active.key, reducedMotion: reduced,
-      sections: data?.sections || [], structure: data?.structure || [], duration: data?.duration || 0 };
+      sections: data?.sections || [], structure: data?.structure || [], duration: data?.duration || 0,
+      vocal: data?.vocal || null };
     const in3d = active.theme === 'mesmerizer' && drawMesmerizer3d(time, data, reduced);
     pageBody()?.classList.toggle('motion-3d-active', in3d);
     if (in3d) { ctx.restore(); return; }
-    if (active.theme === 'your-reality') drawLetter(ctx, w, h, m, reduced);
+    if (active.theme === 'your-reality') window.RealityLetterFx.draw(ctx, w, h, video);
     else if (active.theme === 'your-reality-metal') window.RealityMetalFx.draw(ctx, w, h, video);
     else if (active.theme === 'mesmerizer') window.MesmerizerFx?.draw(ctx, w, h, video);
     else if (active.theme === 'hunters-free') window.FreeFx?.draw(ctx, w, h, video);
@@ -818,5 +737,5 @@ window.SongMotionFx = (() => {
     ctx.restore();
   }
 
-  return Object.freeze({ track, activate, draw, motionAt });
+  return Object.freeze({ track, activate, draw, motionAt, vocalTimeline });
 })();
