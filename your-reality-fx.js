@@ -78,7 +78,9 @@
     });
     const last = words[words.length - 1];
     const lastSection = sections[sections.length - 1];
-    p = { lines, pages, words, widest, last, finale: lastSection[0].start, sealAt: last.end + 2.4 };
+    // Leave room for the stamp when a cover holds its last word almost to the end.
+    const goodbye = Number.isFinite(vocal.duration) ? Math.min(2.4, Math.max(0, vocal.duration - last.end) * .55) : 2.4;
+    p = { lines, pages, words, widest, last, finale: lastSection[0].start, goodbye, sealAt: last.end + goodbye };
     plans.set(vocal, p);
     return p;
   }
@@ -98,7 +100,7 @@
         }
         lines.push({ start: words[0].start, end: words[6].end, words });
       }
-      vocal = { lines };
+      vocal = { lines, duration };
       synthetic.set(key, vocal);
     }
     return vocal;
@@ -248,7 +250,7 @@
     const next = words[i + 1];
     if (!next) {
       // The letter is finished: the pen is lifted and put away past the top right corner.
-      const away = ease((t - word.end - .6) / 1.8);
+      const away = ease((t - word.end - P.goodbye * .25) / Math.max(.001, P.goodbye * .75));
       return { x: mix(ex, g.pw * 1.06, away), y: mix(ey, g.ph * .18, away), lift: Math.min(1, away * 3), alpha: 1 - away, writing: false };
     }
     const to = startOf(next), gap = next.start - word.end;

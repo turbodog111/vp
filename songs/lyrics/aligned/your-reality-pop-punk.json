@@ -1,0 +1,1277 @@
+{
+  "schemaVersion": 1,
+  "recording": "songs/The Juicebox feat. Vannamelon - Your Reality (Pop Punk Cover).m4a",
+  "language": "en",
+  "duration": 162.3075,
+  "preview": false,
+  "source": "Lyrics supplied by Joshua. The cover retains the spoken opening without singing captions.",
+  "rows": [
+    {
+      "id": "line-1",
+      "start": 19.24,
+      "en": "Every day, I imagine a future where I can be with you",
+      "words": {
+        "en": [
+          {
+            "text": "Every",
+            "start": 19.24,
+            "end": 19.602
+          },
+          {
+            "text": "day,",
+            "start": 19.602,
+            "end": 20.385
+          },
+          {
+            "text": "I",
+            "start": 20.385,
+            "end": 20.583
+          },
+          {
+            "text": "imagine",
+            "start": 20.583,
+            "end": 21.043
+          },
+          {
+            "text": "a",
+            "start": 21.043,
+            "end": 21.183
+          },
+          {
+            "text": "future",
+            "start": 21.183,
+            "end": 21.585
+          },
+          {
+            "text": "where",
+            "start": 21.585,
+            "end": 22.086
+          },
+          {
+            "text": "I",
+            "start": 22.086,
+            "end": 22.394
+          },
+          {
+            "text": "can",
+            "start": 22.394,
+            "end": 22.651
+          },
+          {
+            "text": "be",
+            "start": 22.651,
+            "end": 22.931
+          },
+          {
+            "text": "with",
+            "start": 22.931,
+            "end": 23.222
+          },
+          {
+            "text": "you",
+            "start": 23.222,
+            "end": 23.88
+          }
+        ]
+      },
+      "end": 23.88
+    },
+    {
+      "id": "line-2",
+      "start": 27.22,
+      "en": "In my hand is a pen that will write a poem of me and you",
+      "words": {
+        "en": [
+          {
+            "text": "In",
+            "start": 27.22,
+            "end": 27.401
+          },
+          {
+            "text": "my",
+            "start": 27.401,
+            "end": 27.694
+          },
+          {
+            "text": "hand",
+            "start": 27.694,
+            "end": 28.33
+          },
+          {
+            "text": "is",
+            "start": 28.33,
+            "end": 28.586
+          },
+          {
+            "text": "a",
+            "start": 28.586,
+            "end": 28.706
+          },
+          {
+            "text": "pen",
+            "start": 28.706,
+            "end": 28.935
+          },
+          {
+            "text": "that",
+            "start": 28.935,
+            "end": 29.055
+          },
+          {
+            "text": "will",
+            "start": 29.055,
+            "end": 29.139
+          },
+          {
+            "text": "write",
+            "start": 29.139,
+            "end": 29.427
+          },
+          {
+            "text": "a",
+            "start": 29.427,
+            "end": 29.606
+          },
+          {
+            "text": "poem",
+            "start": 29.606,
+            "end": 30.318
+          },
+          {
+            "text": "of",
+            "start": 30.318,
+            "end": 30.681
+          },
+          {
+            "text": "me",
+            "start": 30.681,
+            "end": 30.994
+          },
+          {
+            "text": "and",
+            "start": 30.994,
+            "end": 31.221
+          },
+          {
+            "text": "you",
+            "start": 31.221,
+            "end": 31.74
+          }
+        ]
+      },
+      "end": 31.74
+    },
+    {
+      "id": "line-3",
+      "start": 34.915,
+      "en": "The ink flows down into a dark puddle",
+      "words": {
+        "en": [
+          {
+            "text": "The",
+            "start": 34.915,
+            "end": 35.086
+          },
+          {
+            "text": "ink",
+            "start": 35.086,
+            "end": 35.375
+          },
+          {
+            "text": "flows",
+            "start": 35.375,
+            "end": 35.914
+          },
+          {
+            "text": "down",
+            "start": 35.914,
+            "end": 36.471
+          },
+          {
+            "text": "into",
+            "start": 36.471,
+            "end": 36.877
+          },
+          {
+            "text": "a",
+            "start": 36.877,
+            "end": 37.058
+          },
+          {
+            "text": "dark",
+            "start": 37.058,
+            "end": 37.402
+          },
+          {
+            "text": "puddle",
+            "start": 37.402,
+            "end": 38.84
+          }
+        ]
+      },
+      "end": 38.84
+    },
+    {
+      "id": "line-4",
+      "start": 38.96,
+      "en": "Just move your hand, write the way into his heart",
+      "words": {
+        "en": [
+          {
+            "text": "Just",
+            "start": 38.96,
+            "end": 39.171
+          },
+          {
+            "text": "move",
+            "start": 39.171,
+            "end": 39.374
+          },
+          {
+            "text": "your",
+            "start": 39.374,
+            "end": 39.551
+          },
+          {
+            "text": "hand,",
+            "start": 39.551,
+            "end": 40.11
+          },
+          {
+            "text": "write",
+            "start": 40.11,
+            "end": 40.465
+          },
+          {
+            "text": "the",
+            "start": 40.465,
+            "end": 40.565
+          },
+          {
+            "text": "way",
+            "start": 40.565,
+            "end": 40.883
+          },
+          {
+            "text": "into",
+            "start": 40.883,
+            "end": 41.307
+          },
+          {
+            "text": "his",
+            "start": 41.307,
+            "end": 41.522
+          },
+          {
+            "text": "heart",
+            "start": 41.522,
+            "end": 42.28
+          }
+        ]
+      },
+      "end": 42.28
+    },
+    {
+      "id": "line-5",
+      "start": 42.93,
+      "en": "But in this world of infinite choices",
+      "words": {
+        "en": [
+          {
+            "text": "But",
+            "start": 42.93,
+            "end": 43.17
+          },
+          {
+            "text": "in",
+            "start": 43.17,
+            "end": 43.415
+          },
+          {
+            "text": "this",
+            "start": 43.415,
+            "end": 43.852
+          },
+          {
+            "text": "world",
+            "start": 43.852,
+            "end": 44.451
+          },
+          {
+            "text": "of",
+            "start": 44.451,
+            "end": 44.767
+          },
+          {
+            "text": "infinite",
+            "start": 44.767,
+            "end": 45.172
+          },
+          {
+            "text": "choices",
+            "start": 45.172,
+            "end": 46.83
+          }
+        ]
+      },
+      "end": 46.83
+    },
+    {
+      "id": "line-6",
+      "start": 46.97,
+      "en": "What will it take just to find that special day?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 46.97,
+            "end": 47.166
+          },
+          {
+            "text": "will",
+            "start": 47.166,
+            "end": 47.412
+          },
+          {
+            "text": "it",
+            "start": 47.412,
+            "end": 47.575
+          },
+          {
+            "text": "take",
+            "start": 47.575,
+            "end": 48.073
+          },
+          {
+            "text": "just",
+            "start": 48.073,
+            "end": 48.506
+          },
+          {
+            "text": "to",
+            "start": 48.506,
+            "end": 48.616
+          },
+          {
+            "text": "find",
+            "start": 48.616,
+            "end": 48.931
+          },
+          {
+            "text": "that",
+            "start": 48.931,
+            "end": 49.144
+          },
+          {
+            "text": "special",
+            "start": 49.144,
+            "end": 49.486
+          },
+          {
+            "text": "day?",
+            "start": 49.486,
+            "end": 50.4
+          }
+        ]
+      },
+      "end": 50.4
+    },
+    {
+      "id": "line-7",
+      "start": 50.97,
+      "en": "What will it take just to find that special day?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 50.97,
+            "end": 51.153
+          },
+          {
+            "text": "will",
+            "start": 51.153,
+            "end": 51.433
+          },
+          {
+            "text": "it",
+            "start": 51.433,
+            "end": 51.582
+          },
+          {
+            "text": "take",
+            "start": 51.582,
+            "end": 52.078
+          },
+          {
+            "text": "just",
+            "start": 52.078,
+            "end": 52.432
+          },
+          {
+            "text": "to",
+            "start": 52.432,
+            "end": 52.591
+          },
+          {
+            "text": "find",
+            "start": 52.591,
+            "end": 53.38
+          },
+          {
+            "text": "that",
+            "start": 53.905,
+            "end": 54.076
+          },
+          {
+            "text": "special",
+            "start": 54.076,
+            "end": 54.472
+          },
+          {
+            "text": "day?",
+            "start": 54.472,
+            "end": 55.35
+          }
+        ]
+      },
+      "end": 55.35
+    },
+    {
+      "id": "line-8",
+      "start": 63.22,
+      "en": "Have I found everybody a fun assignment to do today?",
+      "words": {
+        "en": [
+          {
+            "text": "Have",
+            "start": 63.22,
+            "end": 63.482
+          },
+          {
+            "text": "I",
+            "start": 63.482,
+            "end": 63.651
+          },
+          {
+            "text": "found",
+            "start": 63.651,
+            "end": 64.337
+          },
+          {
+            "text": "everybody",
+            "start": 64.337,
+            "end": 64.938
+          },
+          {
+            "text": "a",
+            "start": 64.938,
+            "end": 65.185
+          },
+          {
+            "text": "fun",
+            "start": 65.185,
+            "end": 65.479
+          },
+          {
+            "text": "assignment",
+            "start": 65.479,
+            "end": 66.477
+          },
+          {
+            "text": "to",
+            "start": 66.477,
+            "end": 66.8
+          },
+          {
+            "text": "do",
+            "start": 66.8,
+            "end": 66.978
+          },
+          {
+            "text": "today?",
+            "start": 66.978,
+            "end": 68.0
+          }
+        ]
+      },
+      "end": 68.0
+    },
+    {
+      "id": "line-9",
+      "start": 71.15,
+      "en": "When you're here, everything that we do is fun for them anyway",
+      "words": {
+        "en": [
+          {
+            "text": "When",
+            "start": 71.15,
+            "end": 71.434
+          },
+          {
+            "text": "you're",
+            "start": 71.434,
+            "end": 71.695
+          },
+          {
+            "text": "here,",
+            "start": 71.695,
+            "end": 72.455
+          },
+          {
+            "text": "everything",
+            "start": 72.455,
+            "end": 72.868
+          },
+          {
+            "text": "that",
+            "start": 72.868,
+            "end": 73.058
+          },
+          {
+            "text": "we",
+            "start": 73.058,
+            "end": 73.186
+          },
+          {
+            "text": "do",
+            "start": 73.186,
+            "end": 73.448
+          },
+          {
+            "text": "is",
+            "start": 73.448,
+            "end": 73.654
+          },
+          {
+            "text": "fun",
+            "start": 73.654,
+            "end": 74.096
+          },
+          {
+            "text": "for",
+            "start": 74.096,
+            "end": 74.426
+          },
+          {
+            "text": "them",
+            "start": 74.426,
+            "end": 74.808
+          },
+          {
+            "text": "anyway",
+            "start": 74.808,
+            "end": 75.74
+          }
+        ]
+      },
+      "end": 75.74
+    },
+    {
+      "id": "line-10",
+      "start": 78.905,
+      "en": "When I can't even read my own feelings",
+      "words": {
+        "en": [
+          {
+            "text": "When",
+            "start": 78.905,
+            "end": 79.149
+          },
+          {
+            "text": "I",
+            "start": 79.149,
+            "end": 79.381
+          },
+          {
+            "text": "can't",
+            "start": 79.381,
+            "end": 80.114
+          },
+          {
+            "text": "even",
+            "start": 80.114,
+            "end": 80.612
+          },
+          {
+            "text": "read",
+            "start": 80.612,
+            "end": 80.919
+          },
+          {
+            "text": "my",
+            "start": 80.919,
+            "end": 81.144
+          },
+          {
+            "text": "own",
+            "start": 81.144,
+            "end": 81.411
+          },
+          {
+            "text": "feelings",
+            "start": 81.411,
+            "end": 82.75
+          }
+        ]
+      },
+      "end": 82.75
+    },
+    {
+      "id": "line-11",
+      "start": 82.96,
+      "en": "What good are words when a smile says it all?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 82.96,
+            "end": 83.171
+          },
+          {
+            "text": "good",
+            "start": 83.171,
+            "end": 83.381
+          },
+          {
+            "text": "are",
+            "start": 83.381,
+            "end": 83.55
+          },
+          {
+            "text": "words",
+            "start": 83.55,
+            "end": 84.153
+          },
+          {
+            "text": "when",
+            "start": 84.153,
+            "end": 84.384
+          },
+          {
+            "text": "a",
+            "start": 84.384,
+            "end": 84.499
+          },
+          {
+            "text": "smile",
+            "start": 84.499,
+            "end": 85.084
+          },
+          {
+            "text": "says",
+            "start": 85.084,
+            "end": 85.384
+          },
+          {
+            "text": "it",
+            "start": 85.384,
+            "end": 85.681
+          },
+          {
+            "text": "all?",
+            "start": 85.681,
+            "end": 86.31
+          }
+        ]
+      },
+      "end": 86.31
+    },
+    {
+      "id": "line-12",
+      "start": 86.93,
+      "en": "And if this world won't write me an ending",
+      "words": {
+        "en": [
+          {
+            "text": "And",
+            "start": 86.93,
+            "end": 87.241
+          },
+          {
+            "text": "if",
+            "start": 87.241,
+            "end": 87.441
+          },
+          {
+            "text": "this",
+            "start": 87.441,
+            "end": 87.883
+          },
+          {
+            "text": "world",
+            "start": 87.883,
+            "end": 88.39
+          },
+          {
+            "text": "won't",
+            "start": 88.39,
+            "end": 88.695
+          },
+          {
+            "text": "write",
+            "start": 88.695,
+            "end": 88.942
+          },
+          {
+            "text": "me",
+            "start": 88.942,
+            "end": 89.175
+          },
+          {
+            "text": "an",
+            "start": 89.175,
+            "end": 89.553
+          },
+          {
+            "text": "ending",
+            "start": 89.553,
+            "end": 90.76
+          }
+        ]
+      },
+      "end": 90.76
+    },
+    {
+      "id": "line-13",
+      "start": 90.96,
+      "en": "What will it take just for me to have it all?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 90.96,
+            "end": 91.143
+          },
+          {
+            "text": "will",
+            "start": 91.143,
+            "end": 91.423
+          },
+          {
+            "text": "it",
+            "start": 91.423,
+            "end": 91.529
+          },
+          {
+            "text": "take",
+            "start": 91.529,
+            "end": 92.05
+          },
+          {
+            "text": "just",
+            "start": 92.05,
+            "end": 92.417
+          },
+          {
+            "text": "for",
+            "start": 92.417,
+            "end": 92.659
+          },
+          {
+            "text": "me",
+            "start": 92.659,
+            "end": 92.941
+          },
+          {
+            "text": "to",
+            "start": 92.941,
+            "end": 93.135
+          },
+          {
+            "text": "have",
+            "start": 93.135,
+            "end": 93.493
+          },
+          {
+            "text": "it",
+            "start": 93.493,
+            "end": 93.761
+          },
+          {
+            "text": "all?",
+            "start": 93.761,
+            "end": 94.7
+          }
+        ]
+      },
+      "end": 94.7
+    },
+    {
+      "id": "line-14",
+      "start": 111.1,
+      "en": "Does my pen only write bitter words for those who are dear to me?",
+      "words": {
+        "en": [
+          {
+            "text": "Does",
+            "start": 111.1,
+            "end": 111.456
+          },
+          {
+            "text": "my",
+            "start": 111.456,
+            "end": 111.653
+          },
+          {
+            "text": "pen",
+            "start": 111.653,
+            "end": 112.412
+          },
+          {
+            "text": "only",
+            "start": 112.412,
+            "end": 112.679
+          },
+          {
+            "text": "write",
+            "start": 112.679,
+            "end": 112.936
+          },
+          {
+            "text": "bitter",
+            "start": 112.936,
+            "end": 113.176
+          },
+          {
+            "text": "words",
+            "start": 113.176,
+            "end": 113.428
+          },
+          {
+            "text": "for",
+            "start": 113.428,
+            "end": 113.656
+          },
+          {
+            "text": "those",
+            "start": 113.656,
+            "end": 114.176
+          },
+          {
+            "text": "who",
+            "start": 114.176,
+            "end": 114.456
+          },
+          {
+            "text": "are",
+            "start": 114.456,
+            "end": 114.65
+          },
+          {
+            "text": "dear",
+            "start": 114.65,
+            "end": 114.925
+          },
+          {
+            "text": "to",
+            "start": 114.925,
+            "end": 115.205
+          },
+          {
+            "text": "me?",
+            "start": 115.205,
+            "end": 115.49
+          }
+        ]
+      },
+      "end": 115.49
+    },
+    {
+      "id": "line-15",
+      "start": 119.22,
+      "en": "Is it love if I take you, or is it love if I set you free?",
+      "words": {
+        "en": [
+          {
+            "text": "Is",
+            "start": 119.22,
+            "end": 119.436
+          },
+          {
+            "text": "it",
+            "start": 119.436,
+            "end": 119.694
+          },
+          {
+            "text": "love",
+            "start": 119.694,
+            "end": 120.333
+          },
+          {
+            "text": "if",
+            "start": 120.333,
+            "end": 120.586
+          },
+          {
+            "text": "I",
+            "start": 120.586,
+            "end": 120.677
+          },
+          {
+            "text": "take",
+            "start": 120.677,
+            "end": 120.943
+          },
+          {
+            "text": "you,",
+            "start": 120.943,
+            "end": 121.126
+          },
+          {
+            "text": "or",
+            "start": 121.126,
+            "end": 121.294
+          },
+          {
+            "text": "is",
+            "start": 121.294,
+            "end": 121.506
+          },
+          {
+            "text": "it",
+            "start": 121.506,
+            "end": 121.657
+          },
+          {
+            "text": "love",
+            "start": 121.657,
+            "end": 122.129
+          },
+          {
+            "text": "if",
+            "start": 122.129,
+            "end": 122.474
+          },
+          {
+            "text": "I",
+            "start": 122.474,
+            "end": 122.634
+          },
+          {
+            "text": "set",
+            "start": 122.634,
+            "end": 122.9
+          },
+          {
+            "text": "you",
+            "start": 122.9,
+            "end": 123.111
+          },
+          {
+            "text": "free?",
+            "start": 123.111,
+            "end": 123.95
+          }
+        ]
+      },
+      "end": 123.95
+    },
+    {
+      "id": "line-16",
+      "start": 130.99,
+      "en": "The ink flows down into a dark puddle",
+      "words": {
+        "en": [
+          {
+            "text": "The",
+            "start": 130.99,
+            "end": 131.175
+          },
+          {
+            "text": "ink",
+            "start": 131.175,
+            "end": 131.408
+          },
+          {
+            "text": "flows",
+            "start": 131.408,
+            "end": 131.928
+          },
+          {
+            "text": "down",
+            "start": 131.928,
+            "end": 132.45
+          },
+          {
+            "text": "into",
+            "start": 132.45,
+            "end": 132.809
+          },
+          {
+            "text": "a",
+            "start": 132.809,
+            "end": 133.061
+          },
+          {
+            "text": "dark",
+            "start": 133.061,
+            "end": 133.414
+          },
+          {
+            "text": "puddle",
+            "start": 133.414,
+            "end": 134.73
+          }
+        ]
+      },
+      "end": 134.73
+    },
+    {
+      "id": "line-17",
+      "start": 134.94,
+      "en": "How can I write love into reality?",
+      "words": {
+        "en": [
+          {
+            "text": "How",
+            "start": 134.94,
+            "end": 135.108
+          },
+          {
+            "text": "can",
+            "start": 135.108,
+            "end": 135.357
+          },
+          {
+            "text": "I",
+            "start": 135.357,
+            "end": 135.506
+          },
+          {
+            "text": "write",
+            "start": 135.506,
+            "end": 135.989
+          },
+          {
+            "text": "love",
+            "start": 135.989,
+            "end": 136.399
+          },
+          {
+            "text": "into",
+            "start": 136.399,
+            "end": 136.815
+          },
+          {
+            "text": "reality?",
+            "start": 136.815,
+            "end": 138.29
+          }
+        ]
+      },
+      "end": 138.29
+    },
+    {
+      "id": "line-18",
+      "start": 138.95,
+      "en": "If I can't hear the sound of your heartbeat",
+      "words": {
+        "en": [
+          {
+            "text": "If",
+            "start": 138.95,
+            "end": 139.202
+          },
+          {
+            "text": "I",
+            "start": 139.202,
+            "end": 139.417
+          },
+          {
+            "text": "can't",
+            "start": 139.417,
+            "end": 139.963
+          },
+          {
+            "text": "hear",
+            "start": 139.963,
+            "end": 140.394
+          },
+          {
+            "text": "the",
+            "start": 140.394,
+            "end": 140.62
+          },
+          {
+            "text": "sound",
+            "start": 140.62,
+            "end": 140.937
+          },
+          {
+            "text": "of",
+            "start": 140.937,
+            "end": 141.083
+          },
+          {
+            "text": "your",
+            "start": 141.083,
+            "end": 141.405
+          },
+          {
+            "text": "heartbeat",
+            "start": 141.405,
+            "end": 142.66
+          }
+        ]
+      },
+      "end": 142.66
+    },
+    {
+      "id": "line-19",
+      "start": 142.94,
+      "en": "What do you call love in your reality?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 142.94,
+            "end": 143.154
+          },
+          {
+            "text": "do",
+            "start": 143.154,
+            "end": 143.357
+          },
+          {
+            "text": "you",
+            "start": 143.357,
+            "end": 143.523
+          },
+          {
+            "text": "call",
+            "start": 143.523,
+            "end": 143.961
+          },
+          {
+            "text": "love",
+            "start": 143.961,
+            "end": 144.474
+          },
+          {
+            "text": "in",
+            "start": 144.474,
+            "end": 144.615
+          },
+          {
+            "text": "your",
+            "start": 144.615,
+            "end": 144.937
+          },
+          {
+            "text": "reality?",
+            "start": 144.937,
+            "end": 146.0
+          }
+        ]
+      },
+      "end": 146.0
+    },
+    {
+      "id": "line-20",
+      "start": 146.22,
+      "en": "And in your reality, if I don't know how to love you",
+      "words": {
+        "en": [
+          {
+            "text": "And",
+            "start": 146.22,
+            "end": 146.461
+          },
+          {
+            "text": "in",
+            "start": 146.461,
+            "end": 146.589
+          },
+          {
+            "text": "your",
+            "start": 146.589,
+            "end": 146.922
+          },
+          {
+            "text": "reality,",
+            "start": 146.922,
+            "end": 148.022
+          },
+          {
+            "text": "if",
+            "start": 148.022,
+            "end": 148.488
+          },
+          {
+            "text": "I",
+            "start": 148.488,
+            "end": 148.674
+          },
+          {
+            "text": "don't",
+            "start": 148.674,
+            "end": 149.027
+          },
+          {
+            "text": "know",
+            "start": 149.027,
+            "end": 149.135
+          },
+          {
+            "text": "how",
+            "start": 149.135,
+            "end": 149.312
+          },
+          {
+            "text": "to",
+            "start": 149.312,
+            "end": 149.474
+          },
+          {
+            "text": "love",
+            "start": 149.474,
+            "end": 149.929
+          },
+          {
+            "text": "you",
+            "start": 149.929,
+            "end": 151.83
+          }
+        ]
+      },
+      "end": 151.83
+    },
+    {
+      "id": "line-21",
+      "start": 152.51,
+      "en": "I'll leave you be",
+      "words": {
+        "en": [
+          {
+            "text": "I'll",
+            "start": 152.51,
+            "end": 152.709
+          },
+          {
+            "text": "leave",
+            "start": 152.709,
+            "end": 153.166
+          },
+          {
+            "text": "you",
+            "start": 153.166,
+            "end": 153.529
+          },
+          {
+            "text": "be",
+            "start": 153.529,
+            "end": 159.71
+          }
+        ]
+      },
+      "end": 159.71
+    }
+  ],
+  "alignment": {
+    "recording": "songs/The Juicebox feat. Vannamelon - Your Reality (Pop Punk Cover).m4a",
+    "audioSha256": "94deac5c9e2943e0bf19265d05d581574ab3a75fef913e16cc4458e37aec445e",
+    "method": "Independent Whisper transcriptions of the mix and the htdemucs vocal stem; phrase-constrained wav2vec2 CTC on the stem, with word boundaries cross-checked against both passes and sustained releases measured on the vocal waveform.",
+    "status": "published",
+    "approved": false
+  }
+}

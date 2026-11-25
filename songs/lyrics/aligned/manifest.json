@@ -75,5 +75,12 @@
     "lines": 21,
     "status": "published",
     "audioSha256": "aede4ea8c77b6afa37f4e705eeb2d9d62caf90c432ad602985dd742b32e5716a"
+  },
+  {
+    "recording": "songs/The Juicebox feat. Vannamelon - Your Reality (Pop Punk Cover).m4a",
+    "file": "your-reality-pop-punk.json",
+    "lines": 21,
+    "status": "published",
+    "audioSha256": "94deac5c9e2943e0bf19265d05d581574ab3a75fef913e16cc4458e37aec445e"
   }
 ]

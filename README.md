@@ -75,12 +75,14 @@ are fitted to the selected recording. Visuals use the native playback clock,
 bounded canvas drawing, the existing frame limiter, and reduced-motion settings.
 These are energy-driven scenes, not guessed lyric/chorus timelines.
 
-The two Your Reality recordings share that motion data path but draw their own 2D
-scenes: `your-reality-fx.js` (a letter written by a window) and
-`your-reality-metal-fx.js` (a concert hall). Both also read the recording's synchronized
+The original Your Reality and The Juicebox feat. Vannamelon's pop-punk cover share
+`your-reality-fx.js` (a letter written by a window); FalKKonE feat. Rena uses
+`your-reality-metal-fx.js` (a concert hall). Each recording has its own measured
+beat and amplitude data. The scenes also read the recording's synchronized
 lyric file in `songs/lyrics/aligned/`, keeping only when each word is sung and how many
 letters it has; the words themselves never reach the scene. In the letter, the pen writes
-one handwritten word for each sung word and rests while the piano plays alone. A full page
+one handwritten word for each sung word and rests when nobody is singing. The pop-punk
+cover's spoken intro is preserved without starting the letter. A full page
 breaks into drifting pixels before the next is written, the window light moves from
 afternoon to dusk, and the letter is sealed after the last line. In the hall, a score
 scrolls past a playhead: a note crosses it as each word is sung, and a bar line crosses

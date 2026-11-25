@@ -8,6 +8,12 @@ window.SongMotionFx = (() => {
       lyrics: './songs/lyrics/aligned/your-reality.json',
       source: 'https://www.youtube.com/watch?v=CAL4WMpBNs0'
     }),
+    'songs/the juicebox feat. vannamelon - your reality (pop punk cover)': Object.freeze({
+      key: 'your-reality-pop-punk', theme: 'your-reality', bpm: 120.01, beatOffset: .016,
+      title: 'Your Reality (Pop Punk Cover)', data: './songs/motion/your-reality-pop-punk.json',
+      lyrics: './songs/lyrics/aligned/your-reality-pop-punk.json',
+      source: 'https://www.youtube.com/watch?v=JGwhp0PKcX0'
+    }),
     'songs/falkkone feat. rena - your reality (intense symphonic metal cover)': Object.freeze({
       key: 'your-reality-metal', theme: 'your-reality-metal', bpm: 105.01, beatOffset: .286,
       title: 'Your Reality (Intense Symphonic Metal Cover)', data: './songs/motion/your-reality-metal.json',
@@ -173,7 +179,8 @@ window.SongMotionFx = (() => {
       if (words.length) lines.push(Object.freeze({ start: words[0].start, end: words[words.length - 1].end, words: Object.freeze(words) }));
     }
     lines.sort((a, b) => a.start - b.start);
-    return lines.length ? Object.freeze({ lines: Object.freeze(lines) }) : null;
+    return lines.length ? Object.freeze({ lines: Object.freeze(lines),
+      duration: Number.isFinite(source.duration) ? source.duration : null }) : null;
   }
 
   function sample(data, key, time, fallback = 0) {

@@ -633,6 +633,10 @@ body.reality-letter-active {
   --motion-muted: #5f414c;
 }
 body.reality-letter-active #view-now.active { background: #f5efdf; }
+body.song-motion-fx-active.reality-letter-active .now-meta {
+  grid-column: 1 / -1;
+  max-width: 100%;
+}
 body.reality-letter-active .now-meta h1,
 body.reality-letter-active #local-lyric-overlay .local-lyric-en {
   font-family: Georgia, 'Times New Roman', serif;
@@ -661,7 +665,11 @@ body:is(.reality-letter-active,.reality-metal-active) #local-lyric-overlay { ins
 @media (max-width: 650px), (max-height: 520px) {
   body.song-motion-fx-active.reality-metal-active .now-meta { grid-area: 1 / 1 / 2 / -1; max-width: 76%; }
   body.song-motion-fx-active.reality-metal-active .now-meta h1 { font-size: 19px; }
+  body.song-motion-fx-active.reality-letter-active .now-meta h1 { font-size: 23px; }
   body:is(.reality-letter-active,.reality-metal-active) #local-lyric-overlay { inset: 34% 5% 23%; }
+}
+@media (max-height: 540px) {
+  body.song-motion-fx-active.reality-letter-active .now-meta { max-width: calc(100% - 104px); }
 }
 body.mimi-marshmary-active .player { --accent: #b8e4db; --accent-fg: #183a45; }
 body.bts-dynamite-active {
