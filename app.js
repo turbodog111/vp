@@ -115,11 +115,6 @@ const SUPPORTED_LYRIC_TRACKS = {
     lyricTitle: 'ENCORE DANCE',
     hideSection: true
   },
-  'songs/joshua glass & gpt-5.6 sol - encore dance (piano, strings & harp)': {
-    dataUrl: './songs/lyrics/encore-dance.json',
-    scene: 'encore-harp',
-    visualTheme: 'encore-harp'
-  },
   'songs/kasane teto - waiting for tomorrow': {
     dataUrl: './songs/lyrics/waiting-for-tomorrow.json',
     scene: 'story-theater',
@@ -163,14 +158,6 @@ const SUPPORTED_LYRIC_TRACKS = {
 };
 const SONG_METADATA_OVERRIDES = {
   'songs/HUNTRIX - Golden.m4a': { artist: 'HUNTR/X', title: 'Golden' },
-  'songs/Joshua Glass & GPT-5.6 Sol - Encore Dance (Piano Hyperpop).m4a': {
-    artist: 'Joshua Glass & GPT-5.6 Sol',
-    title: 'Encore Dance: Piano Hyperpop'
-  },
-  'songs/Joshua Glass & GPT-5.6 Sol - Encore Dance (Piano, Strings & Harp).m4a': {
-    artist: 'Joshua Glass & GPT-5.6 Sol',
-    title: 'Encore Dance: Piano, Strings & Harp'
-  },
   'songs/Joshua Glass & GPT-5.6 Sol - Trick Heart (Piano & Bright Keys).m4a': {
     artist: 'Joshua Glass & GPT-5.6 Sol',
     title: 'Trick Heart: Piano & Bright Keys'
