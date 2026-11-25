@@ -2849,6 +2849,8 @@ function setSongMotionFxActive(theme) {
   document.body.classList.toggle('mimi-marshmary-active', config?.key === 'marshmary');
   document.body.classList.toggle('bts-dynamite-active', config?.key === 'dynamite');
   document.body.classList.toggle('bts-butter-active', config?.key === 'butter');
+  document.body.classList.toggle('reality-letter-active', config?.theme === 'your-reality');
+  document.body.classList.toggle('reality-metal-active', config?.theme === 'your-reality-metal');
   document.body.classList.toggle('hunters-golden-active', config?.theme === 'hunters-golden');
   document.body.classList.toggle('hunters-free-active', config?.theme === 'hunters-free');
   document.body.classList.toggle('mesmerizer-active', config?.theme === 'mesmerizer');
@@ -6189,6 +6191,8 @@ function adaptiveCanvasDpr(rect, maxDpr = 1.15) {
 
 /** Double-rAF: wait for CSS grid to settle, then size canvases to real boxes. */
 function scheduleNowLayoutSync() {
+  // A paused WebView can paint a seek before its next animation frame after a resize.
+  fxSizeKey = '';
   if (nowLayoutRaf) return;
   nowLayoutRaf = requestAnimationFrame(() => {
     nowLayoutRaf = requestAnimationFrame(() => {

@@ -12,13 +12,14 @@ const recordings = [
   ['marshmary', 'MIMI feat. Hatsune Miku - Marshmary.m4a'],
   ['dynamite', 'BTS - Dynamite.m4a'],
   ['butter', 'BTS - Butter.m4a'],
-  ['your-reality', 'Dan Salvato feat. Jillian Ashcraft - Your Reality.m4a']
+  ['your-reality', 'Dan Salvato feat. Jillian Ashcraft - Your Reality.m4a'],
+  ['your-reality-metal', 'FalKKonE feat. Rena - Your Reality (Intense Symphonic Metal Cover).m4a']
 ];
 const dataFor = key => JSON.parse(fs.readFileSync(path.join(root, 'songs/motion', `${key}.json`)));
 function create(fetcher, reduced = false) {
   let requests = 0;
   const context = vm.createContext({
-    window: { matchMedia: () => ({ matches: reduced }), OverrideFx: require('../override-fx.js') },
+    window: { matchMedia: () => ({ matches: reduced }), OverrideFx: require('../override-fx.js'), RealityMetalFx: require('../your-reality-metal-fx.js') },
     AbortController, setTimeout, clearTimeout, console: { warn() {} },
     fetch: async (url, options) => {
       requests++;
@@ -76,20 +77,20 @@ for (const [key, name] of recordings) {
     const data = dataFor(key);
     assert.equal(crypto.createHash('sha256').update(media).digest('hex'), data.audioSha256);
     const config = create().api.track({ path: `songs/${name}` });
-    if (key === 'your-reality') {
-      const receipt = JSON.parse(fs.readFileSync(path.join(root, 'songs/imports/your-reality.json')));
+    if (key.startsWith('your-reality')) {
+      const receipt = JSON.parse(fs.readFileSync(path.join(root, 'songs/imports', key+'.json')));
       assert.equal(receipt.recording, `songs/${name}`);
       assert.equal(receipt.source, config.source);
       assert.equal(receipt.outputAudioSha256, data.audioSha256);
       assert.ok(Math.abs(receipt.duration - data.duration) < .01);
-      assert.equal(config.art, undefined, 'stationery is entirely procedural');
+      assert.equal(config.art, undefined, 'both stages are entirely procedural');
     } else assert.ok(fs.statSync(path.join(root, 'songs/art', `${key}.webp`)).size > 1000);
     for (const band of ['energy', 'bass', 'high', 'onset']) {
       assert.ok(data[band].every(x => Number.isFinite(x) && x >= 0 && x <= 100));
       assert.ok(Math.abs(data[band].length * data.sampleInterval - data.duration) < 0.1);
     }
     assert.equal(data.sampleInterval, 0.04);
-    assert.ok(Math.abs(data.bpm - { override: 204, 'petal-lament': 170, marshmary: 182, dynamite: 114, butter: 110, 'your-reality': 105 }[key]) < 1);
+    assert.ok(Math.abs(data.bpm - { override: 204, 'petal-lament': 170, marshmary: 182, dynamite: 114, butter: 110, 'your-reality': 105, 'your-reality-metal': 105 }[key]) < 1);
     assert.equal(config.bpm, data.bpm, 'fallback uses the measured tempo');
     assert.equal(config.beatOffset, data.beatOffset, 'fallback uses the measured phase');
   });
@@ -134,6 +135,35 @@ test('late data from the previous song cannot reactivate it', async () => {
   assert.equal(newReady, 1);
 });
 
+test('Your Reality: distinct stages, the full supplied sheet, independently timed singing and instrumental rests', async () => {
+  const W = require('../lyric-workbench.js');
+  const {api}=create(), folder=path.join(root,'songs/lyrics/aligned');
+  const catalog=JSON.parse(fs.readFileSync(path.join(folder,'manifest.json')));
+  const acts=require('../your-reality-metal-fx.js').arrangement;
+  assert.equal(acts(25).tutti,0); assert.equal(acts(64).tutti,1);
+  assert.equal(acts(102).solo,1); assert.equal(acts(144).peak,1); assert.equal(acts(171).tail,1);
+  const pictures=[], timelines=[];
+  for (const [key,name] of recordings.filter(([k])=>k.startsWith('your-reality'))) {
+    const recording='songs/'+name, config=api.track({path:recording});
+    await api.activate(config); pictures.push(render(api,102));
+    const entries=catalog.filter(e=>e.recording===recording); assert.equal(entries.length,1);
+    const source=JSON.parse(fs.readFileSync(path.join(folder,entries[0].file)));
+    const data=dataFor(key), sheet=W.decode(source,recording); timelines.push(sheet.rows);
+    assert.equal(source.alignment.audioSha256,data.audioSha256);
+    assert.equal(entries[0].audioSha256,data.audioSha256);
+    assert.deepEqual(Array.from(W.validate(sheet,data.duration).errors),[]);
+    assert.equal(entries[0].lines,21); assert.equal(sheet.rows.length,21);
+    const text=sheet.rows.map(r=>r.en).join('\n')+'\n';
+    assert.equal(crypto.createHash('sha256').update(text).digest('hex'),'578f7a656c9775beee7cc3a0d56faaa2ff84348be53e9f7177b889bf941bc05a');
+    assert.equal(sheet.rows.flatMap(r=>r.words.en).length,210);
+    for (const [time,line] of [[5,-1],[12,0],[43,5],[48,6],[54,-1],[63,7],[102,-1],[134,-1],[165,20],[173,-1]])
+      assert.equal(W.activeRow(sheet.rows,time),line, key+' at '+time);
+  }
+  assert.notDeepEqual(pictures[0],pictures[1]);
+  assert.ok(timelines[1][19].end-timelines[0][19].end>2.5,'Rena sustains the penultimate line');
+  assert.equal(W.activeRow(timelines[0],162),-1); assert.equal(W.activeRow(timelines[1],162),19);
+});
+
 test('cached motion data needs no repeat download when switching back', async () => {
   const { api, requests } = create();
   const config = api.track({ path: `songs/${recordings[0][1]}` });
@@ -158,7 +188,8 @@ test('reduced motion removes traveling objects and beat pulses for every scene',
   for (const [, name] of recordings) {
     await api.activate(api.track({ path: `songs/${name}` }));
     // Narrative chapter changes are retained; motion inside a chapter is frozen.
-    assert.deepEqual(render(api, 15), render(api, name.includes('Override') ? 16 : 90), name);
+    const chaptered = name.includes('Override') || name.includes('Symphonic Metal');
+    assert.deepEqual(render(api, 15), render(api, chaptered ? 16 : 90), name);
   }
 });
 

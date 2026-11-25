@@ -1,0 +1,19 @@
+{
+  "recording": "songs/FalKKonE feat. Rena - Your Reality (Intense Symphonic Metal Cover).m4a",
+  "title": "Your Reality (Intense Symphonic Metal Cover)",
+  "artist": "FalKKonE feat. Rena",
+  "composer": "Dan Salvato",
+  "arrangementAndProduction": "FalKKonE",
+  "vocals": "Rena",
+  "source": "https://www.youtube.com/watch?v=7XW6AeZXEWM",
+  "sourceTitle": "RE: Doki Doki Literature Club! - Your Reality (feat. Rena) 【Intense Symphonic Metal Cover】",
+  "sourceChannel": "FalKKonE",
+  "rendition": "Linked remake/remaster. Start and reverb preserved; omit only the inaudible video tail (below -76 dB from 183.96 s).",
+  "sourceDuration": 190.7752,
+  "duration": 184.5,
+  "encoding": "AAC 192k target, 48kHz stereo, faststart",
+  "sourceAudioSha256": "71bd8beee02042128d77e6bec9aa50983d3e619e3810cff14ddeb05f4c43ec89",
+  "outputAudioSha256": "aede4ea8c77b6afa37f4e705eeb2d9d62caf90c432ad602985dd742b32e5716a",
+  "importDate": "2026-11-25",
+  "graphics": "Original procedural rose window, pipe organ, resonating steel strings and Flying V instrumental solos; no source video frames."
+}

@@ -628,6 +628,41 @@ body.song-motion-fx-active .hero-time {
 }
 body.song-motion-fx-active .now-queue { display: none; }
 body.song-motion-fx-active .player { --accent: #f4bfd1; --accent-fg: #271a24; }
+body.reality-letter-active {
+  --motion-ink: #382d36;
+  --motion-muted: #5f414c;
+}
+body.reality-letter-active #view-now.active { background: #f5efdf; }
+body.reality-letter-active .now-meta h1,
+body.reality-letter-active #local-lyric-overlay .local-lyric-en {
+  font-family: Georgia, 'Times New Roman', serif;
+  text-shadow: none;
+}
+body.reality-letter-active #local-lyric-overlay .waiting { color: #655554; }
+body.reality-letter-active #local-lyric-overlay .singing { color: #822849; text-decoration-color: #a5536d; }
+body.reality-letter-active #local-lyric-overlay .sung { color: #342d37; }
+body.reality-letter-active .hero-time { color: #382d36; text-shadow: 0 1px 3px #f7eddc; }
+body.reality-letter-active .hero-play::before { background: conic-gradient(#8e4861 var(--progress, 0deg), #deccca 0deg); }
+body.reality-metal-active {
+  --motion-ink: #fff0d8;
+  --motion-muted: #efd3cf;
+  --accent: #f8959b;
+}
+body.reality-metal-active #view-now.active { background: #181520; }
+body.reality-metal-active .now-meta h1 { font-size: 31px; text-shadow: 0 2px 5px #17111a; }
+body.reality-metal-active .now-meta :is(.now-kicker,.now-subtitle) { text-shadow: 0 1px 4px #100e16; }
+body.reality-metal-active .hero-play { background: #271b28; color: #fff0d8; }
+body.reality-metal-active .hero-play::before { background: conic-gradient(#ffa3ac var(--progress, 0deg), #8b737d 0deg); }
+body.reality-metal-active #local-lyric-overlay { text-shadow: 0 2px 5px #18131b; }
+body.reality-metal-active #local-lyric-overlay .waiting { color: #d7cbd3; }
+body.reality-metal-active #local-lyric-overlay .singing { color: #fff3ce; text-decoration-color: #ffb29d; }
+body.reality-metal-active #local-lyric-overlay .sung { color: #ff9eac; }
+body:is(.reality-letter-active,.reality-metal-active) #local-lyric-overlay { inset: 32% 12%; text-wrap: balance; }
+@media (max-width: 650px), (max-height: 520px) {
+  body.song-motion-fx-active.reality-metal-active .now-meta { grid-area: 1 / 1 / 2 / -1; max-width: 76%; }
+  body.song-motion-fx-active.reality-metal-active .now-meta h1 { font-size: 19px; }
+  body:is(.reality-letter-active,.reality-metal-active) #local-lyric-overlay { inset: 34% 5% 23%; }
+}
 body.mimi-marshmary-active .player { --accent: #b8e4db; --accent-fg: #183a45; }
 body.bts-dynamite-active {
   --accent: #ef9aa8;

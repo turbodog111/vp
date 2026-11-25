@@ -7,6 +7,11 @@ window.SongMotionFx = (() => {
       title: 'Your Reality', data: './songs/motion/your-reality.json',
       source: 'https://www.youtube.com/watch?v=CAL4WMpBNs0'
     }),
+    'songs/falkkone feat. rena - your reality (intense symphonic metal cover)': Object.freeze({
+      key: 'your-reality-metal', theme: 'your-reality-metal', bpm: 105.01, beatOffset: .286,
+      title: 'Your Reality (Intense Symphonic Metal Cover)', data: './songs/motion/your-reality-metal.json',
+      source: 'https://www.youtube.com/watch?v=7XW6AeZXEWM'
+    }),
     'songs/32ki feat. hatsune miku & kasane teto sv - mesmerizer (japanese original)': Object.freeze({
       key: 'mesmerizer-original', theme: 'mesmerizer', variant: 'original', bpm: 92.5, beatOffset: .345,
       title: 'Mesmerizer', data: './songs/motion/mesmerizer-original.json',
@@ -674,41 +679,71 @@ window.SongMotionFx = (() => {
   function inkPoint(u, row, phrase, width, height) {
     const a = u * TAU * (8 + row % 2);
     const group = .28 + .72 * Math.sin(u * Math.PI * 3) ** 2;
-    return [width * (.14 + .71 * u + .014 * Math.sin(a)),
-      height * (.34 + row * .145 - group * (.018 * Math.sin(a) +
-        .046 * Math.max(0, Math.cos(a + phrase * .7)) ** 4))];
+    return [width * (.16 + .48 * u + .008 * Math.sin(a)),
+      height * (.72 + row * .059 - group * (.009 * Math.sin(a) +
+        .023 * Math.max(0, Math.cos(a + phrase * .7)) ** 4))];
   }
 
   function drawLetter(ctx, w, h, m, reduced) {
-    const beats = reduced ? 12 : m.beats;
-    const phrase = Math.floor(beats / 32);
-    const row = Math.floor(beats / 8) % 4;
-    const step = (beats % 8) / 8;
+    const beats = reduced ? 12 : m.beats, time = beats * m.period;
+    const close = reduced ? 0 : ease((time-163)/5);
+    const writing = Math.min(beats, 165 / m.period);
+    const phrase = Math.floor(writing / 32);
+    const row = Math.floor(writing / 8) % 4;
+    const step = (writing % 8) / 8;
     const progress = reduced ? .72 : ease(step / .91);
     const pink = '#ae4c70', ink = '#39404f';
     const desk = ctx.createLinearGradient(0, 0, w, h);
-    desk.addColorStop(0, '#f6e4df'); desk.addColorStop(.62, '#edd2cb'); desk.addColorStop(1, '#d7b4ab');
+    desk.addColorStop(0, '#e8dacf'); desk.addColorStop(.6, '#ead2c4'); desk.addColorStop(1, '#b9c6bb');
     ctx.fillStyle = desk; ctx.fillRect(0, 0, w, h);
 
-    const pw = Math.min(w * .87, h * 1.28), ph = pw * .66;
-    const unit = pw / 400;
-    ctx.save(); ctx.translate(w * .49, h * .52);
-    ctx.rotate(-.055); ctx.translate(-pw / 2, -ph / 2);
+    const pw = w*.94, ph = h*.86, unit = Math.min(pw / 510, ph / 350);
+    const lightShift = Math.sin(beats*Math.PI/96)*.035 + close*.06;
+    for (let i=0;i<3;i++) {
+      const x=w*(i*.38+lightShift);
+      polygon(ctx, [[x,0],[x+w*.23,0],[x-w*.11,h],[x-w*.37,h]], [255,245,218], .36);
+    }
+    ctx.save(); ctx.translate(w * .52, h * .53);
+    ctx.rotate(-.036); ctx.translate(-pw / 2, -ph / 2);
     ctx.fillStyle = '#cbaca8'; ctx.fillRect(4*unit, 8*unit, pw, ph);
     ctx.fillStyle = '#f9eee5'; ctx.fillRect(-3*unit, 4*unit, pw, ph);
-    ctx.fillStyle = '#fff8ec'; ctx.fillRect(0, 0, pw, ph);
+    const paper=ctx.createLinearGradient(0,0,pw,ph);
+    paper.addColorStop(0,'#fffaf0'); paper.addColorStop(.57,'#f7f0df');
+    paper.addColorStop(1,color(blend([232,218,206],[216,217,204],close)));
+    ctx.fillStyle = paper; ctx.fillRect(0, 0, pw, ph);
     ctx.beginPath();
-    for (let i = 0; i < 7; i++) {
-      const y = ph * (.195 + .145 * i);
-      if (y < ph) { ctx.moveTo(0, y); ctx.lineTo(pw, y); }
+    for (let i = 0; i < 14; i++) {
+      const y = ph * (.13 + .059 * i);
+      ctx.moveTo(0, y); ctx.lineTo(pw, y);
     }
-    ctx.strokeStyle = '#d5d8d4'; ctx.lineWidth = Math.max(.8, unit * .65); ctx.stroke();
+    ctx.strokeStyle = '#e0dfd3'; ctx.lineWidth = Math.max(.7, unit * .5); ctx.stroke();
     ctx.fillStyle = '#dfa0ae'; ctx.fillRect(pw * .091, 0, unit, ph);
     // Folded ribbon bookmark with a swallowtail cut.
     ctx.beginPath(); ctx.moveTo(pw*.79, 0); ctx.lineTo(pw*.86, 0);
     ctx.lineTo(pw*.86, ph*.19); ctx.lineTo(pw*.825, ph*.15); ctx.lineTo(pw*.79, ph*.19);
     ctx.closePath(); ctx.fillStyle = pink; ctx.fill();
 
+    // A pressed sprig stitched into the sheet, outside the central reading area.
+    ctx.save(); ctx.translate(pw*.86,ph*.24); ctx.scale(unit,unit);
+    ctx.rotate(-.25+Math.sin(beats*Math.PI/48)*.012);
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.bezierCurveTo(9,-7,20,-29,23,-51);
+    ctx.strokeStyle='#718373'; ctx.lineWidth=1.35; ctx.stroke();
+    for (let leaf=0;leaf<4;leaf++) {
+      const x=5+leaf*4.3, y=-6-leaf*8, side=leaf%2 ? 1 : -1;
+      ctx.beginPath(); ctx.moveTo(x,y);
+      ctx.quadraticCurveTo(x+side*12,y-1,x+side*13,y-12);
+      ctx.quadraticCurveTo(x+side*5,y-12,x,y); ctx.fillStyle=leaf%2 ? '#98a393' : '#748c7f'; ctx.fill();
+    }
+    for (let j=0;j<5;j++) {
+      const a=j*TAU/5; ctx.beginPath(); ctx.ellipse(23+4*Math.cos(a),-51+4*Math.sin(a),4.5,2.6,a,0,TAU);
+      ctx.fillStyle='#b97789'; ctx.fill();
+    }
+    ctx.beginPath(); ctx.arc(23,-51,2.4,0,TAU); ctx.fillStyle='#d7ad65'; ctx.fill(); ctx.restore();
+
+    const turn = reduced ? 0 : Math.sin(Math.PI*clamp((step-.82)/.18))**2*(1-close);
+    const fold = Math.min(pw,ph)*(.048+.033*turn+.018*close);
+    polygon(ctx, [[pw-fold,ph],[pw,ph-fold],[pw,ph]], [200,186,168], .64);
+    polygon(ctx, [[pw-fold,ph],[pw,ph-fold],[pw-fold*.86,ph-fold*.79]], [255,252,241], .98);
     for (let r = 0; r <= row; r++) {
       const limit = r === row ? progress : 1;
       ctx.beginPath();
@@ -720,7 +755,7 @@ window.SongMotionFx = (() => {
       ctx.strokeStyle = ink; ctx.lineWidth = 1.15 * unit; ctx.stroke();
     }
     const [nx, ny] = inkPoint(progress, row, phrase, pw, ph);
-    ctx.save(); ctx.translate(nx, ny); ctx.scale(unit, unit); ctx.rotate(.68);
+    ctx.save(); ctx.translate(nx+close*pw*.034, ny-close*ph*.025); ctx.scale(unit, unit); ctx.rotate(.68+close*.48);
     ctx.fillStyle = '#38334a'; ctx.beginPath();
     ctx.moveTo(-4,-16); ctx.lineTo(-5,-69); ctx.quadraticCurveTo(0,-79,5,-69);
     ctx.lineTo(4,-16); ctx.closePath(); ctx.fill();
@@ -764,6 +799,7 @@ window.SongMotionFx = (() => {
     pageBody()?.classList.toggle('motion-3d-active', in3d);
     if (in3d) { ctx.restore(); return; }
     if (active.theme === 'your-reality') drawLetter(ctx, w, h, m, reduced);
+    else if (active.theme === 'your-reality-metal') window.RealityMetalFx.draw(ctx, w, h, video);
     else if (active.theme === 'mesmerizer') window.MesmerizerFx?.draw(ctx, w, h, video);
     else if (active.theme === 'hunters-free') window.FreeFx?.draw(ctx, w, h, video);
     else if (active.theme === 'kuu-ni-naru') window.KuuFx?.draw(ctx, w, h, video);
