@@ -6,24 +6,44 @@
 <title>vp</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="vp-build" content="2026-11-21-lyrics3d">
+<meta name="vp-build" content="2026-11-24-filters-looks">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="data:,">
 <script>
-  // Apply saved accessibility choices before first paint (no flash of the default look).
+  // Apply saved accessibility and appearance choices before first paint (no flash of the default look).
   (function () {
     try {
       var root = document.documentElement, motion = localStorage.getItem('vp_a11y_reduce_motion');
       if (localStorage.getItem('vp_a11y_large_text') === 'true') root.classList.add('large-text');
       if (localStorage.getItem('vp_a11y_high_contrast') === 'true') root.classList.add('high-contrast');
       if (motion === 'on' || (motion !== 'off' && matchMedia('(prefers-reduced-motion: reduce)').matches)) root.classList.add('reduce-motion');
+      // Appearance (Settings → Appearance). Keep these lists in step with APPEARANCE_* in app.js.
+      var look = localStorage.getItem('vp_look'), font = localStorage.getItem('vp_font');
+      var light = { paper: 1, sakura: 1, daylight: 1 };
+      var fonts = { rounded: 'M+PLUS+Rounded+1c:wght@400;500;700;800', serif: 'Literata:opsz,wght@7..72,400..800', geometric: 'Outfit:wght@400..800' };
+      if (/^(ocean|ember|forest|rose|synthwave|graphite|paper|sakura|daylight)$/.test(look || '')) {
+        root.setAttribute('data-look', look);
+        if (light[look]) document.querySelector('meta[name="color-scheme"]').content = 'light';
+      }
+      if (fonts[font] || font === 'system') {
+        root.setAttribute('data-font', font);
+        if (fonts[font]) {
+          var link = document.createElement('link');
+          link.id = 'appearance-font-css';
+          link.rel = 'stylesheet';
+          link.href = 'https://fonts.googleapis.com/css2?family=' + fonts[font] + '&display=swap';
+          document.head.appendChild(link);
+        }
+      }
+      if (localStorage.getItem('vp_density') === 'compact') root.setAttribute('data-density', 'compact');
+      if (localStorage.getItem('vp_glow') === 'off') root.setAttribute('data-glow', 'off');
     } catch (error) {}
   })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400..800&display=swap">
-<link rel="stylesheet" href="styles.css?v=20261122-trick2">
+<link rel="stylesheet" href="styles.css?v=20261124-look1">
 <link rel="stylesheet" href="lyric-workbench.css?v=20261023-synced-lyrics">
 <link rel="stylesheet" href="override.css?v=20261026-override">
 <link rel="stylesheet" href="kuu.css?v=20261118-mv">
@@ -58,6 +78,10 @@
         </label>
       </div>
       <div class="menu-divider" role="presentation"></div>
+      <button id="appearance-open" class="setting-button eq-setting-button" type="button">
+        <span>Appearance</span>
+        <span id="appearance-summary" class="appearance-open-summary">Ink &amp; Iris</span>
+      </button>
       <button id="equalizer-open" class="setting-button eq-setting-button" type="button">
         <span>Equalizer</span>
         <span id="equalizer-summary">Flat</span>
@@ -80,11 +104,52 @@
 
   <main class="main">
     <section id="view-library" class="view active">
-      <div class="library-toolbar" id="collection-filter" aria-label="Song collections">
-        <button class="collection-tab active" data-collection="all">All <span class="collection-count">0</span></button>
-        <button class="collection-tab" data-collection="secular">Secular <span class="collection-count">0</span></button>
-        <button class="collection-tab" data-collection="christian">Christian <span class="collection-count">0</span></button>
+      <div class="library-toolbar">
+        <div class="collection-tabs" id="collection-filter" role="group" aria-label="Song collections">
+          <button class="collection-tab active" type="button" data-collection="all">All <span class="collection-count">0</span></button>
+          <button class="collection-tab" type="button" data-collection="secular">Secular <span class="collection-count">0</span></button>
+          <button class="collection-tab" type="button" data-collection="christian">Christian <span class="collection-count">0</span></button>
+        </div>
+        <div class="library-filter-bar">
+          <label class="library-filter-pick">
+            <span class="library-filter-pick-label">Showing</span>
+            <select id="library-filter-select"></select>
+          </label>
+          <button id="library-filter-edit" class="library-filter-edit" type="button" aria-pressed="false">Choose songs</button>
+        </div>
       </div>
+      <div id="library-filter-notice" class="library-filter-notice" role="status" hidden>
+        <span id="library-filter-notice-text"></span>
+        <span class="library-filter-notice-actions">
+          <button id="library-filter-notice-show" type="button">Show them</button>
+          <button id="library-filter-notice-keep" class="ghost" type="button">Keep hidden</button>
+        </span>
+      </div>
+      <section id="library-filter-editor" class="library-filter-editor" aria-labelledby="library-filter-editor-title" hidden>
+        <h2 id="library-filter-editor-title" class="visually-hidden">Choose which songs this filter shows</h2>
+        <div class="lfe-head">
+          <label class="lfe-name">
+            <span>Filter name</span>
+            <input id="library-filter-name" type="text" maxlength="40" autocomplete="off" spellcheck="false">
+          </label>
+          <output id="library-filter-count" class="lfe-count" aria-live="polite"></output>
+        </div>
+        <p class="lfe-help">Tick the songs to show. Your choices save as you go.</p>
+        <div class="lfe-actions">
+          <button id="library-filter-show-all" type="button">Show all</button>
+          <button id="library-filter-hide-all" type="button">Hide all</button>
+          <label class="lfe-new">
+            <span>Songs added later</span>
+            <select id="library-filter-new">
+              <option value="show">Show them</option>
+              <option value="hide">Keep them hidden</option>
+            </select>
+          </label>
+          <span class="lfe-spacer"></span>
+          <button id="library-filter-delete" class="ghost lfe-delete" type="button">Delete filter</button>
+          <button id="library-filter-done" class="lfe-done" type="button">Done</button>
+        </div>
+      </section>
       <ul id="library-list" class="song-list" aria-label="Songs"></ul>
       <div id="library-empty" class="empty hidden">
         No songs found. Drop <code>.mp3</code> or <code>.m4a</code> files into the <code>songs/</code> folder, commit, and push.
@@ -559,6 +624,28 @@
       <button id="settings-close" class="icon-btn" type="button" title="Close settings" aria-label="Close settings">×</button>
     </header>
 
+    <section id="settings-appearance" class="settings-section" aria-labelledby="settings-look-heading">
+      <h3 id="settings-look-heading">Appearance</h3>
+      <fieldset id="theme-options" class="theme-grid">
+        <legend class="visually-hidden">Theme</legend>
+      </fieldset>
+      <label class="setting-row setting-row-select appearance-row">
+        <span>Typeface</span>
+        <select id="appearance-font"></select>
+      </label>
+      <div class="setting-row setting-row-choice" role="radiogroup" aria-labelledby="appearance-density-label">
+        <span id="appearance-density-label">Song list</span>
+        <span class="segmented">
+          <label><input type="radio" name="appearance-density" value="comfortable"><span>Comfortable</span></label>
+          <label><input type="radio" name="appearance-density" value="compact"><span>Compact</span></label>
+        </span>
+      </div>
+      <label class="setting-row">
+        <input id="appearance-glow" type="checkbox">
+        <span>Background glow</span>
+      </label>
+    </section>
+
     <section class="settings-section" aria-labelledby="settings-lyrics-heading">
       <h3 id="settings-lyrics-heading">Lyrics</h3>
       <button id="lyrics-open" class="setting-button settings-action" type="button">
@@ -606,6 +693,6 @@
 <script src="my-way-fx.js?v=20261118-mv"></script>
 <script src="song-motion-fx.js?v=20261124-your-reality"></script>
 <script src="lyric-workbench.js?v=20261121-look2"></script>
-<script src="app.js?v=20261122-trick1"></script>
+<script src="app.js?v=20261124-look1"></script>
 </body>
 </html>

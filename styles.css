@@ -1,22 +1,167 @@
-/* VP look: "Ink & Iris" — one dark theme, one accent, one typeface.
-   Text colours meet WCAG AA on every surface (dim text 8:1, faint text 4.7:1). */
-:root {
+/* VP looks. "Ink & Iris" is the default; Settings → Appearance picks another theme
+   ([data-look] on <html>; the theme previews in Settings carry it too), a typeface
+   (html[data-font]), list density (html[data-density]) and the background glow (html[data-glow]).
+   Every theme defines the same tokens, and its text colours meet WCAG AA on bg, panel and
+   panel-2 (scripts/test_appearance.cjs checks this). */
+:root,
+[data-look="iris"] {
+  color-scheme: dark;
   --bg: #0d0e14;
+  --bg-rgb: 13 14 20;
   --panel: #161822;
+  --panel-rgb: 22 24 34;
   --panel-2: #1e2130;
   --border: #2d3142;
   --fg: #f1f2f7;
   --fg-dim: #a6abbd;
-  --fg-faint: #7b8196;
-  --accent: #a99bff;
-  --accent-2: #bdb2ff;
-  --accent-rgb: 169 155 255;
-  --accent-fg: #15122e;
+  --fg-faint: #868ca2;
+  --look-accent: #a99bff;
+  --look-accent-2: #bdb2ff;
+  --look-accent-rgb: 169 155 255;
+  --look-accent-fg: #15122e;
+  --accent: var(--look-accent);
+  --accent-2: var(--look-accent-2);
+  --accent-rgb: var(--look-accent-rgb);
+  --accent-fg: var(--look-accent-fg);
   --focus: #cfc6ff;
   --danger: #ff6b6b;
+  --glow-rgb: 240 171 252;
+  --glow-alpha: 0.13;
+  --glow-2-alpha: 0.06;
+  --hover: rgb(255 255 255 / 0.045);
+  --shadow-rgb: 0 0 0;
+  --shadow-k: 1;
+  --brand-a: #d9d2ff;
+  --brand-b: #f0abfc;
   --radius: 10px;
   --font-ui: 'Atkinson Hyperlegible Next', ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --select-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238a8fa3' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --icon-tick: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.6 4.6L19 7.4' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
+
+/* Every theme names its accent as --look-accent; the page's --accent follows it, and a
+   theme preview (a swatch carrying data-look) works it out from its own theme. */
+[data-look] {
+  --accent: var(--look-accent);
+  --accent-2: var(--look-accent-2);
+  --accent-rgb: var(--look-accent-rgb);
+  --accent-fg: var(--look-accent-fg);
+}
+
+/* Dark themes */
+[data-look="ocean"] {
+  --bg: #0a1219; --bg-rgb: 10 18 25; --panel: #111d27; --panel-rgb: 17 29 39; --panel-2: #182835; --border: #29404f;
+  --fg: #eef6fb; --fg-dim: #a3b8c6; --fg-faint: #7a91a1;
+  --look-accent: #5fd4c8; --look-accent-2: #8fe6dc; --look-accent-rgb: 95 212 200; --look-accent-fg: #03211e; --focus: #a8f0e8;
+  --glow-rgb: 90 150 255; --brand-a: #c6f6f0; --brand-b: #7ab8ff;
+}
+[data-look="ember"] {
+  --bg: #130e0c; --bg-rgb: 19 14 12; --panel: #1d1613; --panel-rgb: 29 22 19; --panel-2: #281e19; --border: #3f2f27;
+  --fg: #faf1ea; --fg-dim: #c7b2a5; --fg-faint: #9a8476;
+  --look-accent: #ffa45e; --look-accent-2: #ffc08f; --look-accent-rgb: 255 164 94; --look-accent-fg: #2b1100; --focus: #ffd2ad;
+  --glow-rgb: 255 84 84; --brand-a: #ffe0b8; --brand-b: #ff6f6f;
+}
+[data-look="forest"] {
+  --bg: #0b110d; --bg-rgb: 11 17 13; --panel: #121c16; --panel-rgb: 18 28 22; --panel-2: #19271f; --border: #2a3d31;
+  --fg: #eef6ef; --fg-dim: #a7bcab; --fg-faint: #7d927f;
+  --look-accent: #93d99a; --look-accent-2: #b8eab9; --look-accent-rgb: 147 217 154; --look-accent-fg: #0b2410; --focus: #c9f2c9;
+  --glow-rgb: 230 210 120; --brand-a: #e4f7c8; --brand-b: #e6d27a;
+}
+[data-look="rose"] {
+  --bg: #130c11; --bg-rgb: 19 12 17; --panel: #1d131a; --panel-rgb: 29 19 26; --panel-2: #281a24; --border: #3e2a37;
+  --fg: #fbeff5; --fg-dim: #c9adbd; --fg-faint: #9a7f8e;
+  --look-accent: #ff86bb; --look-accent-2: #ffabd0; --look-accent-rgb: 255 134 187; --look-accent-fg: #2e0619; --focus: #ffc4de;
+  --glow-rgb: 176 132 255; --brand-a: #ffd6e8; --brand-b: #b98cff;
+}
+[data-look="synthwave"] {
+  --bg: #0c0718; --bg-rgb: 12 7 24; --panel: #150e27; --panel-rgb: 21 14 39; --panel-2: #1e1435; --border: #35265a;
+  --fg: #f6f0ff; --fg-dim: #b9acd6; --fg-faint: #8d80ad;
+  --look-accent: #ff5fd2; --look-accent-2: #ff8fe0; --look-accent-rgb: 255 95 210; --look-accent-fg: #2a0022; --focus: #7df3ff;
+  --glow-rgb: 64 224 255; --glow-alpha: 0.16; --glow-2-alpha: 0.10; --brand-a: #7df3ff; --brand-b: #ff5fd2;
+}
+[data-look="graphite"] {
+  --bg: #101012; --bg-rgb: 16 16 18; --panel: #19191c; --panel-rgb: 25 25 28; --panel-2: #222226; --border: #36363b;
+  --fg: #f3f3f5; --fg-dim: #b0b0b6; --fg-faint: #8e8e95;
+  --look-accent: #e4e4e8; --look-accent-2: #ffffff; --look-accent-rgb: 228 228 232; --look-accent-fg: #131315; --focus: #ffffff;
+  --glow-rgb: 255 255 255; --glow-alpha: 0.05; --glow-2-alpha: 0.03; --brand-a: #ffffff; --brand-b: #9a9aa2;
+}
+
+/* Light themes. The app is light, but Now Playing stays a dark "screen": the song scenes
+   and the visualizer are drawn for a dark stage (they blend light onto dark). Each light
+   theme names its own accent (--look-*, used by the app around the stage) and a dark stage
+   palette (--stage-*, used inside Now Playing). */
+[data-look="paper"],
+[data-look="sakura"],
+[data-look="daylight"] {
+  color-scheme: light;
+  --danger: #c0392b;
+  --glow-alpha: 0.10;
+  --glow-2-alpha: 0.10;
+  --hover: rgb(0 0 0 / 0.045);
+  --shadow-k: 0.4;
+}
+[data-look="paper"] {
+  --bg: #f5f0e6; --bg-rgb: 245 240 230; --panel: #fffbf3; --panel-rgb: 255 251 243; --panel-2: #ece4d4; --border: #d8cbb4;
+  --fg: #231d15; --fg-dim: #57493a; --fg-faint: #6e6150;
+  --look-accent: #3446a8; --look-accent-2: #4a5cc0; --look-accent-rgb: 52 70 168; --look-accent-fg: #ffffff; --focus: #1f2f8f;
+  --glow-rgb: 214 140 80; --shadow-rgb: 70 50 25; --brand-a: #1f2f8f; --brand-b: #b4562a;
+  --stage-bg: #1a1611; --stage-bg-rgb: 26 22 17; --stage-panel: #241f18; --stage-panel-rgb: 36 31 24; --stage-panel-2: #2e271e; --stage-border: #4a3f31;
+  --stage-fg: #f6efe4; --stage-fg-dim: #cbbca7; --stage-fg-faint: #a09079;
+  --stage-accent: #aab6ff; --stage-accent-2: #c4cdff; --stage-accent-rgb: 170 182 255; --stage-accent-fg: #141a40;
+}
+[data-look="sakura"] {
+  --bg: #fbf1f4; --bg-rgb: 251 241 244; --panel: #fffafb; --panel-rgb: 255 250 251; --panel-2: #f5e3e9; --border: #e6c8d2;
+  --fg: #2b1820; --fg-dim: #66434f; --fg-faint: #7e5a68;
+  --look-accent: #b8245e; --look-accent-2: #cf3b75; --look-accent-rgb: 184 36 94; --look-accent-fg: #ffffff; --focus: #8a1445;
+  --glow-rgb: 150 110 220; --shadow-rgb: 90 30 55; --brand-a: #8a1445; --brand-b: #8a5ad6;
+  --stage-bg: #1a1016; --stage-bg-rgb: 26 16 22; --stage-panel: #241820; --stage-panel-rgb: 36 24 32; --stage-panel-2: #2f1f29; --stage-border: #4a3141;
+  --stage-fg: #fbeef3; --stage-fg-dim: #d2b3c1; --stage-fg-faint: #a88896;
+  --stage-accent: #ff8fbd; --stage-accent-2: #ffb3d2; --stage-accent-rgb: 255 143 189; --stage-accent-fg: #2e0619;
+}
+[data-look="daylight"] {
+  --bg: #eef3f8; --bg-rgb: 238 243 248; --panel: #ffffff; --panel-rgb: 255 255 255; --panel-2: #e2e9f1; --border: #c7d3e0;
+  --fg: #121d29; --fg-dim: #43536a; --fg-faint: #55657a;
+  --look-accent: #155fb8; --look-accent-2: #2a74cf; --look-accent-rgb: 21 95 184; --look-accent-fg: #ffffff; --focus: #0b3f80;
+  --glow-rgb: 80 190 220; --shadow-rgb: 20 40 70; --brand-a: #0b3f80; --brand-b: #1fa3b8;
+  --stage-bg: #0f1824; --stage-bg-rgb: 15 24 36; --stage-panel: #162231; --stage-panel-rgb: 22 34 49; --stage-panel-2: #1d2c3e; --stage-border: #2e4258;
+  --stage-fg: #eef4fb; --stage-fg-dim: #a9bbcf; --stage-fg-faint: #8095ab;
+  --stage-accent: #7fc1ff; --stage-accent-2: #a8d4ff; --stage-accent-rgb: 127 193 255; --stage-accent-fg: #04213f;
+}
+/* In a light theme the accent that reaches Now Playing is the stage's. */
+html:is([data-look="paper"], [data-look="sakura"], [data-look="daylight"]) {
+  --accent: var(--stage-accent);
+  --accent-2: var(--stage-accent-2);
+  --accent-rgb: var(--stage-accent-rgb);
+  --accent-fg: var(--stage-accent-fg);
+}
+/* Many songs set their own accent on <body> for their scene. That colour stays in Now
+   Playing: the app around it keeps the chosen theme's accent, so the theme always shows
+   and a song's pale accent never becomes light text on a light page. */
+:is(.topbar, .tabs, #storage-status, #view-library, #view-playlists, #view-lyrics, .player, .eq-backdrop, .toast) {
+  --accent: var(--look-accent);
+  --accent-2: var(--look-accent-2);
+  --accent-rgb: var(--look-accent-rgb);
+  --accent-fg: var(--look-accent-fg);
+}
+html:is([data-look="paper"], [data-look="sakura"], [data-look="daylight"]) #view-now {
+  color-scheme: dark;
+  --bg: var(--stage-bg); --bg-rgb: var(--stage-bg-rgb);
+  --panel: var(--stage-panel); --panel-rgb: var(--stage-panel-rgb); --panel-2: var(--stage-panel-2); --border: var(--stage-border);
+  --fg: var(--stage-fg); --fg-dim: var(--stage-fg-dim); --fg-faint: var(--stage-fg-faint);
+  --hover: rgb(255 255 255 / 0.045); --shadow-rgb: 0 0 0; --shadow-k: 1;
+  color: var(--fg);
+}
+/* The dark stage sits behind Now Playing (on the main area, edge to edge), so a song
+   scene that paints its own background still paints over it. */
+html:is([data-look="paper"], [data-look="sakura"], [data-look="daylight"]) .main:has(> #view-now.active) {
+  background: var(--stage-bg);
+}
+
+/* Typefaces (fonts other than Atkinson load only when chosen; see applyAppearance). */
+html[data-font="rounded"] { --font-ui: 'M PLUS Rounded 1c', 'Hiragino Maru Gothic ProN', ui-rounded, system-ui, sans-serif; }
+html[data-font="serif"] { --font-ui: 'Literata', 'Iowan Old Style', Georgia, 'Hiragino Mincho ProN', serif; }
+html[data-font="geometric"] { --font-ui: 'Outfit', 'Avenir Next', 'Futura', system-ui, sans-serif; }
+html[data-font="system"] { --font-ui: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
 
 #storage-status:not([hidden]) {
   display: flex;
@@ -1362,7 +1507,7 @@ body.spatial-song-active .wave-panel {
   background: var(--panel-2);
   border: 1px solid var(--border);
   border-radius: 8px;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
+  box-shadow: 0 14px 34px rgb(var(--shadow-rgb) / calc(0.42 * var(--shadow-k)));
 }
 .setting-row {
   display: flex;
@@ -1423,7 +1568,7 @@ body.spatial-song-active .wave-panel {
   display: grid;
   place-items: center;
   padding: 16px;
-  background: rgba(4, 4, 8, 0.72);
+  background: rgb(var(--shadow-rgb) / calc(0.25 + 0.47 * var(--shadow-k)));
   backdrop-filter: blur(5px);
 }
 .eq-panel {
@@ -1433,9 +1578,9 @@ body.spatial-song-active .wave-panel {
   padding: 20px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: #121218;
+  background: var(--panel);
   color: var(--fg);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.56);
+  box-shadow: 0 24px 70px rgb(var(--shadow-rgb) / calc(0.56 * var(--shadow-k)));
 }
 .eq-header,
 .eq-toolbar,
@@ -1463,7 +1608,7 @@ body.spatial-song-active .wave-panel {
   padding: 3px;
   border: 1px solid var(--border);
   border-radius: 7px;
-  background: #0b0b10;
+  background: var(--bg);
 }
 .eq-mode button {
   min-height: 34px;
@@ -4997,17 +5142,33 @@ html.large-text #play { width: 46px; height: 46px; }
 /* Accessibility: high contrast */
 html.high-contrast {
   --bg: #000000;
+  --bg-rgb: 0 0 0;
   --panel: #0b0b10;
+  --panel-rgb: 11 11 16;
   --panel-2: #15151d;
   --border: #8d92a6;
   --fg: #ffffff;
   --fg-dim: #e2e4ee;
   --fg-faint: #c2c6d4;
-  --accent: #cbc1ff;
-  --accent-2: #e0daff;
-  --accent-rgb: 203 193 255;
-  --accent-fg: #000000;
   --focus: #ffe066;
+}
+html.high-contrast:not([data-look]) {
+  --look-accent: #cbc1ff;
+  --look-accent-2: #e0daff;
+  --look-accent-rgb: 203 193 255;
+  --look-accent-fg: #000000;
+}
+html.high-contrast:is([data-look="paper"], [data-look="sakura"], [data-look="daylight"]) {
+  --bg: #ffffff;
+  --bg-rgb: 255 255 255;
+  --panel: #ffffff;
+  --panel-rgb: 255 255 255;
+  --panel-2: #eeeef2;
+  --border: #5c5f6e;
+  --fg: #000000;
+  --fg-dim: #1d1f27;
+  --fg-faint: #34374a;
+  --focus: #000000;
 }
 html.high-contrast :focus-visible { outline-width: 3px; }
 html.high-contrast .col-actions { opacity: 1; }
@@ -5053,16 +5214,17 @@ html.reduce-motion body.override-active .trick-heart-lyrics { transform: none; }
 /* Soft accent glow behind the app; plain black in high contrast. */
 html, body {
   background:
-    radial-gradient(900px 520px at 8% -12%, rgb(var(--accent-rgb) / 0.13), transparent 62%),
-    radial-gradient(700px 420px at 100% 110%, rgb(240 171 252 / 0.06), transparent 60%),
+    radial-gradient(900px 520px at 8% -12%, rgb(var(--accent-rgb) / var(--glow-alpha)), transparent 62%),
+    radial-gradient(700px 420px at 100% 110%, rgb(var(--glow-rgb) / var(--glow-2-alpha)), transparent 60%),
     var(--bg);
   background-attachment: fixed;
 }
-html.high-contrast, html.high-contrast body { background: var(--bg); }
-.topbar, .tabs { background: rgb(13 14 20 / 0.55); backdrop-filter: blur(10px); }
+html.high-contrast, html.high-contrast body,
+html[data-glow="off"], html[data-glow="off"] body { background: var(--bg); }
+.topbar, .tabs { background: rgb(var(--bg-rgb) / 0.55); backdrop-filter: blur(10px); }
 html.high-contrast .topbar, html.high-contrast .tabs { background: var(--bg); backdrop-filter: none; }
 .brand {
-  background: linear-gradient(135deg, #d9d2ff 0%, var(--accent) 45%, #f0abfc 100%);
+  background: linear-gradient(135deg, var(--brand-a) 0%, var(--accent) 45%, var(--brand-b) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -5125,7 +5287,7 @@ html.large-text .controls button { --icon-size: 21px; }
   background:
     radial-gradient(circle at 28% 22%, hsl(var(--art-hue) 85% 78% / 0.55), transparent 55%),
     linear-gradient(140deg, hsl(var(--art-hue) 62% 56%), hsl(calc(var(--art-hue) + 38) 58% 34%));
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08), 0 4px 14px rgb(0 0 0 / 0.28);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08), 0 4px 14px rgb(var(--shadow-rgb) / calc(0.28 * var(--shadow-k)));
 }
 .song-art::before {
   content: attr(data-initial);
@@ -5178,7 +5340,7 @@ body.is-playing .playlist-song.playing .song-art::after { animation-play-state: 
   border-radius: 12px;
   transition: background-color 0.12s ease;
 }
-.song-row:hover { background: rgb(255 255 255 / 0.045); }
+.song-row:hover { background: var(--hover); }
 .song-row.playing { background: rgb(var(--accent-rgb) / 0.10); }
 .song-title-wrap { display: flex; align-items: center; gap: 10px; }
 .col-actions .add-to { width: 32px; height: 32px; border-radius: 50%; font-size: 18px; }
@@ -5187,7 +5349,7 @@ html.large-text .song-art { width: 46px; height: 46px; }
 html.large-text .song-row { grid-template-columns: 46px minmax(0, 1fr) auto; }
 
 /* Player bar */
-.player { background: rgb(22 24 34 / 0.86); backdrop-filter: blur(14px); }
+.player { background: rgb(var(--panel-rgb) / 0.86); backdrop-filter: blur(14px); }
 html.high-contrast .player { background: var(--panel); backdrop-filter: none; }
 .now-playing { display: flex; align-items: center; gap: 12px; }
 .np-text { min-width: 0; }
@@ -5219,7 +5381,7 @@ html.high-contrast .player { background: var(--panel); backdrop-filter: none; }
   scrollbar-gutter: stable;
 }
 .playlist-adder-results::-webkit-scrollbar { width: 10px; }
-.playlist-adder-results::-webkit-scrollbar-track { background: rgb(255 255 255 / 0.04); border-radius: 999px; }
+.playlist-adder-results::-webkit-scrollbar-track { background: var(--hover); border-radius: 999px; }
 .playlist-adder-results::-webkit-scrollbar-thumb {
   background: rgb(var(--accent-rgb) / 0.45);
   border-radius: 999px;
@@ -5273,7 +5435,7 @@ html.reduce-motion .song-art::after { animation: none !important; }
 .playlist-shuffle::before { -webkit-mask-image: var(--icon-shuffle); mask-image: var(--icon-shuffle); }
 
 /* Drawn cover art (songs/covers): fills the tile; the lettered tile shows only as a fallback. */
-.song-art.has-cover { background: #1e2130; }
+.song-art.has-cover { background: var(--panel-2); }
 .song-art.has-cover::before { content: none; }
 .song-art img {
   position: absolute;
@@ -5326,3 +5488,277 @@ body.trick-heart-3d-active .trick-heart-overlay {
   body.motion-3d-active .now-meta h1,
   body.trick-heart-3d-active .now-meta h1 { font-size: 20px; }
 }
+
+/* ==========================================================================
+   Library filters (2026-11-24): saved choices of which songs the Library shows
+   ========================================================================== */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.library-toolbar { justify-content: space-between; gap: 10px 16px; }
+.collection-tabs { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.library-filter-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.library-filter-pick {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg-dim);
+  font-size: 13px;
+  font-weight: 600;
+}
+.library-filter-pick select,
+.lfe-new select {
+  max-width: 200px;
+  padding: 7px 30px 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel) var(--select-caret) right 11px center / 10px 6px no-repeat;
+  color: var(--fg);
+  font-size: 13px;
+  font-weight: 650;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+.library-filter-pick select:disabled { opacity: 0.6; cursor: default; }
+.library-filter-edit,
+.library-filter-editor button,
+.library-filter-notice button {
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--fg);
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.library-filter-edit:hover,
+.library-filter-editor button:hover:not(:disabled),
+.library-filter-notice button:hover { border-color: var(--accent); color: var(--accent); }
+.library-filter-edit[aria-pressed="true"],
+.library-filter-editor .lfe-done,
+#library-filter-notice-show {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+.library-filter-edit[aria-pressed="true"]:hover,
+.library-filter-editor .lfe-done:hover,
+#library-filter-notice-show:hover { background: var(--accent-2); border-color: var(--accent-2); color: var(--accent-fg); }
+.library-filter-editor button:disabled { opacity: 0.45; cursor: default; }
+.library-filter-editor .ghost,
+.library-filter-notice .ghost { background: transparent; color: var(--fg-dim); }
+.lfe-delete.confirming { border-color: var(--danger); color: var(--danger); }
+
+.library-filter-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin: 0 0 12px;
+  padding: 10px 12px 10px 16px;
+  border: 1px solid rgb(var(--accent-rgb) / 0.35);
+  border-radius: 12px;
+  background: rgb(var(--accent-rgb) / 0.08);
+  color: var(--fg);
+  font-size: 13.5px;
+}
+.library-filter-notice[hidden],
+.library-filter-editor[hidden] { display: none; }
+.library-filter-notice-actions { display: flex; gap: 8px; }
+
+.library-filter-editor {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 0 0 12px;
+  padding: 14px 16px;
+  border: 1px solid rgb(var(--accent-rgb) / 0.4);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgb(var(--accent-rgb) / 0.10), transparent 70%), var(--panel);
+  box-shadow: 0 10px 28px rgb(var(--shadow-rgb) / 0.28);
+}
+.lfe-head { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; }
+.lfe-name { display: grid; gap: 4px; color: var(--fg-dim); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; }
+.lfe-name input {
+  width: min(280px, 70vw);
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.lfe-name input:focus { outline: none; border-color: var(--accent); }
+.lfe-count { color: var(--accent); font-size: 13px; font-weight: 750; font-variant-numeric: tabular-nums; }
+.lfe-help { margin: 8px 0 10px; color: var(--fg-dim); font-size: 13px; }
+.lfe-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.lfe-new { display: inline-flex; align-items: center; gap: 8px; color: var(--fg-dim); font-size: 13px; font-weight: 600; }
+.lfe-spacer { flex: 1 1 0; }
+
+/* Choosing songs: each row carries a tick box; hidden songs fade back. */
+.song-row.choosing .col-actions { opacity: 1; }
+.song-row.choosing.song-hidden .song-art { opacity: 0.35; filter: grayscale(0.8); }
+.song-row.choosing.song-hidden .song-name-title,
+.song-row.choosing.song-hidden .song-name-artist { color: var(--fg-faint); }
+.library-filter-toggle {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  margin: 0 4px 0 0;
+  border: 2px solid var(--fg-faint);
+  border-radius: 7px;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.library-filter-toggle:checked {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.library-filter-toggle:checked::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  background: var(--accent-fg);
+  -webkit-mask: var(--icon-tick) center / contain no-repeat;
+  mask: var(--icon-tick) center / contain no-repeat;
+}
+@media (max-width: 640px) {
+  .library-toolbar { align-items: stretch; }
+  .library-filter-bar { width: 100%; }
+  .library-filter-pick { flex: 1 1 auto; min-width: 0; }
+  .library-filter-pick select { flex: 1 1 auto; max-width: none; min-width: 0; }
+  /* On a phone the editor scrolls away with the list instead of covering half of it. */
+  .library-filter-editor { position: static; padding: 12px; }
+  .lfe-spacer { display: none; }
+  .lfe-new { width: 100%; justify-content: space-between; }
+}
+
+/* ==========================================================================
+   Appearance (2026-11-24): theme previews, typeface, density, background glow
+   ========================================================================== */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.theme-option { position: relative; display: grid; gap: 6px; cursor: pointer; }
+.theme-option input { position: absolute; opacity: 0; pointer-events: none; }
+.theme-swatch {
+  position: relative;
+  display: grid;
+  grid-template-rows: 9px 1fr 1fr;
+  gap: 5px;
+  height: 70px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(90px 60px at 0% 0%, rgb(var(--accent-rgb) / 0.22), transparent 70%),
+    var(--bg);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.theme-swatch::before {
+  content: "";
+  width: 34px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--brand-a), var(--accent), var(--brand-b));
+}
+.theme-swatch-row {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px 3px 3px;
+  border-radius: 7px;
+  background: var(--panel);
+}
+.theme-swatch-row::before { content: ""; height: 14px; border-radius: 4px; background: var(--accent); }
+.theme-swatch-row + .theme-swatch-row::before { background: var(--panel-2); }
+.theme-swatch-row::after { content: ""; height: 4px; border-radius: 4px; background: var(--fg-dim); opacity: 0.8; }
+.theme-swatch-row + .theme-swatch-row::after { width: 70%; background: var(--fg-faint); }
+.theme-name { color: var(--fg-dim); font-size: 12.5px; font-weight: 650; text-align: center; }
+.theme-option:hover .theme-swatch { transform: translateY(-1px); }
+.theme-option input:checked + .theme-swatch {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.theme-option input:checked ~ .theme-name { color: var(--fg); }
+.theme-option input:focus-visible + .theme-swatch { outline: 2px solid var(--focus); outline-offset: 3px; }
+.theme-group-label {
+  grid-column: 1 / -1;
+  margin: 4px 2px -2px;
+  color: var(--fg-faint);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.appearance-row { margin-top: 10px; }
+.settings-panel .setting-row-select select,
+.segmented {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+}
+.settings-panel .setting-row-select select {
+  min-width: 190px;
+  padding: 6px 30px 6px 12px;
+  background: var(--bg) var(--select-caret) right 11px center / 10px 6px no-repeat;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+.segmented { display: inline-flex; padding: 3px; gap: 2px; }
+.segmented label { position: relative; }
+.segmented input { position: absolute; opacity: 0; pointer-events: none; }
+.segmented span {
+  display: block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  color: var(--fg-dim);
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.segmented input:checked + span { background: var(--accent); color: var(--accent-fg); }
+.segmented input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.settings-panel .setting-row.setting-row-select,
+.settings-panel .setting-row.setting-row-choice { flex-direction: row; justify-content: space-between; cursor: default; }
+.appearance-open-summary { color: var(--accent); font-size: 11px; font-weight: 750; }
+
+/* Compact list: smaller covers and tighter rows. */
+html[data-density="compact"] .song-list { gap: 0; }
+html[data-density="compact"] .song-row {
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+html[data-density="compact"] .song-row .song-art { width: 36px; height: 36px; border-radius: 8px; }
+@media (min-width: 641px) {
+  html[data-density="compact"] .song-row .song-name { grid-template-columns: minmax(0, max-content) minmax(0, 1fr); align-items: baseline; gap: 10px; }
+}
+html[data-density="compact"] .playlist-song { padding-top: 3px; padding-bottom: 3px; grid-template-columns: 18px 22px 30px minmax(0, 1fr) auto 24px; }
+html[data-density="compact"] .playlist-song .song-art { width: 30px; height: 30px; border-radius: 7px; }
+html[data-density="compact"] .song-row.playing .song-art::after { padding: 9px 0; background-position: 8px 100%, 15px 100%, 22px 100%, 0 0; }
+html[data-density="compact"] .playlist-song.playing .song-art::after { padding: 7px 0; background-position: 5px 100%, 12px 100%, 19px 100%, 0 0; }
+html.large-text[data-density="compact"] .song-row { grid-template-columns: 42px minmax(0, 1fr) auto; padding-top: 6px; padding-bottom: 6px; }
+html.large-text[data-density="compact"] .song-row .song-art { width: 42px; height: 42px; }

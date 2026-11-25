@@ -20,6 +20,8 @@ Live at: https://turbodog111.github.io/vp/
 
 - Auto-discovers every `.m4a` or `.mp3` in `songs/` and `songs/christian/` via the GitHub contents API, preferring `.m4a` when both exist
 - Filter the library by All / Secular / Christian
+- Saved library filters choose which songs the Library shows (see below)
+- Ten themes (seven dark, three light), four typefaces plus the device's own, a compact song list and an optional background glow, under Settings → Appearance
 - Create / delete playlists (stored in `localStorage`)
 - Add/remove songs to playlists from the library
 - Play a playlist in order or shuffle it
@@ -37,6 +39,29 @@ Live at: https://turbodog111.github.io/vp/
 - Individual files >100 MB will be rejected by git.
 - The GitHub API allows 60 unauthenticated requests per IP per hour — plenty for normal use.
 - Playlists are per-browser since they live in `localStorage`. Export/import is not implemented yet.
+
+## Library filters
+
+**Choose songs** in the Library turns on tick boxes: untick the songs you don't want to
+see, or use **Hide all** / **Show all** (after a search or a collection tab they act only on
+the songs listed, e.g. "Show these 13"). The choice saves as you go, under a name you can
+change, and the **Showing** menu switches between saved filters and **All songs**. A filter
+hides songs from the Library, its counts, search, and playback started from the Library;
+playlists are not affected. Each filter also says what happens to **songs added later**:
+they show, or they stay hidden and the Library names them with a one-click **Show** /
+**Keep hidden** choice. Filters live in this browser's `localStorage`
+(`vp_library_filters_v1`). Run `node --test scripts/test_library_filters.cjs` after edits.
+
+## Appearance
+
+Settings → Appearance (also the **Appearance** row in the quick menu) picks a theme, a
+typeface, Comfortable or Compact song rows, and the background glow. Each theme is a set of
+colour tokens under `[data-look="…"]` in `styles.css`; its text meets WCAG AA on every
+background. In the light themes the app is light but Now Playing stays a dark stage,
+because the song scenes and the visualizer are drawn for a dark backdrop. A song's own
+accent colour tints Now Playing only; the rest of the app keeps the chosen theme. The
+`<head>` script in `index.html` applies the saved choices before the page first paints.
+Run `node --test scripts/test_appearance.cjs` after adding or changing a theme.
 
 ## Recording-specific scene data
 

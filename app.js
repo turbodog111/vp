@@ -226,6 +226,12 @@ let playlistOrder = loadPlaylistOrder(playlists);
 let collapsedPlaylists = new Set(loadCollapsedPlaylists(playlists));
 let currentPlaylist = null;
 let activeCollection = readSetting('vp_collection') || 'all';
+// Saved library filters choose which songs the Library shows (see libraryFilterShows).
+const LIBRARY_FILTERS_KEY = 'vp_library_filters_v1';
+const LIBRARY_FILTER_ACTIVE_KEY = 'vp_library_filter_active_v1';
+let libraryFilters = parseLibraryFilters(readSetting(LIBRARY_FILTERS_KEY));
+let activeLibraryFilterId = readSetting(LIBRARY_FILTER_ACTIVE_KEY) || '';
+let libraryFilterEditing = false;
 let tetoFxEnabled = readSetting('vp_teto_fx_enabled') !== 'false';
 // The FX theme picker was retired on 2026-11-21: Teto 1.1 is the one generic visualizer.
 const fxTheme = 'teto11';
@@ -236,6 +242,33 @@ const a11yOptions = {
   largeText: readSetting('vp_a11y_large_text') === 'true',
   highContrast: readSetting('vp_a11y_high_contrast') === 'true',
   motion: ['on', 'off'].includes(readSetting('vp_a11y_reduce_motion')) ? readSetting('vp_a11y_reduce_motion') : null,
+};
+// Appearance (Settings → Appearance). The colours live in styles.css under [data-look];
+// the <head> script applies the same saved choices before first paint.
+const APPEARANCE_LOOKS = [
+  { id: 'iris', name: 'Ink & Iris', scheme: 'dark' },
+  { id: 'ocean', name: 'Deep Sea', scheme: 'dark' },
+  { id: 'ember', name: 'Ember', scheme: 'dark' },
+  { id: 'forest', name: 'Forest', scheme: 'dark' },
+  { id: 'rose', name: 'Rose Noir', scheme: 'dark' },
+  { id: 'synthwave', name: 'Synthwave', scheme: 'dark' },
+  { id: 'graphite', name: 'Graphite', scheme: 'dark' },
+  { id: 'paper', name: 'Paper', scheme: 'light' },
+  { id: 'sakura', name: 'Sakura', scheme: 'light' },
+  { id: 'daylight', name: 'Daylight', scheme: 'light' },
+];
+const APPEARANCE_FONTS = [
+  { id: 'atkinson', name: 'Atkinson Hyperlegible (clearest)', family: null },
+  { id: 'rounded', name: 'Rounded (M PLUS Rounded)', family: 'M+PLUS+Rounded+1c:wght@400;500;700;800' },
+  { id: 'serif', name: 'Book serif (Literata)', family: 'Literata:opsz,wght@7..72,400..800' },
+  { id: 'geometric', name: 'Geometric (Outfit)', family: 'Outfit:wght@400..800' },
+  { id: 'system', name: "This device's own font", family: null },
+];
+const appearance = {
+  look: APPEARANCE_LOOKS.some(look => look.id === readSetting('vp_look')) ? readSetting('vp_look') : 'iris',
+  font: APPEARANCE_FONTS.some(font => font.id === readSetting('vp_font')) ? readSetting('vp_font') : 'atkinson',
+  density: readSetting('vp_density') === 'compact' ? 'compact' : 'comfortable',
+  glow: readSetting('vp_glow') !== 'off',
 };
 let timingDebugEnabled = readSetting('vp_timing_debug_enabled') === 'true';
 let addToActionOpenedAt = 0;
@@ -2717,6 +2750,97 @@ function setAccessibilityOption(option, value) {
   if (audio.paused) drawWaveform(true);
 }
 
+function appearanceLook(id = appearance.look) {
+  return APPEARANCE_LOOKS.find(look => look.id === id) || APPEARANCE_LOOKS[0];
+}
+
+// Puts the saved appearance on <html> and keeps the Settings controls in step. A font
+// other than Atkinson (always loaded) is fetched only once it's chosen.
+function applyAppearance() {
+  const root = document.documentElement;
+  const look = appearanceLook();
+  if (look.id === 'iris') root.removeAttribute('data-look');
+  else root.setAttribute('data-look', look.id);
+  const scheme = document.querySelector('meta[name="color-scheme"]');
+  if (scheme) scheme.content = look.scheme;
+  const font = APPEARANCE_FONTS.find(item => item.id === appearance.font) || APPEARANCE_FONTS[0];
+  if (font.id === 'atkinson') root.removeAttribute('data-font');
+  else root.setAttribute('data-font', font.id);
+  if (font.family) {
+    let link = document.getElementById('appearance-font-css');
+    const href = `https://fonts.googleapis.com/css2?family=${font.family}&display=swap`;
+    if (!link) {
+      link = document.createElement('link');
+      link.id = 'appearance-font-css';
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+    }
+    if (link.getAttribute('href') !== href) link.href = href;
+  }
+  if (appearance.density === 'compact') root.setAttribute('data-density', 'compact');
+  else root.removeAttribute('data-density');
+  if (appearance.glow) root.removeAttribute('data-glow');
+  else root.setAttribute('data-glow', 'off');
+
+  const summary = $('appearance-summary');
+  if (summary) summary.textContent = look.name;
+  document.querySelectorAll('input[name="appearance-look"]').forEach(input => { input.checked = input.value === look.id; });
+  const fontSelect = $('appearance-font');
+  if (fontSelect) fontSelect.value = font.id;
+  document.querySelectorAll('input[name="appearance-density"]').forEach(input => { input.checked = input.value === appearance.density; });
+  const glow = $('appearance-glow');
+  if (glow) glow.checked = appearance.glow;
+}
+
+function setAppearance(option, value) {
+  appearance[option] = value;
+  const stored = { look: ['vp_look', value], font: ['vp_font', value], density: ['vp_density', value], glow: ['vp_glow', value ? 'on' : 'off'] }[option];
+  if (stored) writeSetting(stored[0], stored[1]);
+  applyAppearance();
+  scheduleNowLayoutSync();
+  if (audio.paused) drawWaveform(true);
+}
+
+// Each theme preview is drawn by the theme's own colours: the swatch carries data-look,
+// so styles.css paints it exactly as that theme would paint the app.
+function buildAppearanceControls() {
+  const grid = $('theme-options');
+  if (grid && !grid.querySelector('.theme-option')) {
+    ['dark', 'light'].forEach(scheme => {
+      const label = document.createElement('div');
+      label.className = 'theme-group-label';
+      label.textContent = scheme === 'dark' ? 'Dark' : 'Light';
+      label.setAttribute('aria-hidden', 'true');
+      grid.appendChild(label);
+      APPEARANCE_LOOKS.filter(look => look.scheme === scheme).forEach(look => {
+        const option = document.createElement('label');
+        option.className = 'theme-option';
+        option.innerHTML = `
+          <input type="radio" name="appearance-look">
+          <span class="theme-swatch" aria-hidden="true"><span class="theme-swatch-row"></span><span class="theme-swatch-row"></span></span>
+          <span class="theme-name"></span>
+        `;
+        const input = option.querySelector('input');
+        input.value = look.id;
+        option.querySelector('.theme-swatch').dataset.look = look.id;
+        option.querySelector('.theme-name').textContent = look.name;
+        input.addEventListener('change', () => { if (input.checked) setAppearance('look', look.id); });
+        grid.appendChild(option);
+      });
+    });
+  }
+  const fontSelect = $('appearance-font');
+  if (fontSelect && !fontSelect.options.length) {
+    APPEARANCE_FONTS.forEach(font => fontSelect.add(new Option(font.name, font.id)));
+    fontSelect.addEventListener('change', () => setAppearance('font', fontSelect.value));
+  }
+  document.querySelectorAll('input[name="appearance-density"]').forEach(input => {
+    input.addEventListener('change', () => { if (input.checked) setAppearance('density', input.value); });
+  });
+  $('appearance-glow')?.addEventListener('change', (event) => setAppearance('glow', event.target.checked));
+  applyAppearance();
+}
+
 function setSongMotionFxActive(theme) {
   const track = theme !== 'off' ? window.SongMotionFx?.track(currentSong()) : null;
   const config = track?.theme === theme ? track : null;
@@ -2950,12 +3074,239 @@ function switchView(view) {
   window.LyricWorkbench?.tick(currentCalibratedTime());
 }
 
-function filteredLibraryEntries(filter = '') {
+// The songs the Library lists: the collection tab, the active saved filter (except while
+// its songs are being chosen, when every song is listed with a tick box) and the search.
+function filteredLibraryEntries(filter = '', { ignoreSavedFilter = libraryFilterEditing } = {}) {
   const q = filter.toLowerCase().trim();
+  const saved = ignoreSavedFilter ? null : activeLibraryFilter();
   return library
     .map((song, idx) => ({ song, idx }))
     .filter(({ song }) => activeCollection === 'all' || song.collection === activeCollection)
+    .filter(({ song }) => libraryFilterShows(saved, song.path))
     .filter(({ song }) => !q || song.displayName.toLowerCase().includes(q));
+}
+
+// ---- Saved library filters --------------------------------------------------------
+// A filter remembers every song it has been shown ("seen") and which of those are
+// hidden. Songs added to VP afterwards follow its rule for new songs, so a filter built
+// as "only these songs" stays that way when the library grows.
+function makeLibraryFilter(name, paths = [], id = `f${Date.now().toString(36)}`) {
+  return { id, name, newSongs: 'show', hidden: new Set(), seen: new Set(paths) };
+}
+
+function parseLibraryFilters(text) {
+  let data = null;
+  try { data = JSON.parse(text || 'null'); } catch { return []; }
+  const rows = Array.isArray(data?.filters) ? data.filters : [];
+  const ids = new Set();
+  const paths = value => new Set(Array.isArray(value) ? value.filter(item => typeof item === 'string') : []);
+  return rows.flatMap(row => {
+    const id = typeof row?.id === 'string' ? row.id : '';
+    if (!id || ids.has(id)) return [];
+    ids.add(id);
+    return [{
+      id,
+      name: String(row.name || '').trim().slice(0, 40) || 'Filter',
+      newSongs: row.newSongs === 'hide' ? 'hide' : 'show',
+      hidden: paths(row.hidden),
+      seen: paths(row.seen),
+    }];
+  });
+}
+
+function serializeLibraryFilters(filters) {
+  return JSON.stringify({
+    version: 1,
+    filters: filters.map(({ id, name, newSongs, hidden, seen }) => ({ id, name, newSongs, hidden: [...hidden], seen: [...seen] })),
+  });
+}
+
+function libraryFilterShows(filter, path) {
+  if (!filter) return true;
+  if (filter.seen.has(path)) return !filter.hidden.has(path);
+  return filter.newSongs !== 'hide';
+}
+
+function setLibraryFilterSongs(filter, paths, shown) {
+  paths.forEach(path => {
+    filter.seen.add(path);
+    if (shown) filter.hidden.delete(path);
+    else filter.hidden.add(path);
+  });
+}
+
+// Changing the rule only affects songs added from now on: every song in the library
+// keeps what the filter shows today.
+function setLibraryFilterNewSongs(filter, rule, paths) {
+  paths.filter(path => !filter.seen.has(path))
+    .forEach(path => setLibraryFilterSongs(filter, [path], libraryFilterShows(filter, path)));
+  filter.newSongs = rule === 'hide' ? 'hide' : 'show';
+}
+
+// Songs the filter hasn't been shown yet that it is keeping hidden.
+function newSongsHiddenByFilter(filter, paths) {
+  return filter && filter.newSongs === 'hide' ? paths.filter(path => !filter.seen.has(path)) : [];
+}
+
+function nextLibraryFilterName(filters) {
+  const names = new Set(filters.map(filter => filter.name.toLowerCase()));
+  for (let n = 1; ; n++) {
+    const name = n === 1 ? 'My songs' : `My songs ${n}`;
+    if (!names.has(name.toLowerCase())) return name;
+  }
+}
+
+function activeLibraryFilter() {
+  return libraryFilters.find(filter => filter.id === activeLibraryFilterId) || null;
+}
+
+function saveLibraryFilters() {
+  writeSetting(LIBRARY_FILTERS_KEY, serializeLibraryFilters(libraryFilters));
+  writeSetting(LIBRARY_FILTER_ACTIVE_KEY, activeLibraryFilterId);
+}
+
+function librarySongPaths() {
+  return library.map(song => song.path);
+}
+
+function setActiveLibraryFilter(id) {
+  activeLibraryFilterId = libraryFilters.some(filter => filter.id === id) ? id : '';
+  if (!activeLibraryFilterId) libraryFilterEditing = false;
+  saveLibraryFilters();
+  renderCollectionFilters();
+  renderLibrary($('search').value);
+}
+
+function createLibraryFilter() {
+  const filter = makeLibraryFilter(nextLibraryFilterName(libraryFilters), librarySongPaths());
+  libraryFilters.push(filter);
+  activeLibraryFilterId = filter.id;
+  saveLibraryFilters();
+  setLibraryFilterEditing(true, { focusName: true });
+}
+
+function setLibraryFilterEditing(editing, { focusName = false } = {}) {
+  if (editing && !activeLibraryFilter()) {
+    createLibraryFilter();
+    return;
+  }
+  libraryFilterEditing = !!editing;
+  resetLibraryFilterDelete();
+  renderCollectionFilters();
+  renderLibrary($('search').value);
+  if (editing && focusName) {
+    const name = $('library-filter-name');
+    name?.focus();
+    name?.select();
+  } else if (!editing) {
+    $('library-filter-edit')?.focus();
+  }
+}
+
+// Show or hide one song (a tick box in the list) without redrawing the list, so the
+// list keeps its scroll position and the tick box keeps keyboard focus.
+function toggleLibraryFilterSong(row, song, shown) {
+  const filter = activeLibraryFilter();
+  if (!filter) return;
+  setLibraryFilterSongs(filter, [song.path], shown);
+  saveLibraryFilters();
+  row.classList.toggle('song-hidden', !shown);
+  const box = row.querySelector('.library-filter-toggle');
+  if (box) box.checked = shown;
+  renderCollectionFilters();
+  renderLibraryFilterControls();
+}
+
+function setListedSongsShown(shown) {
+  const filter = activeLibraryFilter();
+  if (!filter) return;
+  setLibraryFilterSongs(filter, filteredLibraryEntries($('search').value).map(entry => entry.song.path), shown);
+  saveLibraryFilters();
+  renderCollectionFilters();
+  renderLibrary($('search').value);
+}
+
+let libraryFilterDeleteTimer = 0;
+function resetLibraryFilterDelete() {
+  clearTimeout(libraryFilterDeleteTimer);
+  const button = $('library-filter-delete');
+  if (!button) return;
+  button.classList.remove('confirming');
+  button.textContent = 'Delete filter';
+}
+
+// Deleting asks once more on the same button (no pop-up), and changes its mind after a few seconds.
+function deleteActiveLibraryFilter() {
+  const button = $('library-filter-delete');
+  const filter = activeLibraryFilter();
+  if (!button || !filter) return;
+  if (!button.classList.contains('confirming')) {
+    button.classList.add('confirming');
+    button.textContent = `Delete “${filter.name}”?`;
+    clearTimeout(libraryFilterDeleteTimer);
+    libraryFilterDeleteTimer = setTimeout(resetLibraryFilterDelete, 4000);
+    return;
+  }
+  libraryFilters = libraryFilters.filter(item => item.id !== filter.id);
+  activeLibraryFilterId = '';
+  libraryFilterEditing = false;
+  resetLibraryFilterDelete();
+  saveLibraryFilters();
+  renderCollectionFilters();
+  renderLibrary($('search').value);
+  showToast('✓', `Deleted “${filter.name}”`);
+  $('library-filter-select')?.focus();
+}
+
+function renderLibraryFilterControls() {
+  const select = $('library-filter-select');
+  if (!select) return;
+  const filter = activeLibraryFilter();
+  const options = [['', 'All songs'], ...libraryFilters.map(item => [item.id, item.name]), ['__new', 'New filter…']];
+  if (select.options.length !== options.length || options.some(([value, label], i) => select.options[i].value !== value || select.options[i].textContent !== label)) {
+    select.textContent = '';
+    options.forEach(([value, label]) => select.add(new Option(label, value)));
+  }
+  select.value = filter ? filter.id : '';
+  select.disabled = libraryFilterEditing;
+
+  const edit = $('library-filter-edit');
+  if (edit) {
+    edit.textContent = libraryFilterEditing ? 'Done' : 'Choose songs';
+    edit.setAttribute('aria-pressed', libraryFilterEditing ? 'true' : 'false');
+  }
+  document.body.classList.toggle('library-choosing', libraryFilterEditing);
+
+  const paths = librarySongPaths();
+  const editor = $('library-filter-editor');
+  if (editor) editor.hidden = !libraryFilterEditing || !filter;
+  if (libraryFilterEditing && filter) {
+    const name = $('library-filter-name');
+    if (name && document.activeElement !== name) name.value = filter.name;
+    const shown = paths.filter(path => libraryFilterShows(filter, path)).length;
+    $('library-filter-count').textContent = `${shown} of ${paths.length} songs shown`;
+    const listed = filteredLibraryEntries($('search').value).length;
+    const narrowed = listed !== library.length;
+    $('library-filter-show-all').textContent = narrowed ? `Show these ${listed}` : 'Show all';
+    $('library-filter-hide-all').textContent = narrowed ? `Hide these ${listed}` : 'Hide all';
+    $('library-filter-show-all').disabled = listed === 0;
+    $('library-filter-hide-all').disabled = listed === 0;
+    $('library-filter-new').value = filter.newSongs;
+  }
+
+  const notice = $('library-filter-notice');
+  if (notice) {
+    const fresh = libraryFilterEditing ? [] : newSongsHiddenByFilter(filter, paths);
+    notice.hidden = fresh.length === 0;
+    if (fresh.length) {
+      const titles = fresh.map(path => songTitleText(library.find(song => song.path === path))).slice(0, 3);
+      const more = fresh.length > 3 ? ` and ${fresh.length - 3} more` : '';
+      $('library-filter-notice-text').textContent = fresh.length === 1
+        ? `A new song isn't shown in “${filter.name}”: ${titles[0]}.`
+        : `${fresh.length} new songs aren't shown in “${filter.name}”: ${titles.join(', ')}${more}.`;
+      $('library-filter-notice-show').textContent = fresh.length === 1 ? 'Show it' : 'Show them';
+    }
+  }
 }
 
 function isLocalHost() {
@@ -3087,14 +3438,19 @@ async function loadLibrary() {
 function renderCollectionFilters() {
   const filter = $('collection-filter');
   if (!filter) return;
+  // Counts follow the saved filter, except while choosing songs (every song is listed then).
+  const saved = libraryFilterEditing ? null : activeLibraryFilter();
   const counts = Object.fromEntries(COLLECTIONS.map(collection => [collection.id, 0]));
+  let total = 0;
   library.forEach(song => {
+    if (!libraryFilterShows(saved, song.path)) return;
+    total++;
     if (counts[song.collection] !== undefined) counts[song.collection]++;
   });
   filter.querySelectorAll('.collection-tab').forEach(button => {
     const collection = button.dataset.collection;
     button.classList.toggle('active', collection === activeCollection);
-    const count = collection === 'all' ? library.length : counts[collection] || 0;
+    const count = collection === 'all' ? total : counts[collection] || 0;
     button.querySelector('.collection-count').textContent = count;
   });
 }
@@ -3112,6 +3468,11 @@ function emptyLibraryText(filter) {
   }
   if (filter.trim()) {
     return `No ${activeCollection === 'all' ? '' : `${collectionLabel(activeCollection).toLowerCase()} `}songs match that search.`;
+  }
+  const saved = libraryFilterEditing ? null : activeLibraryFilter();
+  if (saved) {
+    const where = activeCollection === 'all' ? '' : ` ${collectionLabel(activeCollection).toLowerCase()}`;
+    return `“${saved.name}” doesn't show any${where} songs yet. Use Choose songs to pick some.`;
   }
   if (activeCollection !== 'all') {
     return `No ${collectionLabel(activeCollection).toLowerCase()} songs found.`;
@@ -3141,6 +3502,8 @@ function eventHitsRowActionZone(e, row) {
 }
 
 function openAddToMenuFromEvent(e) {
+  // While choosing songs for a filter, the right edge of a row is its tick box.
+  if (libraryFilterEditing) return false;
   const target = e.target.closest?.('.add-to, .col-actions');
   const row = target?.closest('.song-row') || e.target.closest?.('.song-row');
   const hitAction = !!target || eventHitsRowActionZone(e, row);
@@ -3166,7 +3529,10 @@ function renderLibrary(filter = '') {
   const list = $('library-list');
   const empty = $('library-empty');
   const filtered = filteredLibraryEntries(filter);
+  const choosing = libraryFilterEditing ? activeLibraryFilter() : null;
+  renderLibraryFilterControls();
   list.innerHTML = '';
+  list.classList.toggle('choosing', !!choosing);
   if (filtered.length === 0) {
     empty.textContent = emptyLibraryText(filter);
     empty.classList.remove('hidden');
@@ -3178,6 +3544,28 @@ function renderLibrary(filter = '') {
     li.className = 'song-row';
     li.dataset.libIdx = idx;
     if (queue[queueIndex] === idx) li.classList.add('playing');
+    if (choosing) {
+      const shown = libraryFilterShows(choosing, song.path);
+      li.classList.add('choosing');
+      li.classList.toggle('song-hidden', !shown);
+      li.innerHTML = `
+        <span class="song-art" aria-hidden="true"></span>
+        <span class="col-title song-title-wrap"><span class="song-name"></span></span>
+        <span class="col-actions"><input class="library-filter-toggle" type="checkbox"></span>
+      `;
+      paintSongArt(li.querySelector('.song-art'), song);
+      fillSongName(li.querySelector('.song-name'), song);
+      const box = li.querySelector('.library-filter-toggle');
+      box.checked = shown;
+      box.setAttribute('aria-label', `Show ${songLabel(song)}`);
+      box.addEventListener('change', () => toggleLibraryFilterSong(li, song, box.checked));
+      li.addEventListener('click', (e) => {
+        if (e.target === box) return;
+        toggleLibraryFilterSong(li, song, !box.checked);
+      });
+      list.appendChild(li);
+      return;
+    }
     li.innerHTML = `
       <span class="song-art" aria-hidden="true"></span>
       <span class="col-title song-title-wrap">
@@ -10735,6 +11123,8 @@ document.addEventListener('keydown', (event) => {
   else if (quickMenuOpen()) {
     setQuickMenuOpen(false);
     settingsToggle?.focus();
+  } else if (libraryFilterEditing && $('view-library')?.classList.contains('active')) {
+    setLibraryFilterEditing(false);
   }
 });
 $('settings-open')?.addEventListener('click', openSettingsPanel);
@@ -10746,6 +11136,12 @@ settingsBackdrop?.addEventListener('click', (event) => {
 $('lyrics-open')?.addEventListener('click', () => closeSettingsPanel(false));
 
 applyAccessibilityOptions();
+buildAppearanceControls();
+$('appearance-open')?.addEventListener('click', () => {
+  // Appearance is the panel's first section, so focusing the current theme is enough.
+  openSettingsPanel();
+  document.querySelector('input[name="appearance-look"]:checked')?.focus({ preventScroll: true });
+});
 SYSTEM_REDUCED_MOTION.addEventListener?.('change', () => {
   applyAccessibilityOptions();
   updateFxState();
@@ -10847,6 +11243,43 @@ $('search').addEventListener('input', (e) => renderLibrary(e.target.value));
 
 document.querySelectorAll('.collection-tab').forEach(button => {
   button.addEventListener('click', () => setActiveCollection(button.dataset.collection));
+});
+
+// Saved library filters
+$('library-filter-select')?.addEventListener('change', (event) => {
+  if (event.target.value === '__new') createLibraryFilter();
+  else setActiveLibraryFilter(event.target.value);
+});
+$('library-filter-edit')?.addEventListener('click', () => setLibraryFilterEditing(!libraryFilterEditing));
+$('library-filter-done')?.addEventListener('click', () => setLibraryFilterEditing(false));
+$('library-filter-show-all')?.addEventListener('click', () => setListedSongsShown(true));
+$('library-filter-hide-all')?.addEventListener('click', () => setListedSongsShown(false));
+$('library-filter-delete')?.addEventListener('click', deleteActiveLibraryFilter);
+$('library-filter-name')?.addEventListener('input', (event) => {
+  const filter = activeLibraryFilter();
+  if (!filter) return;
+  filter.name = event.target.value.trim().slice(0, 40) || 'Untitled filter';
+  saveLibraryFilters();
+  renderLibraryFilterControls();
+});
+$('library-filter-name')?.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') setLibraryFilterEditing(false);
+});
+$('library-filter-new')?.addEventListener('change', (event) => {
+  const filter = activeLibraryFilter();
+  if (!filter) return;
+  setLibraryFilterNewSongs(filter, event.target.value, librarySongPaths());
+  saveLibraryFilters();
+});
+[['library-filter-notice-show', true], ['library-filter-notice-keep', false]].forEach(([id, shown]) => {
+  $(id)?.addEventListener('click', () => {
+    const filter = activeLibraryFilter();
+    if (!filter) return;
+    setLibraryFilterSongs(filter, newSongsHiddenByFilter(filter, librarySongPaths()), shown);
+    saveLibraryFilters();
+    renderCollectionFilters();
+    renderLibrary($('search').value);
+  });
 });
 
 document.querySelectorAll('.tab').forEach(tab => {
