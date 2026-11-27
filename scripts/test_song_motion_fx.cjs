@@ -166,7 +166,7 @@ test('Your Reality: distinct stages, the full supplied sheet, independently time
       : '578f7a656c9775beee7cc3a0d56faaa2ff84348be53e9f7177b889bf941bc05a');
     assert.equal(sheet.rows.flatMap(r=>r.words.en).length,caleb ? 214 : 210);
     const anchors = caleb
-      ? [[12,-1],[40,-1],[54.8,-1],[55.2,0],[66,1],[99,-1],[106,7],[145,-1],[161,13],[181.9,15],[209.7,21],[214,-1],[245,-1]]
+      ? [[0,-1],[9.8,-1],[10.15,0],[20.96,1],[54,-1],[61,7],[99.9,-1],[115.96,13],[136.85,15],[164.65,21],[165.6,21],[166,-1],[179,-1]]
       : key === 'your-reality-pop-punk'
       ? [[9,-1],[19,-1],[19.5,0],[48,5],[52,6],[59,-1],[64,7],[102,-1],[123,14],[128,-1],[148.5,19],[152,-1],[158,20],[160,-1]]
       : [[5,-1],[12,0],[43,5],[48,6],[54,-1],[63,7],[102,-1],[134,-1],[165,20],[173,-1]];
@@ -242,6 +242,26 @@ test('pop-punk shares the original letter, not its audio clock or final note', a
   assert.notDeepEqual(render(api, 12), frame, 'the original is sung here, the cover is not');
   await api.activate(original);
   assert.deepEqual(render(api, 12), frame);
+});
+
+test("Caleb's music edit keeps every vocal boundary and the instrumental coda on the edited clock", () => {
+  const key = 'your-reality-caleb-hyles';
+  const receipt = JSON.parse(fs.readFileSync(path.join(root, 'songs/imports', key + '.json')));
+  const sheet = lyricFor(key), data = dataFor(key);
+  assert.equal(receipt.trimStart, 45.045);
+  assert.equal(receipt.trimEnd, 225.7);
+  assert.ok(Math.abs(receipt.trimEnd - receipt.trimStart - sheet.duration) < .0001);
+  assert.equal(sheet.duration, data.duration);
+  const shift = Math.round(receipt.trimStart * 1000);
+  const originalClock = sheet.rows.map(row => [row, ...row.words.en].map(cue =>
+    [cue.start, cue.end].map(t => Math.round(t * 1000) + shift)));
+  // Fingerprint of all checked cues in the previously published full upload.
+  assert.equal(crypto.createHash('sha256').update(JSON.stringify(originalClock)).digest('hex'),
+    '56295e7a3fa6fab03ebd91e16fc450670c472e01e9cd7c76d5971697d9e7ab59');
+  assert.equal(sheet.rows[0].start, 9.955);
+  assert.equal(sheet.rows.at(-1).end, 165.675);
+  const at = t => data.energy[Math.round((t - data.sampleOffset) / data.sampleInterval)];
+  assert.ok(at(170) > 30 && at(180.6) <= 2, 'music plays after the last lyric and decays before the end');
 });
 
 test('Your Reality metal: notes cross the playhead as words are sung; bar lines cross it on downbeats', async () => {

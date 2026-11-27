@@ -1042,8 +1042,9 @@ function normalizedMediaUrl(value) {
   if (!value) return '';
   try {
     const url = new URL(value, window.location.href);
-    url.searchParams.delete('_vp_retry');
-    return `${url.origin}${url.pathname}`;
+    // Retries address the same media, but two edits can share a playlist path.
+    const edit = url.searchParams.get('vp_edit');
+    return `${url.origin}${url.pathname}${edit ? '?vp_edit=' + encodeURIComponent(edit) : ''}`;
   } catch {
     return String(value).split('?')[0];
   }
@@ -3312,7 +3313,7 @@ function mapCollectionItems(collection, items) {
       id: path,
       name: i.name,
       path,
-      url: `./${encodePath(path)}`,
+      url: `./${encodePath(path)}${i.sha ? '?vp_edit=' + encodeURIComponent(i.sha) : ''}`,
       collection: collection.id,
       collectionLabel: collection.label,
       displayName: metadata.display || `${metadata.artist} — ${metadata.title}`,

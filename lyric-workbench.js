@@ -229,7 +229,7 @@
     async function loadSynchronized(expected) {
       const startingRevision = revision;
       try {
-        if (!catalogRequest) catalogRequest = fetch('./songs/lyrics/aligned/manifest.json').then(response => {
+        if (!catalogRequest) catalogRequest = fetch('./songs/lyrics/aligned/manifest.json', { cache: 'no-cache' }).then(response => {
           if (!response.ok) throw new Error('Synchronized lyric list unavailable.');
           return response.json();
         }).catch(error => { catalogRequest = null; throw error; });
@@ -238,7 +238,7 @@
         if (!entry || !/^[a-z0-9-]+\.json$/.test(entry.file)) return;
         let timeline = preparedCache.get(expected);
         if (!timeline) {
-          const response = await fetch('./songs/lyrics/aligned/' + entry.file);
+          const response = await fetch('./songs/lyrics/aligned/' + entry.file, { cache: 'no-cache' });
           if (!response.ok) throw new Error('Synchronized lyric file unavailable.');
           timeline = decode(await response.json(), expected);
           if (!validate(timeline).ready) throw new Error('Synchronized lyric file has invalid timing.');

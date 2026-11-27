@@ -82,7 +82,9 @@ beat and amplitude data. The scenes also read the recording's synchronized
 lyric file in `songs/lyrics/aligned/`, keeping only when each word is sung and how many
 letters it has; the words themselves never reach the scene. In the letter, the pen writes
 one handwritten word for each sung word and rests when nobody is singing. The pop-punk
-cover's spoken intro is preserved without starting the letter. A full page
+cover's spoken intro is preserved without starting the letter. Caleb's edit keeps
+the instrumental opening and final chord while omitting his video's spoken intro
+and end card; its cues use the edited audio's clock. A full page
 breaks into drifting pixels before the next is written, the window light moves from
 afternoon to dusk, and the letter is sealed after the last line. In the hall, a score
 scrolls past a playhead: a note crosses it as each word is sung, and a bar line crosses

@@ -27,6 +27,24 @@ function deferred() {
   const promise = new Promise((a, b) => { resolve = a; reject = b; });
   return { promise, resolve, reject };
 }
+test('a revised audio file keeps its playlist identity but cannot reuse an older media URL', () => {
+  const c=context(['audioBaseName','audioFormatRank','preferredAudioFiles','prettyName','encodePath',
+    'mapCollectionItems','songRef','normalizedMediaUrl','sameMediaUrl'], {
+    AUDIO_EXTENSION_RE:/\.(mp3|m4a)$/i, AUDIO_FILE_RE:/\.(mp3|m4a)$/i, SONG_METADATA_OVERRIDES:{},
+    window:{location:{href:'https://example.test/vp/'}}
+  });
+  const catalog=JSON.parse(fs.readFileSync(path.join(ROOT,'songs/manifest.json')));
+  const row=catalog.find(r=>r.name==='Caleb Hyles - Your Reality.m4a');
+  const bytes=fs.readFileSync(path.join(ROOT,'songs',row.name));
+  const gitBlob=require('node:crypto').createHash('sha1').update('blob '+bytes.length+'\0').update(bytes).digest('hex');
+  assert.equal(row.sha,gitBlob);
+  const map = entry => c.mapCollectionItems({folder:'songs',id:'secular',label:'Secular'},[entry])[0];
+  const edit=map(row), old=map({...row,sha:undefined});
+  assert.equal(c.songRef(edit),c.songRef(old));
+  assert.equal(old.url,'./songs/Caleb%20Hyles%20-%20Your%20Reality.m4a');
+  assert.equal(c.sameMediaUrl(old.url,edit.url),false);
+  assert.equal(c.sameMediaUrl(edit.url,edit.url+'&_vp_retry=123'),true);
+});
 function element() {
   const classes = new Set();
   return { textContent: '', value: '', hidden: false, disabled: false, dataset: {}, children: [],

@@ -15,7 +15,7 @@ window.SongMotionFx = (() => {
       source: 'https://www.youtube.com/watch?v=JGwhp0PKcX0'
     }),
     'songs/caleb hyles - your reality': Object.freeze({
-      key: 'your-reality-caleb-hyles', theme: 'your-reality', bpm: 105, beatOffset: .152,
+      key: 'your-reality-caleb-hyles', theme: 'your-reality', bpm: 105, beatOffset: .25,
       title: 'Your Reality', data: './songs/motion/your-reality-caleb-hyles.json',
       lyrics: './songs/lyrics/aligned/your-reality-caleb-hyles.json',
       source: 'https://www.youtube.com/watch?v=jwa1Bf_pIV4'
@@ -151,9 +151,10 @@ window.SongMotionFx = (() => {
     const timeout = setTimeout(() => request.abort(), 8000);
     try {
       // Word timings are optional: a scene without them falls back to its measured beat.
-      const words = config.lyrics ? fetch(config.lyrics, { signal: request.signal })
+      const options = { signal: request.signal, cache: 'no-cache' };
+      const words = config.lyrics ? fetch(config.lyrics, options)
         .then(reply => reply.ok ? reply.json() : null).catch(() => null) : null;
-      const response = await fetch(config.data, { signal: request.signal });
+      const response = await fetch(config.data, options);
       if (!response.ok) throw new Error(`Motion data HTTP ${response.status}`);
       const data = await response.json();
       if (!validData(data)) throw new Error('Invalid motion data');
