@@ -14,7 +14,8 @@ const recordings = [
   ['butter', 'BTS - Butter.m4a'],
   ['your-reality', 'Dan Salvato feat. Jillian Ashcraft - Your Reality.m4a'],
   ['your-reality-metal', 'FalKKonE feat. Rena - Your Reality (Intense Symphonic Metal Cover).m4a'],
-  ['your-reality-pop-punk', 'The Juicebox feat. Vannamelon - Your Reality (Pop Punk Cover).m4a']
+  ['your-reality-pop-punk', 'The Juicebox feat. Vannamelon - Your Reality (Pop Punk Cover).m4a'],
+  ['your-reality-caleb-hyles', 'Caleb Hyles - Your Reality.m4a']
 ];
 const dataFor = key => JSON.parse(fs.readFileSync(path.join(root, 'songs/motion', `${key}.json`)));
 const lyricFor = key => JSON.parse(fs.readFileSync(path.join(root, 'songs/lyrics/aligned', `${key}.json`)));
@@ -95,7 +96,7 @@ for (const [key, name] of recordings) {
       assert.ok(Math.abs(data[band].length * data.sampleInterval - data.duration) < 0.1);
     }
     assert.equal(data.sampleInterval, 0.04);
-    assert.ok(Math.abs(data.bpm - { override: 204, 'petal-lament': 170, marshmary: 182, dynamite: 114, butter: 110, 'your-reality': 105, 'your-reality-metal': 105, 'your-reality-pop-punk': 120 }[key]) < 1);
+    assert.ok(Math.abs(data.bpm - { override: 204, 'petal-lament': 170, marshmary: 182, dynamite: 114, butter: 110, 'your-reality': 105, 'your-reality-metal': 105, 'your-reality-pop-punk': 120, 'your-reality-caleb-hyles': 105 }[key]) < 1);
     assert.equal(config.bpm, data.bpm, 'fallback uses the measured tempo');
     assert.equal(config.beatOffset, data.beatOffset, 'fallback uses the measured phase');
   });
@@ -157,11 +158,16 @@ test('Your Reality: distinct stages, the full supplied sheet, independently time
     assert.equal(source.alignment.audioSha256,data.audioSha256);
     assert.equal(entries[0].audioSha256,data.audioSha256);
     assert.deepEqual(Array.from(W.validate(sheet,data.duration).errors),[]);
-    assert.equal(entries[0].lines,21); assert.equal(sheet.rows.length,21);
+    const caleb = key === 'your-reality-caleb-hyles';
+    assert.equal(entries[0].lines,caleb ? 22 : 21); assert.equal(sheet.rows.length,entries[0].lines);
     const text=sheet.rows.map(r=>r.en).join('\n')+'\n';
-    assert.equal(crypto.createHash('sha256').update(text).digest('hex'),'578f7a656c9775beee7cc3a0d56faaa2ff84348be53e9f7177b889bf941bc05a');
-    assert.equal(sheet.rows.flatMap(r=>r.words.en).length,210);
-    const anchors = key === 'your-reality-pop-punk'
+    assert.equal(crypto.createHash('sha256').update(text).digest('hex'),caleb
+      ? '7b27ae564d27bf61e768007a51754e4d0b702d4f4dc79b2b7b940864f96e8afa'
+      : '578f7a656c9775beee7cc3a0d56faaa2ff84348be53e9f7177b889bf941bc05a');
+    assert.equal(sheet.rows.flatMap(r=>r.words.en).length,caleb ? 214 : 210);
+    const anchors = caleb
+      ? [[12,-1],[40,-1],[54.8,-1],[55.2,0],[66,1],[99,-1],[106,7],[145,-1],[161,13],[181.9,15],[209.7,21],[214,-1],[245,-1]]
+      : key === 'your-reality-pop-punk'
       ? [[9,-1],[19,-1],[19.5,0],[48,5],[52,6],[59,-1],[64,7],[102,-1],[123,14],[128,-1],[148.5,19],[152,-1],[158,20],[160,-1]]
       : [[5,-1],[12,0],[43,5],[48,6],[54,-1],[63,7],[102,-1],[134,-1],[165,20],[173,-1]];
     for (const [time,line] of anchors)
@@ -176,9 +182,10 @@ test('Your Reality: scenes receive when each word is sung and how long it is, ne
   const { api } = create();
   for (const [key] of recordings.filter(([k]) => k.startsWith('your-reality'))) {
     const vocal = api.vocalTimeline(lyricFor(key));
-    assert.equal(vocal.lines.length, 21);
+    const caleb = key === 'your-reality-caleb-hyles';
+    assert.equal(vocal.lines.length, caleb ? 22 : 21);
     const words = vocal.lines.flatMap(line => [...line.words]);
-    assert.equal(words.length, 210);
+    assert.equal(words.length, caleb ? 214 : 210);
     for (const word of words) {
       assert.deepEqual(Object.keys(word).sort(), ['end', 'n', 'start']);
       assert.ok(word.end > word.start && word.n >= 1 && word.n <= 14);

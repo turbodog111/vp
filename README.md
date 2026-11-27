@@ -75,7 +75,7 @@ are fitted to the selected recording. Visuals use the native playback clock,
 bounded canvas drawing, the existing frame limiter, and reduced-motion settings.
 These are energy-driven scenes, not guessed lyric/chorus timelines.
 
-The original Your Reality and The Juicebox feat. Vannamelon's pop-punk cover share
+The original Your Reality, Caleb Hyles's cover, and The Juicebox feat. Vannamelon's pop-punk cover share
 `your-reality-fx.js` (a letter written by a window); FalKKonE feat. Rena uses
 `your-reality-metal-fx.js` (a concert hall). Each recording has its own measured
 beat and amplitude data. The scenes also read the recording's synchronized

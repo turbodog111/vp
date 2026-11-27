@@ -1,0 +1,16 @@
+{
+  "recording": "songs/christian/Cory Asbury - Outsing the Angels.m4a",
+  "title": "Outsing the Angels",
+  "artist": "Cory Asbury",
+  "songwriters": ["Cory Asbury", "Ran Jackson", "Ricky Jackson", "Paul Duncan"],
+  "source": "https://www.youtube.com/watch?v=eLJO5_WOLjI",
+  "sourceTitle": "Outsing The Angels (Official Video) - Cory Asbury",
+  "sourceChannel": "Cory Asbury",
+  "rendition": "Full audio of the artist's official video; no trimming or tempo change.",
+  "sourceDuration": 253.141,
+  "duration": 253.132354,
+  "encoding": "AAC 192k target, 48kHz stereo, faststart",
+  "sourceAudioSha256": "6db5bbb41bae40863e92b8cbc26a3d71f6c5d48a758b4e8b3c282c41f7586adc",
+  "outputAudioSha256": "4a18c1622c9dc755d20539a7c740b41a3a3a68bee4d157b36f117054f057bfc2",
+  "importDate": "2026-11-26"
+}

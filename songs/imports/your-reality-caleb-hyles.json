@@ -1,0 +1,18 @@
+{
+  "recording": "songs/Caleb Hyles - Your Reality.m4a",
+  "title": "Your Reality",
+  "artist": "Caleb Hyles",
+  "composer": "Dan Salvato",
+  "interpolation": "Doki Doki Forever by OR3O, credited in the video description",
+  "source": "https://www.youtube.com/watch?v=jwa1Bf_pIV4",
+  "sourceTitle": "Your Reality (Doki Doki Literature Club) - Cover by Caleb Hyles",
+  "sourceChannel": "Caleb Hyles",
+  "rendition": "Complete linked cover/remix, including spoken introduction, interpolation and outro; no trimming or tempo change.",
+  "sourceDuration": 249.541,
+  "duration": 249.514688,
+  "encoding": "AAC 192k target, 48kHz stereo, faststart",
+  "sourceAudioSha256": "b13dfd46fd2ce8fe3864125cbdfdfb68f01fc05ce5296c96257e7d717282f8b6",
+  "outputAudioSha256": "95ec1f92a0f65488c7569f7aee39aa892f0df3f0b62e09315a2df7bb650bfb8d",
+  "importDate": "2026-11-26",
+  "graphics": "The original letter-writing theater, with this recording's own motion and vocal timing."
+}

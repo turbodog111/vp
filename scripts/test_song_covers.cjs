@@ -52,7 +52,7 @@ test('each cover is its own self-contained SVG drawing', () => {
   for (const slug of Object.keys(covers)) {
     const svg = fs.readFileSync(path.join(root, 'songs/covers', `${slug}.svg`), 'utf8');
     assert.match(svg, /^<svg xmlns='http:\/\/www\.w3\.org\/2000\/svg' viewBox='0 0 100 100'>/, slug);
-    assert.ok(svg.endsWith('</svg>'), slug);
+    assert.ok(svg.trimEnd().endsWith('</svg>'), slug);
     assert.doesNotMatch(svg, /<script|<foreignObject|<image|href=['"]https?:/i, `${slug} loads nothing else`);
     assert.ok(svg.length < 40000, `${slug} stays small`);
     const hash = crypto.createHash('sha256').update(svg).digest('hex');

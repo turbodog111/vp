@@ -82,5 +82,12 @@
     "lines": 21,
     "status": "published",
     "audioSha256": "94deac5c9e2943e0bf19265d05d581574ab3a75fef913e16cc4458e37aec445e"
+  },
+  {
+    "recording": "songs/Caleb Hyles - Your Reality.m4a",
+    "file": "your-reality-caleb-hyles.json",
+    "lines": 22,
+    "status": "published",
+    "audioSha256": "95ec1f92a0f65488c7569f7aee39aa892f0df3f0b62e09315a2df7bb650bfb8d"
   }
 ]

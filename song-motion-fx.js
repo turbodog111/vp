@@ -14,6 +14,12 @@ window.SongMotionFx = (() => {
       lyrics: './songs/lyrics/aligned/your-reality-pop-punk.json',
       source: 'https://www.youtube.com/watch?v=JGwhp0PKcX0'
     }),
+    'songs/caleb hyles - your reality': Object.freeze({
+      key: 'your-reality-caleb-hyles', theme: 'your-reality', bpm: 105, beatOffset: .152,
+      title: 'Your Reality', data: './songs/motion/your-reality-caleb-hyles.json',
+      lyrics: './songs/lyrics/aligned/your-reality-caleb-hyles.json',
+      source: 'https://www.youtube.com/watch?v=jwa1Bf_pIV4'
+    }),
     'songs/falkkone feat. rena - your reality (intense symphonic metal cover)': Object.freeze({
       key: 'your-reality-metal', theme: 'your-reality-metal', bpm: 105.01, beatOffset: .286,
       title: 'Your Reality (Intense Symphonic Metal Cover)', data: './songs/motion/your-reality-metal.json',
