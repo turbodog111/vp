@@ -2,17 +2,17 @@
 // The hall breathes with the recording: fog drifts across the floor, light falls from the
 // rose window, candles and embers burn, and the organ pipes sound on the measured bass hits.
 // Along the floor a score scrolls past a playhead: a bar line crosses it on every downbeat and
-// a note crosses it as each word is sung (held notes trail a bar of light), in the same
-// colours as the sung lyric words. Note heights are decorative; their timing is measured.
+// each measured vocal (or lead guitar) pitch crosses it at its own onset.
 // When the last line ends the lights go down and the candles are left burning.
 // Every frame is a pure function of media time. Original imagery; no lyrics are drawn.
 ((root, factory) => {
   const kit = typeof module === 'object' && module.exports ? require('./mv-kit.js') : root.MvKit;
   const set = typeof module === 'object' && module.exports ? require('./reality-set.js') : root.RealitySet;
-  const fx = factory(kit,set);
+  const notes = typeof module === 'object' && module.exports ? require('./reality-score.js') : root.RealityScore;
+  const fx = factory(kit,set,notes);
   if (typeof module === 'object' && module.exports) module.exports = fx;
   else root.RealityMetalFx = fx;
-})(typeof window === 'object' ? window : globalThis, (kit,set) => {
+})(typeof window === 'object' ? window : globalThis, (kit,set,notes) => {
   'use strict';
   const { hash, hash2, sample, linear, radial, rgba, blend, mix, easeOut } = kit;
   const tau = Math.PI * 2;
@@ -48,21 +48,6 @@
 
   // MARK: the singer's timing
 
-  const scores = new WeakMap();
-  /** One note per sung word. */
-  function score(vocal) {
-    let notes = scores.get(vocal);
-    if (!notes) {
-      notes = [];
-      vocal.lines.forEach((ln, li) => ln.words.forEach((word, wi) => {
-        const contour = 4 + 3.2 * Math.sin(li * 1.9 + wi * .83) + (hash2(li + 1, wi + 1) - .5) * 2.4;
-        notes.push({ start: word.start, end: word.end, held: word.end - word.start > .85,
-          pos: Math.max(-1, Math.min(9, Math.round(contour))) });
-      }));
-      scores.set(vocal, notes);
-    }
-    return notes;
-  }
   /** 1 while a word is being sung, easing off over a third of a second after it. */
   function voiceAt(vocal, t) {
     if (!vocal) return 0;
@@ -250,7 +235,26 @@
       }
     }
   }
-  /** Bar lines on the measured downbeats and one note per sung word, scrolling past a playhead. */
+  function clef(c,x,y,g) {
+    c.save();c.translate(x,y);c.scale(g,g);c.beginPath();
+    c.moveTo(.25,.58);c.bezierCurveTo(-1.02,.48,-.68,-1.13,.23,-.83);
+    c.bezierCurveTo(1.45,-.55,.97,1.30,-.18,1.36);c.bezierCurveTo(-2.02,1.4,-1.8,-.88,-.76,-2.06);
+    c.bezierCurveTo(.18,-3.18,1.23,-4.34,.36,-5.12);c.bezierCurveTo(-.58,-4.52,-.32,-3.12,-.12,-1.82);
+    c.lineTo(.47,2.37);c.bezierCurveTo(.64,3.55,-.94,3.66,-.9,2.79);
+    line(c,'#ebd7c5',.23);c.beginPath();c.arc(-.74,2.75,.27,0,tau);c.fillStyle='#ebd7c5';c.fill();c.restore();
+  }
+  function accidental(c,x,y,g,type,col) {
+    c.beginPath();
+    if(type==='sharp'){
+      for(const dx of [-.25,.22]){c.moveTo(x+dx*g,y-.97*g);c.lineTo(x+(dx-.04)*g,y+.87*g);}
+      for(const dy of [-.32,.31]){c.moveTo(x-.53*g,y+(dy+.12)*g);c.lineTo(x+.48*g,y+(dy-.12)*g);}
+    }else{
+      c.moveTo(x-.24*g,y-.96*g);c.lineTo(x-.24*g,y+.42*g);c.lineTo(x+.26*g,y+.26*g);
+      c.moveTo(x-.24*g,y-.22*g);c.lineTo(x+.26*g,y-.39*g);c.lineTo(x+.26*g,y+.89*g);
+    }
+    line(c,col,Math.max(.7,g*.14));
+  }
+  // A treble staff with a proportional time axis; stems group durations approximately.
   function scoreNotes(c, w, h, m, sec, b, drive, hit, solo, voice) {
     // Narrow stages scroll faster so neighbouring notes do not overlap.
     const play = w * .5, speed = Math.max(w / (LEAD * 2), h * .1), lead = play / speed, gap = h * .017;
@@ -268,26 +272,35 @@
       c.beginPath(); c.moveTo(x, lineY(x, 0)); c.lineTo(x, lineY(x, 4));
       line(c, rgba(near ? SINGING : '#b6a4b0', .22 + .5 * near), Math.max(1, h * (.0018 + .002 * near)));
     }
-    if (!m.vocal) return;
-    for (const note of score(m.vocal)) {
-      if (note.end < sec - lead || note.start > sec + lead) continue;
+    clef(c,w*.032,lineY(w*.032,3),gap);
+    const source=m.variant==='your-reality-metalized'?'guitar':'vocals';
+    for (const note of notes.between(m.data,source,sec-lead,sec+lead)) {
       const x = at(note.start), tailX = at(note.end);
-      const y = lineY(x, 4) - note.pos * gap / 2;
+      const y = lineY(x,4-note.step*.5);
       const singing = sec >= note.start && sec < note.end, past = sec >= note.end;
       const fadeIn = Math.min(1, (w - x) / (w * .08)), fadeOut = past ? Math.max(0, 1 - (sec - note.end) / lead) : 1;
       const alpha = Math.max(0, Math.min(fadeIn, fadeOut)) * (singing ? 1 : past ? .8 : .6);
-      if (alpha <= .01) continue;
+      if (alpha <= .01 || x<w*.064) continue;
       const color = singing ? SINGING : past ? SUNG : WAITING;
+      for(let step=note.step<0?-2:10;note.step<0?step>=note.step:step<=note.step;step+=note.step<0?-2:2){
+        const ly=lineY(x,4-step*.5);c.beginPath();c.moveTo(x-gap*.96,ly);c.lineTo(x+gap*.96,ly);line(c,rgba(color,alpha*.8),Math.max(.8,gap*.12));
+      }
+      if(note.accidental)accidental(c,x-gap*1.4,y,gap,note.accidental,rgba(color,alpha));
       if (note.end - note.start > .35) {
         c.beginPath(); c.moveTo(x, y); c.lineTo(Math.min(tailX, w), y);
         line(c, rgba(color, alpha * .45), gap * .38);
       }
       if (singing) { c.beginPath(); c.arc(x, y, gap * 1.5, 0, tau); c.fillStyle = rgba('#ffd9a0', .22); c.fill(); }
       c.beginPath(); c.ellipse(x, y, gap * .64, gap * .45, -.35, 0, tau);
-      if (note.held) { c.fillStyle = rgba('#1a1520', alpha); c.fill(); line(c, rgba(color, alpha), gap * .2); }
+      const beats=(note.end-note.start)/m.period;
+      if (beats>=1.55) { c.fillStyle = rgba('#1a1520', alpha); c.fill(); line(c, rgba(color, alpha), gap * .2); }
       else { c.fillStyle = rgba(color, alpha); c.fill(); }
-      const up = note.pos < 4, sx = x + (up ? gap * .58 : -gap * .58);
-      c.beginPath(); c.moveTo(sx, y); c.lineTo(sx, y + (up ? -gap * 3.2 : gap * 3.2));
+      if(beats>=3.5)continue;
+      const up = note.step < 4, sx = x + (up ? gap * .58 : -gap * .58), endY=y+(up?-1:1)*gap*3.2;
+      c.beginPath(); c.moveTo(sx, y); c.lineTo(sx,endY);
+      const flags=beats<.36?2:beats<.73?1:0;
+      for(let i=0;i<flags;i++){const yy=endY+(up?1:-1)*i*gap*.58;
+        c.moveTo(sx,yy);c.quadraticCurveTo(sx+gap*1.23,yy+(up?1:-1)*gap*.65,sx+gap*.75,yy+(up?1:-1)*gap*1.45);}
       line(c, rgba(color, alpha), Math.max(1, gap * .11));
     }
   }

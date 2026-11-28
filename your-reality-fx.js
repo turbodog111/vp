@@ -1,122 +1,24 @@
-// Your Reality (Dan Salvato feat. Jillian Ashcraft) — "The Letter". A letter is written at
-// a desk by a window while the song is sung. The pen writes one handwritten line for each
-// sung line and one word for each sung word, and it lifts off the page when the voice rests.
-// Held notes pool ink at the nib. A full page curls back into the light before the next one
-// is begun. Afternoon light crosses the page and turns to dusk by the end, leaf shadows sway
-// with the music, and the piano keys sound on the recording's measured onsets (the piano
-// says more while the voice rests). After the last line the pen is put away and the letter
-// is sealed. Every frame is a pure function of media time. Original imagery; the scene
-// uses only word timings and word lengths, never the words themselves.
+// A recording-specific letter: the nib and the ink follow the same actual lyric strokes.
 ((root, factory) => {
   const kit = typeof module === 'object' && module.exports ? require('./mv-kit.js') : root.MvKit;
   const set = typeof module === 'object' && module.exports ? require('./reality-set.js') : root.RealitySet;
-  const api = factory(kit, set);
+  const hand = typeof module === 'object' && module.exports ? require('./reality-manuscript.js') : root.RealityManuscript;
+  const score = typeof module === 'object' && module.exports ? require('./reality-score.js') : root.RealityScore;
+  const api = factory(kit,set,hand,score);
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.RealityLetterFx = api;
-})(typeof window === 'object' ? window : globalThis, (kit, set) => {
+})(typeof window === 'object' ? window : globalThis, (kit,set,hand,score) => {
   'use strict';
 
-  const { TAU, clamp, mix, ease, easeOut, fract, hash, hash2, rgba, blend, linear, radial, sample, vignette } = kit;
-  const INK = '#39404f', FRESH = '#18204f', PINK = '#ae4c70', WAX = '#952c4d';
-  const ROWS = 3;            // handwritten lines per page
-  const SECTION_GAP = 6;     // a rest this long ends a section, so the next one starts a new page
-  const REST_GAP = 2.2;      // a rest this long sends the pen back to its resting place
-  const DISSOLVE = 1.2;      // maximum duration of a sheet turn
-  const SPACE = 1.5;         // word space, in letter widths
-  const STILL_TIME = 27.2;   // reduced motion holds this one moment: two lines written, pen at rest
+  const { TAU, clamp, mix, ease, easeOut, fract, hash, rgba, blend, linear, radial, vignette } = kit;
+  const INK = '#39404f', PINK = '#ae4c70', WAX = '#952c4d';
   // Light colour through the afternoon (fraction of the song → colour).
   const DAYLIGHT = [[0, '#fff3da'], [.5, '#ffe4b4'], [.76, '#ffcaa6'], [.9, '#f4b9b6'], [1, '#bcc6f2']];
 
-  // MARK: timing plan (built once per timeline)
-
-  const plans = new WeakMap();
-  function plan(vocal) {
-    let p = plans.get(vocal);
-    if (p) return p;
-    const lines = vocal.lines.map((line, index) => ({ ...line, index, words: [] }));
-    // Sections split at long rests; each section is shared out evenly over pages of ROWS lines.
-    const sections = [];
-    lines.forEach((line, i) => {
-      if (!i || line.start - lines[i - 1].end > SECTION_GAP) sections.push([]);
-      sections[sections.length - 1].push(line);
-    });
-    const pages = [];
-    for (const section of sections) {
-      const count = Math.ceil(section.length / ROWS);
-      for (let k = 0, at = 0; k < count; k++) {
-        const size = Math.ceil((section.length - at) / (count - k));
-        pages.push({ index: pages.length, lines: section.slice(at, at + size) });
-        at += size;
-      }
-    }
-    const words = [];
-    let widest = 1;
-    for (const page of pages) {
-      page.lines.forEach((line, row) => {
-        line.row = row; line.page = page;
-        let x = 0;
-        vocal.lines[line.index].words.forEach((source, i) => {
-          const n = Math.max(1, Math.min(14, Math.round(source.n) || 1));
-          const duration = source.end - source.start;
-          // Steady handwriting: about 12 letters a second, never longer than the sung word.
-          const write = Math.min(duration, Math.max(.16, n * .085));
-          const word = { start: source.start, end: source.end, writeEnd: source.start + write,
-            hold: duration - write, n, x, line, seed: hash2(line.index + 1, i + 1) * 1000, order: words.length };
-          line.words.push(word); words.push(word);
-          x += n + SPACE;
-        });
-        line.width = Math.max(0, x - SPACE);
-        widest = Math.max(widest, line.width);
-      });
-      page.start = page.lines[0].words[0].start;
-      page.end = page.lines[page.lines.length - 1].end;
-    }
-    pages.forEach((page, i) => {
-      const next = pages[i + 1];
-      page.clearStart = next ? Math.max(page.end + .3, next.start - DISSOLVE - .2) : Infinity;
-      page.clearEnd = page.clearStart + DISSOLVE;
-    });
-    const last = words[words.length - 1];
-    const lastSection = sections[sections.length - 1];
-    // Leave room for the stamp when a cover holds its last word almost to the end.
-    const goodbye = Number.isFinite(vocal.duration) ? Math.min(2.4, Math.max(0, vocal.duration - last.end) * .55) : 2.4;
-    p = { lines, pages, words, widest, last, finale: lastSection[0].start, goodbye, sealAt: last.end + goodbye };
-    plans.set(vocal, p);
-    return p;
-  }
-
-  // Used only when the synchronized lyric file cannot be read: lines on the measured beat.
-  const synthetic = new Map();
-  function syntheticTimeline(duration, period, offset) {
-    const key = `${duration}:${period}:${offset}`;
-    let vocal = synthetic.get(key);
-    if (!vocal) {
-      const lines = [];
-      for (let beat = Math.ceil((10 - offset) / period); offset + (beat + 16) * period < duration - 16; beat += 16) {
-        const words = [];
-        for (let i = 0; i < 7; i++) {
-          const start = offset + (beat + i) * period;
-          words.push({ start, end: start + period * .8, n: 2 + Math.floor(hash(beat + i * 7) * 6) });
-        }
-        lines.push({ start: words[0].start, end: words[6].end, words });
-      }
-      vocal = { lines, duration };
-      synthetic.set(key, vocal);
-    }
-    return vocal;
-  }
-
-  function lastStarted(words, t) {
-    let lo = 0, hi = words.length - 1, found = -1;
-    while (lo <= hi) {
-      const mid = (lo + hi) >> 1;
-      if (words[mid].start <= t) { found = mid; lo = mid + 1; } else hi = mid - 1;
-    }
-    return found;
-  }
 
   /** 1 inside a sung line, falling to 0 over 2.5 s away from one. */
   function voiceNear(P, t) {
+    if (!P) return 0;
     let gap = Infinity;
     for (const line of P.lines) {
       if (t >= line.start && t <= line.end) return 1;
@@ -125,63 +27,6 @@
     return clamp(1 - gap / 2.5);
   }
 
-  // MARK: handwriting
-
-  function geometry(w, h, P) {
-    const pw = w * (w<h ? .93 : .76), ph = h * .745;
-    const width = pw * .5;
-    // Writing sits on ruled lines below the lyrics: one line lower on tall (phone) stages.
-    const first = h > w * 1.1 ? 10 : 9;
-    return {
-      pw, ph, unit: Math.min(pw / 510, ph / 350),
-      left: pw * .16, base: [0, 1, 2].map(row => ph * (.13 + .059 * (first + row))),
-      lw: Math.min(width / P.widest, ph * .028), xh: ph * .0185,
-      rest: { x: pw * .735, y: ph * .745 },
-    };
-  }
-
-  function letterKind(seed, k) {
-    const r = hash2(seed, k + 1);
-    return r < .4 ? 0 : r < .64 ? 3 : r < .84 ? 1 : 2; // small loop, tall loop, descender, arch
-  }
-
-  /** Point on a word's cursive line after `u` letters (paper coordinates). */
-  function inkAt(word, u, g) {
-    const k = Math.min(word.n - 1, Math.floor(u)), s = u - k;
-    const kind = letterKind(word.seed, k);
-    const size = .85 + hash2(word.seed, k + 40) * .25;
-    let up, x;
-    if (kind === 3) {
-      up = Math.sin(Math.PI * s) * size;
-      x = word.x + k + s;
-    } else {
-      up = (1 - Math.cos(TAU * s)) / 2 * (kind === 1 ? 2.05 : kind === 2 ? -1.45 : size);
-      x = word.x + k + s - Math.sin(TAU * s) * (kind === 1 ? .22 : .32);
-    }
-    x += up * .26;
-    return [g.left + x * g.lw, g.base[word.line.row] - up * g.xh];
-  }
-
-  function written(word, t) {
-    if (t <= word.start) return 0;
-    return word.n * clamp((t - word.start) / (word.writeEnd - word.start));
-  }
-
-  function strokeWord(c, word, u, g, color, width) {
-    const steps = Math.max(1, Math.ceil(u * 6));
-    c.beginPath();
-    for (let i = 0; i <= steps; i++) {
-      const [x, y] = inkAt(word, u * i / steps, g);
-      if (i) c.lineTo(x, y); else c.moveTo(x, y);
-    }
-    c.strokeStyle = color; c.lineWidth = width; c.stroke();
-  }
-
-  /** Ink pooled at the nib while a note is held after its word is written. */
-  function poolRadius(word, t, g) {
-    if (word.hold < .3 || t <= word.writeEnd) return 0;
-    return g.xh * (.22 + .5 * Math.sqrt(clamp((Math.min(t, word.end) - word.writeEnd) / 1.6)));
-  }
 
   // A cylindrical fold advances from the fore-edge; a soft contact shadow leads it.
   function pageTurn(c,g,u) {
@@ -195,71 +40,8 @@
     c.fillStyle=linear(c,x-b*.16,0,x+b*1.2,0,[[0,'#c4b5a1'],[.22,'#e7d7bc'],[.60,'#fff7e5'],[.83,'#f8ecd4'],[1,'#bfad94']]);c.fill();c.restore();
   }
 
-  function drawPage(c, page, t, g) {
-    if (t < page.start - .01 || t >= page.clearEnd) return;
-    const age = t >= page.clearStart ? (t - page.clearStart) / DISSOLVE : 0;
-    const inkAlpha = 1 - ease(age / .35);
-    const width = Math.max(1, 1.15 * g.unit);
-    for (const line of page.lines) {
-      for (const word of line.words) {
-        if (t < word.start) break;
-        if (inkAlpha > 0) {
-          // Fresh ink is wet blue-black and dries to the letter's grey ink.
-          const dry = ease((t - word.writeEnd) / 2.5);
-          strokeWord(c, word, written(word, t), g, blend(FRESH, INK, dry, inkAlpha), width);
-          const r = poolRadius(word, t, g);
-          if (r > 0) {
-            const [x, y] = inkAt(word, word.n, g);
-            c.beginPath(); c.ellipse(x + r * .25, y + r * .35, r * 1.15, r, 0, 0, TAU);
-            c.fillStyle = blend(FRESH, INK, dry, inkAlpha); c.fill();
-            if (dry < 1) {
-              c.beginPath(); c.ellipse(x, y + r * .05, r * .35, r * .22, -.4, 0, TAU);
-              c.fillStyle = rgba('#ffffff', .45 * (1 - dry) * inkAlpha); c.fill();
-            }
-          }
-        }
-      }
-    }
-    pageTurn(c,g,age);
-  }
 
-  // MARK: pen
-
-  /** Where the nib is: on the line while writing, hopping between words, away while the voice rests. */
-  function penAt(P, t, g) {
-    const words = P.words, rest = { ...g.rest, lift: 1, alpha: 1, writing: false };
-    const startOf = word => ({ ...(([x, y]) => ({ x, y }))(inkAt(word, 0, g)), lift: 0, alpha: 1 });
-    const glide = (a, b, u, lift) => ({ x: mix(a.x, b.x, u), y: mix(a.y, b.y, u), lift, alpha: 1, writing: false });
-    const i = lastStarted(words, t);
-    if (i < 0) {
-      const first = startOf(words[0]), back = ease((t - (words[0].start - .8)) / .8);
-      return back > 0 ? glide(rest, first, back, 1 - back) : rest;
-    }
-    const word = words[i];
-    if (t < word.writeEnd) {
-      const [x, y] = inkAt(word, written(word, t), g);
-      return { x, y, lift: 0, alpha: 1, writing: true };
-    }
-    const [ex, ey] = inkAt(word, word.n, g), end = { x: ex, y: ey };
-    if (t < word.end) return { ...end, lift: 0, alpha: 1, writing: false };
-    const next = words[i + 1];
-    if (!next) {
-      // The letter is finished: the pen is lifted and put away past the top right corner.
-      const away = ease((t - word.end - P.goodbye * .25) / Math.max(.001, P.goodbye * .75));
-      return { x: mix(ex, g.pw * 1.06, away), y: mix(ey, g.ph * .18, away), lift: Math.min(1, away * 3), alpha: 1 - away, writing: false };
-    }
-    const to = startOf(next), gap = next.start - word.end;
-    if (gap <= REST_GAP) {
-      const u = ease((t - word.end) / gap);
-      return glide(end, to, u, Math.sin(Math.PI * u) * (next.line === word.line ? .35 : 1));
-    }
-    const back = ease((t - (next.start - .8)) / .8);
-    if (back > 0) return glide(rest, to, back, 1 - back);
-    const away = ease((t - word.end) / .8);
-    return glide(end, rest, away, away);
-  }
-
-  function drawPen(c, pen, g, tap) {
+  function drawPen(c, pen, g, tap, tool) {
     if (pen.alpha <= 0) return;
     c.save(); c.globalAlpha = pen.alpha;
     const raise = pen.lift * g.xh * 2.6 + tap * g.xh * .9;
@@ -272,6 +54,16 @@
     c.save();c.translate(4+pen.lift*4,5+pen.lift*7);
     c.beginPath();c.moveTo(0,1);c.lineTo(-4,-16);c.lineTo(-5,-71);c.quadraticCurveTo(0,-79,5,-71);c.lineTo(4,-16);c.closePath();
     c.fillStyle=rgba('#3e3436',.17-pen.lift*.045);c.fill();c.restore();
+    if(tool==='pencil' || tool==='marker'){
+      const pencil=tool==='pencil', width=pencil?3.8:5.7;
+      const wood=linear(c,-width,0,width,0,pencil?[[0,'#673d26'],[.27,'#d99743'],[.64,'#eab962'],[.67,'#b27c39'],[1,'#785335']]:[[0,'#332b3f'],[.30,'#675671'],[.4,'#82748c'],[.6,'#504359'],[1,'#302735']]);
+      c.fillStyle=wood;c.fillRect(-width,-70,2*width,56);
+      c.fillStyle=pencil?'#c5b39a':'#ded6cb';c.fillRect(-width,-71,2*width,5);
+      c.fillStyle=pencil?'#bf7f7f':'#423c4e';c.fillRect(-width,-77,2*width,6);
+      c.beginPath();c.moveTo(-width,-14);c.lineTo(width,-14);c.lineTo(1.3,-2);c.lineTo(-1,-2);c.closePath();
+      c.fillStyle=pencil?'#dab38b':'#d9c8ba';c.fill();c.beginPath();c.moveTo(-1.3,-4);c.lineTo(1.55,-4);c.lineTo(.3,.35);c.lineTo(-.5,0);c.closePath();c.fillStyle=pencil?'#322d2c':'#4b2e46';c.fill();
+      c.restore();return;
+    }
     c.fillStyle = linear(c,-5,0,5,0,[[0,'#172425'],[.15,'#344347'],[.29,'#7c9291'],[.36,'#465958'],[.52,'#233438'],[.87,'#192c30'],[1,'#0c171d']]); c.beginPath();
     c.moveTo(-4, -16); c.lineTo(-5, -69); c.quadraticCurveTo(0, -79, 5, -69);
     c.lineTo(4, -16); c.closePath(); c.fill();
@@ -291,8 +83,7 @@
   function drawSeal(c, P, t, g) {
     const age = t - P.sealAt;
     if (age < 0) return;
-    const word = P.last, [, y] = inkAt(word, 0, g);
-    const r = g.xh * 3, x = Math.min(g.pw * .7, g.left + (word.x + word.n + 2.4) * g.lw + r), cy = y - g.xh * .6;
+    const r = g.xh * 1.08, x = g.pw*.81, cy = g.ph*.77;
     const stamp = easeOut(age / .45);
     // A ring of light spreads from the stamp as it lands.
     if (age < 1.6) {
@@ -326,7 +117,7 @@
     return DAYLIGHT[DAYLIGHT.length - 1][1];
   }
 
-  function drawPaper(c, w, h, g, day, beat, t, P, still) {
+  function drawPaper(c, w, h, g, day, beat, t, P, still, key) {
     const { pw, ph, unit } = g;
     for(let i=4;i>0;i--){c.fillStyle='rgba(35,24,23,.105)';c.fillRect(unit*(3+i*1.3),unit*(3+i*1.8),pw,ph);}
     for(let i=3;i>0;i--){
@@ -334,12 +125,17 @@
       c.fillStyle=i%2?'#d9c7a9':'#efdfc2';c.fillRect(0,0,pw,ph);c.restore();
     }
     set.paper(c,pw,ph);
-    c.beginPath();
-    for (let i = 8; i < 14; i++) {
-      const y = ph * (.13 + .059 * i);
-      c.moveTo(pw*.105, y); c.lineTo(pw*.88, y);
+    const stock={'your-reality-kamex':'rgba(126,153,205,.23)','your-reality-ink-static':'rgba(148,202,185,.18)','your-reality-cement-city':'rgba(233,179,96,.21)'};
+    if(stock[key]){c.fillStyle=stock[key];c.fillRect(0,0,pw,ph);}
+    if(key==='your-reality-caleb-hyles' || key==='your-reality-pop-punk'){
+      c.beginPath();c.moveTo(pw*.077,0);c.lineTo(pw*.077,ph);c.strokeStyle='#ce9692';c.lineWidth=unit;c.stroke();
+      for(let n=0;n<7;n++){
+        const y=ph*(.12+n*.122);
+        c.beginPath();c.ellipse(pw*.036,y,unit*3.7,unit*4.2,0,0,TAU);c.fillStyle='#69564a';c.fill();
+        c.beginPath();c.ellipse(-unit*.7,y-unit*2,pw*.038,unit*4.6,.08,Math.PI*.7,Math.PI*2.06);
+        c.strokeStyle='#5c5050';c.lineWidth=unit*2.3;c.stroke();
+      }
     }
-    c.strokeStyle = '#d1c6b6'; c.lineWidth = Math.max(.6, unit * .48); c.stroke();
     // Bookmark ribbon; its tail stirs on the beat.
     const flick = still ? 0 : Math.sin(beat * Math.PI) * .004;
     c.beginPath(); c.moveTo(pw * .79, 0); c.lineTo(pw * .86, 0);
@@ -363,7 +159,7 @@
       c.fillStyle = '#b97789'; c.fill();
     }
     c.beginPath(); c.arc(23, -51, 2.4, 0, TAU); c.fillStyle = '#d7ad65'; c.fill();
-    if (!still) for (let i = 0; i < 6; i++) {
+    if (P && !still) for (let i = 0; i < 6; i++) {
       const age = (t - (P.finale + i * 4.1)) / 7;
       if (age <= 0 || age >= 1) continue;
       const x = 23 - age * 150 + Math.sin(age * 7 + i) * 14, y = -51 + age * 205;
@@ -439,52 +235,25 @@
 
   // MARK: piano
 
-  function peak(data, key, t0, t1) {
-    let best = 0;
-    for (let t = t0; t <= t1 + 1e-9; t += .04) best = Math.max(best, sample(data, key, t));
-    return best;
-  }
-
-  function keyFor(slot) {
-    const bar = Math.floor(slot / 8);
-    return Math.max(0, Math.min(13, Math.round(6.5 + 4.6 * Math.sin(slot * .85 + bar * 2.3) + (hash(slot * .37) - .5) * 2.4)));
-  }
-
-  /** Notes struck on the recording's onsets in the last two seconds (eighth-note grid). */
-  function keyEvents(m, P, t) {
-    const data = m.data, events = [];
-    if (!data || m.reducedMotion) return events;
-    const half = m.period / 2, offset = data.beatOffset ?? 0, now = Math.floor((t - offset) / half);
-    for (let slot = now - 8; slot <= now; slot++) {
-      const at = offset + slot * half, age = t - at;
-      if (at < 0 || age < 0 || age > 1.9) continue;
-      const voiced = voiceNear(P, at) > .5;
-      const strength = peak(data, 'onset', at - .04, at + .08);
-      if (strength >= (voiced ? .62 : .4)) events.push({ slot, key: keyFor(slot), age, strength, voiced });
-    }
-    return events;
-  }
-
-  function drawKeyboard(c, w, h, events) {
-    const key = Math.min(w * .044, h * .058), kh = key * 2.35;
-    const pressed = new Array(14).fill(0);
-    for (const e of events) if (e.age < .3) pressed[e.key] = Math.max(pressed[e.key], (1 - e.age / .3) * e.strength);
+  function drawKeyboard(c,w,h,pressed) {
+    // Three fixed, chromatic octaves: never transpose an out-of-range pitch onto a visible key.
+    const key=Math.min(w*.030,h*.043), kh=key*3.1;
     c.save(); c.translate(w * .035, h + 2); c.rotate(-.038);
-    c.fillStyle = linear(c,0,-kh-key*.28,0,-kh,[[0,'#9e7650'],[.28,'#493835'],[.65,'#714539'],[1,'#262328']]); c.fillRect(-3,-kh-key*.28,key*14+6,kh+key*1.3);
+    c.fillStyle = linear(c,0,-kh-key*.28,0,-kh,[[0,'#9e7650'],[.28,'#493835'],[.65,'#714539'],[1,'#262328']]); c.fillRect(-3,-kh-key*.28,key*21+6,kh+key*1.3);
     const ivory=linear(c,0,-kh,0,key*.32,[[0,'#aca195'],[.1,'#d5c9b4'],[.36,'#f3ead4'],[.88,'#faf4df'],[1,'#c5b89d']]);
     const ebony=linear(c,0,-kh,0,-kh*.4,[[0,'#242629'],[.64,'#35363b'],[.79,'#49464a'],[.95,'#27252a'],[1,'#13161c']]);
-    for (let k = 0; k < 14; k++) {
-      const down = pressed[k];
+    for (let k = 0; k < 21; k++) {
+      const down = pressed.get(score.keyMidi(k))||0;
       c.fillStyle = ivory; c.fillRect(k*key+1,-kh+down*key*.15,key-1,kh+key);
       if(down){c.fillStyle=rgba('#846e65',down*.43);c.fillRect(k*key+1,-kh+down*key*.15,key-1,kh+key);}
     }
-    for (let k = 0; k < 13; k++) if (k % 7 !== 2 && k % 7 !== 6) {
-      const x=(k+.73)*key;
+    for (let k = 0; k < 21; k++) if (score.keyMidi(k,true)!==null) {
+      const x=(k+.73)*key, down=pressed.get(score.keyMidi(k,true))||0;
       c.fillStyle='rgba(40,30,34,.32)';c.fillRect(x+key*.1,-kh+key*.13,key*.6,kh*.57);
-      c.fillStyle=ebony;c.fillRect(x,-kh,key*.55,kh*.57);
-      c.fillStyle='#716765';c.fillRect(x+key*.05,-kh+1,Math.max(1,key*.04),kh*.50);
+      c.fillStyle=ebony;c.fillRect(x,-kh+key*.13*down,key*.55,kh*.57);
+      c.fillStyle=down?'#b99279':'#716765';c.fillRect(x+key*.05,-kh+1+key*.13*down,Math.max(1,key*.07),kh*.50);
     }
-    c.fillStyle='#803f4a';c.fillRect(0,-kh-key*.045,key*14,key*.077);
+    c.fillStyle='#803f4a';c.fillRect(0,-kh-key*.045,key*21,key*.077);
     c.restore();
   }
 
@@ -517,10 +286,10 @@
 
   function draw(c, w, h, m) {
     const still = !!m.reducedMotion;
-    const t = still ? STILL_TIME : Math.max(0, m.time);
-    const duration = m.duration || 181.7;
-    const vocal = m.vocal?.lines?.length ? m.vocal : syntheticTimeline(duration, m.period || .5714, m.data?.beatOffset ?? .321);
-    const P = plan(vocal), g = geometry(w, h, P);
+    const t = still ? 27.2 : Math.max(0, m.time), duration=m.duration||181.7;
+    const style=hand.style(m.variant);
+    const P=(!still && m.manuscript!==false) ? hand.plan(m.vocal,style[0]) : null;
+    const g=hand.geometry(w,h,P);
     const day = still ? .3 : clamp(t / duration);
     const lift = still ? 0 : m.lift || 0, pulse = still ? 0 : m.pulse || 0, beats = still ? 12 : m.beats || 0;
     const voice = voiceNear(P, t);
@@ -531,9 +300,10 @@
 
     const tilt=-.038+(still?0:Math.sin(t*.045)*.003), cy=h*(w<h?.585:.557);
     c.save(); c.translate(w * .525, cy); c.rotate(tilt); c.translate(-g.pw / 2, -g.ph / 2);
-    drawPaper(c, w, h, g, day, beats, t, P, still);
-    for (const page of P.pages) drawPage(c, page, t, g);
-    drawSeal(c, P, still ? -1 : t, g);
+    drawPaper(c,w,h,g,day,beats,t,P,still,m.variant);
+    const turn=hand.write(c,P,t,g,style);
+    pageTurn(c,g,turn);
+    if(P)drawSeal(c,P,t,g);
     c.restore();
 
     // The window light: dim at the start, brighter in the choruses and while the piano plays alone.
@@ -541,29 +311,21 @@
     windowLight(c, w, h, t, day, glow, .6 + lift * .9, still);
 
     c.save(); c.translate(w * .525, cy); c.rotate(tilt); c.translate(-g.pw / 2, -g.ph / 2);
-    const pen = penAt(P, t, g);
+    const pen = hand.nib(P,t,g);
     // At rest during a long instrumental, the pen taps along with the beat.
-    drawPen(c, pen, g, pen.lift > .9 && voice < .5 ? pulse : 0);
+    drawPen(c,pen,g,pen.lift>.9 && voice<.5 ? pulse : 0,style[4]);
     c.restore();
 
     set.inkwell(c,w,h);
     if (electronic) drawTape(c,w,h,beats,still?.35:m.energy||0,minor);
-    else drawKeyboard(c, w, h, keyEvents(m, P, t));
+    else drawKeyboard(c,w,h,still?new Map():score.keys(m.data,t));
     c.fillStyle=linear(c,0,0,0,h*.25,[[0,'rgba(48,34,31,.33)'],[.46,'rgba(48,34,31,.20)'],[1,'rgba(48,34,31,0)']]);
     c.fillRect(0,0,w,h*.25);
     vignette(c, w, h, '#3b3d68', .06 + .22 * ease((day - .8) / .2));
+    return !!P;
   }
 
-  /** Inked letters on the visible page at time t (for tests and tooling). */
-  function inkAmount(vocal, t) {
-    const P = plan(vocal);
-    let total = 0;
-    for (const page of P.pages) {
-      if (t < page.start - .01 || t >= page.clearStart) continue;
-      for (const line of page.lines) for (const word of line.words) total += written(word, t);
-    }
-    return total;
-  }
-
-  return Object.freeze({ draw, plan, inkAmount, penAt: (vocal, t, w = 1280, h = 720) => penAt(plan(vocal), t, geometry(w, h, plan(vocal))) });
+  return Object.freeze({draw,plan:hand.plan,inkAmount:hand.inkAmount,penAt:(v,t,w=1280,h=720)=>{
+    const p=hand.plan(v);return hand.nib(p,t,hand.geometry(w,h,p));
+  }});
 });

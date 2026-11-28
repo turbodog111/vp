@@ -76,18 +76,31 @@ bounded canvas drawing, the existing frame limiter, and reduced-motion settings.
 These are energy-driven scenes, not guessed lyric/chorus timelines.
 
 The eight Your Reality recordings use two sets drawn entirely in Canvas. In
-`your-reality-fx.js`, a fountain pen writes on laid paper by a window. The page
-turns, the daylight moves, and the pen lifts when the singer rests. Jillian
+`your-reality-fx.js`, the lyric itself is a handwritten letter. The pen follows
+the exact letters and punctuation from each recording's word sheet, including
+pen-up trips to dots and crossbars. Rows wrap and the paper scrolls by media
+time. The original uses fountain-pen script; Caleb uses pencil on notebook paper;
+the pop-punk and Cement City covers use marker lettering. Typed lyrics remain
+available for reduced motion, forced colors, and local lyric drafts. Jillian
 Ashcraft, Caleb Hyles and The Juicebox feat. Vannamelon have a piano at the desk.
 Cement City feat. Kalcium, Kamex and Ink & Static 360 have a cassette deck whose
 reels and meter follow playback. Kamex's minor-key mix repeats verse one and
 samples its closing words rather than singing the rest of the original sheet.
 
 The second set, `your-reality-metal-fx.js`, is a vaulted recital hall. Rena's
-sung words cross the staff at the playhead; the flying V comes forward during
+sung pitches cross the treble staff at their measured onsets; the flying V comes forward during
 her instrumental breaks. Spyder1246's blue double-cutaway guitar carries the
 melody throughout, with no invented vocals. That edit ends after the natural
 guitar decay, before the upload switches to separate end-card music.
+
+The staff and piano use pitch events in the matching recording's motion JSON,
+not word lengths or generated contours. `scripts/build_reality_score.py` separates
+piano, voice or guitar with Demucs and transcribes the isolated part with Spotify
+Basic Pitch. Events need a matching fundamental in the audio; for voice and
+guitar, YIN must independently agree as well. This is a conservative performance
+transcription, not an official score. Uncertain passages leave space. The three
+keyboard desks show the exact keys within C3-B5 without octave folding.
+Letterform attribution, license and upstream source are in `fonts/pen-OFL.txt`.
 
 `reality-set.js` builds wood grain, paper fibers, leaded glass, masonry and
 reflections from code. Fixed surfaces are cached at bounded resolution; movement,

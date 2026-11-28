@@ -651,6 +651,9 @@ body.song-motion-fx-active.reality-letter-active .hero-play { border-color: #4a3
 body.reality-letter-active #local-lyric-overlay .waiting { color: #655554; }
 body.reality-letter-active #local-lyric-overlay .singing { color: #822849; text-decoration-color: #a5536d; }
 body.reality-letter-active #local-lyric-overlay .sung { color: #342d37; }
+/* Keep the real text available to assistive technology. Only suppress the
+   duplicate typeset caption after the matching handwritten scene has painted. */
+body.reality-letter-active.reality-manuscript-ready #local-lyric-overlay[data-lyric-source="prepared"] { opacity: 0; }
 body.song-motion-fx-active.reality-letter-active .hero-time { color: #fff7e9; text-shadow: 0 1px 2px #392b2b, 0 1px 5px #362829; }
 body.reality-letter-active .hero-play::before { background: conic-gradient(#8e4861 var(--progress, 0deg), #deccca 0deg); }
 body.reality-metal-active {

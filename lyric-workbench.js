@@ -275,6 +275,7 @@
       const index = visible ? activeRow(timeline.rows, time) : -1;
       const key = `${revision}:${timeline === draft ? 'draft' : 'prepared'}:${visible}:${index}`;
       if (key !== lastPaint) {
+        overlay.dataset.lyricSource = visible ? (timeline === draft ? 'draft' : 'prepared') : 'none';
         lastPaint = key; overlay.replaceChildren(); wordNodes = []; overlay.hidden = index < 0;
         if (index >= 0) {
           const row = timeline.rows[index];

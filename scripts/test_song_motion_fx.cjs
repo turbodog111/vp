@@ -202,7 +202,7 @@ test('Kamex loops verse one and the vocal sample; the guitar-only Metalized neve
   assert.equal(dataFor('your-reality-kamex').duration,218.43);
 });
 
-test('Your Reality: scenes receive when each word is sung and how long it is, never the words', async () => {
+test('Your Reality: each timed pen stroke uses the exact sung token, including punctuation', async () => {
   const { api } = create();
   for (const [key] of recordings.filter(([k]) => k.startsWith('your-reality') && k!=='your-reality-metalized')) {
     const vocal = api.vocalTimeline(lyricFor(key));
@@ -211,14 +211,16 @@ test('Your Reality: scenes receive when each word is sung and how long it is, ne
     assert.equal(vocal.lines.length, caleb || sample ? 22 : 21);
     const words = vocal.lines.flatMap(line => [...line.words]);
     assert.equal(words.length, caleb ? 214 : sample ? 168 : 210);
-    for (const word of words) {
-      assert.deepEqual(Object.keys(word).sort(), ['end', 'n', 'start']);
-      assert.ok(word.end > word.start && word.n >= 1 && word.n <= 14);
-    }
+    const published=lyricFor(key).rows.flatMap(row=>row.words.en);
+    words.forEach((word,i)=>{
+      assert.deepEqual(Object.keys(word).sort(), ['end','start','text']);
+      assert.equal(word.text,published[i].text);
+      assert.equal(word.start,published[i].start);assert.equal(word.end,published[i].end);
+    });
   }
   assert.equal(api.vocalTimeline(null), null);
   assert.equal(api.vocalTimeline({ rows: [{ words: { en: [{ text: 'x', start: 5, end: 4 }] } }] }), null);
-  // A missing lyric file leaves the scene on its beat-timed fallback rather than failing.
+  // A missing lyric file leaves a usable desk, not invented handwriting.
   const { api: offline } = create(async url => url.includes('/lyrics/')
     ? { ok: false, status: 404 } : { ok: true, json: async () => dataFor(path.basename(url, '.json')) });
   await offline.activate(offline.track({ path: `songs/${recordings[5][1]}` }));
@@ -237,7 +239,7 @@ test('Your Reality letter: the pen writes only while she sings, rests in the ins
   assert.ok(ink(first.start + .12) > 0 && ink(first.start + .12) < ink(first.start + .3), 'the first word is written as it is sung');
   assert.equal(ink(16), ink(18.8), 'the pen waits through the rest between lines');
   assert.ok(ink(100) > 0 && ink(100) === ink(110), 'the page stays written through the instrumental');
-  assert.ok(ink(31.9) > 0 && ink(32.4) === 0, 'a full page clears before the next line begins');
+  assert.ok(ink(31.86)>0 && ink(32.4)===0, 'a full page turns during the gap before the next line');
   const mid = vocal.lines[3].words[2];
   assert.equal(fx.penAt(vocal, (mid.start + Math.min(mid.end, mid.start + .15)) / 2).writing, true);
   const resting = fx.penAt(vocal, 105);
@@ -289,7 +291,7 @@ test("Caleb's music edit keeps every vocal boundary and the instrumental coda on
   assert.ok(at(170) > 30 && at(180.6) <= 2, 'music plays after the last lyric and decays before the end');
 });
 
-test('Your Reality metal: notes cross the playhead as words are sung; bar lines cross it on downbeats', async () => {
+test('Your Reality metal: recorded pitch onsets cross the playhead independently of syllables', async () => {
   const { api } = create();
   const config = api.track({ path: `songs/${recordings[6][1]}` });
   await api.activate(config);
@@ -298,11 +300,14 @@ test('Your Reality metal: notes cross the playhead as words are sung; bar lines 
   assert.equal(fx.voiceAt(vocal, 102), 0, 'the guitar solo has no singing');
   const W = 1280, H = 720;
   const atPlayhead = (calls, name) => calls.filter(([key, x]) => key === name && Math.abs(x - W / 2) < .5);
-  for (const word of [vocal.lines[2].words[1], vocal.lines[9].words[0], vocal.lines[15].words[3]]) {
-    assert.equal(fx.voiceAt(vocal, word.start + .01), 1);
-    assert.ok(atPlayhead(render(api, word.start, W, H), 'ellipse').length >= 1, `a note head at the playhead at ${word.start}`);
-  }
   const data = dataFor('your-reality-metal'), bar = 4 * 60 / data.bpm;
+  const score=require('../reality-score.js');
+  const pitches=score.between(data,'vocals',0,data.duration);
+  for(const n of [pitches[3],pitches[Math.floor(pitches.length/2)],pitches.at(-4)]){
+    const heads=atPlayhead(render(api,n.start,W,H),'ellipse').filter(e=>Math.abs(e[3]-H*.017*.64)<1e-5);
+    assert.ok(heads.length>0,`visible head at measured onset ${n.start}`);
+  }
+  assert.equal(score.between(data,'vocals',101,103).length,0);
   const downbeat = data.beatOffset + 30 * bar;
   assert.ok(atPlayhead(render(api, downbeat, W, H), 'moveTo').length >= 1, 'a bar line at the playhead on the downbeat');
 });

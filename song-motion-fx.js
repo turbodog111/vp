@@ -133,6 +133,7 @@ window.SongMotionFx = (() => {
   });
   const cache = new Map();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const forcedColors = window.matchMedia('(forced-colors: active)');
   const TAU = Math.PI * 2;
   let active = null;
   let controller = null;
@@ -164,6 +165,7 @@ window.SongMotionFx = (() => {
     controller?.abort();
     controller = null;
     active = config;
+    pageBody()?.classList.remove('reality-manuscript-ready');
     if (config?.theme !== 'mesmerizer') pageBody()?.classList.remove('motion-3d-active');
     if (!config) return;
     if (cache.has(config.key)) { onReady?.(); return; }
@@ -171,7 +173,7 @@ window.SongMotionFx = (() => {
     controller = request;
     const timeout = setTimeout(() => request.abort(), 8000);
     try {
-      // Word timings are optional: a scene without them falls back to its measured beat.
+      // Missing lyric data must never cause a scene to invent words or notes.
       const options = { signal: request.signal, cache: 'no-cache' };
       const words = config.lyrics ? fetch(config.lyrics, options)
         .then(reply => reply.ok ? reply.json() : null).catch(() => null) : null;
@@ -192,18 +194,15 @@ window.SongMotionFx = (() => {
     }
   }
 
-  /**
-   * When each word is sung, from a synchronized lyric file. Only the times and each word's
-   * letter count are kept; scenes never receive or draw the words.
-   */
+  // The letter traces the exact token in this recording, including its punctuation.
   function vocalTimeline(source) {
     if (!Array.isArray(source?.rows)) return null;
     const lines = [];
     for (const row of source.rows) {
       const list = row?.words?.en || Object.values(row?.words || {}).find(Array.isArray) || [];
-      const words = list.filter(word => Number.isFinite(word?.start) && Number.isFinite(word?.end) && word.end > word.start)
-        .map(word => Object.freeze({ start: word.start, end: word.end,
-          n: Math.max(1, Math.min(14, String(word.text || '').replace(/[^\p{L}\p{N}]/gu, '').length)) }));
+      const words = list.filter(word => Number.isFinite(word?.start) && Number.isFinite(word.end) &&
+        word.end > word.start && typeof word.text === 'string' && word.text.trim())
+        .map(word => Object.freeze({start:word.start, end:word.end, text:word.text}));
       if (words.length) lines.push(Object.freeze({ start: words[0].start, end: words[words.length - 1].end, words: Object.freeze(words) }));
     }
     lines.sort((a, b) => a.start - b.start);
@@ -752,7 +751,12 @@ window.SongMotionFx = (() => {
     const in3d = active.theme === 'mesmerizer' && drawMesmerizer3d(time, data, reduced);
     pageBody()?.classList.toggle('motion-3d-active', in3d);
     if (in3d) { ctx.restore(); return; }
-    if (active.theme === 'your-reality') window.RealityLetterFx.draw(ctx, w, h, video);
+    if (active.theme === 'your-reality') {
+      const overlay=typeof document==='object' ? document.getElementById('local-lyric-overlay') : null;
+      video.manuscript=(!overlay || overlay.dataset.lyricSource==='prepared') && !forcedColors.matches;
+      const written=window.RealityLetterFx.draw(ctx,w,h,video);
+      pageBody()?.classList.toggle('reality-manuscript-ready',written);
+    }
     else if (active.theme === 'your-reality-metal') window.RealityMetalFx.draw(ctx, w, h, video);
     else if (active.theme === 'mesmerizer') window.MesmerizerFx?.draw(ctx, w, h, video);
     else if (active.theme === 'hunters-free') window.FreeFx?.draw(ctx, w, h, video);
