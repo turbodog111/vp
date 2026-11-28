@@ -629,23 +629,29 @@ body.song-motion-fx-active .hero-time {
 body.song-motion-fx-active .now-queue { display: none; }
 body.song-motion-fx-active .player { --accent: #f4bfd1; --accent-fg: #271a24; }
 body.reality-letter-active {
-  --motion-ink: #382d36;
-  --motion-muted: #5f414c;
+  --motion-ink: #fff7e9;
+  --motion-muted: #f6e8d8;
 }
 body.reality-letter-active #view-now.active { background: #f5efdf; }
 body.song-motion-fx-active.reality-letter-active .now-meta {
   grid-column: 1 / -1;
   max-width: 100%;
 }
+body.song-motion-fx-active.reality-letter-active .now-meta .now-kicker { display: none; }
+body.song-motion-fx-active.reality-letter-active .now-meta h1 { font-size: 32px; margin: 0; }
 body.reality-letter-active .now-meta h1,
 body.reality-letter-active #local-lyric-overlay .local-lyric-en {
   font-family: Georgia, 'Times New Roman', serif;
   text-shadow: none;
 }
+body.song-motion-fx-active.reality-letter-active .now-meta :is(h1,.now-kicker,.now-subtitle) {
+  text-shadow: 0 1px 2px #37251f, 0 2px 6px #37251f;
+}
+body.song-motion-fx-active.reality-letter-active .hero-play { border-color: #4a3440; color: #442c38; }
 body.reality-letter-active #local-lyric-overlay .waiting { color: #655554; }
 body.reality-letter-active #local-lyric-overlay .singing { color: #822849; text-decoration-color: #a5536d; }
 body.reality-letter-active #local-lyric-overlay .sung { color: #342d37; }
-body.reality-letter-active .hero-time { color: #382d36; text-shadow: 0 1px 3px #f7eddc; }
+body.song-motion-fx-active.reality-letter-active .hero-time { color: #fff7e9; text-shadow: 0 1px 2px #392b2b, 0 1px 5px #362829; }
 body.reality-letter-active .hero-play::before { background: conic-gradient(#8e4861 var(--progress, 0deg), #deccca 0deg); }
 body.reality-metal-active {
   --motion-ink: #fff0d8;

@@ -1,0 +1,18 @@
+{
+  "recording": "songs/Spyder1246 - Your Reality (Metalized).m4a",
+  "title": "Your Reality (Metalized)",
+  "artist": "Spyder1246",
+  "composer": "Dan Salvato",
+  "source": "https://www.youtube.com/watch?v=dOLeGHuycEk",
+  "sourceTitle": "\"Your Reality\" METALIZED!!  - \"Doki Doki Literature Club\"",
+  "sourceChannel": "Spyder1246",
+  "duration": 173.54,
+  "encoding": "48 kHz stereo AAC, 192 kbps target, faststart; linked arrangement preserved.",
+  "sourceAudioSha256": "fc2af857ad89d89704dfce84460d9cf413022e136107663d84ce57e3b50a16c0",
+  "outputAudioSha256": "d233e81b85544f7e19faa5f284df02bb09bc7a771f3326e257eb1066a7112d48",
+  "rendition": "Instrumental metal guitar arrangement. The guitar carries the vocal melody; no sung lyric overlay.",
+  "sourceDuration": 195.941,
+  "trimStart": 0,
+  "trimEnd": 173.54,
+  "edit": "Natural decay retained; separate end-card music excluded."
+}

@@ -1,0 +1,1077 @@
+{
+  "schemaVersion": 1,
+  "recording": "songs/Kamex - Your Reality (Kamex Remix).m4a",
+  "language": "en",
+  "duration": 218.43,
+  "preview": false,
+  "source": "Joshua's supplied Your Reality text, mapped only to audible phrases in this arrangement.",
+  "rows": [
+    {
+      "id": "line-1",
+      "start": 18.92,
+      "en": "Every day, I imagine a future where I can be with you",
+      "words": {
+        "en": [
+          {
+            "text": "Every",
+            "start": 18.92,
+            "end": 19.384
+          },
+          {
+            "text": "day,",
+            "start": 19.384,
+            "end": 20.08
+          },
+          {
+            "text": "I",
+            "start": 20.377,
+            "end": 20.493
+          },
+          {
+            "text": "imagine",
+            "start": 20.493,
+            "end": 21.016
+          },
+          {
+            "text": "a",
+            "start": 21.016,
+            "end": 21.147
+          },
+          {
+            "text": "future",
+            "start": 21.147,
+            "end": 21.648
+          },
+          {
+            "text": "where",
+            "start": 21.648,
+            "end": 22.28
+          },
+          {
+            "text": "I",
+            "start": 22.28,
+            "end": 22.545
+          },
+          {
+            "text": "can",
+            "start": 22.545,
+            "end": 22.836
+          },
+          {
+            "text": "be",
+            "start": 22.836,
+            "end": 23.12
+          },
+          {
+            "text": "with",
+            "start": 23.12,
+            "end": 23.348
+          },
+          {
+            "text": "you",
+            "start": 23.348,
+            "end": 23.43
+          }
+        ]
+      },
+      "end": 23.43
+    },
+    {
+      "id": "line-2",
+      "start": 28.09,
+      "en": "In my hand is a pen that will write a poem of me and you",
+      "words": {
+        "en": [
+          {
+            "text": "In",
+            "start": 28.09,
+            "end": 28.31
+          },
+          {
+            "text": "my",
+            "start": 28.31,
+            "end": 28.587
+          },
+          {
+            "text": "hand",
+            "start": 28.587,
+            "end": 29.19
+          },
+          {
+            "text": "is",
+            "start": 29.527,
+            "end": 29.657
+          },
+          {
+            "text": "a",
+            "start": 29.657,
+            "end": 29.76
+          },
+          {
+            "text": "pen",
+            "start": 29.76,
+            "end": 30.017
+          },
+          {
+            "text": "that",
+            "start": 30.017,
+            "end": 30.167
+          },
+          {
+            "text": "will",
+            "start": 30.167,
+            "end": 30.337
+          },
+          {
+            "text": "write",
+            "start": 30.337,
+            "end": 30.776
+          },
+          {
+            "text": "a",
+            "start": 30.776,
+            "end": 30.868
+          },
+          {
+            "text": "poem",
+            "start": 30.868,
+            "end": 31.52
+          },
+          {
+            "text": "of",
+            "start": 31.797,
+            "end": 32.017
+          },
+          {
+            "text": "me",
+            "start": 32.017,
+            "end": 32.386
+          },
+          {
+            "text": "and",
+            "start": 32.386,
+            "end": 33.068
+          },
+          {
+            "text": "you",
+            "start": 33.068,
+            "end": 33.25
+          }
+        ]
+      },
+      "end": 33.25
+    },
+    {
+      "id": "line-3",
+      "start": 36.93,
+      "en": "The ink flows down into a dark puddle",
+      "words": {
+        "en": [
+          {
+            "text": "The",
+            "start": 36.93,
+            "end": 37.158
+          },
+          {
+            "text": "ink",
+            "start": 37.158,
+            "end": 37.319
+          },
+          {
+            "text": "flows",
+            "start": 37.319,
+            "end": 37.958
+          },
+          {
+            "text": "down",
+            "start": 37.958,
+            "end": 38.61
+          },
+          {
+            "text": "into",
+            "start": 38.61,
+            "end": 39.156
+          },
+          {
+            "text": "a",
+            "start": 39.156,
+            "end": 39.302
+          },
+          {
+            "text": "dark",
+            "start": 39.302,
+            "end": 39.74
+          },
+          {
+            "text": "puddle",
+            "start": 39.74,
+            "end": 40.82
+          }
+        ]
+      },
+      "end": 40.82
+    },
+    {
+      "id": "line-4",
+      "start": 41.44,
+      "en": "Just move your hand, write the way into his heart",
+      "words": {
+        "en": [
+          {
+            "text": "Just",
+            "start": 41.44,
+            "end": 41.664
+          },
+          {
+            "text": "move",
+            "start": 41.664,
+            "end": 41.898
+          },
+          {
+            "text": "your",
+            "start": 41.898,
+            "end": 42.129
+          },
+          {
+            "text": "hand,",
+            "start": 42.129,
+            "end": 42.858
+          },
+          {
+            "text": "write",
+            "start": 42.858,
+            "end": 43.218
+          },
+          {
+            "text": "the",
+            "start": 43.218,
+            "end": 43.337
+          },
+          {
+            "text": "way",
+            "start": 43.337,
+            "end": 43.733
+          },
+          {
+            "text": "into",
+            "start": 43.733,
+            "end": 44.149
+          },
+          {
+            "text": "his",
+            "start": 44.149,
+            "end": 44.344
+          },
+          {
+            "text": "heart",
+            "start": 44.344,
+            "end": 44.77
+          }
+        ]
+      },
+      "end": 44.77
+    },
+    {
+      "id": "line-5",
+      "start": 45.86,
+      "en": "But in this world of infinite choices",
+      "words": {
+        "en": [
+          {
+            "text": "But",
+            "start": 45.86,
+            "end": 46.25
+          },
+          {
+            "text": "in",
+            "start": 46.25,
+            "end": 46.495
+          },
+          {
+            "text": "this",
+            "start": 46.495,
+            "end": 47.032
+          },
+          {
+            "text": "world",
+            "start": 47.032,
+            "end": 47.772
+          },
+          {
+            "text": "of",
+            "start": 47.772,
+            "end": 48.086
+          },
+          {
+            "text": "infinite",
+            "start": 48.086,
+            "end": 48.739
+          },
+          {
+            "text": "choices",
+            "start": 48.739,
+            "end": 50.09
+          }
+        ]
+      },
+      "end": 50.09
+    },
+    {
+      "id": "line-6",
+      "start": 50.608,
+      "en": "What will it take just to find that special day?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 50.608,
+            "end": 50.877
+          },
+          {
+            "text": "will",
+            "start": 50.877,
+            "end": 51.126
+          },
+          {
+            "text": "it",
+            "start": 51.126,
+            "end": 51.267
+          },
+          {
+            "text": "take",
+            "start": 51.267,
+            "end": 51.61
+          },
+          {
+            "text": "just",
+            "start": 52.04,
+            "end": 52.345
+          },
+          {
+            "text": "to",
+            "start": 52.345,
+            "end": 52.463
+          },
+          {
+            "text": "find",
+            "start": 52.463,
+            "end": 52.857
+          },
+          {
+            "text": "that",
+            "start": 52.857,
+            "end": 53.12
+          },
+          {
+            "text": "special",
+            "start": 53.12,
+            "end": 53.928
+          },
+          {
+            "text": "day?",
+            "start": 53.928,
+            "end": 54.04
+          }
+        ]
+      },
+      "end": 54.04
+    },
+    {
+      "id": "line-7",
+      "start": 55.2,
+      "en": "What will it take just to find that special day?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 55.2,
+            "end": 55.393
+          },
+          {
+            "text": "will",
+            "start": 55.393,
+            "end": 55.653
+          },
+          {
+            "text": "it",
+            "start": 55.653,
+            "end": 55.864
+          },
+          {
+            "text": "take",
+            "start": 55.864,
+            "end": 56.48
+          },
+          {
+            "text": "just",
+            "start": 56.48,
+            "end": 56.867
+          },
+          {
+            "text": "to",
+            "start": 56.867,
+            "end": 57.062
+          },
+          {
+            "text": "find",
+            "start": 57.062,
+            "end": 57.527
+          },
+          {
+            "text": "that",
+            "start": 57.527,
+            "end": 57.97
+          },
+          {
+            "text": "special",
+            "start": 58.791,
+            "end": 59.176
+          },
+          {
+            "text": "day?",
+            "start": 59.176,
+            "end": 59.57
+          }
+        ]
+      },
+      "end": 59.57
+    },
+    {
+      "id": "line-8",
+      "start": 66.35,
+      "en": "That special day",
+      "words": {
+        "en": [
+          {
+            "text": "That",
+            "start": 66.35,
+            "end": 67.43
+          },
+          {
+            "text": "special",
+            "start": 67.43,
+            "end": 68.301
+          },
+          {
+            "text": "day",
+            "start": 68.301,
+            "end": 68.7
+          }
+        ]
+      },
+      "end": 68.7
+    },
+    {
+      "id": "line-9",
+      "start": 76.94,
+      "en": "That special day",
+      "words": {
+        "en": [
+          {
+            "text": "That",
+            "start": 76.94,
+            "end": 77.071
+          },
+          {
+            "text": "special",
+            "start": 77.071,
+            "end": 77.445
+          },
+          {
+            "text": "day",
+            "start": 77.445,
+            "end": 77.95
+          }
+        ]
+      },
+      "end": 77.95
+    },
+    {
+      "id": "line-10",
+      "start": 84.897,
+      "en": "That special day",
+      "words": {
+        "en": [
+          {
+            "text": "That",
+            "start": 84.897,
+            "end": 86.275
+          },
+          {
+            "text": "special",
+            "start": 86.275,
+            "end": 86.624
+          },
+          {
+            "text": "day",
+            "start": 86.624,
+            "end": 87.09
+          }
+        ]
+      },
+      "end": 87.09
+    },
+    {
+      "id": "line-11",
+      "start": 95.22,
+      "en": "That special day",
+      "words": {
+        "en": [
+          {
+            "text": "That",
+            "start": 95.22,
+            "end": 95.415
+          },
+          {
+            "text": "special",
+            "start": 95.415,
+            "end": 95.729
+          },
+          {
+            "text": "day",
+            "start": 95.729,
+            "end": 96.15
+          }
+        ]
+      },
+      "end": 96.15
+    },
+    {
+      "id": "line-12",
+      "start": 114.93,
+      "en": "Every day, I imagine a future where I can be with you",
+      "words": {
+        "en": [
+          {
+            "text": "Every",
+            "start": 114.93,
+            "end": 115.39
+          },
+          {
+            "text": "day,",
+            "start": 115.39,
+            "end": 116.08
+          },
+          {
+            "text": "I",
+            "start": 116.253,
+            "end": 116.48
+          },
+          {
+            "text": "imagine",
+            "start": 116.48,
+            "end": 117.003
+          },
+          {
+            "text": "a",
+            "start": 117.003,
+            "end": 117.138
+          },
+          {
+            "text": "future",
+            "start": 117.138,
+            "end": 117.652
+          },
+          {
+            "text": "where",
+            "start": 117.652,
+            "end": 118.293
+          },
+          {
+            "text": "I",
+            "start": 118.293,
+            "end": 118.529
+          },
+          {
+            "text": "can",
+            "start": 118.529,
+            "end": 118.773
+          },
+          {
+            "text": "be",
+            "start": 118.773,
+            "end": 118.956
+          },
+          {
+            "text": "with",
+            "start": 118.956,
+            "end": 119.262
+          },
+          {
+            "text": "you",
+            "start": 119.262,
+            "end": 119.44
+          }
+        ]
+      },
+      "end": 119.44
+    },
+    {
+      "id": "line-13",
+      "start": 124.09,
+      "en": "In my hand is a pen that will write a poem of me and you",
+      "words": {
+        "en": [
+          {
+            "text": "In",
+            "start": 124.09,
+            "end": 124.286
+          },
+          {
+            "text": "my",
+            "start": 124.286,
+            "end": 124.597
+          },
+          {
+            "text": "hand",
+            "start": 124.597,
+            "end": 125.21
+          },
+          {
+            "text": "is",
+            "start": 125.466,
+            "end": 125.657
+          },
+          {
+            "text": "a",
+            "start": 125.657,
+            "end": 125.752
+          },
+          {
+            "text": "pen",
+            "start": 125.752,
+            "end": 126.025
+          },
+          {
+            "text": "that",
+            "start": 126.025,
+            "end": 126.187
+          },
+          {
+            "text": "will",
+            "start": 126.187,
+            "end": 126.317
+          },
+          {
+            "text": "write",
+            "start": 126.317,
+            "end": 126.767
+          },
+          {
+            "text": "a",
+            "start": 126.767,
+            "end": 126.907
+          },
+          {
+            "text": "poem",
+            "start": 126.907,
+            "end": 127.723
+          },
+          {
+            "text": "of",
+            "start": 127.723,
+            "end": 128.069
+          },
+          {
+            "text": "me",
+            "start": 128.069,
+            "end": 128.39
+          },
+          {
+            "text": "and",
+            "start": 128.39,
+            "end": 129.107
+          },
+          {
+            "text": "you",
+            "start": 129.107,
+            "end": 129.22
+          }
+        ]
+      },
+      "end": 129.22
+    },
+    {
+      "id": "line-14",
+      "start": 132.838,
+      "en": "The ink flows down into a dark puddle",
+      "words": {
+        "en": [
+          {
+            "text": "The",
+            "start": 132.838,
+            "end": 133.077
+          },
+          {
+            "text": "ink",
+            "start": 133.077,
+            "end": 133.287
+          },
+          {
+            "text": "flows",
+            "start": 133.287,
+            "end": 133.954
+          },
+          {
+            "text": "down",
+            "start": 133.954,
+            "end": 134.593
+          },
+          {
+            "text": "into",
+            "start": 134.593,
+            "end": 135.137
+          },
+          {
+            "text": "a",
+            "start": 135.137,
+            "end": 135.313
+          },
+          {
+            "text": "dark",
+            "start": 135.313,
+            "end": 135.733
+          },
+          {
+            "text": "puddle",
+            "start": 135.733,
+            "end": 136.82
+          }
+        ]
+      },
+      "end": 136.82
+    },
+    {
+      "id": "line-15",
+      "start": 137.44,
+      "en": "Just move your hand, write the way into his heart",
+      "words": {
+        "en": [
+          {
+            "text": "Just",
+            "start": 137.44,
+            "end": 137.676
+          },
+          {
+            "text": "move",
+            "start": 137.676,
+            "end": 137.895
+          },
+          {
+            "text": "your",
+            "start": 137.895,
+            "end": 138.129
+          },
+          {
+            "text": "hand,",
+            "start": 138.129,
+            "end": 138.66
+          },
+          {
+            "text": "write",
+            "start": 138.877,
+            "end": 139.217
+          },
+          {
+            "text": "the",
+            "start": 139.217,
+            "end": 139.337
+          },
+          {
+            "text": "way",
+            "start": 139.337,
+            "end": 139.733
+          },
+          {
+            "text": "into",
+            "start": 139.733,
+            "end": 140.141
+          },
+          {
+            "text": "his",
+            "start": 140.141,
+            "end": 140.338
+          },
+          {
+            "text": "heart",
+            "start": 140.338,
+            "end": 140.77
+          }
+        ]
+      },
+      "end": 140.77
+    },
+    {
+      "id": "line-16",
+      "start": 141.88,
+      "en": "But in this world of infinite choices",
+      "words": {
+        "en": [
+          {
+            "text": "But",
+            "start": 141.88,
+            "end": 142.243
+          },
+          {
+            "text": "in",
+            "start": 142.243,
+            "end": 142.483
+          },
+          {
+            "text": "this",
+            "start": 142.483,
+            "end": 143.04
+          },
+          {
+            "text": "world",
+            "start": 143.04,
+            "end": 143.749
+          },
+          {
+            "text": "of",
+            "start": 143.749,
+            "end": 144.057
+          },
+          {
+            "text": "infinite",
+            "start": 144.057,
+            "end": 144.739
+          },
+          {
+            "text": "choices",
+            "start": 144.739,
+            "end": 146.08
+          }
+        ]
+      },
+      "end": 146.08
+    },
+    {
+      "id": "line-17",
+      "start": 146.67,
+      "en": "What will it take just to find that special day?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 146.67,
+            "end": 146.866
+          },
+          {
+            "text": "will",
+            "start": 146.866,
+            "end": 147.131
+          },
+          {
+            "text": "it",
+            "start": 147.131,
+            "end": 147.32
+          },
+          {
+            "text": "take",
+            "start": 147.32,
+            "end": 147.64
+          },
+          {
+            "text": "just",
+            "start": 147.977,
+            "end": 148.307
+          },
+          {
+            "text": "to",
+            "start": 148.307,
+            "end": 148.454
+          },
+          {
+            "text": "find",
+            "start": 148.454,
+            "end": 148.875
+          },
+          {
+            "text": "that",
+            "start": 148.875,
+            "end": 149.127
+          },
+          {
+            "text": "special",
+            "start": 149.127,
+            "end": 149.887
+          },
+          {
+            "text": "day?",
+            "start": 149.887,
+            "end": 150.0
+          }
+        ]
+      },
+      "end": 150.0
+    },
+    {
+      "id": "line-18",
+      "start": 151.2,
+      "en": "What will it take just to find that special day?",
+      "words": {
+        "en": [
+          {
+            "text": "What",
+            "start": 151.2,
+            "end": 151.4
+          },
+          {
+            "text": "will",
+            "start": 151.4,
+            "end": 151.673
+          },
+          {
+            "text": "it",
+            "start": 151.673,
+            "end": 151.871
+          },
+          {
+            "text": "take",
+            "start": 151.871,
+            "end": 152.48
+          },
+          {
+            "text": "just",
+            "start": 152.48,
+            "end": 152.851
+          },
+          {
+            "text": "to",
+            "start": 152.851,
+            "end": 153.046
+          },
+          {
+            "text": "find",
+            "start": 153.046,
+            "end": 153.527
+          },
+          {
+            "text": "that",
+            "start": 153.527,
+            "end": 153.93
+          },
+          {
+            "text": "special",
+            "start": 154.737,
+            "end": 155.084
+          },
+          {
+            "text": "day?",
+            "start": 155.084,
+            "end": 155.3
+          }
+        ]
+      },
+      "end": 155.3
+    },
+    {
+      "id": "line-19",
+      "start": 162.35,
+      "en": "That special day",
+      "words": {
+        "en": [
+          {
+            "text": "That",
+            "start": 162.35,
+            "end": 163.49
+          },
+          {
+            "text": "special",
+            "start": 163.758,
+            "end": 164.316
+          },
+          {
+            "text": "day",
+            "start": 164.316,
+            "end": 164.7
+          }
+        ]
+      },
+      "end": 164.7
+    },
+    {
+      "id": "line-20",
+      "start": 172.94,
+      "en": "That special day",
+      "words": {
+        "en": [
+          {
+            "text": "That",
+            "start": 172.94,
+            "end": 173.084
+          },
+          {
+            "text": "special",
+            "start": 173.084,
+            "end": 173.445
+          },
+          {
+            "text": "day",
+            "start": 173.445,
+            "end": 174.13
+          }
+        ]
+      },
+      "end": 174.13
+    },
+    {
+      "id": "line-21",
+      "start": 180.58,
+      "en": "That special day",
+      "words": {
+        "en": [
+          {
+            "text": "That",
+            "start": 180.58,
+            "end": 182.187
+          },
+          {
+            "text": "special",
+            "start": 182.187,
+            "end": 182.589
+          },
+          {
+            "text": "day",
+            "start": 182.589,
+            "end": 183.0
+          }
+        ]
+      },
+      "end": 183.0
+    },
+    {
+      "id": "line-22",
+      "start": 189.72,
+      "en": "That special day",
+      "words": {
+        "en": [
+          {
+            "text": "That",
+            "start": 189.72,
+            "end": 191.448
+          },
+          {
+            "text": "special",
+            "start": 191.448,
+            "end": 191.756
+          },
+          {
+            "text": "day",
+            "start": 191.756,
+            "end": 192.18
+          }
+        ]
+      },
+      "end": 192.18
+    }
+  ],
+  "alignment": {
+    "recording": "songs/Kamex - Your Reality (Kamex Remix).m4a",
+    "audioSha256": "2b9b736566829b2ada0f301af9e10a596dee6ed9dd009e9c1033707a4563b273",
+    "status": "published",
+    "approved": false,
+    "method": "Phrase-bounded wav2vec2 CTC on the separated vocal, compared with independent mix and stem transcriptions; vowel releases checked against the stem envelope."
+  }
+}

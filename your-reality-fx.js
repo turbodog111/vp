@@ -1,7 +1,7 @@
 // Your Reality (Dan Salvato feat. Jillian Ashcraft) — "The Letter". A letter is written at
 // a desk by a window while the song is sung. The pen writes one handwritten line for each
 // sung line and one word for each sung word, and it lifts off the page when the voice rests.
-// Held notes pool ink at the nib. A full page breaks into drifting pixels before the next one
+// Held notes pool ink at the nib. A full page curls back into the light before the next one
 // is begun. Afternoon light crosses the page and turns to dusk by the end, leaf shadows sway
 // with the music, and the piano keys sound on the recording's measured onsets (the piano
 // says more while the voice rests). After the last line the pen is put away and the letter
@@ -9,19 +9,19 @@
 // uses only word timings and word lengths, never the words themselves.
 ((root, factory) => {
   const kit = typeof module === 'object' && module.exports ? require('./mv-kit.js') : root.MvKit;
-  const api = factory(kit);
+  const set = typeof module === 'object' && module.exports ? require('./reality-set.js') : root.RealitySet;
+  const api = factory(kit, set);
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.RealityLetterFx = api;
-})(typeof window === 'object' ? window : globalThis, kit => {
+})(typeof window === 'object' ? window : globalThis, (kit, set) => {
   'use strict';
 
-  const { TAU, clamp, mix, ease, easeOut, fract, hash, hash2, rgba, blend, sample, vignette } = kit;
+  const { TAU, clamp, mix, ease, easeOut, fract, hash, hash2, rgba, blend, linear, radial, sample, vignette } = kit;
   const INK = '#39404f', FRESH = '#18204f', PINK = '#ae4c70', WAX = '#952c4d';
-  const CYAN = '#4cc4d2', ROSE = '#ec6f9e';
   const ROWS = 3;            // handwritten lines per page
   const SECTION_GAP = 6;     // a rest this long ends a section, so the next one starts a new page
   const REST_GAP = 2.2;      // a rest this long sends the pen back to its resting place
-  const DISSOLVE = 1.2;      // seconds for a finished page to break up
+  const DISSOLVE = 1.2;      // maximum duration of a sheet turn
   const SPACE = 1.5;         // word space, in letter widths
   const STILL_TIME = 27.2;   // reduced motion holds this one moment: two lines written, pen at rest
   // Light colour through the afternoon (fraction of the song → colour).
@@ -128,7 +128,7 @@
   // MARK: handwriting
 
   function geometry(w, h, P) {
-    const pw = w * .94, ph = h * .86;
+    const pw = w * (w<h ? .93 : .76), ph = h * .745;
     const width = pw * .5;
     // Writing sits on ruled lines below the lyrics: one line lower on tall (phone) stages.
     const first = h > w * 1.1 ? 10 : 9;
@@ -183,21 +183,16 @@
     return g.xh * (.22 + .5 * Math.sqrt(clamp((Math.min(t, word.end) - word.writeEnd) / 1.6)));
   }
 
-  /** A finished page breaks into small squares with colour fringes that drift up and fade. */
-  function pixels(c, word, g, age) {
-    for (let q = 0; q * 1.5 < word.n; q++) {
-      const seed = hash2(word.seed, q + 1);
-      const a = age / (.6 + .4 * seed);
-      if (a <= 0 || a >= 1) continue;
-      const [x, y] = inkAt(word, Math.min(word.n, q * 1.5 + .5), g);
-      const px = x + (seed - .35) * g.xh * 5 * a;
-      const py = y - Math.pow(a, 1.4) * g.xh * (6 + seed * 8);
-      const size = g.xh * (.55 + hash(seed * 7.1) * .6) * (1 - a * .4);
-      const alpha = Math.min(1, a * 6) * Math.pow(1 - a, 1.3);
-      c.fillStyle = rgba(CYAN, alpha * .7); c.fillRect(px - size * .8, py - size / 2, size, size);
-      c.fillStyle = rgba(ROSE, alpha * .7); c.fillRect(px - size * .2, py - size / 2, size, size);
-      c.fillStyle = rgba(INK, alpha); c.fillRect(px - size / 2, py - size / 2, size, size);
-    }
+  // A cylindrical fold advances from the fore-edge; a soft contact shadow leads it.
+  function pageTurn(c,g,u) {
+    if (!(u>0 && u<1)) return;
+    const w=g.pw, h=g.ph, lift=Math.sin(Math.PI*u), x=w*(1-ease(u)), b=w*.13*lift;
+    c.save();c.beginPath();c.rect(0,0,w,h);c.clip();
+    c.fillStyle=linear(c,x-b*.35,0,x+b,0,[[0,'rgba(62,43,30,0)'],[.36,rgba('#604837',.24*lift)],[1,'rgba(62,43,30,0)']]);
+    c.fillRect(x-b*.35,0,b*1.35,h);
+    c.beginPath();c.moveTo(x,0);c.bezierCurveTo(x+b*.7,h*.23,x-b*.45,h*.76,x+b*.22,h);
+    c.lineTo(x+b*1.2,h);c.bezierCurveTo(x+b*.68,h*.72,x+b*1.25,h*.20,x+b*.9,-h*.018);c.closePath();
+    c.fillStyle=linear(c,x-b*.16,0,x+b*1.2,0,[[0,'#c4b5a1'],[.22,'#e7d7bc'],[.60,'#fff7e5'],[.83,'#f8ecd4'],[1,'#bfad94']]);c.fill();c.restore();
   }
 
   function drawPage(c, page, t, g) {
@@ -223,9 +218,9 @@
             }
           }
         }
-        if (age > 0) pixels(c, word, g, age);
       }
     }
+    pageTurn(c,g,age);
   }
 
   // MARK: pen
@@ -274,13 +269,20 @@
     c.fillStyle = rgba('#3b2c33', .1 + .08 * pen.lift); c.fill();
     c.translate(pen.x, pen.y - raise); c.scale(g.unit, g.unit);
     c.rotate(.68 + pen.lift * .2 + (pen.writing ? Math.sin(pen.x * .31) * .04 : 0));
-    c.fillStyle = '#38334a'; c.beginPath();
+    c.save();c.translate(4+pen.lift*4,5+pen.lift*7);
+    c.beginPath();c.moveTo(0,1);c.lineTo(-4,-16);c.lineTo(-5,-71);c.quadraticCurveTo(0,-79,5,-71);c.lineTo(4,-16);c.closePath();
+    c.fillStyle=rgba('#3e3436',.17-pen.lift*.045);c.fill();c.restore();
+    c.fillStyle = linear(c,-5,0,5,0,[[0,'#172425'],[.15,'#344347'],[.29,'#7c9291'],[.36,'#465958'],[.52,'#233438'],[.87,'#192c30'],[1,'#0c171d']]); c.beginPath();
     c.moveTo(-4, -16); c.lineTo(-5, -69); c.quadraticCurveTo(0, -79, 5, -69);
     c.lineTo(4, -16); c.closePath(); c.fill();
-    c.fillStyle = 'rgba(255,255,255,.16)'; c.fillRect(1.2, -66, 1.4, 46);
-    c.fillStyle = '#cea45e'; c.fillRect(-4.5, -22, 9, 3);
+    c.fillStyle = 'rgba(242,255,243,.47)'; c.fillRect(-2.15, -66, .55, 43);
+    const brass=linear(c,-4.7,0,4.7,0,[[0,'#775642'],[.22,'#cfae69'],[.38,'#fff1bc'],[.52,'#b69049'],[.83,'#c99d60'],[1,'#77503a']]);
+    c.fillStyle = brass; c.fillRect(-4.5, -22, 9, 3);c.fillRect(-4.6,-66,9.2,1.4);c.fillRect(-4.1,-24.2,8.2,.75);
     c.beginPath(); c.moveTo(0, 0); c.lineTo(-4.5, -11); c.lineTo(-3, -16);
-    c.lineTo(3, -16); c.lineTo(4.5, -11); c.closePath(); c.fillStyle = '#c9a25c'; c.fill();
+    c.lineTo(3, -16); c.lineTo(4.5, -11); c.closePath(); c.fillStyle = brass; c.fill();
+    c.beginPath();c.moveTo(-3,-12);c.quadraticCurveTo(-1,-12,0,-9);c.quadraticCurveTo(1,-12,3,-12);
+    c.strokeStyle='#6a4b36';c.lineWidth=.6;c.stroke();
+    c.beginPath();c.arc(0,-8,.82,0,TAU);c.fillStyle='#20242b';c.fill();
     c.strokeStyle = INK; c.lineWidth = .7; c.beginPath();
     c.moveTo(0, -8); c.lineTo(0, 0); c.stroke();
     c.restore();
@@ -303,7 +305,7 @@
       const a = i / 16 * TAU, rr = r * (1 + (hash(i % 16 + 3) - .5) * .16);
       if (i) c.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); else c.moveTo(rr, 0);
     }
-    c.fillStyle = WAX; c.fill();
+    c.fillStyle = radial(c,-r*.36,-r*.37,r*1.6,[[0,'#eca6aa'],[.25,'#b45169'],[.49,WAX],[.76,'#742841'],[.89,'#a94860'],[1,'#582032']]); c.fill();
     c.beginPath(); c.arc(0, 0, r * .72, 0, TAU); c.strokeStyle = '#71203a'; c.lineWidth = r * .09; c.stroke();
     // A pen nib pressed into the wax.
     c.beginPath(); c.moveTo(0, -r * .5); c.lineTo(r * .27, -r * .05); c.lineTo(r * .12, r * .42);
@@ -326,24 +328,24 @@
 
   function drawPaper(c, w, h, g, day, beat, t, P, still) {
     const { pw, ph, unit } = g;
-    c.fillStyle = '#cbaca8'; c.fillRect(4 * unit, 8 * unit, pw, ph);
-    c.fillStyle = '#f9eee5'; c.fillRect(-3 * unit, 4 * unit, pw, ph);
-    const paper = c.createLinearGradient(0, 0, pw, ph);
-    paper.addColorStop(0, '#fffaf0'); paper.addColorStop(.57, '#f7f0df');
-    paper.addColorStop(1, blend('#e8dace', '#dcd8d0', ease((day - .75) / .25)));
-    c.fillStyle = paper; c.fillRect(0, 0, pw, ph);
-    c.beginPath();
-    for (let i = 0; i < 14; i++) {
-      const y = ph * (.13 + .059 * i);
-      c.moveTo(0, y); c.lineTo(pw, y);
+    for(let i=4;i>0;i--){c.fillStyle='rgba(35,24,23,.105)';c.fillRect(unit*(3+i*1.3),unit*(3+i*1.8),pw,ph);}
+    for(let i=3;i>0;i--){
+      c.save(); c.rotate(-i*.0048);c.translate(-unit*i,unit*i*1.2);
+      c.fillStyle=i%2?'#d9c7a9':'#efdfc2';c.fillRect(0,0,pw,ph);c.restore();
     }
-    c.strokeStyle = '#e0dfd3'; c.lineWidth = Math.max(.7, unit * .5); c.stroke();
-    c.fillStyle = '#dfa0ae'; c.fillRect(pw * .091, 0, unit, ph);
+    set.paper(c,pw,ph);
+    c.beginPath();
+    for (let i = 8; i < 14; i++) {
+      const y = ph * (.13 + .059 * i);
+      c.moveTo(pw*.105, y); c.lineTo(pw*.88, y);
+    }
+    c.strokeStyle = '#d1c6b6'; c.lineWidth = Math.max(.6, unit * .48); c.stroke();
     // Bookmark ribbon; its tail stirs on the beat.
     const flick = still ? 0 : Math.sin(beat * Math.PI) * .004;
     c.beginPath(); c.moveTo(pw * .79, 0); c.lineTo(pw * .86, 0);
     c.lineTo(pw * (.86 + flick), ph * .19); c.lineTo(pw * .825, ph * .15); c.lineTo(pw * (.79 + flick), ph * .19);
-    c.closePath(); c.fillStyle = PINK; c.fill();
+    c.closePath(); c.fillStyle = linear(c,pw*.79,0,pw*.86,0,[[0,'#873a50'],[.08,'#bf6e7c'],[.39,'#d797a2'],[.55,'#c47989'],[.93,'#96465d'],[1,'#d796a4']]); c.fill();
+    c.beginPath();c.moveTo(pw*.795,0);c.lineTo(pw*(.795+flick),ph*.18);c.strokeStyle='#e2a9a9';c.lineWidth=unit*.7;c.stroke();
     // Pressed sprig; in the last chorus it lets go of a few petals.
     c.save(); c.translate(pw * .86, ph * .24); c.scale(unit, unit);
     c.rotate(-.25 + Math.sin(beat * Math.PI / 48) * .012);
@@ -417,14 +419,13 @@
         c.moveTo(x + ox, y); c.lineTo(x + ox + W, y); c.lineTo(x + ox + W + dx, y + H); c.lineTo(x + ox + dx, y + H); c.closePath();
       }
     };
-    const shade = rgba('#6d5a5c', glow * .42), soft = w * .014;
-    // Shade everywhere outside the window patch, in two steps for a soft edge.
-    for (const grow of [soft, 0]) {
-      c.beginPath(); c.rect(0, 0, w, h); panes(grow); c.fillStyle = shade; c.fill('evenodd');
+    const soft = w * .009;
+    c.fillStyle=rgba('#6b565c',glow*.56);c.fillRect(0,0,w,h);
+    if(!set.sunPane(c,ax,ay,paneW*2+gap,paneH*2+gap,skew,glow*1.17)){
+      c.beginPath();panes(0);c.fillStyle=rgba(daylight(day),glow*.95);c.fill();
     }
-    c.beginPath(); panes(soft * .5); c.fillStyle = rgba(daylight(day), glow * .55); c.fill();
     c.save(); c.beginPath(); panes(soft); c.clip();
-    c.fillStyle = rgba('#6d5a5c', glow * .62);
+    c.fillStyle = rgba('#4d504c', glow * .40);
     leafShadows(c, at, t, sway, still, Math.min(w, h) * .055);
     // Dust drifting through the beam.
     if (!still) for (let i = 0; i < 22; i++) {
@@ -469,27 +470,46 @@
     const pressed = new Array(14).fill(0);
     for (const e of events) if (e.age < .3) pressed[e.key] = Math.max(pressed[e.key], (1 - e.age / .3) * e.strength);
     c.save(); c.translate(w * .035, h + 2); c.rotate(-.038);
-    c.fillStyle = INK; c.fillRect(-2, -kh - 3, key * 14 + 4, kh + key);
+    c.fillStyle = linear(c,0,-kh-key*.28,0,-kh,[[0,'#9e7650'],[.28,'#493835'],[.65,'#714539'],[1,'#262328']]); c.fillRect(-3,-kh-key*.28,key*14+6,kh+key*1.3);
+    const ivory=linear(c,0,-kh,0,key*.32,[[0,'#aca195'],[.1,'#d5c9b4'],[.36,'#f3ead4'],[.88,'#faf4df'],[1,'#c5b89d']]);
+    const ebony=linear(c,0,-kh,0,-kh*.4,[[0,'#242629'],[.64,'#35363b'],[.79,'#49464a'],[.95,'#27252a'],[1,'#13161c']]);
     for (let k = 0; k < 14; k++) {
       const down = pressed[k];
-      c.fillStyle = down ? blend('#fff8e8', '#e3909f', down) : '#fff8e8';
-      c.fillRect(k * key + 1, -kh + down * 1.5, key - 1, kh + key);
+      c.fillStyle = ivory; c.fillRect(k*key+1,-kh+down*key*.15,key-1,kh+key);
+      if(down){c.fillStyle=rgba('#846e65',down*.43);c.fillRect(k*key+1,-kh+down*key*.15,key-1,kh+key);}
     }
-    c.fillStyle = INK;
-    for (let k = 0; k < 13; k++) if (k % 7 !== 2 && k % 7 !== 6) c.fillRect((k + .73) * key, -kh, key * .55, kh * .57);
-    // Each struck key sends a note up over the page.
-    for (const e of events) {
-      const life = e.age / 1.9, size = key * (e.voiced ? .26 : .34);
-      const x = (e.key + .5) * key + Math.sin(e.age * 2.2 + e.slot) * key * .35, y = -kh - key * .4 - Math.pow(life, .7) * key * 1.5;
-      const alpha = Math.pow(1 - life, 1.3) * (.5 + .45 * e.strength) * Math.min(1, e.age * 8);
-      const color = hash(e.slot * 1.7) > .45 ? PINK : INK;
-      c.save(); c.translate(x, y); c.rotate(Math.sin(e.age * 1.7 + e.slot) * .2);
-      c.beginPath(); c.ellipse(0, 0, size, size * .72, -.4, 0, TAU); c.fillStyle = rgba(color, alpha); c.fill();
-      c.beginPath(); c.moveTo(size * .9, 0); c.lineTo(size * .9, -size * 3.4);
-      if (hash(e.slot * 3.1) > .5) c.quadraticCurveTo(size * 2.1, -size * 2.6, size * 1.9, -size * 1.5);
-      c.strokeStyle = rgba(color, alpha); c.lineWidth = Math.max(1, size * .22); c.stroke();
-      c.restore();
+    for (let k = 0; k < 13; k++) if (k % 7 !== 2 && k % 7 !== 6) {
+      const x=(k+.73)*key;
+      c.fillStyle='rgba(40,30,34,.32)';c.fillRect(x+key*.1,-kh+key*.13,key*.6,kh*.57);
+      c.fillStyle=ebony;c.fillRect(x,-kh,key*.55,kh*.57);
+      c.fillStyle='#716765';c.fillRect(x+key*.05,-kh+1,Math.max(1,key*.04),kh*.50);
     }
+    c.fillStyle='#803f4a';c.fillRect(0,-kh-key*.045,key*14,key*.077);
+    c.restore();
+  }
+
+  // The sampled vocals have a physical source on the desk. The tape keeps running
+  // through the instrumental, but both reels stop exactly where playback is paused.
+  function drawTape(c,w,h,b,energy,minor) {
+    const s=Math.min(w*.00205,h*.0023), accent=minor?'#a9c9c2':'#f4af9c';
+    c.save();c.translate(w*(w<h?.235:.145),h*.935);c.rotate(-.06);c.scale(s,s);
+    c.fillStyle='rgba(30,24,29,.36)';c.fillRect(-69,-28,147,65);
+    c.fillStyle=linear(c,-70,-27,72,33,[[0,'#827e72'],[.04,'#c0b9a5'],[.13,'#454c4b'],[.86,'#293335'],[.97,'#7c8177'],[1,'#252828']]);c.fillRect(-72,-33,146,65);
+    c.fillStyle='#171f22';c.fillRect(-65,-27,132,51);
+    c.fillStyle=linear(c,0,-25,0,22,[[0,'#414a49'],[.3,'#242e30'],[1,'#101b20']]);c.fillRect(-63,-25,91,44);
+    c.beginPath();c.moveTo(-44,6);c.lineTo(-44,12);c.lineTo(9,12);c.lineTo(10,6);c.strokeStyle='#ac7e5c';c.lineWidth=1.2;c.stroke();
+    for(const [x,r,rate] of [[-43,13,1],[8,12,1.12]]){
+      c.save();c.translate(x,-4);c.beginPath();c.arc(0,0,r+2,0,TAU);c.fillStyle='#12191b';c.fill();
+      c.beginPath();c.arc(0,0,r,0,TAU);c.fillStyle=linear(c,-r,-r,r,r,[[0,'#dcd6c2'],[.3,'#8e9a96'],[.54,'#c4cbbd'],[1,'#5a6462']]);c.fill();
+      c.rotate(b*.38*rate);
+      for(let k=0;k<3;k++){c.rotate(TAU/3);c.beginPath();c.ellipse(0,-r*.59,r*.28,r*.21,0,0,TAU);c.fillStyle='#273133';c.fill();}
+      c.beginPath();c.arc(0,0,r*.19,0,TAU);c.fillStyle='#716653';c.fill();c.restore();
+    }
+    c.fillStyle='#e1d2ab';c.fillRect(34,-18,28,21);
+    c.beginPath();c.arc(48,3,15,Math.PI*1.19,Math.PI*1.81);c.strokeStyle='#9c795c';c.lineWidth=1.3;c.stroke();
+    c.beginPath();c.moveTo(48,2);const a=-2.49+1.77*clamp(energy);
+    c.lineTo(48+14*Math.cos(a),2+14*Math.sin(a));c.strokeStyle='#703c36';c.lineWidth=1.2;c.stroke();
+    for(let k=0;k<4;k++){c.fillStyle=k===1?accent:'#a09e8e';c.fillRect(32+k*8,10,5,5);}
     c.restore();
   }
 
@@ -505,29 +525,32 @@
     const lift = still ? 0 : m.lift || 0, pulse = still ? 0 : m.pulse || 0, beats = still ? 12 : m.beats || 0;
     const voice = voiceNear(P, t);
 
-    const desk = c.createLinearGradient(0, 0, w, h);
-    desk.addColorStop(0, blend('#e8dacf', '#a9a4bb', ease((day - .78) / .22)));
-    desk.addColorStop(.6, blend('#ead2c4', '#b6a6b6', ease((day - .78) / .22)));
-    desk.addColorStop(1, '#b9c6bb');
-    c.fillStyle = desk; c.fillRect(0, 0, w, h);
+    set.desk(c,w,h);
+    const minor=m.variant==='your-reality-kamex', electronic=minor||m.variant==='your-reality-cement-city'||m.variant==='your-reality-ink-static';
+    c.fillStyle=rgba(minor?'#263455':'#413456',minor?.32:.19*ease((day-.58)/.42));c.fillRect(0,0,w,h);
 
-    c.save(); c.translate(w * .52, h * .53); c.rotate(-.036); c.translate(-g.pw / 2, -g.ph / 2);
+    const tilt=-.038+(still?0:Math.sin(t*.045)*.003), cy=h*(w<h?.585:.557);
+    c.save(); c.translate(w * .525, cy); c.rotate(tilt); c.translate(-g.pw / 2, -g.ph / 2);
     drawPaper(c, w, h, g, day, beats, t, P, still);
     for (const page of P.pages) drawPage(c, page, t, g);
     drawSeal(c, P, still ? -1 : t, g);
     c.restore();
 
     // The window light: dim at the start, brighter in the choruses and while the piano plays alone.
-    const glow = (.15 + .07 * lift + .025 * pulse + .04 * (1 - voice)) * ease(.35 + t / 5) * (1 - .55 * ease((day - .88) / .12));
+    const glow = (.19 + .09 * lift + .025 * pulse + .06 * (1 - voice)) * ease(.52 + t / 5) * (1 - .5 * ease((day - .88) / .12));
     windowLight(c, w, h, t, day, glow, .6 + lift * .9, still);
 
-    c.save(); c.translate(w * .52, h * .53); c.rotate(-.036); c.translate(-g.pw / 2, -g.ph / 2);
+    c.save(); c.translate(w * .525, cy); c.rotate(tilt); c.translate(-g.pw / 2, -g.ph / 2);
     const pen = penAt(P, t, g);
     // At rest during a long instrumental, the pen taps along with the beat.
     drawPen(c, pen, g, pen.lift > .9 && voice < .5 ? pulse : 0);
     c.restore();
 
-    drawKeyboard(c, w, h, keyEvents(m, P, t));
+    set.inkwell(c,w,h);
+    if (electronic) drawTape(c,w,h,beats,still?.35:m.energy||0,minor);
+    else drawKeyboard(c, w, h, keyEvents(m, P, t));
+    c.fillStyle=linear(c,0,0,0,h*.25,[[0,'rgba(48,34,31,.33)'],[.46,'rgba(48,34,31,.20)'],[1,'rgba(48,34,31,0)']]);
+    c.fillRect(0,0,w,h*.25);
     vignette(c, w, h, '#3b3d68', .06 + .22 * ease((day - .8) / .2));
   }
 

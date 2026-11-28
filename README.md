@@ -75,23 +75,26 @@ are fitted to the selected recording. Visuals use the native playback clock,
 bounded canvas drawing, the existing frame limiter, and reduced-motion settings.
 These are energy-driven scenes, not guessed lyric/chorus timelines.
 
-The original Your Reality, Caleb Hyles's cover, and The Juicebox feat. Vannamelon's pop-punk cover share
-`your-reality-fx.js` (a letter written by a window); FalKKonE feat. Rena uses
-`your-reality-metal-fx.js` (a concert hall). Each recording has its own measured
-beat and amplitude data. The scenes also read the recording's synchronized
-lyric file in `songs/lyrics/aligned/`, keeping only when each word is sung and how many
-letters it has; the words themselves never reach the scene. In the letter, the pen writes
-one handwritten word for each sung word and rests when nobody is singing. The pop-punk
-cover's spoken intro is preserved without starting the letter. Caleb's edit keeps
-the instrumental opening and final chord while omitting his video's spoken intro
-and end card; its cues use the edited audio's clock. A full page
-breaks into drifting pixels before the next is written, the window light moves from
-afternoon to dusk, and the letter is sealed after the last line. In the hall, a score
-scrolls past a playhead: a note crosses it as each word is sung, and a bar line crosses
-it on each downbeat. Note heights are decorative; only their timing is measured. Organ
-pipes and floor echoes follow the measured bass hits, and the candles are left burning
-at the end. If a lyric file cannot be read, the letter writes on the measured beat
-instead.
+The eight Your Reality recordings use two sets drawn entirely in Canvas. In
+`your-reality-fx.js`, a fountain pen writes on laid paper by a window. The page
+turns, the daylight moves, and the pen lifts when the singer rests. Jillian
+Ashcraft, Caleb Hyles and The Juicebox feat. Vannamelon have a piano at the desk.
+Cement City feat. Kalcium, Kamex and Ink & Static 360 have a cassette deck whose
+reels and meter follow playback. Kamex's minor-key mix repeats verse one and
+samples its closing words rather than singing the rest of the original sheet.
+
+The second set, `your-reality-metal-fx.js`, is a vaulted recital hall. Rena's
+sung words cross the staff at the playhead; the flying V comes forward during
+her instrumental breaks. Spyder1246's blue double-cutaway guitar carries the
+melody throughout, with no invented vocals. That edit ends after the natural
+guitar decay, before the upload switches to separate end-card music.
+
+`reality-set.js` builds wood grain, paper fibers, leaded glass, masonry and
+reflections from code. Fixed surfaces are cached at bounded resolution; movement,
+lighting and highlights use the media clock, not accumulated frames. The seven
+vocal arrangements have separate word timings in `songs/lyrics/aligned/`.
+The pop-punk spoken intro remains uncaptioned, and Caleb's 3:00.655 music edit
+retains its original playlist identity and edited lyric clock.
 
 ## Music videos
 

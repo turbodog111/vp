@@ -15,7 +15,11 @@ const recordings = [
   ['your-reality', 'Dan Salvato feat. Jillian Ashcraft - Your Reality.m4a'],
   ['your-reality-metal', 'FalKKonE feat. Rena - Your Reality (Intense Symphonic Metal Cover).m4a'],
   ['your-reality-pop-punk', 'The Juicebox feat. Vannamelon - Your Reality (Pop Punk Cover).m4a'],
-  ['your-reality-caleb-hyles', 'Caleb Hyles - Your Reality.m4a']
+  ['your-reality-caleb-hyles', 'Caleb Hyles - Your Reality.m4a'],
+  ['your-reality-cement-city', 'Cement City feat. Kalcium - Your Reality (Cement City Remix).m4a'],
+  ['your-reality-metalized', 'Spyder1246 - Your Reality (Metalized).m4a'],
+  ['your-reality-kamex', 'Kamex - Your Reality (Kamex Remix).m4a'],
+  ['your-reality-ink-static', 'Joshua Glass & Gemini 4 Neon feat. Jillian Ashcraft - Your Reality (Ink & Static 360).m4a']
 ];
 const dataFor = key => JSON.parse(fs.readFileSync(path.join(root, 'songs/motion', `${key}.json`)));
 const lyricFor = key => JSON.parse(fs.readFileSync(path.join(root, 'songs/lyrics/aligned', `${key}.json`)));
@@ -96,7 +100,8 @@ for (const [key, name] of recordings) {
       assert.ok(Math.abs(data[band].length * data.sampleInterval - data.duration) < 0.1);
     }
     assert.equal(data.sampleInterval, 0.04);
-    assert.ok(Math.abs(data.bpm - { override: 204, 'petal-lament': 170, marshmary: 182, dynamite: 114, butter: 110, 'your-reality': 105, 'your-reality-metal': 105, 'your-reality-pop-punk': 120, 'your-reality-caleb-hyles': 105 }[key]) < 1);
+    assert.ok(Math.abs(data.bpm - { override: 204, 'petal-lament': 170, marshmary: 182, dynamite: 114, butter: 110, 'your-reality': 105, 'your-reality-metal': 105, 'your-reality-pop-punk': 120, 'your-reality-caleb-hyles': 105,
+      'your-reality-cement-city': 103, 'your-reality-metalized': 115, 'your-reality-kamex': 105, 'your-reality-ink-static': 105 }[key]) < 1);
     assert.equal(config.bpm, data.bpm, 'fallback uses the measured tempo');
     assert.equal(config.beatOffset, data.beatOffset, 'fallback uses the measured phase');
   });
@@ -149,7 +154,7 @@ test('Your Reality: distinct stages, the full supplied sheet, independently time
   assert.equal(acts(25).tutti,0); assert.equal(acts(64).tutti,1);
   assert.equal(acts(102).solo,1); assert.equal(acts(144).peak,1); assert.equal(acts(171).tail,1);
   const pictures=[], timelines=[];
-  for (const [key,name] of recordings.filter(([k])=>k.startsWith('your-reality'))) {
+  for (const [key,name] of recordings.filter(([k])=>k.startsWith('your-reality') && !['your-reality-metalized','your-reality-kamex'].includes(k))) {
     const recording='songs/'+name, config=api.track({path:recording});
     await api.activate(config); pictures.push(render(api,102));
     const entries=catalog.filter(e=>e.recording===recording); assert.equal(entries.length,1);
@@ -169,6 +174,8 @@ test('Your Reality: distinct stages, the full supplied sheet, independently time
       ? [[0,-1],[9.8,-1],[10.15,0],[20.96,1],[54,-1],[61,7],[99.9,-1],[115.96,13],[136.85,15],[164.65,21],[165.6,21],[166,-1],[179,-1]]
       : key === 'your-reality-pop-punk'
       ? [[9,-1],[19,-1],[19.5,0],[48,5],[52,6],[59,-1],[64,7],[102,-1],[123,14],[128,-1],[148.5,19],[152,-1],[158,20],[160,-1]]
+      : key === 'your-reality-cement-city'
+      ? [[9,-1],[12,0],[43,5],[48,6],[54,-1],[63,7],[102,-1],[134,-1],[160,19],[165,-1],[168,20],[172,-1]]
       : [[5,-1],[12,0],[43,5],[48,6],[54,-1],[63,7],[102,-1],[134,-1],[165,20],[173,-1]];
     for (const [time,line] of anchors)
       assert.equal(W.activeRow(sheet.rows,time),line, key+' at '+time);
@@ -178,14 +185,32 @@ test('Your Reality: distinct stages, the full supplied sheet, independently time
   assert.equal(W.activeRow(timelines[0],162),-1); assert.equal(W.activeRow(timelines[1],162),19);
 });
 
+test('Kamex loops verse one and the vocal sample; the guitar-only Metalized never borrows a lyric track', async () => {
+  const W=require('../lyric-workbench.js'),catalog=require('../songs/lyrics/aligned/manifest.json');
+  const sheet=lyricFor('your-reality-kamex'), original=lyricFor('your-reality');
+  const verse=original.rows.slice(0,7).map(r=>r.en);
+  const expected=[...verse,...Array(4).fill('That special day')];
+  assert.deepEqual(sheet.rows.map(r=>r.en),expected.concat(expected));
+  assert.deepEqual(W.validate(W.decode(sheet,sheet.recording),sheet.duration).errors,[]);
+  assert.equal(sheet.alignment.audioSha256,dataFor('your-reality-kamex').audioSha256);
+  assert.deepEqual([12,19.4,63,67.7,103,116.1,157,164,196,217].map(t=>W.activeRow(sheet.rows,t)),[-1,0,-1,7,-1,11,-1,18,-1,-1]);
+  const {api,requests}=create();
+  const config=api.track({path:'songs/Spyder1246 - Your Reality (Metalized).m4a'});
+  assert.equal(config.lyrics,undefined);assert.ok(!catalog.some(r=>r.recording.includes('Spyder1246')));
+  await api.activate(config);assert.equal(requests(),1);
+  assert.equal(dataFor(config.key).duration,173.54);
+  assert.equal(dataFor('your-reality-kamex').duration,218.43);
+});
+
 test('Your Reality: scenes receive when each word is sung and how long it is, never the words', async () => {
   const { api } = create();
-  for (const [key] of recordings.filter(([k]) => k.startsWith('your-reality'))) {
+  for (const [key] of recordings.filter(([k]) => k.startsWith('your-reality') && k!=='your-reality-metalized')) {
     const vocal = api.vocalTimeline(lyricFor(key));
     const caleb = key === 'your-reality-caleb-hyles';
-    assert.equal(vocal.lines.length, caleb ? 22 : 21);
+    const sample = key === 'your-reality-kamex';
+    assert.equal(vocal.lines.length, caleb || sample ? 22 : 21);
     const words = vocal.lines.flatMap(line => [...line.words]);
-    assert.equal(words.length, caleb ? 214 : 210);
+    assert.equal(words.length, caleb ? 214 : sample ? 168 : 210);
     for (const word of words) {
       assert.deepEqual(Object.keys(word).sort(), ['end', 'n', 'start']);
       assert.ok(word.end > word.start && word.n >= 1 && word.n <= 14);
@@ -317,7 +342,7 @@ test('reduced motion removes traveling objects and beat pulses for every scene',
   for (const [, name] of recordings) {
     await api.activate(api.track({ path: `songs/${name}` }));
     // Narrative chapter changes are retained; motion inside a chapter is frozen.
-    const chaptered = name.includes('Override') || name.includes('Symphonic Metal');
+    const chaptered = name.includes('Override') || name.includes('Symphonic Metal') || name.includes('(Metalized)');
     assert.deepEqual(render(api, 15), render(api, chaptered ? 16 : 90), name);
   }
 });

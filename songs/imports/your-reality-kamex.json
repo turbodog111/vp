@@ -1,0 +1,18 @@
+{
+  "recording": "songs/Kamex - Your Reality (Kamex Remix).m4a",
+  "title": "Your Reality (Kamex Remix)",
+  "artist": "Kamex",
+  "composer": "Dan Salvato",
+  "source": "https://www.youtube.com/watch?v=-_jRKsmrixc",
+  "sourceTitle": "Your Reality - Doki Doki Literature Club Remix [Kamex]",
+  "sourceChannel": "Kamex",
+  "duration": 218.43,
+  "encoding": "48 kHz stereo AAC, 192 kbps target, faststart; linked arrangement preserved.",
+  "sourceAudioSha256": "b8d5009fe1767e0fde08e10cf4a0bcf13f2a8790acdeb6634232488d5fa9c0cf",
+  "outputAudioSha256": "2b9b736566829b2ada0f301af9e10a596dee6ed9dd009e9c1033707a4563b273",
+  "rendition": "Minor-key electronic remix using Jillian Ashcraft's original first-verse vocals, with repeated phrases.",
+  "sourceDuration": 222.161,
+  "trimStart": 0,
+  "trimEnd": 218.43,
+  "edit": "Natural fade retained; silent end-card tail excluded."
+}

@@ -26,6 +26,27 @@ window.SongMotionFx = (() => {
       lyrics: './songs/lyrics/aligned/your-reality-metal.json',
       source: 'https://www.youtube.com/watch?v=7XW6AeZXEWM'
     }),
+    'songs/cement city feat. kalcium - your reality (cement city remix)': Object.freeze({
+      key: 'your-reality-cement-city', theme: 'your-reality', bpm: 103, beatOffset: .291,
+      title: 'Your Reality (Cement City Remix)', data: './songs/motion/your-reality-cement-city.json',
+      lyrics: './songs/lyrics/aligned/your-reality-cement-city.json', source: 'https://www.youtube.com/watch?v=26SrUUL70U4'
+    }),
+    'songs/kamex - your reality (kamex remix)': Object.freeze({
+      key: 'your-reality-kamex', theme: 'your-reality', bpm: 105, beatOffset: .071,
+      title: 'Your Reality (Kamex Remix)', data: './songs/motion/your-reality-kamex.json',
+      lyrics: './songs/lyrics/aligned/your-reality-kamex.json', source: 'https://www.youtube.com/watch?v=-_jRKsmrixc'
+    }),
+    'songs/spyder1246 - your reality (metalized)': Object.freeze({
+      key: 'your-reality-metalized', theme: 'your-reality-metal', bpm: 115, beatOffset: .31,
+      title: 'Your Reality (Metalized)', data: './songs/motion/your-reality-metalized.json',
+      source: 'https://www.youtube.com/watch?v=dOLeGHuycEk'
+    }),
+    'songs/joshua glass & gemini 4 neon feat. jillian ashcraft - your reality (ink & static 360)': Object.freeze({
+      key: 'your-reality-ink-static', theme: 'your-reality', bpm: 105, beatOffset: .312,
+      title: 'Your Reality (Ink & Static 360)', data: './songs/motion/your-reality-ink-static.json',
+      lyrics: './songs/lyrics/aligned/your-reality-ink-static.json',
+      source: 'https://github.com/turbodog111/vp/commit/65ce144fcbdcc5542e77a2f43ac9c01a3efd62e9'
+    }),
     'songs/32ki feat. hatsune miku & kasane teto sv - mesmerizer (japanese original)': Object.freeze({
       key: 'mesmerizer-original', theme: 'mesmerizer', variant: 'original', bpm: 92.5, beatOffset: .345,
       title: 'Mesmerizer', data: './songs/motion/mesmerizer-original.json',

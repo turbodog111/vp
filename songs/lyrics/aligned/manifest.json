@@ -89,5 +89,26 @@
     "lines": 22,
     "status": "published",
     "audioSha256": "a7193c679f922e5345a0ed83d57f11dcc656f3c17638ea55d693a96801367299"
+  },
+  {
+    "recording": "songs/Cement City feat. Kalcium - Your Reality (Cement City Remix).m4a",
+    "file": "your-reality-cement-city.json",
+    "lines": 21,
+    "status": "published",
+    "audioSha256": "3059dd1acc5578a905d19cb85eeb4f270a89a1095224d10ebb77385fc7ac332b"
+  },
+  {
+    "recording": "songs/Kamex - Your Reality (Kamex Remix).m4a",
+    "file": "your-reality-kamex.json",
+    "lines": 22,
+    "status": "published",
+    "audioSha256": "2b9b736566829b2ada0f301af9e10a596dee6ed9dd009e9c1033707a4563b273"
+  },
+  {
+    "recording": "songs/Joshua Glass & Gemini 4 Neon feat. Jillian Ashcraft - Your Reality (Ink & Static 360).m4a",
+    "file": "your-reality-ink-static.json",
+    "lines": 21,
+    "status": "published",
+    "audioSha256": "93b23e39bb964f771b078cab81b3b6990714b2472dd611c996bdeb95af2f84f0"
   }
 ]

@@ -8,12 +8,13 @@
 // Every frame is a pure function of media time. Original imagery; no lyrics are drawn.
 ((root, factory) => {
   const kit = typeof module === 'object' && module.exports ? require('./mv-kit.js') : root.MvKit;
-  const fx = factory(kit);
+  const set = typeof module === 'object' && module.exports ? require('./reality-set.js') : root.RealitySet;
+  const fx = factory(kit,set);
   if (typeof module === 'object' && module.exports) module.exports = fx;
   else root.RealityMetalFx = fx;
-})(typeof window === 'object' ? window : globalThis, kit => {
+})(typeof window === 'object' ? window : globalThis, (kit,set) => {
   'use strict';
-  const { hash, hash2, sample, radial, rgba, blend, mix, easeOut } = kit;
+  const { hash, hash2, sample, linear, radial, rgba, blend, mix, easeOut } = kit;
   const tau = Math.PI * 2;
   const unit = x => Math.max(0, Math.min(1, x));
   const smooth = x => { const y = unit(x); return y * y * (3 - 2 * y); };
@@ -86,6 +87,7 @@
     c.fillStyle = color; c.fill(); line(c, rim, Math.max(.8, radius*.011));
   }
   function roseWindow(c, x, y, r, turn, open, light, voice, glint) {
+    if(set.glass(c,x,y,r*1.08,unit(light+voice*.09),glint))return;
     c.save(); c.translate(x, y);
     c.fillStyle = '#181622'; c.beginPath(); c.arc(0,0,r*1.08,0,tau); c.fill();
     for (const [radius, edge, width] of [[1.08,'#987d80',.015],[1.035,'#453847',.032],[1,'#d1adb2',.011]]) {
@@ -93,15 +95,21 @@
     }
     // A glint runs once round the rim in every bar.
     c.beginPath(); c.arc(0,0,r*1.035,glint-.35,glint+.35); line(c,`rgba(255,214,180,${(.18+.4*light).toFixed(3)})`,Math.max(1,r*.03));
-    c.rotate(turn);
+    // The glass stays in the masonry. The light moves through its leaded facets.
+    const glass=['#d97672','#dca55d','#824467','#bc465c','#7f92a0','#be6a76'];
     for (let i=0; i<12; i++) {
-      c.save(); c.rotate(i*tau/12); c.translate(0,-open*r*.065);
+      c.save(); c.rotate(i*tau/12);
       pane(c,r*.89,i%2 ? '#9c304d' : '#c95c69','#402733');
-      path(c,`rgba(255,218,170,${.19+light*.5})`,0,-r*.83, r*.068,-r*.61, 0,-r*.46, -r*.018,-r*.58);
+      for(let j=0;j<3;j++){
+        const y0=-r*(.38+j*.148),y1=y0-r*.139,wide=r*(j===2?.045:.077);
+        const warm=unit(.16+light*.41+Math.sin(i*.52+j*.6+turn*10)*.16);
+        path(c,blend(glass[(i+j*2)%glass.length],'#fff0bd',warm),0,y0,wide,y0-r*.068,0,y1,-wide,y0-r*.068);
+        c.beginPath();c.moveTo(-wide*.65,y0-r*.058);c.lineTo(.8,y0-r*.019);line(c,'rgba(255,222,172,.58)',Math.max(.65,r*.008));
+      }
+      c.beginPath();c.arc(0,-r*.89,r*.048,0,tau);c.fillStyle=blend('#685766','#efc388',.32+open*.4);c.fill();
       c.restore();
     }
     // A split pen nib takes the place of the central boss; it glows while she sings.
-    c.rotate(-turn);
     if (voice > 0) { c.beginPath(); c.arc(0,0,r*.42,0,tau); c.fillStyle=rgba('#ffd9a0',.28*voice); c.fill(); }
     c.beginPath(); c.arc(0,0,r*.29,0,tau); c.fillStyle='#24202b'; c.fill();
     path(c,blend('#f4dbb6','#fff6dc',voice),0,-r*.26,r*.15,-r*.02,r*.083,r*.19,-r*.083,r*.19,-r*.15,-r*.02);
@@ -133,15 +141,16 @@
     c.save(); if (side === 1) { c.translate(w,0); c.scale(-1,1); }
     const step = Math.min(w*.031, h*.056);
     // The casing opens on pivot points, but each pipe remains a rigid, fluted tube.
-    c.translate(-step*(.3+drive*.68),0);
+    c.translate(-step*.42,0);
     for (let i=0; i<7; i++) {
       const x = step*(i-.32), width = step*.91, base = h*(.80+i*.018);
-      const top = h*(.055 + i*.036) + Math.sin(i*.72+beats*Math.PI/8)*h*.014*drive;
+      const top = h*(.055 + i*.036);
       const mouth = base - (base-top)*.27, glint = (1+Math.cos(i*.95-beats*Math.PI/2))/2;
       const metal = c.createLinearGradient(x,0,x+width,0);
-      metal.addColorStop(0,'#25212d'); metal.addColorStop(.24,'#514653');
-      metal.addColorStop(.38,`rgba(${Math.round(124+70*glint*drive)},128,142,1)`);
-      metal.addColorStop(.46,'#574955'); metal.addColorStop(.79,'#302631'); metal.addColorStop(1,'#171621');
+      metal.addColorStop(0,'#161b27'); metal.addColorStop(.10,'#50515f');
+      metal.addColorStop(.21,'#bab1aa'); metal.addColorStop(.245,'#ebd5bd');metal.addColorStop(.30,'#716971');
+      metal.addColorStop(.38,blend('#575967','#e9b19f',glint*drive));
+      metal.addColorStop(.58,'#363947');metal.addColorStop(.79,'#23232c');metal.addColorStop(.88,'#917977');metal.addColorStop(1,'#24232e');
       path(c,metal,x,top+width*.42,x+width,top,x+width,base,x,base);
       // A bass hit sends a band of light up the pipe from its mouth, outer pipes first.
       for (const p of pulses) {
@@ -285,29 +294,53 @@
 
   // MARK: guitar
 
-  function guitarBreak(c,w,h,level,b,hit,still,sparks) {
+  function guitarBreak(c,w,h,level,b,hit,still,sparks,blue) {
     if (level<=0) return;
     const size=Math.min(w/460,h/352), x=w*.49, y=h*(.68+(1-level)*.43);
     c.save(); c.globalAlpha=level;
-    // The long edges of the two spotlights meet behind the instrument, not the words.
     for (const sign of [-1,1]) {
-      const u=.06*Math.sin(b*Math.PI/8+sign);
-      const beam=c.createLinearGradient(0,0,0,h);
-      beam.addColorStop(0,'rgba(255,192,151,.66)'); beam.addColorStop(.72,'rgba(204,75,86,.17)'); beam.addColorStop(1,'rgba(204,75,86,0)');
-      path(c,beam,w*(.5+sign*(.31+u)),0,w*(.5+sign*(.37+u)),0,w*(.5-sign*.10),h,w*(.5-sign*.29),h);
+      const u=.04*Math.sin(b*Math.PI/9+sign);
+      set.shaft(c,w*(.5+sign*.31),h*.018,w*(.5-sign*(.07+u)),h*.869,h*.125,level*(.78+.13*hit),sign>0?'#efc992':blue?'#9fbde5':'#dd8793');
+    }
+    c.beginPath();c.ellipse(x+w*.018,h*.914,size*92,size*7,0,0,tau);c.fillStyle='rgba(17,16,23,.36)';c.fill();
+    if(blue){
+      const bx=x-size*73,by=h*.835;
+      c.fillStyle=linear(c,bx,by-size*38,bx+size*72,by,[[0,'#585154'],[.075,'#232631'],[.92,'#1e2029'],[1,'#685f59']]);
+      c.fillRect(bx,by-size*42,size*63,size*42);
+      c.fillStyle='#918571';c.fillRect(bx+size*3,by-size*39,size*57,size*6);
+      c.beginPath();
+      for(let i=0;i<8;i++){c.moveTo(bx+size*4,by-size*(5+i*3.3));c.lineTo(bx+size*59,by-size*(5+i*3.3));}
+      line(c,'#535257',size*.8);
+      for(let i=0;i<5;i++){c.beginPath();c.arc(bx+size*(8+i*5),by-size*36,size*1.35,0,tau);c.fillStyle='#343238';c.fill();}
+      c.beginPath();c.moveTo(bx+size*56,by-size*35);c.bezierCurveTo(bx+size*68,by+size*38,x-size*10,by+size*27,x+size*28,y+size*46);
+      line(c,'#151921',size*2);
     }
     c.translate(x,y); c.scale(size,size);
-    c.rotate(.81+.10*Math.sin(b*Math.PI/8)+hit*.027);
-    const shape=()=>{ c.beginPath(); c.moveTo(-13,-27); c.quadraticCurveTo(-19,-31,-23,-18);
+    c.rotate((blue?.61:.81)+.045*Math.sin(b*Math.PI/12)+hit*.012);
+    const shape=()=>{ c.beginPath();
+      if(blue){
+        c.moveTo(-10,-18);c.bezierCurveTo(-21,-11,-28,-24,-28,-45);c.bezierCurveTo(-52,-27,-33,-2,-42,18);
+        c.bezierCurveTo(-55,51,-53,80,-23,86);c.bezierCurveTo(2,91,43,82,46,58);
+        c.bezierCurveTo(51,36,27,20,27,7);c.bezierCurveTo(26,-2,40,-17,30,-27);
+        c.bezierCurveTo(26,-16,20,-10,10,-14);c.closePath();return;
+      }
+      c.moveTo(-13,-27); c.quadraticCurveTo(-19,-31,-23,-18);
       c.lineTo(-83,100); c.quadraticCurveTo(-84,106,-78,102); c.lineTo(-2,50);
       c.lineTo(61,90); c.quadraticCurveTo(68,93,65,85); c.lineTo(19,-21);
       c.quadraticCurveTo(16,-28,10,-27); c.closePath(); };
     c.save(); c.translate(3,6); shape(); c.fillStyle='#341f2b'; c.fill(); c.restore();
-    const finish=c.createLinearGradient(-52,8,51,59);
-    finish.addColorStop(0,'#672f40'); finish.addColorStop(.36,'#da6269'); finish.addColorStop(.46,'#b83b51'); finish.addColorStop(1,'#712639');
+    const finish=c.createLinearGradient(-60,-12,52,68);
+    const lacquer=blue?['#111b35','#293c79','#3b61a4','#b7cbdc','#7287bf','#303e82','#141e3e']:['#391f31','#933a4d','#ca595e','#e4a092','#cc7674','#96374d','#482534'];
+    [0,.16,.38,.47,.485,.64,1].forEach((at,i)=>finish.addColorStop(at,lacquer[i]));
     shape(); c.fillStyle=finish; c.fill(); line(c,'#f1c1a1',1.5);
-    path(c,'#e3d1b7',-13,-17,11,-17,47,70,-2,39,-59,79);
-    path(c,'#29232c',-10,-17,9,-17,35,54,-2,33,-42,60);
+    c.save();shape();c.clip();c.beginPath();
+    for(let i=0;i<27;i++){
+      const xx=-82+i*6;c.moveTo(xx,-30);c.bezierCurveTo(xx+8,18,xx-10,49,xx+7,111);
+    }line(c,'rgba(255,213,182,.16)',.7);c.restore();
+    if(!blue){
+      path(c,'#e3d1b7',-13,-17,11,-17,47,70,-2,39,-59,79);
+      path(c,'#29232c',-10,-17,9,-17,35,54,-2,33,-42,60);
+    }
     path(c,'#dfbb92',-10,-11,-6.5,-189,6.5,-189,10,-11);
     path(c,'#342731',-8.6,-10,-5.5,-189,5.5,-189,8.6,-10);
     for (let i=0;i<19;i++) {
@@ -317,7 +350,7 @@
         path(c,'#dfd4c6',0,yy-2.5,2.6,yy-5,0,yy-7.5,-2.6,yy-5);
     }
     path(c,'#d0b69a',-6,-180,-11,-206,1,-238,11,-205,6,-180);
-    path(c,'#9a404f',-4.5,-184,-8.3,-205,.8,-232,8.4,-205,4.5,-184);
+    path(c,blue?'#263e73':'#9a404f',-4.5,-184,-8.3,-205,.8,-232,8.4,-205,4.5,-184);
     for (let i=0;i<3;i++) for (const side of [-1,1]) {
       const yy=-195-i*9;
       c.fillStyle='#c3b8a7'; c.fillRect(side<0?-14:6,yy,8,1.6);
@@ -354,7 +387,11 @@
 
   function draw(c,w,h,m) {
     const still=m.reducedMotion, b=still ? 12 : m.beats, sec=m.time;
-    const {tutti,solo,peak:climax,tail}=arrangement(sec);
+    const leadGuitar=m.variant==='your-reality-metalized';
+    const {tutti,solo,peak:climax,tail}=leadGuitar ? {
+      tutti:ramp(sec,8,15),solo:band(sec,96,103,121,128),
+      peak:band(sec,133,143,150,158),tail:ramp(sec,(m.duration||196)-6,(m.duration||196)-.5)
+    } : arrangement(sec);
     const energy=still ? .55 : m.energy, hi=still ? .3 : m.highs;
     const drive=unit((.22+.62*tutti+.22*solo+.24*climax)*(energy*.65+.35))*(1-tail*.74);
     const hit=still ? 0 : unit(m.pulse*.58+m.onset*.27+m.bass*.15);
@@ -362,12 +399,15 @@
     const voice=still ? 0 : voiceAt(m.vocal, sec);
     const data=still ? null : m.data, offset=data?.beatOffset ?? 0;
     const clock=still ? 0 : sec;
-    const floor=c.createLinearGradient(0,0,w*.22,h);
-    floor.addColorStop(0,'#100f1a'); floor.addColorStop(.41,'#231825');
-    floor.addColorStop(.68,'#181824'); floor.addColorStop(1,'#30212d');
-    c.fillStyle=floor; c.fillRect(0,0,w,h);
+    set.hall(c,w,h);
     const center=w*.5, narrow=w<h*.95;
-    const s=Math.min(w,h), rx=narrow ? w*.80 : center, ry=h*(narrow?.19:.16);
+    const s=Math.min(w,h), rx=center, ry=h*(narrow?.225:.195);
+    const r=s*(narrow?.134:.150);
+    // The same glass that emits the high light leaves a low, elongated reflection.
+    c.save();c.translate(rx,h*.816);c.scale(1,.13);
+    const glow=.17+hi*.15+hit*.13;
+    c.fillStyle=radial(c,0,0,r*1.84,[[0,rgba('#ffb983',glow)],[.36,rgba('#da5666',glow*.87)],[1,'rgba(165,38,57,0)']]);
+    c.fillRect(-r*1.84,-r*1.84,r*3.68,r*3.68);c.restore();
     windowRays(c,w,h,rx,ry,b,(.25+.45*drive+.2*hi+.35*climax+.25*voice)*(1-tail*.8),still);
 
     // Bass hits measured on the beat send light up the pipes.
@@ -378,31 +418,21 @@
       const strength=peak(data,'bass',at-.04,at+.08);
       if (strength>.55) pulses.push({ u:easeOut(u/1.3)*1.3, a:Math.min(.75,(strength-.45)*1.6)*(.35+.65*drive) });
     }
-    // Pointed rib vault, followed by rake lights reflected down its sides.
+    // The visible beam and floor footprint move together; the stone and pipes never flex.
     for (const side of [-1,1]) {
-      c.save(); c.translate(center,0); c.scale(side,1);
-      for (let i=0;i<3;i++) {
-        c.beginPath(); c.moveTo(w*(.45+i*.05),h*.83);
-        c.bezierCurveTo(w*.46,h*.42,w*(.32+i*.04),h*.09,0,h*(-.05+i*.045));
-        line(c,i===1?'#71505c':'#513d4b',Math.max(1,h*(i===1?.006:.002)));
-      }
       // Slow sweeps in the quiet parts; with the full band the lights jump to a new mark each bar.
       const drift=.5+.5*Math.sin(b*Math.PI/8+side*.7);
       const bar=Math.floor(b/4), mark=k=>.5+.5*Math.sin(k*2.39+side*1.3);
       const jump=mix(mark(bar-1),mark(bar),easeOut((b%4)/1.2));
       const swing=mix(drift,jump,unit(tutti*.85+climax*.15)*(1-solo));
-      const foot=w*(.20+swing*.17), tip=w*(.38+.07*double), sw=h*(.06+.11*drive);
-      const light=c.createLinearGradient(0,0,0,h);
-      const dim=1-.78*tail;
-      light.addColorStop(0,`rgba(255,110,103,${((.11+.40*drive+.08*hit)*dim).toFixed(3)})`);
-      light.addColorStop(.6,`rgba(207,57,87,${((.10+.14*drive)*dim).toFixed(3)})`); light.addColorStop(1,'rgba(165,44,76,0)');
-      path(c,light,tip,-1,tip+sw,-1,foot+sw*.7,h,foot-sw,h);
-      c.restore();
+      const foot=center+side*w*(.10+swing*.21),tip=center+side*w*.35,sw=h*(.038+.052*drive);
+      set.shaft(c,tip,h*.024,foot,h*(.79+.055*swing),sw,(.28+.52*drive+.18*hit)*(1-.71*tail),side<0?'#efd0aa':'#d98999');
+      if(tutti>.08)set.shaft(c,center+side*w*.27,h*.08,center-side*w*(.045+swing*.08),h*.765,sw*.56,(.21+.34*drive+.13*double)*tutti,'#afbedc');
     }
     candles(c,w,h,clock,.55+.45*tail,still);
     fog(c,w,h,clock,drive,tail);
     for (const side of [-1,1]) rank(c,w,h,side,drive,b,hit,pulses);
-    roseWindow(c,rx,ry,s*(narrow?.12:.122)*(1+.035*hit),Math.sin(b*Math.PI/24)*.19+solo*.23,drive*(.45+.55*hit),
+    roseWindow(c,rx,ry,r,Math.sin(b*Math.PI/24)*.19+solo*.23,drive*(.45+.55*hit),
       unit(drive+hi*.18+voice*.2),voice,((b/4)%1)*tau-Math.PI/2);
     scoreLines(c,w,h,b,drive,hit,solo,tail);
     if (!still) scoreNotes(c,w,h,m,sec,b,drive,hit,solo,voice);
@@ -418,7 +448,7 @@
       line(c,`rgba(248,119,105,${(a*.72).toFixed(3)})`,Math.max(1,h*.003));
     }
     if (!still) embers(c,w,h,sec,drive,tail);
-    const instrumental=Math.max(band(sec,50.65,51.6,58.6,60.0), band(sec,95.55,97.3,113.9,115.5),
+    const instrumental=leadGuitar ? (still ? 1 : .90+.10*drive) : Math.max(band(sec,50.65,51.6,58.6,60.0), band(sec,95.55,97.3,113.9,115.5),
       .84*band(sec,130.0,131.5,136.3,137.7));
     const sparks=[];
     if (data && instrumental>0) {
@@ -430,7 +460,7 @@
         if (strength>.6) sparks.push({ age, strength, seed: slot%97 });
       }
     }
-    guitarBreak(c,w,h,still ? (instrumental>.5 ? 1 : 0) : instrumental,b,hit,still,sparks);
+    guitarBreak(c,w,h,still ? (instrumental>.5 ? 1 : 0) : instrumental,b,hit,still,sparks,leadGuitar);
   }
   return Object.freeze({draw,arrangement,voiceAt});
 });
